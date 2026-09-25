@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-25T22:19:29.366338+00:00",
+  "generated_at": "2026-09-25T23:00:15.956668+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -9484,21 +9484,6 @@
       "path": "mods/wda_questline-1.21.1-1.0.0.jar",
       "sha256": "4e3a954def09701b06b0c7a5d0683f4382ca815d836f197f7ac2f95e88501f3b",
       "size": 274363
-    },
-    {
-      "path": "mods/xaerominimap-neoforge-1.21.1-26.1.0.jar",
-      "sha256": "6bd6cbab01ff57b9ba2fbfee18f9605593101f15d80e8d19dc59c385d2535ccc",
-      "size": 2138254
-    },
-    {
-      "path": "mods/xaeros_waystones_compatibility-NeoForge-1.21.1-2.1.0.jar",
-      "sha256": "fcd0a18f5f5940b31353ee70ddb0194cf1cd9565a8bfc9557c93804e34422b89",
-      "size": 7308
-    },
-    {
-      "path": "mods/xaeroworldmap-neoforge-1.21.1-1.41.0.jar",
-      "sha256": "b3e377b11d277cfbc0ccdd91a6fb6bc1ff4e93b354eb9c0277e1e4446c316ccb",
-      "size": 1386888
     },
     {
       "path": "mods/yet_another_config_lib_v3-3.8.2+1.21.1-neoforge.jar",
