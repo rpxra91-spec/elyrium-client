@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "dungeons_arise:fishing_hut",
+    "dungeons_arise:wishing_well",
+    "dungeons_arise:jungle_tree_house",
+    "dungeons_arise:bathhouse",
+    "dungeons_arise:abandoned_temple",
+    "dungeons_arise:lighthouse",
+    "dungeons_arise:illager_campsite",
+    "dungeons_arise:merchant_campsite",
+    "imst:beehouse",
+    "imst:sunflower_farm",
+    "imst:berry_house",
+    "imst:terralith/yurt",
+    "imst:cactus_farm",
+    "imst:desert_well",
+    "imst:cocoa_farm",
+    "imst:lumberjack/oak_hut",
+    "imst:lumberjack/birch_hut",
+    "imst:lumberjack/spruce_hut",
+    "imst:lumberjack/acacia_hut",
+    "imst:lumberjack/jungle_hut",
+    "imst:lumberjack/dark_oak_hut",
+    "imst:lumberjack/mangrove_hut",
+    "imst:igloo",
+    "imst:observatory",
+    "imst:witch_hut",
+    "irons_spellbooks:mangrove_hut"
+  ]
+}

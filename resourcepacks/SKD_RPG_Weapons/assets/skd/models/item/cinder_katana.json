@@ -1,0 +1,6 @@
+{
+  "parent": "simplyswords:item/template_katana",
+  "textures": {
+    "layer0": "skd:item/cinder_katana"
+  }
+}

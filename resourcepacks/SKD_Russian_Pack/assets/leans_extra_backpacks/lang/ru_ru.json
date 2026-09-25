@@ -1,0 +1,14 @@
+{
+  "backpack.leans_extra_backpacks.fisherman": "Fisherman's Backpack",
+  "backpack.leans_extra_backpacks.fisherman.unlock": "Craft a fishing rod",
+  "backpack.leans_extra_backpacks.explorer": "Explorer's Backpack",
+  "backpack.leans_extra_backpacks.explorer.unlock": "Travel 3k Blocks",
+  "backpack.leans_extra_backpacks.pirate_king": "Strawhat's Backpack",
+  "backpack.leans_extra_backpacks.pirate_king.unlock": "Kill 10 Pillagers and or Vindicators",
+  "backpack.leans_extra_backpacks.micropack": "MicroBackpack Backpack",
+  "backpack.leans_extra_backpacks.swordpack": "Swordsman",
+  "backpack.leans_extra_backpacks.swordpack.unlock": "Craft a Алмазный Sword.",
+  "backpack.leans_extra_backpacks.computer": "Computerized Backpack",
+  "item.leans_extra_backpacks.swordpack": "Swordpack",
+  "item.leans_extra_backpacks.swordpack_straps": "Swordpack Straps"
+}

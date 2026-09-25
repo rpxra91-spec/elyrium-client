@@ -1,0 +1,9 @@
+{
+    "parent": "bettercombat:claymore",
+    "attributes": {
+        "range_bonus": 1.2,
+        "category": "claymore",
+        "two_handed": true,
+        "upswing_rate": 0.75
+    }
+}

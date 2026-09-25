@@ -1,0 +1,48 @@
+{
+  "masterToggle": true,
+  "global": {
+    "head": {
+      "trim": true,
+      "base": true,
+      "glint": true,
+      "opacity": 1.0
+    },
+    "chest": {
+      "trim": true,
+      "base": true,
+      "glint": true,
+      "opacity": 1.0
+    },
+    "legs": {
+      "trim": true,
+      "base": true,
+      "glint": true,
+      "opacity": 1.0
+    },
+    "feet": {
+      "trim": true,
+      "base": true,
+      "glint": true,
+      "opacity": 1.0
+    },
+    "elytra": {
+      "base": true,
+      "glint": true,
+      "opacity": 1.0
+    },
+    "shield": {
+      "base": true,
+      "glint": true,
+      "opacity": 1.0
+    },
+    "hat": {
+      "base": true,
+      "glint": true,
+      "opacity": 1.0
+    },
+    "showInCombat": true,
+    "showNameTag": true,
+    "forceElytraWhenFlying": true
+  },
+  "overrides": {}
+}

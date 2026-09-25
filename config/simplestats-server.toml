@@ -1,0 +1,18 @@
+[Experience]
+	#Base XP dropped by mobs not defined in the list below
+	base_xp = 10
+	#Rate at which XP scales, Higher values mean more XP needed
+	xp_scaling = 1.08
+	#XP required for first level up
+	base_level_requirement = 50
+	#Points awarded per level
+	points_per_level = 1
+	#List XP values for Mobs, can be empty
+	#In the following format: Mob (string), XP Granted (int). Don't include spaces.
+	xp_values = ["minecraft:zombie,8", "minecraft:skeleton,8", "minecraft:spider,8", "minecraft:creeper,12", "minecraft:drowned,9", "minecraft:husk,8", "minecraft:stray,8", "minecraft:cave_spider,9", "minecraft:enderman,25", "minecraft:blaze,20", "minecraft:witch,22", "minecraft:piglin_brute,35", "minecraft:ravager,80", "minecraft:evoker,65", "minecraft:warden,500", "minecraft:wither,600", "minecraft:ender_dragon,1000"]
+
+[Perks]
+	#List of Perks, can be empty
+	#In the following format: ID (string), Name, (string), Icon (String), Max Level (int), Cost per Level (int), Action on Level Up (string), Action on Level Down (string).
+	#All fields are required. Don't include spaces
+	perks = ["strength,Сила (+Физ. урон),minecraft:iron_sword,100,1,attribute @s generic.attack_damage base set 1.0+%level%*0.2,attribute @s generic.attack_damage base set 1.0+%level%*0.2", "vitality,Живучесть (+Макс. здоровье),minecraft:golden_apple,100,1,attribute @s generic.max_health base set 20+%level%*0.75,attribute @s generic.max_health base set 20+%level%*0.75", "defense,Стойкость (+Броня и защита),minecraft:shield,100,1,attribute @s generic.armor base set %level%*0.2,attribute @s generic.armor base set %level%*0.2", "agility,Ловкость (+Скорость бега),minecraft:feather,100,1,attribute @s generic.movement_speed base set 0.1+%level%*0.00035,attribute @s generic.movement_speed base set 0.1+%level%*0.00035", "crit,Точность (+Крит. урон),minecraft:golden_sword,100,1,attribute @s apothic_attributes:crit_damage base set 1.5+%level%*0.008,attribute @s apothic_attributes:crit_damage base set 1.5+%level%*0.008", "mana,Интеллект (+Запас маны),minecraft:lapis_lazuli,100,1,attribute @s irons_spellbooks:max_mana base set 100+%level%*4.0,attribute @s irons_spellbooks:max_mana base set 100+%level%*4.0"]

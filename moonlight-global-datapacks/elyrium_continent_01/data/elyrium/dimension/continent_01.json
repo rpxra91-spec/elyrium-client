@@ -1,0 +1,84 @@
+{
+  "type": "elyrium:continent_type",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "elyrium:continent_noise",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "minecraft:plains",
+          "parameters": {
+            "temperature": 0.0,
+            "humidity": 0.0,
+            "continentalness": 0.0,
+            "erosion": 0.0,
+            "depth": 0.0,
+            "weirdness": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "minecraft:forest",
+          "parameters": {
+            "temperature": 0.2,
+            "humidity": 0.3,
+            "continentalness": 0.0,
+            "erosion": 0.0,
+            "depth": 0.0,
+            "weirdness": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "minecraft:birch_forest",
+          "parameters": {
+            "temperature": 0.1,
+            "humidity": 0.1,
+            "continentalness": 0.0,
+            "erosion": 0.0,
+            "depth": 0.0,
+            "weirdness": 0.3,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "minecraft:meadow",
+          "parameters": {
+            "temperature": -0.2,
+            "humidity": 0.2,
+            "continentalness": 0.0,
+            "erosion": 0.0,
+            "depth": 0.0,
+            "weirdness": -0.3,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "minecraft:flower_forest",
+          "parameters": {
+            "temperature": 0.3,
+            "humidity": 0.4,
+            "continentalness": 0.0,
+            "erosion": 0.0,
+            "depth": 0.0,
+            "weirdness": 0.5,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "minecraft:river",
+          "parameters": {
+            "temperature": 0.0,
+            "humidity": 0.5,
+            "continentalness": 0.0,
+            "erosion": 0.6,
+            "depth": 0.0,
+            "weirdness": 0.0,
+            "offset": 0.0
+          }
+        }
+      ]
+    }
+  }
+}

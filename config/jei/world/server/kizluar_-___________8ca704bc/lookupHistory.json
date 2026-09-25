@@ -1,0 +1,14 @@
+[
+  {"version":1},
+  {"ingredient":{"id":"projecte:low_covalence_dust"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"projecte:alchemical_chest"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"projecte:orange_alchemical_bag"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"projecte:high_covalence_dust"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"projecte:medium_covalence_dust"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"projecte:brown_alchemical_bag"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"projecte:green_alchemical_bag"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"projecte:blue_alchemical_bag"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"projecte:yellow_alchemical_bag"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"projecte:magenta_alchemical_bag"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"projecte:white_alchemical_bag"},"type":"item_stack","bookmarkType":"INGREDIENT"}
+]

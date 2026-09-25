@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "cataclysm:desert_temple",
+      "weight": 1
+    },
+    {
+      "structure": "cataclysm:desert_site",
+      "weight": 1
+    },
+    {
+      "structure": "cataclysm:desert_occupied_village",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "cataclysm:cataclysm_random_spread",
+    "spacing": 60,
+    "separation": 40,
+    "salt": 9274812
+  }
+}

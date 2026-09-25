@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#curios:waist",
+    "cataclysm:belt_of_beginner",
+    "cataclysm:belt_of_monstrosity",
+    "relics:hunting_belt",
+    "relics:kinetic_belt"
+  ]
+}

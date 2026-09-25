@@ -1,0 +1,64 @@
+[
+  {
+    "id": "stats",
+    "title": "Характеристики (RPG)",
+    "icon": "simplestats:worn_notebook",
+    "action": {
+      "type": "KEY",
+      "name": "key.simplestats.open_stats",
+      "toggle": false,
+      "mode": "AUTO"
+    }
+  },
+  {
+    "id": "quests",
+    "title": "Квесты (FTB Quests)",
+    "icon": "ftbquests:book",
+    "action": {
+      "type": "KEY",
+      "name": "key.ftbquests.quests",
+      "toggle": false,
+      "mode": "AUTO"
+    }
+  },
+  {
+    "id": "curios",
+    "title": "Аксессуары (Curios)",
+    "icon": "minecraft:gold_nugget",
+    "action": {
+      "type": "KEY",
+      "name": "key.curios.open.desc",
+      "toggle": false,
+      "mode": "AUTO"
+    }
+  },
+  {
+    "id": "apotheosis",
+    "title": "Хроники (Apotheosis)",
+    "icon": "minecraft:enchanted_book",
+    "action": {
+      "type": "KEY",
+      "name": "key.apotheosis.open_world_tier_select",
+      "toggle": false,
+      "mode": "AUTO"
+    }
+  },
+  {
+    "id": "mastery",
+    "title": "Мастерство оружия",
+    "icon": "minecraft:netherite_sword",
+    "action": {
+      "type": "COMMAND",
+      "command": "/mastery"
+    }
+  },
+  {
+    "id": "colony_warehouse",
+    "title": "Лимиты склада",
+    "icon": "minecraft:chest",
+    "action": {
+      "type": "COMMAND",
+      "command": "/colony panel"
+    }
+  }
+]

@@ -1,0 +1,6 @@
+#How many bed spawn-points is tracked per player.
+# Default: 3
+# Range: > 2
+maximumBedFallbacks = 3
+#If true, players need to sleep in the bed to set their spawn point. If false, just interacting with the bed sets the spawn point.
+needsSleepingToSetSpawnPoint = true

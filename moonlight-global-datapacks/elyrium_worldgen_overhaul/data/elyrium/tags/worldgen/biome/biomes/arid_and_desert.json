@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:desert",
+    "minecraft:badlands",
+    "minecraft:eroded_badlands",
+    "minecraft:wooded_badlands",
+    "regions_unexplored:joshua_desert",
+    "regions_unexplored:saguaro_desert",
+    "regions_unexplored:outback"
+  ]
+}

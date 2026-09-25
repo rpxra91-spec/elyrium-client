@@ -1,0 +1,46 @@
+{
+  "structures": [
+    {
+      "structure": "imst:flowerdome",
+      "weight": 1
+    },
+    {
+      "structure": "imst:pyramid",
+      "weight": 1
+    },
+    {
+      "structure": "imst:el_dorado",
+      "weight": 1
+    },
+    {
+      "structure": "imst:dark_tower",
+      "weight": 1
+    },
+    {
+      "structure": "imst:caravan",
+      "weight": 1
+    },
+    {
+      "structure": "imst:viking_house",
+      "weight": 1
+    },
+    {
+      "structure": "imst:fossil_swamp",
+      "weight": 1
+    },
+    {
+      "structure": "imst:alpine_house",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 90,
+    "separation": 45,
+    "salt": 7328195,
+    "exclusion_zone": {
+      "other_set": "minecraft:villages",
+      "chunk_count": 16
+    }
+  }
+}

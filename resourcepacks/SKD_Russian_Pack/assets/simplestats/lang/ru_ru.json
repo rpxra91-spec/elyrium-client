@@ -1,0 +1,13 @@
+{
+  "key.simplestats.open_stats": "Открыть Меню Характеристик",
+  "item.simplestats.worn_notebook": "Потрепанный Блокнот (Очки Статов)",
+  "item.simplestats.filagree_texts": "Филигранные Тексты",
+  "screen.simplestate.error.maxlevel": "Навык уже достиг максимального уровня",
+  "screen.simplestate.error.tooexpensive": "Недостаточно очков характеристик",
+  "screen.simplestate.title": "Характеристики Персонажа",
+  "stat.simplestats.strength": "Сила (Урон в ближнем бою)",
+  "stat.simplestats.vitality": "Живучесть (Максимальное Здоровье)",
+  "stat.simplestats.agility": "Ловкость (Скорость бега и атаки)",
+  "stat.simplestats.defense": "Стойкость (Броня и защита)",
+  "stat.simplestats.intelligence": "Интеллект (Сила Магии и Мана)"
+}

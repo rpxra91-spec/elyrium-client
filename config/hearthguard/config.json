@@ -1,0 +1,20 @@
+{
+  "mode": "WHITELIST",
+  "mobs": [
+    "minecraft:cave_spider",
+    "minecraft:skeleton",
+    "minecraft:stray",
+    "minecraft:spider",
+    "minecraft:zombie",
+    "minecraft:creeper",
+    "minecraft:drowned",
+    "minecraft:zombie_villager",
+    "minecraft:husk",
+    "minecraft:bogged",
+    "minecraft:slime"
+  ],
+  "range": 8,
+  "flee_fast_speed": 1.5,
+  "flee_slow_speed": 1.0,
+  "drop_item_chance": 25
+}

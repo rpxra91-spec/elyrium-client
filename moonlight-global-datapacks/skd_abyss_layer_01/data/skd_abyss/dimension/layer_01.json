@@ -1,0 +1,11 @@
+﻿{
+  "type": "skd_abyss:layer_01_type",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "skd_abyss:layer_01_noise",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "minecraft:lush_caves"
+    }
+  }
+}

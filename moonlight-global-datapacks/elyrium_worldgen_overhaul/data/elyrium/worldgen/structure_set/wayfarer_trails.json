@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "elyrium:wayfarer_trails",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 18,
+    "separation": 10,
+    "salt": 981247
+  }
+}

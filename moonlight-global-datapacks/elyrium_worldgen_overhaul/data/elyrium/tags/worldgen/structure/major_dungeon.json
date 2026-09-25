@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+    "dungeons_arise:keep_kayra",
+    "dungeons_arise:shiraz_palace",
+    "dungeons_arise:foundry",
+    "dungeons_arise:coliseum",
+    "dungeons_arise:thornborn_towers",
+    "dungeons_arise:plague_asylum",
+    "dungeons_arise:infested_temple",
+    "dungeons_arise:mining_complex",
+    "dungeons_arise:mechanical_nest",
+    "dungeons_arise:kisegi_sanctuary",
+    "cataclysm:ruined_citadel",
+    "cataclysm:ancient_factory",
+    "cataclysm:sunken_city",
+    "cataclysm:frosted_prison",
+    "cataclysm:cursed_pyramid",
+    "cataclysm:burning_arena",
+    "cataclysm:soul_black_smith",
+    "irons_spellbooks:catacombs",
+    "irons_spellbooks:citadel"
+  ]
+}

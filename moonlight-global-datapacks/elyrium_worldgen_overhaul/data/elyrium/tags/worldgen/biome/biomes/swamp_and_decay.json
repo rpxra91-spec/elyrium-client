@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:swamp",
+    "minecraft:mangrove_swamp",
+    "minecraft:mushroom_fields",
+    "regions_unexplored:ashen_woodland",
+    "regions_unexplored:bayou",
+    "regions_unexplored:blackstone_basin",
+    "regions_unexplored:fen",
+    "regions_unexplored:fungal_fen",
+    "regions_unexplored:glistering_meadow",
+    "regions_unexplored:infernal_holt",
+    "regions_unexplored:inferno",
+    "regions_unexplored:marsh",
+    "regions_unexplored:mycotoxic_undergrowth",
+    "regions_unexplored:old_growth_bayou",
+    "regions_unexplored:redstone_abyss"
+  ]
+}

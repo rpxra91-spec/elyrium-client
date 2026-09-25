@@ -1,0 +1,6 @@
+{
+  "citizens_request_armor": false,
+  "armor_tier_min": "leather",
+  "armor_tier_max": "iron",
+  "comment": "Set citizens_request_armor to true to enable armor requests for workers/citizens"
+}

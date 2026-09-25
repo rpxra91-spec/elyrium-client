@@ -1,0 +1,938 @@
+{
+	autofocus_id: "1010000000000001"
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "sector_1_cradle_of_aincrad"
+	group: ""
+	icon: {
+		id: "minecraft:iron_sword"
+	}
+	id: "1010000000000000"
+	order_index: 1
+	progression_mode: "flexible"
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "minecraft:compass"
+			}
+			id: "1010000000000001"
+			rewards: [
+				{
+					count: 16
+					id: "1010000000000101"
+					item: {
+						count: 16
+						id: "minecraft:bread"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000102"
+					type: "xp"
+					xp: 50
+				}
+			]
+			shape: "gear"
+			size: 2.0d
+			tasks: [{
+				id: "1010000000000201"
+				type: "checkmark"
+			}]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1010000000000001"]
+			icon: {
+				id: "minecraft:iron_sword"
+			}
+			id: "1010000000000002"
+			rewards: [
+				{
+					count: 3
+					id: "1010000000000103"
+					item: {
+						count: 3
+						id: "minecraft:flint"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000104"
+					item: {
+						count: 1
+						id: "minecraft:shield"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000105"
+					type: "xp"
+					xp: 75
+				}
+			]
+			shape: "diamond"
+			size: 1.3d
+			tasks: [
+				{
+					id: "1010000000000202"
+					item: { count: 1, id: "minecraft:crafting_table" }
+					type: "item"
+				}
+				{
+					id: "1010000000000203"
+					item: { count: 1, id: "minecraft:stone_sword" }
+					type: "item"
+				}
+				{
+					id: "1010000000000204"
+					item: { count: 1, id: "minecraft:stone_pickaxe" }
+					type: "item"
+				}
+			]
+			x: 2.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1010000000000001"]
+			icon: {
+				id: "structurize:sceptergold"
+			}
+			id: "1010000000000003"
+			rewards: [
+				{
+					id: "1010000000000106"
+					item: {
+						count: 1
+						id: "structurize:sceptergold"
+					}
+					type: "item"
+				}
+				{
+					count: 32
+					id: "1010000000000107"
+					item: {
+						count: 32
+						id: "minecraft:oak_log"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000108"
+					type: "xp"
+					xp: 100
+				}
+			]
+			shape: "square"
+			size: 1.2d
+			tasks: [{
+				id: "1010000000000205"
+				type: "checkmark"
+			}]
+			x: 0.0d
+			y: 2.0d
+		}
+		{
+			dependencies: ["1010000000000003"]
+			icon: {
+				id: "minecolonies:blockhuttownhall"
+			}
+			id: "1010000000000004"
+			rewards: [
+				{
+					count: 64
+					id: "1010000000000109"
+					item: {
+						count: 64
+						id: "minecraft:cobblestone"
+					}
+					type: "item"
+				}
+				{
+					count: 16
+					id: "1010000000000110"
+					item: {
+						count: 16
+						id: "minecraft:torch"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000111"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					id: "1010000000000206"
+					item: { count: 1, id: "minecolonies:blockhuttownhall" }
+					type: "item"
+				}
+				{
+					id: "1010000000000207"
+					item: { count: 1, id: "minecolonies:blockhutbuilder" }
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 3.5d
+		}
+		{
+			dependencies: ["1010000000000004"]
+			icon: {
+				id: "minecolonies:blockhuttavern"
+			}
+			id: "1010000000000005"
+			rewards: [
+				{
+					count: 8
+					id: "1010000000000112"
+					item: {
+						count: 8
+						id: "minecraft:cooked_beef"
+					}
+					type: "item"
+				}
+				{
+					count: 5
+					id: "1010000000000113"
+					item: {
+						count: 5
+						id: "minecraft:emerald"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000114"
+					type: "xp"
+					xp: 120
+				}
+			]
+			tasks: [{
+				id: "1010000000000208"
+				item: { count: 1, id: "minecolonies:blockhuttavern" }
+				type: "item"
+			}]
+			x: 0.0d
+			y: 5.0d
+		}
+		{
+			dependencies: ["1010000000000002"]
+			icon: {
+				id: "minecraft:shield"
+			}
+			id: "1010000000000020"
+			rewards: [
+				{
+					count: 3
+					id: "1010000000000150"
+					item: {
+						count: 3
+						id: "minecraft:grindstone"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "1010000000000151"
+					item: {
+						count: 2
+						id: "minecraft:potion"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000152"
+					type: "xp"
+					xp: 150
+				}
+			]
+			shape: "square"
+			size: 1.3d
+			tasks: [{
+				id: "1010000000000240"
+				type: "checkmark"
+			}]
+			x: 2.0d
+			y: -2.0d
+		}
+		{
+			dependencies: ["1010000000000002"]
+			icon: {
+				id: "minecraft:bone"
+			}
+			id: "1010000000000006"
+			rewards: [
+				{
+					id: "1010000000000115"
+					item: {
+						count: 1
+						id: "minecraft:grindstone"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "1010000000000116"
+					item: {
+						count: 8
+						id: "minecraft:copper_ingot"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000117"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [{
+				entity: "minecraft:wolf"
+				id: "1010000000000209"
+				type: "kill"
+				value: 5L
+			}]
+			x: 3.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1010000000000006"]
+			icon: {
+				id: "minecraft:iron_ingot"
+			}
+			id: "1010000000000007"
+			rewards: [
+				{
+					count: 16
+					id: "1010000000000118"
+					item: {
+						count: 16
+						id: "minecraft:iron_ingot"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000119"
+					item: {
+						count: 1
+						id: "minecraft:raw_iron_block"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000120"
+					type: "xp"
+					xp: 120
+				}
+			]
+			tasks: [
+				{
+					count: 32L
+					id: "1010000000000210"
+					item: { count: 1, id: "minecraft:raw_copper" }
+					type: "item"
+				}
+				{
+					count: 24L
+					id: "1010000000000211"
+					item: { count: 1, id: "minecraft:raw_iron" }
+					type: "item"
+				}
+			]
+			x: 5.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1010000000000007"]
+			icon: {
+				id: "minecraft:anvil"
+			}
+			id: "1010000000000008"
+			rewards: [
+				{
+					count: 5
+					id: "1010000000000121"
+					item: {
+						count: 5
+						id: "minecraft:gold_ingot"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000122"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					id: "1010000000000212"
+					item: { count: 1, id: "minecraft:iron_sword" }
+					type: "item"
+				}
+				{
+					id: "1010000000000213"
+					item: { count: 1, id: "minecraft:iron_chestplate" }
+					type: "item"
+				}
+				{
+					id: "1010000000000214"
+					item: { count: 1, id: "minecraft:anvil" }
+					type: "item"
+				}
+			]
+			x: 5.0d
+			y: 1.5d
+		}
+		{
+			dependencies: ["1010000000000008"]
+			icon: {
+				id: "minecraft:potion"
+			}
+			id: "1010000000000009"
+			rewards: [
+				{
+					count: 2
+					id: "1010000000000123"
+					item: {
+						count: 2
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000124"
+					type: "xp"
+					xp: 200
+				}
+			]
+			tasks: [
+				{
+					entity: "minecraft:witch"
+					id: "1010000000000215"
+					type: "kill"
+					value: 2L
+				}
+				{
+					entity: "minecraft:zombie"
+					id: "1010000000000216"
+					type: "kill"
+					value: 10L
+				}
+			]
+			x: 6.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1010000000000009"]
+			icon: {
+				id: "minecraft:lodestone"
+			}
+			id: "1010000000000010"
+			rewards: [
+				{
+					count: 10
+					id: "1010000000000125"
+					item: {
+						count: 10
+						id: "minecraft:emerald"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000126"
+					item: {
+						count: 1
+						id: "minecraft:ender_pearl"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000127"
+					type: "xp"
+					xp: 300
+				}
+			]
+			shape: "hexagon"
+			size: 1.8d
+			tasks: [{
+				id: "1010000000000217"
+				type: "checkmark"
+			}]
+			x: 8.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1010000000000010"]
+			icon: {
+				id: "minecraft:oak_hanging_sign"
+			}
+			id: "1010000000000011"
+			rewards: [
+				{
+					count: 12
+					id: "1010000000000128"
+					item: {
+						count: 12
+						id: "minecraft:gold_ingot"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000129"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_book"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000130"
+					type: "xp"
+					xp: 250
+				}
+			]
+			shape: "rsquare"
+			size: 1.3d
+			tasks: [
+				{
+					entity: "minecraft:skeleton"
+					id: "1010000000000218"
+					type: "kill"
+					value: 15L
+				}
+				{
+					entity: "minecraft:spider"
+					id: "1010000000000219"
+					type: "kill"
+					value: 10L
+				}
+			]
+			x: 8.5d
+			y: -2.0d
+		}
+		{
+			dependencies: ["1010000000000010"]
+			icon: {
+				id: "minecraft:bundle"
+			}
+			id: "1010000000000012"
+			rewards: [
+				{
+					count: 8
+					id: "1010000000000131"
+					item: {
+						count: 8
+						id: "minecraft:emerald"
+					}
+					type: "item"
+				}
+				{
+					count: 3
+					id: "1010000000000132"
+					item: {
+						count: 3
+						id: "minecraft:grindstone"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000133"
+					type: "xp"
+					xp: 200
+				}
+			]
+			shape: "rsquare"
+			size: 1.2d
+			tasks: [
+				{
+					count: 64L
+					id: "1010000000000220"
+					item: { count: 1, id: "minecraft:coal" }
+					type: "item"
+				}
+				{
+					count: 32L
+					id: "1010000000000221"
+					item: { count: 1, id: "minecraft:iron_ingot" }
+					type: "item"
+				}
+				{
+					count: 64L
+					id: "1010000000000222"
+					item: { count: 1, id: "minecraft:spruce_log" }
+					type: "item"
+				}
+			]
+			x: 10.0d
+			y: -2.0d
+		}
+		{
+			dependencies: ["1010000000000010"]
+			icon: {
+				id: "minecolonies:blockhutguardtower"
+			}
+			id: "1010000000000013"
+			rewards: [
+				{
+					id: "1010000000000134"
+					item: {
+						count: 1
+						id: "minecolonies:blockhutlumberjack"
+					}
+					type: "item"
+				}
+				{
+					count: 16
+					id: "1010000000000135"
+					item: {
+						count: 16
+						id: "minecraft:chain"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000136"
+					type: "xp"
+					xp: 250
+				}
+			]
+			shape: "square"
+			size: 1.2d
+			tasks: [{
+				id: "1010000000000223"
+				item: { count: 1, id: "minecolonies:blockhutguardtower" }
+				type: "item"
+			}]
+			x: 8.5d
+			y: 2.0d
+		}
+		{
+			dependencies: ["1010000000000010"]
+			icon: {
+				id: "minecraft:chainmail_chestplate"
+			}
+			id: "1010000000000014"
+			rewards: [
+				{
+					count: 8
+					id: "1010000000000137"
+					item: {
+						count: 8
+						id: "minecraft:iron_block"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000138"
+					type: "xp"
+					xp: 250
+				}
+			]
+			tasks: [
+				{
+					entity: "minecraft:skeleton"
+					id: "1010000000000224"
+					type: "kill"
+					value: 20L
+				}
+				{
+					entity: "minecraft:creeper"
+					id: "1010000000000225"
+					type: "kill"
+					value: 5L
+				}
+			]
+			x: 10.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1010000000000014"]
+			icon: {
+				id: "minecraft:iron_helmet"
+			}
+			id: "1010000000000015"
+			rewards: [
+				{
+					id: "1010000000000139"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000140"
+					type: "xp"
+					xp: 350
+				}
+			]
+			tasks: [
+				{
+					id: "1010000000000226"
+					item: { count: 1, id: "minecraft:iron_helmet" }
+					type: "item"
+				}
+				{
+					entity: "minecraft:zombie"
+					id: "1010000000000227"
+					type: "kill"
+					value: 10L
+				}
+			]
+			x: 12.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1010000000000015"]
+			icon: {
+				id: "minecraft:diamond_chestplate"
+			}
+			id: "1010000000000016"
+			rewards: [
+				{
+					count: 5
+					id: "1010000000000141"
+					item: {
+						count: 5
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000142"
+					type: "xp"
+					xp: 400
+				}
+			]
+			tasks: [
+				{
+					count: 10L
+					id: "1010000000000228"
+					item: { count: 1, id: "minecraft:diamond" }
+					type: "item"
+				}
+				{
+					id: "1010000000000229"
+					item: { count: 1, id: "minecraft:diamond_sword" }
+					type: "item"
+				}
+				{
+					id: "1010000000000230"
+					item: { count: 1, id: "minecraft:diamond_chestplate" }
+					type: "item"
+				}
+			]
+			x: 13.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1010000000000016"]
+			icon: {
+				id: "minecraft:goat_horn"
+			}
+			id: "1010000000000021"
+			rewards: [
+				{
+					count: 5
+					id: "1010000000000153"
+					item: {
+						count: 5
+						id: "minecraft:grindstone"
+					}
+					type: "item"
+				}
+				{
+					count: 3
+					id: "1010000000000154"
+					item: {
+						count: 3
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000155"
+					type: "xp"
+					xp: 500
+				}
+			]
+			shape: "diamond"
+			size: 1.4d
+			tasks: [
+				{
+					id: "1010000000000241"
+					type: "checkmark"
+				}
+				{
+					id: "1010000000000242"
+					item: { count: 1, id: "minecraft:echo_shard" }
+					type: "item"
+				}
+			]
+			x: 15.0d
+			y: -1.5d
+		}
+		{
+			dependencies: ["1010000000000016"]
+			icon: {
+				id: "minecraft:iron_axe"
+			}
+			id: "1010000000000022"
+			rewards: [
+				{
+					count: 16
+					id: "1010000000000156"
+					item: {
+						count: 16
+						id: "minecraft:iron_ingot"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "1010000000000157"
+					item: {
+						count: 8
+						id: "minecraft:spectral_arrow"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000158"
+					type: "xp"
+					xp: 500
+				}
+			]
+			shape: "diamond"
+			size: 1.4d
+			tasks: [
+				{
+					entity: "minecraft:pillager"
+					id: "1010000000000243"
+					type: "kill"
+					value: 12L
+				}
+				{
+					entity: "minecraft:vindicator"
+					id: "1010000000000244"
+					type: "kill"
+					value: 3L
+				}
+				{
+					id: "1010000000000245"
+					item: { count: 1, id: "minecraft:prismarine_shard" }
+					type: "item"
+				}
+			]
+			x: 15.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1010000000000016"]
+			icon: {
+				id: "minecraft:respawn_anchor"
+			}
+			id: "1010000000000023"
+			rewards: [
+				{
+					count: 2
+					id: "1010000000000159"
+					item: {
+						count: 2
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000160"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_book"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000161"
+					type: "xp"
+					xp: 500
+				}
+			]
+			shape: "diamond"
+			size: 1.4d
+			tasks: [
+				{
+					id: "1010000000000246"
+					type: "checkmark"
+				}
+				{
+					id: "1010000000000247"
+					item: { count: 1, id: "minecraft:amethyst_shard" }
+					type: "item"
+				}
+			]
+			x: 15.0d
+			y: 1.5d
+		}
+		{
+			dependencies: [
+				"1010000000000021"
+				"1010000000000022"
+				"1010000000000023"
+			]
+			icon: {
+				id: "minecraft:ender_eye"
+			}
+			id: "1010000000000018"
+			rewards: [
+				{
+					id: "1010000000000146"
+					item: {
+						count: 1
+						id: "minecraft:nether_star"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000147"
+					item: {
+						count: 1
+						id: "minecraft:ancient_debris"
+					}
+					type: "item"
+				}
+				{
+					count: 20
+					id: "1010000000000148"
+					item: {
+						count: 20
+						id: "minecraft:gold_block"
+					}
+					type: "item"
+				}
+				{
+					id: "1010000000000149"
+					type: "xp"
+					xp: 2000
+				}
+			]
+			shape: "octagon"
+			size: 2.2d
+			tasks: [
+				{
+					id: "1010000000000248"
+					type: "checkmark"
+				}
+				{
+					id: "1010000000000233"
+					item: { count: 1, id: "minecraft:ender_eye" }
+					type: "item"
+				}
+			]
+			x: 17.5d
+			y: 0.0d
+		}
+	]
+}

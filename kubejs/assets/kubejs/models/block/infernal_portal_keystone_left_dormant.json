@@ -1,0 +1,310 @@
+{
+  "parent": "minecraft:block/block",
+  "ambientocclusion": true,
+  "textures": {
+    "particle": "kubejs:block/bone_bastion_stone",
+    "stone": "kubejs:block/bone_bastion_stone",
+    "bone": "kubejs:block/ancient_bone",
+    "horn": "kubejs:block/ancient_horn_dormant",
+    "eye_s": "kubejs:block/keystone_dormant_left",
+    "eye_n": "kubejs:block/keystone_dormant_right"
+  },
+  "elements": [
+    {
+      "name": "arch_block",
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#stone",
+          "cullface": "down"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#stone"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#eye_n",
+          "cullface": "north"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#eye_s",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#stone",
+          "cullface": "west"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#stone",
+          "cullface": "east"
+        }
+      }
+    },
+    {
+      "name": "small_horn_base_l",
+      "from": [
+        1,
+        15,
+        4
+      ],
+      "to": [
+        5,
+        19,
+        12
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            12,
+            5,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "south": {
+          "uv": [
+            1,
+            12,
+            5,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "west": {
+          "uv": [
+            4,
+            12,
+            12,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "east": {
+          "uv": [
+            4,
+            12,
+            12,
+            16
+          ],
+          "texture": "#horn"
+        }
+      }
+    },
+    {
+      "name": "small_horn_tip_l",
+      "from": [
+        3,
+        18,
+        5
+      ],
+      "to": [
+        7,
+        23,
+        11
+      ],
+      "rotation": {
+        "angle": 15.0,
+        "axis": "z",
+        "origin": [
+          3,
+          18,
+          8
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            4,
+            6
+          ],
+          "texture": "#horn"
+        },
+        "north": {
+          "uv": [
+            3,
+            8,
+            7,
+            13
+          ],
+          "texture": "#horn"
+        },
+        "south": {
+          "uv": [
+            3,
+            8,
+            7,
+            13
+          ],
+          "texture": "#horn"
+        },
+        "west": {
+          "uv": [
+            5,
+            8,
+            11,
+            13
+          ],
+          "texture": "#horn"
+        },
+        "east": {
+          "uv": [
+            5,
+            8,
+            11,
+            13
+          ],
+          "texture": "#horn"
+        }
+      }
+    },
+    {
+      "name": "small_center_root_l",
+      "from": [
+        13,
+        15,
+        6
+      ],
+      "to": [
+        16,
+        19,
+        10
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            13,
+            12,
+            16,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "south": {
+          "uv": [
+            13,
+            12,
+            16,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "west": {
+          "uv": [
+            6,
+            12,
+            10,
+            16
+          ],
+          "texture": "#horn"
+        }
+      }
+    },
+    {
+      "name": "small_center_tip_l",
+      "from": [
+        14,
+        18,
+        6.5
+      ],
+      "to": [
+        16,
+        21.5,
+        9.5
+      ],
+      "rotation": {
+        "angle": 10.0,
+        "axis": "z",
+        "origin": [
+          14,
+          18,
+          8
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2,
+            3
+          ],
+          "texture": "#horn"
+        },
+        "north": {
+          "uv": [
+            14,
+            9,
+            16,
+            12.5
+          ],
+          "texture": "#horn"
+        },
+        "south": {
+          "uv": [
+            14,
+            9,
+            16,
+            12.5
+          ],
+          "texture": "#horn"
+        },
+        "west": {
+          "uv": [
+            6.5,
+            9,
+            9.5,
+            12.5
+          ],
+          "texture": "#horn"
+        }
+      }
+    }
+  ]
+}

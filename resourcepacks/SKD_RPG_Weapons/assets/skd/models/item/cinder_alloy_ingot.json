@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "skd:item/cinder_alloy_ingot"
+  }
+}

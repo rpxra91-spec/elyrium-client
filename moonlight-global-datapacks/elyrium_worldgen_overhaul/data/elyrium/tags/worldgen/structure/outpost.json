@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "dungeons_arise:illager_fort",
+    "dungeons_arise:bandit_towers",
+    "dungeons_arise:monastery",
+    "irons_spellbooks:evoker_fort",
+    "irons_spellbooks:mountain_tower",
+    "irons_spellbooks:pyromancer_tower",
+    "irons_spellbooks:ancient_battleground",
+    "totw_modded:regular",
+    "totw_modded:desert",
+    "totw_modded:ice",
+    "totw_modded:derelict",
+    "totw_modded:derelict_grass",
+    "totw_modded:jungle",
+    "totw_modded:badlands",
+    "totw_modded:ocean",
+    "totw_modded:ocean_warm",
+    "imst:dark_tower",
+    "imst:quarry",
+    "imst:mountain_camp",
+    "imst:bandit_camp"
+  ]
+}

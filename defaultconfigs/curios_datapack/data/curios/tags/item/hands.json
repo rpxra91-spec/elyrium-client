@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#curios:glove",
+    "too_many_bows:wind_glove",
+    "cataclysm:sticky_gloves",
+    "cataclysm:blazing_grips",
+    "cataclysm:chitin_claw"
+  ]
+}

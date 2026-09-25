@@ -1,0 +1,18 @@
+{
+  "structures": [
+    {
+      "structure": "irons_spellbooks:ancient_battleground",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 65,
+    "separation": 35,
+    "salt": 7182946,
+    "exclusion_zone": {
+      "other_set": "minecraft:villages",
+      "chunk_count": 16
+    }
+  }
+}

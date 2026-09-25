@@ -1,0 +1,15 @@
+{
+  "name": "elyrium:boundary_wall/sea",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "elyrium:boundary_wall/wall_sea_gateway",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

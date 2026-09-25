@@ -1,0 +1,170 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:heart_of_the_sea",
+          "functions": [
+            {
+              "function": "minecraft:set_name",
+              "target": "item_name",
+              "name": {
+                "text": "Grand Void Key: F5 Outpost",
+                "color": "gold",
+                "bold": true
+              }
+            },
+            {
+              "function": "minecraft:set_lore",
+              "mode": "replace_all",
+              "lore": [
+                {
+                  "text": "Symbol of victory over Warlord Brandor.",
+                  "color": "yellow",
+                  "italic": false
+                },
+                {
+                  "text": "Activates the Teleport Gate Platform in Hub F5!",
+                  "color": "light_purple",
+                  "italic": false
+                }
+              ]
+            },
+            {
+              "function": "minecraft:set_custom_data",
+              "tag": "{\"aincrad_teleport_key\":\"hub_f5\",\"aincrad_tier\":2}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "min": 3,
+        "max": 6
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_ingot",
+          "functions": [
+            {
+              "function": "minecraft:set_name",
+              "target": "item_name",
+              "name": {
+                "text": "Master Whetstone (T2)",
+                "color": "blue",
+                "bold": true
+              }
+            },
+            {
+              "function": "minecraft:set_lore",
+              "mode": "replace_all",
+              "lore": [
+                {
+                  "text": "Refined abrasive stone for T2 iron gear sharpening (+1..+3).",
+                  "color": "gray",
+                  "italic": false
+                }
+              ]
+            },
+            {
+              "function": "minecraft:set_custom_data",
+              "tag": "{\"aincrad_upgrade_mat\":\"whetstone_t2\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_axe",
+          "functions": [
+            {
+              "function": "minecraft:set_name",
+              "target": "item_name",
+              "name": {
+                "text": "Brandor Bonecrusher Hammer",
+                "color": "red",
+                "bold": true
+              }
+            },
+            {
+              "function": "minecraft:set_lore",
+              "mode": "replace_all",
+              "lore": [
+                {
+                  "text": "Trophy warhammer of Warlord Brandor.",
+                  "color": "dark_red",
+                  "italic": false
+                },
+                {
+                  "text": "Tier 2 (Iron Era). Attack Damage: 9.5.",
+                  "color": "gray",
+                  "italic": false
+                },
+                {
+                  "text": "Passive: 15% chance to stun enemy for 1.5s.",
+                  "color": "yellow",
+                  "italic": false
+                }
+              ]
+            },
+            {
+              "function": "minecraft:set_custom_data",
+              "tag": "{\"aincrad_unique_weapon\":\"brandor_hammer\",\"weapon_type\":\"bettercombat:hammer\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:enchanted_book",
+          "functions": [
+            {
+              "function": "minecraft:set_name",
+              "target": "item_name",
+              "name": {
+                "text": "Rune Scroll: Sharpness II",
+                "color": "aqua",
+                "bold": true
+              }
+            },
+            {
+              "function": "minecraft:set_lore",
+              "mode": "replace_all",
+              "lore": [
+                {
+                  "text": "Pure scroll with merge-crafting prohibited.",
+                  "color": "gray",
+                  "italic": false
+                },
+                {
+                  "text": "Directly overwrites Sharpness I on the blade.",
+                  "color": "green",
+                  "italic": false
+                }
+              ]
+            },
+            {
+              "function": "minecraft:set_stored_enchantments",
+              "enchantments": {
+                "minecraft:sharpness": 2
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "structures": [
+    {
+      "structure": "elyrium:boundary_wall_sea",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:concentric_rings",
+    "distance": 125,
+    "spread": 2,
+    "count": 20,
+    "salt": 194828,
+    "preferred_biomes": "#elyrium:biomes/boundary_wall_sea"
+  }
+}

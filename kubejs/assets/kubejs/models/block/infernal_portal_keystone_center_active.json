@@ -1,0 +1,308 @@
+{
+  "parent": "minecraft:block/block",
+  "ambientocclusion": true,
+  "textures": {
+    "particle": "kubejs:block/bone_bastion_stone",
+    "stone": "kubejs:block/bone_bastion_stone",
+    "bone": "kubejs:block/ancient_bone",
+    "horn": "kubejs:block/ancient_horn_active",
+    "eye_s": "kubejs:block/infernal_eye_3b_center",
+    "eye_n": "kubejs:block/infernal_eye_3b_center",
+    "eye_w": "kubejs:block/infernal_eye_3b_center",
+    "eye_e": "kubejs:block/infernal_eye_3b_center"
+  },
+  "elements": [
+    {
+      "name": "arch_block",
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#stone",
+          "cullface": "down"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#stone"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#eye_n"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#eye_s"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#eye_w"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#eye_e"
+        }
+      }
+    },
+    {
+      "name": "central_crown_base",
+      "from": [
+        5,
+        15,
+        4
+      ],
+      "to": [
+        11,
+        21,
+        12
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            5,
+            10,
+            11,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "south": {
+          "uv": [
+            5,
+            10,
+            11,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "west": {
+          "uv": [
+            4,
+            10,
+            12,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "east": {
+          "uv": [
+            4,
+            10,
+            12,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "up": {
+          "uv": [
+            5,
+            4,
+            11,
+            12
+          ],
+          "texture": "#horn"
+        }
+      }
+    },
+    {
+      "name": "central_crown_tip",
+      "from": [
+        6,
+        21,
+        5
+      ],
+      "to": [
+        10,
+        25,
+        11
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            6,
+            7,
+            10,
+            11
+          ],
+          "texture": "#horn"
+        },
+        "south": {
+          "uv": [
+            6,
+            7,
+            10,
+            11
+          ],
+          "texture": "#horn"
+        },
+        "west": {
+          "uv": [
+            5,
+            7,
+            11,
+            11
+          ],
+          "texture": "#horn"
+        },
+        "east": {
+          "uv": [
+            5,
+            7,
+            11,
+            11
+          ],
+          "texture": "#horn"
+        },
+        "up": {
+          "uv": [
+            6,
+            5,
+            10,
+            11
+          ],
+          "texture": "#horn"
+        }
+      }
+    },
+    {
+      "name": "crown_left_wing",
+      "from": [
+        2,
+        15,
+        5
+      ],
+      "to": [
+        5,
+        19,
+        11
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            12,
+            5,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "south": {
+          "uv": [
+            2,
+            12,
+            5,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "west": {
+          "uv": [
+            5,
+            12,
+            11,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "up": {
+          "uv": [
+            2,
+            5,
+            5,
+            11
+          ],
+          "texture": "#horn"
+        }
+      }
+    },
+    {
+      "name": "crown_right_wing",
+      "from": [
+        11,
+        15,
+        5
+      ],
+      "to": [
+        14,
+        19,
+        11
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            11,
+            12,
+            14,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "south": {
+          "uv": [
+            11,
+            12,
+            14,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "east": {
+          "uv": [
+            5,
+            12,
+            11,
+            16
+          ],
+          "texture": "#horn"
+        },
+        "up": {
+          "uv": [
+            11,
+            5,
+            14,
+            11
+          ],
+          "texture": "#horn"
+        }
+      }
+    }
+  ]
+}

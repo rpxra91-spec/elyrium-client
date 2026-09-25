@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "#elyrium:biomes/temperate_plains",
+    "#elyrium:biomes/temperate_forests",
+    "#elyrium:biomes/alpine_and_peaks",
+    "#elyrium:biomes/boreal_and_taiga",
+    "#elyrium:biomes/savanna_and_scrubland",
+    "#elyrium:biomes/snowy_and_icy",
+    "#elyrium:biomes/swamp_and_decay",
+    "minecraft:plains",
+    "minecraft:forest",
+    "minecraft:birch_forest",
+    "minecraft:meadow",
+    "minecraft:flower_forest"
+  ]
+}

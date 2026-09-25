@@ -1,0 +1,18 @@
+[
+  {"version":1},
+  {"ingredient":{"id":"minecolonies:spear"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecolonies:pirate_hat"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecolonies:firearrow"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecolonies:pharaoscepter"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecolonies:iron_scimitar"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecolonies:chiefsword"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecolonies:blockminecoloniesrack"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"mctradepost:wish_shelter"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"mctradepost:wish_gathering_cow"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"mctradepost:advanced_clipboard"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecolonies:clipboard"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"mctradepost:icecream"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecraft:leather"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecraft:spruce_fence"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecraft:dark_oak_fence"},"type":"item_stack","bookmarkType":"INGREDIENT"}
+]

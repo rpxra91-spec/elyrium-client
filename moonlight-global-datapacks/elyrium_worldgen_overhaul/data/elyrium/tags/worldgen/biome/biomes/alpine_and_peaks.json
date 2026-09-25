@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:jagged_peaks",
+    "minecraft:stony_peaks",
+    "minecraft:windswept_hills",
+    "minecraft:windswept_gravelly_hills",
+    "regions_unexplored:arid_mountains",
+    "regions_unexplored:icy_heights",
+    "regions_unexplored:mountains",
+    "regions_unexplored:rocky_meadow",
+    "regions_unexplored:towering_cliffs"
+  ]
+}

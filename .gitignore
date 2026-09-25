@@ -1,0 +1,29 @@
+# Temporary & debug
+.mixin.out/
+debug/
+downloads/
+dynamic-resource-pack-cache/
+local/
+mods_disabled/
+observable_announce*
+command_history.txt
+patch_client.bat
+update_temp.zip
+*.log
+*.tmp
+*.bak
+
+# User files
+options.txt
+servers.dat*
+saves/
+screenshots/
+logs/
+crash-reports/
+usercache.json
+usernamecache.json
+XaeroWaypoints*/
+xaero/
+.patch_temp*/
+CustomSkinLoader/
+resourcepacks/*.zip

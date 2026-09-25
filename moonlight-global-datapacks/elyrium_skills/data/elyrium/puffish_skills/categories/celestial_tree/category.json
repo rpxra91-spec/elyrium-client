@@ -1,0 +1,31 @@
+{
+  "unlocked_by_default": true,
+  "title": "Созвездия Элириума",
+  "icon": {
+    "type": "texture",
+    "data": {
+      "texture": "elyrium:textures/skills/keystone.png"
+    }
+  },
+  "background": "textures/gui/advancements/backgrounds/stone.png",
+  "colors": {
+    "connections": {
+      "locked": {
+        "fill": "#3a3a44",
+        "stroke": "#1e1e24"
+      },
+      "available": {
+        "fill": "#4da6ff",
+        "stroke": "#1a75ff"
+      },
+      "affordable": {
+        "fill": "#33dd88",
+        "stroke": "#119944"
+      },
+      "unlocked": {
+        "fill": "#ffcc00",
+        "stroke": "#ee9900"
+      }
+    }
+  }
+}

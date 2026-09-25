@@ -1,0 +1,6 @@
+[
+  {"version":2},
+  {"ingredient":{"id":"relics:hunting_belt","components":{"relics:data":{"abilities":{"abilities":{"slots":{"points":0,"stats":{"amount":{"initialQuality":3}},"lock":{"breaks":5}},"pack":{"points":0,"stats":{"resistance_per_pet":{"initialQuality":5},"pet_radius":{"initialQuality":8},"damage_modifier":{},"revival_cost":{"initialQuality":6}},"lock":{"breaks":5}}},"synergies":{}},"leveling":{},"statistic":{"metrics":{"retention_time":{"value":2.0}}}}}},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecraft:charcoal"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"cataclysm:ring_of_grudged"},"type":"item_stack","bookmarkType":"INGREDIENT"}
+]

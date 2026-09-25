@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#elyrium:biomes/ocean_and_deep_waters",
+    "#elyrium:biomes/coastal_and_shores",
+    "minecraft:river",
+    "minecraft:frozen_river",
+    "minecraft:ocean",
+    "minecraft:deep_ocean"
+  ]
+}

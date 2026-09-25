@@ -1,0 +1,365 @@
+{
+	autofocus_id: "1001000000000001"
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "minecolonies"
+	group: ""
+	icon: {
+		components: {
+			"ftbquests:missing_item": "minecolonies:supplycampplacer"
+		}
+		id: "ftbquests:missing_item"
+	}
+	id: "1001000000000000"
+	order_index: 0
+	progression_mode: "flexible"
+	quest_links: [ ]
+	quests: [
+		{
+			id: "1001000000000001"
+			rewards: [
+				{
+					id: "1001000000000011"
+					type: "xp"
+					xp: 50
+				}
+				{
+					count: 16
+					id: "1001000000000012"
+					item: {
+						count: 16
+						id: "minecraft:bread"
+					}
+					type: "item"
+				}
+				{
+					id: "1001000000000013"
+					item: {
+						count: 1
+						id: "structurize:sceptergold"
+					}
+					type: "item"
+				}
+			]
+			shape: "gear"
+			size: 2.0d
+			tasks: [{
+				id: "1001000000000021"
+				item: { components: { "ftbquests:missing_item": "minecolonies:supplycampplacer" }, count: 1, id: "ftbquests:missing_item" }
+				type: "item"
+			}]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1001000000000001"]
+			id: "1001000000000002"
+			rewards: [
+				{
+					id: "1001000000000014"
+					type: "xp"
+					xp: 100
+				}
+				{
+					count: 32
+					id: "1001000000000015"
+					item: {
+						count: 32
+						id: "minecraft:torch"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "1001000000000016"
+					item: {
+						count: 8
+						id: "minecraft:cooked_beef"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.5d
+			tasks: [{
+				id: "1001000000000022"
+				item: { count: 1, id: "minecolonies:blockhuttownhall" }
+				type: "item"
+			}]
+			x: 2.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1001000000000002"]
+			id: "1001000000000003"
+			rewards: [
+				{
+					id: "1001000000000017"
+					type: "xp"
+					xp: 100
+				}
+				{
+					count: 64
+					id: "1001000000000018"
+					item: {
+						count: 64
+						id: "minecraft:cobblestone"
+					}
+					type: "item"
+				}
+				{
+					count: 64
+					id: "1001000000000019"
+					item: {
+						count: 64
+						id: "minecraft:oak_planks"
+					}
+					type: "item"
+				}
+			]
+			shape: "square"
+			size: 1.2d
+			tasks: [{
+				id: "1001000000000023"
+				item: { count: 1, id: "minecolonies:blockhutbuilder" }
+				type: "item"
+			}]
+			x: 4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1001000000000003"]
+			id: "1001000000000004"
+			rewards: [
+				{
+					id: "1001000000000020"
+					type: "xp"
+					xp: 75
+				}
+				{
+					count: 4
+					id: "1001000000000024"
+					item: {
+						count: 4
+						id: "minecraft:red_bed"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [{
+				id: "1001000000000025"
+				item: { count: 1, id: "minecolonies:blockhutcitizen" }
+				type: "item"
+			}]
+			x: 6.5d
+			y: -1.5d
+		}
+		{
+			dependencies: ["1001000000000003"]
+			id: "1001000000000005"
+			rewards: [
+				{
+					id: "1001000000000026"
+					type: "xp"
+					xp: 150
+				}
+				{
+					count: 8
+					id: "1001000000000027"
+					item: {
+						count: 8
+						id: "minecraft:chest"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "1001000000000028"
+					item: { count: 1, id: "minecolonies:blockhutwarehouse" }
+					type: "item"
+				}
+				{
+					id: "1001000000000029"
+					item: { count: 1, id: "minecolonies:blockhutdeliveryman" }
+					type: "item"
+				}
+			]
+			x: 6.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1001000000000003"]
+			id: "1001000000000006"
+			rewards: [
+				{
+					id: "1001000000000030"
+					type: "xp"
+					xp: 120
+				}
+				{
+					id: "1001000000000031"
+					item: {
+						count: 1
+						id: "minecraft:iron_chestplate"
+					}
+					type: "item"
+				}
+				{
+					id: "1001000000000032"
+					item: {
+						count: 1
+						id: "minecraft:bow"
+					}
+					type: "item"
+				}
+				{
+					count: 64
+					id: "1001000000000033"
+					item: {
+						count: 64
+						id: "minecraft:arrow"
+					}
+					type: "item"
+				}
+			]
+			shape: "shield"
+			size: 1.1d
+			tasks: [{
+				id: "1001000000000034"
+				item: { count: 1, id: "minecolonies:blockhutguardtower" }
+				type: "item"
+			}]
+			x: 6.5d
+			y: 1.5d
+		}
+		{
+			dependencies: ["1001000000000005"]
+			id: "1001000000000007"
+			rewards: [
+				{
+					id: "1001000000000035"
+					type: "xp"
+					xp: 100
+				}
+				{
+					count: 2
+					id: "1001000000000036"
+					item: {
+						count: 2
+						id: "minecraft:iron_pickaxe"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "1001000000000037"
+					item: {
+						count: 2
+						id: "minecraft:iron_axe"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "1001000000000038"
+					item: { count: 1, id: "minecolonies:blockhutlumberjack" }
+					type: "item"
+				}
+				{
+					id: "1001000000000039"
+					item: { count: 1, id: "minecolonies:blockhutminer" }
+					type: "item"
+				}
+			]
+			x: 8.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1001000000000005"]
+			id: "1001000000000008"
+			rewards: [
+				{
+					id: "1001000000000040"
+					type: "xp"
+					xp: 100
+				}
+				{
+					count: 16
+					id: "1001000000000041"
+					item: {
+						count: 16
+						id: "minecraft:baked_potato"
+					}
+					type: "item"
+				}
+				{
+					count: 16
+					id: "1001000000000042"
+					item: {
+						count: 16
+						id: "minecraft:golden_carrot"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [{
+				id: "1001000000000043"
+				item: { count: 1, id: "minecolonies:blockhutfarmer" }
+				type: "item"
+			}]
+			x: 8.5d
+			y: -1.5d
+		}
+		{
+			dependencies: [
+				"1001000000000007"
+				"1001000000000006"
+			]
+			id: "1001000000000009"
+			rewards: [
+				{
+					id: "1001000000000044"
+					type: "xp"
+					xp: 250
+				}
+				{
+					count: 4
+					id: "1001000000000045"
+					item: {
+						count: 4
+						id: "minecraft:book"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "1001000000000046"
+					item: {
+						count: 4
+						id: "minecraft:gold_ingot"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.4d
+			tasks: [{
+				id: "1001000000000047"
+				item: { count: 1, id: "minecolonies:blockhutuniversity" }
+				type: "item"
+			}]
+			x: 10.5d
+			y: 0.0d
+		}
+	]
+}

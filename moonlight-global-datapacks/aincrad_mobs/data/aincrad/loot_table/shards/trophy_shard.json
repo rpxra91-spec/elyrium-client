@@ -1,0 +1,45 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:amethyst_shard",
+          "functions": [
+            {
+              "function": "minecraft:set_name",
+              "target": "item_name",
+              "name": {
+                "text": "Осколок Охоты (Trophy Shard)",
+                "color": "gold",
+                "bold": true
+              }
+            },
+            {
+              "function": "minecraft:set_lore",
+              "mode": "replace_all",
+              "lore": [
+                {
+                  "text": "Трофей победы над Полевым Боссом открытого мира.",
+                  "color": "gray",
+                  "italic": false
+                },
+                {
+                  "text": "Часть триады ключей призыва Мал Гароса на Y = -90",
+                  "color": "dark_purple",
+                  "italic": false
+                }
+              ]
+            },
+            {
+              "function": "minecraft:set_custom_data",
+              "tag": "{\"aincrad_ritual_key\":\"trophy_shard\",\"tier\":1}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

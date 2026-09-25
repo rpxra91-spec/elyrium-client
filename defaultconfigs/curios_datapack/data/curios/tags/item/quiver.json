@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "relics:arrow_quiver",
+    "eternal_starlight:galactic_quiver",
+    "l2backpack:quiver",
+    "minecraft:arrow",
+    "minecraft:spectral_arrow",
+    "minecraft:tipped_arrow"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "cataclysm:abandoned_spire",
+      "weight": 1
+    },
+    {
+      "structure": "cataclysm:abandoned_temple",
+      "weight": 1
+    },
+    {
+      "structure": "cataclysm:abandoned_village",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "cataclysm:cataclysm_random_spread",
+    "spacing": 55,
+    "separation": 35,
+    "salt": 3819275
+  }
+}

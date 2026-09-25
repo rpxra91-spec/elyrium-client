@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=south": {
+      "model": "kubejs:block/infernal_anvil"
+    },
+    "facing=west": {
+      "model": "kubejs:block/infernal_anvil",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "kubejs:block/infernal_anvil",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "kubejs:block/infernal_anvil",
+      "y": 270
+    }
+  }
+}

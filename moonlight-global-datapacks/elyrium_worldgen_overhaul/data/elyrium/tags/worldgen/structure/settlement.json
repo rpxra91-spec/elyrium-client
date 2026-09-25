@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:village",
+    "dungeons_arise:bandit_village",
+    "dungeons_arise:mushroom_village",
+    "cataclysm:abandoned_village",
+    "cataclysm:desert_occupied_village"
+  ]
+}

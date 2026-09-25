@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:beach",
+    "minecraft:snowy_beach",
+    "minecraft:stony_shore",
+    "minecraft:river",
+    "minecraft:frozen_river",
+    "regions_unexplored:chalk_cliffs",
+    "regions_unexplored:grassy_beach",
+    "regions_unexplored:gravel_beach",
+    "regions_unexplored:cold_river",
+    "regions_unexplored:muddy_river",
+    "regions_unexplored:tropical_river"
+  ]
+}

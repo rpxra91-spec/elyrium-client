@@ -1,0 +1,45 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:amethyst_shard",
+          "functions": [
+            {
+              "function": "minecraft:set_name",
+              "target": "item_name",
+              "name": {
+                "text": "Осколок Осады (Siege Shard)",
+                "color": "red",
+                "bold": true
+              }
+            },
+            {
+              "function": "minecraft:set_lore",
+              "mode": "replace_all",
+              "lore": [
+                {
+                  "text": "Снят с павшего Командира укрепленного Лагеря Варбанды.",
+                  "color": "gray",
+                  "italic": false
+                },
+                {
+                  "text": "Часть триады ключей призыва Мал Гароса на Y = -90",
+                  "color": "dark_purple",
+                  "italic": false
+                }
+              ]
+            },
+            {
+              "function": "minecraft:set_custom_data",
+              "tag": "{\"aincrad_ritual_key\":\"siege_shard\",\"tier\":1}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

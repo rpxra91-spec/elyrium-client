@@ -1,0 +1,566 @@
+{
+  "parent": "minecraft:block/block",
+  "ambientocclusion": true,
+  "textures": {
+    "particle": "kubejs:block/bone_bastion_stone",
+    "stone": "kubejs:block/bone_bastion_stone",
+    "bone": "kubejs:block/ancient_bone",
+    "seal": "kubejs:block/corner_seal_dormant"
+  },
+  "elements": [
+    {
+      "name": "solid_base",
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#stone",
+          "cullface": "down"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#stone"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#seal",
+          "cullface": "north"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#seal",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#stone",
+          "cullface": "west"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#stone",
+          "cullface": "east"
+        }
+      }
+    },
+    {
+      "name": "claw_nw_root",
+      "from": [
+        1,
+        14,
+        1
+      ],
+      "to": [
+        5,
+        19,
+        5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            10,
+            5,
+            15
+          ],
+          "texture": "#bone"
+        },
+        "west": {
+          "uv": [
+            1,
+            10,
+            5,
+            15
+          ],
+          "texture": "#bone"
+        },
+        "east": {
+          "uv": [
+            1,
+            10,
+            5,
+            15
+          ],
+          "texture": "#bone"
+        },
+        "south": {
+          "uv": [
+            1,
+            10,
+            5,
+            15
+          ],
+          "texture": "#bone"
+        }
+      }
+    },
+    {
+      "name": "claw_nw_tip",
+      "from": [
+        2,
+        18,
+        2
+      ],
+      "to": [
+        5,
+        24,
+        5
+      ],
+      "rotation": {
+        "angle": 22.5,
+        "axis": "z",
+        "origin": [
+          2,
+          18,
+          2
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            2,
+            2,
+            5,
+            5
+          ],
+          "texture": "#bone"
+        },
+        "north": {
+          "uv": [
+            2,
+            4,
+            5,
+            10
+          ],
+          "texture": "#bone"
+        },
+        "west": {
+          "uv": [
+            2,
+            4,
+            5,
+            10
+          ],
+          "texture": "#bone"
+        },
+        "east": {
+          "uv": [
+            2,
+            4,
+            5,
+            10
+          ],
+          "texture": "#bone"
+        },
+        "south": {
+          "uv": [
+            2,
+            4,
+            5,
+            10
+          ],
+          "texture": "#bone"
+        }
+      }
+    },
+    {
+      "name": "claw_ne_root",
+      "from": [
+        11,
+        14,
+        1
+      ],
+      "to": [
+        15,
+        19,
+        5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            11,
+            10,
+            15,
+            15
+          ],
+          "texture": "#bone"
+        },
+        "east": {
+          "uv": [
+            1,
+            10,
+            5,
+            15
+          ],
+          "texture": "#bone"
+        },
+        "west": {
+          "uv": [
+            1,
+            10,
+            5,
+            15
+          ],
+          "texture": "#bone"
+        },
+        "south": {
+          "uv": [
+            11,
+            10,
+            15,
+            15
+          ],
+          "texture": "#bone"
+        }
+      }
+    },
+    {
+      "name": "claw_ne_tip",
+      "from": [
+        11,
+        18,
+        2
+      ],
+      "to": [
+        14,
+        24,
+        5
+      ],
+      "rotation": {
+        "angle": -22.5,
+        "axis": "z",
+        "origin": [
+          14,
+          18,
+          2
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            11,
+            2,
+            14,
+            5
+          ],
+          "texture": "#bone"
+        },
+        "north": {
+          "uv": [
+            11,
+            4,
+            14,
+            10
+          ],
+          "texture": "#bone"
+        },
+        "east": {
+          "uv": [
+            2,
+            4,
+            5,
+            10
+          ],
+          "texture": "#bone"
+        },
+        "west": {
+          "uv": [
+            2,
+            4,
+            5,
+            10
+          ],
+          "texture": "#bone"
+        },
+        "south": {
+          "uv": [
+            11,
+            4,
+            14,
+            10
+          ],
+          "texture": "#bone"
+        }
+      }
+    },
+    {
+      "name": "claw_sw_root",
+      "from": [
+        1,
+        14,
+        11
+      ],
+      "to": [
+        5,
+        19,
+        15
+      ],
+      "faces": {
+        "south": {
+          "uv": [
+            1,
+            10,
+            5,
+            15
+          ],
+          "texture": "#bone"
+        },
+        "west": {
+          "uv": [
+            11,
+            10,
+            15,
+            15
+          ],
+          "texture": "#bone"
+        },
+        "east": {
+          "uv": [
+            11,
+            10,
+            15,
+            15
+          ],
+          "texture": "#bone"
+        },
+        "north": {
+          "uv": [
+            1,
+            10,
+            5,
+            15
+          ],
+          "texture": "#bone"
+        }
+      }
+    },
+    {
+      "name": "claw_sw_tip",
+      "from": [
+        2,
+        18,
+        11
+      ],
+      "to": [
+        5,
+        24,
+        14
+      ],
+      "rotation": {
+        "angle": 22.5,
+        "axis": "z",
+        "origin": [
+          2,
+          18,
+          14
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            2,
+            11,
+            5,
+            14
+          ],
+          "texture": "#bone"
+        },
+        "south": {
+          "uv": [
+            2,
+            4,
+            5,
+            10
+          ],
+          "texture": "#bone"
+        },
+        "west": {
+          "uv": [
+            2,
+            4,
+            5,
+            10
+          ],
+          "texture": "#bone"
+        },
+        "east": {
+          "uv": [
+            2,
+            4,
+            5,
+            10
+          ],
+          "texture": "#bone"
+        },
+        "north": {
+          "uv": [
+            2,
+            4,
+            5,
+            10
+          ],
+          "texture": "#bone"
+        }
+      }
+    },
+    {
+      "name": "claw_se_root",
+      "from": [
+        11,
+        14,
+        11
+      ],
+      "to": [
+        15,
+        19,
+        15
+      ],
+      "faces": {
+        "south": {
+          "uv": [
+            11,
+            10,
+            15,
+            15
+          ],
+          "texture": "#bone"
+        },
+        "east": {
+          "uv": [
+            11,
+            10,
+            15,
+            15
+          ],
+          "texture": "#bone"
+        },
+        "west": {
+          "uv": [
+            11,
+            10,
+            15,
+            15
+          ],
+          "texture": "#bone"
+        },
+        "north": {
+          "uv": [
+            11,
+            10,
+            15,
+            15
+          ],
+          "texture": "#bone"
+        }
+      }
+    },
+    {
+      "name": "claw_se_tip",
+      "from": [
+        11,
+        18,
+        11
+      ],
+      "to": [
+        14,
+        24,
+        14
+      ],
+      "rotation": {
+        "angle": -22.5,
+        "axis": "z",
+        "origin": [
+          14,
+          18,
+          14
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            11,
+            11,
+            14,
+            14
+          ],
+          "texture": "#bone"
+        },
+        "south": {
+          "uv": [
+            11,
+            4,
+            14,
+            10
+          ],
+          "texture": "#bone"
+        },
+        "east": {
+          "uv": [
+            2,
+            4,
+            5,
+            10
+          ],
+          "texture": "#bone"
+        },
+        "west": {
+          "uv": [
+            2,
+            4,
+            5,
+            10
+          ],
+          "texture": "#bone"
+        },
+        "north": {
+          "uv": [
+            11,
+            4,
+            14,
+            10
+          ],
+          "texture": "#bone"
+        }
+      }
+    }
+  ]
+}

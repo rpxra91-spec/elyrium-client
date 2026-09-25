@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#curios:rings",
+    "cataclysm:ring_of_grudged",
+    "too_many_bows:stormbound_signet",
+    "too_many_bows:sharpshot_ring"
+  ]
+}

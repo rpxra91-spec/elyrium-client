@@ -1,0 +1,9 @@
+{
+    "parent": "bettercombat:hammer",
+    "attributes": {
+        "range_bonus": 0.9,
+        "category": "hammer",
+        "two_handed": true,
+        "upswing_rate": 0.8
+    }
+}

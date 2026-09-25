@@ -1,0 +1,15 @@
+[
+  {"version":1},
+  {"ingredient":{"id":"minecraft:stone"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecraft:sugar_cane"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecraft:paper"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"handcrafted:dark_oak_cupboard"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"handcrafted:bamboo_fancy_bed"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"handcrafted:crimson_nightstand"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"apothic_enchanting:treasure_shelf"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"handcrafted:jungle_fancy_bed"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"handcrafted:pink_cushion"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"handcrafted:crimson_fancy_bed"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"storagedrawers:controller"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecraft:diorite"},"type":"item_stack","bookmarkType":"INGREDIENT"}
+]
