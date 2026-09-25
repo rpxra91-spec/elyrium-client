@@ -1,0 +1,38 @@
+filename = 'CustomSkinLoader_Universal-14.28.jar'
+name = 'CustomSkinLoader'
+side = ''
+x-prismlauncher-dependencies = []
+x-prismlauncher-loaders = [ 'neoforge', 'forge' ]
+x-prismlauncher-mc-versions = [
+    '1.20.2',
+    '1.20.3',
+    '1.20.4',
+    '1.20.5',
+    '1.20.6',
+    '1.21',
+    '1.21.1',
+    '1.21.2',
+    '1.21.3',
+    '1.21.4',
+    '1.21.5',
+    '1.21.6',
+    '1.21.7',
+    '1.21.8',
+    '1.21.9',
+    '1.21.10',
+    '1.21.11',
+    '26.1',
+    '26.1.1'
+]
+x-prismlauncher-release-type = 'release'
+x-prismlauncher-version-number = 'CustomSkinLoader_Universal_14.28'
+
+[download]
+hash = 'b2d9bf46f3d672e2bef26a8e6de55401a7c0818e'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 7823407
+project-id = 286924

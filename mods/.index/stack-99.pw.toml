@@ -1,0 +1,18 @@
+filename = 'stackisb-1.0.0.jar'
+name = 'Stack 99'
+side = 'server'
+x-prismlauncher-dependencies = []
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+x-prismlauncher-version-number = 'stackisb-1.0.0.jar'
+
+[download]
+hash = '31d695954b179ef5e1a9259e16d88f9ad7684e01'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 8045765
+project-id = 1535043

@@ -1,0 +1,21 @@
+filename = '[Neoforge]ctov-3.6.3.jar'
+name = "ChoiceTheorem's Overhauled Village"
+side = ''
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+x-prismlauncher-version-number = '[Neoforge]CTOV-v3.6.3'
+
+[download]
+hash = 'c5fe733d743af20f84eb87dd75b5bb57684f3e05'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 7788733
+project-id = 623908
+
+[[x-prismlauncher-dependencies]]
+addonId = '936015'
+type = 'REQUIRED'

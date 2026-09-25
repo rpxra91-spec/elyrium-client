@@ -1,0 +1,21 @@
+filename = 'structurize-1.0.831-1.21.1-snapshot.jar'
+name = 'Structurize'
+side = 'server'
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21', '1.21.1' ]
+x-prismlauncher-release-type = 'beta'
+x-prismlauncher-version-number = 'structurize-1.0.831-1.21.1-snapshot.jar'
+
+[download]
+hash = '8f8d48e24bbe40385ded00972137c748ffbc29d0'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 8171741
+project-id = 298744
+
+[[x-prismlauncher-dependencies]]
+addonId = '522992'
+type = 'REQUIRED'

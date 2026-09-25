@@ -1,0 +1,18 @@
+filename = 'warehouseworkshop-01.00.007.jar'
+name = 'Warehouse Workshop - A MineColonies Add-On'
+side = 'server'
+x-prismlauncher-dependencies = []
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+x-prismlauncher-version-number = 'warehouseworkshop-01.00.007.jar'
+
+[download]
+hash = 'c1ae9ee4e0a0190f567095aed963001275dd23f3'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 8238647
+project-id = 1506343

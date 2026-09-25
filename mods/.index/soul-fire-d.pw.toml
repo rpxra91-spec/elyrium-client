@@ -1,0 +1,25 @@
+filename = 'soul-fire-d-neoforge-1.21-6.1.0.jar'
+name = "Soul fire'd"
+side = 'server'
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21', '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+x-prismlauncher-version-number = "[NeoForge - 1.21] Soul Fire'd v6.1.0"
+
+[download]
+hash = '877002a5aa386f9011ebc4eb3360a7647ac359d9'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 7364962
+project-id = 662413
+
+[[x-prismlauncher-dependencies]]
+addonId = '1365195'
+type = 'REQUIRED'
+
+[[x-prismlauncher-dependencies]]
+addonId = '968456'
+type = 'REQUIRED'

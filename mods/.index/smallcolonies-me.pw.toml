@@ -1,0 +1,41 @@
+filename = 'smallcoloniesme 1.21.1 v1.9.jar'
+name = 'SmallColonies ME for Minecolonies'
+side = 'server'
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+x-prismlauncher-version-number = 'smallcoloniesme 1.21.1 v1.9.jar'
+
+[download]
+hash = '28de82aefd7d3444a5e83347a82447504d56afa2'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 8045900
+project-id = 1247027
+
+[[x-prismlauncher-dependencies]]
+addonId = '245506'
+type = 'REQUIRED'
+
+[[x-prismlauncher-dependencies]]
+addonId = '527361'
+type = 'REQUIRED'
+
+[[x-prismlauncher-dependencies]]
+addonId = '298744'
+type = 'REQUIRED'
+
+[[x-prismlauncher-dependencies]]
+addonId = '538214'
+type = 'REQUIRED'
+
+[[x-prismlauncher-dependencies]]
+addonId = '633252'
+type = 'REQUIRED'
+
+[[x-prismlauncher-dependencies]]
+addonId = '896746'
+type = 'REQUIRED'

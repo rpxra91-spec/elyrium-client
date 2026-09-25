@@ -1,0 +1,21 @@
+filename = 'hearthguard-neoforge-1.21.1-1.1.1.jar'
+name = 'Mobs Fear CampFire – HearthGuard'
+side = 'server'
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+x-prismlauncher-version-number = 'HearthGuard 1.21.1-1.1.1 (NeoForge)'
+
+[download]
+hash = '2d92f955fbbfd09b1160973e72efa4eedd4c1c24'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 8046053
+project-id = 1483098
+
+[[x-prismlauncher-dependencies]]
+addonId = '348521'
+type = 'OPTIONAL'

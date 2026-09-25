@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-25T13:03:26.741327+00:00",
+  "generated_at": "2026-09-25T22:19:29.366338+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -1884,6 +1884,96 @@
       "path": "config/waystones-common.toml",
       "sha256": "70bb3d8676061c2a29ae97d746e4c45c2bb2604ffbcc43364d1860c22ed1e72b",
       "size": 6236
+    },
+    {
+      "path": "config/xaero/lib/client.cfg",
+      "sha256": "43ed9dbfa5b4d6f0f3d2e8c2ced17ad298164b22c68ff11d415257a39b074336",
+      "size": 26
+    },
+    {
+      "path": "config/xaero/lib/common.cfg",
+      "sha256": "98f698d96a6d21d830a455b4ad045b70516fa63c298021742d8499e7f0366cd2",
+      "size": 236
+    },
+    {
+      "path": "config/xaero/lib/profiles/default.cfg",
+      "sha256": "34ae854b17d896d7cb853bdc28c27231a3947e91cb9f0991f372846ee3c2a907",
+      "size": 121
+    },
+    {
+      "path": "config/xaero/lib/server_profiles/default.cfg",
+      "sha256": "d438aea41ca41e93697e059f523686935c0add482f6abe96b532bbf10c6ed80a",
+      "size": 75
+    },
+    {
+      "path": "config/xaero/minimap/client.cfg",
+      "sha256": "c0915eff5d1a7905cd1038d646eb9086fd1a29e2f637d53535e4da161de17b9f",
+      "size": 235
+    },
+    {
+      "path": "config/xaero/minimap/common.cfg",
+      "sha256": "2b49df024c03a369c62a303c72755e7fedeb4f4653ff53a12fd37bd83ccd4ed0",
+      "size": 147
+    },
+    {
+      "path": "config/xaero/minimap/default_radar_categories_client.json",
+      "sha256": "3c888b22cba252e8f0a974f8c1604bc05109affbf4354ad3b16e71778c4b9774",
+      "size": 5531
+    },
+    {
+      "path": "config/xaero/minimap/default_radar_categories_server.json",
+      "sha256": "a4c652cafa7dea324e5f5cf3b1df46a84e54b6d4f877195857bce55a559c1cfd",
+      "size": 4597
+    },
+    {
+      "path": "config/xaero/minimap/profiles/default.cfg",
+      "sha256": "8c6e6459ec729198799d9d1e49bce48eeffca7549e9b05c69c5b9c2e6d2d8dfc",
+      "size": 3747
+    },
+    {
+      "path": "config/xaero/minimap/profiles/entity_radar_categories/default.cfg.json",
+      "sha256": "76239797bf685ce3eca8189781511516c2b9676465aabb34e708cdfbe5a404a1",
+      "size": 5531
+    },
+    {
+      "path": "config/xaero/minimap/profiles/info_display_config/default.cfg.txt",
+      "sha256": "095b827da778cba902b3051470829c5eeb4fbef25777a64114acacba76b1bcd5",
+      "size": 683
+    },
+    {
+      "path": "config/xaero/minimap/server_profiles/default.cfg",
+      "sha256": "d438aea41ca41e93697e059f523686935c0add482f6abe96b532bbf10c6ed80a",
+      "size": 75
+    },
+    {
+      "path": "config/xaero/world-map/client.cfg",
+      "sha256": "bde8aa2b904df9be59cafb72453df8eaa34eac231b0a6b543260219dc8c07f90",
+      "size": 468
+    },
+    {
+      "path": "config/xaero/world-map/common.cfg",
+      "sha256": "0c229eb0daf85bd09af51f21eeeb99497a3bd50a825d5ab1ca695fb21bf6cf9d",
+      "size": 141
+    },
+    {
+      "path": "config/xaero/world-map/profiles/default.cfg",
+      "sha256": "7b24c882801bcc7f0a8aedc625d419f661fa490fa0e9d5ebe39599a1ce2dcbd5",
+      "size": 1379
+    },
+    {
+      "path": "config/xaero/world-map/server_profiles/default.cfg",
+      "sha256": "d438aea41ca41e93697e059f523686935c0add482f6abe96b532bbf10c6ed80a",
+      "size": 75
+    },
+    {
+      "path": "config/xaerohud.txt",
+      "sha256": "aa28ac5dd0c973057676236130e17e1dc6648724f9ba2da8bcbdd26d5f9b0aee",
+      "size": 123
+    },
+    {
+      "path": "config/xaeropatreon.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
     },
     {
       "path": "config/xmxw.json",
@@ -7646,6 +7736,11 @@
       "size": 5964
     },
     {
+      "path": "kubejs/server_scripts/03_combat/elyrium_forge_api.js",
+      "sha256": "9e555b86d2a56342b9c23cc38a6b9d3bbf61e456d0fd1ffdddbb4f2d9c5c5b98",
+      "size": 17831
+    },
+    {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_engine.js",
       "sha256": "2da06630c781b226347377b2ec815c6aee0778285a4737f49360af6d1b8bb6a6",
       "size": 28881
@@ -9391,6 +9486,21 @@
       "size": 274363
     },
     {
+      "path": "mods/xaerominimap-neoforge-1.21.1-26.1.0.jar",
+      "sha256": "6bd6cbab01ff57b9ba2fbfee18f9605593101f15d80e8d19dc59c385d2535ccc",
+      "size": 2138254
+    },
+    {
+      "path": "mods/xaeros_waystones_compatibility-NeoForge-1.21.1-2.1.0.jar",
+      "sha256": "fcd0a18f5f5940b31353ee70ddb0194cf1cd9565a8bfc9557c93804e34422b89",
+      "size": 7308
+    },
+    {
+      "path": "mods/xaeroworldmap-neoforge-1.21.1-1.41.0.jar",
+      "sha256": "b3e377b11d277cfbc0ccdd91a6fb6bc1ff4e93b354eb9c0277e1e4446c316ccb",
+      "size": 1386888
+    },
+    {
       "path": "mods/yet_another_config_lib_v3-3.8.2+1.21.1-neoforge.jar",
       "sha256": "b5c30321b46cfaa521645a04aff89d2804d8167a25bb23ad4b1ae8da73093a2f",
       "size": 1118651
@@ -10509,6 +10619,11 @@
       "path": "resourcepacks/SKD_Russian_Pack/assets/wetbackpacks.jar/lang/ru_ru.json",
       "sha256": "56bff6335817d064299fe61984200eed32fbc8063202746d654c9f9441a450db",
       "size": 54
+    },
+    {
+      "path": "resourcepacks/SKD_Russian_Pack/assets/xaeroworldmap/lang/ru_ru.json",
+      "sha256": "ec8e75bcb718c90dd6ab5efc76c4d649503038637bb2643f32ef20b419de7400",
+      "size": 26894
     },
     {
       "path": "resourcepacks/SKD_Russian_Pack/pack.mcmeta",

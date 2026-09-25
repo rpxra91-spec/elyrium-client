@@ -1,0 +1,18 @@
+filename = 'greenhousegardener-01.01.008.jar'
+name = 'Greenhouse Gardener - A MineColonies Add-On'
+side = 'server'
+x-prismlauncher-dependencies = []
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+x-prismlauncher-version-number = 'greenhousegardener-01.01.008.jar'
+
+[download]
+hash = '464009bb7657253e79946c23a7baff41bacf8601'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 8238664
+project-id = 1535902

@@ -1,0 +1,21 @@
+filename = 'prometheus-neoforge-1.21-1.2.5.jar'
+name = 'Prometheus'
+side = 'server'
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21', '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+x-prismlauncher-version-number = '[NeoForge - 1.21] Prometheus v1.2.5'
+
+[download]
+hash = 'c4ef1020569a1dfc5bb161221449d7cf13b597cb'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 7364871
+project-id = 1365195
+
+[[x-prismlauncher-dependencies]]
+addonId = '968456'
+type = 'REQUIRED'

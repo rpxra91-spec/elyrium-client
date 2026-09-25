@@ -1,0 +1,25 @@
+filename = 'deep_aether-1.21.1-1.1.5.1.jar'
+name = 'Deep Aether'
+side = ''
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+x-prismlauncher-version-number = 'deep_aether-1.21.1-1.1.5.1.jar'
+
+[download]
+hash = '2cffdb08d7cb068186cf0fe766fd937425889af1'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 7843283
+project-id = 852465
+
+[[x-prismlauncher-dependencies]]
+addonId = '255308'
+type = 'REQUIRED'
+
+[[x-prismlauncher-dependencies]]
+addonId = '867237'
+type = 'OPTIONAL'

@@ -1,0 +1,25 @@
+filename = 'divinerpg-1.10.9.3.jar'
+name = 'DivineRPG (Official)'
+side = 'server'
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+x-prismlauncher-version-number = 'DivineRPG - 1.10.9.3 Server Hotfix'
+
+[download]
+hash = 'd6c0b4efe607d81f389095eb37cc459fd5b4f939'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 7371103
+project-id = 363543
+
+[[x-prismlauncher-dependencies]]
+addonId = '280510'
+type = 'OPTIONAL'
+
+[[x-prismlauncher-dependencies]]
+addonId = '807162'
+type = 'OPTIONAL'

@@ -1,0 +1,25 @@
+filename = 'wda_questline-1.21.1-1.0.0.jar'
+name = 'When Dungeons Arise Questline'
+side = 'server'
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+x-prismlauncher-version-number = 'wda_questline-1.21.1-1.0.0.jar'
+
+[download]
+hash = '608bdf114da0eb5c64380bfa09dcbaf4d79ce2a2'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 6958326
+project-id = 1340230
+
+[[x-prismlauncher-dependencies]]
+addonId = '442508'
+type = 'REQUIRED'
+
+[[x-prismlauncher-dependencies]]
+addonId = '289412'
+type = 'REQUIRED'
