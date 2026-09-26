@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-26T16:39:34.066124+00:00",
+  "generated_at": "2026-09-26T17:07:11.991629+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -5976,6 +5976,16 @@
       "size": 423
     },
     {
+      "path": "kubejs/assets/simplestats/lang/en_us.json",
+      "sha256": "5b4301e497e794cbc8dfbb0da7ca129118b19ebd2410151cb7c45baff8f0bda3",
+      "size": 1325
+    },
+    {
+      "path": "kubejs/assets/simplestats/lang/ru_ru.json",
+      "sha256": "102a69badd07b4407f50c9013adc34f8779a4a8c64b7dde28d541c70a7cc6494",
+      "size": 2511
+    },
+    {
       "path": "kubejs/assets/simplestats/textures/screens/stats_bg.png",
       "sha256": "232a345a0a958b89264f415701dc2f216026aca1649eb28b26f523054ee21f8c",
       "size": 1507
@@ -7902,8 +7912,8 @@
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/rpg_unified_leveling.js",
-      "sha256": "9c6e998e306722230cfb85ff30ed68c620ff48e76f925d28dcd96ada897eb79b",
-      "size": 7971
+      "sha256": "26ce0b1c5de196a376d897d1989e6966acdaf05aeb02458f42c7ce82f3c4385b",
+      "size": 8706
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/skill_abilities_engine.js",
@@ -9467,8 +9477,8 @@
     },
     {
       "path": "mods/simplestats-1.0.4.jar",
-      "sha256": "56d139a03d86fe0cc27dee90f5baac0da2cacad28fc8da63f21934176f3e99e0",
-      "size": 93315
+      "sha256": "e96a0d387975b01f05b0e0742ef77ee2ac9ca6fea7e51138d5eab3dcf4664623",
+      "size": 93582
     },
     {
       "path": "mods/simplyswords-neoforge-1.63.0-1.21.1.jar",
@@ -10647,8 +10657,8 @@
     },
     {
       "path": "resourcepacks/SKD_Russian_Pack/assets/simplestats/lang/ru_ru.json",
-      "sha256": "c169ab7590367e5a628fa9c9aff73f35fcda162ff1632b8c4aee2fffb3b81f9b",
-      "size": 1020
+      "sha256": "102a69badd07b4407f50c9013adc34f8779a4a8c64b7dde28d541c70a7cc6494",
+      "size": 2511
     },
     {
       "path": "resourcepacks/SKD_Russian_Pack/assets/simplyswords/lang/ru_ru.json",
@@ -12189,6 +12199,11 @@
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/skills/wooden_shovel.png",
       "sha256": "bfc38df86276ca7a51affd8d9373e82c977ebd0608ce5d37855d301774cc17e8",
       "size": 423
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/simplestats/lang/ru_ru.json",
+      "sha256": "102a69badd07b4407f50c9013adc34f8779a4a8c64b7dde28d541c70a7cc6494",
+      "size": 2511
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/simplestats/textures/screens/stats_bg.png",
