@@ -1,67 +1,46 @@
 // ==============================================================================
-// 🔥 ELYRIUM RPG: INFERNAL ANVIL INTERACTIVE GUI ENGINE (v1.3: EXPANDED 4-ROW RPG GUI)
+// 🔥 ELYRIUM RPG: INFERNAL ANVIL & FORGE UI/UX ENGINE (v2.2: PREMIER RPG GUI & QUICK-CYCLE)
 // Minecraft 1.21.1 NeoForge | KubeJS Server Script
 // ==============================================================================
-// Расширенная кузнечная станция (4 ряда / 36 слотов) + Реальный инвентарь игрока:
+// Премиальный эргономичный графический интерфейс древнего Алтаря Преисподней.
+// Полностью отделен от логики расчетов и привязан к глобальному бэкенд-движку
+// global.ElyriumForgeAPI (разработанному Серверным Архитектором).
 //
-// Row 0 (Y=0): ДЕКОРАТИВНЫЙ АРХИТЕКТУРНЫЙ КАРНИЗ ИНФЕРНО
-//   [0,0] Древний Обсидиан | [1..3,0] Огненные Руны | [4,0] 🔥 АЛТАРЬ ПЛАМЕНИ ЭЛИРИУМА | [5..7,0] Огненные Руны | [8,0] Древний Обсидиан
+// Архитектура экрана (4 ряда / 36 слотов верхнего алтаря + 36 слотов инвентаря игрока):
 //
-// Row 1 (Y=1): РАБОЧАЯ ЛИНИЯ АЛТАРЯ КОВКИ
+// Row 0 (Y=0): ИНФЕРНАЛЬНЫЙ КАРНИЗ И СТАТУСНЫЙ МОНИТОР
+//   [0,0] Плачущий Обсидиан | [1..3,0] Лавовые Плиты | [4,0] 👑 АЛТАРЬ ПЕРВОРОДНОГО ПЛАМЕНИ | [5..7,0] Лавовые Плиты | [8,0] Плачущий Обсидиан
+//
+// Row 1 (Y=1): РАБОЧАЯ ЛИНИЯ АЛТАРЯ КОВКИ (СВЯЩЕННЫЕ ПЬЕДЕСТАЛЫ)
 //   [0,1] Базальтовая Колонна
-//   [1,1] СЛОТ 1: ЭКИПИРОВКА (Оружие, Броня, Щит)
-//   [2,1] Индикатор Горна [➔]
-//   [3,1] СЛОТ 2: РЕАГЕНТ (Кузнечные Камни I..V, Скрижали, Шаблоны)
-//   [4,1] Индикатор Синтеза [+]
-//   [5,1] СЛОТ 3: ПЕЧАТЬ ЭГИДЫ (kubejs:smithing_aegis - защита от отката)
-//   [6,1] Индикатор Горнила [➔]
-//   [7,1] СЛОТ 4: ГОТОВЫЙ РЕЗУЛЬТАТ (0 XP, чистый забор)
+//   [1,1] СЛОТ I:   ГОРНИЛО АРТЕФАКТА (Оружие, Броня, Щит)
+//   [2,1] КАНАЛ I:  ПОТОК МАГМЫ [»»»]
+//   [3,1] СЛОТ II:  КАТАЛИЗАТОР ПЛАМЕНИ (Камни I..V, Скрижали, Шаблоны)
+//   [4,1] ЦЕНТР:    ТИГЕЛЬ СИНТЕЗА [✦]
+//   [5,1] СЛОТ III: СВЯТИЛИЩЕ ЭГИДЫ (kubejs:smithing_aegis - защита от отката)
+//   [6,1] КАНАЛ II: СТОК АПОГЕЯ [»»»]
+//   [7,1] СЛОТ IV:  ПЬЕДЕСТАЛ АПОГЕЯ (Готовый артефакт, 0 XP чистый забор)
 //   [8,1] Базальтовая Колонна
 //
-// Row 2 (Y=2): ПАНЕЛЬ УПРАВЛЕНИЯ, ИНДИКАТОРЫ И КУЗНЕЧНЫЙ МОЛОТ
-//   [0,2] 📖 Кодекс и Шансы  | [1,2] 📊 Статус Предмета | [2..3,2] Лавовые Руны
-//   [4,2] 🔨 ГЛАВНЫЙ КУЗНЕЧНЫЙ МОЛОТ КОВКИ (Живой расчет и запуск)
-//   [5..6,2] Лавовые Руны   | [7,2] 🛡 Индикатор Эгиды  | [8,2] ⚡ Авто-поиск камня
+// Row 2 (Y=2): КОМАНДНЫЙ МОСТ И КУЗНЕЧНЫЙ МОЛОТ
+//   [0,2] 📖 Кодекс 11 Тиров  | [1,2] Руна Огня | [2,2] ⚡ Авто-камень | [3,2] Руна Огня
+//   [4,2] 🔨 СЕРДЦЕ КУЗНИ: ВЕЛИКИЙ ИНФЕРНАЛЬНЫЙ МОЛОТ (Расчет шанса и запуск)
+//   [5,2] Руна Огня          | [6,2] 🛡 Авто-Эгида | [7,2] Руна Огня | [8,2] ✖ Выход
 //
-// Row 3 (Y=3): НИЖНИЙ ПЬЕДЕСТАЛ И ВЫХОД
-//   [0..3,3] Теневой Базальт | [4,3] ✖ Безопасный Выход | [5..8,3] Теневой Базальт
+// Row 3 (Y=3): НИЖНИЙ ПЬЕДЕСТАЛ И СЕРВИС
+//   [0..3,3] Полированный Базальт | [4,3] 🔄 Очистить Алтарь | [5..8,3] Полированный Базальт
 //
 // + ИНТЕЛЛЕКТУАЛЬНЫЙ 1-КЛИК РОУТИНГ (gui.inventoryClicked):
-//   Клик по предмету в инвентаре снизу мгновенно маршрутизирует его в нужный слот!
+//   Клик по предмету в инвентаре снизу моментально маршрутизирует его в нужный слот!
 // ==============================================================================
 
-const INFERNAL_CHANCES = {
-    1: 100.0,
-    2: 50.0,
-    3: 30.0,
-    4: 15.0,
-    5: 10.0,
-    6: 6.0,
-    7: 3.5,
-    8: 1.8,
-    9: 0.8,
-    10: 0.3
-};
-
-const INFERNAL_REQUIRED_STONES = {
-    1: 'kubejs:smithing_stone_1',
-    2: 'kubejs:smithing_stone_1',
-    3: 'kubejs:smithing_stone_2',
-    4: 'kubejs:smithing_stone_2',
-    5: 'kubejs:smithing_stone_3',
-    6: 'kubejs:smithing_stone_3',
-    7: 'kubejs:smithing_stone_4',
-    8: 'kubejs:smithing_stone_4',
-    9: 'kubejs:smithing_stone_5',
-    10: 'kubejs:smithing_stone_5'
-};
-
-const INFERNAL_STONE_NAMES = {
-    'kubejs:smithing_stone_1': '§7Кузнечный Камень I (+1..+2)',
-    'kubejs:smithing_stone_2': '§aКузнечный Камень II (+3..+4)',
-    'kubejs:smithing_stone_3': '§9Кузнечный Камень III (+5..+6)',
-    'kubejs:smithing_stone_4': '§5Кузнечный Камень IV (+7..+8)',
-    'kubejs:smithing_stone_5': '§6Кузнечный Камень V (+9..+10)'
+// Таблица названий камней для интерфейсных подсказок
+const STONE_DISPLAY_NAMES = {
+    'kubejs:smithing_stone_1': '§bКузнечный Камень I (Пепельный / +1..+3)',
+    'kubejs:smithing_stone_2': '§dКузнечный Камень II (Небесный / +4..+6)',
+    'kubejs:smithing_stone_3': '§6Кузнечный Камень III (Драконий / +7..+8)',
+    'kubejs:smithing_stone_4': '§5Кузнечный Камень IV (Звездный / +9)',
+    'kubejs:smithing_stone_5': '§c✦ Кузнечный Камень V (Скалк-Бездны / +10)'
 };
 
 // Сессии игроков
@@ -100,7 +79,7 @@ function clearAndRefundSession(player, force) {
 }
 
 // ------------------------------------------------------------------------------
-// ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ПРОВЕРКИ И ТЕГОВ
+// ВСПОМОГАТЕЛЬНЫЕ ПРОВЕРКИ ИНВЕНТАРЯ И ФИЛЬТРЫ
 // ------------------------------------------------------------------------------
 function isAnvilGear(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
@@ -125,261 +104,230 @@ function isValidAnvilReagent(item) {
            id === 'kubejs:tier_upgrade_template';
 }
 
-function getGearReinforce(item) {
-    if (!item || item.isEmpty()) return 0;
-    try {
-        if (item.customData && item.customData.contains('skd_reinforce')) return item.customData.getInt('skd_reinforce');
-        if (item.nbt && item.nbt.contains('skd_reinforce')) return item.nbt.getInt('skd_reinforce');
-    } catch (e) {}
-    try {
-        let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
-        let cd = item.get(DataComponents.CUSTOM_DATA);
-        if (cd) {
-            let tag = cd.copyTag();
-            if (tag && tag.contains('skd_reinforce')) {
-                return tag.getInt('skd_reinforce');
-            }
-        }
-    } catch (e2) {}
-    return 0;
-}
-
-function setGearReinforce(item, lvl) {
-    if (!item || item.isEmpty()) return;
-    let clamped = Math.max(0, Math.min(10, Math.floor(lvl || 0)));
-
-    // 1. Попытка прямой записи в существующий customData
-    try {
-        if (item.customData && typeof item.customData.putInt === 'function') {
-            item.customData.putInt('skd_reinforce', clamped);
-            return;
-        }
-    } catch (e1) {}
-
-    // 2. Гарантированная запись через DataComponents.CUSTOM_DATA (NeoForge 1.21.1)
-    try {
-        let CompoundTag = Java.loadClass('net.minecraft.nbt.CompoundTag');
-        let CustomData = Java.loadClass('net.minecraft.world.item.component.CustomData');
-        let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
-        let tag = null;
-        try {
-            let cd = item.get(DataComponents.CUSTOM_DATA);
-            if (cd) tag = cd.copyTag();
-        } catch (e2) {}
-        if (!tag) tag = new CompoundTag();
-        tag.putInt('skd_reinforce', clamped);
-        item.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
-    } catch (err) {
-        console.error('[InfernalAnvil] Error setting reinforce tag: ' + err);
+// Генератор стилизованного прогресс-бара шанса
+function createProgressBar(percent) {
+    let totalBars = 10;
+    let filled = Math.max(0, Math.min(totalBars, Math.round((percent / 100) * totalBars)));
+    let barStr = '';
+    for (let i = 0; i < totalBars; i++) {
+        if (i < filled) barStr += '■';
+        else barStr += '□';
     }
+    return barStr;
 }
 
-function updateGearNameBadge(item, lvl) {
-    if (!item || item.isEmpty()) return;
-    try {
-        let currentName = '';
-        try {
-            if (item.hoverName) currentName = '' + item.hoverName.getString();
-            else if (item.displayName) currentName = '' + item.displayName.getString();
-        } catch (eName) {}
+// ------------------------------------------------------------------------------
+// ВИЗУАЛИЗАЦИЯ СЛОТОВ АЛТАРЯ КОВКИ
+// ------------------------------------------------------------------------------
 
-        let baseName = currentName
-            .replace(/\[\+\d+\]/g, '')
-            .replace(/★/g, '')
-            .replace(/👑/g, '')
-            .replace(/✦/g, '')
-            .replace(/\s+/g, ' ')
-            .trim();
-
-        let finalComp;
-        if (lvl <= 0) {
-            finalComp = Text.of(baseName);
-        } else {
-            let badge = '';
-            if (lvl <= 3) badge = `§b[+${lvl}]`;
-            else if (lvl <= 6) badge = `§d[+${lvl}]`;
-            else if (lvl <= 8) badge = `§6★ [+${lvl}] ★`;
-            else badge = `§c✦ §6👑 [+${lvl}] §c✦`;
-
-            finalComp = Text.of(`${baseName} ${badge}`);
-        }
-
-        // 1. Установка через DataComponents.CUSTOM_NAME (нативный 1.21.1)
-        try {
-            let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
-            item.set(DataComponents.CUSTOM_NAME, finalComp);
-            return;
-        } catch (e1) {}
-
-        // 2. KubeJS fallback
-        try {
-            item.customName = finalComp;
-        } catch (e2) {}
-    } catch (e) {
-        console.error('[InfernalAnvil] Error updating gear badge: ' + e);
-    }
-}
-
+// СЛОТ I: ЭКИПИРОВКА
 function getSlot1Item(session) {
     if (session.equipment && !session.equipment.isEmpty()) {
         return session.equipment;
     }
-    return Item.of('minecraft:light_blue_stained_glass_pane')
-        .withCustomName(Text.aqua('✦ [ СЛОТ I: ЭКИПИРОВКА ]'))
+    return Item.of('minecraft:netherite_upgrade_smithing_template')
+        .withCustomName(Text.of('§b✦ [ ГОРНИЛО АРТЕФАКТА ] ✦'))
         .withLore([
-            Text.gray('Оружие, элемент брони или щит для ковки.'),
-            Text.darkGray('──────────────────────────'),
-            Text.green('▶ Нажмите на предмет в вашем инвентаре снизу,'),
-            Text.green('   чтобы мгновенно перенести его сюда!'),
-            Text.yellow('▶ Или кликните сюда для авто-подбора из руки.')
+            Text.of('§7Установите оружие, элемент брони или боевой щит.'),
+            Text.of('§8────────────────────────────────'),
+            Text.of('§a▶ Нажмите на предмет в сумке снизу,'),
+            Text.of('   §aчтобы мгновенно перенести его в Горнило!'),
+            Text.of('§e▶ Или кликните сюда для подбора из руки.')
         ]);
 }
 
+// СЛОТ II: РЕАГЕНТ (КАТАЛИЗАТОР)
 function getSlot2Item(session) {
     if (session.reagent && !session.reagent.isEmpty()) {
         return session.reagent;
     }
-    return Item.of('minecraft:orange_stained_glass_pane')
-        .withCustomName(Text.gold('✦ [ СЛОТ II: КУЗНЕЧНЫЙ КАМЕНЬ ]'))
-        .withLore([
-            Text.gray('Кузнечный Камень (I..V), Скрижаль или Шаблон.'),
-            Text.darkGray('──────────────────────────'),
-            Text.green('▶ Нажмите на камень в инвентаре снизу,'),
-            Text.green('   чтобы мгновенно зарядить наковальню!'),
-            Text.yellow('▶ Или кликните сюда для авто-поиска камня.')
-        ]);
+
+    let evalData = null;
+    if (global.ElyriumForgeAPI && session.equipment && !session.equipment.isEmpty()) {
+        try {
+            evalData = global.ElyriumForgeAPI.evaluate(session.equipment, null, session.aegis);
+        } catch (e) {}
+    }
+
+    let lore = [
+        Text.of('§7Кузнечный Камень (I..V), Скрижаль или Шаблон.'),
+        Text.of('§8────────────────────────────────')
+    ];
+
+    if (evalData && evalData.requiredReagentId) {
+        let reqName = STONE_DISPLAY_NAMES[evalData.requiredReagentId] || evalData.requiredReagentId;
+        lore.push(Text.of('§eДля текущего предмета требуется:'));
+        lore.push(Text.of(`§6➔ ${reqName}`));
+        lore.push(Text.of('§8────────────────────────────────'));
+    }
+
+    lore.push(Text.of('§a▶ Кликните камень в сумке снизу для установки!'));
+    lore.push(Text.of('§e▶ Или нажмите [⚡ Авто-камень] на панели управления.'));
+
+    return Item.of('minecraft:blaze_powder')
+        .withCustomName(Text.of('§6✦ [ КАТАЛИЗАТОР ПЛАМЕНИ ] ✦'))
+        .withLore(lore);
 }
 
+// СЛОТ III: ПЕЧАТЬ ЭГИДЫ
 function getSlot3Item(session) {
     if (session.aegis && !session.aegis.isEmpty()) {
         return session.aegis;
     }
-    return Item.of('minecraft:purple_stained_glass_pane')
-        .withCustomName(Text.darkPurple('✦ [ СЛОТ III: ПЕЧАТЬ ЭГИДЫ ]'))
-        .withLore([
-            Text.gray('Печать Кузнечной Эгиды (kubejs:smithing_aegis).'),
-            Text.darkGray('──────────────────────────'),
-            Text.gold('• Полностью защищает предмет от отката при неудаче!'),
-            Text.green('▶ Кликните Печать в инвентаре снизу для установки.'),
-            Text.darkGray('(Не требуется для безопасных уровней +0..+2)')
-        ]);
+
+    let curLvl = 0;
+    if (global.ElyriumForgeAPI && session.equipment && !session.equipment.isEmpty()) {
+        try {
+            curLvl = global.ElyriumForgeAPI.getReinforceLevel(session.equipment);
+        } catch (e) {}
+    }
+
+    let title = '§d✦ [ СВЯТИЛИЩЕ ЭГИДЫ ] ✦';
+    let lore = [];
+
+    if (!session.equipment || session.equipment.isEmpty()) {
+        lore.push(Text.of('§7Печать Кузнечной Эгиды (§fkubejs:smithing_aegis§7).'));
+        lore.push(Text.of('§8────────────────────────────────'));
+        lore.push(Text.of('§6• Полностью защищает предмет от отката при неудаче!'));
+        lore.push(Text.of('§8(Не требуется для безопасных уровней +0..+2)'));
+        lore.push(Text.of('§a▶ Кликните Печать в сумке снизу для установки.'));
+    } else if (curLvl < 3) {
+        title = '§a🛡 [ БЕЗОПАСНАЯ ЗОНА: ЗАТЕМНЕНО ]';
+        lore.push(Text.of(`§7Текущая закалка предмета: §b+${curLvl}`));
+        lore.push(Text.of('§a✓ Закалка до +3 гарантированно безопасна!'));
+        lore.push(Text.of('§7Откат уровня невозможен даже при неудаче.'));
+        lore.push(Text.of('§8Печать Эгиды здесь не требуется и не будет потрачена.'));
+    } else {
+        title = '§c⚠️ [ ТРЕБУЕТСЯ ЗАЩИТА ЭГИДЫ! ]';
+        lore.push(Text.of(`§7Текущая закалка предмета: §e+${curLvl} §c(ЗОНА РИСКА)`));
+        lore.push(Text.of('§4✖ ВНИМАНИЕ! Неудача приведет к откату на -1 уровень!'));
+        lore.push(Text.of('§8────────────────────────────────'));
+        lore.push(Text.of('§6• Установите Печать Эгиды для 100% спасения от отката.'));
+        lore.push(Text.of('§a▶ Кликните Печать в сумке или [🛡 Авто-Эгида].'));
+    }
+
+    return Item.of('minecraft:shield')
+        .withCustomName(Text.of(title))
+        .withLore(lore);
 }
 
+// СЛОТ IV: ГОТОВЫЙ РЕЗУЛЬТАТ
 function getSlot4Item(session) {
     if (session.result && !session.result.isEmpty()) {
         return session.result;
     }
-    return Item.of('minecraft:lime_stained_glass_pane')
-        .withCustomName(Text.green('✦ [ СЛОТ IV: ГОТОВЫЙ РЕЗУЛЬТАТ ]'))
+    return Item.of('minecraft:gold_nugget')
+        .withCustomName(Text.of('§e✦ [ ПЬЕДЕСТАЛ АПОГЕЯ ] ✦'))
         .withLore([
-            Text.gray('Здесь появится готовый предмет после удара молотом.'),
-            Text.darkGray('──────────────────────────'),
-            Text.green('✓ 0 XP / 100% безопасный забор предмета в 1 клик.')
+            Text.of('§7Здесь появится готовый артефакт после удара молотом.'),
+            Text.of('§8────────────────────────────────'),
+            Text.of('§a✓ 0 XP / 100% безопасный забор предмета в 1 клик.')
         ]);
 }
 
-function getHammerData(session) {
-    let buttonItem = Item.of('minecraft:anvil');
-    let buttonName = '§7[ 🔨 КУЗНЕЧНЫЙ МОЛОТ НЕ АКТИВЕН ]';
+// ДИНАМИЧЕСКИЙ РАСЧЕТ И ВИЗУАЛИЗАЦИЯ КУЗНЕЧНОГО МОЛОТА
+function getHammerDisplayData(session) {
+    let buttonItem = Item.of('minecraft:iron_bars');
+    let buttonName = '§7[ 🔨 КУЗНЕЧНЫЙ МОЛОТ ОСТЫЛ ]';
     let buttonLore = [];
-    let canForge = false;
-    let forgeActionType = null;
-    let calcChance = 0;
-    let nextLvl = 0;
-    let hasAegisInstalled = (session.aegis && !session.aegis.isEmpty() && session.aegis.id === 'kubejs:smithing_aegis');
+    let evalData = null;
+
+    if (global.ElyriumForgeAPI) {
+        try {
+            evalData = global.ElyriumForgeAPI.evaluate(session.equipment, session.reagent, session.aegis);
+        } catch (e) {
+            console.error('[InfernalAnvil] Error calling ElyriumForgeAPI.evaluate: ' + e);
+        }
+    }
 
     if (!session.equipment || session.equipment.isEmpty()) {
-        buttonItem = Item.of('minecraft:iron_bars');
-        buttonLore.push(Text.red('❌ Установите экипировку в Слот I!'));
-        buttonLore.push(Text.gray('Оружие, броня или щит.'));
-        buttonLore.push(Text.yellow('Кликните предмет в сумке снизу для быстрой установки.'));
-    } else if (!session.reagent || session.reagent.isEmpty()) {
-        buttonItem = Item.of('minecraft:iron_bars');
-        buttonName = '§e[ 🔨 ТРЕБУЕТСЯ РЕАГЕНТ ДЛЯ КОВКИ ]';
-        buttonLore.push(Text.gold(`Предмет: §f${session.equipment.hoverName.getString()}`));
-        buttonLore.push(Text.red('❌ Поместите реагент в Слот II!'));
-        let curLvl = getGearReinforce(session.equipment);
-        if (curLvl < 10) {
-            let reqStone = INFERNAL_REQUIRED_STONES[curLvl + 1];
-            buttonLore.push(Text.yellow(`Требуется: §f${INFERNAL_STONE_NAMES[reqStone] || reqStone}`));
-            buttonLore.push(Text.gray('Кликните камень в сумке или нажмите авто-поиск.'));
-        }
-    } else {
-        let rId = session.reagent.id;
-        let curLvl = getGearReinforce(session.equipment);
+        buttonLore.push(Text.of('§c❌ Установите экипировку в Слот I!'));
+        buttonLore.push(Text.of('§7Оружие, элемент доспеха или щит.'));
+        buttonLore.push(Text.of('§e▶ Кликните вещь в сумке снизу для быстрой установки.'));
+        return { item: buttonItem.withCustomName(Text.of(buttonName)).withLore(buttonLore), canForge: false, evalData: null };
+    }
 
-        if (rId.startsWith('kubejs:smithing_stone_')) {
-            if (curLvl >= 10) {
-                buttonItem = Item.of('minecraft:nether_star');
-                buttonName = '§6👑 [ АПОГЕЙ БОГОВ ДОСТИГНУТ ]';
-                buttonLore.push(Text.green('Этот предмет уже имеет максимальную заточку (+10)!'));
-            } else {
-                nextLvl = curLvl + 1;
-                let reqStone = INFERNAL_REQUIRED_STONES[nextLvl];
-                if (rId !== reqStone) {
-                    buttonItem = Item.of('minecraft:barrier');
-                    buttonName = '§c✖ НЕПОДХОДЯЩИЙ КАМЕНЬ ЗАТОЧКИ';
-                    buttonLore.push(Text.red(`Для заточки с +${curLvl} на +${nextLvl} требуется:`));
-                    buttonLore.push(Text.yellow(`➔ ${INFERNAL_STONE_NAMES[reqStone] || reqStone}`));
-                    buttonLore.push(Text.gray(`В слоте установлен: ${session.reagent.hoverName.getString()}`));
-                    buttonLore.push(Text.yellow('Замените камень в Слоте II.'));
-                } else {
-                    canForge = true;
-                    forgeActionType = 'REINFORCE';
-                    calcChance = INFERNAL_CHANCES[nextLvl] || 0.3;
-                    buttonItem = Item.of('minecraft:anvil').enchant('minecraft:unbreaking', 1);
-                    buttonName = '§a[ 🔨 ВЫКОВАТЬ В АДСКОМ ПЛАМЕНИ ]';
-                    buttonLore.push(Text.gold(`Предмет: §f${session.equipment.hoverName.getString()}`));
-                    buttonLore.push(Text.gold(`Заточка: §b+${curLvl} §7➔ §a+${nextLvl}`));
-                    buttonLore.push(Text.white(`Шанс успеха: §e${calcChance}%`));
-                    if (curLvl < 3) {
-                        buttonLore.push(Text.green('✓ Безопасная зона (+0..+2): откат невозможен'));
-                    } else if (hasAegisInstalled) {
-                        buttonLore.push(Text.gold('🛡 Защита: Печать установлена! (Откат будет поглощен)'));
-                    } else {
-                        buttonLore.push(Text.red(`⚠ Внимание: риск отката до +${curLvl - 1} при неудаче!`));
-                        buttonLore.push(Text.gray('(Установите Печать в Слот III для защиты)'));
-                    }
-                    buttonLore.push(Text.darkGray('──────────────────────────'));
-                    buttonLore.push(Text.yellow('▶ Нажмите ЛКМ, чтобы ударить молотом!'));
-                }
-            }
-        } else if (rId.startsWith('kubejs:martial_tablet_')) {
-            canForge = true;
-            forgeActionType = 'MARTIAL_TABLET';
-            buttonItem = Item.of('minecraft:enchanted_book');
-            buttonName = '§6[ ⚔ ИНКРУСТИРОВАТЬ БОЕВОЕ ИСКУССТВО ]';
-            buttonLore.push(Text.gold(`Скрижаль: §f${session.reagent.hoverName.getString()}`));
-            buttonLore.push(Text.green('Шанс инкрустации: 100%'));
-            buttonLore.push(Text.yellow('▶ Нажмите ЛКМ для гравировки!'));
-        } else if (rId === 'kubejs:tier_upgrade_template') {
-            canForge = true;
-            forgeActionType = 'TIER_TEMPLATE';
-            buttonItem = Item.of('minecraft:smithing_table');
-            buttonName = '§d[ 🌟 ПРЕЕМСТВЕННОСТЬ ТИРОВ ]';
-            buttonLore.push(Text.lightPurple('Перенос заточки на оружие старшего тира'));
-            buttonLore.push(Text.green('Шанс: 100%'));
-            buttonLore.push(Text.yellow('▶ Нажмите ЛКМ для улучшения!'));
+    if (!session.reagent || session.reagent.isEmpty()) {
+        buttonName = '§e[ 🔨 ТРЕБУЕТСЯ КАТАЛИЗАТОР КОВКИ ]';
+        buttonLore.push(Text.of(`§7Предмет: §f${session.equipment.hoverName.getString()}`));
+        buttonLore.push(Text.of('§c❌ Поместите реагент в Слот II!'));
+        if (evalData && evalData.requiredReagentId) {
+            let reqName = STONE_DISPLAY_NAMES[evalData.requiredReagentId] || evalData.requiredReagentId;
+            buttonLore.push(Text.of(`§eТребуется: §f${reqName}`));
+            buttonLore.push(Text.of('§a▶ Кликните камень в сумке или нажмите [⚡ Авто-камень].'));
         }
+        return { item: buttonItem.withCustomName(Text.of(buttonName)).withLore(buttonLore), canForge: false, evalData: evalData };
+    }
+
+    if (!evalData || !evalData.canExecute) {
+        let msg = evalData ? evalData.statusMessage : 'Недопустимая операция';
+        buttonItem = Item.of('minecraft:barrier');
+        buttonName = '§c✖ КОВКА НЕВОЗМОЖНА';
+        buttonLore.push(Text.of(`§7Причина: §e${msg}`));
+        if (evalData && evalData.requiredReagentId) {
+            let reqName = STONE_DISPLAY_NAMES[evalData.requiredReagentId] || evalData.requiredReagentId;
+            buttonLore.push(Text.of(`§eНеобходим: §f${reqName}`));
+        }
+        return { item: buttonItem.withCustomName(Text.of(buttonName)).withLore(buttonLore), canForge: false, evalData: evalData };
+    }
+
+    // Операция готова к исполнению!
+    if (evalData.actionType === 'REINFORCE') {
+        buttonItem = Item.of('minecraft:anvil').enchant('minecraft:unbreaking', 1);
+        buttonName = '§c🔥 [ УДАРИТЬ В АДСКОМ ПЛАМЕНИ ] 🔥';
+
+        let pBar = createProgressBar(evalData.chancePercent);
+        buttonLore.push(Text.of('§6✦ ══════════════════════════════ ✦'));
+        buttonLore.push(Text.of(`§eПредмет: §f${session.equipment.hoverName.getString()}`));
+        buttonLore.push(Text.of(`§eПрогресс закалки: §b+${evalData.currentLevel} §7➔ §a+${evalData.targetLevel}`));
+        buttonLore.push(Text.of(`§eВероятность успеха: §a${evalData.chancePercent}%`));
+        buttonLore.push(Text.of(`§7Шкала удачи: §6[§a${pBar}§6] §8(${evalData.chancePercent}%)`));
+        buttonLore.push(Text.of('§6✦ ══════════════════════════════ ✦'));
+
+        if (evalData.isSafeZone) {
+            buttonLore.push(Text.of('§a✓ Безопасная зона (+0..+2): откат уровня невозможен!'));
+        } else if (evalData.hasAegis) {
+            buttonLore.push(Text.of('§6🛡 ЗАЩИТА АКТИВНА: Печать Эгиды защитит от отката!'));
+        } else {
+            buttonLore.push(Text.of(`§4⚠ ОПАСНОСТЬ: При неудаче откат до +${evalData.currentLevel - 1}!`));
+            buttonLore.push(Text.of('§8(Установите Печать в Слот III для 100% защиты)'));
+        }
+
+        buttonLore.push(Text.of('§8────────────────────────────────'));
+        buttonLore.push(Text.of('§e▶ Нажмите ЛКМ, чтобы опустить Кузнечный Молот!'));
+    } else if (evalData.actionType === 'MARTIAL_TABLET') {
+        buttonItem = Item.of('minecraft:enchanted_book');
+        buttonName = '§6[ ⚔ ИНКРУСТИРОВАТЬ БОЕВОЕ ИСКУССТВО ]';
+        buttonLore.push(Text.of(`§7Скрижаль: §f${session.reagent.hoverName.getString()}`));
+        buttonLore.push(Text.of('§a✓ Шанс гравировки: 100% (Гарантированно)'));
+        buttonLore.push(Text.of('§8────────────────────────────────'));
+        buttonLore.push(Text.of('§e▶ Нажмите ЛКМ для сокетирования приема!'));
+    } else if (evalData.actionType === 'TIER_TEMPLATE') {
+        buttonItem = Item.of('minecraft:smithing_table');
+        buttonName = '§d[ 🌟 ПРЕЕМСТВЕННОСТЬ ТИРОВ ]';
+        buttonLore.push(Text.of('§7Перенос уровня закалки на экипировку старшего тира.'));
+        buttonLore.push(Text.of('§8────────────────────────────────'));
+        buttonLore.push(Text.of('§e⚠ Проводится в мире через Ритуал Двух Рук:'));
+        buttonLore.push(Text.of('§f  • Новое оружие в правой руке, донор в левой.'));
+        buttonLore.push(Text.of('§f  • Имея Шаблон в инвентаре ➔ нажать Shift + ПКМ.'));
+        buttonLore.push(Text.of('§8────────────────────────────────'));
+        buttonLore.push(Text.of('§7(В Алтаре Горнила доступна закалка одиночных предметов).'));
     }
 
     return {
         item: buttonItem.withCustomName(Text.of(buttonName)).withLore(buttonLore),
-        canForge: canForge,
-        forgeActionType: forgeActionType,
-        calcChance: calcChance,
-        nextLvl: nextLvl,
-        hasAegisInstalled: hasAegisInstalled
+        canForge: true,
+        evalData: evalData
     };
 }
 
+// ------------------------------------------------------------------------------
+// IN-PLACE ОБНОВЛЕНИЕ СЛОТОВ БЕЗ ПЕРЕОТКРЫТИЯ ЭКРАНА (ZERO LAG / ZERO FLICKER)
+// ------------------------------------------------------------------------------
 function refreshInfernalAnvilGUI(player) {
     let session = getOrCreateAnvilSession(player);
     let menu = player.containerMenu;
 
-    // ВАЖНО: Если меню уже открыто, обновляем слоты НА МЕСТЕ без переоткрытия экрана!
-    // Отправка нативных сетевых пакетов исключает сброс мыши в центр экрана,
-    // устраняет лаги синхронизации и исключает необходимость кликать книгу!
     if (menu && menu.data && typeof menu.data.getSlot === 'function') {
         try {
             let data = menu.data;
@@ -387,22 +335,14 @@ function refreshInfernalAnvilGUI(player) {
             let item2 = getSlot2Item(session);
             let item3 = getSlot3Item(session);
             let item4 = getSlot4Item(session);
-            let itemHammer = getHammerData(session).item;
+            let itemHammer = getHammerDisplayData(session).item;
 
-            let s1 = data.getSlot(1, 1);
-            if (s1) s1.setItem(item1);
-
-            let s2 = data.getSlot(3, 1);
-            if (s2) s2.setItem(item2);
-
-            let s3 = data.getSlot(5, 1);
-            if (s3) s3.setItem(item3);
-
-            let s4 = data.getSlot(7, 1);
-            if (s4) s4.setItem(item4);
-
-            let sH = data.getSlot(4, 2);
-            if (sH) sH.setItem(itemHammer);
+            // Обновляем виртуальные слоты в модели меню
+            let s1 = data.getSlot(1, 1); if (s1) s1.setItem(item1);
+            let s2 = data.getSlot(3, 1); if (s2) s2.setItem(item2);
+            let s3 = data.getSlot(5, 1); if (s3) s3.setItem(item3);
+            let s4 = data.getSlot(7, 1); if (s4) s4.setItem(item4);
+            let sH = data.getSlot(4, 2); if (sH) sH.setItem(itemHammer);
 
             let slotEntries = [
                 { idx: 10, item: item1 },
@@ -432,12 +372,8 @@ function refreshInfernalAnvilGUI(player) {
                 }
             }
 
-            try {
-                menu.broadcastFullState();
-            } catch (eB) {}
-            try {
-                if (typeof data.sync === 'function') data.sync();
-            } catch (eS) {}
+            try { menu.broadcastFullState(); } catch (eB) {}
+            try { if (typeof data.sync === 'function') data.sync(); } catch (eS) {}
             return;
         } catch (e) {
             console.error('[InfernalAnvil] In-place refresh error: ' + e);
@@ -449,25 +385,48 @@ function refreshInfernalAnvilGUI(player) {
 }
 
 // ------------------------------------------------------------------------------
-// ГЛАВНЫЙ ИНТЕРФЕЙС GUI АДСКОЙ НАКОВАЛЬНИ (РАСШИРЕННЫЙ 4-РЯДНЫЙ ФОРМАТ)
+// ГЛАВНЫЙ ИНТЕРФЕЙС АЛТАРЯ АДСКОЙ НАКОВАЛЬНИ (ПРЕМИАЛЬНЫЙ 4-РЯДНЫЙ RPG GUI)
 // ------------------------------------------------------------------------------
 function openInfernalAnvilGUI(player) {
     let session = getOrCreateAnvilSession(player);
 
-    // 4 ряда (36 слотов верхнего алтаря + 36 слотов инвентаря игрока)
-    player.openChestGUI(Text.darkRed('🔥 Адская Наковальня Элириума'), 4, gui => {
+    // Открываем экран с эпическим стилизованным заголовком
+    player.openChestGUI(Text.of('🔥 §4§lАДСКИЙ АЛТАРЬ КОВКИ §c✦ §6ЭЛИРИУМ'), 4, gui => {
         gui.playerSlots = true;
 
-        // Базовый фон: Теневой базальт (пропускаем интерактивные слоты, чтобы не блокировать их хэндлеры!)
-        let darkBorder = Item.of('minecraft:black_stained_glass_pane').withCustomName(Text.darkGray(' '));
+        // ======================================================================
+        // ДЕКОРАТИВНЫЙ ИНФЕРНАЛЬНЫЙ ФРЕЙМ (АРХИТЕКТУРА ЗАЛА ОГНЯ)
+        // ======================================================================
+        let darkBasalt = Item.of('minecraft:black_stained_glass_pane').withCustomName(Text.of('§8✦ Инфернальный Базальт ✦'));
+        let lavaRune = Item.of('minecraft:orange_stained_glass_pane').withCustomName(Text.of('§6✦ Руна Неумолимого Пламени ✦'));
+        let cryingObsidian = Item.of('minecraft:crying_obsidian').withCustomName(Text.of('§5✦ Плачущий Окоем Бездны ✦'));
+        let polishedBasalt = Item.of('minecraft:polished_blackstone_brick_slab').withCustomName(Text.of('§7✦ Плита Алтаря Кузни ✦'));
+
+        // Заполняем декоративные клетки, не перетирая интерактивные слоты
         for (let x = 0; x < 9; x++) {
             for (let y = 0; y < 4; y++) {
-                if ((x === 1 && y === 1) || (x === 3 && y === 1) || (x === 5 && y === 1) || (x === 7 && y === 1) ||
-                    (x === 0 && y === 2) || (x === 4 && y === 2) || (x === 8 && y === 2)) {
+                // Пропускаем все рабочие и сервисные слоты
+                if ((y === 1 && (x === 1 || x === 2 || x === 3 || x === 4 || x === 5 || x === 6 || x === 7)) ||
+                    (y === 2 && (x === 0 || x === 2 || x === 4 || x === 6 || x === 8)) ||
+                    (y === 0 && x === 4) ||
+                    (y === 3 && x === 4)) {
                     continue;
                 }
+
+                let decoItem = darkBasalt;
+                if (y === 0) {
+                    if (x === 0 || x === 8) decoItem = cryingObsidian;
+                    else decoItem = lavaRune;
+                } else if (y === 3) {
+                    decoItem = polishedBasalt;
+                } else if (x === 0 || x === 8) {
+                    decoItem = darkBasalt;
+                } else if (y === 2) {
+                    decoItem = lavaRune;
+                }
+
                 gui.slot(x, y, s => {
-                    s.setItem(darkBorder);
+                    s.setItem(decoItem);
                     s.leftClicked = () => {};
                     s.rightClicked = () => {};
                 });
@@ -475,12 +434,30 @@ function openInfernalAnvilGUI(player) {
         }
 
         // ======================================================================
-        // ROW 1 (Y=1): РАБОЧАЯ ЛИНИЯ КОВКИ (ПОДКРАШЕННЫЕ СЛОТЫ 1..4)
+        // ROW 0 (Y=0): ЦЕНТРАЛЬНЫЙ АЛТАРНЫЙ МОНОЛИТ
+        // ======================================================================
+        gui.slot(4, 0, s => {
+            if (typeof s.resetClickHandlers === 'function') s.resetClickHandlers();
+            s.setItem(Item.of('minecraft:lodestone')
+                .withCustomName(Text.of('§6👑 [ АЛТАРЬ ПЕРВОРОДНОГО ПЛАМЕНИ ] 👑'))
+                .withLore([
+                    Text.of('§7Священная наковальня древних титанов Элириума.'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of('§e• Закалка экипировки от +0 до +10 по 11 Тирам.'),
+                    Text.of('§e• Инкрустация скрижалей Боевых Искусств.'),
+                    Text.of('§e• Перенос заточки через Шаблон Преемственности.'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of('§a✓ Затраты опыта: 0 XP (Кузница берет лишь металл).')
+                ]));
+            s.leftClicked = () => {};
+            s.rightClicked = () => {};
+        });
+
+        // ======================================================================
+        // ROW 1 (Y=1): РАБОЧАЯ ЛИНИЯ АЛТАРЯ КОВКИ
         // ======================================================================
 
-        // ----------------------------------------------------------------------
-        // СЛОТ 1 (X=1, Y=1): ЭКИПИРОВКА (Оружие, Броня, Щит) - СВЕТЛО-ГОЛУБОЙ СЛОТ
-        // ----------------------------------------------------------------------
+        // СЛОТ I: ЭКИПИРОВКА (X=1, Y=1)
         gui.slot(1, 1, s => {
             if (typeof s.resetClickHandlers === 'function') s.resetClickHandlers();
             s.setItem(getSlot1Item(session));
@@ -491,7 +468,6 @@ function openInfernalAnvilGUI(player) {
                     sess.equipment = null;
                     player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
                 } else {
-                    // Авто-подбор: сначала главная рука, затем инвентарь
                     let main = player.mainHandItem;
                     if (main && !main.isEmpty() && isAnvilGear(main)) {
                         sess.equipment = main.split(1);
@@ -509,7 +485,7 @@ function openInfernalAnvilGUI(player) {
                             }
                         }
                         if (!found) {
-                            player.tell(Text.yellow('ℹ В инвентаре не найдено экипировки (оружие, броня, щит).'));
+                            player.tell(Text.of('§eℹ В инвентаре не найдено экипировки (оружие, броня, щит).'));
                             player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
                         }
                     }
@@ -522,9 +498,13 @@ function openInfernalAnvilGUI(player) {
             s.shiftRightClicked = clickHandler;
         });
 
-        // ----------------------------------------------------------------------
-        // СЛОТ 2 (X=3, Y=1): РЕАГЕНТ (Камни I..V, Скрижали) - ОРАНЖЕВЫЙ СЛОТ
-        // ----------------------------------------------------------------------
+        // МАГМАТИЧЕСКИЙ КАНАЛ I (X=2, Y=1)
+        gui.slot(2, 1, s => {
+            s.setItem(Item.of('minecraft:blaze_rod').withCustomName(Text.of('§6»»» ПОТОК МАГМЫ »»»')).withLore([Text.of('§7Передача жара Горнила к Катализатору.')]));
+            s.leftClicked = () => {}; s.rightClicked = () => {};
+        });
+
+        // СЛОТ II: КАТАЛИЗАТОР (X=3, Y=1)
         gui.slot(3, 1, s => {
             if (typeof s.resetClickHandlers === 'function') s.resetClickHandlers();
             s.setItem(getSlot2Item(session));
@@ -536,10 +516,13 @@ function openInfernalAnvilGUI(player) {
                     player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
                 } else {
                     let neededStoneId = null;
-                    if (sess.equipment && !sess.equipment.isEmpty()) {
-                        let curLvl = getGearReinforce(sess.equipment);
-                        if (curLvl < 10) neededStoneId = INFERNAL_REQUIRED_STONES[curLvl + 1];
+                    if (global.ElyriumForgeAPI && sess.equipment && !sess.equipment.isEmpty()) {
+                        try {
+                            let ev = global.ElyriumForgeAPI.evaluate(sess.equipment, null, sess.aegis);
+                            if (ev && ev.requiredReagentId) neededStoneId = ev.requiredReagentId;
+                        } catch (e) {}
                     }
+
                     let inv = player.inventory;
                     let found = null;
                     for (let i = 0; i < inv.size; i++) {
@@ -554,10 +537,10 @@ function openInfernalAnvilGUI(player) {
                         player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                     } else {
                         if (neededStoneId) {
-                            let stoneName = INFERNAL_STONE_NAMES[neededStoneId] || neededStoneId;
-                            player.tell(Text.yellow(`ℹ В сумке не найден требуемый ${stoneName}.`));
+                            let stoneName = STONE_DISPLAY_NAMES[neededStoneId] || neededStoneId;
+                            player.tell(Text.of(`§eℹ В сумке не найден требуемый ${stoneName}.`));
                         } else {
-                            player.tell(Text.yellow('ℹ В сумке не найдено подходящих кузнечных камней.'));
+                            player.tell(Text.of('§eℹ В сумке не найдено подходящих кузнечных камней или скрижалей.'));
                         }
                         player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
                     }
@@ -570,9 +553,13 @@ function openInfernalAnvilGUI(player) {
             s.shiftRightClicked = clickHandler;
         });
 
-        // ----------------------------------------------------------------------
-        // СЛОТ 3 (X=5, Y=1): ПЕЧАТЬ ЭГИДЫ - ФИОЛЕТОВЫЙ СЛОТ
-        // ----------------------------------------------------------------------
+        // ЦЕНТРАЛЬНЫЙ ТИГЕЛЬ СИНТЕЗА (X=4, Y=1)
+        gui.slot(4, 1, s => {
+            s.setItem(Item.of('minecraft:fire_charge').withCustomName(Text.of('§c✦ ЯДРО ИНФЕРНО ✦')).withLore([Text.of('§7Точка концентрации первородного огня.')]));
+            s.leftClicked = () => {}; s.rightClicked = () => {};
+        });
+
+        // СЛОТ III: ПЕЧАТЬ ЭГИДЫ (X=5, Y=1)
         gui.slot(5, 1, s => {
             if (typeof s.resetClickHandlers === 'function') s.resetClickHandlers();
             s.setItem(getSlot3Item(session));
@@ -596,7 +583,7 @@ function openInfernalAnvilGUI(player) {
                         sess.aegis = found.split(found.count);
                         player.server.runCommandSilent(`playsound minecraft:item.shield.block player ${player.username} ~ ~ ~ 0.8 1.2`);
                     } else {
-                        player.tell(Text.yellow('ℹ В инвентаре не найдено Печатей Кузнечной Эгиды.'));
+                        player.tell(Text.of('§eℹ В инвентаре не найдено Печатей Кузнечной Эгиды.'));
                         player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
                     }
                 }
@@ -608,13 +595,17 @@ function openInfernalAnvilGUI(player) {
             s.shiftRightClicked = clickHandler;
         });
 
-        // ----------------------------------------------------------------------
-        // СЛОТ 4 (X=7, Y=1): ГОТОВЫЙ РЕЗУЛЬТАТ - ЛАЙМОВЫЙ/ЗЕЛЕНЫЙ СЛОТ
-        // ----------------------------------------------------------------------
+        // МАГМАТИЧЕСКИЙ КАНАЛ II (X=6, Y=1)
+        gui.slot(6, 1, s => {
+            s.setItem(Item.of('minecraft:blaze_rod').withCustomName(Text.of('§6»»» СТОК АПОГЕЯ »»»')).withLore([Text.of('§7Отвод закаленного сплава на пьедестал.')]));
+            s.leftClicked = () => {}; s.rightClicked = () => {};
+        });
+
+        // СЛОТ IV: ГОТОВЫЙ РЕЗУЛЬТАТ (X=7, Y=1)
         gui.slot(7, 1, s => {
             if (typeof s.resetClickHandlers === 'function') s.resetClickHandlers();
             s.setItem(getSlot4Item(session));
-            let clickHandler = () => {
+            let takeHandler = () => {
                 let sess = getOrCreateAnvilSession(player);
                 if (sess.result && !sess.result.isEmpty()) {
                     let res = sess.result;
@@ -624,182 +615,238 @@ function openInfernalAnvilGUI(player) {
                     refreshInfernalAnvilGUI(player);
                 }
             };
-            s.leftClicked = clickHandler;
-            s.rightClicked = clickHandler;
-            s.shiftLeftClicked = clickHandler;
-            s.shiftRightClicked = clickHandler;
+            let rightClickHandler = () => {
+                let sess = getOrCreateAnvilSession(player);
+                if (sess.result && !sess.result.isEmpty()) {
+                    if (!sess.equipment || sess.equipment.isEmpty()) {
+                        sess.equipment = sess.result;
+                        sess.result = null;
+                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                        player.tell(Text.of('§a✦ Предмет возвращен в Горнило для следующей закалки!'));
+                        refreshInfernalAnvilGUI(player);
+                        return;
+                    }
+                    takeHandler();
+                }
+            };
+            s.leftClicked = takeHandler;
+            s.rightClicked = rightClickHandler;
+            s.shiftLeftClicked = takeHandler;
+            s.shiftRightClicked = rightClickHandler;
         });
 
         // ======================================================================
-        // ROW 2 (Y=2): ПАНЕЛЬ УПРАВЛЕНИЯ, ИНДИКАТОРЫ И КУЗНЕЧНЫЙ МОЛОТ
+        // ROW 2 (Y=2): КОМАНДНЫЙ МОСТ И КУЗНЕЧНЫЙ МОЛОТ
         // ======================================================================
 
-        // ----------------------------------------------------------------------
-        // СПРАВКА / КОДЕКС КОВКИ (X=0, Y=2)
-        // ----------------------------------------------------------------------
+        // 📖 КОДЕКС КУЗНИЦЫ 11 ТИРОВ (X=0, Y=2)
         gui.slot(0, 2, s => {
             if (typeof s.resetClickHandlers === 'function') s.resetClickHandlers();
-            s.setItem(Item.of('minecraft:book')
-                .withCustomName(Text.aqua('📖 Кодекс Адской Наковальни'))
+            s.setItem(Item.of('minecraft:enchanted_book')
+                .withCustomName(Text.of('§6📖 [ КОДЕКС КУЗНЕЧНОГО РЕМЕСЛА ]'))
                 .withLore([
-                    Text.gold('✦ ТАБЛИЦА ШАНСОВ ЗАТОЧКИ ✦'),
-                    Text.green('+1: 100% | +2: 50% | +3: 30%'),
-                    Text.yellow('+4: 15% | +5: 10% | +6: 6%'),
-                    Text.gold('+7: 3.5% | +8: 1.8%'),
-                    Text.red('+9: 0.8% | +10: 0.3% (Апогей Богов)'),
-                    Text.darkGray('──────────────────────────'),
-                    Text.green('• +0..+2: Безопасная зона (откат невозможен)'),
-                    Text.red('• С +4: Риск отката на -1 уровень при неудаче'),
-                    Text.gold('• Слот 3: Печать Эгиды полностью спасает от отката!'),
-                    Text.darkGray('──────────────────────────'),
-                    Text.aqua('✦ УМНОЕ УПРАВЛЕНИЕ ✦'),
-                    Text.yellow('• Клик по вещи в сумке ➔ сразу встает в нужный слот!'),
-                    Text.yellow('• Клик по верхнему слоту ➔ возврат в сумку.')
+                    Text.of('§6✦ ТАБЛИЦА ШАНСОВ И 11 ТИРОВ ✦'),
+                    Text.of('§b+1: 100% §7(Камень I: Пепельный)'),
+                    Text.of('§b+2: 50%  §7(Камень I: Пепельный)'),
+                    Text.of('§b+3: 30%  §7(Камень I: Пепельный)'),
+                    Text.of('§d+4: 15%  §7(Камень II: Небесный)'),
+                    Text.of('§d+5: 10%  §7(Камень II: Небесный)'),
+                    Text.of('§d+6: 6%   §7(Камень II: Небесный)'),
+                    Text.of('§6+7: 3.5% §7(Камень III: Драконий)'),
+                    Text.of('§6+8: 1.8% §7(Камень III: Драконий)'),
+                    Text.of('§5+9: 0.8% §7(Камень IV: Звездный)'),
+                    Text.of('§c+10: 0.3% §7(Камень V: Скалк-Бездны)'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of('§a✓ +0..+2: Безопасная зона (откат невозможен).'),
+                    Text.of('§4⚠ С +4: Риск падения на -1 ур. при неудаче!'),
+                    Text.of('§6🛡 Слот III: Печать Эгиды полностью спасает от отката!'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of('§e▶ Клик по вещи в сумке ➔ сразу встает в Слот!')
                 ]));
-            s.leftClicked = () => {};
-            s.rightClicked = () => {};
-            s.shiftLeftClicked = () => {};
-            s.shiftRightClicked = () => {};
+            s.leftClicked = () => {}; s.rightClicked = () => {};
         });
 
-        // ----------------------------------------------------------------------
-        // ЦЕНТРАЛЬНЫЙ КУЗНЕЧНЫЙ МОЛОТ (X=4, Y=2): ДИНАМИЧЕСКИЙ РАСЧЕТ И КОВКА
-        // ----------------------------------------------------------------------
+        // ⚡ АВТО-ПОИСК КАМНЯ (X=2, Y=2)
+        gui.slot(2, 2, s => {
+            if (typeof s.resetClickHandlers === 'function') s.resetClickHandlers();
+            s.setItem(Item.of('minecraft:compass')
+                .withCustomName(Text.of('§e⚡ [ МАГНИТ РЕАГЕНТОВ ]'))
+                .withLore([
+                    Text.of('§7Автоматически сканирует сумку и заряжает'),
+                    Text.of('§7точный кузнечный камень под текущую вещь.'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of('§e▶ Нажмите ЛКМ для авто-зарядки!')
+                ]));
+            let autoLoadStone = () => {
+                let sess = getOrCreateAnvilSession(player);
+                let neededStoneId = null;
+                if (global.ElyriumForgeAPI && sess.equipment && !sess.equipment.isEmpty()) {
+                    try {
+                        let ev = global.ElyriumForgeAPI.evaluate(sess.equipment, null, sess.aegis);
+                        if (ev && ev.requiredReagentId) neededStoneId = ev.requiredReagentId;
+                    } catch (e) {}
+                }
+
+                let inv = player.inventory;
+                let found = null;
+                for (let i = 0; i < inv.size; i++) {
+                    let st = inv.getItem(i);
+                    if (st && !st.isEmpty()) {
+                        if (neededStoneId && st.id === neededStoneId) { found = st; break; }
+                        else if (!neededStoneId && isValidAnvilReagent(st)) { found = st; break; }
+                    }
+                }
+
+                if (found) {
+                    if (sess.reagent && !sess.reagent.isEmpty()) player.give(sess.reagent);
+                    sess.reagent = found.split(found.count);
+                    player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    player.tell(Text.of(`§a✓ Заряжен: ${sess.reagent.hoverName.getString()}`));
+                } else {
+                    player.tell(Text.of('§eℹ В сумке не найдено подходящих кузнечных камней.'));
+                    player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
+                }
+                refreshInfernalAnvilGUI(player);
+            };
+            s.leftClicked = autoLoadStone;
+            s.rightClicked = autoLoadStone;
+        });
+
+        // 🔨 СЕРДЦЕ КУЗНИ: ВЕЛИКИЙ ИНФЕРНАЛЬНЫЙ МОЛОТ (X=4, Y=2)
         gui.slot(4, 2, s => {
             if (typeof s.resetClickHandlers === 'function') s.resetClickHandlers();
-            s.setItem(getHammerData(session).item);
+            let hammerData = getHammerDisplayData(session);
+            s.setItem(hammerData.item);
+
             let forgeClick = () => {
                 let sess = getOrCreateAnvilSession(player);
-                let hData = getHammerData(sess);
-                if (!hData.canForge) {
+                let hData = getHammerDisplayData(sess);
+                if (!hData.canForge || !hData.evalData || !global.ElyriumForgeAPI) {
                     player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.7`);
                     return;
                 }
 
+                let action = hData.evalData.actionType;
                 let bx = player.x, by = player.y, bz = player.z;
 
-                if (hData.forgeActionType === 'REINFORCE') {
-                    sess.reagent.shrink(1);
-                    if (sess.reagent.isEmpty()) sess.reagent = null;
+                if (action === 'REINFORCE') {
+                    // Вызов бэкенда закалки
+                    let result = global.ElyriumForgeAPI.executeForge(player, sess.equipment, sess.reagent, sess.aegis);
 
-                    let roll = Math.random() * 100.0;
-                    let isSuccess = (roll < hData.calcChance);
-                    let targetItem = sess.equipment.copy();
-                    let curLvl = getGearReinforce(targetItem);
-                    let nextLvl = hData.nextLvl;
+                    if (result && result.status !== 'INVALID') {
+                        // Списание реагента
+                        if (result.consumeReagentCount > 0 && sess.reagent) {
+                            sess.reagent.shrink(result.consumeReagentCount);
+                            if (sess.reagent.isEmpty()) sess.reagent = null;
+                        }
 
-                    if (isSuccess) {
-                        setGearReinforce(targetItem, nextLvl);
-                        updateGearNameBadge(targetItem, nextLvl);
-                        sess.result = targetItem;
+                        // Списание эгиды, если она поглотила откат
+                        if (result.consumeAegis && sess.aegis) {
+                            sess.aegis.shrink(1);
+                            if (sess.aegis.isEmpty()) sess.aegis = null;
+                        }
+
+                        // Перемещение готового предмета в Слот IV (Результат)
+                        sess.result = result.resultGear;
                         sess.equipment = null;
 
-                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 1.0 1.2`);
-                        player.server.runCommandSilent(`playsound minecraft:entity.player.levelup player ${player.username} ~ ~ ~ 0.9 1.4`);
-                        player.server.runCommandSilent(`particle minecraft:wax_off ${bx} ${by + 1.2} ${bz} 0.4 0.4 0.4 0.05 30`);
-
-                        if (nextLvl >= 7) {
-                            player.server.runCommandSilent(`playsound minecraft:entity.lightning_bolt.thunder player ${player.username} ~ ~ ~ 1.2 1.0`);
-                            player.server.runCommandSilent(`particle minecraft:totem_of_undying ${bx} ${by + 1.5} ${bz} 0.5 0.5 0.5 0.2 50`);
-                        }
-
-                        if (nextLvl === 10) {
-                            let rawName = targetItem.hoverName.getString();
-                            player.server.runCommandSilent(
-                                `tellraw @a ["",{"text":"👑 [АДСКАЯ КУЗНИЦА] ","color":"gold","bold":true},{"text":"Герой ","color":"yellow"},{"text":"${player.username}","color":"white","bold":true},{"text":" закалил ","color":"yellow"},{"text":"${rawName}","color":"light_purple","bold":true},{"text":" до ","color":"yellow"},{"text":"АПОГЕЯ БОГОВ (+10)","color":"red","bold":true},{"text":"!","color":"gray"}]`
-                            );
-                        }
-
-                        player.tell(Text.green(`★ УСПЕХ ЗАТОЧКИ! ${targetItem.hoverName.getString()} (Шанс: ${hData.calcChance}%)`));
-                    } else {
-                        if (curLvl < 3) {
-                            sess.result = targetItem;
-                            sess.equipment = null;
-                            player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.8 0.7`);
-                            player.server.runCommandSilent(`particle minecraft:smoke ${bx} ${by + 1.1} ${bz} 0.3 0.3 0.3 0.02 20`);
-                            player.tell(Text.red(`✖ Неудача! Камень сгорел. Уровень сохранен (+${curLvl}).`));
-                        } else {
-                            if (hData.hasAegisInstalled) {
-                                sess.aegis.shrink(1);
-                                if (sess.aegis.isEmpty()) sess.aegis = null;
-
-                                sess.result = targetItem;
-                                sess.equipment = null;
-
-                                player.server.runCommandSilent(`playsound minecraft:item.shield.block player ${player.username} ~ ~ ~ 1.0 1.1`);
-                                player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                                player.server.runCommandSilent(`particle minecraft:enchanted_hit ${bx} ${by + 1.2} ${bz} 0.4 0.4 0.4 0.1 35`);
-                                player.tell(Text.gold(`🛡 Печать Эгиды спасла от отката! Уровень сохранен (+${curLvl}). Печать сгорела.`));
-                            } else {
-                                let downLvl = curLvl - 1;
-                                setGearReinforce(targetItem, downLvl);
-                                updateGearNameBadge(targetItem, downLvl);
-                                sess.result = targetItem;
-                                sess.equipment = null;
-
-                                player.server.runCommandSilent(`playsound minecraft:block.anvil.destroy player ${player.username} ~ ~ ~ 1.0 0.8`);
-                                player.server.runCommandSilent(`particle minecraft:large_smoke ${bx} ${by + 1.2} ${bz} 0.4 0.4 0.4 0.05 30`);
-                                player.tell(Text.darkRed(`✖ ПРОВАЛ КОВКИ! Откат: +${curLvl} ➔ +${downLvl}! (Камень сгорел)`));
+                        // Визуальные частицы в зависимости от статуса
+                        if (result.status === 'SUCCESS') {
+                            player.server.runCommandSilent(`particle minecraft:wax_off ${bx} ${by + 1.2} ${bz} 0.4 0.4 0.4 0.05 30`);
+                            if (result.newLevel >= 7) {
+                                player.server.runCommandSilent(`particle minecraft:totem_of_undying ${bx} ${by + 1.5} ${bz} 0.5 0.5 0.5 0.2 50`);
                             }
+                            player.tell(Text.of(`§a${result.message}`));
+                        } else if (result.status === 'FAIL_SAVED_BY_AEGIS') {
+                            player.server.runCommandSilent(`particle minecraft:enchanted_hit ${bx} ${by + 1.2} ${bz} 0.4 0.4 0.4 0.1 35`);
+                            player.tell(Text.of(`§6${result.message}`));
+                        } else if (result.status === 'FAIL_SAFE') {
+                            player.server.runCommandSilent(`particle minecraft:smoke ${bx} ${by + 1.1} ${bz} 0.3 0.3 0.3 0.02 20`);
+                            player.tell(Text.of(`§e${result.message}`));
+                        } else if (result.status === 'FAIL_DOWNGRADE') {
+                            player.server.runCommandSilent(`particle minecraft:large_smoke ${bx} ${by + 1.2} ${bz} 0.4 0.4 0.4 0.05 30`);
+                            player.tell(Text.of(`§c${result.message}`));
                         }
+                    } else {
+                        player.tell(Text.of('§cОшибка выполнения операции в ElyriumForgeAPI.'));
                     }
-                } else if (hData.forgeActionType === 'MARTIAL_TABLET') {
-                    let tablet = sess.reagent;
-                    let targetItem = sess.equipment.copy();
-                    sess.reagent.shrink(1);
-                    if (sess.reagent.isEmpty()) sess.reagent = null;
+                } else if (action === 'MARTIAL_TABLET') {
+                    // Вызов бэкенда инкрустации
+                    let result = global.ElyriumForgeAPI.executeMartialInscription(player, sess.equipment, sess.reagent);
+                    if (result && result.status === 'SUCCESS') {
+                        sess.reagent.shrink(1);
+                        if (sess.reagent.isEmpty()) sess.reagent = null;
+                        sess.result = result.resultGear;
+                        sess.equipment = null;
 
-                    let rank = 1;
-                    if (tablet.id.endsWith('_2')) rank = 2;
-                    else if (tablet.id.endsWith('_3')) rank = 3;
-
-                    try {
-                        if (!targetItem.customData) targetItem.customData = {};
-                        targetItem.customData.putInt('skd_art_rank', rank);
-                    } catch (e) {
-                        try {
-                            if (!targetItem.nbt) targetItem.nbt = {};
-                            targetItem.nbt.putInt('skd_art_rank', rank);
-                        } catch (e2) {}
+                        player.server.runCommandSilent(`particle minecraft:portal ${bx} ${by + 1.2} ${bz} 0.4 0.4 0.4 0.1 40`);
+                        player.tell(Text.of(`§6${result.message}`));
                     }
-
-                    sess.result = targetItem;
-                    sess.equipment = null;
-
-                    player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 1.0 1.2`);
-                    player.server.runCommandSilent(`particle minecraft:portal ${bx} ${by + 1.2} ${bz} 0.4 0.4 0.4 0.1 40`);
-                    player.tell(Text.gold(`⚔ Боевое Искусство Ранга ${rank} успешно инкрустировано в предмет!`));
-                } else if (hData.forgeActionType === 'TIER_TEMPLATE') {
-                    sess.reagent.shrink(1);
-                    if (sess.reagent.isEmpty()) sess.reagent = null;
-
-                    let targetItem = sess.equipment.copy();
-                    sess.result = targetItem;
-                    sess.equipment = null;
-
-                    player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 1.0 1.2`);
-                    player.server.runCommandSilent(`playsound minecraft:entity.player.levelup player ${player.username} ~ ~ ~ 0.9 1.4`);
-                    player.tell(Text.green(`🌟 Шаблон Преемственности успешно применен!`));
+                } else if (action === 'TIER_TEMPLATE') {
+                    // Преемственность тиров проводится через ритуал двух рук в мире
+                    player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    player.tell(Text.of('§d🌟 [ПРЕЕМСТВЕННОСТЬ ТИРОВ] §eДля переноса заточки на оружие старшего тира:'));
+                    player.tell(Text.of('§f  1. Возьмите новое оружие в правую руку, а старое (закаленное) в левую.'));
+                    player.tell(Text.of('§f  2. Имея Шаблон в инвентаре, нажмите §6Shift + ПКМ§f в мире.'));
+                    player.tell(Text.of('§7(В Адском Горниле ковка производится над одиночными предметами).'));
+                    return;
                 }
 
                 refreshInfernalAnvilGUI(player);
             };
+
             s.leftClicked = forgeClick;
             s.rightClicked = forgeClick;
             s.shiftLeftClicked = forgeClick;
             s.shiftRightClicked = forgeClick;
         });
 
-        // ----------------------------------------------------------------------
-        // КНОПКА ЗАКРЫТЬ И ВЕРНУТЬ РЕСУРСЫ (X=8, Y=2) - КРАСНЫЙ СЛОТ ВЫХОДА
-        // ----------------------------------------------------------------------
+        // 🛡 АВТО-ЭГИДА (X=6, Y=2)
+        gui.slot(6, 2, s => {
+            if (typeof s.resetClickHandlers === 'function') s.resetClickHandlers();
+            s.setItem(Item.of('minecraft:golden_apple')
+                .withCustomName(Text.of('§6🛡 [ АВТО-УСТАНОВКА ЭГИДЫ ]'))
+                .withLore([
+                    Text.of('§7Находит Печать Кузнечной Эгиды в сумке'),
+                    Text.of('§7и мгновенно устанавливает ее в Слот III.'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of('§e▶ Нажмите ЛКМ для активации защиты!')
+                ]));
+            let autoLoadAegis = () => {
+                let sess = getOrCreateAnvilSession(player);
+                let inv = player.inventory;
+                let found = null;
+                for (let i = 0; i < inv.size; i++) {
+                    let st = inv.getItem(i);
+                    if (st && !st.isEmpty() && st.id === 'kubejs:smithing_aegis') {
+                        found = st;
+                        break;
+                    }
+                }
+                if (found) {
+                    if (sess.aegis && !sess.aegis.isEmpty()) player.give(sess.aegis);
+                    sess.aegis = found.split(found.count);
+                    player.server.runCommandSilent(`playsound minecraft:item.shield.block player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    player.tell(Text.of('§6✓ Печать Кузнечной Эгиды успешно установлена!'));
+                } else {
+                    player.tell(Text.of('§eℹ В инвентаре не найдено Печатей Кузнечной Эгиды.'));
+                    player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
+                }
+                refreshInfernalAnvilGUI(player);
+            };
+            s.leftClicked = autoLoadAegis;
+            s.rightClicked = autoLoadAegis;
+        });
+
+        // ✖ БЕЗОПАСНЫЙ ВЫХОД (X=8, Y=2)
         gui.slot(8, 2, s => {
             if (typeof s.resetClickHandlers === 'function') s.resetClickHandlers();
-            s.setItem(Item.of('minecraft:red_stained_glass_pane')
-                .withCustomName(Text.red('✖ Закрыть наковальню'))
+            s.setItem(Item.of('minecraft:crimson_door')
+                .withCustomName(Text.of('§c✖ [ БЕЗОПАСНЫЙ ВЫХОД ]'))
                 .withLore([
-                    Text.gray('Все установленные ресурсы немедленно вернутся в инвентарь.'),
-                    Text.yellow('Нажмите для безопасного выхода.')
+                    Text.of('§7Все установленные ресурсы немедленно вернутся в инвентарь.'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of('§e▶ Нажмите для закрытия Алтаря.')
                 ]));
             let closeHandler = () => {
                 clearAndRefundSession(player, true);
@@ -809,6 +856,37 @@ function openInfernalAnvilGUI(player) {
             s.rightClicked = closeHandler;
             s.shiftLeftClicked = closeHandler;
             s.shiftRightClicked = closeHandler;
+        });
+
+        // ======================================================================
+        // ROW 3 (Y=3): НИЖНЯЯ ПАНЕЛЬ СЕРВИСА
+        // ======================================================================
+
+        // 🔄 ОЧИСТИТЬ АЛТАРЬ (X=4, Y=3)
+        gui.slot(4, 3, s => {
+            if (typeof s.resetClickHandlers === 'function') s.resetClickHandlers();
+            s.setItem(Item.of('minecraft:hopper')
+                .withCustomName(Text.of('§e🔄 [ СБРОСИТЬ ВСЕ В СУМКУ ]'))
+                .withLore([
+                    Text.of('§7Возвращает установленную экипировку, реагент'),
+                    Text.of('§7и печать обратно в сумку без закрытия меню.'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of('§e▶ Нажмите ЛКМ для очистки алтаря.')
+                ]));
+            let refundAll = () => {
+                let sess = getOrCreateAnvilSession(player);
+                let refunded = false;
+                if (sess.equipment && !sess.equipment.isEmpty()) { player.give(sess.equipment); sess.equipment = null; refunded = true; }
+                if (sess.reagent && !sess.reagent.isEmpty()) { player.give(sess.reagent); sess.reagent = null; refunded = true; }
+                if (sess.aegis && !sess.aegis.isEmpty()) { player.give(sess.aegis); sess.aegis = null; refunded = true; }
+                if (refunded) {
+                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    player.tell(Text.of('§a✓ Все компоненты возвращены в сумку.'));
+                }
+                refreshInfernalAnvilGUI(player);
+            };
+            s.leftClicked = refundAll;
+            s.rightClicked = refundAll;
         });
 
         // ======================================================================
@@ -834,7 +912,7 @@ function openInfernalAnvilGUI(player) {
                 }
             };
 
-            // 1. Оружие / Броня / Щит ➔ Слот 1 (Экипировка)
+            // 1. Оружие / Броня / Щит ➔ Слот 1 (Горнило Артефакта)
             if (isAnvilGear(clickedItem)) {
                 let toEquip = clickedItem.copy();
                 toEquip.setCount(1);
@@ -851,7 +929,7 @@ function openInfernalAnvilGUI(player) {
                 return;
             }
 
-            // 2. Кузнечные Камни / Скрижали / Шаблоны ➔ Слот 2 (Реагент)
+            // 2. Кузнечные Камни / Скрижали / Шаблоны ➔ Слот 2 (Катализатор)
             if (isValidAnvilReagent(clickedItem)) {
                 let toReagent = clickedItem.copy();
                 event.setItem(Item.empty);
@@ -866,7 +944,7 @@ function openInfernalAnvilGUI(player) {
                 return;
             }
 
-            // 3. Печать Эгиды ➔ Слот 3 (Эгида)
+            // 3. Печать Эгиды ➔ Слот 3 (Святилище Эгиды)
             if (clickedItem.id === 'kubejs:smithing_aegis') {
                 let toAegis = clickedItem.copy();
                 event.setItem(Item.empty);
@@ -888,7 +966,7 @@ function openInfernalAnvilGUI(player) {
 // ИНТЕГРАЦИЯ С МИРОМ: ОТКРЫТИЕ АДСКОЙ НАКОВАЛЬНИ
 // ------------------------------------------------------------------------------
 
-// 1. Таргетированный клик по блоку Адской Наковальни (Чистое открытие)
+// 1. Таргетированный клик по блоку Адской Наковальни
 BlockEvents.rightClicked('kubejs:infernal_anvil', event => {
     let player = event.player;
     if (!player || player.level.isClientSide()) return;
@@ -901,7 +979,7 @@ BlockEvents.rightClicked('kubejs:infernal_anvil', event => {
     player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
 });
 
-// 2. Перехват клика ПКМ с предметом в руке или в приседе (ItemEvents.rightClicked)
+// 2. Перехват клика ПКМ с предметом в руке или в приседе
 ItemEvents.rightClicked(event => {
     let player = event.player;
     if (!player || player.level.isClientSide()) return;
@@ -932,7 +1010,7 @@ PlayerEvents.loggedOut(event => {
     }
 });
 
-// Команда прямого вызова для тестирования и шорткатов
+// Чат-команда для быстрого тестирования разработчиком
 ServerEvents.commandRegistry(event => {
     const { commands: Commands } = event;
     event.register(

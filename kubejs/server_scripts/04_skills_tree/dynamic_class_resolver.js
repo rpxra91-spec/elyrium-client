@@ -28,7 +28,9 @@ const ARCHETYPES = {
 // Periodic class resolver (Runs every 100 ticks / 5 seconds per player)
 PlayerEvents.tick(event => {
     let player = event.player;
-    if (!player || player.age % 100 !== 0) return;
+    if (!player) return;
+    let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0);
+    if (tick % 100 !== 0) return;
 
     let pData = player.persistentData;
     let perks = pData.getCompound('simplestats_perks');

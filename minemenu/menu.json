@@ -1,0 +1,48 @@
+{
+  "main": {
+    "0": {
+      "title": "Характеристики (RPG Статы)",
+      "icon": {
+        "stack": "{count:1,id:\"simplestats:worn_notebook\"}"
+      },
+      "action": {
+        "key": {
+          "key": "key.simplestats.open_stats"
+        }
+      }
+    },
+    "2": {
+      "title": "Квесты (FTB Quests)",
+      "icon": {
+        "stack": "{count:1,id:\"ftbquests:book\"}"
+      },
+      "action": {
+        "key": {
+          "key": "key.ftbquests.quests"
+        }
+      }
+    },
+    "4": {
+      "title": "Аксессуары (Curios)",
+      "icon": {
+        "stack": "{count:1,id:\"minecraft:gold_nugget\"}"
+      },
+      "action": {
+        "key": {
+          "key": "curios.key.open"
+        }
+      }
+    },
+    "6": {
+      "title": "Хроники Теней (Apotheosis)",
+      "icon": {
+        "stack": "{count:1,id:\"patchouli:guide_book\",components:{\"patchouli:book\":\"apotheosis:chronicle\"}}"
+      },
+      "action": {
+        "key": {
+          "key": "key.apotheosis.open_world_tier_select"
+        }
+      }
+    }
+  }
+}

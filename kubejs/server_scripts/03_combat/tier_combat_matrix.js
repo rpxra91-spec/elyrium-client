@@ -198,92 +198,14 @@ function getMobTier(entity) {
 // -----------------------------------------------------------------------------
 // CENTRAL COMBAT EVENT: TIER COMBAT MATRIX
 // -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// CENTRAL COMBAT HOOK (ORGANIC ARPG BALANCING)
+// -----------------------------------------------------------------------------
+// Примечание: Искусственные штрафы урона (-50%/-85%), пробои (x2.0/x3.5) и рикошет
+// по наковальне упразднены по решению Куратора. Сложность и баланс боя определяются
+// органичными атрибутами мобов (HP/Armor/Attack), статами оружия и прокачкой SimpleStats.
 EntityEvents.beforeHurt(event => {
-    let source = event.source
-    if (!source) return
-    let target = event.entity
-    if (!target || !target.isLiving()) return
-
-    let attacker = source.actual
-
-    // 1. PLAYER ATTACKS MOB
-    if (attacker && attacker.isPlayer() && !target.isPlayer()) {
-        let player = attacker
-        if (target.type && target.type.toString().includes('minecolonies:citizen')) return
-
-        let weapon = player.mainHandItem
-        if (!weapon || weapon.isEmpty() || weapon.id === 'minecraft:air') {
-            if (player.offHandItem && !player.offHandItem.isEmpty() && player.offHandItem.id !== 'minecraft:air') {
-                weapon = player.offHandItem
-            }
-        }
-
-        let wTier = getWeaponTier(weapon)
-        let mTier = getMobTier(target)
-
-        if (wTier === mTier) {
-            // Weapon tier == Mob tier: 100% damage
-        } else if (wTier > mTier) {
-            // Weapon tier > Mob tier: +25% bonus damage
-            event.damage = event.damage * 1.25
-        } else {
-            // Weapon tier < Mob tier: Damage penalty & Anvil deflection sound
-            let diff = mTier - wTier
-            let now = player.age
-            let canPlaySound = !player.persistentData.contains('skd_last_tier_sound') || 
-                               (now - player.persistentData.getInt('skd_last_tier_sound') >= 5)
-
-            if (diff === 1) {
-                event.damage = event.damage * 0.5
-                player.sendSystemMessage(Text.of(`§c🛡 Броня цели слишком прочна! (Тир ${mTier} против Т${wTier}: -50% урона)`), true)
-                if (canPlaySound) {
-                    player.persistentData.putInt('skd_last_tier_sound', now)
-                    event.server.runCommandSilent(`playsound minecraft:block.anvil.land player ${player.username} ~ ~ ~ 0.8 1.2`)
-                }
-            } else {
-                event.damage = event.damage * 0.15
-                player.sendSystemMessage(Text.of(`§4⚠ Непробиваемая броня! (Тир ${mTier} против Т${wTier}: -85% урона)`), true)
-                if (canPlaySound) {
-                    player.persistentData.putInt('skd_last_tier_sound', now)
-                    event.server.runCommandSilent(`playsound minecraft:block.anvil.land player ${player.username} ~ ~ ~ 1.0 0.8`)
-                }
-            }
-        }
-        return
-    }
-
-    // 2. MOB ATTACKS PLAYER
-    if (target.isPlayer() && attacker && attacker.isLiving() && !attacker.isPlayer()) {
-        let player = target
-        if (attacker.type && attacker.type.toString().includes('minecolonies:citizen')) return
-
-        let mTier = getMobTier(attacker)
-        let pArmorTier = getPlayerArmorTier(player)
-
-        if (pArmorTier < mTier) {
-            let diff = mTier - pArmorTier
-            let now = (player.age !== undefined && player.age !== null) ? player.age : (player.tickCount || 0)
-            let canPlaySound = !player.persistentData.contains('skd_last_breach_sound') || 
-                               (now - player.persistentData.getInt('skd_last_breach_sound') >= 8)
-
-            if (diff === 1) {
-                event.damage = event.damage * 2.0
-                player.sendSystemMessage(Text.of(`§c⚠ Враг пробивает броню! (Моб Т${mTier} против вашей Т${pArmorTier}: ×2 урон)`), true)
-                if (canPlaySound) {
-                    player.persistentData.putInt('skd_last_breach_sound', Math.floor(now))
-                    event.server.runCommandSilent(`playsound minecraft:item.shield.break player ${player.username} ~ ~ ~ 0.8 1.0`)
-                }
-            } else {
-                event.damage = event.damage * 3.5
-                player.sendSystemMessage(Text.of(`§4☠ Критический пробой брони! (Моб Т${mTier} против вашей Т${pArmorTier}: ×3.5 урон)`), true)
-                if (canPlaySound) {
-                    player.persistentData.putInt('skd_last_breach_sound', now)
-                    event.server.runCommandSilent(`playsound minecraft:entity.iron_golem.damage player ${player.username} ~ ~ ~ 1.0 0.7`)
-                }
-            }
-        }
-        return
-    }
+    // Organically handled by entity attributes, armor, and SimpleStats
 })
 
 // -----------------------------------------------------------------------------

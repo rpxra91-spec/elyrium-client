@@ -93,7 +93,8 @@ function enforceTwoHandedRestriction(player) {
 // 1. Tick check (every 4 ticks / 0.2s for responsive check)
 PlayerEvents.tick(event => {
     let player = event.player
-    if (player.age % 4 !== 0) return
+    let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0)
+    if (tick % 4 !== 0) return
     enforceTwoHandedRestriction(player)
 })
 

@@ -293,7 +293,9 @@ EntityEvents.beforeHurt(event => {
 // ------------------------------------------------------------------------------
 PlayerEvents.tick(event => {
     let player = event.player;
-    if (!player || player.age % 5 !== 0) return;
+    if (!player) return;
+    let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0);
+    if (tick % 5 !== 0) return;
 
     let pData = player.persistentData;
     let absorbed = pData.getFloat('skd_guard_absorbed') || 0;

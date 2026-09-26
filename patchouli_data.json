@@ -1,0 +1,74 @@
+{
+  "bookGuiScale": 0,
+  "clickedVisualize": false,
+  "bookData": {
+    "apotheosis:apoth_chronicle": {
+      "viewedEntries": [
+        "apotheosis:adventure/affix_loot/affixes",
+        "apotheosis:adventure/affix_loot/salvaging",
+        "apotheosis:adventure/affix_loot/rarities",
+        "apotheosis:adventure/affix_loot/reforging",
+        "apotheosis:adventure/affix_loot/augmenting",
+        "apotheosis:adventure/gems/gems",
+        "apotheosis:adventure/gems/gem_cutting",
+        "apotheosis:adventure/gems/gem_case",
+        "apotheosis:adventure/gems/gem_dust",
+        "apotheosis:adventure/rogue_spawners/brutal_spawners",
+        "apotheosis:adventure/mobs/invaders",
+        "apotheosis:adventure/mobs/invader_dungeons",
+        "apotheosis:adventure/mobs/invader_items",
+        "apotheosis:adventure/mobs/elites",
+        "apotheosis:adventure/attributes/life_steal",
+        "apotheosis:adventure/attributes/reach_distance",
+        "apotheosis:adventure/attributes/attack_range",
+        "apotheosis:adventure/attributes/swim_speed",
+        "apotheosis:adventure/attributes/mining_speed",
+        "apotheosis:adventure/attributes/knockback",
+        "apotheosis:adventure/attributes/step_height",
+        "apotheosis:adventure/attributes/armor_pierce",
+        "apotheosis:adventure/attributes/overheal",
+        "apotheosis:adventure/attributes/movement_speed",
+        "apotheosis:adventure/attributes/prot_pierce",
+        "apotheosis:adventure/attributes/luck",
+        "apotheosis:adventure/attributes/prot_shred",
+        "apotheosis:adventure/attributes/crit_damage",
+        "apotheosis:adventure/attributes/armor_toughness",
+        "apotheosis:adventure/attributes/knockback_resistance",
+        "apotheosis:adventure/attributes/crit_chance",
+        "apotheosis:adventure/attributes/cold_damage",
+        "apotheosis:adventure/attributes/fire_damage",
+        "apotheosis:adventure/attributes/draw_speed",
+        "apotheosis:adventure/attributes/armor",
+        "apotheosis:adventure/attributes/armor_shred",
+        "apotheosis:adventure/attributes/current_hp_damage",
+        "apotheosis:adventure/attributes/attack_speed",
+        "apotheosis:adventure/attributes/gravity",
+        "apotheosis:adventure/attributes/max_health",
+        "apotheosis:adventure/attributes/attack_damage",
+        "apotheosis:adventure/world_tiers/select_screen",
+        "apotheosis:adventure/world_tiers/unlocking_tiers",
+        "apotheosis:adventure/world_tiers/world_tiers",
+        "apotheosis:enchanting/utility/scrapping"
+      ],
+      "bookmarks": [],
+      "completedManualQuests": []
+    },
+    "l2backpack:backpack_guide": {
+      "viewedEntries": [
+        "l2backpack:items/1_backpacks",
+        "l2backpack:items/3_ender_backpack",
+        "l2backpack:mechanics/exit"
+      ],
+      "bookmarks": [],
+      "completedManualQuests": []
+    },
+    "divinerpg:divine": {
+      "viewedEntries": [
+        "divinerpg:getting_started/ores",
+        "divinerpg:vethea/nightmare_bed"
+      ],
+      "bookmarks": [],
+      "completedManualQuests": []
+    }
+  }
+}

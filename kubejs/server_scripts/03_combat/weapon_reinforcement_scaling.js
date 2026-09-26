@@ -367,7 +367,7 @@ EntityEvents.beforeHurt(event => {
             event.damage = event.damage * 0.85;
 
             // Occasional resonant deflection sound on heavy hits
-            let now = player.age;
+            let now = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0);
             let lastSound = player.persistentData.getInt('skd_last_resonance_sound') || 0;
             if (now - lastSound >= 10) {
                 player.persistentData.putInt('skd_last_resonance_sound', now);
@@ -382,7 +382,9 @@ EntityEvents.beforeHurt(event => {
 // ------------------------------------------------------------------------------
 PlayerEvents.tick(event => {
     let player = event.player;
-    if (!player || player.age % 20 !== 0) return;
+    if (!player) return;
+    let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0);
+    if (tick % 20 !== 0) return;
 
     let headLvl = getReinforceLevel(player.getHeadArmorItem());
     let chestLvl = getReinforceLevel(player.getChestArmorItem());

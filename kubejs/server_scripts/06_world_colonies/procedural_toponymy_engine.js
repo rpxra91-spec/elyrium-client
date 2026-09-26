@@ -101,7 +101,8 @@ function getCompassDirection(dx, dz) {
 // ==============================================================================
 PlayerEvents.tick(event => {
     let player = event.player;
-    if (player.age % 20 !== 0) return;
+    let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0);
+    if (tick % 20 !== 0) return;
 
     let level = player.level;
     let pos = player.blockPosition();

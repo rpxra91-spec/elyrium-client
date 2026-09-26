@@ -1,4 +1,4 @@
-﻿// ==============================================================================
+// ==============================================================================
 // ⚡ ELYRIUM RPG: GEAR SCORE SYSTEM (KUBEJS 1.21.1 NEOFORGE)
 // ==============================================================================
 // Calculates individual item and total player Gear Score based on:
@@ -196,7 +196,8 @@ ServerEvents.commandRegistry(event => {
 // Periodic Sync to persistentData
 PlayerEvents.tick(event => {
     let player = event.player
-    if (player.age % 40 !== 0) return
+    let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0)
+    if (tick % 40 !== 0) return
 
     let gs = getPlayerGearScore(player)
     player.persistentData.gearScore = gs

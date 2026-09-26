@@ -371,7 +371,7 @@ EntityEvents.beforeHurt(event => {
             let resBonus = (analysis.maxResonanceCount === 2) ? 0.20 : 0.35; // +20% for 2 copies, +35% for 3+
             totalMultiplier += resBonus;
 
-            let now = player.age;
+            let now = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0);
             let lastNotice = player.persistentData.getInt('skd_last_resonance_notice');
             if (now - lastNotice >= 40) {
                 player.persistentData.putInt('skd_last_resonance_notice', now);

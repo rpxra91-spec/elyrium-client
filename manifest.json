@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-26T08:29:00.221794+00:00",
+  "generated_at": "2026-09-26T12:11:58.494901+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -1232,8 +1232,8 @@
     },
     {
       "path": "config/l2configs/l2itemselector-client.toml",
-      "sha256": "68ee83e95cb0fcd7897b47f0002e4a6774f0f9fe235aa5c988f643536cd772bb",
-      "size": 403
+      "sha256": "06974965c2133bc6078f173b4342834270e78a4b3b70dd9a9d786c8055d771c0",
+      "size": 375
     },
     {
       "path": "config/l2configs/l2library-server.toml",
@@ -1292,8 +1292,8 @@
     },
     {
       "path": "config/minecolonies-common.toml",
-      "sha256": "b7308712fbb5044fff1f8354302921fad9e19b053da60d5c0c69f4c4c819a37a",
-      "size": 385
+      "sha256": "7704176f407a6ecc1cbbd6e0d795a7b0e1a6e8b7c5b7b7a6d4c567f376595d23",
+      "size": 659
     },
     {
       "path": "config/minecolonies-server.toml",
@@ -1367,7 +1367,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "d76a99c0b59cfa2cd9464cce475a4df0924af35cfd06991efe22cc02902c03d0",
+      "sha256": "92f2ab574af08d605dce2449759f19779412345946420aa14f4ba90605892394",
       "size": 275
     },
     {
@@ -1387,8 +1387,8 @@
     },
     {
       "path": "config/quark-common.toml",
-      "sha256": "9f7fb6122b9942b1a4b7886ccb16c7bd2df578db1a3c360569d5db26cedb8985",
-      "size": 84111
+      "sha256": "60931049b224da4ed4c93a04ee9e802166a6ff453a89a3885748eb1ea29a838c",
+      "size": 84169
     },
     {
       "path": "config/regions_unexplored/client.json",
@@ -7377,8 +7377,8 @@
     },
     {
       "path": "kubejs/client_scripts/filter_early_weapons.js",
-      "sha256": "61a3cf45e6edad5b29999cd056749aca072ad4abe08e61e19ef0abaaf7466988",
-      "size": 2056
+      "sha256": "7417d42bbef6ff0ee27442d4f0bb8703f63ed71a48d3d10d442711411ca8b04b",
+      "size": 13950
     },
     {
       "path": "kubejs/client_scripts/filter_hazennstuff.js",
@@ -7409,6 +7409,11 @@
       "path": "kubejs/client_scripts/martial_arts_tooltips.js",
       "sha256": "177d14d5b260aa7b5656ce7072bce0fddc3bad834dd3ee56873791d3b0f7f9cd",
       "size": 15476
+    },
+    {
+      "path": "kubejs/client_scripts/modular_multitool_tooltips.js",
+      "sha256": "c3612c8cf6815dd2a84dc9cff541b78dd63c7b247b2bbb27d68c4e7a448ca9a6",
+      "size": 3314
     },
     {
       "path": "kubejs/client_scripts/spell_capacity_tooltips.js",
@@ -7697,8 +7702,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/world_progression_gossip.js",
-      "sha256": "3d039e3caeadf9ffe780a564e316b8f5de0053379727b1cc3b12b4447c316db8",
-      "size": 9122
+      "sha256": "13399b7dfed329cee7d2bbfeff8fd6a008178ee16b9ad5de22d094e8719d732d",
+      "size": 9210
     },
     {
       "path": "kubejs/server_scripts/01_progression/world_spawn_setup.js",
@@ -7707,8 +7712,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_magic/spell_capacity_engine.js",
-      "sha256": "444f3896ebc41bbc23243d7916c10985373c73a3958b1cb490733f4d8549adf0",
-      "size": 17132
+      "sha256": "80b1e0a4c850eaa8289d12b9a4af774af91141e9844c907dc535c02b9f030523",
+      "size": 17199
     },
     {
       "path": "kubejs/server_scripts/02_magic/staff_spell_system.js",
@@ -7752,18 +7757,18 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/gear_score_system.js",
-      "sha256": "f36e05ad5050b41234a89364ecb23a66783ead3a7b475c5b9fb9bfc754bf19e7",
-      "size": 9524
+      "sha256": "c720a72aed174a27f94a0c58af5bde36261a0dd7366b3c17e915b5ae15e7f6b6",
+      "size": 9608
     },
     {
       "path": "kubejs/server_scripts/03_combat/gear_stat_requirements.js",
-      "sha256": "0a7f290bcdc27ed8550ede9eecc9dacc44cabcab7ba2081a0c5e5d34d2e797c4",
-      "size": 13230
+      "sha256": "b57512a52e969ccebd62e07baefd958b39d36eeee7db8b54f4f39c5cbc200644",
+      "size": 13312
     },
     {
       "path": "kubejs/server_scripts/03_combat/infernal_anvil_gui.js",
-      "sha256": "3e19723c3a1eac85f1df61c20ab73c2166639ff27321785d58000fb8b1bfd6ad",
-      "size": 49298
+      "sha256": "7b8ba9df383468b042b282158d9207fe5afc0792fb5c5e45d34d10499e6994eb",
+      "size": 58199
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_inscription.js",
@@ -7787,23 +7792,23 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
-      "sha256": "2535901ea94ca5c1e9fda9ba200ce25ee22b2a199ae740be5263b14eb31c3774",
-      "size": 3347
+      "sha256": "7077688a1af5b8bea89564510eb1ad739d3ed20f5d9f39146b42362334984453",
+      "size": 990
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
-      "sha256": "88ca4c1aa1311142120ebc02ecc383cb46691c6952ee022b4e2ed68c242969c4",
-      "size": 11919
+      "sha256": "31dc89477080f73a5cae6f5252051e288605df70ee8cdd80835d64745a3e56c3",
+      "size": 12021
     },
     {
       "path": "kubejs/server_scripts/03_combat/tier_combat_matrix.js",
-      "sha256": "93b7ede9cd9a5c291d2f518d8c653200cb48295d02747b21530f585e2be2aa7a",
-      "size": 15658
+      "sha256": "77fa3784a71a8d1d9db3433c421afb7035e917633c687c1fe6a87a097b17c85f",
+      "size": 12141
     },
     {
       "path": "kubejs/server_scripts/03_combat/two_handed_offhand_lock.js",
-      "sha256": "41528087205d08c46a983d219556225088cd090c58507cf3d9603197280d979f",
-      "size": 3951
+      "sha256": "6535bf4c9077708bee35042d09492208ba493edaafb09d5f1097477703fc3b9f",
+      "size": 4038
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_attributes.js",
@@ -7817,13 +7822,18 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_reinforcement_scaling.js",
-      "sha256": "75fe65cf45bbedc92486045c59c910e14c0d5ea2b1b3e0bd93dffc6cb6a34413",
-      "size": 23643
+      "sha256": "bc777cc12a57094cce0329fc9a08eb947f1d725c24e2471c323105a8d10bb9e3",
+      "size": 23812
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/dynamic_class_resolver.js",
-      "sha256": "a98e191a8aae0d8403c19fd36eecdb8acba66135a8eafac97e46a16badf99a38",
-      "size": 5592
+      "sha256": "78c04e7513ba5ae65a3e7ae025cb6fd740e2033eafd2a738f2047fad51bf6d99",
+      "size": 5694
+    },
+    {
+      "path": "kubejs/server_scripts/04_skills_tree/rpg_unified_leveling.js",
+      "sha256": "366a8bb90f40bf819c24898e61070674331838ee2eeca6dd1102c78ec1e55c80",
+      "size": 7100
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/skill_abilities_engine.js",
@@ -7874,6 +7884,11 @@
       "path": "kubejs/server_scripts/05_professions/gathering_professions_mechanics.js",
       "sha256": "9f62d8cb79a69b841d4fb09d707f7e30acd6d1ad2330ba5a1b8d9a84460bbe23",
       "size": 25879
+    },
+    {
+      "path": "kubejs/server_scripts/05_professions/modular_multitool_engine.js",
+      "sha256": "d333b47fdea8154f1683a166c9b865890c85c1687275c720ab340939bcb4d084",
+      "size": 13916
     },
     {
       "path": "kubejs/server_scripts/05_professions/player_trade_system.js",
@@ -7942,8 +7957,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_instance_engine.js",
-      "sha256": "eac7b7248ad22506cf4c0c1590f24493cc006876a7124bf1ccb1bd22889ef114",
-      "size": 30115
+      "sha256": "0c82e5ccbe2dd866b892b6df9c514c6dad6a9bca942397a22113b47ddff681da",
+      "size": 30197
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/guard_combat_abilities.js",
@@ -7967,8 +7982,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/procedural_toponymy_engine.js",
-      "sha256": "96688dbc5c37f53e00eceb78c27ba2f1ae1ec34b1283e35812b3eab421e62961",
-      "size": 10492
+      "sha256": "b659e044272b37bca5b68918f45f8a27858e15b0fa01dfb165ebf1fb028c67bf",
+      "size": 10580
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/server_idle_system.js",
@@ -7977,8 +7992,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/tavern_peace_zones.js",
-      "sha256": "bd64dfb36cc5de0515f03d7d52e3500c3b31340f9b7926543f5ac8859aba6560",
-      "size": 7396
+      "sha256": "a0c03641017c4a9b5955ace760ffc7d8e85347fec96ebe0e92a85aa7b2531809",
+      "size": 7484
     },
     {
       "path": "kubejs/server_scripts/07_recipes_filters/filter_early_weapons.js",
@@ -8001,6 +8016,11 @@
       "size": 2391
     },
     {
+      "path": "kubejs/server_scripts/07_recipes_filters/modular_multitool_recipes.js",
+      "sha256": "da3ca944a9657a811bf9a0dcd732b74845cda4a4bf59dd65f45543555fe3cde0",
+      "size": 3512
+    },
+    {
       "path": "kubejs/server_scripts/07_recipes_filters/tier4_recipes.js",
       "sha256": "b46b1a3d129ab25de61a9a5efdfa57cbf130ff7d1993d1a0acf5725cbf1965b4",
       "size": 2867
@@ -8019,6 +8039,11 @@
       "path": "kubejs/startup_scripts/martial_arts_items.js",
       "sha256": "6658d2b474bb669a307dd4f472d3c4e36dc1a4e13e907371f223667bdb82c735",
       "size": 7686
+    },
+    {
+      "path": "kubejs/startup_scripts/modular_multitool_items.js",
+      "sha256": "de30f6452d7f67b2df9a2521b6e714f4a8461df0efc1577f6228208aab8a1cac",
+      "size": 7783
     },
     {
       "path": "kubejs/startup_scripts/portal_blocks.js",

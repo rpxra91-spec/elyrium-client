@@ -113,7 +113,8 @@ ItemEvents.entityInteracted(event => {
 // ------------------------------------------------------------------------------
 PlayerEvents.tick(event => {
     let player = event.player;
-    if (player.age % 100 !== 0) return;
+    let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0);
+    if (tick % 100 !== 0) return;
 
     let tier = getPlayerTier(player);
     if (tier < 2) return; // Only salute heroes who unlocked Tier 2+

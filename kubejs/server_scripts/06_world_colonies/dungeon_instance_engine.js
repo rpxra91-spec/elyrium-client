@@ -358,6 +358,7 @@ ServerEvents.tick(event => {
 // Player Tick Loop: Boundary Enforcement & Timer
 PlayerEvents.tick(event => {
     let player = event.player
+    let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0);
     let dim = String(player.level.dimension)
     let px = player.x
     let py = player.y
@@ -365,7 +366,7 @@ PlayerEvents.tick(event => {
 
     if (dim.includes('inst_nether')) {
         // 500-Block Bedrock Box Boundary Enforcement
-        if (player.age % 10 === 0) {
+        if (tick % 10 === 0) {
             let isZoneB = (px > 2500)
             let centerX = isZoneB ? 5000 : 0
             let relX = px - centerX
@@ -401,7 +402,7 @@ PlayerEvents.tick(event => {
         }
 
         // 15-minute Looting Actionbar Timer
-        if (dungeonState === 'LOOTING' && player.age % 20 === 0) {
+        if (dungeonState === 'LOOTING' && tick % 20 === 0) {
             let mins = Math.floor(dungeonLootTimeRemaining / 60)
             let secs = dungeonLootTimeRemaining % 60
             let timeStr = (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs

@@ -256,7 +256,8 @@ EntityEvents.beforeHurt(event => {
 // ------------------------------------------------------------------------------
 PlayerEvents.tick(event => {
     let player = event.player;
-    if (player.age % 20 !== 0) return;
+    let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0);
+    if (tick % 20 !== 0) return;
     if (player.isCreative() || player.isSpectator()) return;
 
     let stats = getEffectiveStats(player);
@@ -285,7 +286,7 @@ PlayerEvents.tick(event => {
         let slownessAmp = totalArmorMissing >= 8 ? 2 : 1;
         player.potionEffects.add('minecraft:slowness', 40, slownessAmp, false, false);
 
-        if (player.age % 100 === 0) { // Every 5 seconds
+        if (tick % 100 === 0) { // Every 5 seconds
             player.displayClientMessage(
                 Text.of(`§c🛡 Тяжёлые доспехи сковывают движения! Не хватает Силы/Стойкости.`),
                 true
