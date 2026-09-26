@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-26T13:34:12.968290+00:00",
+  "generated_at": "2026-09-26T16:39:34.066124+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -127,7 +127,7 @@
     },
     {
       "path": "config/apotheosis/name_generation.cfg",
-      "sha256": "3ee3301222be7804b6a76048ed68fb8e7a0a7687fdea586373afc3208283dd9e",
+      "sha256": "0110c47f11c5f3ec4a46b5164edfc2e8b366b9b2ecd8527d9175fac5068ad0a2",
       "size": 138672
     },
     {
@@ -972,8 +972,8 @@
     },
     {
       "path": "config/jei/ingredient-list-mod-sort-order.ini",
-      "sha256": "8b9d55e1914355c9a46eea2c61dce8c677beb4afc8ed6286b4bd9a0912c115f8",
-      "size": 794
+      "sha256": "6d7a5151ad177f7130573029fde9018103e3dfaace26374ee190226956a398f8",
+      "size": 741
     },
     {
       "path": "config/jei/ingredient-list-type-sort-order.ini",
@@ -1002,8 +1002,8 @@
     },
     {
       "path": "config/jei/recipe-category-sort-order.ini",
-      "sha256": "a15dbdf3cd26d05504d1161785b5e5be64f2c06a202159d245a0e111fb4b9825",
-      "size": 2206
+      "sha256": "10788dca94781d39e68ef9fd2f3b49671485df11db3160293b1160a72498f32c",
+      "size": 2134
     },
     {
       "path": "config/jei/world/local/Новый мир/lookupHistory.json",
@@ -1367,7 +1367,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "ae738deb09e959cdde897c548b6a0460adb44dba410b9b69e511c25881414cc6",
+      "sha256": "4122dfb40a6b0f79f1fbbe7abedad9f234f982c3b5dcc89c614a29fe4ec2cb30",
       "size": 275
     },
     {
@@ -1417,8 +1417,8 @@
     },
     {
       "path": "config/rpg_series/loot_fallback_report.json",
-      "sha256": "39877d2913ce1eb840575fcad4200047341ada62cbe70d9de59c62a22f38be6c",
-      "size": 83024
+      "sha256": "7cf5e831b0c5f3d7f39c5e3d35c9bc3fc09b5676e2d86279672ec565c53f978f",
+      "size": 176
     },
     {
       "path": "config/rpg_series/loot_scrolls_v2.json",
@@ -1431,9 +1431,14 @@
       "size": 5719
     },
     {
+      "path": "config/simplestats-common.toml",
+      "sha256": "f825694dca8dc18bbf86b26be2e8c9f99b678b3ab90c85c5ace102c5d8b86cd2",
+      "size": 2338
+    },
+    {
       "path": "config/simplestats-server.toml",
-      "sha256": "6f5019091e18e93f62136426d18693a5c0f922a926f73d63d83312b46e932e03",
-      "size": 2308
+      "sha256": "f825694dca8dc18bbf86b26be2e8c9f99b678b3ab90c85c5ace102c5d8b86cd2",
+      "size": 2338
     },
     {
       "path": "config/simplyswords/gem_powers.toml",
@@ -2151,14 +2156,24 @@
       "size": 100
     },
     {
+      "path": "defaultconfigs/simplestats-common.toml",
+      "sha256": "f825694dca8dc18bbf86b26be2e8c9f99b678b3ab90c85c5ace102c5d8b86cd2",
+      "size": 2338
+    },
+    {
       "path": "defaultconfigs/simplestats-server.toml",
-      "sha256": "b27da6c4dfb0d6b591f7707a7179bf4676d53bd8e714e42573ed378d16ad6440",
-      "size": 2130
+      "sha256": "f825694dca8dc18bbf86b26be2e8c9f99b678b3ab90c85c5ace102c5d8b86cd2",
+      "size": 2338
     },
     {
       "path": "kubejs/README.txt",
       "sha256": "989f3737ae4621b8ff6730bce4cbeeee756921e7e510e0c281c8a350501d98af",
       "size": 1203
+    },
+    {
+      "path": "kubejs/assets/elyrium/textures/gui/celestial_constellation_bg.png",
+      "sha256": "377bdb134a3f43017c56f63020fc460bbbb133132a1c27c98c1235e7605ed6a5",
+      "size": 202236
     },
     {
       "path": "kubejs/assets/elyrium/textures/skills/alchemist_class.png",
@@ -5961,6 +5976,11 @@
       "size": 423
     },
     {
+      "path": "kubejs/assets/simplestats/textures/screens/stats_bg.png",
+      "sha256": "232a345a0a958b89264f415701dc2f216026aca1649eb28b26f523054ee21f8c",
+      "size": 1507
+    },
+    {
       "path": "kubejs/assets/skilltree/textures/icons/alchemist_class.png",
       "sha256": "b28e192bd4a146f7c8526e7deb7dc5a3d512afbcfdfa4af0088e14e2463db858",
       "size": 319
@@ -7752,8 +7772,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/world_progression_gossip.js",
-      "sha256": "3d039e3caeadf9ffe780a564e316b8f5de0053379727b1cc3b12b4447c316db8",
-      "size": 9122
+      "sha256": "13399b7dfed329cee7d2bbfeff8fd6a008178ee16b9ad5de22d094e8719d732d",
+      "size": 9210
     },
     {
       "path": "kubejs/server_scripts/01_progression/world_spawn_setup.js",
@@ -7762,8 +7782,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_magic/spell_capacity_engine.js",
-      "sha256": "444f3896ebc41bbc23243d7916c10985373c73a3958b1cb490733f4d8549adf0",
-      "size": 17132
+      "sha256": "80b1e0a4c850eaa8289d12b9a4af774af91141e9844c907dc535c02b9f030523",
+      "size": 17199
     },
     {
       "path": "kubejs/server_scripts/02_magic/staff_spell_system.js",
@@ -7812,13 +7832,13 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/gear_stat_requirements.js",
-      "sha256": "0a7f290bcdc27ed8550ede9eecc9dacc44cabcab7ba2081a0c5e5d34d2e797c4",
-      "size": 13230
+      "sha256": "b57512a52e969ccebd62e07baefd958b39d36eeee7db8b54f4f39c5cbc200644",
+      "size": 13312
     },
     {
       "path": "kubejs/server_scripts/03_combat/infernal_anvil_gui.js",
-      "sha256": "3e19723c3a1eac85f1df61c20ab73c2166639ff27321785d58000fb8b1bfd6ad",
-      "size": 49298
+      "sha256": "7b8ba9df383468b042b282158d9207fe5afc0792fb5c5e45d34d10499e6994eb",
+      "size": 58199
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_inscription.js",
@@ -7842,23 +7862,23 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
-      "sha256": "2535901ea94ca5c1e9fda9ba200ce25ee22b2a199ae740be5263b14eb31c3774",
-      "size": 3347
+      "sha256": "7077688a1af5b8bea89564510eb1ad739d3ed20f5d9f39146b42362334984453",
+      "size": 990
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
-      "sha256": "88ca4c1aa1311142120ebc02ecc383cb46691c6952ee022b4e2ed68c242969c4",
-      "size": 11919
+      "sha256": "31dc89477080f73a5cae6f5252051e288605df70ee8cdd80835d64745a3e56c3",
+      "size": 12021
     },
     {
       "path": "kubejs/server_scripts/03_combat/tier_combat_matrix.js",
-      "sha256": "93b7ede9cd9a5c291d2f518d8c653200cb48295d02747b21530f585e2be2aa7a",
-      "size": 15658
+      "sha256": "77fa3784a71a8d1d9db3433c421afb7035e917633c687c1fe6a87a097b17c85f",
+      "size": 12141
     },
     {
       "path": "kubejs/server_scripts/03_combat/two_handed_offhand_lock.js",
-      "sha256": "41528087205d08c46a983d219556225088cd090c58507cf3d9603197280d979f",
-      "size": 3951
+      "sha256": "6535bf4c9077708bee35042d09492208ba493edaafb09d5f1097477703fc3b9f",
+      "size": 4038
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_attributes.js",
@@ -7872,13 +7892,13 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_reinforcement_scaling.js",
-      "sha256": "75fe65cf45bbedc92486045c59c910e14c0d5ea2b1b3e0bd93dffc6cb6a34413",
-      "size": 23643
+      "sha256": "bc777cc12a57094cce0329fc9a08eb947f1d725c24e2471c323105a8d10bb9e3",
+      "size": 23812
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/dynamic_class_resolver.js",
-      "sha256": "a98e191a8aae0d8403c19fd36eecdb8acba66135a8eafac97e46a16badf99a38",
-      "size": 5592
+      "sha256": "78c04e7513ba5ae65a3e7ae025cb6fd740e2033eafd2a738f2047fad51bf6d99",
+      "size": 5694
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/rpg_unified_leveling.js",
@@ -8007,8 +8027,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_instance_engine.js",
-      "sha256": "eac7b7248ad22506cf4c0c1590f24493cc006876a7124bf1ccb1bd22889ef114",
-      "size": 30115
+      "sha256": "0c82e5ccbe2dd866b892b6df9c514c6dad6a9bca942397a22113b47ddff681da",
+      "size": 30197
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/guard_combat_abilities.js",
@@ -8032,8 +8052,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/procedural_toponymy_engine.js",
-      "sha256": "96688dbc5c37f53e00eceb78c27ba2f1ae1ec34b1283e35812b3eab421e62961",
-      "size": 10492
+      "sha256": "b659e044272b37bca5b68918f45f8a27858e15b0fa01dfb165ebf1fb028c67bf",
+      "size": 10580
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/server_idle_system.js",
@@ -8042,8 +8062,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/tavern_peace_zones.js",
-      "sha256": "bd64dfb36cc5de0515f03d7d52e3500c3b31340f9b7926543f5ac8859aba6560",
-      "size": 7396
+      "sha256": "a0c03641017c4a9b5955ace760ffc7d8e85347fec96ebe0e92a85aa7b2531809",
+      "size": 7484
     },
     {
       "path": "kubejs/server_scripts/07_recipes_filters/filter_early_weapons.js",
@@ -9447,8 +9467,8 @@
     },
     {
       "path": "mods/simplestats-1.0.4.jar",
-      "sha256": "d2a467e0d8d020be417ec6d2036ef39e9c19298172a062ff38a43292ef7bbd70",
-      "size": 90642
+      "sha256": "56d139a03d86fe0cc27dee90f5baac0da2cacad28fc8da63f21934176f3e99e0",
+      "size": 93315
     },
     {
       "path": "mods/simplyswords-neoforge-1.63.0-1.21.1.jar",
@@ -10704,6 +10724,11 @@
       "path": "resourcepacks/SKD_Russian_Pack/pack.mcmeta",
       "sha256": "99917f9b623aeeb02892178ff48a6d70bf201d0051d59705f2847af18c43d985",
       "size": 144
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/celestial_constellation_bg.png",
+      "sha256": "377bdb134a3f43017c56f63020fc460bbbb133132a1c27c98c1235e7605ed6a5",
+      "size": 202236
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/skills/alchemist_class.png",
@@ -12164,6 +12189,11 @@
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/skills/wooden_shovel.png",
       "sha256": "bfc38df86276ca7a51affd8d9373e82c977ebd0608ce5d37855d301774cc17e8",
       "size": 423
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/simplestats/textures/screens/stats_bg.png",
+      "sha256": "232a345a0a958b89264f415701dc2f216026aca1649eb28b26f523054ee21f8c",
+      "size": 1507
     },
     {
       "path": "resourcepacks/elyrium_resources/pack.mcmeta",

@@ -1,18 +1,18 @@
 [Experience]
 	#Base XP dropped by mobs not defined in the list below
-	base_xp = 5
+	base_xp = 10
 	#Rate at which XP scales, Higher values mean more XP needed
-	xp_scaling = 1.35
+	xp_scaling = 1.08
 	#XP required for first level up
-	base_level_requirement = 100
+	base_level_requirement = 50
 	#Points awarded per level
 	points_per_level = 1
 	#List XP values for Mobs, can be empty
 	#In the following format: Mob (string), XP Granted (int). Don't include spaces.
-	xp_values = ["minecraft:zombie,5", "minecraft:skeleton,5", "minecraft:spider,5", "minecraft:creeper,6", "minecraft:drowned,5", "minecraft:husk,5", "minecraft:stray,5", "minecraft:cave_spider,5", "minecraft:enderman,12", "minecraft:blaze,10", "minecraft:witch,10", "minecraft:piglin_brute,15", "minecraft:ravager,30", "minecraft:evoker,25", "minecraft:warden,150", "minecraft:wither,150", "minecraft:ender_dragon,300"]
+	xp_values = ["minecraft:zombie,8", "minecraft:skeleton,8", "minecraft:spider,8", "minecraft:creeper,12", "minecraft:drowned,9", "minecraft:husk,8", "minecraft:stray,8", "minecraft:cave_spider,9", "minecraft:enderman,25", "minecraft:blaze,20", "minecraft:witch,22", "minecraft:piglin_brute,35", "minecraft:ravager,80", "minecraft:evoker,65", "minecraft:warden,500", "minecraft:wither,600", "minecraft:ender_dragon,1000"]
 
 [Perks]
 	#List of Perks, can be empty
 	#In the following format: ID (string), Name, (string), Icon (String), Max Level (int), Cost per Level (int), Action on Level Up (string), Action on Level Down (string).
 	#All fields are required. Don't include spaces
-	perks = ["strength,Сила,minecraft:iron_sword,20,1,attribute @p generic.attack_damage base set %level%*0.5+1,attribute @p generic.attack_damage base set %level%*0.5+1", "vitality,Живучесть,minecraft:golden_apple,20,1,attribute @p generic.max_health base set 20+%level%*1.5,attribute @p generic.max_health base set 20+%level%*1.5", "defense,Стойкость,minecraft:shield,20,1,attribute @p generic.armor base set %level%*0.5,attribute @p generic.armor base set %level%*0.5", "agility,Ловкость,minecraft:feather,20,1,attribute @p generic.movement_speed base set 0.1+%level%*0.001,attribute @p generic.movement_speed base set 0.1+%level%*0.001", "crit,Критический удар,minecraft:golden_sword,20,1,attribute @p apothic_attributes:crit_damage base set 1.5+%level%*0.02,attribute @p apothic_attributes:crit_damage base set 1.5+%level%*0.02", "mana,Запас маны,minecraft:lapis_lazuli,20,1,attribute @p irons_spellbooks:max_mana base set 100+%level%*15,attribute @p irons_spellbooks:max_mana base set 100+%level%*15"]
+	perks = ["strength,Сила (+Физ. урон),minecraft:netherite_sword,100,1,attribute @s generic.attack_damage base set 1.0+{level}*0.2,attribute @s generic.attack_damage base set 1.0+{level}*0.2", "vitality,Живучесть (+Макс. здоровье),minecraft:enchanted_golden_apple,100,1,attribute @s generic.max_health base set 20+{level}*0.75,attribute @s generic.max_health base set 20+{level}*0.75", "defense,Стойкость (+Броня и защита),minecraft:shield,100,1,attribute @s generic.armor base set {level}*0.2,attribute @s generic.armor base set {level}*0.2", "agility,Ловкость (+Скорость бега),minecraft:wind_charge,100,1,attribute @s generic.movement_speed base set 0.1+{level}*0.00035,attribute @s generic.movement_speed base set 0.1+{level}*0.00035", "crit,Точность (+Крит. урон),minecraft:spectral_arrow,100,1,attribute @s apothic_attributes:crit_damage base set 1.5+{level}*0.008,attribute @s apothic_attributes:crit_damage base set 1.5+{level}*0.008", "mana,Интеллект (+Запас маны),irons_spellbooks:arcane_essence,100,1,attribute @s irons_spellbooks:max_mana base set 100+{level}*4.0,attribute @s irons_spellbooks:max_mana base set 100+{level}*4.0"]

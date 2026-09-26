@@ -7,24 +7,33 @@
       "texture": "elyrium:textures/skills/keystone.png"
     }
   },
-  "background": "textures/gui/advancements/backgrounds/stone.png",
+  "background": {
+    "texture": "elyrium:textures/gui/celestial_constellation_bg.png",
+    "width": 1024,
+    "height": 1024,
+    "position": "fill"
+  },
   "colors": {
     "connections": {
       "locked": {
-        "fill": "#3a3a44",
-        "stroke": "#1e1e24"
+        "fill": "#252538",
+        "stroke": "#13131e"
       },
       "available": {
-        "fill": "#4da6ff",
-        "stroke": "#1a75ff"
+        "fill": "#00f0ff",
+        "stroke": "#0077ff"
       },
       "affordable": {
-        "fill": "#33dd88",
-        "stroke": "#119944"
+        "fill": "#33ff99",
+        "stroke": "#00aa55"
       },
       "unlocked": {
-        "fill": "#ffcc00",
+        "fill": "#ffdd44",
         "stroke": "#ee9900"
+      },
+      "excluded": {
+        "fill": "#4a1818",
+        "stroke": "#220808"
       }
     }
   }
