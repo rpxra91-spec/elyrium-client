@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-26T12:11:58.494901+00:00",
+  "generated_at": "2026-09-26T12:27:47.292107+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -4396,6 +4396,56 @@
       "size": 305
     },
     {
+      "path": "kubejs/assets/kubejs/textures/item/modular_omni_chassis_mk1.png",
+      "sha256": "6434f424bd088bc12eebf0340ea4bac88cf5186c74e27767059c93b6df905208",
+      "size": 170
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/modular_omni_chassis_mk2.png",
+      "sha256": "9fdcdda78d2a02b91a44f17346356222a6dc003db1d555554a90c09a57183678",
+      "size": 171
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/modular_omni_chassis_mk3.png",
+      "sha256": "40f19bddb157355107d4dd269af47ce1989a235da962e81b1ed9c3d5c9ea3db4",
+      "size": 170
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/multitool_module_fortune.png",
+      "sha256": "cfa698905a07e515b35066e03dc7b163bd398231b9f4a68f9e4166bd6badb89f",
+      "size": 191
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/multitool_module_haste.png",
+      "sha256": "f9795f1bed730cec90cdda080e8a7a5d85480261b8721f0fd7347489eb5ecb56",
+      "size": 179
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/multitool_module_magnetic.png",
+      "sha256": "1fdfe33dc365d87518f3afc792b95ee4ba6d40f179b62bc7d86a4e09947ca264",
+      "size": 168
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/multitool_module_prospector.png",
+      "sha256": "cde7f474af165772813734f951c35365bb51db1788153db0bf690adb78b225dc",
+      "size": 192
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/multitool_module_silence.png",
+      "sha256": "1b571e1bcd484a76f0628807aa579e852d5936dfcaec5ca4f88f6757309d5a58",
+      "size": 152
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/multitool_module_silk.png",
+      "sha256": "c683233593eacd475b77d2f7c41b4beee503119f435e8780af78a59bddf61e37",
+      "size": 149
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/multitool_module_smelting.png",
+      "sha256": "f120a4abf7c877c18c8b5aa35d7585dd291319711712cc5b1a43c447d11a705b",
+      "size": 194
+    },
+    {
       "path": "kubejs/assets/kubejs/textures/item/sigil_of_transmutation.png",
       "sha256": "42a555f2a69ead4f9f93e17db94c38131ac67e8adc162168d282cbfe30bc8111",
       "size": 204
@@ -7412,8 +7462,8 @@
     },
     {
       "path": "kubejs/client_scripts/modular_multitool_tooltips.js",
-      "sha256": "c3612c8cf6815dd2a84dc9cff541b78dd63c7b247b2bbb27d68c4e7a448ca9a6",
-      "size": 3314
+      "sha256": "6791d541fd280ac210397a8c12a12682905c4008d4fa6c5bb03a5152b18c5e5d",
+      "size": 4156
     },
     {
       "path": "kubejs/client_scripts/spell_capacity_tooltips.js",
@@ -7832,8 +7882,8 @@
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/rpg_unified_leveling.js",
-      "sha256": "366a8bb90f40bf819c24898e61070674331838ee2eeca6dd1102c78ec1e55c80",
-      "size": 7100
+      "sha256": "915e9d8151168f87be3d445fe6ff50f4ed309bd28a74d8d2b1f8bd34166230c9",
+      "size": 7869
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/skill_abilities_engine.js",
@@ -7887,8 +7937,8 @@
     },
     {
       "path": "kubejs/server_scripts/05_professions/modular_multitool_engine.js",
-      "sha256": "d333b47fdea8154f1683a166c9b865890c85c1687275c720ab340939bcb4d084",
-      "size": 13916
+      "sha256": "ef8b9e3f754987c253f1fe51d7974801f6596dd7b079d6d2dca5cb731f08b6bb",
+      "size": 20522
     },
     {
       "path": "kubejs/server_scripts/05_professions/player_trade_system.js",
@@ -8042,8 +8092,8 @@
     },
     {
       "path": "kubejs/startup_scripts/modular_multitool_items.js",
-      "sha256": "de30f6452d7f67b2df9a2521b6e714f4a8461df0efc1577f6228208aab8a1cac",
-      "size": 7783
+      "sha256": "c60950ff748bd9fbf633e6bd5f965bf0def0d6b784e8eef9495703499dbadd82",
+      "size": 7766
     },
     {
       "path": "kubejs/startup_scripts/portal_blocks.js",

@@ -1,6 +1,6 @@
 // ==============================================================================
 // 🛠️ ELYRIUM RPG: MODULAR MULTITOOL CLIENT TOOLTIPS
-// Minecraft 1.21.1 NeoForge | KubeJS Client Script
+// Minecraft 1.21.1 NeoForge | KubeJS Client Script (v1.1)
 // ==============================================================================
 
 const MULTITOOL_NAMES = {
@@ -30,10 +30,19 @@ ItemEvents.modifyTooltips(event => {
             tooltip.add(Text.of(`§6[Универсальный Мультитул • ${tierName}]`));
             tooltip.add(Text.of('§7Совмещает инструменты: §fКирка • Топор • Лопата • Мотыга'));
 
-            // Installed modules from item NBT
+            if (isMk3) {
+                tooltip.add(Text.of('§d⚔ Добыча области: §f3x3 (ЛКМ) / 3x3x3 (Shift+ЛКМ)'));
+            } else if (isMk2) {
+                tooltip.add(Text.of('§b⚔ Добыча области: §f3x3 на Shift+ЛКМ'));
+            }
+
+            // Installed modules from item CustomData or NBT
             let installed = [];
             try {
-                if (item.nbt && item.nbt.contains('multitool_modules')) {
+                if (item.customData && item.customData.contains('multitool_modules')) {
+                    let str = String(item.customData.getString('multitool_modules')).trim();
+                    if (str) installed = str.split(',').filter(m => m.length > 0);
+                } else if (item.nbt && item.nbt.contains('multitool_modules')) {
                     let str = String(item.nbt.getString('multitool_modules')).trim();
                     if (str) installed = str.split(',').filter(m => m.length > 0);
                 }
@@ -54,6 +63,8 @@ ItemEvents.modifyTooltips(event => {
             tooltip.add(Text.of('§8----------------------------------------'));
             tooltip.add(Text.of('§8Установка: ПКМ по Наковальне с модулем в левой руке'));
             tooltip.add(Text.of('§8Извлечение: Shift+ПКМ по Наковальне пустой рукой'));
+            tooltip.add(Text.of('§8ПКМ по блокам: Обтесать бревно (Топор) / Вспахать (Мотыга)'));
+            tooltip.add(Text.of('§8Shift+ПКМ по траве: Сделать тропинку (Лопата)'));
         });
     });
 });

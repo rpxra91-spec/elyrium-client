@@ -1,6 +1,6 @@
 // ==============================================================================
 // 🏛️ ELYRIUM RPG: UNIFIED RPG LEVELING & EXPERIENCE ENGINE (1–100 LEVELS)
-// Minecraft 1.21.1 NeoForge | KubeJS Server Script
+// Minecraft 1.21.1 NeoForge | KubeJS Server Script (v1.1)
 // ==============================================================================
 // - Fuses SimpleStats (1-100) and Puffish Skills ('elyrium:celestial_tree').
 // - Awards 1 Skill Point in Puffish Skills upon each SimpleStats Level Up.
@@ -32,11 +32,17 @@ function checkRpgLevelUp(player) {
 
     let trackedLvl = pData.getInt('elyrium_tracked_level');
 
-    // First time tracking on join / migration
+    // First time tracking on join / migration:
+    // If existing player joins at level > 1, start tracking from 1 so they catch up talent points
     if (!trackedLvl || trackedLvl < 1) {
-        pData.putInt('elyrium_tracked_level', currentLvl);
-        syncVanillaXpBar(player, currentLvl);
-        return;
+        if (currentLvl > 1) {
+            pData.putInt('elyrium_tracked_level', 1);
+            trackedLvl = 1;
+        } else {
+            pData.putInt('elyrium_tracked_level', 1);
+            syncVanillaXpBar(player, currentLvl);
+            return;
+        }
     }
 
     // LEVEL UP DETECTED
@@ -97,9 +103,21 @@ function syncVanillaXpBar(player, currentLvl) {
 
         // Ensure experience level number reflects RPG Hero Level
         if (player.experienceLevel !== currentLvl) {
-            player.server.runCommandSilent(`experience set ${player.username} ${currentLvl} levels`);
+            try {
+                player.setExperienceLevels(currentLvl);
+            } catch (e1) {
+                player.server.runCommandSilent(`experience set ${player.username} ${currentLvl} levels`);
+            }
         }
-        player.setExperienceProgress(progress);
+
+        // Set visual progress on XP bar
+        player.experienceProgress = progress;
+
+        // Keep internal XP points in sync and force client network packet update
+        try {
+            let pts = Math.round(progress * Math.max(1, player.getXpNeededForNextLevel()));
+            player.setExperiencePoints(pts);
+        } catch (e2) {}
     } catch (e) {}
 }
 
@@ -152,6 +170,10 @@ PlayerEvents.inventoryChanged(event => {
     let pData = player.persistentData;
     let currentLvl = pData ? pData.getInt('simplestats_level') : 0;
     if (currentLvl > 0 && player.experienceLevel < currentLvl) {
-        player.server.runCommandSilent(`experience set ${player.username} ${currentLvl} levels`);
+        try {
+            player.setExperienceLevels(currentLvl);
+        } catch (e1) {
+            player.server.runCommandSilent(`experience set ${player.username} ${currentLvl} levels`);
+        }
     }
 });

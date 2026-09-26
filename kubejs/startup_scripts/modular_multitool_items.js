@@ -1,6 +1,6 @@
 // ==============================================================================
 // 🛠️ ELYRIUM RPG: MODULAR MULTITOOL CHASSIS & UPGRADE MODULES
-// Minecraft 1.21.1 NeoForge | KubeJS Startup Script
+// Minecraft 1.21.1 NeoForge | KubeJS Startup Script (v1.1)
 // ==============================================================================
 // - Registers Tier 4 (Nether) MK-I Omni-Chassis (Pickaxe, Axe, Shovel, Hoe in one).
 // - Registers Tier 7 MK-II and Tier 11 MK-III Chassis for progression evolution.
@@ -23,14 +23,15 @@ StartupEvents.registry('item', event => {
         .speedBaseline(1.1)
         .maxDamage(2500)
         .rarity('rare')
-        .tag('minecraft:mineable/pickaxe')
-        .tag('minecraft:mineable/axe')
-        .tag('minecraft:mineable/shovel')
-        .tag('minecraft:mineable/hoe')
+        .tag('minecraft:pickaxes')
+        .tag('minecraft:axes')
+        .tag('minecraft:shovels')
+        .tag('minecraft:hoes')
         .tag('c:tools/pickaxes')
         .tag('c:tools/axes')
         .tag('c:tools/shovels')
         .tag('c:tools/hoes')
+        .tag('c:tools')
         .tag('elyrium:modular_multitools');
 
     // 1.2 MK-II: Астрально-Пустотное Шасси Мультитула (Tier 7) - 2 Слота Модулей
@@ -43,14 +44,15 @@ StartupEvents.registry('item', event => {
         .maxDamage(4500)
         .rarity('epic')
         .glow(true)
-        .tag('minecraft:mineable/pickaxe')
-        .tag('minecraft:mineable/axe')
-        .tag('minecraft:mineable/shovel')
-        .tag('minecraft:mineable/hoe')
+        .tag('minecraft:pickaxes')
+        .tag('minecraft:axes')
+        .tag('minecraft:shovels')
+        .tag('minecraft:hoes')
         .tag('c:tools/pickaxes')
         .tag('c:tools/axes')
         .tag('c:tools/shovels')
         .tag('c:tools/hoes')
+        .tag('c:tools')
         .tag('elyrium:modular_multitools');
 
     // 1.3 MK-III: Шасси Апогея Демиурга (Tier 11) - 4 Слота Модулей
@@ -63,14 +65,15 @@ StartupEvents.registry('item', event => {
         .maxDamage(9000)
         .rarity('epic')
         .glow(true)
-        .tag('minecraft:mineable/pickaxe')
-        .tag('minecraft:mineable/axe')
-        .tag('minecraft:mineable/shovel')
-        .tag('minecraft:mineable/hoe')
+        .tag('minecraft:pickaxes')
+        .tag('minecraft:axes')
+        .tag('minecraft:shovels')
+        .tag('minecraft:hoes')
         .tag('c:tools/pickaxes')
         .tag('c:tools/axes')
         .tag('c:tools/shovels')
         .tag('c:tools/hoes')
+        .tag('c:tools')
         .tag('elyrium:modular_multitools');
 
     // --------------------------------------------------------------------------
