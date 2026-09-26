@@ -1,6 +1,6 @@
 // ==============================================================================
 // 🏛️ ELYRIUM RPG: UNIFIED RPG LEVELING & EXPERIENCE ENGINE (1–100 LEVELS)
-// Minecraft 1.21.1 NeoForge | KubeJS Server Script (v1.1)
+// Minecraft 1.21.1 NeoForge | KubeJS Server Script (v1.2)
 // ==============================================================================
 // - Fuses SimpleStats (1-100) and Puffish Skills ('elyrium:celestial_tree').
 // - Awards 1 Skill Point in Puffish Skills upon each SimpleStats Level Up.
@@ -8,6 +8,8 @@
 //   and golden/azure particles.
 // - "Second Wind" (Второе Дыхание): 100% Health, Food, and Mana replenishment.
 // - Harmonizes Vanilla XP bar with RPG Hero Level (1-100) and XP progress.
+// - Captures Vanilla XP gains (mining ores, smelting, breeding, fishing, quests)
+//   and routes them into SimpleStats.
 // - Abolishes vanilla XP drain: disables Enchanting Table and restores level on anvil.
 // ==============================================================================
 
@@ -17,14 +19,26 @@ function getRequiredXpForLevel(lvl) {
     return Math.round(50 * Math.pow(1.08, l - 1));
 }
 
-// Level Check and Level Up Logic
+// Level Check, XP Ingestion and Level Up Logic
 function checkRpgLevelUp(player) {
     if (!player || !player.isAlive()) return;
 
     let pData = player.persistentData;
     if (!pData) return;
 
-    // Get true SimpleStats level (defaults to 1 if not yet initialized)
+    let server = player.server;
+    if (!server) return;
+
+    // 1. INGEST VANILLA XP ORBS (Mining, Smelting, Breeding, Fishing, Quests)
+    let lastTotalXp = pData.getInt('elyrium_synced_total_xp');
+    let currentTotalXp = player.totalExperience;
+    if (typeof lastTotalXp === 'number' && lastTotalXp > 0 && currentTotalXp > lastTotalXp) {
+        let gainedXp = currentTotalXp - lastTotalXp;
+        // Feed into SimpleStats progression
+        server.runCommandSilent(`simplestats xp add ${player.username} ${gainedXp}`);
+    }
+
+    // 2. CHECK LEVEL PROGRESSION
     let currentLvl = pData.getInt('simplestats_level');
     if (!currentLvl || currentLvl < 1) {
         currentLvl = 1;
@@ -33,7 +47,6 @@ function checkRpgLevelUp(player) {
     let trackedLvl = pData.getInt('elyrium_tracked_level');
 
     // First time tracking on join / migration:
-    // If existing player joins at level > 1, start tracking from 1 so they catch up talent points
     if (!trackedLvl || trackedLvl < 1) {
         if (currentLvl > 1) {
             pData.putInt('elyrium_tracked_level', 1);
@@ -49,9 +62,6 @@ function checkRpgLevelUp(player) {
     if (currentLvl > trackedLvl) {
         let delta = currentLvl - trackedLvl;
         pData.putInt('elyrium_tracked_level', currentLvl);
-
-        let server = player.server;
-        if (!server) return;
 
         // 1. Grant Puffish Skills talent points (1 point per level gained)
         server.runCommandSilent(`puffish_skills points add ${player.username} elyrium:celestial_tree ${delta}`);
@@ -113,11 +123,16 @@ function syncVanillaXpBar(player, currentLvl) {
         // Set visual progress on XP bar
         player.experienceProgress = progress;
 
-        // Keep internal XP points in sync and force client network packet update
+        // Keep internal XP points in sync
         try {
             let pts = Math.round(progress * Math.max(1, player.getXpNeededForNextLevel()));
             player.setExperiencePoints(pts);
         } catch (e2) {}
+
+        // Anchor synced total XP to prevent self-triggering loops
+        if (pData) {
+            pData.putInt('elyrium_synced_total_xp', player.totalExperience);
+        }
     } catch (e) {}
 }
 
@@ -137,7 +152,11 @@ PlayerEvents.loggedIn(event => {
 
 // Respawn Hook: Restore level display and status
 PlayerEvents.respawned(event => {
-    checkRpgLevelUp(event.player);
+    let p = event.player;
+    if (p && p.persistentData) {
+        p.persistentData.putInt('elyrium_synced_total_xp', p.totalExperience);
+    }
+    checkRpgLevelUp(p);
 });
 
 // ------------------------------------------------------------------------------
