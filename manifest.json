@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-26T21:06:29.524073+00:00",
+  "generated_at": "2026-09-26T21:14:44.530675+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -4522,8 +4522,8 @@
     },
     {
       "path": "kubejs/assets/l2complements/textures/block/eternal_anvil_n.png",
-      "sha256": "5336009389558c7535f05635456fb0d76e656bd335f47572a9efbafdc6c012c4",
-      "size": 177455
+      "sha256": "a0db4c241016e18e0cd0f0e6df1e5aefe3a7b9bb725be2436c9d8512ffcd93e3",
+      "size": 165104
     },
     {
       "path": "kubejs/assets/l2complements/textures/block/eternal_anvil_s.png",
