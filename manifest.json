@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-26T17:07:11.991629+00:00",
+  "generated_at": "2026-09-26T18:42:08.639712+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -127,7 +127,7 @@
     },
     {
       "path": "config/apotheosis/name_generation.cfg",
-      "sha256": "0110c47f11c5f3ec4a46b5164edfc2e8b366b9b2ecd8527d9175fac5068ad0a2",
+      "sha256": "3ee3301222be7804b6a76048ed68fb8e7a0a7687fdea586373afc3208283dd9e",
       "size": 138672
     },
     {
@@ -1367,7 +1367,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "4122dfb40a6b0f79f1fbbe7abedad9f234f982c3b5dcc89c614a29fe4ec2cb30",
+      "sha256": "b244e5fa7c0113882ed4afda29d2bd814309707bb26266d916087962caa83e6e",
       "size": 275
     },
     {
@@ -1417,8 +1417,8 @@
     },
     {
       "path": "config/rpg_series/loot_fallback_report.json",
-      "sha256": "7cf5e831b0c5f3d7f39c5e3d35c9bc3fc09b5676e2d86279672ec565c53f978f",
-      "size": 176
+      "sha256": "39877d2913ce1eb840575fcad4200047341ada62cbe70d9de59c62a22f38be6c",
+      "size": 83024
     },
     {
       "path": "config/rpg_series/loot_scrolls_v2.json",
@@ -4514,6 +4514,11 @@
       "path": "kubejs/assets/kubejs/textures/item/world_heart_shard.png",
       "sha256": "567c678d8d086bed7a19375270d7cbb2b639cf897d6c62acd9e758a9a7163922",
       "size": 248
+    },
+    {
+      "path": "kubejs/assets/l2complements/textures/block/eternal_anvil.png",
+      "sha256": "a9707cc11b88e57b0df98208eafed04356145cb190bcfe9ba37b40fb5887741b",
+      "size": 2560
     },
     {
       "path": "kubejs/assets/puffish_skills/textures/skills/alchemist_class.png",
