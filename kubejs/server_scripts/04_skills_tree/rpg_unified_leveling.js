@@ -124,7 +124,9 @@ function syncVanillaXpBar(player, currentLvl) {
 // Tick Hook: Check level every 10 ticks (0.5s)
 PlayerEvents.tick(event => {
     let player = event.player;
-    if (!player || player.age % 10 !== 0) return;
+    if (!player) return;
+    let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0);
+    if (tick % 10 !== 0) return;
     checkRpgLevelUp(player);
 });
 

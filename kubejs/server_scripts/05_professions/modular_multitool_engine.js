@@ -412,7 +412,9 @@ BlockEvents.broken(event => {
 // ------------------------------------------------------------------------------
 PlayerEvents.tick(event => {
     let player = event.player;
-    if (!player || player.age % 20 !== 0) return;
+    if (!player) return;
+    let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0);
+    if (tick % 20 !== 0) return;
 
     let mainItem = player.mainHandItem;
     if (!mainItem || !mainItem.id.includes('modular_omni_chassis')) return;

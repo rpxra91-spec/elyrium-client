@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-26T12:27:47.292107+00:00",
+  "generated_at": "2026-09-26T12:31:37.589703+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -7882,8 +7882,8 @@
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/rpg_unified_leveling.js",
-      "sha256": "915e9d8151168f87be3d445fe6ff50f4ed309bd28a74d8d2b1f8bd34166230c9",
-      "size": 7869
+      "sha256": "9c6e998e306722230cfb85ff30ed68c620ff48e76f925d28dcd96ada897eb79b",
+      "size": 7971
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/skill_abilities_engine.js",
@@ -7937,8 +7937,8 @@
     },
     {
       "path": "kubejs/server_scripts/05_professions/modular_multitool_engine.js",
-      "sha256": "ef8b9e3f754987c253f1fe51d7974801f6596dd7b079d6d2dca5cb731f08b6bb",
-      "size": 20522
+      "sha256": "9702b38ff10753ec95e4e262ec3ac6f0640c77452bb34b0cd7296723e7725907",
+      "size": 20624
     },
     {
       "path": "kubejs/server_scripts/05_professions/player_trade_system.js",
