@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-27T00:24:06.716907+00:00",
+  "generated_at": "2026-09-27T09:14:41.071845+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -1367,7 +1367,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "0635af935a72bc27be33f4b525276dc73dadf15912ed75101424c4117e038488",
+      "sha256": "ee1169a636a487ed6b104a809bd0d94dddc834c7bc0ddcfb65d3a0e8d09e24db",
       "size": 275
     },
     {
@@ -7467,8 +7467,8 @@
     },
     {
       "path": "kubejs/client_scripts/equipment_reinforcement_tooltips.js",
-      "sha256": "0e808b673a5f0cabb18e99824fd4b3a5f607a4928ae465a576d6da671ae55de5",
-      "size": 13168
+      "sha256": "65e82e89fbf63a715c0466586cd8c91181dae3acc585bb9d52582b6ab65ccefd",
+      "size": 11300
     },
     {
       "path": "kubejs/client_scripts/filter_early_weapons.js",
@@ -7487,8 +7487,8 @@
     },
     {
       "path": "kubejs/client_scripts/gear_score_tooltips.js",
-      "sha256": "1b75ef6e8c77710910067df68e4b4188152b13fb6fbfc894b042aea80c4735fe",
-      "size": 5459
+      "sha256": "ba90502cff9dfea4e0ff5d08404f69f95321ebce19d9d6f494397cd2cfb15bb7",
+      "size": 5140
     },
     {
       "path": "kubejs/client_scripts/item_en_tooltip.js",
@@ -7502,13 +7502,18 @@
     },
     {
       "path": "kubejs/client_scripts/martial_arts_tooltips.js",
-      "sha256": "177d14d5b260aa7b5656ce7072bce0fddc3bad834dd3ee56873791d3b0f7f9cd",
-      "size": 15476
+      "sha256": "64cfb193470cde861cf3144ee13d58156b57ba46f59101675dcbd2845f0bc070",
+      "size": 24167
     },
     {
       "path": "kubejs/client_scripts/modular_multitool_tooltips.js",
       "sha256": "9a1c97954222c668206dc8194b9ce74b47224dee7ae28af34f99d4bb528a33eb",
       "size": 7555
+    },
+    {
+      "path": "kubejs/client_scripts/physical_weapon_arts_animations.js",
+      "sha256": "f36cd4f0f401a055391a0194c573f73e2de10ca971fec42958f1856c43db1c22",
+      "size": 4919
     },
     {
       "path": "kubejs/client_scripts/spell_capacity_tooltips.js",
@@ -7802,8 +7807,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/world_spawn_setup.js",
-      "sha256": "aeb63942b867e6d1f712c59e202a30cca86feec0483b8390d17a3f9bd96b4597",
-      "size": 2431
+      "sha256": "2769f55bea809a69a8ada5bf5588c39e7bc25211f494e215c4efc37b039ada7f",
+      "size": 10192
     },
     {
       "path": "kubejs/server_scripts/02_magic/spell_capacity_engine.js",
@@ -7867,8 +7872,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_inscription.js",
-      "sha256": "f2d966825671f58bb3c19cfd1736226c13b84d605350bfb698b2df78953b15d6",
-      "size": 45193
+      "sha256": "3aae4e1bb656667f0864ad19fca1b6becdf043dbfc6a411a6d65bb1671c862a6",
+      "size": 46183
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_loot.js",
@@ -7882,8 +7887,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "c524b596a6f79b8ea639975eda3e28cf60dc16f26629d4c1f89bf5223276828a",
-      "size": 65748
+      "sha256": "27b848c51bd27000e6343e44f9c94a8e9c7de2f81577d2a2cd2086c139019ad9",
+      "size": 84730
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",

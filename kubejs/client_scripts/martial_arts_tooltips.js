@@ -1,14 +1,18 @@
 // ==============================================================================
-// ⚔️ ELYRIUM RPG: MARTIAL ARTS & WEAPON ARTS TOOLTIPS (CLIENT SCRIPT v2.2)
+// ⚔️ ELYRIUM RPG: MARTIAL ARTS & WEAPON ARTS TOOLTIPS (CLIENT SCRIPT v2.3)
 // Minecraft 1.21.1 NeoForge | KubeJS Client Script
 // ==============================================================================
-// Displays Physical Weapon Arts information on weapons and tablets:
+// Displays Physical Weapon Arts information on weapons, shields, and tablets:
 // 1. Weapons:
 //    - §6⚔ Врожденный прием: §e[Прием] §8[ПКМ / Shift+ПКМ со щитом]
 //      §7• Эффект: §fОписание
 //      §7• Затраты: §bX Выносливости §7| Откат: §aY сек.
 //    - §d💎 Рунический навык: §e[Навык Ранг] §8[Shift+ПКМ] (или пустой слот)
-// 2. Martial Tablets:
+// 2. Spear Mechanics:
+//    - §6🔱 Универсальный хват (со щитом / двуручный силовой)
+// 3. Shield Mechanics:
+//    - §e★ Гвардейский Контрудар на ЛКМ после блока
+// 4. Martial Tablets:
 //    - Archetype, suitable weapons, effect, stamina cost, cooldown, rank.
 // ==============================================================================
 
@@ -16,71 +20,143 @@ const ROMAN_RANKS = ['0', 'I', 'II', 'III', 'IV', 'V'];
 
 const WEAPON_ARTS = {
     // --------------------------------------------------------------------------
-    // INNATE ARCHETYPE ARTS
+    // 9 MELEE WEAPON ARTS
     // --------------------------------------------------------------------------
-    'parry_counter': {
-        name: 'Парирующий Клинок',
-        desc: 'Стойка парирования на 0.8с: блокирует 100% урона, оглушает врага и проводит контрудар x2.0.',
-        weapons: 'Одноручные мечи, палаши, сабли',
-        baseCd: 8,
-        stamina: 25,
-        archetype: 'Парирование и Контрудар'
-    },
-    'seismic_cleave': {
-        name: 'Сейсмический Клив',
-        desc: 'Круговой замах на 360° в радиусе 4.5б с каменной волной (180% урона и отбрасывание).',
-        weapons: 'Двуручные мечи, клейморы, боевые косы',
+    'whirlwind_cleave': {
+        name: 'Вихревой Размах',
+        desc: 'Круговой замах на 360° в радиусе 4.5б (180% урона и круговое отбрасывание).',
+        weapons: 'Двуручные мечи, клейморы, алебарды',
         baseCd: 12,
         stamina: 40,
-        archetype: 'Рассекающий Удар'
+        archetype: 'Размашистый Клив'
     },
     'iai_slash': {
-        name: 'Фантомный Выпад (Иайдзюцу)',
+        name: 'Фантомный Выпад (Иай)',
         desc: 'Мгновенный рывок сквозь строй врагов на 6 блоков (190% урона и кровотечение на 5с).',
-        weapons: 'Катаны, нодати, утигатаны',
+        weapons: 'Катаны, нодати, рапиры, сабли',
         baseCd: 10,
         stamina: 30,
         archetype: 'Стремительное Иай'
     },
-    'shield_breaker': {
-        name: 'Сокрушитель Защиты',
-        desc: 'Тяжелый нисходящий удар: сбивает щиты, игнорирует 50% брони и оглушает на 1.5с.',
-        weapons: 'Боевые топоры, секиры',
+    'severing_cleave': {
+        name: 'Рассекающий Клив',
+        desc: 'Мощный фронтальный дуговой удар (конус 120°, 4м): 210% урона, игнорирует 40% брони.',
+        weapons: 'Боевые топоры, секиры, клейморы',
         baseCd: 11,
         stamina: 35,
         archetype: 'Раскалывание Защиты'
     },
-    'tectonic_rupture': {
-        name: 'Разлом Тектоники',
-        desc: 'Удар о землю с 5-метровой радиальной волной: подбрасывает в воздух и накладывает Замедление IV.',
+    'earth_sunder': {
+        name: 'Сотрясение Земли',
+        desc: 'Удар в землю с 5-метровой радиальной волной: 200% урона, подброс и Замедление IV.',
         weapons: 'Боевые молоты, булавы, палицы',
         baseCd: 14,
         stamina: 45,
         archetype: 'Сейсмический Разлом'
     },
+    'crushing_uppercut': {
+        name: 'Сокрушительный Апперкот',
+        desc: 'Восходящий удар снизу-вверх: 220% урона, запуск врага на 4 блока в воздух, стан 2с.',
+        weapons: 'Булавы, молоты, кастеты, кулачное оружие',
+        baseCd: 11,
+        stamina: 30,
+        archetype: 'Оглушающий Апперкот'
+    },
     'piercing_thrust': {
         name: 'Бронебойный Прокол',
-        desc: 'Колющий выпад на 5.5 блоков со 100% игнорированием плотной брони и отталкиванием.',
-        weapons: 'Копья, алебарды, трезубцы, пики',
+        desc: 'Линейный выпад на 5.5 блоков со 100% игнорированием брони цели и отталкиванием.',
+        weapons: 'Копья, алебарды, трезубцы, пики, рапиры',
         baseCd: 9,
         stamina: 25,
         archetype: 'Пронзающий Выпад'
     },
+    'scissor_cross': {
+        name: 'Ножницы',
+        desc: 'Скрещенный рассекающий удар двумя клинками: 2x 110% урона + Глубокие Раны.',
+        weapons: 'Парные клинки, кинжалы, парные мечи',
+        baseCd: 8,
+        stamina: 25,
+        archetype: 'Парное Рассечение'
+    },
     'shadow_step': {
         name: 'Теневой Шаг',
-        desc: 'Мгновенное смещение за спину цели (до 5б), скрытность на 1с и гарантированный 100% крит.',
+        desc: 'Мгновенное смещение за спину цели (до 5.5б), невидимость 1.2с и 100% крит.',
         weapons: 'Кинжалы, рапиры, саи, когти',
         baseCd: 8,
         stamina: 20,
         archetype: 'Теневое Убийство'
     },
+    'reverse_sunder': {
+        name: 'Реверсивный Раскол',
+        desc: 'Возвратный вертикальный взмах: 195% урона, сбивает блок щита и дает Слабость II.',
+        weapons: 'Одноручные и двуручные мечи, палаши',
+        baseCd: 10,
+        stamina: 30,
+        archetype: 'Разрушение Стойки'
+    },
+
+    // --------------------------------------------------------------------------
+    // 5 RANGED BOW ARTS
+    // --------------------------------------------------------------------------
     'fan_barrage': {
         name: 'Веерный Залп',
-        desc: 'Веерный выстрел конусом из 5 спектральных стрел перед собой.',
+        desc: 'Выпуск веера из 5 спектральных стрел по широкому конусу перед собой.',
         weapons: 'Луки, арбалеты',
         baseCd: 10,
         stamina: 30,
         archetype: 'Стрелковый Веер'
+    },
+    'piercing_shot': {
+        name: 'Бронебойный Выстрел',
+        desc: 'Стрела прошивает строй врагов насквозь по прямой до 25 блоков со 100% пробитием брони.',
+        weapons: 'Луки, длинные луки',
+        baseCd: 12,
+        stamina: 35,
+        archetype: 'Снайперский Пробой'
+    },
+    'arrow_rain': {
+        name: 'Град Стрел',
+        desc: 'Выстрел в зенит: через 1.2с в выбранную зону 6м обрушивается шквал из 12 стрел.',
+        weapons: 'Луки, составные луки',
+        baseCd: 16,
+        stamina: 45,
+        archetype: 'Артиллерийский Залп'
+    },
+    'tactical_backstep': {
+        name: 'Тактический Отскок',
+        desc: 'Отскок назад на 5 блоков с одновременным выстрелом контузящей стрелы.',
+        weapons: 'Луки, арбалеты',
+        baseCd: 9,
+        stamina: 25,
+        archetype: 'Тактическое Уклонение'
+    },
+    'triple_shot': {
+        name: 'Беглая Тройка',
+        desc: 'Скорострельная очередь из 3 стрел подряд в одну точку с повышенной кучностью.',
+        weapons: 'Луки, арбалеты',
+        baseCd: 11,
+        stamina: 30,
+        archetype: 'Беглая Стрельба'
+    },
+
+    // --------------------------------------------------------------------------
+    // 2 SHIELD ARTS & GUARD COUNTER
+    // --------------------------------------------------------------------------
+    'shield_bash': {
+        name: 'Таранный Натиск',
+        desc: 'Рывок со щитом на 5 блоков: сбивает врагов, наносит урон от стойкости и оглушает на 2с.',
+        weapons: 'Щиты (основная или вторая рука)',
+        baseCd: 12,
+        stamina: 35,
+        archetype: 'Таранная Оборона'
+    },
+    'unwavering_bulwark': {
+        name: 'Непоколебимый Оплот',
+        desc: 'Защитная стойка на 3.5с: 80% защиты от урона, иммунитет к отбросу, 30% отражения урона.',
+        weapons: 'Тяжелые и ростовые щиты',
+        baseCd: 20,
+        stamina: 40,
+        archetype: 'Бастион'
     },
 
     // --------------------------------------------------------------------------
@@ -127,14 +203,14 @@ const WEAPON_ARTS = {
         archetype: 'Божественная Кара'
     },
 
-    // Legacy Tablet Aliases
-    'whirlwind': { name: 'Сейсмический Клив', desc: 'Круговой замах на 360° в радиусе 4.5б.', weapons: 'Двуручные мечи, клейморы, секиры', baseCd: 12, stamina: 40, archetype: 'Рассечение' },
-    'earth_sunder': { name: 'Разлом Тектоники', desc: 'Мощный удар в землю с трещиной на 6 блоков.', weapons: 'Тяжелые двуручники, молоты', baseCd: 14, stamina: 45, archetype: 'Дробящее Рассечение' },
-    'juggernaut': { name: 'Неумолимый Натиск', desc: 'Стремительный таран со щитом (+40% защиты).', weapons: 'Двуручные мечи, алебарды', baseCd: 16, stamina: 35, archetype: 'Натиск и Оборона' },
-    'lightning_thrust': { name: 'Фантомный Выпад', desc: 'Молниеносный рывок сквозь строй врагов на 6 блоков.', weapons: 'Катаны, рапиры, кинжалы', baseCd: 10, stamina: 30, archetype: 'Стремительный Выпад' },
-    'blood_rend': { name: 'Кровавая Жатва', desc: 'Рассекающий полумесяц алой энергии с исцелением.', weapons: 'Катаны, косы, сабли', baseCd: 12, stamina: 35, archetype: 'Жажда Крови' },
-    'seismic_slam': { name: 'Разлом Тектоники', desc: 'Удар оземь с радиальной волной и оглушением.', weapons: 'Молоты, дубины, булавы', baseCd: 14, stamina: 45, archetype: 'Землетрясение' },
-    'arrow_barrage': { name: 'Веерный Залп', desc: 'Веерный выстрел конусом из 5 спектральных стрел.', weapons: 'Луки, арбалеты', baseCd: 10, stamina: 30, archetype: 'Стрелковое Мастерство' }
+    // Legacy Aliases
+    'whirlwind': { name: 'Вихревой Размах', desc: 'Круговой замах на 360° в радиусе 4.5б.', weapons: 'Двуручные мечи, клейморы', baseCd: 12, stamina: 40, archetype: 'Размашистый Клив' },
+    'seismic_cleave': { name: 'Вихревой Размах', desc: 'Круговой замах на 360° в радиусе 4.5б.', weapons: 'Двуручные мечи, клейморы', baseCd: 12, stamina: 40, archetype: 'Размашистый Клив' },
+    'tectonic_rupture': { name: 'Сотрясение Земли', desc: 'Удар в землю с 5-метровой радиальной волной.', weapons: 'Молоты, булавы', baseCd: 14, stamina: 45, archetype: 'Сейсмический Разлом' },
+    'shield_breaker': { name: 'Рассекающий Клив', desc: 'Фронтальный дуговой удар с пробитием брони.', weapons: 'Секиры, боевые топоры', baseCd: 11, stamina: 35, archetype: 'Раскалывание Защиты' },
+    'parry_counter': { name: 'Реверсивный Раскол', desc: 'Возвратный вертикальный взмах со сбивом защиты.', weapons: 'Одноручные и двуручные мечи', baseCd: 10, stamina: 30, archetype: 'Разрушение Стойки' },
+    'juggernaut': { name: 'Таранный Натиск', desc: 'Рывок вперед со щитом.', weapons: 'Щиты', baseCd: 12, stamina: 35, archetype: 'Таранная Оборона' },
+    'arrow_barrage': { name: 'Веерный Залп', desc: 'Выпуск веера из 5 спектральных стрел.', weapons: 'Луки, арбалеты', baseCd: 10, stamina: 30, archetype: 'Стрелковый Веер' }
 };
 
 function getArtRankRoman(rank) {
@@ -175,41 +251,39 @@ function isTwoHandedWeapon(item) {
            item.hasTag('c:tools/two_handed') || item.hasTag('c:two_handed_weapons');
 }
 
+function isSpear(item) {
+    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
+    let id = String(item.id).toLowerCase();
+    return id.includes('spear') || id.includes('halberd') || id.includes('lance') ||
+           id.includes('glaive') || id.includes('polearm') || id.includes('trident') ||
+           id.includes('pike') || item.hasTag('c:tools/spears') || item.hasTag('c:spears');
+}
+
+function isShield(item) {
+    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
+    let id = String(item.id).toLowerCase();
+    return item.hasTag('c:tools/shields') ||
+           item.hasTag('c:shields') ||
+           item.hasTag('forge:shields') ||
+           item.hasTag('minecraft:shields') ||
+           id.includes('shield');
+}
+
 function isAnyWeapon(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
     let id = String(item.id).toLowerCase();
-
-    // Not tablets, not smithing stones, not templates
-    if (id.startsWith('kubejs:martial_tablet_') || id.startsWith('kubejs:smithing_stone_') || id.includes('template')) {
-        return false;
-    }
-
-    // Exclude shields
-    if (item.hasTag('c:tools/shields') || item.hasTag('c:shields') || item.hasTag('forge:shields') || item.hasTag('minecraft:shields') || id.includes('shield')) {
-        return false;
-    }
-
-    // Exclude armor
-    if (item.hasTag('minecraft:armors') || item.hasTag('c:armors') || 
-        item.hasTag('minecraft:head_armor') || item.hasTag('minecraft:chest_armor') ||
-        item.hasTag('minecraft:leg_armor') || item.hasTag('minecraft:foot_armor') ||
-        id.includes('helmet') || id.includes('chestplate') || id.includes('leggings') || 
-        id.includes('boots') || id.includes('hood') || id.includes('robe') || id.includes('crown')) {
-        return false;
-    }
-
     return item.hasTag('c:tools/melee_weapon') ||
            item.hasTag('minecraft:swords') ||
            item.hasTag('minecraft:axes') ||
            item.hasTag('c:tools/bows') ||
            item.hasTag('c:tools/crossbows') ||
            item.hasTag('c:weapons') ||
+           isShield(item) ||
            id.includes('sword') || id.includes('blade') || id.includes('claymore') ||
            id.includes('katana') || id.includes('dagger') || id.includes('scythe') ||
            id.includes('rapier') || id.includes('glaive') || id.includes('spear') ||
            id.includes('halberd') || id.includes('axe') || id.includes('bow') ||
            id.includes('crossbow') || id.includes('hammer') || id.includes('mace') ||
-           id.includes('staff') || id.includes('wand') || id.includes('scepter') ||
            id.includes('sai') || id.includes('trident');
 }
 
@@ -217,49 +291,61 @@ function resolveInnateWeaponArt(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return null;
     let id = String(item.id).toLowerCase();
 
-    // 1. Bows & Crossbows: Fan Barrage
+    // 1. Shields
+    if (isShield(item)) {
+        return 'shield_bash';
+    }
+
+    // 2. Bows & Crossbows: Fan Barrage
     if (id.includes('bow') || id.includes('crossbow') ||
         item.hasTag('c:tools/bows') || item.hasTag('c:tools/crossbows')) {
         return 'fan_barrage';
     }
 
-    // 2. Katanas: Phantom Thrust / Iai Slash
+    // 3. Katanas: Phantom Thrust / Iai Slash
     if (id.includes('katana') || id.includes('nodachi') || id.includes('uchigatana')) {
         return 'iai_slash';
     }
 
-    // 3. Warhammers & Maces: Tectonic Rupture
-    if (id.includes('hammer') || id.includes('mace') || id.includes('club') ||
-        id.includes('maul') || id.includes('greathammer')) {
-        return 'tectonic_rupture';
+    // 4. Warhammers & Maces: Earth Sunder
+    if (id.includes('hammer') || id.includes('club') || id.includes('maul') || id.includes('greathammer')) {
+        return 'earth_sunder';
     }
 
-    // 4. Battleaxes & Greataxes: Shield Breaker / Sunder
+    if (id.includes('mace') || id.includes('fist') || id.includes('knuckle')) {
+        return 'crushing_uppercut';
+    }
+
+    // 5. Battleaxes & Greataxes: Severing Cleave
     if (id.includes('battleaxe') || id.includes('greataxe') || id.includes('waraxe') ||
         (id.includes('axe') && !id.includes('pickaxe'))) {
-        return 'shield_breaker';
+        return 'severing_cleave';
     }
 
-    // 5. Polearms & Spears: Armor-Piercing Thrust
-    if (id.includes('spear') || id.includes('halberd') || id.includes('lance') ||
-        id.includes('glaive') || id.includes('polearm') || id.includes('trident') || id.includes('pike')) {
+    // 6. Polearms & Spears: Armor-Piercing Thrust
+    if (isSpear(item)) {
         return 'piercing_thrust';
     }
 
-    // 6. Daggers & Rapiers: Shadow Step
-    if (id.includes('dagger') || id.includes('rapier') || id.includes('knife') ||
-        id.includes('sickle') || id.includes('sai') || id.includes('stiletto') || id.includes('tanto')) {
+    // 7. Daggers & Twinblades: Scissor Cross
+    if (id.includes('dagger') || id.includes('knife') || id.includes('sai') ||
+        id.includes('stiletto') || id.includes('tanto') || id.includes('twinblade')) {
+        return 'scissor_cross';
+    }
+
+    // 8. Rapiers & Finesse: Shadow Step
+    if (id.includes('rapier') || id.includes('saber') || id.includes('cutlass')) {
         return 'shadow_step';
     }
 
-    // 7. Greatswords & Claymores: Seismic Cleave
+    // 9. Greatswords & Claymores: Whirlwind Cleave
     if (id.includes('claymore') || id.includes('greatsword') || id.includes('zweihander') ||
         id.includes('colossal') || id.includes('scythe') || isTwoHandedWeapon(item)) {
-        return 'seismic_cleave';
+        return 'whirlwind_cleave';
     }
 
-    // 8. Swords & Broadswords: Parry & Counter
-    return 'parry_counter';
+    // 10. Swords: Reverse Sunder
+    return 'reverse_sunder';
 }
 
 function extractInscribedWeaponArt(item) {
@@ -339,7 +425,17 @@ function renderMartialTooltips(lines, item) {
     }
 
     // --------------------------------------------------------------------------
-    // 2. TOOLTIP FOR WEAPONS
+    // 2. TOOLTIP FOR SHIELDS
+    // --------------------------------------------------------------------------
+    if (isShield(item)) {
+        lines.add(Text.of('§6🛡 Боевое искусство щита: §e[Таранный Натиск] §8[ПКМ]'));
+        lines.add(Text.of('  §7• Эффект: §fРывок на 5б со сбивом врагов и оглушением на 2с.'));
+        lines.add(Text.of('§e★ Гвардейский Контрудар: §fЛКМ в окне 1.5с после блока (+150% урона, стан 1.5с)'));
+        return;
+    }
+
+    // --------------------------------------------------------------------------
+    // 3. TOOLTIP FOR WEAPONS
     // --------------------------------------------------------------------------
     if (!isAnyWeapon(item)) return;
 
@@ -352,7 +448,14 @@ function renderMartialTooltips(lines, item) {
         lines.add(Text.of('  §7• Расход: §b' + innateArt.stamina + ' Выносливости §7| Откат: §a' + innateArt.baseCd + 'с'));
     }
 
-    // B. Extra Runic Slot
+    // B. Spear Mechanics (Universal Grip)
+    if (isSpear(item)) {
+        lines.add(Text.of('§6🔱 Универсальный хват копья:'));
+        lines.add(Text.of('  §a• Со щитом: §fУкол из-за блока (защита щита не сбрасывается)'));
+        lines.add(Text.of('  §a• Без щита: §fДвуручный силовой хват (+30% урона, +1.5м дальность)'));
+    }
+
+    // C. Extra Runic Slot
     let runicKey = extractInscribedWeaponArt(item);
     if (runicKey && WEAPON_ARTS[runicKey]) {
         let rArt = WEAPON_ARTS[runicKey];
@@ -369,7 +472,7 @@ function renderMartialTooltips(lines, item) {
 }
 
 // ------------------------------------------------------------------------------
-// 3. EVENT REGISTRATION (KubeJS 21 NeoForge Dynamic Tooltips)
+// 4. EVENT REGISTRATION (KubeJS 21 NeoForge Dynamic Tooltips)
 // ------------------------------------------------------------------------------
 
 ItemEvents.modifyTooltips(event => {

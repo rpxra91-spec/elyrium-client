@@ -87,13 +87,32 @@ const MARTIAL_TABLETS = {
 
 const ART_NAMES = {
     'whirlwind_cleave': 'Вихревой Размах',
-    'earth_sunder': 'Рассечение Земли',
-    'juggernaut_rush': 'Неумолимый Натиск',
-    'lightning_thrust': 'Молниеносный Выпад',
-    'blood_rend': 'Кровавый Росчерк',
-    'seismic_slam': 'Сейсмический Молот',
+    'iai_slash': 'Фантомный Выпад',
+    'severing_cleave': 'Рассекающий Клив',
+    'earth_sunder': 'Сотрясение Земли',
+    'crushing_uppercut': 'Сокрушительный Апперкот',
+    'piercing_thrust': 'Бронебойный Прокол',
+    'scissor_cross': 'Ножницы',
     'shadow_step': 'Теневой Шаг',
-    'arrow_barrage': 'Залп Стрел'
+    'reverse_sunder': 'Реверсивный Раскол',
+    'fan_barrage': 'Веерный Залп',
+    'piercing_shot': 'Бронебойный Выстрел',
+    'arrow_rain': 'Град Стрел',
+    'tactical_backstep': 'Тактический Отскок',
+    'triple_shot': 'Беглая Тройка',
+    'shield_bash': 'Таранный Натиск',
+    'unwavering_bulwark': 'Непоколебимый Оплот',
+    'flame_vortex': 'Пламенный Вихрь',
+    'frost_stomp': 'Ледяная Поступь',
+    'lightning_smite': 'Громовой Раскат',
+    'blood_harvest': 'Кровавая Жатва',
+    'holy_blade': 'Священный Клинок',
+    // Legacy
+    'juggernaut_rush': 'Таранный Натиск',
+    'lightning_thrust': 'Фантомный Выпад',
+    'blood_rend': 'Кровавая Жатва',
+    'seismic_slam': 'Сотрясение Земли',
+    'arrow_barrage': 'Веерный Залп'
 };
 
 function getArtDisplayName(artId) {
