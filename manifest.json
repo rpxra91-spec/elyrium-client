@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-27T09:14:41.071845+00:00",
+  "generated_at": "2026-09-27T09:30:35.981330+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -332,13 +332,13 @@
     },
     {
       "path": "config/chunky/config.json",
-      "sha256": "c7384a22595488f79f3125b22cc175eb729267267807a084479419349797abc8",
-      "size": 146
+      "sha256": "6c103db0800e63ba88c2296e42fb8f5e631f70ea17b8c5d77bef0166d0662d96",
+      "size": 145
     },
     {
       "path": "config/chunky/tasks/minecraft/overworld.properties",
-      "sha256": "a71590138009a58a4ee42f6491282b9930cbf0d1737c4091f24498d3342ccd93",
-      "size": 135
+      "sha256": "38a9ee695207ead3aab654dea995680474a95979a7cfb0297bc2ec581ffe66c2",
+      "size": 129
     },
     {
       "path": "config/citadel-common.toml",
@@ -7512,8 +7512,8 @@
     },
     {
       "path": "kubejs/client_scripts/physical_weapon_arts_animations.js",
-      "sha256": "f36cd4f0f401a055391a0194c573f73e2de10ca971fec42958f1856c43db1c22",
-      "size": 4919
+      "sha256": "c9470f3cd5b62f1f1296d606dc719aaa475ae70ca622a342a46ccf24f057dcf1",
+      "size": 6650
     },
     {
       "path": "kubejs/client_scripts/spell_capacity_tooltips.js",
@@ -7807,8 +7807,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/world_spawn_setup.js",
-      "sha256": "2769f55bea809a69a8ada5bf5588c39e7bc25211f494e215c4efc37b039ada7f",
-      "size": 10192
+      "sha256": "e315e47590f12a270d5bdb2909e9c8ddd564488b6d0e285c97fea1314bdbb007",
+      "size": 11082
     },
     {
       "path": "kubejs/server_scripts/02_magic/spell_capacity_engine.js",
@@ -7872,8 +7872,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_inscription.js",
-      "sha256": "3aae4e1bb656667f0864ad19fca1b6becdf043dbfc6a411a6d65bb1671c862a6",
-      "size": 46183
+      "sha256": "d49af336570a9eac72afa6712aa16cd154c00a2dbcbce2d99cacd3b4b4d0bb8d",
+      "size": 49772
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_loot.js",
@@ -7887,8 +7887,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "27b848c51bd27000e6343e44f9c94a8e9c7de2f81577d2a2cd2086c139019ad9",
-      "size": 84730
+      "sha256": "4f180a449850c18b98c0c8f1bf2d3bc7e204975cba879c02f26fb9d744e0d31b",
+      "size": 87217
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
@@ -8022,8 +8022,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/capital_safe_haven.js",
-      "sha256": "bca2b4ad2260f30ce1aaea039bad424458a56c6fdaf92cb17dceb5c14843e8cc",
-      "size": 8742
+      "sha256": "87fe0fc97595429479bd16d9f95702d14c7f8acbfbadddddcc7ad916481b9172",
+      "size": 8881
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/colony_board.js",
@@ -8137,8 +8137,8 @@
     },
     {
       "path": "kubejs/startup_scripts/martial_arts_items.js",
-      "sha256": "6658d2b474bb669a307dd4f472d3c4e36dc1a4e13e907371f223667bdb82c735",
-      "size": 7686
+      "sha256": "5fe3ed8c4a8d9b6863c107180a711e626507a52b935b1b00f8a963af81366c12",
+      "size": 14794
     },
     {
       "path": "kubejs/startup_scripts/modular_multitool_items.js",

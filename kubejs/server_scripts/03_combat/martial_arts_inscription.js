@@ -35,54 +35,34 @@ const ROMAN_RANKS = {
 };
 
 const MARTIAL_TABLETS = {
-    'kubejs:martial_tablet_whirlwind': {
-        artId: 'whirlwind_cleave',
-        name: 'Вихревой Размах',
-        archetype: 'heavy',
-        allowedDesc: 'Двуручное / Тяжелое (клеймор, двуручник, секира, молот, алебарда)'
-    },
-    'kubejs:martial_tablet_earth_sunder': {
-        artId: 'earth_sunder',
-        name: 'Рассечение Земли',
-        archetype: 'heavy',
-        allowedDesc: 'Двуручное / Тяжелое (клеймор, двуручник, секира, молот, алебарда)'
-    },
-    'kubejs:martial_tablet_juggernaut': {
-        artId: 'juggernaut_rush',
-        name: 'Неумолимый Натиск',
-        archetype: 'heavy',
-        allowedDesc: 'Двуручное / Тяжелое (клеймор, двуручник, секира, молот, алебарда)'
-    },
-    'kubejs:martial_tablet_lightning_thrust': {
-        artId: 'lightning_thrust',
-        name: 'Молниеносный Выпад',
-        archetype: 'finesse',
-        allowedDesc: 'Клинковое / Ловкое (катана, рапира, коса, меч, сабля)'
-    },
-    'kubejs:martial_tablet_blood_rend': {
-        artId: 'blood_rend',
-        name: 'Кровавый Росчерк',
-        archetype: 'finesse',
-        allowedDesc: 'Клинковое / Ловкое (катана, рапира, коса, меч, сабля)'
-    },
-    'kubejs:martial_tablet_seismic_slam': {
-        artId: 'seismic_slam',
-        name: 'Сейсмический Молот',
-        archetype: 'bludgeoning',
-        allowedDesc: 'Дробящее (молот, булава, дубина)'
-    },
-    'kubejs:martial_tablet_shadow_step': {
-        artId: 'shadow_step',
-        name: 'Теневой Шаг',
-        archetype: 'daggers',
-        allowedDesc: 'Кинжалы / Легкое (кинжал, сай, нож, короткий меч)'
-    },
-    'kubejs:martial_tablet_arrow_barrage': {
-        artId: 'arrow_barrage',
-        name: 'Залп Стрел',
-        archetype: 'ranged',
-        allowedDesc: 'Стрелковое (лук, арбалет)'
-    }
+    // 9 Melee Arts
+    'kubejs:martial_tablet_whirlwind': { artId: 'whirlwind_cleave', name: 'Вихревой Размах', archetype: 'heavy', allowedDesc: 'Двуручное / Тяжелое (клеймор, двуручник, секира, алебарда)' },
+    'kubejs:martial_tablet_earth_sunder': { artId: 'earth_sunder', name: 'Сотрясение Земли', archetype: 'heavy', allowedDesc: 'Тяжелые двуручники, боевые молоты, булавы' },
+    'kubejs:martial_tablet_severing_cleave': { artId: 'severing_cleave', name: 'Рассекающий Клив', archetype: 'heavy', allowedDesc: 'Боевые топоры, секиры, клейморы' },
+    'kubejs:martial_tablet_lightning_thrust': { artId: 'iai_slash', name: 'Фантомный Выпад (Иай)', archetype: 'finesse', allowedDesc: 'Клинковое / Ловкое (катана, рапира, кинжал, сабля)' },
+    'kubejs:martial_tablet_crushing_uppercut': { artId: 'crushing_uppercut', name: 'Сокрушительный Апперкот', archetype: 'bludgeoning', allowedDesc: 'Дробящее (булава, молот, кастет)' },
+    'kubejs:martial_tablet_piercing_thrust': { artId: 'piercing_thrust', name: 'Бронебойный Прокол', archetype: 'finesse', allowedDesc: 'Копья, алебарды, пики, рапиры' },
+    'kubejs:martial_tablet_scissor_cross': { artId: 'scissor_cross', name: 'Ножницы', archetype: 'daggers', allowedDesc: 'Парные клинки, кинжалы, парные мечи' },
+    'kubejs:martial_tablet_shadow_step': { artId: 'shadow_step', name: 'Теневой Шаг', archetype: 'daggers', allowedDesc: 'Кинжалы / Легкое (кинжал, сай, нож, рапира)' },
+    'kubejs:martial_tablet_reverse_sunder': { artId: 'reverse_sunder', name: 'Реверсивный Раскол', archetype: 'any', allowedDesc: 'Одноручные и двуручные мечи, палаши' },
+
+    // 5 Bow Arts
+    'kubejs:martial_tablet_arrow_barrage': { artId: 'fan_barrage', name: 'Веерный Залп', archetype: 'ranged', allowedDesc: 'Стрелковое (лук, арбалет)' },
+    'kubejs:martial_tablet_piercing_shot': { artId: 'piercing_shot', name: 'Бронебойный Выстрел', archetype: 'ranged', allowedDesc: 'Стрелковое (лук, длинный лук)' },
+    'kubejs:martial_tablet_arrow_rain': { artId: 'arrow_rain', name: 'Град Стрел', archetype: 'ranged', allowedDesc: 'Стрелковое (лук, составной лук)' },
+    'kubejs:martial_tablet_tactical_backstep': { artId: 'tactical_backstep', name: 'Тактический Отскок', archetype: 'ranged', allowedDesc: 'Стрелковое (лук, арбалет)' },
+    'kubejs:martial_tablet_triple_shot': { artId: 'triple_shot', name: 'Беглая Тройка', archetype: 'ranged', allowedDesc: 'Стрелковое (лук, арбалет)' },
+
+    // 2 Shield Arts
+    'kubejs:martial_tablet_juggernaut': { artId: 'shield_bash', name: 'Таранный Натиск', archetype: 'shield', allowedDesc: 'Щиты (баклеры, щиты, башенные)' },
+    'kubejs:martial_tablet_unwavering_bulwark': { artId: 'unwavering_bulwark', name: 'Непоколебимый Оплот', archetype: 'shield', allowedDesc: 'Щиты (тяжелые, башенные)' },
+
+    // 5 Elemental Runes (T4+)
+    'kubejs:martial_tablet_flame_vortex': { artId: 'flame_vortex', name: 'Пламенный Вихрь', archetype: 'any', allowedDesc: 'Любое боевое оружие' },
+    'kubejs:martial_tablet_frost_stomp': { artId: 'frost_stomp', name: 'Ледяная Поступь', archetype: 'any', allowedDesc: 'Любое боевое оружие' },
+    'kubejs:martial_tablet_lightning_smite': { artId: 'lightning_smite', name: 'Громовой Раскат', archetype: 'any', allowedDesc: 'Любое боевое оружие' },
+    'kubejs:martial_tablet_blood_rend': { artId: 'blood_harvest', name: 'Кровавая Жатва', archetype: 'any', allowedDesc: 'Любое боевое оружие' },
+    'kubejs:martial_tablet_holy_blade': { artId: 'holy_blade', name: 'Священный Клинок', archetype: 'any', allowedDesc: 'Любое боевое оружие' }
 };
 
 const ART_NAMES = {
@@ -214,31 +194,69 @@ function isRangedWeapon(item, id) {
     return false;
 }
 
+function isShield(item) {
+    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
+    let id = String(item.id).toLowerCase();
+    return item.hasTag('c:tools/shields') ||
+           item.hasTag('c:shields') ||
+           item.hasTag('forge:shields') ||
+           item.hasTag('minecraft:shields') ||
+           id.includes('shield');
+}
+
 function isArtCompatibleWithWeapon(weaponItem, artId) {
     if (!weaponItem || weaponItem.isEmpty() || weaponItem.id === 'minecraft:air') return false;
     let id = String(weaponItem.id).toLowerCase();
 
+    // Universal runes and universal arts can be socketed into any weapon or shield
+    let tablet = null;
+    for (let k in MARTIAL_TABLETS) {
+        if (MARTIAL_TABLETS[k].artId === artId) {
+            tablet = MARTIAL_TABLETS[k];
+            break;
+        }
+    }
+    if (tablet && tablet.archetype === 'any') return isWeaponItem(weaponItem) || isShield(weaponItem);
+    if (tablet && tablet.archetype === 'shield') return isShield(weaponItem);
+
     switch (artId) {
         case 'whirlwind_cleave':
         case 'earth_sunder':
+        case 'severing_cleave':
         case 'juggernaut_rush':
             return is2HHeavyWeapon(weaponItem, id);
 
+        case 'iai_slash':
         case 'lightning_thrust':
+        case 'piercing_thrust':
         case 'blood_rend':
-            return isFinesseBladeWeapon(weaponItem, id);
+            return isFinesseBladeWeapon(weaponItem, id) || id.includes('spear') || id.includes('lance') || id.includes('halberd');
 
+        case 'crushing_uppercut':
         case 'seismic_slam':
             return isBludgeoningWeapon(weaponItem, id);
 
+        case 'scissor_cross':
         case 'shadow_step':
-            return isDaggerLightWeapon(weaponItem, id);
+            return isDaggerLightWeapon(weaponItem, id) || id.includes('rapier');
 
+        case 'reverse_sunder':
+            return isWeaponItem(weaponItem);
+
+        case 'fan_barrage':
         case 'arrow_barrage':
+        case 'piercing_shot':
+        case 'arrow_rain':
+        case 'tactical_backstep':
+        case 'triple_shot':
             return isRangedWeapon(weaponItem, id);
 
+        case 'shield_bash':
+        case 'unwavering_bulwark':
+            return isShield(weaponItem);
+
         default:
-            return false;
+            return isWeaponItem(weaponItem);
     }
 }
 

@@ -7,12 +7,14 @@
 //    - 'elyrium:play_art_anim' (local player)
 //    - 'elyrium:play_player_art_anim' (broadcasted to nearby players)
 // 2. Integrates with dev.kosmx.playerAnim PlayerAnimationAccess & PlayerAnimationRegistry
+//    - Real skeletal keyframes with full first-person & third-person rendering
 // 3. Fallbacks seamlessly to Spell Engine AnimatablePlayer or arm swings.
 // ==============================================================================
 
 let J_PlayerAnimationRegistry = null;
 let J_PlayerAnimationAccess = null;
 let J_KeyframeAnimationPlayer = null;
+let J_FirstPersonMode = null;
 let J_ResourceLocation = null;
 let J_SpellCastAnimationEnum = null;
 let J_Minecraft = null;
@@ -24,6 +26,7 @@ function initAnimationApi() {
         J_PlayerAnimationRegistry = Java.loadClass('dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry');
         J_PlayerAnimationAccess = Java.loadClass('dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess');
         J_KeyframeAnimationPlayer = Java.loadClass('dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer');
+        J_FirstPersonMode = Java.loadClass('dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode');
         J_ResourceLocation = Java.loadClass('net.minecraft.resources.ResourceLocation');
         J_Minecraft = Java.loadClass('net.minecraft.client.Minecraft');
     } catch (e) {}
@@ -41,27 +44,56 @@ function playRealPlayerAnimation(targetPlayer, animId, speed) {
 
     let animPlayed = false;
     let s = (typeof speed === 'number' && speed > 0) ? speed : 1.0;
+    let rawPlayer = targetPlayer.minecraftPlayer || targetPlayer.minecraftEntity || targetPlayer.entity || targetPlayer;
 
     // 1. Primary: Spell Engine AnimatablePlayer Mixin (if present)
     try {
-        if (typeof targetPlayer.playSpellAnimation === 'function' && J_SpellCastAnimationEnum) {
-            let releaseType = J_SpellCastAnimationEnum.RELEASE || J_SpellCastAnimationEnum.values()[1] || J_SpellCastAnimationEnum.values()[0];
-            targetPlayer.playSpellAnimation(releaseType, String(animId), s);
-            animPlayed = true;
+        let playFunc = rawPlayer.playSpellAnimation || targetPlayer.playSpellAnimation;
+        if (typeof playFunc === 'function' && J_SpellCastAnimationEnum) {
+            let releaseType = null;
+            try {
+                releaseType = J_SpellCastAnimationEnum.RELEASE || J_SpellCastAnimationEnum.valueOf('RELEASE');
+            } catch (eRel) {
+                try { releaseType = J_SpellCastAnimationEnum.values()[0]; } catch (eVals) {}
+            }
+            if (releaseType) {
+                if (typeof rawPlayer.playSpellAnimation === 'function') {
+                    rawPlayer.playSpellAnimation(releaseType, String(animId), s);
+                    animPlayed = true;
+                } else if (typeof targetPlayer.playSpellAnimation === 'function') {
+                    targetPlayer.playSpellAnimation(releaseType, String(animId), s);
+                    animPlayed = true;
+                }
+            }
         }
     } catch (eSpell) {}
 
     // 2. Secondary / Direct: KosmX PlayerAnimationAccess & PlayerAnimationRegistry
-    if (!animPlayed && J_PlayerAnimationRegistry && J_PlayerAnimationAccess && J_KeyframeAnimationPlayer && J_ResourceLocation) {
+    if (!animPlayed && J_PlayerAnimationRegistry && J_PlayerAnimationAccess && J_ResourceLocation) {
         try {
             let resLoc = J_ResourceLocation.parse(String(animId));
             let animationData = J_PlayerAnimationRegistry.getAnimation(resLoc);
             if (animationData) {
-                let stack = J_PlayerAnimationAccess.getPlayerAnimLayer(targetPlayer);
+                let stack = J_PlayerAnimationAccess.getPlayerAnimLayer(rawPlayer);
                 if (stack) {
-                    let animPlayer = new J_KeyframeAnimationPlayer(animationData);
-                    stack.addAnimLayer(1000, animPlayer);
-                    animPlayed = true;
+                    let animPlayer = null;
+                    if (typeof animationData.playAnimation === 'function') {
+                        animPlayer = animationData.playAnimation();
+                    } else if (J_KeyframeAnimationPlayer) {
+                        animPlayer = new J_KeyframeAnimationPlayer(animationData);
+                    }
+
+                    if (animPlayer) {
+                        // Enable full 3D skeletal first person rendering
+                        try {
+                            if (J_FirstPersonMode && typeof animPlayer.setFirstPersonMode === 'function') {
+                                animPlayer.setFirstPersonMode(J_FirstPersonMode.THIRD_PERSON_MODEL);
+                            }
+                        } catch (eFp) {}
+
+                        stack.addAnimLayer(1000, animPlayer);
+                        animPlayed = true;
+                    }
                 }
             }
         } catch (eKosmx) {}
@@ -69,7 +101,9 @@ function playRealPlayerAnimation(targetPlayer, animId, speed) {
 
     // 3. Client Arm Swing Feedback
     try {
-        if (typeof targetPlayer.swing === 'function') {
+        if (typeof rawPlayer.swing === 'function') {
+            rawPlayer.swing(rawPlayer.usedItemHand || 'main_hand');
+        } else if (typeof targetPlayer.swing === 'function') {
             targetPlayer.swing(targetPlayer.usedItemHand || 'main_hand');
         }
     } catch (eSwing) {}

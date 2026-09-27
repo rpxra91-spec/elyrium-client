@@ -513,10 +513,15 @@ function resolveInnateWeaponArt(player, isAirborne) {
         return 'iai_slash';
     }
 
-    // 3. Warhammers & Maces: Earth Sunder / Ground Slam (Сотрясение Земли)
-    if (mainId.includes('hammer') || mainId.includes('mace') || mainId.includes('club') ||
-        mainId.includes('maul') || mainId.includes('greathammer')) {
+    // 3. Warhammers & Heavy Hammers: Earth Sunder / Ground Slam (Сотрясение Земли)
+    if (mainId.includes('greathammer') || mainId.includes('warhammer') || mainId.includes('hammer') ||
+        mainId.includes('maul') || mainId.includes('club')) {
         return 'earth_sunder';
+    }
+
+    // 3.1 Maces & Bludgeons: Crushing Uppercut (Сокрушительный Апперкот)
+    if (mainId.includes('mace') || mainId.includes('fist') || mainId.includes('knuckle') || mainId.includes('flail')) {
+        return 'crushing_uppercut';
     }
 
     // 4. Battleaxes & Greataxes: Severing Cleave (Рассекающий Клив)
@@ -1371,11 +1376,13 @@ EntityEvents.beforeHurt(event => {
         if (mainHand && isSpear(mainHand)) {
             let hasShieldInOffhand = offHand && isShield(offHand);
             if (!hasShieldInOffhand) {
-                // Two-Handed Power Grip (+30% physical damage)
+                // Two-Handed Power Grip (+30% physical damage, +1.5m reach)
                 event.damage *= 1.30;
                 attacker.server.runCommandSilent(`particle minecraft:enchanted_hit ${victim.x} ${victim.y + 1} ${victim.z} 0.3 0.3 0.3 0.1 10 normal`);
             } else {
-                // Guard Thrust with Shield
+                // Guard Thrust with Shield (thrust from behind raised guard)
+                broadcastPlayerArtAnimation(attacker, 'spell_engine:weapon_thrust_charge', 1.3);
+                attacker.server.runCommandSilent(`playsound minecraft:item.shield.block player ${attacker.username} ~ ~ ~ 0.8 1.4`);
                 attacker.server.runCommandSilent(`particle minecraft:crit ${victim.x} ${victim.y + 1} ${victim.z} 0.3 0.3 0.3 0.05 8 normal`);
             }
         }
@@ -1486,6 +1493,20 @@ PlayerEvents.tick(event => {
         player.server.runCommandSilent(`playsound minecraft:block.note_block.chime player ${player.username} ~ ~ ~ 1.0 1.6`);
         player.sendSystemMessage(Text.of(`§a⚔ Боевое искусство «${artName}»: ГОТОВО К БОЮ! §7[ПКМ]`), true);
     }
+
+    // 3. Spear Universal Grip Reach (+1.5m Entity Interaction Range when two-handed)
+    let mainHand = player.mainHandItem;
+    let offHand = player.offHandItem;
+    let isTwoHandedSpear = mainHand && !mainHand.isEmpty() && isSpear(mainHand) && (!offHand || offHand.isEmpty() || offHand.id === 'minecraft:air');
+    let hadSpearReach = player.persistentData.getBoolean('skd_spear_reach_active');
+
+    if (isTwoHandedSpear && !hadSpearReach) {
+        player.persistentData.putBoolean('skd_spear_reach_active', true);
+        player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier add elyrium:spear_reach 1.5 add_value`);
+    } else if (!isTwoHandedSpear && hadSpearReach) {
+        player.persistentData.putBoolean('skd_spear_reach_active', false);
+        player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier remove elyrium:spear_reach`);
+    }
 });
 
 // ------------------------------------------------------------------------------
@@ -1565,5 +1586,25 @@ PlayerEvents.chat(event => {
     } else if (msg === '.art list' || msg === '!art list' || msg === '.art help') {
         printArtsList(player);
         event.cancel();
+    }
+});
+
+// ------------------------------------------------------------------------------
+// EVENT 5: ATTRIBUTE MODIFIER CLEANUP (LOGOUT / RESPAWN)
+// ------------------------------------------------------------------------------
+
+PlayerEvents.loggedOut(event => {
+    let player = event.player;
+    if (player && player.persistentData && player.persistentData.getBoolean('skd_spear_reach_active')) {
+        player.persistentData.putBoolean('skd_spear_reach_active', false);
+        player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier remove elyrium:spear_reach`);
+    }
+});
+
+PlayerEvents.respawned(event => {
+    let player = event.player;
+    if (player && player.persistentData) {
+        player.persistentData.putBoolean('skd_spear_reach_active', false);
+        player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier remove elyrium:spear_reach`);
     }
 });

@@ -21,6 +21,8 @@ function isInsideCapital(level, x, z) {
 
 function isHostileMob(entity) {
     if (!entity || !entity.isLiving() || entity.isPlayer()) return false;
+    // Allow intentional test dummies on the combat arena
+    if (entity.tags && entity.tags.contains('elyrium_test_dummy')) return false;
     if (entity.isMonster && entity.isMonster()) return true;
 
     let type = entity.type.toString().toLowerCase();

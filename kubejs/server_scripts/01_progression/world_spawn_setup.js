@@ -92,7 +92,8 @@ function summonTestDummy(server, triggerPlayer) {
     server.runCommandSilent(`kill @e[type=minecraft:zombified_piglin,tag=elyrium_test_dummy,distance=..25]`);
 
     // Summon durable test dummy (500 HP, no wander, high knockback resist)
-    server.runCommandSilent(`summon minecraft:zombified_piglin ${sx} ${sy} ${sz} {Tags:["elyrium_test_dummy"],CustomName:'"§e⚔ Тестовый Манекен (500 HP) ⚔"',CustomNameVisible:1b,Attributes:[{Name:"minecraft:generic.max_health",Base:500.0d},{Name:"minecraft:generic.movement_speed",Base:0.0d},{Name:"minecraft:generic.knockback_resistance",Base:0.4d}],Health:500.0f,NoAI:0b,Silent:0b}`);
+    // NeoForge 1.21.1 requires {id:"...",base:...} attribute format
+    server.runCommandSilent(`summon minecraft:zombified_piglin ${sx} ${sy} ${sz} {Tags:["elyrium_test_dummy"],CustomName:'"§e⚔ Тестовый Манекен (500 HP) ⚔"',CustomNameVisible:1b,Attributes:[{id:"minecraft:generic.max_health",base:500.0d},{id:"minecraft:generic.movement_speed",base:0.0d},{id:"minecraft:generic.knockback_resistance",base:0.4d}],Health:500.0f,NoAI:0b,Silent:0b}`);
 
     server.runCommandSilent(`playsound minecraft:block.bell.use ambient @a ${sx} ${sy} ${sz} 1.2 1.2`);
     server.runCommandSilent(`playsound minecraft:entity.zombified_piglin.ambient ambient @a ${sx} ${sy} ${sz} 1.2 1.0`);
@@ -132,6 +133,7 @@ ServerEvents.loaded(event => {
 // ------------------------------------------------------------------------------
 
 BlockEvents.rightClicked(event => {
+    if (event.hand && String(event.hand).toUpperCase().includes('OFF')) return;
     let block = event.block;
     if (!block) return;
 
@@ -141,8 +143,14 @@ BlockEvents.rightClicked(event => {
 
     // Check if clicked the dummy button at (0, 77, 7) or pedestal
     if ((x === ARENA_CONFIG.buttonX && y === ARENA_CONFIG.buttonY && z === ARENA_CONFIG.buttonZ) ||
-        (x === 0 && y === 76 && z === 7 && block.id.includes('button'))) {
-        summonTestDummy(event.server, event.player);
+        (x === 0 && y === 76 && z === 7 && block.id.includes('button')) ||
+        (x === 0 && y === 77 && z === 7 && block.id.includes('button'))) {
+        let now = Date.now();
+        let p = event.player;
+        let lastSpawn = p ? (p.persistentData.getLong('skd_last_dummy_spawn') || 0) : 0;
+        if (now - lastSpawn < 1200) return;
+        if (p) p.persistentData.putLong('skd_last_dummy_spawn', now);
+        summonTestDummy(event.server, p);
     }
 });
 
@@ -150,9 +158,9 @@ BlockEvents.rightClicked(event => {
 // MOB SPAWN SUPPRESSION (100 BLOCKS AROUND SPAWN)
 // ------------------------------------------------------------------------------
 
-EntityEvents.spawned(event => {
+EntityEvents.checkSpawn(event => {
     let entity = event.entity;
-    if (!entity || !entity.isMonster() || entity.isPlayer()) return;
+    if (!entity || !entity.isLiving() || entity.isPlayer()) return;
 
     // Allow intentional test dummies
     if (entity.tags && entity.tags.contains('elyrium_test_dummy')) return;
@@ -161,6 +169,21 @@ EntityEvents.spawned(event => {
     let dz = entity.z;
     if (dx * dx + dz * dz <= ARENA_CONFIG.suppressionRadiusSq) {
         event.cancel();
+    }
+});
+
+EntityEvents.spawned(event => {
+    let entity = event.entity;
+    if (!entity || !entity.isLiving() || entity.isPlayer()) return;
+
+    // Allow intentional test dummies
+    if (entity.tags && entity.tags.contains('elyrium_test_dummy')) return;
+
+    let dx = entity.x;
+    let dz = entity.z;
+    if (dx * dx + dz * dz <= ARENA_CONFIG.suppressionRadiusSq) {
+        event.cancel();
+        entity.discard();
     }
 });
 
