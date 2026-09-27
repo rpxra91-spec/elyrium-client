@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-27T09:30:35.981330+00:00",
+  "generated_at": "2026-09-27T10:11:40.089705+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -1367,7 +1367,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "ee1169a636a487ed6b104a809bd0d94dddc834c7bc0ddcfb65d3a0e8d09e24db",
+      "sha256": "78fd24d22e2cc11e5b90fba7db36570a74c3926ec5c8048906a100bbeac1df38",
       "size": 275
     },
     {
@@ -7807,8 +7807,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/world_spawn_setup.js",
-      "sha256": "e315e47590f12a270d5bdb2909e9c8ddd564488b6d0e285c97fea1314bdbb007",
-      "size": 11082
+      "sha256": "0ee7d173a0b71450c9ef2c2c0dd346ef6b78603337dcbe0f17ad50d84ddafad6",
+      "size": 14502
     },
     {
       "path": "kubejs/server_scripts/02_magic/spell_capacity_engine.js",
