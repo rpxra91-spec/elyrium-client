@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-27T00:15:37.720522+00:00",
+  "generated_at": "2026-09-27T00:24:06.716907+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -7882,8 +7882,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "3b788974610d0aaa53c76231fcde27dfe971ce3a65e8e0aad4708388cdf57eb3",
-      "size": 63437
+      "sha256": "c524b596a6f79b8ea639975eda3e28cf60dc16f26629d4c1f89bf5223276828a",
+      "size": 65748
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
@@ -7937,8 +7937,8 @@
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/skills_combat_triggers.js",
-      "sha256": "0f55d2eb1e65a7941190f5f6e5ed6c14829b97172d6b67c0645571b001846702",
-      "size": 45912
+      "sha256": "251223bad85e807f3f89ef85d43911837ee75d2544330c976701a5d7269c8b67",
+      "size": 48656
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/skills_crafting_triggers.js",

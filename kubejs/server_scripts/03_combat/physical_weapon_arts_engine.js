@@ -311,6 +311,26 @@ function dealArtDamage(player, target, damage, bypassArmor) {
     return true;
 }
 
+function getSafeStepDistance(level, startX, startY, startZ, normX, normZ, maxDist) {
+    let safeDist = maxDist;
+    for (let d = 1.0; d <= maxDist; d += 0.5) {
+        let cx = Math.floor(startX + normX * d);
+        let cy = Math.floor(startY);
+        let cz = Math.floor(startZ + normZ * d);
+        try {
+            let bFeet = level.getBlock(cx, cy, cz);
+            let bHead = level.getBlock(cx, cy + 1, cz);
+            let feetBlocks = bFeet && bFeet.blockState && bFeet.blockState.blocksMotion();
+            let headBlocks = bHead && bHead.blockState && bHead.blockState.blocksMotion();
+            if (feetBlocks || headBlocks) {
+                safeDist = Math.max(0.5, d - 0.9);
+                break;
+            }
+        } catch (e) {}
+    }
+    return safeDist;
+}
+
 // ------------------------------------------------------------------------------
 // RESOLVE INNATE ARCHETYPE WEAPON ART (Right-Click)
 // ------------------------------------------------------------------------------
@@ -327,50 +347,42 @@ function resolveInnateWeaponArt(player, isAirborne) {
         return 'fan_barrage';
     }
 
-    // 2. Airborne Heavy Weapons: Tectonic Rupture
-    if (isAirborne) {
-        if (mainId.includes('hammer') || mainId.includes('mace') || mainId.includes('club') ||
-            mainId.includes('axe') || mainId.includes('claymore') || mainId.includes('greatsword')) {
-            return 'tectonic_rupture';
-        }
-    }
-
-    // 3. Katanas: Phantom Thrust / Iai Slash
+    // 2. Katanas: Phantom Thrust / Iai Slash
     if (mainId.includes('katana') || mainId.includes('nodachi') || mainId.includes('uchigatana')) {
         return 'iai_slash';
     }
 
-    // 4. Warhammers & Maces: Tectonic Rupture
+    // 3. Warhammers & Maces: Tectonic Rupture
     if (mainId.includes('hammer') || mainId.includes('mace') || mainId.includes('club') ||
         mainId.includes('maul') || mainId.includes('greathammer')) {
         return 'tectonic_rupture';
     }
 
-    // 5. Battleaxes & Greataxes: Shield Breaker / Sunder
+    // 4. Battleaxes & Greataxes: Shield Breaker / Sunder
     if (mainId.includes('battleaxe') || mainId.includes('greataxe') || mainId.includes('waraxe') ||
         (mainId.includes('axe') && !mainId.includes('pickaxe'))) {
         return 'shield_breaker';
     }
 
-    // 6. Polearms & Spears: Armor-Piercing Thrust
+    // 5. Polearms & Spears: Armor-Piercing Thrust
     if (mainId.includes('spear') || mainId.includes('halberd') || mainId.includes('lance') ||
         mainId.includes('glaive') || mainId.includes('polearm') || mainId.includes('trident') || mainId.includes('pike')) {
         return 'piercing_thrust';
     }
 
-    // 7. Daggers & Rapiers: Shadow Step
+    // 6. Daggers & Rapiers: Shadow Step
     if (mainId.includes('dagger') || mainId.includes('rapier') || mainId.includes('knife') ||
         mainId.includes('sickle') || mainId.includes('sai') || mainId.includes('stiletto') || mainId.includes('tanto')) {
         return 'shadow_step';
     }
 
-    // 8. Greatswords & Claymores: Seismic Cleave
+    // 7. Greatswords & Claymores: Seismic Cleave
     if (mainId.includes('claymore') || mainId.includes('greatsword') || mainId.includes('zweihander') ||
         mainId.includes('colossal') || mainId.includes('scythe') || isTwoHandedWeapon(mainItem)) {
         return 'seismic_cleave';
     }
 
-    // 9. Swords & Broadswords: Parry & Counter
+    // 8. Swords & Broadswords: Parry & Counter
     return 'parry_counter';
 }
 
@@ -381,17 +393,15 @@ function resolveInnateWeaponArt(player, isAirborne) {
 function getInscribedWeaponArt(item) {
     if (!item || item.isEmpty()) return null;
     try {
-        if (item.nbt && item.nbt.contains('elyrium_inscribed_art')) {
-            return String(item.nbt.getString('elyrium_inscribed_art')).toLowerCase();
+        if (item.nbt) {
+            if (item.nbt.contains('elyrium_inscribed_art')) return String(item.nbt.getString('elyrium_inscribed_art')).toLowerCase();
+            if (item.nbt.contains('skd_weapon_art')) return String(item.nbt.getString('skd_weapon_art')).toLowerCase();
+            if (item.nbt.contains('weapon_art')) return String(item.nbt.getString('weapon_art')).toLowerCase();
         }
-        if (item.customData && item.customData.contains('elyrium_inscribed_art')) {
-            return String(item.customData.getString('elyrium_inscribed_art')).toLowerCase();
-        }
-        if (item.nbt && item.nbt.contains('weapon_art')) {
-            return String(item.nbt.getString('weapon_art')).toLowerCase();
-        }
-        if (item.customData && item.customData.contains('weapon_art')) {
-            return String(item.customData.getString('weapon_art')).toLowerCase();
+        if (item.customData) {
+            if (item.customData.contains('elyrium_inscribed_art')) return String(item.customData.getString('elyrium_inscribed_art')).toLowerCase();
+            if (item.customData.contains('skd_weapon_art')) return String(item.customData.getString('skd_weapon_art')).toLowerCase();
+            if (item.customData.contains('weapon_art')) return String(item.customData.getString('weapon_art')).toLowerCase();
         }
     } catch (e) {}
     return null;
@@ -417,18 +427,22 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
 
     // Check Cooldown
     if (now < cdEnd) {
-        let leftSec = ((cdEnd - now) / 1000).toFixed(1);
-        player.sendSystemMessage(Text.of(`§c⏳ «${art.name}» перезаряжается: ${leftSec} сек`), true);
-        player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.5 1.8`);
+        if (resolvedId !== 'fan_barrage') {
+            let leftSec = ((cdEnd - now) / 1000).toFixed(1);
+            player.sendSystemMessage(Text.of(`§c⏳ «${art.name}» перезаряжается: ${leftSec} сек`), true);
+            player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.5 1.8`);
+        }
         return;
     }
 
     // Check & Consume Stamina
     let stamCost = art.stamina || 30;
     if (!consumePlayerStamina(player, stamCost)) {
-        let cur = getPlayerStamina(player);
-        player.sendSystemMessage(Text.of(`§c⚡ Недостаточно выносливости! Требуется: §e${stamCost} §c(У вас: §7${cur}§c)`), true);
-        player.server.runCommandSilent(`playsound minecraft:entity.player.breath player ${player.username} ~ ~ ~ 0.8 1.4`);
+        if (resolvedId !== 'fan_barrage') {
+            let cur = getPlayerStamina(player);
+            player.sendSystemMessage(Text.of(`§c⚡ Недостаточно выносливости! Требуется: §e${stamCost} §c(У вас: §7${cur}§c)`), true);
+            player.server.runCommandSilent(`playsound minecraft:entity.player.breath player ${player.username} ~ ~ ~ 0.8 1.4`);
+        }
         return;
     }
 
@@ -499,11 +513,12 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
         let startY = player.y;
         let startZ = player.z;
 
-        let targetX = startX + normX * 6.0;
+        let stepDist = getSafeStepDistance(level, startX, startY, startZ, normX, normZ, 6.0);
+        let targetX = startX + normX * stepDist;
         let targetY = startY;
-        let targetZ = startZ + normZ * 6.0;
+        let targetZ = startZ + normZ * stepDist;
 
-        // Teleport forward through enemies
+        // Teleport forward through enemies (within collision-safe bounds)
         player.teleportTo(player.level.dimension, targetX, targetY, targetZ, player.yaw, player.pitch);
 
         let corridor = AABB.of(
@@ -517,8 +532,11 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
             if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
                 dealArtDamage(player, ent, totalDmg, false);
                 // Bleed effect for 5 seconds (100 ticks)
-                ent.potionEffects.add('minecraft:wither', 100, 1, false, true);
-                try { ent.potionEffects.add('attributeslib:bleeding', 100, 1, false, true); } catch (e) {}
+                try {
+                    ent.potionEffects.add('apothic_attributes:bleeding', 100, 1, false, true);
+                } catch (e) {
+                    ent.potionEffects.add('minecraft:wither', 100, 1, false, true);
+                }
                 hits++;
             }
         });
@@ -655,15 +673,31 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
 
         let targetX, targetY, targetZ;
         if (bestTarget) {
-            let tLook = bestTarget.getLookAngle();
-            targetX = bestTarget.x - tLook.x * 1.4;
-            targetY = bestTarget.y;
-            targetZ = bestTarget.z - tLook.z * 1.4;
+            let tLook = bestTarget.getLookAngle ? bestTarget.getLookAngle() : { x: 0, y: 0, z: 1 };
+            let desiredX = bestTarget.x - tLook.x * 1.4;
+            let desiredY = bestTarget.y;
+            let desiredZ = bestTarget.z - tLook.z * 1.4;
+            let isBehindSolid = false;
+            try {
+                let b = level.getBlock(Math.floor(desiredX), Math.floor(desiredY), Math.floor(desiredZ));
+                if (b && b.blockState && b.blockState.blocksMotion()) isBehindSolid = true;
+            } catch (e) {}
+
+            if (isBehindSolid) {
+                targetX = bestTarget.x + tLook.z * 1.2;
+                targetY = bestTarget.y;
+                targetZ = bestTarget.z - tLook.x * 1.2;
+            } else {
+                targetX = desiredX;
+                targetY = desiredY;
+                targetZ = desiredZ;
+            }
             player.teleportTo(player.level.dimension, targetX, targetY, targetZ, bestTarget.yaw, player.pitch);
         } else {
-            targetX = player.x + look.x * maxRange;
+            let stepDist = getSafeStepDistance(level, player.x, player.y, player.z, look.x, look.z, maxRange);
+            targetX = player.x + look.x * stepDist;
             targetY = player.y;
-            targetZ = player.z + look.z * maxRange;
+            targetZ = player.z + look.z * stepDist;
             player.teleportTo(player.level.dimension, targetX, targetY, targetZ, player.yaw, player.pitch);
         }
 
@@ -685,6 +719,7 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
     } else if (resolvedId === 'fan_barrage') {
         let angles = [-18, -9, 0, 9, 18];
         let speed = 2.5;
+        let arrowDmg = baseDmg * 0.8;
 
         angles.forEach(deg => {
             let yawRad = (player.yaw + deg) * Math.PI / 180.0;
@@ -703,13 +738,15 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
                     arrow.setPos(sx, sy, sz);
                     arrow.setDeltaMovement(vx, vy, vz);
                     try { arrow.setOwner(player); } catch (e) {}
+                    try { arrow.setBaseDamage(arrowDmg); } catch (e) {}
                     try { arrow.pickup = 0; } catch (e) {}
+                    try { if (arrow.nbt) arrow.nbt.putByte('pickup', 0); } catch (e) {}
                     arrow.spawn();
                     return;
                 }
             } catch (e) {}
 
-            player.server.runCommandSilent(`execute at ${u} run summon minecraft:spectral_arrow ${sx.toFixed(2)} ${sy.toFixed(2)} ${sz.toFixed(2)} {Motion:[${vx.toFixed(3)},${vy.toFixed(3)},${vz.toFixed(3)}],pickup:0b}`);
+            player.server.runCommandSilent(`execute at ${u} run summon minecraft:spectral_arrow ${sx.toFixed(2)} ${sy.toFixed(2)} ${sz.toFixed(2)} {damage:${arrowDmg.toFixed(1)}d,pickup:0b,Motion:[${vx.toFixed(3)},${vy.toFixed(3)},${vz.toFixed(3)}]}`);
         });
 
         player.server.runCommandSilent(`playsound minecraft:entity.arrow.shoot player ${u} ${player.x} ${player.y} ${player.z} 1.2 0.8`);
@@ -932,7 +969,7 @@ EntityEvents.beforeHurt(event => {
     if (victim && victim.isPlayer() && victim.isAlive()) {
         // 1. PARRY & COUNTER: 0.8s Parry Window (Swords/Broadswords)
         let parryUntil = victim.persistentData.getLong('skd_parry_window') || 0;
-        if (parryUntil > 0 && now <= parryUntil) {
+        if (parryUntil > 0 && now <= parryUntil && attacker && attacker.isLiving() && attacker !== victim) {
             victim.persistentData.remove('skd_parry_window');
 
             // 100% Damage Negated!
@@ -940,14 +977,12 @@ EntityEvents.beforeHurt(event => {
             event.cancel();
 
             // Attacker Stunned
-            if (attacker && attacker.isLiving() && attacker !== victim) {
-                attacker.potionEffects.add('minecraft:slowness', 60, 3, false, true);
-                attacker.potionEffects.add('minecraft:weakness', 60, 2, false, true);
+            attacker.potionEffects.add('minecraft:slowness', 60, 3, false, true);
+            attacker.potionEffects.add('minecraft:weakness', 60, 2, false, true);
 
-                // Counter strike x2.0 base damage back to attacker!
-                let counterDmg = getWeaponBaseDamage(victim) * 2.0;
-                dealArtDamage(victim, attacker, counterDmg, false);
-            }
+            // Counter strike x2.0 base damage back to attacker!
+            let counterDmg = getWeaponBaseDamage(victim) * 2.0;
+            dealArtDamage(victim, attacker, counterDmg, false);
 
             victim.server.runCommandSilent(`playsound minecraft:block.anvil.land player ${victim.username} ~ ~ ~ 1.5 1.2`);
             victim.server.runCommandSilent(`playsound minecraft:item.shield.block player ${victim.username} ~ ~ ~ 1.5 1.5`);
@@ -959,7 +994,7 @@ EntityEvents.beforeHurt(event => {
         }
 
         // 2. SHIELD GUARD COUNTER SETUP: Player blocks hit with shield
-        if (victim.isBlocking()) {
+        if (victim.isBlocking() && attacker && attacker.isLiving()) {
             let offHand = victim.offHandItem;
             let mainHand = victim.mainHandItem;
             let hasShieldEquipped = (offHand && isShield(offHand)) || (mainHand && isShield(mainHand));
@@ -1048,7 +1083,7 @@ ItemEvents.rightClicked(event => {
     let isAirborne = (typeof player.onGround === 'function' ? !player.onGround() : !player.onGround) || player.fallDistance > 0.05;
 
     // --------------------------------------------------------------------------
-    // CASE A: Shift + Right-Click (Sneak + ПКМ) -> Extra Runic Slot
+    // CASE A: Shift + Right-Click (Sneak + ПКМ) -> Extra Runic Slot or Shield Innate Art
     // --------------------------------------------------------------------------
     if (player.isCrouching()) {
         player.persistentData.putInt('skd_last_art_tick', currentAge);
@@ -1056,6 +1091,12 @@ ItemEvents.rightClicked(event => {
         let inscribedArt = getInscribedWeaponArt(mainHand);
         if (inscribedArt && WEAPON_ARTS[inscribedArt]) {
             executeWeaponArt(player, inscribedArt, false, true);
+        } else if (hasShieldInOffhand) {
+            // Shield in offhand: Shift+ПКМ executes weapon's innate archetype art!
+            let innateArt = resolveInnateWeaponArt(player, isAirborne);
+            if (innateArt) {
+                executeWeaponArt(player, innateArt, isAirborne, false);
+            }
         } else {
             player.sendSystemMessage(Text.of('§7В руническом слоте оружия нет боевого искусства §8[Shift+ПКМ] §7(Инкрустируйте скрижаль на Адской Наковальне).'), true);
             player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.5 1.8`);
