@@ -1,0 +1,101 @@
+{
+  "school": "spell_power:physical_melee",
+  "range": 0.0,
+  "range_mechanic": "MELEE",
+  "tier": 1,
+  "learn": {},
+  "active": {},
+  "target": {
+    "type": "NONE"
+  },
+  "deliver": {
+    "type": "MELEE",
+    "melee": {
+      "attacks": [
+        {
+          "delay": 0.08,
+          "attack_speed_multiplier": 2.0,
+          "hitbox": {
+            "length": 3.5,
+            "height": 0.3,
+            "roll": 45.0,
+            "arc": 90.0
+          },
+          "animation": {
+            "id": "spell_engine:weapon_dual_slash_cross",
+            "speed": 1.3
+          },
+          "swing_sound": {
+            "id": "spell_engine:weapon_sword_swing"
+          },
+          "impact_sound": {
+            "id": "spell_engine:weapon_dagger_impact"
+          }
+        },
+        {
+          "delay": 0.12,
+          "additional_strike_delay": 0.15,
+          "attack_speed_multiplier": 2.0,
+          "hitbox": {
+            "length": 3.5,
+            "height": 0.3,
+            "roll": -45.0,
+            "arc": 90.0
+          },
+          "animation": {
+            "id": "spell_engine:weapon_dual_slash_cross",
+            "speed": 1.3
+          },
+          "swing_sound": {
+            "id": "spell_engine:weapon_sword_swing"
+          },
+          "impact_sound": {
+            "id": "spell_engine:weapon_dagger_impact"
+          }
+        }
+      ]
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 1.1,
+          "knockback": 0.5
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "minecraft:wither",
+          "duration": 4.0,
+          "amplifier": 0,
+          "apply_mode": "SET",
+          "show_particles": true
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "minecraft:weakness",
+          "duration": 4.0,
+          "amplifier": 0,
+          "apply_mode": "SET",
+          "show_particles": true
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "group": "weapon",
+      "attempt_duration": 0.5,
+      "duration": 8.0
+    }
+  }
+}

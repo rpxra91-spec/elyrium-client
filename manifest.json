@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-27T23:18:53.501363+00:00",
+  "generated_at": "2026-09-27T23:22:55.388531+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -7977,8 +7977,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/gear_stat_requirements.js",
-      "sha256": "b57512a52e969ccebd62e07baefd958b39d36eeee7db8b54f4f39c5cbc200644",
-      "size": 13312
+      "sha256": "2fa5106cb709153e29282bed3e1617b0e1152e7b18e00316f4a70faa37ad4bde",
+      "size": 13294
     },
     {
       "path": "kubejs/server_scripts/03_combat/infernal_anvil_gui.js",

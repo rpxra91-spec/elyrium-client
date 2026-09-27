@@ -1,0 +1,93 @@
+{
+  "school": "spell_power:physical_melee",
+  "range": 0.0,
+  "range_mechanic": "MELEE",
+  "tier": 1,
+  "learn": {},
+  "active": {
+    "cast": {
+      "duration": 0.2,
+      "animation": {
+        "id": "spell_engine:two_handed_slash_vertical_windup",
+        "speed": 1.5
+      },
+      "start_sound": {
+        "id": "spell_engine:weapon_shing_a"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "spell_engine:weapon_cleave"
+    }
+  },
+  "target": {
+    "type": "NONE"
+  },
+  "deliver": {
+    "type": "MELEE",
+    "melee": {
+      "attacks": [
+        {
+          "delay": 0.15,
+          "attack_speed_multiplier": 1.5,
+          "hitbox": {
+            "length": 3.8,
+            "height": 0.4,
+            "arc": 90.0,
+            "roll": -15.0
+          },
+          "animation": {
+            "id": "spell_engine:two_handed_slash_vertical_slash",
+            "speed": 1.1
+          },
+          "swing_sound": {
+            "id": "spell_engine:weapon_sword_swing"
+          }
+        }
+      ]
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 1.95,
+          "knockback": 1.2
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "DISRUPT",
+        "disrupt": {
+          "shield_blocking": true,
+          "item_usage_seconds": 2.0
+        }
+      },
+      "sound": {
+        "id": "spell_engine:weapon_claymore_impact"
+      }
+    },
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "minecraft:weakness",
+          "duration": 4.0,
+          "amplifier": 1,
+          "apply_mode": "SET",
+          "show_particles": true
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "group": "weapon",
+      "attempt_duration": 0.5,
+      "duration": 10.0
+    }
+  }
+}

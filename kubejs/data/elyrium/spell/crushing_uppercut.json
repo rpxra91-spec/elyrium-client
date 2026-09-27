@@ -1,0 +1,90 @@
+{
+  "school": "spell_power:physical_melee",
+  "range": 0.0,
+  "range_mechanic": "MELEE",
+  "tier": 1,
+  "learn": {},
+  "active": {
+    "cast": {
+      "duration": 0.35,
+      "animation": {
+        "id": "spell_engine:weapon_mace_uppercut_start",
+        "speed": 1.4
+      },
+      "animation_pitch": false
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "spell_engine:weapon_cleave"
+    }
+  },
+  "target": {
+    "type": "NONE"
+  },
+  "deliver": {
+    "type": "MELEE",
+    "melee": {
+      "attacks": [
+        {
+          "delay": 0.2,
+          "attack_speed_multiplier": 1.5,
+          "hitbox": {
+            "length": 3.5,
+            "height": 0.4,
+            "roll": 15.0,
+            "arc": 90.0
+          },
+          "animation": {
+            "id": "spell_engine:weapon_mace_uppercut_end"
+          },
+          "swing_sound": {
+            "id": "spell_engine:weapon_sword_swing"
+          },
+          "impact_sound": {
+            "id": "spell_engine:weapon_mace_smash_impact"
+          }
+        }
+      ]
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 2.2,
+          "knockback": 3.5
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "DISRUPT",
+        "disrupt": {
+          "shield_blocking": true,
+          "item_usage_seconds": 2.0
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "minecraft:slowness",
+          "duration": 2.0,
+          "amplifier": 4,
+          "apply_mode": "SET",
+          "show_particles": true
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "group": "weapon",
+      "attempt_duration": 0.5,
+      "duration": 11.0
+    }
+  }
+}

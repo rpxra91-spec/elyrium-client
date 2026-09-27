@@ -241,7 +241,7 @@ EntityEvents.beforeHurt(event => {
         attacker.potionEffects.add('minecraft:mining_fatigue', 60, 1, false, false);
 
         // Sound effect
-        attacker.level.playSound(null, attacker.blockX, attacker.blockY, attacker.blockZ, 'minecraft:block.anvil.land', 'players', 0.8, 1.5);
+        attacker.server.runCommandSilent(`playsound minecraft:block.anvil.land player ${attacker.username} ~ ~ ~ 0.8 1.5`);
 
         // Actionbar message
         attacker.displayClientMessage(

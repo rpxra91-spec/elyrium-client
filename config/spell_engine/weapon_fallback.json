@@ -6,6 +6,20 @@
     "enable_specifiers": true,
     "specifiers": [
       {
+        "item": "~katana|nodachi|uchigatana",
+        "container": {
+          "access": "MAGIC",
+          "access_param": "",
+          "pool": "",
+          "slot": "",
+          "max_spell_count": 0,
+          "spell_ids": [
+            "elyrium:iai_slash"
+          ],
+          "extra_tier_binding": 0
+        }
+      },
+      {
         "item": "#rpg_series:weapon_type/claymore",
         "container": {
           "access": "MAGIC",
@@ -14,13 +28,13 @@
           "slot": "",
           "max_spell_count": 0,
           "spell_ids": [
-            "rpg_series:flurry"
+            "elyrium:whirlwind_cleave"
           ],
           "extra_tier_binding": 0
         }
       },
       {
-        "item": "~claymore|great_sword|greatsword",
+        "item": "~claymore|great_sword|greatsword|zweihander|colossal",
         "container": {
           "access": "MAGIC",
           "access_param": "",
@@ -28,7 +42,7 @@
           "slot": "",
           "max_spell_count": 0,
           "spell_ids": [
-            "rpg_series:flurry"
+            "elyrium:whirlwind_cleave"
           ],
           "extra_tier_binding": 0
         }
@@ -42,7 +56,7 @@
           "slot": "",
           "max_spell_count": 0,
           "spell_ids": [
-            "rpg_series:ground_slam"
+            "elyrium:earth_sunder"
           ],
           "extra_tier_binding": 0
         }
@@ -56,147 +70,7 @@
           "slot": "",
           "max_spell_count": 0,
           "spell_ids": [
-            "rpg_series:ground_slam"
-          ],
-          "extra_tier_binding": 0
-        }
-      },
-      {
-        "item": "#rpg_series:weapon_type/double_axe",
-        "container": {
-          "access": "MAGIC",
-          "access_param": "",
-          "pool": "",
-          "slot": "",
-          "max_spell_count": 0,
-          "spell_ids": [
-            "rpg_series:whirlwind"
-          ],
-          "extra_tier_binding": 0
-        }
-      },
-      {
-        "item": "~double_axe|doubleaxe|war_axe|waraxe|great_axe|greataxe",
-        "container": {
-          "access": "MAGIC",
-          "access_param": "",
-          "pool": "",
-          "slot": "",
-          "max_spell_count": 0,
-          "spell_ids": [
-            "rpg_series:whirlwind"
-          ],
-          "extra_tier_binding": 0
-        }
-      },
-      {
-        "item": "#rpg_series:weapon_type/glaive",
-        "container": {
-          "access": "MAGIC",
-          "access_param": "",
-          "pool": "",
-          "slot": "",
-          "max_spell_count": 0,
-          "spell_ids": [
-            "rpg_series:thrust"
-          ],
-          "extra_tier_binding": 0
-        }
-      },
-      {
-        "item": "~glaive",
-        "container": {
-          "access": "MAGIC",
-          "access_param": "",
-          "pool": "",
-          "slot": "",
-          "max_spell_count": 0,
-          "spell_ids": [
-            "rpg_series:thrust"
-          ],
-          "extra_tier_binding": 0
-        }
-      },
-      {
-        "item": "#rpg_series:weapon_type/spear",
-        "container": {
-          "access": "MAGIC",
-          "access_param": "",
-          "pool": "",
-          "slot": "",
-          "max_spell_count": 0,
-          "spell_ids": [
-            "rpg_series:impale"
-          ],
-          "extra_tier_binding": 0
-        }
-      },
-      {
-        "item": "~spear",
-        "container": {
-          "access": "MAGIC",
-          "access_param": "",
-          "pool": "",
-          "slot": "",
-          "max_spell_count": 0,
-          "spell_ids": [
-            "rpg_series:impale"
-          ],
-          "extra_tier_binding": 0
-        }
-      },
-      {
-        "item": "#rpg_series:weapon_type/sickle",
-        "container": {
-          "access": "MAGIC",
-          "access_param": "",
-          "pool": "",
-          "slot": "",
-          "max_spell_count": 0,
-          "spell_ids": [
-            "rpg_series:swipe"
-          ],
-          "extra_tier_binding": 0
-        }
-      },
-      {
-        "item": "~sickle",
-        "container": {
-          "access": "MAGIC",
-          "access_param": "",
-          "pool": "",
-          "slot": "",
-          "max_spell_count": 0,
-          "spell_ids": [
-            "rpg_series:swipe"
-          ],
-          "extra_tier_binding": 0
-        }
-      },
-      {
-        "item": "#rpg_series:weapon_type/dagger",
-        "container": {
-          "access": "MAGIC",
-          "access_param": "",
-          "pool": "",
-          "slot": "",
-          "max_spell_count": 0,
-          "spell_ids": [
-            "rpg_series:fan_of_knives"
-          ],
-          "extra_tier_binding": 0
-        }
-      },
-      {
-        "item": "~dagger|knife",
-        "container": {
-          "access": "MAGIC",
-          "access_param": "",
-          "pool": "",
-          "slot": "",
-          "max_spell_count": 0,
-          "spell_ids": [
-            "rpg_series:fan_of_knives"
+            "elyrium:earth_sunder"
           ],
           "extra_tier_binding": 0
         }
@@ -210,13 +84,13 @@
           "slot": "",
           "max_spell_count": 0,
           "spell_ids": [
-            "rpg_series:smash"
+            "elyrium:crushing_uppercut"
           ],
           "extra_tier_binding": 0
         }
       },
       {
-        "item": "~mace|hammer|flail",
+        "item": "~mace|flail|club",
         "container": {
           "access": "MAGIC",
           "access_param": "",
@@ -224,7 +98,21 @@
           "slot": "",
           "max_spell_count": 0,
           "spell_ids": [
-            "rpg_series:smash"
+            "elyrium:crushing_uppercut"
+          ],
+          "extra_tier_binding": 0
+        }
+      },
+      {
+        "item": "#rpg_series:weapon_type/double_axe",
+        "container": {
+          "access": "MAGIC",
+          "access_param": "",
+          "pool": "",
+          "slot": "",
+          "max_spell_count": 0,
+          "spell_ids": [
+            "elyrium:severing_cleave"
           ],
           "extra_tier_binding": 0
         }
@@ -238,13 +126,13 @@
           "slot": "",
           "max_spell_count": 0,
           "spell_ids": [
-            "rpg_series:cleave"
+            "elyrium:severing_cleave"
           ],
           "extra_tier_binding": 0
         }
       },
       {
-        "item": "~_axe",
+        "item": "~_axe|battleaxe|waraxe|greataxe|double_axe",
         "container": {
           "access": "MAGIC",
           "access_param": "",
@@ -252,7 +140,91 @@
           "slot": "",
           "max_spell_count": 0,
           "spell_ids": [
-            "rpg_series:cleave"
+            "elyrium:severing_cleave"
+          ],
+          "extra_tier_binding": 0
+        }
+      },
+      {
+        "item": "#rpg_series:weapon_type/spear",
+        "container": {
+          "access": "MAGIC",
+          "access_param": "",
+          "pool": "",
+          "slot": "",
+          "max_spell_count": 0,
+          "spell_ids": [
+            "elyrium:piercing_thrust"
+          ],
+          "extra_tier_binding": 0
+        }
+      },
+      {
+        "item": "#rpg_series:weapon_type/glaive",
+        "container": {
+          "access": "MAGIC",
+          "access_param": "",
+          "pool": "",
+          "slot": "",
+          "max_spell_count": 0,
+          "spell_ids": [
+            "elyrium:piercing_thrust"
+          ],
+          "extra_tier_binding": 0
+        }
+      },
+      {
+        "item": "~spear|glaive|halberd|lance|pike",
+        "container": {
+          "access": "MAGIC",
+          "access_param": "",
+          "pool": "",
+          "slot": "",
+          "max_spell_count": 0,
+          "spell_ids": [
+            "elyrium:piercing_thrust"
+          ],
+          "extra_tier_binding": 0
+        }
+      },
+      {
+        "item": "#rpg_series:weapon_type/dagger",
+        "container": {
+          "access": "MAGIC",
+          "access_param": "",
+          "pool": "",
+          "slot": "",
+          "max_spell_count": 0,
+          "spell_ids": [
+            "elyrium:scissor_cross"
+          ],
+          "extra_tier_binding": 0
+        }
+      },
+      {
+        "item": "#rpg_series:weapon_type/sickle",
+        "container": {
+          "access": "MAGIC",
+          "access_param": "",
+          "pool": "",
+          "slot": "",
+          "max_spell_count": 0,
+          "spell_ids": [
+            "elyrium:scissor_cross"
+          ],
+          "extra_tier_binding": 0
+        }
+      },
+      {
+        "item": "~dagger|knife|sickle|sai|stiletto|tanto",
+        "container": {
+          "access": "MAGIC",
+          "access_param": "",
+          "pool": "",
+          "slot": "",
+          "max_spell_count": 0,
+          "spell_ids": [
+            "elyrium:scissor_cross"
           ],
           "extra_tier_binding": 0
         }
@@ -266,7 +238,7 @@
           "slot": "",
           "max_spell_count": 0,
           "spell_ids": [
-            "rpg_series:swift_strikes"
+            "elyrium:reverse_sunder"
           ],
           "extra_tier_binding": 0
         }
@@ -280,7 +252,7 @@
           "slot": "",
           "max_spell_count": 0,
           "spell_ids": [
-            "rpg_series:swift_strikes"
+            "elyrium:reverse_sunder"
           ],
           "extra_tier_binding": 0
         }
@@ -300,7 +272,50 @@
     "enabled": true,
     "blacklist": "",
     "enable_specifiers": true,
-    "specifiers": [],
+    "specifiers": [
+      {
+        "item": "#minecraft:enchantable/bow",
+        "container": {
+          "access": "ARCHERY",
+          "access_param": "",
+          "pool": "",
+          "slot": "",
+          "max_spell_count": 0,
+          "spell_ids": [
+            "elyrium:fan_barrage"
+          ],
+          "extra_tier_binding": 0
+        }
+      },
+      {
+        "item": "#minecraft:enchantable/crossbow",
+        "container": {
+          "access": "ARCHERY",
+          "access_param": "",
+          "pool": "",
+          "slot": "",
+          "max_spell_count": 0,
+          "spell_ids": [
+            "elyrium:fan_barrage"
+          ],
+          "extra_tier_binding": 0
+        }
+      },
+      {
+        "item": "~bow|crossbow",
+        "container": {
+          "access": "ARCHERY",
+          "access_param": "",
+          "pool": "",
+          "slot": "",
+          "max_spell_count": 0,
+          "spell_ids": [
+            "elyrium:fan_barrage"
+          ],
+          "extra_tier_binding": 0
+        }
+      }
+    ],
     "defaults": {
       "access": "ARCHERY",
       "access_param": "",

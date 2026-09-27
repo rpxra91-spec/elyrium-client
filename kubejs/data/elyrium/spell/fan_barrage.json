@@ -1,0 +1,52 @@
+{
+  "school": "spell_power:physical_ranged",
+  "range": 0.0,
+  "tier": 1,
+  "learn": {},
+  "active": {
+    "cast": {
+      "duration": 0.4,
+      "animation": {
+        "id": "spell_engine:archery_pull"
+      },
+      "animates_ranged_weapon": true,
+      "sound": {
+        "id": "minecraft:entity.arrow.shoot"
+      }
+    }
+  },
+  "release": {
+    "animation": {
+      "id": "spell_engine:archery_release"
+    }
+  },
+  "target": {
+    "type": "AIM",
+    "aim": {}
+  },
+  "deliver": {
+    "type": "SHOOT_ARROW",
+    "shoot_arrow": {
+      "launch_properties": {
+        "velocity": 2.8,
+        "extra_launch_count": 4
+      }
+    }
+  },
+  "arrow_perks": {
+    "damage_multiplier": 0.8,
+    "bypass_iframes": true,
+    "knockback": 0.5
+  },
+  "cost": {
+    "cooldown": {
+      "group": "weapon",
+      "attempt_duration": 0.5,
+      "duration": 10.0
+    },
+    "item": {
+      "id": "minecraft:arrow",
+      "consume": false
+    }
+  }
+}

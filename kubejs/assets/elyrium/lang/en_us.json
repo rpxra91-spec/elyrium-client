@@ -1,0 +1,20 @@
+{
+  "spell.elyrium.reverse_sunder.name": "Reverse Sunder",
+  "spell.elyrium.reverse_sunder.description": "Upward reverse vertical slash: deals {damage} damage, disables enemy shield, and inflicts Weakness II for 4s.",
+  "spell.elyrium.whirlwind_cleave.name": "Whirlwind Cleave",
+  "spell.elyrium.whirlwind_cleave.description": "360° circular cleave in 4.5m radius: deals {damage} damage and knocks back all surrounding enemies.",
+  "spell.elyrium.severing_cleave.name": "Severing Cleave",
+  "spell.elyrium.severing_cleave.description": "Frontal sweeping arc (120°, 4m): deals {damage} damage, disables shield, and slows target.",
+  "spell.elyrium.earth_sunder.name": "Earth Sunder",
+  "spell.elyrium.earth_sunder.description": "Slam into ground creating a 5m shockwave: deals {damage} damage, launches enemies, and inflicts Slowness IV.",
+  "spell.elyrium.crushing_uppercut.name": "Crushing Uppercut",
+  "spell.elyrium.crushing_uppercut.description": "Upward uppercut: deals {damage} damage, launches target 4 blocks upward with stun and guard break.",
+  "spell.elyrium.piercing_thrust.name": "Piercing Thrust",
+  "spell.elyrium.piercing_thrust.description": "5.5m linear thrust completely bypassing armor: deals {damage} true damage.",
+  "spell.elyrium.scissor_cross.name": "Scissor Cross",
+  "spell.elyrium.scissor_cross.description": "Cross cleave with dual blades: deals {damage} damage across two strikes and inflicts Deep Wounds.",
+  "spell.elyrium.iai_slash.name": "Phantom Iai Slash",
+  "spell.elyrium.iai_slash.description": "Instant 6m forward dash through enemies: deals {damage} damage and causes heavy Bleeding.",
+  "spell.elyrium.fan_barrage.name": "Fan Barrage",
+  "spell.elyrium.fan_barrage.description": "Release a fan of 5 arrows in a wide frontal cone, piercing incoming ranks."
+}

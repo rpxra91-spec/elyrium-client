@@ -29,17 +29,41 @@ const GRADE_SCALING_PER_POINT = {
     'E': 0.2   // +0.2% per point
 };
 
+let J_PerkManager = null;
+let J_Minecraft = null;
+try {
+    J_PerkManager = Java.loadClass('network.roto.simplestats.leveling.PerkManager');
+} catch (e) {}
+try {
+    J_Minecraft = Java.loadClass('net.minecraft.client.Minecraft');
+} catch (e) {}
+
 function getPlayerPerkStat(statKey) {
     if (!statKey) return 0;
     try {
+        if (!J_Minecraft) {
+            try { J_Minecraft = Java.loadClass('net.minecraft.client.Minecraft'); } catch (e) {}
+        }
+        if (!J_PerkManager) {
+            try { J_PerkManager = Java.loadClass('network.roto.simplestats.leveling.PerkManager'); } catch (e) {}
+        }
+        let mc = J_Minecraft ? J_Minecraft.getInstance() : null;
+        let player = (mc && mc.player) ? mc.player : ((typeof Client !== 'undefined' && Client.player) ? Client.player : null);
+        if (player && J_PerkManager) {
+            let rawPlayer = player.minecraftPlayer || player;
+            return J_PerkManager.getPerkLevel(rawPlayer, statKey) || 0;
+        }
+    } catch (e) {}
+
+    try {
         let p = (typeof Client !== 'undefined' && Client.player) ? Client.player : null;
-        if (!p || !p.persistentData) return 0;
-        let perks = p.persistentData.getCompound('simplestats_perks');
-        if (!perks) return 0;
-        return perks.getInt(statKey) || 0;
-    } catch (e) {
-        return 0;
-    }
+        if (p && p.persistentData) {
+            let perks = p.persistentData.getCompound('simplestats_perks');
+            if (perks) return perks.getInt(statKey) || 0;
+        }
+    } catch (e) {}
+
+    return 0;
 }
 
 function calculateDynamicStatBonus(grade, statKey) {
@@ -211,7 +235,7 @@ function renderReinforcementTooltips(tooltip, item) {
         let sc1 = adjustGrade(baseG1, tier, reinforceLvl, primaryKey);
         let sc2 = adjustGrade(baseG2, tier, reinforceLvl, secondaryKey);
 
-        tooltip.add(Text.of('§7Масштабирование:'));
+        tooltip.add(Text.of('§7Сродство оружия:'));
         tooltip.add(Text.of(`  §b• ${primaryStat} §e[${sc1.grade}] §a(+${sc1.bonus}% урона)`));
         tooltip.add(Text.of(`  §b• ${secondaryStat} §e[${sc2.grade}] §a(+${sc2.bonus}% урона)`));
 
