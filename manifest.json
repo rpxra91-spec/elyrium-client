@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-27T10:18:39.966343+00:00",
+  "generated_at": "2026-09-27T13:55:49.033957+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -907,8 +907,8 @@
     },
     {
       "path": "config/irons_spellbooks-server.toml",
-      "sha256": "60433b671b895f0de388c1baa7aeb7c1dcd2dbd93622e0f3d7128b77daf8be11",
-      "size": 5334
+      "sha256": "b8dab30527dcb634a269cba437e3e6c7e769bc4cc0f96d2f01f197ed0c937e31",
+      "size": 5395
     },
     {
       "path": "config/irons_spellbooks_spell_config/global_config.json",
@@ -1437,8 +1437,8 @@
     },
     {
       "path": "config/simplestats-server.toml",
-      "sha256": "f825694dca8dc18bbf86b26be2e8c9f99b678b3ab90c85c5ace102c5d8b86cd2",
-      "size": 2338
+      "sha256": "5ce5c38a662e2a0d88128230e131bb066ad09181c47476a4fc03c3479147daa0",
+      "size": 2371
     },
     {
       "path": "config/simplyswords/gem_powers.toml",
@@ -1542,8 +1542,8 @@
     },
     {
       "path": "config/spell_engine/client.json5",
-      "sha256": "cbbe02482b857f1d1c460649a935a6232ce6ad17680f52949330e4a3036eaf9d",
-      "size": 863
+      "sha256": "a20c190fcb1e15c594e3d62a21e675cced446ecf40edc9646f86710b5fec7810",
+      "size": 865
     },
     {
       "path": "config/spell_engine/elemental_weaknesses.json",
@@ -2162,8 +2162,8 @@
     },
     {
       "path": "defaultconfigs/simplestats-server.toml",
-      "sha256": "f825694dca8dc18bbf86b26be2e8c9f99b678b3ab90c85c5ace102c5d8b86cd2",
-      "size": 2338
+      "sha256": "5ce5c38a662e2a0d88128230e131bb066ad09181c47476a4fc03c3479147daa0",
+      "size": 2371
     },
     {
       "path": "kubejs/README.txt",
@@ -7466,6 +7466,11 @@
       "size": 423
     },
     {
+      "path": "kubejs/client_scripts/dodge_camera_fx.js",
+      "sha256": "4ee9a083d0f43e277081ba0c7b91ff906c2ed29a91c1c052833c08a1fc32a44d",
+      "size": 13412
+    },
+    {
       "path": "kubejs/client_scripts/equipment_reinforcement_tooltips.js",
       "sha256": "65e82e89fbf63a715c0466586cd8c91181dae3acc585bb9d52582b6ab65ccefd",
       "size": 11300
@@ -7502,8 +7507,8 @@
     },
     {
       "path": "kubejs/client_scripts/martial_arts_tooltips.js",
-      "sha256": "64cfb193470cde861cf3144ee13d58156b57ba46f59101675dcbd2845f0bc070",
-      "size": 24167
+      "sha256": "95904203724cf89d90eb7ec0d1f6ac376adbdfc117a489099f637b3ff1076465",
+      "size": 25341
     },
     {
       "path": "kubejs/client_scripts/modular_multitool_tooltips.js",
@@ -7807,8 +7812,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/world_spawn_setup.js",
-      "sha256": "4b011e9e6d51a7d91ddb76369ea715595c5d38b6f0d9695eaa87f9d6255c25f5",
-      "size": 14244
+      "sha256": "31c5c45d94c55be8f51b5698cb39a37f530c91686627135b5353e8fc17e2633b",
+      "size": 15007
     },
     {
       "path": "kubejs/server_scripts/02_magic/spell_capacity_engine.js",
@@ -7887,8 +7892,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "4f180a449850c18b98c0c8f1bf2d3bc7e204975cba879c02f26fb9d744e0d31b",
-      "size": 87217
+      "sha256": "7260f88c8c801de99273c81e7b853c84fc1abf24d24d115db03d969cef0e0e22",
+      "size": 89463
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
@@ -7899,6 +7904,11 @@
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
       "sha256": "31dc89477080f73a5cae6f5252051e288605df70ee8cdd80835d64745a3e56c3",
       "size": 12021
+    },
+    {
+      "path": "kubejs/server_scripts/03_combat/souls_dodge_engine.js",
+      "sha256": "cfec84810c14b0433b206fa6451bc132f02a62d7fe6ecd7fd6d975a9d0c3401f",
+      "size": 10437
     },
     {
       "path": "kubejs/server_scripts/03_combat/tier_combat_matrix.js",
@@ -7932,13 +7942,13 @@
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/rpg_unified_leveling.js",
-      "sha256": "26ce0b1c5de196a376d897d1989e6966acdaf05aeb02458f42c7ce82f3c4385b",
-      "size": 8706
+      "sha256": "9778dc2dc1e1b9f1b5e70a51e7172fa6bd4f1dcf70c137717c2e564d81ac8fec",
+      "size": 15550
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/skill_abilities_engine.js",
-      "sha256": "7d34e401fa8c572b5ff5c8b1ecb98b504d7048fbd4e352995a4011699711048d",
-      "size": 21024
+      "sha256": "c2b1dc6b4b3d8d1f0828d049b506ee58ae9f1a328f5b14d146bada55106196ad",
+      "size": 20543
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/skills_combat_triggers.js",
@@ -8032,7 +8042,7 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/colony_qol.js",
-      "sha256": "c2b12bd21d9fda9d708c392372d437b76915281f3e0fc8ad8935f37721b0084e",
+      "sha256": "d4fa148ed29c7b3068fb6e656546279fe2e657e5852822bb096214131b13810b",
       "size": 22332
     },
     {
@@ -8047,7 +8057,7 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/custom_epic_raids.js",
-      "sha256": "67c296bea01ce0e63ae599762c8eed3e6045aafd7a3472bd524028a39cea47e7",
+      "sha256": "b8b8ef145fd726b1d4a1d173642c243323b56581158335fc69009f537e731d71",
       "size": 11554
     },
     {
@@ -8129,6 +8139,11 @@
       "path": "kubejs/server_scripts/08_testing_kits/magic_and_socket_kits.js",
       "sha256": "8a94f09f3907e5047732630327fbb7beb10a4d371057e8502a5f9046bc91a311",
       "size": 11191
+    },
+    {
+      "path": "kubejs/startup_scripts/dodge_keybinds.js",
+      "sha256": "87a505286ae6dc6b4682b1d52fcdbb3ffedfb0013ecdf13fd33342780fb836c9",
+      "size": 1118
     },
     {
       "path": "kubejs/startup_scripts/infernal_anvil_block.js",

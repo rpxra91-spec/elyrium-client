@@ -1,22 +1,194 @@
 // ==============================================================================
 // 🏛️ ELYRIUM RPG: UNIFIED RPG LEVELING & EXPERIENCE ENGINE (1–100 LEVELS)
-// Minecraft 1.21.1 NeoForge | KubeJS Server Script (v1.2)
+// Minecraft 1.21.1 NeoForge | KubeJS Server Script (v2.1)
 // ==============================================================================
 // - Fuses SimpleStats (1-100) and Puffish Skills ('elyrium:celestial_tree').
-// - Awards 1 Skill Point in Puffish Skills upon each SimpleStats Level Up.
+// - Direct JVM LevelManager API integration (zero NBT lag, atomic updates).
+// - Strict Zero Start: New players start at Level 1, 0% XP bar, 0 Stat Points, 0 Talent Points.
+// - Level 2+ Atomic Progression: +1 Stat Point (SimpleStats) and +1 Talent Point (Puffish Skills).
 // - Full RPG Fanfare: challenge sound, celebratory screen title, chat alert,
 //   and golden/azure particles.
 // - "Second Wind" (Второе Дыхание): 100% Health, Food, and Mana replenishment.
-// - Harmonizes Vanilla XP bar with RPG Hero Level (1-100) and XP progress.
+// - Harmonizes Vanilla XP bar with RPG Hero Level (1-100) and XP progress via LevelManager.getXpProgress.
 // - Captures Vanilla XP gains (mining ores, smelting, breeding, fishing, quests)
-//   and routes them into SimpleStats.
+//   and directly routes them into SimpleStats via LevelManager.addXP.
 // - Abolishes vanilla XP drain: disables Enchanting Table and restores level on anvil.
 // ==============================================================================
 
+let LevelManager = null;
+try {
+    LevelManager = Java.loadClass('network.roto.simplestats.leveling.LevelManager');
+} catch (e) {
+    console.error('[RPG Leveling] Failed to load SimpleStats LevelManager:', e);
+}
+
+// Helper: Safely resolve raw Minecraft ServerPlayer
+function getRawPlayer(player) {
+    if (!player) return null;
+    return player.minecraftPlayer || player.minecraftEntity || player.entity || player;
+}
+
+// Helper: Get effective RPG level of player (Direct Java API or NBT fallback)
+function getPlayerLevel(player) {
+    if (!player) return 1;
+    if (LevelManager) {
+        try {
+            let raw = getRawPlayer(player);
+            return LevelManager.getLevel(raw);
+        } catch (e) {
+            try {
+                return LevelManager.getLevel(player);
+            } catch (e2) {}
+        }
+    }
+    let pData = player.persistentData;
+    return pData ? Math.max(1, pData.getInt('simplestats_level')) : 1;
+}
+
 // Helper: Calculate XP required for next level in SimpleStats
 function getRequiredXpForLevel(lvl) {
+    if (LevelManager) {
+        try {
+            return LevelManager.getXpRequiredForLevel(lvl);
+        } catch (e) {}
+    }
     let l = Math.max(1, lvl);
-    return Math.round(50 * Math.pow(1.08, l - 1));
+    return Math.max(1, Math.floor(50 * Math.pow(1.08, l <= 1 ? 0 : l - 2)));
+}
+
+// Helper: Get normalized XP progress (0.0 to 1.0)
+function getPlayerXpProgress(player) {
+    if (!player) return 0.0;
+    if (LevelManager) {
+        try {
+            let raw = getRawPlayer(player);
+            return Math.min(0.999, Math.max(0.0, LevelManager.getXpProgress(raw)));
+        } catch (e) {
+            try {
+                return Math.min(0.999, Math.max(0.0, LevelManager.getXpProgress(player)));
+            } catch (e2) {}
+        }
+    }
+    let pData = player.persistentData;
+    let curXp = pData ? (pData.getInt('simplestats_xp') || 0) : 0;
+    let currentLvl = getPlayerLevel(player);
+    let reqXp = getRequiredXpForLevel(currentLvl + 1);
+    return Math.min(0.999, Math.max(0.0, curXp / Math.max(1, reqXp)));
+}
+
+// Helper: Synchronously add XP to player via direct Java API
+function addPlayerXp(player, amount) {
+    if (!player || amount <= 0) return;
+    if (LevelManager) {
+        try {
+            let raw = getRawPlayer(player);
+            LevelManager.addXP(raw, amount);
+            return;
+        } catch (e) {
+            try {
+                LevelManager.addXP(player, amount);
+                return;
+            } catch (e2) {
+                console.error('[RPG Leveling] Error calling LevelManager.addXP:', e2);
+            }
+        }
+    }
+    player.server.runCommandSilent(`simplestats xp add ${player.username} ${amount}`);
+}
+
+// Synchronizes the HUD XP bar with SimpleStats progression
+function syncVanillaXpBar(player, currentLvl) {
+    try {
+        let progress = getPlayerXpProgress(player);
+
+        // Ensure experience level number reflects RPG Hero Level
+        if (player.experienceLevel !== currentLvl) {
+            try {
+                player.setExperienceLevels(currentLvl);
+            } catch (e1) {
+                player.server.runCommandSilent(`experience set ${player.username} ${currentLvl} levels`);
+            }
+        }
+
+        // Set visual progress on XP bar
+        player.experienceProgress = progress;
+
+        // Keep internal XP points in sync
+        try {
+            let pts = Math.round(progress * Math.max(1, player.getXpNeededForNextLevel()));
+            player.setExperiencePoints(pts);
+        } catch (e2) {}
+
+        // Anchor synced total XP to prevent self-triggering loops
+        if (player.persistentData) {
+            player.persistentData.putInt('elyrium_synced_total_xp', player.totalExperience);
+        }
+    } catch (e) {}
+}
+
+// Strict Zero Start & First Login Initialization
+function handleStrictZeroStart(player, forceReset) {
+    if (!player || !player.isAlive()) return;
+    let pData = player.persistentData;
+    if (!pData) return;
+    let server = player.server;
+    if (!server) return;
+
+    if (forceReset || !pData.getBoolean('elyrium_zero_start_initialized')) {
+        pData.putBoolean('elyrium_zero_start_initialized', true);
+
+        let raw = getRawPlayer(player);
+
+        // 1. Strict Level 1, 0 XP, and 0 Stat Points in SimpleStats
+        if (LevelManager) {
+            try {
+                LevelManager.setXP(raw, 0);
+                let currentPts = LevelManager.getPoints(raw);
+                if (currentPts > 0) {
+                    LevelManager.handlePointsUpdate(raw, -currentPts);
+                }
+            } catch (e) {
+                console.error('[RPG Leveling] Zero start SimpleStats init error:', e);
+            }
+        }
+        server.runCommandSilent(`simplestats points set ${player.username} 0`);
+        server.runCommandSilent(`simplestats xp set ${player.username} 0`);
+        server.runCommandSilent(`simplestats level set ${player.username} 1`);
+        pData.putInt('simplestats_level', 1);
+        pData.putInt('simplestats_xp', 0);
+        pData.putInt('simplestats_points', 0);
+
+        // 2. Strict 0 talent points in Puffish Skills celestial tree
+        server.runCommandSilent(`puffish_skills points set ${player.username} elyrium:celestial_tree 0`);
+
+        // 3. Strict Level 1 and 0% bar in Vanilla HUD
+        try {
+            player.setExperienceLevels(1);
+        } catch (e) {
+            server.runCommandSilent(`experience set ${player.username} 1 levels`);
+        }
+        player.experienceProgress = 0.0;
+        try {
+            player.setExperiencePoints(0);
+        } catch (e) {}
+
+        // Anchor tracking tags
+        pData.putInt('elyrium_tracked_level', 1);
+        pData.putInt('elyrium_synced_total_xp', player.totalExperience);
+
+        // Sync visual bar
+        syncVanillaXpBar(player, 1);
+        return;
+    }
+
+    // Existing player: ensure tracking tag is initialized
+    let currentLvl = getPlayerLevel(player);
+    let trackedLvl = pData.getInt('elyrium_tracked_level');
+    if (!trackedLvl || trackedLvl < 1) {
+        pData.putInt('elyrium_tracked_level', currentLvl);
+    }
+    pData.putInt('elyrium_synced_total_xp', player.totalExperience);
+    syncVanillaXpBar(player, currentLvl);
 }
 
 // Level Check, XP Ingestion and Level Up Logic
@@ -29,42 +201,39 @@ function checkRpgLevelUp(player) {
     let server = player.server;
     if (!server) return;
 
+    // Strict zero start check if not initialized yet
+    if (!pData.getBoolean('elyrium_zero_start_initialized')) {
+        handleStrictZeroStart(player, false);
+        return;
+    }
+
     // 1. INGEST VANILLA XP ORBS (Mining, Smelting, Breeding, Fishing, Quests)
     let lastTotalXp = pData.getInt('elyrium_synced_total_xp');
     let currentTotalXp = player.totalExperience;
     if (typeof lastTotalXp === 'number' && lastTotalXp > 0 && currentTotalXp > lastTotalXp) {
         let gainedXp = currentTotalXp - lastTotalXp;
-        // Feed into SimpleStats progression
-        server.runCommandSilent(`simplestats xp add ${player.username} ${gainedXp}`);
+        // Directly add XP into SimpleStats progression via LevelManager Java API
+        addPlayerXp(player, gainedXp);
     }
 
-    // 2. CHECK LEVEL PROGRESSION
-    let currentLvl = pData.getInt('simplestats_level');
-    if (!currentLvl || currentLvl < 1) {
-        currentLvl = 1;
-    }
-
+    // 2. CHECK LEVEL PROGRESSION (Direct JVM call, zero NBT lag)
+    let currentLvl = getPlayerLevel(player);
     let trackedLvl = pData.getInt('elyrium_tracked_level');
 
-    // First time tracking on join / migration:
     if (!trackedLvl || trackedLvl < 1) {
-        if (currentLvl > 1) {
-            pData.putInt('elyrium_tracked_level', 1);
-            trackedLvl = 1;
-        } else {
-            pData.putInt('elyrium_tracked_level', 1);
-            syncVanillaXpBar(player, currentLvl);
-            return;
-        }
+        pData.putInt('elyrium_tracked_level', currentLvl);
+        trackedLvl = currentLvl;
     }
 
-    // LEVEL UP DETECTED
+    // LEVEL UP DETECTED (Level 2+)
     if (currentLvl > trackedLvl) {
         let delta = currentLvl - trackedLvl;
         pData.putInt('elyrium_tracked_level', currentLvl);
 
         // 1. Grant Puffish Skills talent points (1 point per level gained)
-        server.runCommandSilent(`puffish_skills points add ${player.username} elyrium:celestial_tree ${delta}`);
+        for (let i = 0; i < delta; i++) {
+            server.runCommandSilent(`puffish_skills points add ${player.username} elyrium:celestial_tree 1`);
+        }
 
         // 2. Audio-Visual RPG Fanfare
         server.runCommandSilent(`playsound minecraft:ui.toast.challenge_complete player ${player.username} ~ ~ ~ 1.0 1.0`);
@@ -103,51 +272,26 @@ function checkRpgLevelUp(player) {
     syncVanillaXpBar(player, currentLvl);
 }
 
-// Synchronizes the HUD XP bar with SimpleStats progression
-function syncVanillaXpBar(player, currentLvl) {
-    try {
-        let pData = player.persistentData;
-        let curXp = pData ? (pData.getInt('simplestats_xp') || 0) : 0;
-        let reqXp = getRequiredXpForLevel(currentLvl);
-        let progress = Math.min(0.99, Math.max(0.0, curXp / Math.max(1, reqXp)));
-
-        // Ensure experience level number reflects RPG Hero Level
-        if (player.experienceLevel !== currentLvl) {
-            try {
-                player.setExperienceLevels(currentLvl);
-            } catch (e1) {
-                player.server.runCommandSilent(`experience set ${player.username} ${currentLvl} levels`);
-            }
-        }
-
-        // Set visual progress on XP bar
-        player.experienceProgress = progress;
-
-        // Keep internal XP points in sync
-        try {
-            let pts = Math.round(progress * Math.max(1, player.getXpNeededForNextLevel()));
-            player.setExperiencePoints(pts);
-        } catch (e2) {}
-
-        // Anchor synced total XP to prevent self-triggering loops
-        if (pData) {
-            pData.putInt('elyrium_synced_total_xp', player.totalExperience);
-        }
-    } catch (e) {}
-}
-
-// Tick Hook: Check level every 10 ticks (0.5s)
+// Tick Hook: Check level every 5 ticks (0.25s) for snappy responsiveness
 PlayerEvents.tick(event => {
     let player = event.player;
     if (!player) return;
     let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0);
-    if (tick % 10 !== 0) return;
+    if (tick % 5 !== 0) return;
     checkRpgLevelUp(player);
 });
 
-// Login Hook: Initial sync upon joining
+// Instant level check on mob death
+EntityEvents.death(event => {
+    let killer = event.source ? (event.source.player || event.source.actual) : null;
+    if (killer && killer.isPlayer()) {
+        checkRpgLevelUp(killer);
+    }
+});
+
+// Login Hook: Strict Zero Start & initial sync upon joining
 PlayerEvents.loggedIn(event => {
-    checkRpgLevelUp(event.player);
+    handleStrictZeroStart(event.player, false);
 });
 
 // Respawn Hook: Restore level display and status
@@ -157,6 +301,39 @@ PlayerEvents.respawned(event => {
         p.persistentData.putInt('elyrium_synced_total_xp', p.totalExperience);
     }
     checkRpgLevelUp(p);
+});
+
+// Admin / Test Command for Leveling Reset & Status
+ServerEvents.commandRegistry(event => {
+    const { commands: Commands, arguments: Arguments } = event;
+    event.register(
+        Commands.literal('elyrium_leveling')
+            .then(Commands.literal('reset')
+                .requires(src => src.hasPermission(2))
+                .then(Commands.argument('target', Arguments.PLAYER.create(event))
+                    .executes(ctx => {
+                        let targetPlayer = Arguments.PLAYER.getResult(ctx, 'target');
+                        if (targetPlayer) {
+                            targetPlayer.persistentData.remove('elyrium_zero_start_initialized');
+                            handleStrictZeroStart(targetPlayer, true);
+                            ctx.source.sendSuccess(() => Text.of(`§a[Elyrium Leveling] Сброс выполнен для ${targetPlayer.username}: Уровень 1, 0 очков статов, 0 очков талантов.`), true);
+                        }
+                        return 1;
+                    })
+                )
+            )
+            .then(Commands.literal('sync')
+                .executes(ctx => {
+                    let player = ctx.source.player;
+                    if (player) {
+                        let lvl = getPlayerLevel(player);
+                        syncVanillaXpBar(player, lvl);
+                        ctx.source.sendSuccess(() => Text.of(`§a[Elyrium Leveling] HUD синхронизирован: Уровень ${lvl}.`), false);
+                    }
+                    return 1;
+                })
+            )
+    );
 });
 
 // ------------------------------------------------------------------------------
@@ -188,8 +365,7 @@ PlayerEvents.inventoryChanged(event => {
     let menuClass = String(menu);
     if (!menuClass.includes('Anvil')) return;
 
-    let pData = player.persistentData;
-    let currentLvl = pData ? pData.getInt('simplestats_level') : 0;
+    let currentLvl = getPlayerLevel(player);
     if (currentLvl > 0 && player.experienceLevel < currentLvl) {
         try {
             player.setExperienceLevels(currentLvl);

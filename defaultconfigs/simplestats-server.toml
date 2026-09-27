@@ -9,7 +9,7 @@
 	points_per_level = 1
 	#List XP values for Mobs, can be empty
 	#In the following format: Mob (string), XP Granted (int). Don't include spaces.
-	xp_values = ["minecraft:zombie,8", "minecraft:skeleton,8", "minecraft:spider,8", "minecraft:creeper,12", "minecraft:drowned,9", "minecraft:husk,8", "minecraft:stray,8", "minecraft:cave_spider,9", "minecraft:enderman,25", "minecraft:blaze,20", "minecraft:witch,22", "minecraft:piglin_brute,35", "minecraft:ravager,80", "minecraft:evoker,65", "minecraft:warden,500", "minecraft:wither,600", "minecraft:ender_dragon,1000"]
+	xp_values = ["minecraft:zombie,8", "minecraft:skeleton,8", "minecraft:spider,8", "minecraft:creeper,12", "minecraft:drowned,9", "minecraft:husk,8", "minecraft:stray,8", "minecraft:cave_spider,9", "minecraft:enderman,25", "minecraft:blaze,20", "minecraft:witch,22", "minecraft:piglin_brute,35", "minecraft:zombified_piglin,50", "minecraft:ravager,80", "minecraft:evoker,65", "minecraft:warden,500", "minecraft:wither,600", "minecraft:ender_dragon,1000"]
 
 [Perks]
 	#List of Perks, can be empty

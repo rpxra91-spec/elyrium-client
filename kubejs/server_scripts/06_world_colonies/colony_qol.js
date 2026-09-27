@@ -172,8 +172,8 @@ ServerEvents.tick(event => {
 
                     if (belongs) {
                         // Grant light stat points via SimpleStats
-                        server.runCommandSilent(`simplestats points add ${statPoints} ${p.username}`)
-                        server.runCommandSilent(`simplestats xp add ${bonusXp} ${p.username}`)
+                        server.runCommandSilent(`simplestats points add ${p.username} ${statPoints}`)
+                        server.runCommandSilent(`simplestats xp add ${p.username} ${bonusXp}`)
                         server.runCommandSilent(`playsound minecraft:ui.toast.challenge_complete player ${p.username} ~ ~ ~ 1 1.2`)
                         p.potionEffects.add('minecraft:hero_of_the_village', 1200, 0, false, false)
                     }

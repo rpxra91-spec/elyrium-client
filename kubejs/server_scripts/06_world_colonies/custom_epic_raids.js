@@ -224,8 +224,8 @@ EntityEvents.death(event => {
 
         server.players.forEach(p => {
             if (p.distanceToEntity(entity) < 150) {
-                server.runCommandSilent(`simplestats points add 1 ${p.username}`)
-                server.runCommandSilent(`simplestats xp add 500 ${p.username}`)
+                server.runCommandSilent(`simplestats points add ${p.username} 1`)
+                server.runCommandSilent(`simplestats xp add ${p.username} 500`)
                 server.runCommandSilent(`playsound minecraft:ui.toast.challenge_complete player ${p.username} ~ ~ ~ 1 1`)
             }
         })
