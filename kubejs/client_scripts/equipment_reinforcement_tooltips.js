@@ -182,35 +182,7 @@ function renderReinforcementTooltips(tooltip, item) {
         tooltip.add(Text.of(`  §b• ${primaryStat} §e[${sc1.grade}] §a(+${sc1.bonus}% урона)`));
         tooltip.add(Text.of(`  §b• ${secondaryStat} §e[${sc2.grade}] §a(+${sc2.bonus}% урона)`));
 
-        // Martial Art Inscription Display
-        let artId = null;
-        let artRank = 1;
-        try {
-            if (item.nbt && item.nbt.contains('skd_weapon_art')) {
-                artId = String(item.nbt.getString('skd_weapon_art'));
-                artRank = item.nbt.getInt('skd_art_rank') || 1;
-            } else if (item.customData && item.customData.contains('skd_weapon_art')) {
-                artId = String(item.customData.getString('skd_weapon_art'));
-                artRank = item.customData.getInt('skd_art_rank') || 1;
-            }
-        } catch (e) {}
-
-        if (artId) {
-            let artNames = {
-                'whirlwind_cleave': 'Вихревой Размах',
-                'earth_sunder': 'Рассечение Земли',
-                'juggernaut_rush': 'Неумолимый Натиск',
-                'lightning_thrust': 'Молниеносный Выпад',
-                'blood_rend': 'Кровавый Росчерк',
-                'seismic_slam': 'Сейсмический Молот',
-                'shadow_step': 'Теневой Шаг',
-                'arrow_barrage': 'Залп Стрел'
-            };
-            let roman = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V' };
-            let artName = artNames[artId] || artId;
-            let rankStr = roman[artRank] || 'I';
-            tooltip.add(Text.of(`§6⚔ Боевое Искусство: §e«${artName}» §f(Ранг ${rankStr})`));
-        }
+        // Reinforcement scaling display complete
     }
 
     // ==========================================================================
@@ -249,26 +221,18 @@ function renderReinforcementTooltips(tooltip, item) {
 }
 
 // ------------------------------------------------------------------------------
-// 3. EVENT HOOK (ItemEvents.modifyTooltips / ItemEvents.tooltip)
+// 3. EVENT REGISTRATION (KubeJS 21 NeoForge Dynamic Tooltips)
 // ------------------------------------------------------------------------------
 
-if (typeof ItemEvents !== 'undefined') {
-    if (typeof ItemEvents.modifyTooltips === 'function') {
-        ItemEvents.modifyTooltips(event => {
-            event.modify('*', tooltip => {
-                let item = tooltip.item;
-                if (!item || item.isEmpty() || item.id === 'minecraft:air') return;
-                renderReinforcementTooltips(tooltip, item);
-            });
-        });
-    } else if (typeof ItemEvents.tooltip === 'function') {
-        ItemEvents.tooltip(event => {
-            event.addAdvanced('*', (item, advanced, text) => {
-                let tooltipWrapper = {
-                    add: (component) => text.add(component)
-                };
-                renderReinforcementTooltips(tooltipWrapper, item);
-            });
-        });
-    }
-}
+ItemEvents.modifyTooltips(event => {
+    event.modify('*', text => {
+        text.dynamic('elyrium_reinforcement');
+    });
+});
+
+ItemEvents.dynamicTooltips('elyrium_reinforcement', event => {
+    let item = event.item;
+    if (!item || item.isEmpty() || item.id === 'minecraft:air') return;
+    renderReinforcementTooltips(event.lines, item);
+});
+
