@@ -1,103 +1,211 @@
 // ==============================================================================
 // ⚔️ ELYRIUM RPG: PHYSICAL WEAPON ARTS & GUARD COUNTER ENGINE
+// Minecraft 1.21.1 NeoForge | KubeJS Server Script
 // ==============================================================================
 // Architecture & Mechanics Specification:
-// 1. Triggering Controls:
-//    - Two-Handed Weapons (offhand empty):
-//      * Right-Click (ПКМ): Triggers Weapon Art 1 (or equipped art).
-//      * Jump + ПКМ (airborne): Triggers Ground Slam / Sunder (Earth Sunder / Seismic Slam).
-//    - One-Handed Weapons with Shield:
-//      * Guard Counter: When blocking with shield (ПКМ) and taking a hit ->
-//        Pressing Left Click within 1.5s window triggers instant Guard Counter (+150% dmg, stun).
-//      * Dedicated hotkey / command: '.art' in chat or '/art' command, or Sneak + ПКМ.
-//    - One-Handed Weapons (offhand empty):
-//      * Right-Click (ПКМ): Triggers equipped Weapon Art.
-// 2. 8 Martial Arts (AoE hitbox, damage, particles, sound, cooldown):
-//    - Whirlwind Cleave: 360° sweep in 4.5 block radius, 180% weapon dmg, knockback, sweep/sparks (CD: 12s).
-//    - Earth Sunder: 6-block linear shockwave forward, knocks mobs into air, 200% weapon dmg, dirt/explosion (CD: 15s).
-//    - Juggernaut Rush: 7-block charge with Resistance 40% buff, knocks enemies aside, 150% dmg (CD: 16s).
-//    - Lightning Thrust: Instant dash through targets 6 blocks, inflicts Bleed/Wither 3s, 190% dmg (CD: 10s).
-//    - Blood Rend: Crescent slash with 10% lifesteal of damage dealt, blood particles (CD: 11s).
-//    - Seismic Slam: Heavy leap & slam in 4-block radius, Slowness IV (stun) 2.5s, 220% dmg (CD: 14s).
-//    - Shadow Step: Blinks behind target in 6 blocks, Invisibility 1.5s, next strike within 3s is 100% Crit (CD: 12s).
-//    - Arrow Barrage: Shoots a spread of 5 spectral arrows forward in an arc (CD: 10s).
-// 3. Cooldown tracking in player.persistentData with Actionbar display of readiness.
+// 1. Two-Tier Weapon Arts System:
+//    - Innate Archetype Skill (Right-Click / ПКМ):
+//      * Swords / Broadswords: Parry & Counter (0.8s window, 100% block, stun, x2.0 counter).
+//      * Greatswords / Claymores: Seismic Cleave (360° sweep, 4.5b radius, 180% dmg, knockback).
+//      * Katanas: Phantom Thrust / Iai Slash (6-block forward dash through enemies, 190% dmg, bleed).
+//      * Battleaxes: Shield Breaker / Sunder (crushes shields, ignores 50% armor, stuns 1.5s).
+//      * Warhammers: Tectonic Rupture (ground slam, 5m radial shockwave, knocks into air, Slowness IV).
+//      * Polearms / Spears: Armor-Piercing Thrust (5.5-block thrust, 100% armor bypass).
+//      * Daggers / Rapiers: Shadow Step (instant blink behind nearest enemy within 5b, 1s stealth, 100% crit).
+//      * Bows / Crossbows: Fan Barrage (5 spectral arrows in a cone forward).
+//    - Extra Runic Slot (Shift + Right-Click / Shift+ПКМ):
+//      * Reads 'elyrium_inscribed_art' NBT tag from weapon (e.g. Flame Vortex, Frost Stomp, Lightning Smite, Blood Harvest, Holy Blade).
+// 2. Resource Engine: SimpleStats Stamina (Agility + Vitality scaling) + Cooldown tracking + Actionbar feedback.
+// 3. One-Handed Shield Guard Counter: Blocking incoming hit + Left Click within 1.5s window -> Guard Counter (+150% dmg, stun).
 // ==============================================================================
 
 const WEAPON_ARTS = {
-    whirlwind_cleave: {
-        id: 'whirlwind_cleave',
+    // --------------------------------------------------------------------------
+    // INNATE ARCHETYPE ARTS
+    // --------------------------------------------------------------------------
+    parry_counter: {
+        id: 'parry_counter',
         num: 1,
-        name: 'Вихревой Размах',
-        enName: 'Whirlwind Cleave',
-        cdMs: 12000,
-        dmgMult: 1.8,
-        desc: 'Круговой клив на 360° в радиусе 4.5 блоков с отбрасыванием врагов.'
-    },
-    earth_sunder: {
-        id: 'earth_sunder',
-        num: 2,
-        name: 'Рассечение Земли',
-        enName: 'Earth Sunder',
-        cdMs: 15000,
+        name: 'Парирующий Клинок',
+        enName: 'Parry & Counter',
+        cdMs: 8000,
+        stamina: 25,
         dmgMult: 2.0,
-        desc: 'Линейная ударная волна на 6 блоков, подбрасывающая врагов в воздух.'
+        desc: 'Стойка парирования на 0.8с: блокирует 100% урона, оглушает врага и проводит контрудар x2.0.'
     },
-    juggernaut_rush: {
-        id: 'juggernaut_rush',
+    seismic_cleave: {
+        id: 'seismic_cleave',
+        num: 2,
+        name: 'Сейсмический Клив',
+        enName: 'Seismic Cleave',
+        cdMs: 12000,
+        stamina: 40,
+        dmgMult: 1.8,
+        desc: 'Круговой замах на 360° в радиусе 4.5б с каменной волной, наносит 180% урона и отбрасывает врагов.'
+    },
+    iai_slash: {
+        id: 'iai_slash',
         num: 3,
-        name: 'Неумолимый Натиск',
-        enName: 'Juggernaut Rush',
-        cdMs: 16000,
-        dmgMult: 1.5,
-        desc: 'Таранный рывок на 7 блоков с Сопротивлением 40%, раскидывающий врагов.'
-    },
-    lightning_thrust: {
-        id: 'lightning_thrust',
-        num: 4,
-        name: 'Молниеносный Выпад',
-        enName: 'Lightning Thrust',
+        name: 'Фантомный Выпад (Иайдзюцу)',
+        enName: 'Phantom Thrust / Iai Slash',
         cdMs: 10000,
+        stamina: 30,
         dmgMult: 1.9,
-        desc: 'Мгновенный выпад-рывок сквозь врагов на 6 блоков с кровотечением.'
+        desc: 'Мгновенный рывок вперед на 6 блоков сквозь врагов: 190% урона и кровотечение на 5с.'
     },
-    blood_rend: {
-        id: 'blood_rend',
-        num: 5,
-        name: 'Кровавый Росчерк',
-        enName: 'Blood Rend',
+    shield_breaker: {
+        id: 'shield_breaker',
+        num: 4,
+        name: 'Сокрушитель Защиты',
+        enName: 'Shield Breaker / Sunder',
         cdMs: 11000,
-        dmgMult: 1.7,
-        desc: 'Серповидный взмах клинком с исцелением на 10% от нанесенного урона.'
+        stamina: 35,
+        dmgMult: 1.85,
+        desc: 'Тяжелый нисходящий удар: сбивает щиты, игнорирует 50% брони и оглушает на 1.5с.'
     },
-    seismic_slam: {
-        id: 'seismic_slam',
-        num: 6,
-        name: 'Сейсмический Удар',
-        enName: 'Seismic Slam',
+    tectonic_rupture: {
+        id: 'tectonic_rupture',
+        num: 5,
+        name: 'Разлом Тектоники',
+        enName: 'Tectonic Rupture',
         cdMs: 14000,
-        dmgMult: 2.2,
-        desc: 'Сокрушительный прыжок-удар в радиусе 4 блоков с оглушением на 2.5с.'
+        stamina: 45,
+        dmgMult: 2.1,
+        desc: 'Удар о землю с 5-метровой радиальной волной: подбрасывает врагов в воздух и накладывает Замедление IV.'
+    },
+    piercing_thrust: {
+        id: 'piercing_thrust',
+        num: 6,
+        name: 'Бронебойный Прокол',
+        enName: 'Armor-Piercing Thrust',
+        cdMs: 9000,
+        stamina: 25,
+        dmgMult: 1.75,
+        desc: 'Колющий выпад на 5.5 блоков со 100% пробитием плотной брони и отталкиванием.'
     },
     shadow_step: {
         id: 'shadow_step',
         num: 7,
         name: 'Теневой Шаг',
         enName: 'Shadow Step',
-        cdMs: 12000,
+        cdMs: 8000,
+        stamina: 20,
         dmgMult: 2.0,
-        desc: 'Телепортация за спину цели на 6 блоков, Невидимость и 100% Крит.'
+        desc: 'Мгновенное смещение за спину цели (до 5б), скрытность на 1с и гарантированный 100% крит.'
     },
-    arrow_barrage: {
-        id: 'arrow_barrage',
+    fan_barrage: {
+        id: 'fan_barrage',
         num: 8,
-        name: 'Залп Стрел',
-        enName: 'Arrow Barrage',
+        name: 'Веерный Залп',
+        enName: 'Fan Barrage',
         cdMs: 10000,
+        stamina: 30,
         dmgMult: 1.6,
-        desc: 'Веерный выпуск 5 спектральных стрел по дуге перед собой.'
-    }
+        desc: 'Выпуск веера из 5 спектральных стрел по конусу перед собой.'
+    },
+
+    // --------------------------------------------------------------------------
+    // EXTRA RUNIC SLOT ARTS (Inscribed via Ancient / Infernal Anvil)
+    // --------------------------------------------------------------------------
+    flame_vortex: {
+        id: 'flame_vortex',
+        num: 9,
+        name: 'Пламенный Вихрь',
+        enName: 'Flame Vortex',
+        cdMs: 12000,
+        stamina: 35,
+        dmgMult: 1.8,
+        desc: 'Огненный шторм вокруг игрока на 4.5 блока: поджигает врагов на 6с и наносит огненный урон.'
+    },
+    frost_stomp: {
+        id: 'frost_stomp',
+        num: 10,
+        name: 'Ледяная Поступь',
+        enName: 'Frost Stomp',
+        cdMs: 11000,
+        stamina: 30,
+        dmgMult: 1.7,
+        desc: 'Ледяной удар по земле: шипы льда в радиусе 5б, глубокая заморозка и замедление IV.'
+    },
+    lightning_smite: {
+        id: 'lightning_smite',
+        num: 11,
+        name: 'Громовой Раскат',
+        enName: 'Lightning Smite',
+        cdMs: 14000,
+        stamina: 40,
+        dmgMult: 2.2,
+        desc: 'Низвержение молнии в точку удара: 220% урона молнией и оглушающий шок.'
+    },
+    blood_harvest: {
+        id: 'blood_harvest',
+        num: 12,
+        name: 'Кровавая Жатва',
+        enName: 'Blood Harvest',
+        cdMs: 12000,
+        stamina: 35,
+        dmgMult: 1.6,
+        desc: 'Серповидный удар с вампиризмом: исцеляет заклинателя на 15% от нанесенного урона.'
+    },
+    holy_blade: {
+        id: 'holy_blade',
+        num: 13,
+        name: 'Священный Клинок',
+        enName: 'Holy Blade',
+        cdMs: 13000,
+        stamina: 35,
+        dmgMult: 2.0,
+        desc: 'Луч святой энергии: 200% урона (+50% по нежити/демонам) и Регенерация II на 4с.'
+    },
+
+    // --------------------------------------------------------------------------
+    // BACKWARDS COMPATIBILITY ALIASES
+    // --------------------------------------------------------------------------
+    whirlwind_cleave: { id: 'seismic_cleave', num: 2, name: 'Сейсмический Клив', enName: 'Seismic Cleave', cdMs: 12000, stamina: 40, dmgMult: 1.8, desc: 'Круговой замах на 360° в радиусе 4.5б.' },
+    earth_sunder: { id: 'tectonic_rupture', num: 5, name: 'Разлом Тектоники', enName: 'Tectonic Rupture', cdMs: 14000, stamina: 45, dmgMult: 2.1, desc: 'Удар о землю с 5-метровой радиальной волной.' },
+    juggernaut_rush: { id: 'juggernaut_rush', num: 14, name: 'Неумолимый Натиск', enName: 'Juggernaut Rush', cdMs: 16000, stamina: 35, dmgMult: 1.5, desc: 'Таранный рывок на 7 блоков с Сопротивлением 40%.' },
+    lightning_thrust: { id: 'iai_slash', num: 3, name: 'Фантомный Выпад', enName: 'Phantom Thrust', cdMs: 10000, stamina: 30, dmgMult: 1.9, desc: 'Мгновенный выпад-рывок сквозь врагов на 6 блоков.' },
+    blood_rend: { id: 'blood_harvest', num: 12, name: 'Кровавая Жатва', enName: 'Blood Harvest', cdMs: 12000, stamina: 35, dmgMult: 1.6, desc: 'Серповидный взмах с исцелением.' },
+    seismic_slam: { id: 'tectonic_rupture', num: 5, name: 'Разлом Тектоники', enName: 'Tectonic Rupture', cdMs: 14000, stamina: 45, dmgMult: 2.1, desc: 'Сокрушительный удар в радиусе 5б с оглушением.' },
+    arrow_barrage: { id: 'fan_barrage', num: 8, name: 'Веерный Залп', enName: 'Fan Barrage', cdMs: 10000, stamina: 30, dmgMult: 1.6, desc: 'Веерный выпуск 5 спектральных стрел по дуге.' },
+    fire_vortex: { id: 'flame_vortex', num: 9, name: 'Пламенный Вихрь', enName: 'Flame Vortex', cdMs: 12000, stamina: 35, dmgMult: 1.8, desc: 'Огненный шторм вокруг игрока.' }
 };
+
+// ------------------------------------------------------------------------------
+// STAMINA ENGINE (SimpleStats Agility & Vitality Scaling)
+// ------------------------------------------------------------------------------
+
+function getPlayerMaxStamina(player) {
+    if (!player) return 100;
+    let perks = player.persistentData ? player.persistentData.getCompound('simplestats_perks') : null;
+    let agi = perks ? perks.getInt('agility') : 0;
+    let vit = perks ? perks.getInt('vitality') : 0;
+    return 100 + (agi * 5) + (vit * 5);
+}
+
+function getPlayerStamina(player) {
+    if (!player) return 100;
+    let pData = player.persistentData;
+    if (!pData.contains('elyrium_stamina')) {
+        let maxStam = getPlayerMaxStamina(player);
+        pData.putInt('elyrium_stamina', maxStam);
+        return maxStam;
+    }
+    return pData.getInt('elyrium_stamina');
+}
+
+function consumePlayerStamina(player, amount) {
+    if (!player) return false;
+    let current = getPlayerStamina(player);
+    if (current < amount) return false;
+    player.persistentData.putInt('elyrium_stamina', current - amount);
+    try {
+        if (typeof player.causeFoodExhaustion === 'function') {
+            player.causeFoodExhaustion(amount * 0.05);
+        }
+    } catch (e) {}
+    return true;
+}
 
 // ------------------------------------------------------------------------------
 // HELPER FUNCTIONS: WEAPON CLASSIFICATION
@@ -117,7 +225,9 @@ function isTwoHandedWeapon(item) {
         id.includes('twinblade') ||
         id.includes('warglaive') ||
         id.includes('spear') ||
-        id.includes('lance')) {
+        id.includes('lance') ||
+        id.includes('zweihander') ||
+        id.includes('colossal')) {
         return true;
     }
     if (item.hasTag('c:two_handed') || item.hasTag('bettercombat:two_handed') || item.hasTag('skd:two_handed')) {
@@ -133,6 +243,7 @@ function isOneHandedWeapon(item) {
     return id.includes('sword') || id.includes('blade') || id.includes('dagger') ||
            id.includes('axe') || id.includes('katana') || id.includes('rapier') ||
            id.includes('mace') || id.includes('cutlass') || id.includes('saber') ||
+           id.includes('broadsword') ||
            item.hasTag('minecraft:swords') || item.hasTag('minecraft:axes') ||
            item.hasTag('c:tools/swords') || item.hasTag('c:tools/axes');
 }
@@ -176,13 +287,21 @@ function getWeaponBaseDamage(player) {
     return Math.max(3.0, dmg);
 }
 
-function dealArtDamage(player, target, damage) {
+function dealArtDamage(player, target, damage, bypassArmor) {
     if (!target || !target.isLiving() || !target.isAlive() || target.isPlayer()) return false;
     try {
-        target.attack(player, damage);
+        if (bypassArmor) {
+            try {
+                target.attack(player.damageSources().magic(), damage);
+            } catch (em) {
+                target.setHealth(Math.max(0, target.health - damage));
+            }
+        } else {
+            target.attack(player.damageSources().playerAttack(player), damage);
+        }
     } catch (e1) {
         try {
-            target.attack(player.damageSources().playerAttack(player), damage);
+            target.attack(player, damage);
         } catch (e2) {
             try {
                 target.setHealth(Math.max(0, target.health - damage));
@@ -193,108 +312,154 @@ function dealArtDamage(player, target, damage) {
 }
 
 // ------------------------------------------------------------------------------
-// RESOLVE ACTIVE WEAPON ART
+// RESOLVE INNATE ARCHETYPE WEAPON ART (Right-Click)
 // ------------------------------------------------------------------------------
 
-function resolveWeaponArt(player, isAirborne) {
+function resolveInnateWeaponArt(player, isAirborne) {
     let mainItem = player.mainHandItem;
     if (!mainItem || mainItem.isEmpty()) return null;
 
     let mainId = String(mainItem.id).toLowerCase();
 
-    // 1. Explicitly stored art in weapon NBT / customData
-    let explicitArt = null;
-    try {
-        if (mainItem.nbt && mainItem.nbt.contains('weapon_art')) {
-            explicitArt = String(mainItem.nbt.getString('weapon_art')).toLowerCase();
-        } else if (mainItem.customData && mainItem.customData.contains('weapon_art')) {
-            explicitArt = String(mainItem.customData.getString('weapon_art')).toLowerCase();
-        }
-    } catch (e) {}
-
-    // 2. Explicitly selected art in player profile
-    if (!explicitArt) {
-        let pSelected = player.persistentData.getString('skd_selected_weapon_art');
-        if (pSelected && pSelected.length > 0) explicitArt = pSelected;
+    // 1. Bows & Crossbows: Fan Barrage
+    if (mainId.includes('bow') || mainId.includes('crossbow') ||
+        mainItem.hasTag('c:tools/bows') || mainItem.hasTag('c:tools/crossbows')) {
+        return 'fan_barrage';
     }
 
-    // 3. Jump + ПКМ: If jumping / airborne, trigger Ground Slam / Earth Sunder
+    // 2. Airborne Heavy Weapons: Tectonic Rupture
     if (isAirborne) {
-        if (explicitArt === 'seismic_slam' || mainId.includes('hammer') || mainId.includes('mace') || mainId.includes('club')) {
-            return 'seismic_slam';
+        if (mainId.includes('hammer') || mainId.includes('mace') || mainId.includes('club') ||
+            mainId.includes('axe') || mainId.includes('claymore') || mainId.includes('greatsword')) {
+            return 'tectonic_rupture';
         }
-        return 'earth_sunder';
     }
 
-    // If explicit art was assigned and valid, return it
-    if (explicitArt && WEAPON_ARTS[explicitArt]) {
-        return explicitArt;
+    // 3. Katanas: Phantom Thrust / Iai Slash
+    if (mainId.includes('katana') || mainId.includes('nodachi') || mainId.includes('uchigatana')) {
+        return 'iai_slash';
     }
 
-    // 4. Smart Archetype Defaults based on weapon class
-    if (mainId.includes('bow') || mainId.includes('crossbow')) {
-        return 'arrow_barrage';
-    }
-    if (mainId.includes('hammer') || mainId.includes('mace') || mainId.includes('club')) {
-        return 'seismic_slam';
-    }
-    if (mainId.includes('spear') || mainId.includes('lance') || mainId.includes('rapier') || mainId.includes('halberd') || mainId.includes('glaive')) {
-        return 'lightning_thrust';
-    }
-    if (mainId.includes('dagger') || mainId.includes('knife') || mainId.includes('scythe') || mainId.includes('sickle')) {
-        return player.isCrouching() ? 'blood_rend' : 'shadow_step';
-    }
-    if (isTwoHandedWeapon(mainItem)) {
-        if (player.isCrouching()) return 'juggernaut_rush';
-        return 'whirlwind_cleave';
-    }
-    if (player.isCrouching()) {
-        return 'blood_rend';
+    // 4. Warhammers & Maces: Tectonic Rupture
+    if (mainId.includes('hammer') || mainId.includes('mace') || mainId.includes('club') ||
+        mainId.includes('maul') || mainId.includes('greathammer')) {
+        return 'tectonic_rupture';
     }
 
-    return 'whirlwind_cleave';
+    // 5. Battleaxes & Greataxes: Shield Breaker / Sunder
+    if (mainId.includes('battleaxe') || mainId.includes('greataxe') || mainId.includes('waraxe') ||
+        (mainId.includes('axe') && !mainId.includes('pickaxe'))) {
+        return 'shield_breaker';
+    }
+
+    // 6. Polearms & Spears: Armor-Piercing Thrust
+    if (mainId.includes('spear') || mainId.includes('halberd') || mainId.includes('lance') ||
+        mainId.includes('glaive') || mainId.includes('polearm') || mainId.includes('trident') || mainId.includes('pike')) {
+        return 'piercing_thrust';
+    }
+
+    // 7. Daggers & Rapiers: Shadow Step
+    if (mainId.includes('dagger') || mainId.includes('rapier') || mainId.includes('knife') ||
+        mainId.includes('sickle') || mainId.includes('sai') || mainId.includes('stiletto') || mainId.includes('tanto')) {
+        return 'shadow_step';
+    }
+
+    // 8. Greatswords & Claymores: Seismic Cleave
+    if (mainId.includes('claymore') || mainId.includes('greatsword') || mainId.includes('zweihander') ||
+        mainId.includes('colossal') || mainId.includes('scythe') || isTwoHandedWeapon(mainItem)) {
+        return 'seismic_cleave';
+    }
+
+    // 9. Swords & Broadswords: Parry & Counter
+    return 'parry_counter';
 }
 
 // ------------------------------------------------------------------------------
-// EXECUTION ENGINE FOR THE 8 MARTIAL ARTS
+// RESOLVE EXTRA RUNIC SLOT ART (Shift + Right-Click)
 // ------------------------------------------------------------------------------
 
-function executeWeaponArt(player, isAirborne) {
+function getInscribedWeaponArt(item) {
+    if (!item || item.isEmpty()) return null;
+    try {
+        if (item.nbt && item.nbt.contains('elyrium_inscribed_art')) {
+            return String(item.nbt.getString('elyrium_inscribed_art')).toLowerCase();
+        }
+        if (item.customData && item.customData.contains('elyrium_inscribed_art')) {
+            return String(item.customData.getString('elyrium_inscribed_art')).toLowerCase();
+        }
+        if (item.nbt && item.nbt.contains('weapon_art')) {
+            return String(item.nbt.getString('weapon_art')).toLowerCase();
+        }
+        if (item.customData && item.customData.contains('weapon_art')) {
+            return String(item.customData.getString('weapon_art')).toLowerCase();
+        }
+    } catch (e) {}
+    return null;
+}
+
+// ------------------------------------------------------------------------------
+// EXECUTION ENGINE FOR ALL WEAPON ARTS
+// ------------------------------------------------------------------------------
+
+function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
     if (!player || !player.isAlive()) return;
 
-    let artId = resolveWeaponArt(player, isAirborne);
     if (!artId || !WEAPON_ARTS[artId]) {
-        player.sendSystemMessage(Text.of('§7Возьмите в руку оружие для применения Боевого Искусства.'), true);
+        player.sendSystemMessage(Text.of('§7Возьмите в руку оружие с боевым искусством.'), true);
         return;
     }
 
     let art = WEAPON_ARTS[artId];
+    let resolvedId = art.id || artId;
     let now = Date.now();
-    let cdKey = 'skd_cd_' + artId;
+    let cdKey = 'skd_cd_' + resolvedId;
     let cdEnd = player.persistentData.getLong(cdKey) || 0;
 
     // Check Cooldown
     if (now < cdEnd) {
         let leftSec = ((cdEnd - now) / 1000).toFixed(1);
-        player.sendSystemMessage(Text.of(`§c⏳ Боевое искусство «${art.name}» перезаряжается: ${leftSec} сек`), true);
-        player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.6 1.8`);
+        player.sendSystemMessage(Text.of(`§c⏳ «${art.name}» перезаряжается: ${leftSec} сек`), true);
+        player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.5 1.8`);
+        return;
+    }
+
+    // Check & Consume Stamina
+    let stamCost = art.stamina || 30;
+    if (!consumePlayerStamina(player, stamCost)) {
+        let cur = getPlayerStamina(player);
+        player.sendSystemMessage(Text.of(`§c⚡ Недостаточно выносливости! Требуется: §e${stamCost} §c(У вас: §7${cur}§c)`), true);
+        player.server.runCommandSilent(`playsound minecraft:entity.player.breath player ${player.username} ~ ~ ~ 0.8 1.4`);
         return;
     }
 
     // Set Cooldown
     player.persistentData.putLong(cdKey, now + art.cdMs);
-    player.persistentData.putString('skd_active_cd_art', artId);
+    player.persistentData.putString('skd_active_cd_art', resolvedId);
     player.persistentData.putLong('skd_active_cd_end', now + art.cdMs);
 
     let baseDmg = getWeaponBaseDamage(player);
     let level = player.level;
     let look = player.getLookAngle();
     let u = player.username;
+    let curStam = getPlayerStamina(player);
+    let maxStam = getPlayerMaxStamina(player);
+    let stamTag = `§8[⚡ ${curStam}/${maxStam}]`;
 
-    // --------------------------------------------------------------------------
-    // 1. WHIRLWIND CLEAVE (360° sweep, 4.5b radius, 180% dmg, knockback)
-    // --------------------------------------------------------------------------
-    if (artId === 'whirlwind_cleave') {
+    // ==========================================================================
+    // 1. PARRY & COUNTER (Swords/Broadswords: 0.8s parry window, 100% block, stun, x2.0 counter)
+    // ==========================================================================
+    if (resolvedId === 'parry_counter') {
+        player.persistentData.putLong('skd_parry_window', now + 800);
+        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_chain player ${u} ${player.x} ${player.y} ${player.z} 1.2 1.4`);
+        player.server.runCommandSilent(`playsound minecraft:block.chain.step player ${u} ${player.x} ${player.y} ${player.z} 1.0 1.6`);
+        player.server.runCommandSilent(`particle minecraft:enchanted_hit ${player.x} ${player.y + 1} ${player.z} 0.5 0.5 0.5 0.1 20 normal`);
+        player.server.runCommandSilent(`particle minecraft:sweep_attack ${player.x} ${player.y + 0.8} ${player.z} 0.6 0.2 0.6 0.05 6 normal`);
+        player.sendSystemMessage(Text.of(`§6⚔ СТОЙКА ПАРИРОВАНИЯ! §e(Окно 0.8с: Блок 100% + Контрудар ×2.0) ${stamTag}`), true);
+
+    // ==========================================================================
+    // 2. SEISMIC CLEAVE (Greatswords/Claymores: 360° sweep, 4.5b radius, 180% dmg, knockback)
+    // ==========================================================================
+    } else if (resolvedId === 'seismic_cleave') {
         let radius = 4.5;
         let totalDmg = baseDmg * art.dmgMult;
         let aabb = AABB.of(player.x - radius, player.y - 1.5, player.z - radius, player.x + radius, player.y + 2.5, player.z + radius);
@@ -307,105 +472,24 @@ function executeWeaponArt(player, isAirborne) {
                 let dz = ent.z - player.z;
                 let dist = Math.max(0.1, Math.sqrt(dx * dx + dz * dz));
                 if (dist <= radius) {
-                    dealArtDamage(player, ent, totalDmg);
-                    ent.knockback(0.85, -dx / dist, -dz / dist);
+                    dealArtDamage(player, ent, totalDmg, false);
+                    ent.knockback(0.95, -dx / dist, -dz / dist);
                     hits++;
                 }
             }
         });
 
         player.server.runCommandSilent(`playsound minecraft:entity.player.attack.sweep player ${u} ${player.x} ${player.y} ${player.z} 1.5 0.8`);
-        player.server.runCommandSilent(`particle minecraft:sweep_attack ${player.x} ${player.y + 1} ${player.z} 1.6 0.2 1.6 0.1 22 normal`);
+        player.server.runCommandSilent(`playsound minecraft:block.stone.break player ${u} ${player.x} ${player.y} ${player.z} 1.2 0.8`);
+        player.server.runCommandSilent(`particle minecraft:sweep_attack ${player.x} ${player.y + 1} ${player.z} 1.8 0.2 1.8 0.1 25 normal`);
+        player.server.runCommandSilent(`particle minecraft:block minecraft:stone ${player.x} ${player.y + 0.3} ${player.z} 1.5 0.3 1.5 0.1 20 normal`);
         player.server.runCommandSilent(`particle minecraft:crit ${player.x} ${player.y + 1} ${player.z} 1.2 0.4 1.2 0.15 25 normal`);
-        player.server.runCommandSilent(`particle minecraft:wax_off ${player.x} ${player.y + 1} ${player.z} 1.4 0.3 1.4 0.08 16 normal`);
-        player.sendSystemMessage(Text.of(`§6🌪 ВИХРЕВОЙ РАЗМАХ! §fУрон: §e${Math.round(totalDmg)} §7(×1.8) | Врагов: §a${hits}`), true);
+        player.sendSystemMessage(Text.of(`§6🌪 СЕЙСМИЧЕСКИЙ КЛИВ! §fУрон: §e${Math.round(totalDmg)} §7(×1.8) | Врагов: §a${hits} ${stamTag}`), true);
 
-    // --------------------------------------------------------------------------
-    // 2. EARTH SUNDER (6-block linear shockwave, knocks mobs into air, 200% dmg)
-    // --------------------------------------------------------------------------
-    } else if (artId === 'earth_sunder') {
-        let totalDmg = baseDmg * art.dmgMult;
-        let hitEntities = new Set();
-        let hits = 0;
-
-        let hLen = Math.max(0.01, Math.sqrt(look.x * look.x + look.z * look.z));
-        let normX = look.x / hLen;
-        let normZ = look.z / hLen;
-
-        for (let i = 1; i <= 6; i++) {
-            let sx = player.x + normX * i;
-            let sy = player.y;
-            let sz = player.z + normZ * i;
-
-            player.server.runCommandSilent(`particle minecraft:block minecraft:dirt ${sx} ${sy + 0.2} ${sz} 0.3 0.4 0.3 0.15 15 normal`);
-            player.server.runCommandSilent(`particle minecraft:large_smoke ${sx} ${sy + 0.3} ${sz} 0.2 0.3 0.2 0.05 4 normal`);
-            player.server.runCommandSilent(`particle minecraft:explosion ${sx} ${sy + 0.1} ${sz} 0.1 0.1 0.1 0 1 normal`);
-
-            let stepBox = AABB.of(sx - 1.5, sy - 1.0, sz - 1.5, sx + 1.5, sy + 2.5, sz + 1.5);
-            let ents = level.getEntitiesWithin(stepBox);
-            ents.forEach(ent => {
-                if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive() && !hitEntities.has(ent.id)) {
-                    hitEntities.add(ent.id);
-                    dealArtDamage(player, ent, totalDmg);
-                    ent.knockback(0.4, -normX, -normZ);
-                    ent.setDeltaMovement(normX * 0.15, 0.75, normZ * 0.15);
-                    ent.hasImpulse = true;
-                    hits++;
-                }
-            });
-        }
-
-        player.server.runCommandSilent(`playsound minecraft:entity.generic.explode player ${u} ${player.x} ${player.y} ${player.z} 1.0 1.2`);
-        player.server.runCommandSilent(`playsound minecraft:block.stone.break player ${u} ${player.x} ${player.y} ${player.z} 1.2 0.7`);
-        player.sendSystemMessage(Text.of(`§e⚡ РАССЕЧЕНИЕ ЗЕМЛИ! §fУрон: §e${Math.round(totalDmg)} §7(×2.0) | Подброшено: §a${hits}`), true);
-
-    // --------------------------------------------------------------------------
-    // 3. JUGGERNAUT RUSH (7-block forward charge, Resistance 40%, knocks aside)
-    // --------------------------------------------------------------------------
-    } else if (artId === 'juggernaut_rush') {
-        let totalDmg = baseDmg * art.dmgMult;
-        let hLen = Math.max(0.01, Math.sqrt(look.x * look.x + look.z * look.z));
-        let normX = look.x / hLen;
-        let normZ = look.z / hLen;
-
-        // Buff: Resistance II (40% damage reduction) for 80 ticks (4 seconds)
-        player.potionEffects.add('minecraft:resistance', 80, 1, false, true);
-        player.potionEffects.add('minecraft:speed', 30, 2, false, false);
-
-        // Impulse forward
-        player.setDeltaMovement(normX * 1.55, 0.18, normZ * 1.55);
-        player.hasImpulse = true;
-
-        let hitEntities = new Set();
-        let hits = 0;
-        for (let i = 1; i <= 7; i++) {
-            let cx = player.x + normX * i;
-            let cy = player.y;
-            let cz = player.z + normZ * i;
-
-            let cBox = AABB.of(cx - 1.8, cy - 1.0, cz - 1.8, cx + 1.8, cy + 2.5, cz + 1.8);
-            let ents = level.getEntitiesWithin(cBox);
-            ents.forEach(ent => {
-                if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive() && !hitEntities.has(ent.id)) {
-                    hitEntities.add(ent.id);
-                    dealArtDamage(player, ent, totalDmg);
-                    // Knock enemies aside (perpendicular vector)
-                    ent.knockback(0.9, normZ, -normX);
-                    hits++;
-                }
-            });
-        }
-
-        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${u} ${player.x} ${player.y} ${player.z} 1.2 0.8`);
-        player.server.runCommandSilent(`playsound minecraft:entity.ravager.roar player ${u} ${player.x} ${player.y} ${player.z} 1.0 1.2`);
-        player.server.runCommandSilent(`particle minecraft:cloud ${player.x} ${player.y + 0.8} ${player.z} 1.0 0.4 1.0 0.1 25 normal`);
-        player.server.runCommandSilent(`particle minecraft:explosion ${player.x} ${player.y + 0.5} ${player.z} 0.5 0.5 0.5 0 2 normal`);
-        player.sendSystemMessage(Text.of(`§c🛡 НЕУМОЛИМЫЙ НАТИСК! §fСопротивление 40% | Раскинуто врагов: §a${hits}`), true);
-
-    // --------------------------------------------------------------------------
-    // 4. LIGHTNING THRUST (Instant dash 6 blocks through targets, Bleed, 190% dmg)
-    // --------------------------------------------------------------------------
-    } else if (artId === 'lightning_thrust') {
+    // ==========================================================================
+    // 3. IAI SLASH / PHANTOM THRUST (Katanas: 6b forward dash through enemies, 190% dmg, bleed)
+    // ==========================================================================
+    } else if (resolvedId === 'iai_slash') {
         let totalDmg = baseDmg * art.dmgMult;
         let hLen = Math.max(0.01, Math.sqrt(look.x * look.x + look.z * look.z));
         let normX = look.x / hLen;
@@ -431,110 +515,128 @@ function executeWeaponArt(player, isAirborne) {
 
         ents.forEach(ent => {
             if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
-                dealArtDamage(player, ent, totalDmg);
-                // Bleed / Wither for 3 seconds (60 ticks)
-                ent.potionEffects.add('minecraft:wither', 60, 1, false, true);
-                try { ent.potionEffects.add('attributeslib:bleeding', 60, 1, false, true); } catch (e) {}
+                dealArtDamage(player, ent, totalDmg, false);
+                // Bleed effect for 5 seconds (100 ticks)
+                ent.potionEffects.add('minecraft:wither', 100, 1, false, true);
+                try { ent.potionEffects.add('attributeslib:bleeding', 100, 1, false, true); } catch (e) {}
                 hits++;
             }
         });
 
-        player.server.runCommandSilent(`playsound minecraft:entity.lightning_bolt.thunder player ${u} ${targetX} ${targetY} ${targetZ} 1.0 1.8`);
-        player.server.runCommandSilent(`playsound minecraft:entity.player.attack.crit player ${u} ${targetX} ${targetY} ${targetZ} 1.2 1.3`);
-        player.server.runCommandSilent(`particle minecraft:electric_spark ${targetX} ${targetY + 1} ${targetZ} 1.2 0.8 1.2 0.2 35 normal`);
-        player.server.runCommandSilent(`particle minecraft:sweep_attack ${targetX} ${targetY + 1} ${targetZ} 1.0 0.3 1.0 0.1 15 normal`);
+        player.server.runCommandSilent(`playsound minecraft:entity.player.attack.crit player ${u} ${targetX} ${targetY} ${targetZ} 1.5 1.5`);
+        player.server.runCommandSilent(`playsound minecraft:item.trident.throw player ${u} ${targetX} ${targetY} ${targetZ} 1.2 1.3`);
+        player.server.runCommandSilent(`particle minecraft:sweep_attack ${targetX} ${targetY + 1} ${targetZ} 1.2 0.3 1.2 0.1 20 normal`);
         player.server.runCommandSilent(`particle minecraft:flash ${targetX} ${targetY + 1} ${targetZ} 0.1 0.1 0.1 0 1 normal`);
-        player.sendSystemMessage(Text.of(`§b⚡ МОЛНИЕНОСНЫЙ ВЫПАД! §fУрон: §e${Math.round(totalDmg)} §7(×1.9) + Кровотечение | Поражено: §a${hits}`), true);
+        player.server.runCommandSilent(`particle minecraft:crimson_spore ${targetX} ${targetY + 1} ${targetZ} 0.8 0.5 0.8 0.1 25 normal`);
+        player.sendSystemMessage(Text.of(`§b⚡ ФАНТОМНЫЙ ВЫПАД (ИАЙ)! §fУрон: §e${Math.round(totalDmg)} §7(×1.9) + Кровотечение | Задето: §a${hits} ${stamTag}`), true);
 
-    // --------------------------------------------------------------------------
-    // 5. BLOOD REND (Crescent slash, 10% lifesteal, 170% dmg)
-    // --------------------------------------------------------------------------
-    } else if (artId === 'blood_rend') {
+    // ==========================================================================
+    // 4. SHIELD BREAKER / SUNDER (Battleaxes: crushes shields, ignores 50% armor, stuns 1.5s)
+    // ==========================================================================
+    } else if (resolvedId === 'shield_breaker') {
         let totalDmg = baseDmg * art.dmgMult;
-        let radius = 4.0;
-        let aabb = AABB.of(player.x - radius, player.y - 1.5, player.z - radius, player.x + radius, player.y + 2.5, player.z + radius);
-        let ents = level.getEntitiesWithin(aabb);
-        let totalDealt = 0;
+        let forwardDist = 3.5;
+        let cx = player.x + look.x * (forwardDist * 0.5);
+        let cy = player.y;
+        let cz = player.z + look.z * (forwardDist * 0.5);
+
+        let chopBox = AABB.of(cx - 2.0, cy - 1.2, cz - 2.0, cx + 2.0, cy + 2.5, cz + 2.0);
+        let ents = level.getEntitiesWithin(chopBox);
         let hits = 0;
 
         ents.forEach(ent => {
             if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
-                let dx = ent.x - player.x;
-                let dz = ent.z - player.z;
-                let dist = Math.max(0.01, Math.sqrt(dx * dx + dz * dz));
-                if (dist <= radius) {
-                    let dot = (dx * look.x + dz * look.z) / dist;
-                    if (dot > 0.25) { // ~150° frontal crescent arc
-                        dealArtDamage(player, ent, totalDmg);
-                        totalDealt += totalDmg;
-                        hits++;
-                    }
-                }
+                // Deal heavy damage ignoring 50% armor (composite damage)
+                dealArtDamage(player, ent, totalDmg * 0.5, true);  // 50% true damage
+                dealArtDamage(player, ent, totalDmg * 0.5, false); // 50% physical damage
+
+                // Stun 1.5s (30 ticks)
+                ent.potionEffects.add('minecraft:slowness', 30, 4, false, true);
+                ent.potionEffects.add('minecraft:mining_fatigue', 30, 3, false, true);
+                ent.potionEffects.add('minecraft:weakness', 40, 1, false, true);
+                hits++;
             }
         });
 
-        // 10% Lifesteal
-        let healAmount = totalDealt * 0.10;
-        if (healAmount > 0) {
-            player.heal(healAmount);
-        }
+        player.server.runCommandSilent(`playsound minecraft:item.shield.break player ${u} ${player.x} ${player.y} ${player.z} 1.5 0.9`);
+        player.server.runCommandSilent(`playsound minecraft:entity.generic.explode player ${u} ${player.x} ${player.y} ${player.z} 1.0 1.4`);
+        player.server.runCommandSilent(`particle minecraft:block minecraft:iron_block ${player.x + look.x * 2} ${player.y + 0.5} ${player.z + look.z * 2} 0.8 0.4 0.8 0.2 25 normal`);
+        player.server.runCommandSilent(`particle minecraft:crit ${player.x + look.x * 2} ${player.y + 1} ${player.z + look.z * 2} 1.0 0.5 1.0 0.2 30 normal`);
+        player.sendSystemMessage(Text.of(`§c🔨 СОКРУШИТЕЛЬ ЗАЩИТЫ! §fУрон: §e${Math.round(totalDmg)} §7(Игнор 50% брони) | Оглушено: §a${hits} ${stamTag}`), true);
 
-        player.server.runCommandSilent(`playsound minecraft:entity.wither.shoot player ${u} ${player.x} ${player.y} ${player.z} 1.0 1.6`);
-        player.server.runCommandSilent(`playsound minecraft:entity.player.attack.strong player ${u} ${player.x} ${player.y} ${player.z} 1.2 0.9`);
-        player.server.runCommandSilent(`particle minecraft:dust 0.85 0.05 0.05 1.5 ${player.x + look.x * 1.5} ${player.y + 1} ${player.z + look.z * 1.5} 0.8 0.4 0.8 0.1 30 normal`);
-        player.server.runCommandSilent(`particle minecraft:crimson_spore ${player.x + look.x * 1.5} ${player.y + 1} ${player.z + look.z * 1.5} 0.6 0.3 0.6 0.1 20 normal`);
-        player.server.runCommandSilent(`particle minecraft:soul_fire_flame ${player.x + look.x * 1.5} ${player.y + 1} ${player.z + look.z * 1.5} 0.5 0.2 0.5 0.05 10 normal`);
-        player.sendSystemMessage(Text.of(`§4🩸 КРОВАВЫЙ РОСЧЕРК! §fУрон: §e${Math.round(totalDmg)} §7| Исцеление: §a+${healAmount.toFixed(1)} HP §7(10%) | Целей: §c${hits}`), true);
-
-    // --------------------------------------------------------------------------
-    // 6. SEISMIC SLAM (Heavy leap & slam in 4b radius, Slowness IV stun 2.5s, 220% dmg)
-    // --------------------------------------------------------------------------
-    } else if (artId === 'seismic_slam') {
+    // ==========================================================================
+    // 5. TECTONIC RUPTURE (Warhammers: ground slam, 5m radial wave, knocks up, Slowness IV)
+    // ==========================================================================
+    } else if (resolvedId === 'tectonic_rupture') {
+        let radius = 5.0;
         let totalDmg = baseDmg * art.dmgMult;
-        let radius = 4.0;
-
-        // Leap impulse if on ground
-        let isAirborneCheck = (typeof player.onGround === 'function' ? !player.onGround() : !player.onGround);
-        if (!isAirborneCheck) {
-            player.setDeltaMovement(look.x * 0.2, 0.45, look.z * 0.2);
-            player.hasImpulse = true;
-        }
-
         let aabb = AABB.of(player.x - radius, player.y - 2.0, player.z - radius, player.x + radius, player.y + 2.5, player.z + radius);
         let ents = level.getEntitiesWithin(aabb);
         let hits = 0;
 
         ents.forEach(ent => {
             if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
-                let dx = ent.x - player.x;
-                let dz = ent.z - player.z;
-                let dist = Math.max(0.1, Math.sqrt(dx * dx + dz * dz));
-                if (dist <= radius) {
-                    dealArtDamage(player, ent, totalDmg);
-                    // Slowness IV (stun) for 2.5s (50 ticks)
-                    ent.potionEffects.add('minecraft:slowness', 50, 3, false, true);
-                    ent.knockback(0.7, -dx / dist, -dz / dist);
-                    hits++;
-                }
+                dealArtDamage(player, ent, totalDmg, false);
+                // Knock high into air + Slowness IV for 50 ticks (2.5s)
+                ent.setDeltaMovement(0, 0.82, 0);
+                ent.hasImpulse = true;
+                ent.potionEffects.add('minecraft:slowness', 50, 3, false, true);
+                hits++;
             }
         });
 
-        player.server.runCommandSilent(`playsound minecraft:block.anvil.land player ${u} ${player.x} ${player.y} ${player.z} 1.5 0.8`);
-        player.server.runCommandSilent(`playsound minecraft:entity.iron_golem.attack player ${u} ${player.x} ${player.y} ${player.z} 1.2 0.7`);
-        player.server.runCommandSilent(`particle minecraft:explosion ${player.x} ${player.y + 0.3} ${player.z} 0.8 0.3 0.8 0 3 normal`);
-        player.server.runCommandSilent(`particle minecraft:large_smoke ${player.x} ${player.y + 0.4} ${player.z} 1.2 0.3 1.2 0.08 25 normal`);
-        player.server.runCommandSilent(`particle minecraft:block minecraft:stone ${player.x} ${player.y + 0.2} ${player.z} 1.5 0.5 1.5 0.2 30 normal`);
-        player.sendSystemMessage(Text.of(`§8🔨 СЕЙСМИЧЕСКИЙ УДАР! §fУрон: §e${Math.round(totalDmg)} §7(×2.2) | Оглушено врагов (2.5с): §a${hits}`), true);
+        player.server.runCommandSilent(`playsound minecraft:entity.generic.explode player ${u} ${player.x} ${player.y} ${player.z} 1.4 0.8`);
+        player.server.runCommandSilent(`playsound minecraft:block.stone.break player ${u} ${player.x} ${player.y} ${player.z} 1.5 0.6`);
+        player.server.runCommandSilent(`particle minecraft:explosion ${player.x} ${player.y + 0.2} ${player.z} 1.2 0.3 1.2 0 4 normal`);
+        player.server.runCommandSilent(`particle minecraft:block minecraft:dirt ${player.x} ${player.y + 0.4} ${player.z} 2.0 0.6 2.0 0.25 40 normal`);
+        player.server.runCommandSilent(`particle minecraft:large_smoke ${player.x} ${player.y + 0.4} ${player.z} 1.5 0.3 1.5 0.1 20 normal`);
+        player.sendSystemMessage(Text.of(`§8🌋 РАЗЛОМ ТЕКТОНИКИ! §fУрон: §e${Math.round(totalDmg)} §7(×2.1) | В воздухе: §a${hits} ${stamTag}`), true);
 
-    // --------------------------------------------------------------------------
-    // 7. SHADOW STEP (Blink behind target 6b, Invisibility 1.5s, 100% Crit next strike)
-    // --------------------------------------------------------------------------
-    } else if (artId === 'shadow_step') {
-        let maxRange = 6.0;
+    // ==========================================================================
+    // 6. ARMOR-PIERCING THRUST (Polearms/Spears: 5.5b thrust, 100% armor bypass)
+    // ==========================================================================
+    } else if (resolvedId === 'piercing_thrust') {
+        let totalDmg = baseDmg * art.dmgMult;
+        let hLen = Math.max(0.01, Math.sqrt(look.x * look.x + look.z * look.z));
+        let normX = look.x / hLen;
+        let normZ = look.z / hLen;
+        let hitEntities = new Set();
+        let hits = 0;
+
+        for (let i = 1; i <= 5.5; i += 0.9) {
+            let px = player.x + normX * i;
+            let py = player.y + player.eyeHeight - 0.2;
+            let pz = player.z + normZ * i;
+
+            player.server.runCommandSilent(`particle minecraft:crit ${px} ${py} ${pz} 0.2 0.2 0.2 0.05 5 normal`);
+            player.server.runCommandSilent(`particle minecraft:enchanted_hit ${px} ${py} ${pz} 0.15 0.15 0.15 0.05 4 normal`);
+
+            let box = AABB.of(px - 1.2, py - 1.0, pz - 1.2, px + 1.2, py + 1.2, pz + 1.2);
+            let ents = level.getEntitiesWithin(box);
+            ents.forEach(ent => {
+                if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive() && !hitEntities.has(ent.id)) {
+                    hitEntities.add(ent.id);
+                    // 100% Armor Bypass
+                    dealArtDamage(player, ent, totalDmg, true);
+                    ent.knockback(0.8, -normX, -normZ);
+                    hits++;
+                }
+            });
+        }
+
+        player.server.runCommandSilent(`playsound minecraft:item.trident.pierce player ${u} ${player.x} ${player.y} ${player.z} 1.4 1.4`);
+        player.server.runCommandSilent(`playsound minecraft:entity.arrow.hit_player player ${u} ${player.x} ${player.y} ${player.z} 1.2 1.6`);
+        player.sendSystemMessage(Text.of(`§e🔱 БРОНЕБОЙНЫЙ ПРОКОЛ! §fЧистый урон (100% пробитие): §e${Math.round(totalDmg)} §7| Поражено: §a${hits} ${stamTag}`), true);
+
+    // ==========================================================================
+    // 7. SHADOW STEP (Daggers/Rapiers: instant blink behind nearest enemy 5b, 1s stealth, 100% crit)
+    // ==========================================================================
+    } else if (resolvedId === 'shadow_step') {
+        let maxRange = 5.0;
         let searchBox = AABB.of(player.x - maxRange, player.y - 2, player.z - maxRange, player.x + maxRange, player.y + 3, player.z + maxRange);
         let nearby = level.getEntitiesWithin(searchBox);
         let bestTarget = null;
-        let bestDot = 0.5;
+        let bestDot = 0.3;
 
         nearby.forEach(ent => {
             if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
@@ -554,9 +656,9 @@ function executeWeaponArt(player, isAirborne) {
         let targetX, targetY, targetZ;
         if (bestTarget) {
             let tLook = bestTarget.getLookAngle();
-            targetX = bestTarget.x - tLook.x * 1.5;
+            targetX = bestTarget.x - tLook.x * 1.4;
             targetY = bestTarget.y;
-            targetZ = bestTarget.z - tLook.z * 1.5;
+            targetZ = bestTarget.z - tLook.z * 1.4;
             player.teleportTo(player.level.dimension, targetX, targetY, targetZ, bestTarget.yaw, player.pitch);
         } else {
             targetX = player.x + look.x * maxRange;
@@ -565,25 +667,24 @@ function executeWeaponArt(player, isAirborne) {
             player.teleportTo(player.level.dimension, targetX, targetY, targetZ, player.yaw, player.pitch);
         }
 
-        // Invisibility for 1.5s (30 ticks)
-        player.potionEffects.add('minecraft:invisibility', 30, 0, false, false);
+        // Invisibility for 1.0s (20 ticks) + Speed II for 2.0s (40 ticks)
+        player.potionEffects.add('minecraft:invisibility', 20, 0, false, false);
         player.potionEffects.add('minecraft:speed', 40, 1, false, false);
 
         // Next strike within 3s is 100% guaranteed Critical Hit
         player.persistentData.putLong('skd_shadow_step_crit_until', now + 3000);
 
-        player.server.runCommandSilent(`playsound minecraft:entity.enderman.teleport player ${u} ${targetX} ${targetY} ${targetZ} 1.2 1.1`);
-        player.server.runCommandSilent(`particle minecraft:portal ${targetX} ${targetY + 1} ${targetZ} 0.6 0.8 0.6 0.1 40 normal`);
-        player.server.runCommandSilent(`particle minecraft:smoke ${targetX} ${targetY + 1} ${targetZ} 0.5 0.5 0.5 0.05 20 normal`);
-        player.server.runCommandSilent(`particle minecraft:reverse_portal ${targetX} ${targetY + 1} ${targetZ} 0.4 0.6 0.4 0.1 25 normal`);
-        player.sendSystemMessage(Text.of('§5🌑 ТЕНЕВОЙ ШАГ! §d(Невидимость 1.5с + 100% Крит на следующий удар в течение 3с)'), true);
+        player.server.runCommandSilent(`playsound minecraft:entity.enderman.teleport player ${u} ${targetX} ${targetY} ${targetZ} 1.2 1.2`);
+        player.server.runCommandSilent(`particle minecraft:portal ${targetX} ${targetY + 1} ${targetZ} 0.6 0.8 0.6 0.1 30 normal`);
+        player.server.runCommandSilent(`particle minecraft:smoke ${targetX} ${targetY + 1} ${targetZ} 0.5 0.5 0.5 0.05 15 normal`);
+        player.sendSystemMessage(Text.of(`§5🌑 ТЕНЕВОЙ ШАГ! §d(Смещение за спину + Невидимость 1с + 100% Крит) ${stamTag}`), true);
 
-    // --------------------------------------------------------------------------
-    // 8. ARROW BARRAGE (Spread of 5 spectral arrows forward in an arc)
-    // --------------------------------------------------------------------------
-    } else if (artId === 'arrow_barrage') {
-        let angles = [-20, -10, 0, 10, 20];
-        let speed = 2.4;
+    // ==========================================================================
+    // 8. FAN BARRAGE (Bows/Crossbows: 5 spectral arrows in a cone forward)
+    // ==========================================================================
+    } else if (resolvedId === 'fan_barrage') {
+        let angles = [-18, -9, 0, 9, 18];
+        let speed = 2.5;
 
         angles.forEach(deg => {
             let yawRad = (player.yaw + deg) * Math.PI / 180.0;
@@ -613,13 +714,208 @@ function executeWeaponArt(player, isAirborne) {
 
         player.server.runCommandSilent(`playsound minecraft:entity.arrow.shoot player ${u} ${player.x} ${player.y} ${player.z} 1.2 0.8`);
         player.server.runCommandSilent(`particle minecraft:crit ${player.x + look.x} ${player.y + 1.2} ${player.z + look.z} 0.5 0.5 0.5 0.1 20 normal`);
-        player.server.runCommandSilent(`particle minecraft:enchanted_hit ${player.x + look.x} ${player.y + 1.2} ${player.z + look.z} 0.4 0.4 0.4 0.1 15 normal`);
-        player.sendSystemMessage(Text.of('§a🏹 ЗАЛП СТРЕЛ! §fВыпущено 5 спектральных стрел веером'), true);
+        player.sendSystemMessage(Text.of(`§a🏹 ВЕЕРНЫЙ ЗАЛП! §f5 спектральных стрел веером ${stamTag}`), true);
+
+    // ==========================================================================
+    // 9. FLAME VORTEX (Secondary Runic: 4.5b fire cyclone, ignites for 6s)
+    // ==========================================================================
+    } else if (resolvedId === 'flame_vortex') {
+        let radius = 4.5;
+        let totalDmg = baseDmg * art.dmgMult;
+        let aabb = AABB.of(player.x - radius, player.y - 1.5, player.z - radius, player.x + radius, player.y + 2.5, player.z + radius);
+        let ents = level.getEntitiesWithin(aabb);
+        let hits = 0;
+
+        ents.forEach(ent => {
+            if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
+                dealArtDamage(player, ent, totalDmg, false);
+                ent.setSecondsOnFire(6);
+                hits++;
+            }
+        });
+
+        player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${u} ${player.x} ${player.y} ${player.z} 1.4 1.1`);
+        player.server.runCommandSilent(`particle minecraft:flame ${player.x} ${player.y + 1} ${player.z} 1.6 0.4 1.6 0.1 35 normal`);
+        player.server.runCommandSilent(`particle minecraft:lava ${player.x} ${player.y + 1} ${player.z} 1.2 0.4 1.2 0.1 15 normal`);
+        player.sendSystemMessage(Text.of(`§6🔥 ПЛАМЕННЫЙ ВИХРЬ! §fУрон: §e${Math.round(totalDmg)} §7+ Поджог на 6с | Врагов: §a${hits} ${stamTag}`), true);
+
+    // ==========================================================================
+    // 10. FROST STOMP (Secondary Runic: 5m freeze shockwave, Slowness IV, marks freeze)
+    // ==========================================================================
+    } else if (resolvedId === 'frost_stomp') {
+        let radius = 5.0;
+        let totalDmg = baseDmg * art.dmgMult;
+        let aabb = AABB.of(player.x - radius, player.y - 1.5, player.z - radius, player.x + radius, player.y + 2.5, player.z + radius);
+        let ents = level.getEntitiesWithin(aabb);
+        let hits = 0;
+
+        ents.forEach(ent => {
+            if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
+                dealArtDamage(player, ent, totalDmg, false);
+                ent.potionEffects.add('minecraft:slowness', 80, 3, false, true);
+                try { ent.setTicksFrozen(200); } catch (e) {}
+                ent.persistentData.putBoolean('elyrium_frozen', true);
+                ent.persistentData.putLong('elyrium_frozen_until', now + 4000);
+                hits++;
+            }
+        });
+
+        player.server.runCommandSilent(`playsound minecraft:block.glass.break player ${u} ${player.x} ${player.y} ${player.z} 1.3 1.2`);
+        player.server.runCommandSilent(`playsound minecraft:block.powder_snow.step player ${u} ${player.x} ${player.y} ${player.z} 1.5 0.7`);
+        player.server.runCommandSilent(`particle minecraft:snowflake ${player.x} ${player.y + 0.5} ${player.z} 1.8 0.4 1.8 0.15 40 normal`);
+        player.server.runCommandSilent(`particle minecraft:item_snowball ${player.x} ${player.y + 0.5} ${player.z} 1.4 0.3 1.4 0.1 25 normal`);
+        player.sendSystemMessage(Text.of(`§b❄ ЛЕДЯНАЯ ПОСТУПЬ! §fУрон: §e${Math.round(totalDmg)} §7+ Глубокая Заморозка | Врагов: §a${hits} ${stamTag}`), true);
+
+    // ==========================================================================
+    // 11. LIGHTNING SMITE (Secondary Runic: lightning bolt strike, 220% dmg)
+    // ==========================================================================
+    } else if (resolvedId === 'lightning_smite') {
+        let totalDmg = baseDmg * art.dmgMult;
+        let targetX = player.x + look.x * 5.0;
+        let targetY = player.y;
+        let targetZ = player.z + look.z * 5.0;
+
+        // Summon visual lightning
+        player.server.runCommandSilent(`execute at ${u} run summon minecraft:lightning_bolt ${targetX.toFixed(2)} ${targetY.toFixed(2)} ${targetZ.toFixed(2)}`);
+
+        let strikeBox = AABB.of(targetX - 3.5, targetY - 2.0, targetZ - 3.5, targetX + 3.5, targetY + 3.5, targetZ + 3.5);
+        let ents = level.getEntitiesWithin(strikeBox);
+        let hits = 0;
+
+        ents.forEach(ent => {
+            if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
+                dealArtDamage(player, ent, totalDmg, false);
+                ent.potionEffects.add('minecraft:slowness', 60, 2, false, true);
+                hits++;
+            }
+        });
+
+        player.server.runCommandSilent(`particle minecraft:electric_spark ${targetX} ${targetY + 1} ${targetZ} 1.2 1.0 1.2 0.2 40 normal`);
+        player.server.runCommandSilent(`particle minecraft:flash ${targetX} ${targetY + 1} ${targetZ} 0.1 0.1 0.1 0 1 normal`);
+        player.sendSystemMessage(Text.of(`§e⚡ ГРОМОВОЙ РАСКАТ! §fУрон молнией: §e${Math.round(totalDmg)} §7(×2.2) | Поражено: §a${hits} ${stamTag}`), true);
+
+    // ==========================================================================
+    // 12. BLOOD HARVEST (Secondary Runic: crescent slash, 15% vampirism)
+    // ==========================================================================
+    } else if (resolvedId === 'blood_harvest') {
+        let totalDmg = baseDmg * art.dmgMult;
+        let radius = 4.0;
+        let aabb = AABB.of(player.x - radius, player.y - 1.5, player.z - radius, player.x + radius, player.y + 2.5, player.z + radius);
+        let ents = level.getEntitiesWithin(aabb);
+        let totalDealt = 0;
+        let hits = 0;
+
+        ents.forEach(ent => {
+            if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
+                let dx = ent.x - player.x;
+                let dz = ent.z - player.z;
+                let dist = Math.max(0.01, Math.sqrt(dx * dx + dz * dz));
+                if (dist <= radius) {
+                    let dot = (dx * look.x + dz * look.z) / dist;
+                    if (dot > 0.20) {
+                        dealArtDamage(player, ent, totalDmg, false);
+                        totalDealt += totalDmg;
+                        hits++;
+                    }
+                }
+            }
+        });
+
+        let healAmount = totalDealt * 0.15;
+        if (healAmount > 0) {
+            player.heal(healAmount);
+        }
+
+        player.server.runCommandSilent(`playsound minecraft:entity.wither.shoot player ${u} ${player.x} ${player.y} ${player.z} 1.0 1.5`);
+        player.server.runCommandSilent(`particle minecraft:crimson_spore ${player.x + look.x * 1.5} ${player.y + 1} ${player.z + look.z * 1.5} 0.8 0.4 0.8 0.1 30 normal`);
+        player.server.runCommandSilent(`particle minecraft:soul_fire_flame ${player.x + look.x * 1.5} ${player.y + 1} ${player.z + look.z * 1.5} 0.5 0.2 0.5 0.05 15 normal`);
+        player.sendSystemMessage(Text.of(`§4🩸 КРОВАВАЯ ЖАТВА! §fУрон: §e${Math.round(totalDmg)} §7| Вампиризм 15%: §a+${healAmount.toFixed(1)} HP §7| Целей: §c${hits} ${stamTag}`), true);
+
+    // ==========================================================================
+    // 13. HOLY BLADE (Secondary Runic: 200% sacred burst, +50% vs undead, Regen II 4s)
+    // ==========================================================================
+    } else if (resolvedId === 'holy_blade') {
+        let totalDmg = baseDmg * art.dmgMult;
+        let radius = 5.0;
+        let aabb = AABB.of(player.x - radius, player.y - 1.5, player.z - radius, player.x + radius, player.y + 2.5, player.z + radius);
+        let ents = level.getEntitiesWithin(aabb);
+        let hits = 0;
+
+        ents.forEach(ent => {
+            if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
+                let dx = ent.x - player.x;
+                let dz = ent.z - player.z;
+                let dist = Math.max(0.01, Math.sqrt(dx * dx + dz * dz));
+                if (dist <= radius) {
+                    let dot = (dx * look.x + dz * look.z) / dist;
+                    if (dot > 0.15) {
+                        let finalDmg = totalDmg;
+                        let isUndeadOrDemon = false;
+                        try {
+                            let typeStr = String(ent.type).toLowerCase();
+                            isUndeadOrDemon = ent.isUndead() || typeStr.includes('zombie') || typeStr.includes('skeleton') || typeStr.includes('wither') || typeStr.includes('demon');
+                        } catch (e) {}
+
+                        if (isUndeadOrDemon) {
+                            finalDmg *= 1.50; // +50% extra sacred damage
+                        }
+
+                        dealArtDamage(player, ent, finalDmg, true);
+                        hits++;
+                    }
+                }
+            }
+        });
+
+        // Grant player Regeneration II for 4 seconds (80 ticks)
+        player.potionEffects.add('minecraft:regeneration', 80, 1, false, true);
+
+        player.server.runCommandSilent(`playsound minecraft:block.amethyst_block.chime player ${u} ${player.x} ${player.y} ${player.z} 1.4 1.2`);
+        player.server.runCommandSilent(`particle minecraft:totem_of_undying ${player.x} ${player.y + 1} ${player.z} 0.8 0.5 0.8 0.2 30 normal`);
+        player.server.runCommandSilent(`particle minecraft:electric_spark ${player.x} ${player.y + 1} ${player.z} 0.6 0.4 0.6 0.1 20 normal`);
+        player.sendSystemMessage(Text.of(`§e✨ СВЯЩЕННЫЙ КЛИНОК! §fСвятой урон: §e${Math.round(totalDmg)} §7+ Регенерация II | Задето: §a${hits} ${stamTag}`), true);
+
+    // ==========================================================================
+    // 14. JUGGERNAUT RUSH (Legacy Tank Charge: Resistance 40% buff, knocks aside)
+    // ==========================================================================
+    } else if (resolvedId === 'juggernaut_rush') {
+        let totalDmg = baseDmg * art.dmgMult;
+        let hLen = Math.max(0.01, Math.sqrt(look.x * look.x + look.z * look.z));
+        let normX = look.x / hLen;
+        let normZ = look.z / hLen;
+
+        player.potionEffects.add('minecraft:resistance', 80, 1, false, true);
+        player.potionEffects.add('minecraft:speed', 30, 2, false, false);
+        player.setDeltaMovement(normX * 1.55, 0.18, normZ * 1.55);
+        player.hasImpulse = true;
+
+        let hitEntities = new Set();
+        let hits = 0;
+        for (let i = 1; i <= 7; i++) {
+            let cx = player.x + normX * i;
+            let cy = player.y;
+            let cz = player.z + normZ * i;
+
+            let cBox = AABB.of(cx - 1.8, cy - 1.0, cz - 1.8, cx + 1.8, cy + 2.5, cz + 1.8);
+            let ents = level.getEntitiesWithin(cBox);
+            ents.forEach(ent => {
+                if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive() && !hitEntities.has(ent.id)) {
+                    hitEntities.add(ent.id);
+                    dealArtDamage(player, ent, totalDmg, false);
+                    ent.knockback(0.9, normZ, -normX);
+                    hits++;
+                }
+            });
+        }
+
+        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${u} ${player.x} ${player.y} ${player.z} 1.2 0.8`);
+        player.server.runCommandSilent(`particle minecraft:cloud ${player.x} ${player.y + 0.8} ${player.z} 1.0 0.4 1.0 0.1 25 normal`);
+        player.sendSystemMessage(Text.of(`§c🛡 НЕУМОЛИМЫЙ НАТИСК! §fСопротивление 40% | Раскинуто: §a${hits} ${stamTag}`), true);
     }
 }
 
 // ------------------------------------------------------------------------------
-// EVENT 1: COMBAT INTERACTIONS (GUARD COUNTER & SHADOW CRIT)
+// EVENT 1: COMBAT INTERACTIONS (PARRY & COUNTER, GUARD COUNTER, SHADOW CRIT)
 // ------------------------------------------------------------------------------
 
 EntityEvents.beforeHurt(event => {
@@ -628,40 +924,73 @@ EntityEvents.beforeHurt(event => {
 
     let victim = event.entity;
     let attacker = source.actual || source.player;
+    let now = Date.now();
 
-    // A. GUARD COUNTER SETUP: Player blocks incoming hit with shield
-    if (victim && victim.isPlayer() && victim.isAlive() && victim.isBlocking()) {
-        let offHand = victim.offHandItem;
-        let mainHand = victim.mainHandItem;
-        let hasShieldEquipped = (offHand && isShield(offHand)) || (mainHand && isShield(mainHand));
+    // ==========================================================================
+    // A. INCOMING DAMAGE TO PLAYER: PARRY OR SHIELD BLOCK
+    // ==========================================================================
+    if (victim && victim.isPlayer() && victim.isAlive()) {
+        // 1. PARRY & COUNTER: 0.8s Parry Window (Swords/Broadswords)
+        let parryUntil = victim.persistentData.getLong('skd_parry_window') || 0;
+        if (parryUntil > 0 && now <= parryUntil) {
+            victim.persistentData.remove('skd_parry_window');
 
-        if (hasShieldEquipped) {
-            let now = Date.now();
-            victim.persistentData.putLong('skd_guard_counter_window', now + 1500);
-            if (attacker) {
-                victim.persistentData.putInt('skd_guard_counter_target_id', attacker.id);
+            // 100% Damage Negated!
+            event.damage = 0;
+            event.cancel();
+
+            // Attacker Stunned
+            if (attacker && attacker.isLiving() && attacker !== victim) {
+                attacker.potionEffects.add('minecraft:slowness', 60, 3, false, true);
+                attacker.potionEffects.add('minecraft:weakness', 60, 2, false, true);
+
+                // Counter strike x2.0 base damage back to attacker!
+                let counterDmg = getWeaponBaseDamage(victim) * 2.0;
+                dealArtDamage(victim, attacker, counterDmg, false);
             }
 
-            victim.server.runCommandSilent(`playsound minecraft:block.amethyst_block.hit player ${victim.username} ~ ~ ~ 1.2 1.6`);
-            victim.server.runCommandSilent(`particle minecraft:electric_spark ${victim.x} ${victim.y + 1} ${victim.z} 0.4 0.4 0.4 0.1 12 normal`);
-            victim.sendSystemMessage(Text.of('§e⚡ СТОЙКА КОНТРУДАРА! §f[Нажмите ЛКМ в течение 1.5с для контратаки +150%]'), true);
+            victim.server.runCommandSilent(`playsound minecraft:block.anvil.land player ${victim.username} ~ ~ ~ 1.5 1.2`);
+            victim.server.runCommandSilent(`playsound minecraft:item.shield.block player ${victim.username} ~ ~ ~ 1.5 1.5`);
+            victim.server.runCommandSilent(`particle minecraft:flash ${victim.x} ${victim.y + 1} ${victim.z} 0.1 0.1 0.1 0 1 normal`);
+            victim.server.runCommandSilent(`particle minecraft:sweep_attack ${victim.x} ${victim.y + 1} ${victim.z} 1.2 0.2 1.2 0.1 12 normal`);
+            victim.server.runCommandSilent(`particle minecraft:crit ${victim.x} ${victim.y + 1} ${victim.z} 0.8 0.8 0.8 0.2 25 normal`);
+            victim.sendSystemMessage(Text.of('§6⚔ ИДЕАЛЬНОЕ ПАРИРОВАНИЕ И КОНТРУДАР! §e[100% Блок + Контрудар ×2.0, Враг оглушен на 3с]'), true);
+            return;
+        }
+
+        // 2. SHIELD GUARD COUNTER SETUP: Player blocks hit with shield
+        if (victim.isBlocking()) {
+            let offHand = victim.offHandItem;
+            let mainHand = victim.mainHandItem;
+            let hasShieldEquipped = (offHand && isShield(offHand)) || (mainHand && isShield(mainHand));
+
+            if (hasShieldEquipped) {
+                victim.persistentData.putLong('skd_guard_counter_window', now + 1500);
+                if (attacker) {
+                    victim.persistentData.putInt('skd_guard_counter_target_id', attacker.id);
+                }
+
+                victim.server.runCommandSilent(`playsound minecraft:block.amethyst_block.hit player ${victim.username} ~ ~ ~ 1.2 1.6`);
+                victim.server.runCommandSilent(`particle minecraft:electric_spark ${victim.x} ${victim.y + 1} ${victim.z} 0.4 0.4 0.4 0.1 12 normal`);
+                victim.sendSystemMessage(Text.of('§e⚡ СТОЙКА КОНТРУДАРА! §f[Нажмите ЛКМ в течение 1.5с для контратаки +150%]'), true);
+            }
         }
     }
 
-    // B. PLAYER ATTACKS AN ENEMY
+    // ==========================================================================
+    // B. OUTGOING DAMAGE FROM PLAYER: GUARD COUNTER & SHADOW CRIT
+    // ==========================================================================
     if (attacker && attacker.isPlayer() && attacker.isAlive() && victim && victim.isAlive() && !victim.isPlayer()) {
-        let now = Date.now();
-
         // 1. Guard Counter Execution: Left click within 1.5s of blocking
         let counterUntil = attacker.persistentData.getLong('skd_guard_counter_window') || 0;
         if (counterUntil > 0 && now <= counterUntil) {
             attacker.persistentData.remove('skd_guard_counter_window');
             attacker.persistentData.remove('skd_guard_counter_target_id');
 
-            // +150% damage bonus
+            // +150% damage bonus (2.5x multiplier)
             event.damage *= 2.5;
 
-            // Stun & weaken attacker
+            // Stun & weaken target
             victim.potionEffects.add('minecraft:slowness', 60, 3, false, true);
             victim.potionEffects.add('minecraft:weakness', 60, 1, false, true);
             victim.potionEffects.add('minecraft:mining_fatigue', 60, 1, false, true);
@@ -689,7 +1018,7 @@ EntityEvents.beforeHurt(event => {
 });
 
 // ------------------------------------------------------------------------------
-// EVENT 2: RIGHT-CLICK TRIGGER CONTROLS (ПКМ)
+// EVENT 2: RIGHT-CLICK TRIGGER CONTROLS (ПКМ & SHIFT+ПКМ)
 // ------------------------------------------------------------------------------
 
 ItemEvents.rightClicked(event => {
@@ -699,12 +1028,13 @@ ItemEvents.rightClicked(event => {
     let item = event.item;
     if (!item || item.isEmpty()) return;
 
+    // Ignore offhand right click events
     if (event.hand && String(event.hand).toUpperCase().includes('OFF')) return;
 
     let mainHand = player.mainHandItem;
-    if (!mainHand || mainHand.isEmpty()) return;
+    if (!mainHand || mainHand.isEmpty() || !isAnyWeapon(mainHand)) return;
 
-    // Check if player is aiming at Infernal Anvil: allow block interaction instead of weapon art
+    // Check if player is aiming at Infernal Anvil: allow block interaction without triggering art
     let hit = event.target || (player.rayTrace ? player.rayTrace(5.0) : null);
     if (hit && hit.block && String(hit.block.id) === 'kubejs:infernal_anvil') {
         return;
@@ -714,44 +1044,62 @@ ItemEvents.rightClicked(event => {
     if (player.persistentData.getInt('skd_last_art_tick') === currentAge) return;
 
     let offHand = player.offHandItem;
-    let offEmpty = (!offHand || offHand.isEmpty() || offHand.id === 'minecraft:air');
-
+    let hasShieldInOffhand = offHand && isShield(offHand);
     let isAirborne = (typeof player.onGround === 'function' ? !player.onGround() : !player.onGround) || player.fallDistance > 0.05;
 
-    // Case 1: Two-Handed Weapons (Offhand is empty) -> Right-Click triggers Art, Jump+ПКМ triggers Slam/Sunder
-    if (isTwoHandedWeapon(mainHand)) {
-        if (offEmpty) {
-            player.persistentData.putInt('skd_last_art_tick', currentAge);
-            executeWeaponArt(player, isAirborne);
+    // --------------------------------------------------------------------------
+    // CASE A: Shift + Right-Click (Sneak + ПКМ) -> Extra Runic Slot
+    // --------------------------------------------------------------------------
+    if (player.isCrouching()) {
+        player.persistentData.putInt('skd_last_art_tick', currentAge);
+
+        let inscribedArt = getInscribedWeaponArt(mainHand);
+        if (inscribedArt && WEAPON_ARTS[inscribedArt]) {
+            executeWeaponArt(player, inscribedArt, false, true);
+        } else {
+            player.sendSystemMessage(Text.of('§7В руническом слоте оружия нет боевого искусства §8[Shift+ПКМ] §7(Инкрустируйте скрижаль на Адской Наковальне).'), true);
+            player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.5 1.8`);
         }
         return;
     }
 
-    // Case 2: One-Handed Weapons (Offhand is empty) -> Right-Click triggers Art
-    if (isOneHandedWeapon(mainHand) && offEmpty) {
-        player.persistentData.putInt('skd_last_art_tick', currentAge);
-        executeWeaponArt(player, isAirborne);
+    // --------------------------------------------------------------------------
+    // CASE B: Standard Right-Click (ПКМ) -> Innate Archetype Skill
+    // --------------------------------------------------------------------------
+    // If holding shield in offhand and not crouching, allow vanilla shield blocking!
+    if (hasShieldInOffhand) {
         return;
     }
 
-    // Case 3: Sneak + Right-Click with shield or weapon (Alternative instant trigger for shield users)
-    if (isAnyWeapon(mainHand) && player.isCrouching()) {
+    // Main weapon right click -> execute innate archetype art
+    let innateArt = resolveInnateWeaponArt(player, isAirborne);
+    if (innateArt) {
         player.persistentData.putInt('skd_last_art_tick', currentAge);
-        executeWeaponArt(player, isAirborne);
-        return;
+        executeWeaponArt(player, innateArt, isAirborne, false);
     }
 });
 
 // ------------------------------------------------------------------------------
-// EVENT 3: COOLDOWN READINESS ACTIONBAR MONITOR (Tick Check)
+// EVENT 3: STAMINA REGEN & COOLDOWN READINESS MONITOR (PlayerEvents.tick)
 // ------------------------------------------------------------------------------
 
 PlayerEvents.tick(event => {
     let player = event.player;
-    if (!player) return;
+    if (!player || !player.isAlive()) return;
     let pAge = (typeof player.age === 'number') ? player.age : (typeof player.tickCount === 'number' ? player.tickCount : 0);
     if (pAge % 10 !== 0) return;
 
+    // 1. Stamina Regeneration (+5 to +8 every 10 ticks based on food & movement)
+    let curStam = getPlayerStamina(player);
+    let maxStam = getPlayerMaxStamina(player);
+    if (curStam < maxStam) {
+        let regen = 5;
+        if (player.foodLevel > 14) regen += 3;
+        if (player.isSprinting()) regen = Math.max(1, regen - 3);
+        player.persistentData.putInt('elyrium_stamina', Math.min(maxStam, curStam + regen));
+    }
+
+    // 2. Cooldown Readiness Notification
     let cdEnd = player.persistentData.getLong('skd_active_cd_end') || 0;
     if (cdEnd > 0 && Date.now() >= cdEnd) {
         let artId = player.persistentData.getString('skd_active_cd_art');
@@ -767,20 +1115,24 @@ PlayerEvents.tick(event => {
 });
 
 // ------------------------------------------------------------------------------
-// EVENT 4: COMMANDS & CHAT SHORTCUTS (.art, /art)
+// EVENT 4: COMMANDS & SHORTCUTS (/art, .art)
 // ------------------------------------------------------------------------------
 
 function printArtsList(player) {
     player.tell('§6═══════════════════════════════════════════════════');
-    player.tell('§e⚔ ТАКТИЧЕСКИЕ БОЕВЫЕ ИСКУССТВА ЭЛИРИУМА (8 ПРИЕМОВ)');
+    player.tell('§e⚔ БОЕВЫЕ ИСКУССТВА ЭЛИРИУМА: АРХЕТИПЫ И РУНИЧЕСКИЙ СЛОТ');
     player.tell('§6═══════════════════════════════════════════════════');
-    Object.keys(WEAPON_ARTS).forEach(k => {
-        let a = WEAPON_ARTS[k];
-        player.tell(`§6[${a.num}] §e${a.name} §7(${a.enName}) §8| §fУрон: §c${Math.round(a.dmgMult * 100)}% §8| §7Откат: §b${a.cdMs / 1000}с`);
-        player.tell(`    §8└─ §7${a.desc}`);
-    });
-    player.tell('§7• Выбор умения: §f.art <1-8> §7или §f/art select <имя>');
-    player.tell('§7• Активация: §eПКМ §7(без щита), §eПрыжок + ПКМ §7(Удар о землю), §eЛКМ §7из блока (Контрудар).');
+    player.tell('§b1. Врожденные умения архетипов [ПКМ]:');
+    player.tell('  §6• Мечи / Палаши: §eПарирующий Клинок §7(0.8с блок 100%, стан, контрудар x2.0, 25⚡)');
+    player.tell('  §6• Двуручники / Клейморы: §eСейсмический Клив §7(360° клив 4.5б, 180% урон, 40⚡)');
+    player.tell('  §6• Катаны: §eФантомный Выпад / Иай §7(рывок 6б сквозь врагов, 190% урон, кровотечение, 30⚡)');
+    player.tell('  §6• Секиры / Топоры: §eСокрушитель Защиты §7(сбив щитов, 50% пробой брони, стан 1.5с, 35⚡)');
+    player.tell('  §6• Молоты / Булавы: §eРазлом Тектоники §7(удар о землю 5м, подброс, Замедление IV, 45⚡)');
+    player.tell('  §6• Копья / Алебарды: §eБронебойный Прокол §7(выпад 5.5б, 100% чистый пробой брони, 25⚡)');
+    player.tell('  §6• Кинжалы / Рапиры: §eТеневой Шаг §7(блинк за спину 5б, невидимость 1с, 100% крит, 20⚡)');
+    player.tell('  §6• Луки / Арбалеты: §eВеерный Залп §7(5 спектральных стрел веером, 30⚡)');
+    player.tell('§b2. Дополнительный рунический слот [Shift + ПКМ]:');
+    player.tell('  §6• Скрижали: §eПламенный Вихрь§7, §bЛедяная Поступь§7, §eГромовой Раскат§7, §4Кровавая Жатва§7, §aСвященный Клинок');
     player.tell('§6═══════════════════════════════════════════════════');
 }
 
@@ -791,7 +1143,7 @@ ServerEvents.commandRegistry(event => {
         Commands.literal('art')
             .executes(ctx => {
                 let p = ctx.source.player;
-                if (p) executeWeaponArt(p, false);
+                if (p) executeWeaponArt(p, resolveInnateWeaponArt(p, false), false, false);
                 return 1;
             })
             .then(Commands.literal('list').executes(ctx => {
@@ -804,39 +1156,13 @@ ServerEvents.commandRegistry(event => {
                 if (p) printArtsList(p);
                 return 1;
             }))
-            .then(Commands.literal('select')
-                .then(Commands.argument('name', Arguments.STRING.create(event))
-                    .executes(ctx => {
-                        let p = ctx.source.player;
-                        let arg = ctx.getArgument('name', java('java.lang.String')).toLowerCase();
-                        let targetArt = null;
-
-                        Object.keys(WEAPON_ARTS).forEach(k => {
-                            let a = WEAPON_ARTS[k];
-                            if (k === arg || String(a.num) === arg || a.enName.toLowerCase().includes(arg) || a.name.toLowerCase().includes(arg)) {
-                                targetArt = k;
-                            }
-                        });
-
-                        if (targetArt) {
-                            p.persistentData.putString('skd_selected_weapon_art', targetArt);
-                            let a = WEAPON_ARTS[targetArt];
-                            p.sendSystemMessage(Text.of(`§a⚔ Выбрано Боевое Искусство: §e«${a.name}» §7(${a.enName})`), true);
-                            p.server.runCommandSilent(`playsound minecraft:block.smithing_table.use player ${p.username} ~ ~ ~ 1.0 1.2`);
-                        } else {
-                            p.tell(`§cНеизвестное боевое искусство: "${arg}". Напишите §f/art list §cдля списка.`);
-                        }
-                        return 1;
-                    })
-                )
-            )
     );
 
     event.register(
         Commands.literal('weapon_art')
             .executes(ctx => {
                 let p = ctx.source.player;
-                if (p) executeWeaponArt(p, false);
+                if (p) executeWeaponArt(p, resolveInnateWeaponArt(p, false), false, false);
                 return 1;
             })
     );
@@ -849,30 +1175,10 @@ PlayerEvents.chat(event => {
     if (!player) return;
 
     if (msg === '.art' || msg === '!art') {
-        executeWeaponArt(player, false);
+        executeWeaponArt(player, resolveInnateWeaponArt(player, false), false, false);
         event.cancel();
     } else if (msg === '.art list' || msg === '!art list' || msg === '.art help') {
         printArtsList(player);
-        event.cancel();
-    } else if (msg.startsWith('.art ') || msg.startsWith('!art ')) {
-        let param = msg.substring(5).trim();
-        let targetArt = null;
-
-        Object.keys(WEAPON_ARTS).forEach(k => {
-            let a = WEAPON_ARTS[k];
-            if (k === param || String(a.num) === param || a.enName.toLowerCase().includes(param) || a.name.toLowerCase().includes(param)) {
-                targetArt = k;
-            }
-        });
-
-        if (targetArt) {
-            player.persistentData.putString('skd_selected_weapon_art', targetArt);
-            let a = WEAPON_ARTS[targetArt];
-            player.sendSystemMessage(Text.of(`§a⚔ Выбрано Боевое Искусство: §e«${a.name}» §7(${a.enName})`), true);
-            player.server.runCommandSilent(`playsound minecraft:block.smithing_table.use player ${player.username} ~ ~ ~ 1.0 1.2`);
-        } else {
-            player.tell(`§cНеизвестное боевое искусство: "${param}". Напишите §f.art list §cдля просмотра.`);
-        }
         event.cancel();
     }
 });

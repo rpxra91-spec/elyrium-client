@@ -186,23 +186,39 @@ EntityEvents.beforeHurt(event => {
                 }
             }
 
-            // --- 8. АССАСИН (Assassin) ---
-            // Внезапный удар из скрытности / со спины
-            if (tags.contains('skill_assassin_subclass')) {
-                let isSneak = attacker.isCrouching() || (attacker.isShiftKeyDown && attacker.isShiftKeyDown())
-                let isBehind = false
-                try {
-                    let diff = Math.abs((attacker.yaw - victim.yaw) % 360)
-                    if (diff > 180) diff = 360 - diff
-                    if (diff < 60) isBehind = true
-                } catch (e) {}
+            // --- 8. РАЗВЕДЧИК И АССАСИН (Scout / Rogue / Assassin: Backstab Detection) ---
+            let pLook = attacker.getLookAngle()
+            let vLook = victim.getLookAngle()
+            let pLen = Math.max(0.001, Math.sqrt(pLook.x * pLook.x + pLook.z * pLook.z))
+            let vLen = Math.max(0.001, Math.sqrt(vLook.x * vLook.x + vLook.z * vLook.z))
+            let dot = (pLook.x * vLook.x + pLook.z * vLook.z) / (pLen * vLen)
 
-                if (isSneak || isBehind) {
-                    event.damage *= 1.40
-                    attacker.server.runCommandSilent(`playsound minecraft:entity.player.attack.crit player ${attacker.username} ~ ~ ~ 0.9 1.4`)
-                    attacker.sendSystemMessage(Text.of('§8🗡 Внезапный удар из тени! (+40% урона)'), true)
-                }
+            let dx = attacker.x - victim.x
+            let dz = attacker.z - victim.z
+            let dLen = Math.max(0.001, Math.sqrt(dx * dx + dz * dz))
+            let posDot = (dx * vLook.x + dz * vLook.z) / (dLen * vLen)
+
+            let isDagger = mainId.includes('dagger') || mainId.includes('knife') || mainId.includes('rapier') || mainId.includes('stiletto') || mainId.includes('sickle')
+            let isBehind = dot > 0.65 && posDot < 0.25 // Both facing same way (within ~90°) AND attacker is behind victim
+            let isSneak = attacker.isCrouching() || (typeof attacker.isShiftKeyDown === 'function' && attacker.isShiftKeyDown())
+
+            if (isBehind || (isSneak && isDagger)) {
+                // Base 2.5x multiplier, scaling up to 3.5x based on assassin/scout perks
+                let critMult = 2.5
+                if (tags.contains('skill_assassin_subclass')) critMult += 0.3
+                if (tags.contains('skill_assassin_skill_2_1_8_1')) critMult += 0.3
+                if (tags.contains('skill_assassin_final')) critMult += 0.4
+
+                event.damage *= critMult
+
+                attacker.server.runCommandSilent(`playsound minecraft:entity.player.attack.crit player ${attacker.username} ~ ~ ~ 1.5 1.5`)
+                attacker.server.runCommandSilent(`playsound minecraft:entity.arrow.hit_player player ${attacker.username} ~ ~ ~ 1.0 1.6`)
+                attacker.server.runCommandSilent(`particle minecraft:smoke ${victim.x} ${victim.y + 1} ${victim.z} 0.5 0.5 0.5 0.05 20 normal`)
+                attacker.server.runCommandSilent(`particle minecraft:large_smoke ${victim.x} ${victim.y + 1} ${victim.z} 0.3 0.3 0.3 0.02 8 normal`)
+                attacker.server.runCommandSilent(`particle minecraft:crit ${victim.x} ${victim.y + 1} ${victim.z} 0.8 0.8 0.8 0.2 25 normal`)
+                attacker.sendSystemMessage(Text.of(`§8🗡 БЭКСТЭБ СО СПИНЫ! §c[×${critMult.toFixed(1)} Крит] §7(${Math.round(event.damage)} урона)`), true)
             }
+
             // Смертельный яд
             if (tags.contains('skill_assassin_skill_2_1_8_1') && Math.random() < 0.30) {
                 victim.potionEffects.add('minecraft:poison', 100, 1, false, true)
@@ -314,6 +330,97 @@ EntityEvents.beforeHurt(event => {
                     attacker.server.runCommandSilent(`particle minecraft:portal ${victim.x} ${victim.y + 1} ${victim.z} 0.3 0.3 0.3 0.1 10`)
                 }
             }
+
+            // ==================================================================
+            // ELEMENTAL COMBOS (SUPERCONDUCTIVITY & THERMAL SHOCK)
+            // ==================================================================
+            let isVictimFrozen = false
+            try {
+                if ((typeof victim.ticksFrozen === 'number' && victim.ticksFrozen > 0) ||
+                    (victim.hasEffect && (victim.hasEffect('minecraft:slowness') || victim.hasEffect('irons_spellbooks:chilled') || victim.hasEffect('irons_spellbooks:frozen'))) ||
+                    (victim.persistentData && victim.persistentData.getBoolean('elyrium_frozen'))) {
+                    isVictimFrozen = true
+                }
+            } catch (e) {}
+
+            let isVictimBurning = victim.isOnFire() || (typeof victim.remainingFireTicks === 'number' && victim.remainingFireTicks > 0)
+
+            let isLightningAttack = String(source.type).toLowerCase().includes('lightning') ||
+                                    String(source.type).toLowerCase().includes('shock') ||
+                                    tags.contains('skill_wizard_lightning_static') ||
+                                    tags.contains('skill_wizard_lightning_wrath') ||
+                                    mainId.includes('lightning') ||
+                                    (source.direct && String(source.direct.type).toLowerCase().includes('lightning'))
+
+            let isIceAttack = String(source.type).toLowerCase().includes('freeze') ||
+                              String(source.type).toLowerCase().includes('ice') ||
+                              String(source.type).toLowerCase().includes('frost') ||
+                              tags.contains('skill_wizard_ice_frostbite') ||
+                              tags.contains('skill_wizard_ice_absolute_zero') ||
+                              mainId.includes('ice') || mainId.includes('frost')
+
+            let isFireAttack = isVictimBurning ||
+                               String(source.type).toLowerCase().includes('fire') ||
+                               tags.contains('skill_wizard_fire_ignite') ||
+                               tags.contains('skill_wizard_fire_combustion') ||
+                               mainId.includes('fire') || mainId.includes('flame')
+
+            // COMBO 1: SUPERCONDUCTIVITY (Freeze + Lightning)
+            // 150% AoE lightning explosion in 5 block radius
+            if (isVictimFrozen && isLightningAttack) {
+                event.damage *= 1.5
+
+                let level = attacker.level
+                let nearby = level.getEntitiesWithin(AABB.of(victim.x - 5.0, victim.y - 2.0, victim.z - 5.0, victim.x + 5.0, victim.y + 3.0, victim.z + 5.0))
+                let aoeDmg = event.damage * 1.5
+                let hits = 0
+
+                for (let ent of nearby) {
+                    if (ent && ent.isAlive() && ent !== attacker && ent !== victim && ent.isLiving() && !ent.isPlayer()) {
+                        try {
+                            ent.attack(source, aoeDmg)
+                            ent.potionEffects.add('minecraft:slowness', 60, 2, false, true)
+                            hits++
+                        } catch (e) {}
+                    }
+                }
+
+                try {
+                    victim.setTicksFrozen(0)
+                    victim.persistentData.remove('elyrium_frozen')
+                } catch (e) {}
+
+                attacker.server.runCommandSilent(`playsound minecraft:entity.lightning_bolt.thunder player ${attacker.username} ~ ~ ~ 1.2 1.4`)
+                attacker.server.runCommandSilent(`playsound minecraft:block.glass.break player ${attacker.username} ~ ~ ~ 1.0 1.2`)
+                attacker.server.runCommandSilent(`particle minecraft:electric_spark ${victim.x} ${victim.y + 1} ${victim.z} 1.2 0.8 1.2 0.2 35 normal`)
+                attacker.server.runCommandSilent(`particle minecraft:flash ${victim.x} ${victim.y + 1} ${victim.z} 0.1 0.1 0.1 0 1 normal`)
+                attacker.server.runCommandSilent(`particle minecraft:snowflake ${victim.x} ${victim.y + 1} ${victim.z} 1.0 0.5 1.0 0.1 20 normal`)
+                attacker.sendSystemMessage(Text.of(`§b⚡ СВЕРХПРОВОДИМОСТЬ! §eВзрыв дуговой молнии в радиусе 5б (+150% AoE Урона) | Задето: §a${hits}`), true)
+            }
+
+            // COMBO 2: THERMAL SHOCK (Burn + Freeze)
+            // 100% armor shred and burst damage
+            if ((isVictimBurning && isIceAttack) || (isVictimFrozen && isFireAttack)) {
+                event.damage *= 2.0
+
+                // 100% Armor shred debuff
+                victim.potionEffects.add('minecraft:weakness', 100, 2, false, true)
+                victim.potionEffects.add('minecraft:slowness', 60, 2, false, true)
+
+                // Quench fire / thaw ice
+                try {
+                    victim.clearFire()
+                    victim.setTicksFrozen(0)
+                    victim.persistentData.remove('elyrium_frozen')
+                } catch (e) {}
+
+                attacker.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${attacker.username} ~ ~ ~ 1.2 0.6`)
+                attacker.server.runCommandSilent(`playsound minecraft:entity.generic.explode player ${attacker.username} ~ ~ ~ 1.0 1.3`)
+                attacker.server.runCommandSilent(`particle minecraft:cloud ${victim.x} ${victim.y + 1} ${victim.z} 1.2 0.6 1.2 0.1 30 normal`)
+                attacker.server.runCommandSilent(`particle minecraft:lava ${victim.x} ${victim.y + 1} ${victim.z} 0.8 0.4 0.8 0.1 15 normal`)
+                attacker.server.runCommandSilent(`particle minecraft:snowflake ${victim.x} ${victim.y + 1} ${victim.z} 0.8 0.4 0.8 0.1 15 normal`)
+                attacker.sendSystemMessage(Text.of('§6🔥❄ ТЕРМОШОК! §cРазрушение 100% брони и термальный взрыв!'), true)
+            }
         }
     }
 
@@ -414,13 +521,35 @@ EntityEvents.beforeHurt(event => {
                 }
             }
 
-            // 9. НАЁМНИК: Уклонение (Dodge Reflexes)
-            if (pTags.contains('skill_adventurer_subclass') && Math.random() < 0.15) {
+            // 9. РАЗВЕДЧИК / НАЁМНИК: Уклонение (Dodge Roll 5% - 25%)
+            let dodgeChance = 0.0
+            if (pTags.contains('skill_adventurer_subclass')) dodgeChance += 0.05
+            if (pTags.contains('skill_assassin_subclass')) dodgeChance += 0.05
+            if (pTags.contains('skill_adventurer_skill_11_4')) dodgeChance += 0.05
+            if (pTags.contains('skill_assassin_skill_3')) dodgeChance += 0.05
+            if (pTags.contains('skill_adventurer_final')) dodgeChance += 0.05
+
+            try {
+                let attr = victim.attributes.getValue('apothic_attributes:dodge_chance')
+                if (attr && attr > 0) dodgeChance = Math.max(dodgeChance, attr)
+            } catch (e) {}
+
+            dodgeChance = Math.min(0.25, Math.max(0.0, dodgeChance))
+
+            if (dodgeChance > 0 && Math.random() < dodgeChance) {
                 event.damage = 0
                 event.cancel()
-                victim.potionEffects.add('minecraft:speed', 40, 1, false, false)
-                victim.server.runCommandSilent(`playsound minecraft:entity.player.attack.sweep player ${victim.username} ~ ~ ~ 0.9 1.3`)
-                victim.sendSystemMessage(Text.of('§e💨 Ловкое уклонение от удара!'), true)
+
+                // Leap backward 2 blocks with smoke puff
+                let look = victim.getLookAngle()
+                let hLen = Math.max(0.001, Math.sqrt(look.x * look.x + look.z * look.z))
+                victim.setDeltaMovement(-look.x / hLen * 0.75, 0.22, -look.z / hLen * 0.75)
+                victim.hasImpulse = true
+
+                victim.server.runCommandSilent(`playsound minecraft:entity.player.attack.sweep player ${victim.username} ~ ~ ~ 0.9 1.6`)
+                victim.server.runCommandSilent(`particle minecraft:poof ${victim.x} ${victim.y + 0.5} ${victim.z} 0.4 0.2 0.4 0.05 15 normal`)
+                victim.server.runCommandSilent(`particle minecraft:smoke ${victim.x} ${victim.y + 0.5} ${victim.z} 0.3 0.2 0.3 0.02 10 normal`)
+                victim.sendSystemMessage(Text.of(`§a✦ УКЛОНЕНИЕ! §f(Ловкий перекат назад [${Math.round(dodgeChance * 100)}%])`), true)
                 return
             }
 
