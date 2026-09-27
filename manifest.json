@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-27T10:11:40.089705+00:00",
+  "generated_at": "2026-09-27T10:18:39.966343+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -7807,8 +7807,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/world_spawn_setup.js",
-      "sha256": "0ee7d173a0b71450c9ef2c2c0dd346ef6b78603337dcbe0f17ad50d84ddafad6",
-      "size": 14502
+      "sha256": "4b011e9e6d51a7d91ddb76369ea715595c5d38b6f0d9695eaa87f9d6255c25f5",
+      "size": 14244
     },
     {
       "path": "kubejs/server_scripts/02_magic/spell_capacity_engine.js",
@@ -7842,8 +7842,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/elyrium_forge_api.js",
-      "sha256": "9e555b86d2a56342b9c23cc38a6b9d3bbf61e456d0fd1ffdddbb4f2d9c5c5b98",
-      "size": 17831
+      "sha256": "fc2344e2ecdfa3fb9f16d850c1107cd2522bdb919edf5a1d0fcdb3ba1f4f8268",
+      "size": 18329
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_engine.js",
@@ -7867,8 +7867,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/infernal_anvil_gui.js",
-      "sha256": "7b8ba9df383468b042b282158d9207fe5afc0792fb5c5e45d34d10499e6994eb",
-      "size": 58199
+      "sha256": "5abab3d0cd8eb4b35d4cc104559a55bd791f0b4919114022a1abf9f81ddf537c",
+      "size": 59125
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_inscription.js",
