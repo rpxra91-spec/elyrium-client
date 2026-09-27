@@ -359,6 +359,9 @@ const PLAYER_STAMINA_BARS = new Map();
 
 function updateStaminaBossBar(player, curStam, maxStam) {
     if (!player) return;
+    try {
+        player.sendData('elyrium:sync_stamina', { stamina: curStam, maxStamina: maxStam });
+    } catch (eSync) {}
     initBossBarApi();
     if (!J_ServerBossEvent) return;
 
@@ -1716,10 +1719,21 @@ PlayerEvents.loggedOut(event => {
     }
 });
 
+PlayerEvents.loggedIn(event => {
+    let player = event.player;
+    if (!player) return;
+    let curStam = getPlayerStamina(player);
+    let maxStam = getPlayerMaxStamina(player);
+    updateStaminaBossBar(player, curStam, maxStam);
+});
+
 PlayerEvents.respawned(event => {
     let player = event.player;
     if (player && player.persistentData) {
         player.persistentData.putBoolean('skd_spear_reach_active', false);
         player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier remove elyrium:spear_reach`);
+        let curStam = getPlayerStamina(player);
+        let maxStam = getPlayerMaxStamina(player);
+        updateStaminaBossBar(player, curStam, maxStam);
     }
 });
