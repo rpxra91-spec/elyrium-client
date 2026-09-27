@@ -67,8 +67,16 @@
 	#/!\ Unsupported item types are not guaranteed to work out of the box.
 	#Imbue Whitelist. Use an item's id to allow it to be imbued, ex: "minecraft:iron_sword"
 	imbueWhitelist = []
-	#Imbue Blacklist. Use an item's id to prevent it from being imbued, ex: "minecraft:iron_sword"
-	imbueBlacklist = []
+	imbueBlacklist = [
+		"#minecraft:swords",
+		"#minecraft:axes",
+		"#c:tools/swords",
+		"#c:tools/axes",
+		"#c:tools/spears",
+		"#c:swords",
+		"#c:axes",
+		"#c:spears"
+	]
 
 [Worldgen]
 	#The weight of the priest house spawning in a village. Default: 4

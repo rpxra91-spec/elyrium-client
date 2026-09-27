@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-27T13:55:49.033957+00:00",
+  "generated_at": "2026-09-27T13:58:02.994352+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -7472,8 +7472,8 @@
     },
     {
       "path": "kubejs/client_scripts/equipment_reinforcement_tooltips.js",
-      "sha256": "65e82e89fbf63a715c0466586cd8c91181dae3acc585bb9d52582b6ab65ccefd",
-      "size": 11300
+      "sha256": "3bc41c37c56c29ac0f8aa826435e9817f88eb614849c9d60ee00aa3d8d0caecd",
+      "size": 12557
     },
     {
       "path": "kubejs/client_scripts/filter_early_weapons.js",
@@ -7892,8 +7892,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "7260f88c8c801de99273c81e7b853c84fc1abf24d24d115db03d969cef0e0e22",
-      "size": 89463
+      "sha256": "66b6d7c837b5b70f951b27fac922fd2ba5636a3b1686995e67fcc5f6b6529cf5",
+      "size": 93222
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
@@ -7902,8 +7902,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
-      "sha256": "31dc89477080f73a5cae6f5252051e288605df70ee8cdd80835d64745a3e56c3",
-      "size": 12021
+      "sha256": "bb4b3b982ab11f3659a025844c7ec2bb2c9c96d48103ba3cccbd0897447271f0",
+      "size": 12218
     },
     {
       "path": "kubejs/server_scripts/03_combat/souls_dodge_engine.js",

@@ -484,5 +484,30 @@ ItemEvents.modifyTooltips(event => {
 ItemEvents.dynamicTooltips('elyrium_martial_arts', event => {
     let item = event.item;
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return;
+
+    // Filter out parasitic spellbook / imbued lines from weapon tooltips
+    if (isAnyWeapon(item)) {
+        try {
+            for (let i = event.lines.size() - 1; i >= 0; i--) {
+                let comp = event.lines.get(i);
+                if (!comp) continue;
+                let lineStr = (typeof comp.getString === 'function') ? comp.getString() : String(comp);
+                if (lineStr) {
+                    let lower = lineStr.toLowerCase();
+                    if (lower.includes('высечено заклинаний') ||
+                        lower.includes('inscribed spells') ||
+                        lower.includes('экипированной книги') ||
+                        lower.includes('книги заклинаний') ||
+                        lower.includes('книга заклинаний') ||
+                        lower.includes('книгу заклинаний') ||
+                        lower.includes('spell book') ||
+                        lower.includes('casts spells from equipped')) {
+                        event.lines.remove(i);
+                    }
+                }
+            }
+        } catch (e) {}
+    }
+
     renderMartialTooltips(event.lines, item);
 });

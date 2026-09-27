@@ -20,14 +20,35 @@
 
 const SCALING_GRADES = ['E', 'D', 'C', 'B', 'A', 'S'];
 
-const BASE_GRADE_BONUS = {
-    'S': 34,
-    'A': 25,
-    'B': 18,
-    'C': 12,
-    'D': 6,
-    'E': 3
+const GRADE_SCALING_PER_POINT = {
+    'S': 2.0,  // +2.0% per point
+    'A': 1.5,  // +1.5% per point
+    'B': 1.1,  // +1.1% per point
+    'C': 0.8,  // +0.8% per point
+    'D': 0.5,  // +0.5% per point
+    'E': 0.2   // +0.2% per point
 };
+
+function getPlayerPerkStat(statKey) {
+    if (!statKey) return 0;
+    try {
+        let p = (typeof Client !== 'undefined' && Client.player) ? Client.player : null;
+        if (!p || !p.persistentData) return 0;
+        let perks = p.persistentData.getCompound('simplestats_perks');
+        if (!perks) return 0;
+        return perks.getInt(statKey) || 0;
+    } catch (e) {
+        return 0;
+    }
+}
+
+function calculateDynamicStatBonus(grade, statKey) {
+    if (!statKey) return 0;
+    let statVal = getPlayerPerkStat(statKey);
+    if (statVal <= 0) return 0;
+    let mult = GRADE_SCALING_PER_POINT[grade] || 0.5;
+    return Math.round(statVal * mult);
+}
 
 function getReinforceLevel(item) {
     if (!item || item.isEmpty()) return 0;
@@ -69,7 +90,7 @@ function getWeaponProgressionTier(item, id) {
     return 1;
 }
 
-function adjustGrade(baseGrade, tier, reinforce) {
+function adjustGrade(baseGrade, tier, reinforce, statKey) {
     let idx = SCALING_GRADES.indexOf(baseGrade);
     if (idx === -1) idx = 1; // Default 'D'
 
@@ -83,7 +104,7 @@ function adjustGrade(baseGrade, tier, reinforce) {
     idx = Math.max(0, Math.min(SCALING_GRADES.length - 1, idx));
     let grade = SCALING_GRADES[idx];
 
-    let bonus = BASE_GRADE_BONUS[grade] + Math.round(reinforce * 1.2);
+    let bonus = calculateDynamicStatBonus(grade, statKey);
     return { grade: grade, bonus: bonus };
 }
 
@@ -138,6 +159,8 @@ function renderReinforcementTooltips(tooltip, item) {
         // 2. Elden Ring Scaling grades
         let primaryStat = 'Сила:     ';
         let secondaryStat = 'Ловкость: ';
+        let primaryKey = 'strength';
+        let secondaryKey = 'agility';
         let baseG1 = 'B';
         let baseG2 = 'D';
 
@@ -146,18 +169,24 @@ function renderReinforcementTooltips(tooltip, item) {
             // Colossal & Heavy: STR (B->A->S), AGI (D->C)
             primaryStat = 'Сила:     ';
             secondaryStat = 'Ловкость: ';
+            primaryKey = 'strength';
+            secondaryKey = 'agility';
             baseG1 = 'B';
             baseG2 = 'D';
         } else if (id.includes('katana') || id.includes('scythe') || id.includes('rapier') || id.includes('glaive')) {
             // Finesse: AGI (B->A->S), STR (C->B)
             primaryStat = 'Ловкость: ';
             secondaryStat = 'Сила:     ';
+            primaryKey = 'agility';
+            secondaryKey = 'strength';
             baseG1 = 'B';
             baseG2 = 'C';
         } else if (id.includes('dagger') || id.includes('sai') || id.includes('bow') || id.includes('crossbow')) {
             // Agility & Ranged: AGI (B->A->S), CRIT (D->C)
             primaryStat = 'Ловкость: ';
             secondaryStat = 'Точность: ';
+            primaryKey = 'agility';
+            secondaryKey = 'crit';
             baseG1 = 'B';
             baseG2 = 'D';
         } else if (id.includes('staff') || id.includes('wand') || id.includes('spellbook') || 
@@ -165,18 +194,22 @@ function renderReinforcementTooltips(tooltip, item) {
             // Magic Focus: INT (A->S), VIT (D->C)
             primaryStat = 'Интеллект:';
             secondaryStat = 'Ловкость: ';
+            primaryKey = 'mana';
+            secondaryKey = 'agility';
             baseG1 = 'A';
             baseG2 = 'D';
         } else {
             // Balanced Swords & Spears: STR (C->B->A), AGI (C->B->A)
             primaryStat = 'Сила:     ';
             secondaryStat = 'Ловкость: ';
+            primaryKey = 'strength';
+            secondaryKey = 'agility';
             baseG1 = 'C';
             baseG2 = 'D';
         }
 
-        let sc1 = adjustGrade(baseG1, tier, reinforceLvl);
-        let sc2 = adjustGrade(baseG2, tier, reinforceLvl);
+        let sc1 = adjustGrade(baseG1, tier, reinforceLvl, primaryKey);
+        let sc2 = adjustGrade(baseG2, tier, reinforceLvl, secondaryKey);
 
         tooltip.add(Text.of('§7Масштабирование:'));
         tooltip.add(Text.of(`  §b• ${primaryStat} §e[${sc1.grade}] §a(+${sc1.bonus}% урона)`));

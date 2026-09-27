@@ -322,13 +322,95 @@ function consumePlayerStamina(player, amount) {
     if (!player) return false;
     let current = getPlayerStamina(player);
     if (current < amount) return false;
-    player.persistentData.putInt('elyrium_stamina', current - amount);
+    let maxStam = getPlayerMaxStamina(player);
+    let newStam = current - amount;
+    player.persistentData.putInt('elyrium_stamina', newStam);
     try {
         if (typeof player.causeFoodExhaustion === 'function') {
             player.causeFoodExhaustion(amount * 0.05);
         }
     } catch (e) {}
+    updateStaminaBossBar(player, newStam, maxStam);
     return true;
+}
+
+// ------------------------------------------------------------------------------
+// STAMINA POP-UP SERVER BOSSBAR
+// ------------------------------------------------------------------------------
+
+let J_ServerBossEvent = null;
+let J_BossBarColor = null;
+let J_BossBarOverlay = null;
+let J_Component = null;
+let isBossBarApiInitialized = false;
+
+function initBossBarApi() {
+    if (isBossBarApiInitialized) return;
+    try {
+        J_ServerBossEvent = Java.loadClass('net.minecraft.server.level.ServerBossEvent');
+        J_BossBarColor = Java.loadClass('net.minecraft.world.BossEvent$BossBarColor');
+        J_BossBarOverlay = Java.loadClass('net.minecraft.world.BossEvent$BossBarOverlay');
+        J_Component = Java.loadClass('net.minecraft.network.chat.Component');
+    } catch (e) {}
+    isBossBarApiInitialized = true;
+}
+
+const PLAYER_STAMINA_BARS = new Map();
+
+function updateStaminaBossBar(player, curStam, maxStam) {
+    if (!player) return;
+    initBossBarApi();
+    if (!J_ServerBossEvent) return;
+
+    let pUuid = String(player.uuid);
+    let bar = PLAYER_STAMINA_BARS.get(pUuid);
+
+    if (!bar) {
+        try {
+            let label = J_Component ? J_Component.literal(`⚡ Выносливость [${curStam} / ${maxStam}]`) : Text.of(`⚡ Выносливость [${curStam} / ${maxStam}]`);
+            bar = new J_ServerBossEvent(label, J_BossBarColor.YELLOW, J_BossBarOverlay.PROGRESS);
+            bar.setVisible(false);
+            let rawPlayer = player.minecraftEntity || player;
+            bar.addPlayer(rawPlayer);
+            PLAYER_STAMINA_BARS.set(pUuid, bar);
+        } catch (eInit) {
+            return;
+        }
+    }
+
+    let pData = player.persistentData;
+    let progress = Math.max(0.0, Math.min(1.0, curStam / maxStam));
+
+    if (curStam < maxStam) {
+        pData.remove('elyrium_stamina_full_timestamp');
+        let text = J_Component ? J_Component.literal(`⚡ Выносливость [${curStam} / ${maxStam}]`) : Text.of(`⚡ Выносливость [${curStam} / ${maxStam}]`);
+        bar.setName(text);
+        bar.setProgress(progress);
+        if (!bar.isVisible()) {
+            bar.setVisible(true);
+        }
+    } else {
+        // 100% full: disappears after 2.5 seconds (2500ms)
+        let fullTime = pData.getLong('elyrium_stamina_full_timestamp') || 0;
+        let now = Date.now();
+        if (fullTime === 0) {
+            fullTime = now;
+            pData.putLong('elyrium_stamina_full_timestamp', fullTime);
+        }
+
+        if (now - fullTime >= 2500) {
+            if (bar.isVisible()) {
+                bar.setVisible(false);
+            }
+        } else {
+            let text = J_Component ? J_Component.literal(`⚡ Выносливость [${maxStam} / ${maxStam}]`) : Text.of(`⚡ Выносливость [${maxStam} / ${maxStam}]`);
+            bar.setName(text);
+            bar.setProgress(1.0);
+            if (!bar.isVisible()) {
+                bar.setVisible(true);
+            }
+        }
+    }
 }
 
 // ------------------------------------------------------------------------------
@@ -357,6 +439,20 @@ function broadcastPlayerArtAnimation(player, animId, speed) {
     } catch (e2) {}
 }
 
+const Vec3 = Java.loadClass('net.minecraft.world.phys.Vec3');
+
+function applyEntityMotion(entity, vx, vy, vz) {
+    if (!entity) return;
+    try {
+        entity.setDeltaMovement(new Vec3(vx, vy, vz));
+        entity.hasImpulse = true;
+    } catch (e) {
+        try {
+            entity.setDeltaMovement(vx, vy, vz);
+            entity.hasImpulse = true;
+        } catch (e2) {}
+    }
+}
 // ------------------------------------------------------------------------------
 // HELPER FUNCTIONS: WEAPON CLASSIFICATION
 // ------------------------------------------------------------------------------
@@ -754,8 +850,7 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
         ents.forEach(ent => {
             if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
                 dealArtDamage(player, ent, totalDmg, false);
-                ent.setDeltaMovement(0, 0.85, 0);
-                ent.hasImpulse = true;
+                applyEntityMotion(ent, 0, 0.85, 0);
                 ent.potionEffects.add('minecraft:slowness', 60, 3, false, true);
                 hits++;
             }
@@ -784,8 +879,7 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
         ents.forEach(ent => {
             if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive() && hits === 0) {
                 dealArtDamage(player, ent, totalDmg, false);
-                ent.setDeltaMovement(look.x * 0.3, 1.15, look.z * 0.3);
-                ent.hasImpulse = true;
+                applyEntityMotion(ent, look.x * 0.3, 1.15, look.z * 0.3);
                 ent.potionEffects.add('minecraft:slowness', 40, 4, false, true);
                 ent.potionEffects.add('minecraft:weakness', 40, 2, false, true);
                 hits++;
@@ -933,8 +1027,7 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
                 dealArtDamage(player, ent, totalDmg, false);
                 ent.potionEffects.add('minecraft:weakness', 80, 1, false, true);
                 ent.potionEffects.add('minecraft:mining_fatigue', 60, 2, false, true);
-                ent.setDeltaMovement(0, 0.45, 0);
-                ent.hasImpulse = true;
+                applyEntityMotion(ent, 0, 0.45, 0);
                 hits++;
             }
         });
@@ -967,7 +1060,7 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
                 let arrow = level.createEntity('minecraft:spectral_arrow');
                 if (arrow) {
                     arrow.setPos(sx, sy, sz);
-                    arrow.setDeltaMovement(vx, vy, vz);
+                    applyEntityMotion(arrow, vx, vy, vz);
                     try { arrow.setOwner(player); } catch (e) {}
                     try { arrow.setBaseDamage(arrowDmg); } catch (e) {}
                     try { arrow.pickup = 0; } catch (e) {}
@@ -1069,8 +1162,7 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
         let normZ = look.z / hLen;
 
         // Backward leap
-        player.setDeltaMovement(-normX * 1.35, 0.38, -normZ * 1.35);
-        player.hasImpulse = true;
+        applyEntityMotion(player, -normX * 1.35, 0.38, -normZ * 1.35);
 
         // Shoot concussive slowing spectral arrow forward
         let sx = player.x + look.x * 0.5;
@@ -1119,8 +1211,7 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
         let normZ = look.z / hLen;
 
         player.potionEffects.add('minecraft:resistance', 60, 1, false, true);
-        player.setDeltaMovement(normX * 1.6, 0.15, normZ * 1.6);
-        player.hasImpulse = true;
+        applyEntityMotion(player, normX * 1.6, 0.15, normZ * 1.6);
 
         let hitEntities = new Set();
         let hits = 0;
@@ -1428,35 +1519,44 @@ ItemEvents.rightClicked(event => {
     let hasShieldInOffhand = offHand && isShield(offHand);
     let isAirborne = (typeof player.onGround === 'function' ? !player.onGround() : !player.onGround) || player.fallDistance > 0.05;
 
-    // CASE A: Shift + Right-Click -> Extra Runic Slot or Shield Innate Art
-    if (player.isCrouching()) {
-        player.persistentData.putInt('skd_last_art_tick', currentAge);
-
-        let inscribedArt = getInscribedWeaponArt(mainHand);
-        if (inscribedArt && WEAPON_ARTS[inscribedArt]) {
-            executeWeaponArt(player, inscribedArt, false, true);
-        } else if (hasShieldInOffhand) {
+    // Control scheme:
+    // With shield:
+    //   - [ПКМ]: Standard vanilla shield block
+    //   - [Shift + ПКМ]: Innate weapon art from behind shield (Slot 1)
+    // Without shield:
+    //   - [ПКМ]: Innate weapon art (Slot 1)
+    //   - [Shift + ПКМ]: Inlaid runic art (Slot 2)
+    if (hasShieldInOffhand) {
+        if (player.isCrouching()) {
+            player.persistentData.putInt('skd_last_art_tick', currentAge);
             let innateArt = resolveInnateWeaponArt(player, isAirborne);
             if (innateArt) {
                 executeWeaponArt(player, innateArt, isAirborne, false);
             }
+            return;
         } else {
-            player.sendSystemMessage(Text.of('§7В руническом слоте оружия нет боевого искусства §8[Shift+ПКМ] §7(Инкрустируйте скрижаль на Адской Наковальне).'), true);
-            player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.5 1.8`);
+            // Holding shield and not crouching -> standard vanilla shield block
+            return;
         }
-        return;
-    }
-
-    // CASE B: Standard Right-Click (ПКМ) -> Innate Archetype Skill
-    if (hasShieldInOffhand) {
-        // Holding shield and not crouching -> standard vanilla shield block
-        return;
-    }
-
-    let innateArt = resolveInnateWeaponArt(player, isAirborne);
-    if (innateArt) {
-        player.persistentData.putInt('skd_last_art_tick', currentAge);
-        executeWeaponArt(player, innateArt, isAirborne, false);
+    } else {
+        if (player.isCrouching()) {
+            player.persistentData.putInt('skd_last_art_tick', currentAge);
+            let inscribedArt = getInscribedWeaponArt(mainHand);
+            if (inscribedArt && WEAPON_ARTS[inscribedArt]) {
+                executeWeaponArt(player, inscribedArt, false, true);
+            } else {
+                player.sendSystemMessage(Text.of('§7В руническом слоте оружия нет боевого искусства §8[Shift+ПКМ] §7(Инкрустируйте скрижаль на Адской Наковальне).'), true);
+                player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.5 1.8`);
+            }
+            return;
+        } else {
+            let innateArt = resolveInnateWeaponArt(player, isAirborne);
+            if (innateArt) {
+                player.persistentData.putInt('skd_last_art_tick', currentAge);
+                executeWeaponArt(player, innateArt, isAirborne, false);
+            }
+            return;
+        }
     }
 });
 
@@ -1470,15 +1570,20 @@ PlayerEvents.tick(event => {
     let pAge = (typeof player.age === 'number') ? player.age : (typeof player.tickCount === 'number' ? player.tickCount : 0);
     if (pAge % 10 !== 0) return;
 
-    // 1. Stamina Regeneration (+5 to +8 every 10 ticks based on food & sprint)
+    // 1. Stamina Regeneration (+5 to +8 every 10 ticks based on food & sprint, -70% if blocking)
     let curStam = getPlayerStamina(player);
     let maxStam = getPlayerMaxStamina(player);
     if (curStam < maxStam) {
         let regen = 5;
         if (player.foodLevel > 14) regen += 3;
         if (player.isSprinting()) regen = Math.max(1, regen - 3);
-        player.persistentData.putInt('elyrium_stamina', Math.min(maxStam, curStam + regen));
+        if (player.isBlocking()) {
+            regen = Math.max(1, Math.round(regen * 0.3)); // 70% reduction when blocking
+        }
+        curStam = Math.min(maxStam, curStam + regen);
+        player.persistentData.putInt('elyrium_stamina', curStam);
     }
+    updateStaminaBossBar(player, curStam, maxStam);
 
     // 2. Cooldown Readiness Notification
     let cdEnd = player.persistentData.getLong('skd_active_cd_end') || 0;
@@ -1595,9 +1700,19 @@ PlayerEvents.chat(event => {
 
 PlayerEvents.loggedOut(event => {
     let player = event.player;
-    if (player && player.persistentData && player.persistentData.getBoolean('skd_spear_reach_active')) {
-        player.persistentData.putBoolean('skd_spear_reach_active', false);
-        player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier remove elyrium:spear_reach`);
+    if (player) {
+        let pUuid = String(player.uuid);
+        if (PLAYER_STAMINA_BARS.has(pUuid)) {
+            try {
+                let bar = PLAYER_STAMINA_BARS.get(pUuid);
+                bar.removeAllPlayers();
+            } catch (eBar) {}
+            PLAYER_STAMINA_BARS.delete(pUuid);
+        }
+        if (player.persistentData && player.persistentData.getBoolean('skd_spear_reach_active')) {
+            player.persistentData.putBoolean('skd_spear_reach_active', false);
+            player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier remove elyrium:spear_reach`);
+        }
     }
 });
 

@@ -209,7 +209,14 @@ function triggerGuardBreak(player, shieldItem, server) {
     player.potionEffects.add('minecraft:slowness', 60, 1, false, true);
     player.potionEffects.add('minecraft:mining_fatigue', 60, 1, false, true);
 
-    // 5. Actionbar notification
+    // 5. Knockback backwards on guard break
+    try {
+        let look = player.lookAngle;
+        player.knockback(0.8, -look.x, -look.z);
+        player.hurtMarked = true;
+    } catch (eKb) {}
+
+    // 6. Actionbar notification
     player.sendSystemMessage(Text.of('§4⚠ БЛОК ПРОБИТ! (Guard Break) §cЩит выбит из рук!'), true);
 }
 

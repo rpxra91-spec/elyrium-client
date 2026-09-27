@@ -18,8 +18,8 @@
 	"highlightTarget": true,
 	"filterInvalidTargets": true,
 	"alwaysShowFullTooltip": false,
-	"showSpellBookSuppportTooltip": true,
-	"showSpellBindingTooltip": true,
+	"showSpellBookSuppportTooltip": false,
+	"showSpellBindingTooltip": false,
 	"showSpellCastErrors": true,
 	"shoulderSurfingAdaptiveWhileUse": true,
 	"firstPersonAnimations": "AUTO"
