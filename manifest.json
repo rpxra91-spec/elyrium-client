@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-28T19:16:31.424555+00:00",
+  "generated_at": "2026-09-28T19:32:48.474511+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -7797,8 +7797,8 @@
     },
     {
       "path": "kubejs/client_scripts/simplestats_anti_exploit.js",
-      "sha256": "c4082e5f14977c12a03d10d91c83e580834b26d4e6f7040395c7a257fcfc58ed",
-      "size": 3799
+      "sha256": "090f27da3d7bb0b3e34fdf8b4350477c7a2ccad8b3481f81af47af06e632aa37",
+      "size": 3455
     },
     {
       "path": "kubejs/client_scripts/spell_capacity_tooltips.js",
@@ -7807,8 +7807,8 @@
     },
     {
       "path": "kubejs/client_scripts/stamina_hud_overlay.js",
-      "sha256": "0bd8089fe00d923f0c7dd594a6ae679d16c3d3f3e958e8d79900f7f53dcaebbf",
-      "size": 8500
+      "sha256": "83c8b1718c8c17303d98813d01d49ca98a22ed647566cba2882284193f9e0223",
+      "size": 8490
     },
     {
       "path": "kubejs/client_scripts/tier4_tooltips.js",
@@ -8342,8 +8342,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/elemental_infusion_engine.js",
-      "sha256": "b5d1e2938688629612dec37f1b5427c16d9449b62a87ad234710540dd8f0540a",
-      "size": 22230
+      "sha256": "1f74314adccf6be45ded25b8f70877eb2e6f8bacda6923bf00a74744ded82918",
+      "size": 22224
     },
     {
       "path": "kubejs/server_scripts/03_combat/elemental_stone_recipes.js",
@@ -8352,8 +8352,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/elyrium_forge_api.js",
-      "sha256": "d65e8614a4b50998fd3a4951ac6af9642d95d889729b62d59ae19a3f61b5d5ff",
-      "size": 34875
+      "sha256": "e22a337678c77041ed2eacbe4d2ea197885a0d94e9beea7f4cbc9975550bd65e",
+      "size": 34865
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_engine.js",

@@ -519,10 +519,10 @@ EntityEvents.beforeHurt(event => {
 });
 
 // ------------------------------------------------------------------------------
-// 4. GLOBAL EXPORTS
+// 4. API EXPORTS
 // ------------------------------------------------------------------------------
 
-global.ElyriumElementalInfusion = {
+var ElyriumElementalInfusion = {
     getInfusion: getWeaponElementalInfusion,
     setInfusion: setWeaponElementalInfusion,
     removeInfusion: removeWeaponElementalInfusion,

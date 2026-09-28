@@ -43,8 +43,8 @@ let clientMaxStamina = 100;
 let displayedStamina = 100;
 let isInitialSync = true;
 
-// Global API export for other client scripts
-global.ElyriumClientStamina = {
+// API export for other client scripts
+var ElyriumClientStamina = {
     get current() { return clientStamina; },
     get max() { return clientMaxStamina; },
     consume: function(amount) {

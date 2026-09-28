@@ -291,9 +291,9 @@ function findAscensionTargetItem(gear, targetTier) {
 }
 
 // ==============================================================================
-// PUBLIC GLOBAL API
+// PUBLIC API
 // ==============================================================================
-global.ElyriumForgeAPI = {
+var ElyriumForgeAPI = {
     getReinforceLevel: function(item) {
         return getReinforceTag(item);
     },
