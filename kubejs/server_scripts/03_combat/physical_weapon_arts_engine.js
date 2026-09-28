@@ -602,9 +602,9 @@ function resolveInnateWeaponArt(player, isAirborne) {
 
     let mainId = String(mainItem.id).toLowerCase();
 
-    // 1. Bows & Crossbows: Fan Barrage (Веерный Залп)
+    // 1. Bows & Crossbows: Triple Rapid Shot (Беглая Тройка / Быстрые Выстрелы)
     if (isBow(mainItem)) {
-        return 'fan_barrage';
+        return 'triple_shot';
     }
 
     // 2. Katanas: Phantom Thrust / Iai Slash (Фантомный Выпад)
@@ -1507,8 +1507,62 @@ EntityEvents.beforeHurt(event => {
             attacker.server.runCommandSilent(`particle minecraft:crit ${victim.x} ${victim.y + 1} ${victim.z} 0.6 0.6 0.6 0.2 25 normal`);
             attacker.sendSystemMessage(Text.of('§5🌑 УДАР ИЗ ТЕНИ! §d(100% Гарантированный Крит ×2.0)'), true);
         }
+
+        // 4. Weaponmaster's Bench Reinforcement Scaling (+5% per rank)
+        if (mainHand && !mainHand.isEmpty()) {
+            let reinforce = 0;
+            try {
+                if (mainHand.nbt && mainHand.nbt.contains('skd_reinforce')) reinforce = mainHand.nbt.getInt('skd_reinforce');
+                else if (mainHand.customData && mainHand.customData.contains('skd_reinforce')) reinforce = mainHand.customData.getInt('skd_reinforce');
+            } catch (eR) {}
+            if (reinforce > 0) {
+                event.damage *= (1.0 + reinforce * 0.05);
+            }
+        }
     }
 });
+
+// ------------------------------------------------------------------------------
+// EVENT 1.8: SPELL ENGINE CAST HOOK (Stamina & Physical Arts Sync)
+// ------------------------------------------------------------------------------
+try {
+    let J_SpellEvents = Java.loadClass('net.spell_engine.api.spell.event.SpellEvents');
+    if (J_SpellEvents && J_SpellEvents.SPELL_CAST) {
+        J_SpellEvents.SPELL_CAST.register(args => {
+            try {
+                let p = args.player ? args.player() : args.player;
+                if (!p || !p.isAlive()) return;
+                let spellHolder = args.spell ? args.spell() : args.spell;
+                let spellId = '';
+                if (spellHolder) {
+                    try {
+                        let key = spellHolder.unwrapKey();
+                        if (key && key.isPresent()) {
+                            spellId = String(key.get().location());
+                        } else if (spellHolder.value) {
+                            let val = spellHolder.value();
+                            if (val && val.id) spellId = String(val.id);
+                        }
+                    } catch (eKey) {
+                        spellId = String(spellHolder);
+                    }
+                }
+
+                if (spellId.startsWith('elyrium:') || spellId.startsWith('archers:')) {
+                    let stamCost = 30;
+                    if (spellId.includes('cleave') || spellId.includes('sunder')) stamCost = 35;
+                    else if (spellId.includes('scissor') || spellId.includes('dagger')) stamCost = 25;
+                    else if (spellId.includes('barrage')) stamCost = 30;
+
+                    if (!consumePlayerStamina(p, stamCost)) {
+                        p.sendSystemMessage(Text.of('§c⚡ Недостаточно выносливости для боевого искусства!'), true);
+                        p.server.runCommandSilent(`playsound minecraft:entity.player.breath player ${p.username} ~ ~ ~ 0.8 1.4`);
+                    }
+                }
+            } catch (eInner) {}
+        });
+    }
+} catch (eHook) {}
 
 // ------------------------------------------------------------------------------
 // EVENT 2: RIGHT-CLICK TRIGGER CONTROLS (ПКМ & SHIFT+ПКМ)
@@ -1588,11 +1642,9 @@ ItemEvents.rightClicked(event => {
             }
             return;
         } else {
-            let innateArt = resolveInnateWeaponArt(player, isAirborne);
-            if (innateArt) {
-                player.persistentData.putInt('skd_last_art_tick', currentAge);
-                executeWeaponArt(player, innateArt, isAirborne, false);
-            }
+            // [ПКМ] without crouch: Handled natively by Spell Engine (Slot 1 Innate Art).
+            // Spell Engine executes the single smooth attack animation and radial cooldown on the HUD slot.
+            // Eliminates duplicate KubeJS actionbar text and double animations.
             return;
         }
     }

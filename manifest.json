@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-28T20:37:14.846723+00:00",
+  "generated_at": "2026-09-28T21:39:34.243117+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -1367,7 +1367,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "573c4b7982e2c1f5d60b79cc102a7b20e430f333d5c3e18f2f7a9f23fd951de3",
+      "sha256": "346288d1f76f81246b9bfac8083a85171ccb05ed3c058d52007f9b626e93d743",
       "size": 275
     },
     {
@@ -1542,8 +1542,8 @@
     },
     {
       "path": "config/spell_engine/client.json5",
-      "sha256": "a20c190fcb1e15c594e3d62a21e675cced446ecf40edc9646f86710b5fec7810",
-      "size": 865
+      "sha256": "3e768ba2f07e6369c6e757fe8b83e954a6e44900836a44da3e94ceb65687b5f2",
+      "size": 793
     },
     {
       "path": "config/spell_engine/elemental_weaknesses.json",
@@ -1567,8 +1567,8 @@
     },
     {
       "path": "config/spell_engine/weapon_fallback.json",
-      "sha256": "7e14aba25c00907cb453361bc525ac2572ff4d2fa7aac115c22b2c310f73ed61",
-      "size": 7911
+      "sha256": "2a75fa720cee3d69521e6984c0d9a3f01be323215f4289541a1d338a8835f3f0",
+      "size": 7899
     },
     {
       "path": "config/spell_power/attributes.json",
@@ -8402,8 +8402,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "5b6894393008572d2a76ebd745ea2326ef92d8f5a7edc691c018982f002b7ef8",
-      "size": 96362
+      "sha256": "ce3d53b454d5ede864581e9360e93af7f7437e208022d8a9613207c51f9a6e68",
+      "size": 99190
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
