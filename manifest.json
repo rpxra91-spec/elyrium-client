@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-28T18:49:25.973139+00:00",
+  "generated_at": "2026-09-28T19:16:31.424555+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -7797,8 +7797,8 @@
     },
     {
       "path": "kubejs/client_scripts/simplestats_anti_exploit.js",
-      "sha256": "560d797d11ba68c725a762407dc97ef2114ba0bc93dc3a9fcdaafcf96b4f2c0d",
-      "size": 3010
+      "sha256": "c4082e5f14977c12a03d10d91c83e580834b26d4e6f7040395c7a257fcfc58ed",
+      "size": 3799
     },
     {
       "path": "kubejs/client_scripts/spell_capacity_tooltips.js",
