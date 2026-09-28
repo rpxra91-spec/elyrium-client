@@ -8,9 +8,9 @@
 //    Y = screenHeight - (hasArmor ? 59 : 49)
 // 3. Styling & Dimensions:
 //    - Dimensions: 81 x 6 px
-//    - Outer Border (1px): Graphite #1F2937 (0xFF1F2937)
-//    - Inner Background (79x4): Semi-transparent #111827 (0xCC111827, 80% opacity)
-//    - Bar: Amber gradient #F59E0B -> #D97706 (0xFFF59E0B -> 0xFFD97706)
+//    - Outer Border (1px): Graphite #1F2937
+//    - Inner Background (79x4): Semi-transparent #111827 (80% opacity)
+//    - Bar: Amber gradient #F59E0B -> #D97706
 //    - Text: ⚡ [cur]/[max] centered inside bar (scaled 0.7x via PoseStack)
 // 4. Zero-Latency Network Sync: listens to 'elyrium:sync_stamina'
 // ==============================================================================
@@ -60,24 +60,26 @@ var ElyriumClientStamina = {
 // 1. NETWORK RECEIVER: 'elyrium:sync_stamina'
 // ------------------------------------------------------------------------------
 NetworkEvents.dataReceived('elyrium:sync_stamina', event => {
-    let data = event.data;
-    if (!data) return;
+    try {
+        let data = event.data;
+        if (!data) return;
 
-    let stam = (typeof data.stamina === 'number') ? data.stamina : 
-               (data.getInt ? data.getInt('stamina') : null);
-    let max = (typeof data.maxStamina === 'number') ? data.maxStamina : 
-              (data.getInt ? data.getInt('maxStamina') : null);
+        let stam = (typeof data.stamina === 'number') ? data.stamina : 
+                   (data.getInt ? data.getInt('stamina') : null);
+        let max = (typeof data.maxStamina === 'number') ? data.maxStamina : 
+                  (data.getInt ? data.getInt('maxStamina') : null);
 
-    if (stam != null) {
-        clientStamina = stam;
-        if (isInitialSync) {
-            displayedStamina = stam;
+        if (stam != null) {
+            clientStamina = stam;
+            if (isInitialSync) {
+                displayedStamina = stam;
+            }
         }
-    }
-    if (max != null && max > 0) {
-        clientMaxStamina = max;
-    }
-    isInitialSync = false;
+        if (max != null && max > 0) {
+            clientMaxStamina = max;
+        }
+        isInitialSync = false;
+    } catch (eNet) {}
 });
 
 // ------------------------------------------------------------------------------
@@ -85,93 +87,97 @@ NetworkEvents.dataReceived('elyrium:sync_stamina', event => {
 // ------------------------------------------------------------------------------
 function renderStaminaBar(guiGraphics) {
     if (!guiGraphics) return;
-    initStaminaHudApi();
-
-    let mc = J_Minecraft ? J_Minecraft.getInstance() : null;
-    if (!mc || !mc.player || !mc.player.isAlive()) return;
-    if (mc.options.hideGui) return;
-    if (mc.player.isCreative() || mc.player.isSpectator()) return;
-    if (mc.screen != null) return;
-
-    // Screen dimensions
-    let screenWidth = guiGraphics.guiWidth ? guiGraphics.guiWidth() : mc.getWindow().getGuiScaledWidth();
-    let screenHeight = guiGraphics.guiHeight ? guiGraphics.guiHeight() : mc.getWindow().getGuiScaledHeight();
-
-    // Armor check: checks if player has any armor points (which causes vanilla armor bar to render)
-    let hasArmor = false;
     try {
-        if (typeof mc.player.getArmorValue === 'function') {
-            hasArmor = mc.player.getArmorValue() > 0;
-        } else if (typeof mc.player.armorValue === 'number') {
-            hasArmor = mc.player.armorValue > 0;
-        }
-    } catch (eArmor) {}
+        initStaminaHudApi();
 
-    // Coordinates calculation
-    const BAR_WIDTH = 81;
-    const BAR_HEIGHT = 6;
-    let x = Math.floor(screenWidth / 2) - 91;
-    let y = screenHeight - (hasArmor ? 59 : 49);
+        let mc = J_Minecraft ? J_Minecraft.getInstance() : null;
+        if (!mc || !mc.player || !mc.player.isAlive()) return;
+        if (mc.options.hideGui) return;
+        if (mc.player.isCreative() || mc.player.isSpectator()) return;
+        if (mc.screen != null) return;
 
-    // Smooth animation interpolation towards actual stamina
-    displayedStamina += (clientStamina - displayedStamina) * 0.35;
-    if (Math.abs(clientStamina - displayedStamina) < 0.2) {
-        displayedStamina = clientStamina;
-    }
+        // Screen dimensions
+        let screenWidth = guiGraphics.guiWidth ? guiGraphics.guiWidth() : mc.getWindow().getGuiScaledWidth();
+        let screenHeight = guiGraphics.guiHeight ? guiGraphics.guiHeight() : mc.getWindow().getGuiScaledHeight();
 
-    let progress = Math.max(0.0, Math.min(1.0, displayedStamina / Math.max(1, clientMaxStamina)));
-    let innerWidth = BAR_WIDTH - 2; // 79 px
-    let fillWidth = Math.round(innerWidth * progress);
-
-    // Colors (ARGB)
-    const COLOR_BORDER = 0xFF1F2937;     // Graphite #1F2937
-    const COLOR_BG = 0xCC111827;         // Semi-transparent #111827 (80% opacity)
-    const COLOR_AMBER_TOP = 0xFFF59E0B;  // Amber Gradient Start #F59E0B
-    const COLOR_AMBER_BOT = 0xFFD97706;  // Amber Gradient End #D97706
-    const COLOR_TEXT = 0xFFFFFFFF;       // Crisp White with drop shadow
-
-    // 1. Draw 1px Outer Border (81 x 6)
-    guiGraphics.fill(x, y, x + BAR_WIDTH, y + BAR_HEIGHT, COLOR_BORDER);
-
-    // 2. Draw Inner Background (79 x 4)
-    guiGraphics.fill(x + 1, y + 1, x + BAR_WIDTH - 1, y + BAR_HEIGHT - 1, COLOR_BG);
-
-    // 3. Draw Amber Gradient Stamina Bar
-    if (fillWidth > 0) {
+        // Armor check: checks if player has any armor points (which causes vanilla armor bar to render)
+        let hasArmor = false;
         try {
-            guiGraphics.fillGradient(x + 1, y + 1, x + 1 + fillWidth, y + BAR_HEIGHT - 1, 0, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
-        } catch (eGrad) {
-            guiGraphics.fill(x + 1, y + 1, x + 1 + fillWidth, y + BAR_HEIGHT - 1, COLOR_AMBER_TOP);
+            if (typeof mc.player.getArmorValue === 'function') {
+                hasArmor = mc.player.getArmorValue() > 0;
+            } else if (typeof mc.player.armorValue === 'number') {
+                hasArmor = mc.player.armorValue > 0;
+            }
+        } catch (eArmor) {}
+
+        // Coordinates calculation
+        const BAR_WIDTH = 81;
+        const BAR_HEIGHT = 6;
+        let x = Math.floor(screenWidth / 2) - 91;
+        let y = screenHeight - (hasArmor ? 59 : 49);
+
+        // Smooth animation interpolation towards actual stamina
+        displayedStamina += (clientStamina - displayedStamina) * 0.35;
+        if (Math.abs(clientStamina - displayedStamina) < 0.2) {
+            displayedStamina = clientStamina;
         }
-    }
 
-    // 4. Draw Centered Text: ⚡ [cur]/[max]
-    let curInt = Math.max(0, Math.round(displayedStamina));
-    let maxInt = Math.round(clientMaxStamina);
-    let text = `⚡ ${curInt}/${maxInt}`;
+        let progress = Math.max(0.0, Math.min(1.0, displayedStamina / Math.max(1, clientMaxStamina)));
+        let innerWidth = BAR_WIDTH - 2; // 79 px
+        let fillWidth = Math.round(innerWidth * progress);
 
-    let font = mc.font;
-    if (font) {
-        let textWidth = font.width(text);
-        let pose = guiGraphics.pose ? guiGraphics.pose() : null;
+        // Colors (ARGB) - bitwise OR with 0 converts JS double into signed 32-bit int expected by Minecraft GUI
+        const COLOR_BORDER = (0xFF1F2937 | 0);     // Graphite #1F2937 (-14735049)
+        const COLOR_BG = (0xCC111827 | 0);         // Semi-transparent #111827 (-871294937)
+        const COLOR_AMBER_TOP = (0xFFF59E0B | 0);  // Amber Gradient Start #F59E0B (-680437)
+        const COLOR_AMBER_BOT = (0xFFD97706 | 0);  // Amber Gradient End #D97706 (-2525434)
+        const COLOR_TEXT = (0xFFFFFFFF | 0);       // Crisp White (-1)
 
-        if (pose) {
-            // Elegant 0.7x scale to nest smoothly inside the 6px bar
-            const SCALE = 0.7;
-            pose.pushPose();
-            pose.scale(SCALE, SCALE, 1.0);
+        // 1. Draw 1px Outer Border (81 x 6)
+        guiGraphics.fill(x | 0, y | 0, (x + BAR_WIDTH) | 0, (y + BAR_HEIGHT) | 0, COLOR_BORDER);
 
-            let scaledX = (x + (BAR_WIDTH - textWidth * SCALE) / 2) / SCALE;
-            let scaledY = (y + (BAR_HEIGHT - 7.5 * SCALE) / 2) / SCALE;
+        // 2. Draw Inner Background (79 x 4)
+        guiGraphics.fill((x + 1) | 0, (y + 1) | 0, (x + BAR_WIDTH - 1) | 0, (y + BAR_HEIGHT - 1) | 0, COLOR_BG);
 
-            guiGraphics.drawString(font, text, Math.round(scaledX), Math.round(scaledY), COLOR_TEXT, true);
-            pose.popPose();
-        } else {
-            // Fallback unscaled drawing
-            let textX = x + Math.round((BAR_WIDTH - textWidth) / 2);
-            let textY = y - 1;
-            guiGraphics.drawString(font, text, textX, textY, COLOR_TEXT, true);
+        // 3. Draw Amber Gradient Stamina Bar
+        if (fillWidth > 0) {
+            try {
+                guiGraphics.fillGradient((x + 1) | 0, (y + 1) | 0, (x + 1 + fillWidth) | 0, (y + BAR_HEIGHT - 1) | 0, 0, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
+            } catch (eGrad) {
+                guiGraphics.fill((x + 1) | 0, (y + 1) | 0, (x + 1 + fillWidth) | 0, (y + BAR_HEIGHT - 1) | 0, COLOR_AMBER_TOP);
+            }
         }
+
+        // 4. Draw Centered Text: ⚡ [cur]/[max]
+        let curInt = Math.max(0, Math.round(displayedStamina));
+        let maxInt = Math.round(clientMaxStamina);
+        let text = `⚡ ${curInt}/${maxInt}`;
+
+        let font = mc.font;
+        if (font) {
+            let textWidth = font.width(text);
+            let pose = guiGraphics.pose ? guiGraphics.pose() : null;
+
+            if (pose) {
+                // Elegant 0.7x scale to nest smoothly inside the 6px bar
+                const SCALE = 0.7;
+                pose.pushPose();
+                pose.scale(SCALE, SCALE, 1.0);
+
+                let scaledX = (x + (BAR_WIDTH - textWidth * SCALE) / 2) / SCALE;
+                let scaledY = (y + (BAR_HEIGHT - 7.5 * SCALE) / 2) / SCALE;
+
+                guiGraphics.drawString(font, text, Math.round(scaledX), Math.round(scaledY), COLOR_TEXT, true);
+                pose.popPose();
+            } else {
+                // Fallback unscaled drawing
+                let textX = x + Math.round((BAR_WIDTH - textWidth) / 2);
+                let textY = y - 1;
+                guiGraphics.drawString(font, text, textX, textY, COLOR_TEXT, true);
+            }
+        }
+    } catch (e) {
+        // Complete safety shield: rendering error must NEVER crash the game or disconnect player
     }
 }
 
@@ -184,23 +190,27 @@ try {
     if (J_RenderGuiEventPost && !isRenderListenerRegistered) {
         if (typeof NativeEvents !== 'undefined') {
             NativeEvents.onEvent(J_RenderGuiEventPost, event => {
-                if (event) {
-                    let guiGraphics = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
-                    if (guiGraphics) {
-                        renderStaminaBar(guiGraphics);
-                    }
-                }
-            });
-            isRenderListenerRegistered = true;
-        } else if (J_NeoForge && J_Consumer) {
-            let renderListener = new J_Consumer({
-                accept: function(event) {
+                try {
                     if (event) {
                         let guiGraphics = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
                         if (guiGraphics) {
                             renderStaminaBar(guiGraphics);
                         }
                     }
+                } catch (err) {}
+            });
+            isRenderListenerRegistered = true;
+        } else if (J_NeoForge && J_Consumer) {
+            let renderListener = new J_Consumer({
+                accept: function(event) {
+                    try {
+                        if (event) {
+                            let guiGraphics = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
+                            if (guiGraphics) {
+                                renderStaminaBar(guiGraphics);
+                            }
+                        }
+                    } catch (err) {}
                 }
             });
             J_NeoForge.EVENT_BUS['addListener(java.lang.Class,java.util.function.Consumer)'](J_RenderGuiEventPost, renderListener);
