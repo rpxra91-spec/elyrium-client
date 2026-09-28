@@ -6,6 +6,14 @@
   "item.kubejs.smithing_stone_5": "Divine Mortum Stone V",
   "item.kubejs.smithing_aegis": "Ancient Smith's Aegis",
   "item.kubejs.tier_upgrade_template": "Smithing Template: Succession",
+  "item.kubejs.ascension_catalyst_t4": "Ascension Catalyst IV (Infernal)",
+  "item.kubejs.ascension_catalyst_t5": "Ascension Catalyst V (Celestial)",
+  "item.kubejs.ascension_catalyst_t6": "Ascension Catalyst VI (Void)",
+  "item.kubejs.ascension_catalyst_t7": "Ascension Catalyst VII (Astral)",
+  "item.kubejs.ascension_catalyst_t8": "Ascension Catalyst VIII (Abyssal)",
+  "item.kubejs.ascension_catalyst_t9": "Ascension Catalyst IX (Eden)",
+  "item.kubejs.ascension_catalyst_t10": "Ascension Catalyst X (Storm)",
+  "item.kubejs.ascension_catalyst_t11": "Ascension Catalyst XI (Apex Mortum)",
   "item.kubejs.martial_tablet_whirlwind": "Martial Tablet: Whirlwind Cleave",
   "item.kubejs.martial_tablet_earth_sunder": "Martial Tablet: Earth Sunder",
   "item.kubejs.martial_tablet_juggernaut": "Martial Tablet: Juggernaut Rush",
@@ -25,5 +33,12 @@
   "item.kubejs.respec_orb_aether": "Celestial Orb of Oblivion",
   "item.kubejs.respec_echo_void": "Void Echo of Purification",
   "item.kubejs.respec_tome_divine": "Divine Tome of Rebirth",
-  "block.kubejs.infernal_anvil": "Infernal Anvil"
+  "block.kubejs.infernal_anvil": "Infernal Anvil",
+  "block.kubejs.weapon_bench": "Weaponmaster's Bench",
+  "item.kubejs.weapon_chisel": "Weaponmaster's Chisel",
+  "item.kubejs.elemental_stone_fire": "Elemental Stone: Flame",
+  "item.kubejs.elemental_stone_frost": "Elemental Stone: Frost",
+  "item.kubejs.elemental_stone_lightning": "Elemental Stone: Lightning",
+  "item.kubejs.elemental_stone_shadow": "Elemental Stone: Void",
+  "item.kubejs.elemental_stone_holy": "Elemental Stone: Holy"
 }

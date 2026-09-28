@@ -141,6 +141,155 @@ function isEligibleGear(item) {
            id.includes('leggings') || id.includes('boots');
 }
 
+function getGearTier(item) {
+    if (!item || item.isEmpty() || item.id === 'minecraft:air') return 1;
+
+    // 1. Explicit NBT ascension tag: skd_tier
+    try {
+        if (item.customData && item.customData.contains('skd_tier')) {
+            let t = item.customData.getInt('skd_tier');
+            if (t >= 1 && t <= 11) return t;
+        }
+        if (item.nbt && item.nbt.contains('skd_tier')) {
+            let t = item.nbt.getInt('skd_tier');
+            if (t >= 1 && t <= 11) return t;
+        }
+        let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
+        let cd = item.get(DataComponents.CUSTOM_DATA);
+        if (cd) {
+            let tag = cd.copyTag();
+            if (tag && tag.contains('skd_tier')) {
+                let t = tag.getInt('skd_tier');
+                if (t >= 1 && t <= 11) return t;
+            }
+        }
+    } catch (e) {}
+
+    // 2. Tag-based overrides: skd:tier_X or c:tools/tier_X
+    for (let t = 11; t >= 1; t--) {
+        if (item.hasTag(`skd:tier_${t}`) || item.hasTag(`c:tools/tier_${t}`)) return t;
+    }
+
+    // 3. Name/ID canonical 11-tier mapping
+    let id = String(item.id).toLowerCase();
+
+    // Tier 11: DivineRPG Mortum & Apex Cataclysm
+    if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('the_incinerator') || id.includes('aquatooth') || id.includes('halite')) return 11;
+
+    // Tier 10: DivineRPG Apalachia & Skythern
+    if (id.includes('apalachia') || id.includes('skythern') || id.includes('divinerpg:apalachia') || id.includes('divinerpg:skythern')) return 10;
+
+    // Tier 9: DivineRPG Eden & Wildwood
+    if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) return 9;
+
+    // Tier 8: Deeper Darker (Otherside) / Warden
+    if (id.includes('sculk') || id.includes('echo') || id.includes('warden') || id.startsWith('deeperdarker:')) return 8;
+
+    // Tier 7: Eternal Starlight
+    if (id.includes('starlight') || id.includes('luminite') || id.startsWith('eternal_starlight:') || id.includes('thermal_springstone')) return 7;
+
+    // Tier 6: The End / Void / Ender Guardian / Dragon
+    if (id.includes('dragon') || id.includes('void') || id.includes('ender_guardian') || id.includes('ender_golem') || id.includes('elytra') || id.includes('ascended')) return 6;
+
+    // Tier 5: The Aether & Deep Aether
+    if (id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie') || id.includes('skyjade') || id.startsWith('aether:') || id.startsWith('deep_aether:')) return 5;
+
+    // Tier 4: The Nether (Cinder Alloy, Netherite, Ignitium, Cataclysm)
+    if (id.includes('cinder') || id.includes('netherite') || id.startsWith('cataclysm:') || id.includes('ignitium') || id.includes('witherite') || id.includes('monstrosity') || id.includes('wither')) return 4;
+
+    // Tier 3: Diamond, Cobalt, Rune / Runes, Iron standard
+    if (id.includes('diamond') || id.includes('cobalt') || id.includes('rune') || id.includes('runic') || id.startsWith('runes:') || id.includes('amethyst') ||
+        (id.includes('iron') && !id.includes('early_iron') && !id.includes('crude_iron') && !id.includes('rusted_iron'))) {
+        return 3;
+    }
+
+    // Tier 2: Copper, Chain, Iron early, Gold, Bronze, Brass, Silver, Flint
+    if (id.includes('copper') || id.includes('chain') || id.includes('early_iron') || 
+        id.includes('crude_iron') || id.includes('rusted_iron') || id.includes('gold') || 
+        id.includes('golden') || id.includes('bronze') || id.includes('brass') || id.includes('silver') || id.includes('flint')) {
+        return 2;
+    }
+
+    // Tier 1: Starter Wood / Leather / Stone
+    return 1;
+}
+
+function isValidItem(id) {
+    if (!id) return false;
+    try {
+        let it = Item.of(id);
+        return it && !it.isEmpty() && String(it.id) !== 'minecraft:air';
+    } catch (e) {
+        return false;
+    }
+}
+
+const DIRECT_ASCENSIONS = {
+    4: {
+        'minecraft:diamond_sword': 'minecraft:netherite_sword',
+        'minecraft:diamond_axe': 'minecraft:netherite_axe',
+        'minecraft:diamond_pickaxe': 'minecraft:netherite_pickaxe',
+        'minecraft:diamond_shovel': 'minecraft:netherite_shovel',
+        'minecraft:diamond_hoe': 'minecraft:netherite_hoe',
+        'minecraft:diamond_helmet': 'minecraft:netherite_helmet',
+        'minecraft:diamond_chestplate': 'minecraft:netherite_chestplate',
+        'minecraft:diamond_leggings': 'minecraft:netherite_leggings',
+        'minecraft:diamond_boots': 'minecraft:netherite_boots'
+    },
+    5: {
+        'minecraft:netherite_sword': 'aether:gravitite_sword',
+        'minecraft:netherite_axe': 'aether:gravitite_axe',
+        'minecraft:netherite_pickaxe': 'aether:gravitite_pickaxe',
+        'minecraft:netherite_shovel': 'aether:gravitite_shovel',
+        'minecraft:netherite_hoe': 'aether:gravitite_hoe',
+        'minecraft:netherite_helmet': 'aether:gravitite_helmet',
+        'minecraft:netherite_chestplate': 'aether:gravitite_chestplate',
+        'minecraft:netherite_leggings': 'aether:gravitite_leggings',
+        'minecraft:netherite_boots': 'aether:gravitite_boots'
+    },
+    6: {
+        'aether:gravitite_sword': 'cataclysm:void_forge'
+    },
+    9: {
+        'deeperdarker:warden_sword': 'divinerpg:eden_blade',
+        'deeperdarker:warden_helmet': 'divinerpg:eden_helmet',
+        'deeperdarker:warden_chestplate': 'divinerpg:eden_chestplate',
+        'deeperdarker:warden_leggings': 'divinerpg:eden_leggings',
+        'deeperdarker:warden_boots': 'divinerpg:eden_boots'
+    },
+    10: {
+        'divinerpg:eden_blade': 'divinerpg:apalachia_blade',
+        'divinerpg:eden_helmet': 'divinerpg:apalachia_helmet',
+        'divinerpg:eden_chestplate': 'divinerpg:apalachia_chestplate',
+        'divinerpg:eden_leggings': 'divinerpg:apalachia_leggings',
+        'divinerpg:eden_boots': 'divinerpg:apalachia_boots'
+    },
+    11: {
+        'divinerpg:apalachia_blade': 'divinerpg:mortum_blade',
+        'divinerpg:apalachia_helmet': 'divinerpg:mortum_helmet',
+        'divinerpg:apalachia_chestplate': 'divinerpg:mortum_chestplate',
+        'divinerpg:apalachia_leggings': 'divinerpg:mortum_leggings',
+        'divinerpg:apalachia_boots': 'divinerpg:mortum_boots'
+    }
+};
+
+function findAscensionTargetItem(gear, targetTier) {
+    if (!gear || gear.isEmpty()) return null;
+    let id = String(gear.id).toLowerCase();
+
+    if (DIRECT_ASCENSIONS[targetTier] && DIRECT_ASCENSIONS[targetTier][id]) {
+        let mapped = DIRECT_ASCENSIONS[targetTier][id];
+        if (isValidItem(mapped)) return mapped;
+    }
+
+    if (targetTier === 4 && id.includes('diamond_')) {
+        let netheriteCandidate = id.replace('diamond_', 'netherite_');
+        if (isValidItem(netheriteCandidate)) return netheriteCandidate;
+    }
+
+    return null;
+}
+
 // ==============================================================================
 // PUBLIC GLOBAL API
 // ==============================================================================
@@ -149,7 +298,20 @@ global.ElyriumForgeAPI = {
         return getReinforceTag(item);
     },
 
-    evaluate: function(gear, reagent, aegis) {
+    evaluate: function(a, b, c, d) {
+        let player = null;
+        let gear, reagent, aegis;
+        if (a && typeof a.isPlayer === 'function' && a.isPlayer()) {
+            player = a;
+            gear = b;
+            reagent = c;
+            aegis = d;
+        } else {
+            gear = a;
+            reagent = b;
+            aegis = c;
+        }
+
         if (!gear || gear.isEmpty() || !isEligibleGear(gear)) {
             return {
                 canExecute: false,
@@ -236,7 +398,98 @@ global.ElyriumForgeAPI = {
             };
         }
 
-        // 2. Martial Tablets
+        // 2. Ascension Catalysts (T4 - T11)
+        if (rId.startsWith('kubejs:ascension_catalyst_t')) {
+            let targetTier = parseInt(rId.replace('kubejs:ascension_catalyst_t', ''));
+            if (isNaN(targetTier) || targetTier < 4 || targetTier > 11) {
+                return {
+                    canExecute: false,
+                    actionType: 'ASCENSION',
+                    currentLevel: curLvl,
+                    targetLevel: curLvl,
+                    chancePercent: 0,
+                    isSafeZone: true,
+                    hasAegis: hasAegis,
+                    requiredReagentId: null,
+                    statusMessage: 'Неизвестный катализатор возвышения',
+                    canBreakOnFail: false
+                };
+            }
+
+            let curTier = getGearTier(gear);
+
+            if (curTier === targetTier - 1) {
+                let targetItemId = findAscensionTargetItem(gear, targetTier);
+                let targetItemObj = null;
+                if (targetItemId && isValidItem(targetItemId)) {
+                    targetItemObj = Item.of(targetItemId);
+                } else {
+                    targetItemObj = gear.copy();
+                    targetItemId = gear.id;
+                }
+
+                return {
+                    canExecute: true,
+                    actionType: 'ASCENSION',
+                    successRate: 100,
+                    chancePercent: 100,
+                    currentTier: curTier,
+                    targetTier: targetTier,
+                    targetItem: targetItemObj,
+                    targetItemId: targetItemId,
+                    costLevel: 0,
+                    currentLevel: curLvl,
+                    targetLevel: curLvl,
+                    isSafeZone: true,
+                    hasAegis: hasAegis,
+                    requiredReagentId: null,
+                    statusMessage: `Возвышение Оружия в Эпоху Тира ${targetTier} (Шанс: 100%)`,
+                    canBreakOnFail: false
+                };
+            } else if (curTier >= targetTier) {
+                return {
+                    canExecute: false,
+                    actionType: 'ASCENSION',
+                    successRate: 0,
+                    chancePercent: 0,
+                    currentTier: curTier,
+                    targetTier: targetTier,
+                    targetItem: null,
+                    targetItemId: gear.id,
+                    costLevel: 0,
+                    currentLevel: curLvl,
+                    targetLevel: curLvl,
+                    isSafeZone: true,
+                    hasAegis: hasAegis,
+                    requiredReagentId: null,
+                    statusMessage: `Оружие уже принадлежит Тиру ${curTier} (равно или выше катализатора T${targetTier}).`,
+                    canBreakOnFail: false
+                };
+            } else {
+                let neededTier = curTier + 1;
+                let neededCat = `kubejs:ascension_catalyst_t${neededTier}`;
+                return {
+                    canExecute: false,
+                    actionType: 'ASCENSION',
+                    successRate: 0,
+                    chancePercent: 0,
+                    currentTier: curTier,
+                    targetTier: targetTier,
+                    targetItem: null,
+                    targetItemId: gear.id,
+                    costLevel: 0,
+                    currentLevel: curLvl,
+                    targetLevel: curLvl,
+                    isSafeZone: true,
+                    hasAegis: hasAegis,
+                    requiredReagentId: neededCat,
+                    statusMessage: `Несоответствие эпох! Оружие Тира ${curTier} требует Катализатор T${neededTier}.`,
+                    canBreakOnFail: false
+                };
+            }
+        }
+
+        // 3. Martial Tablets
         if (rId.startsWith('kubejs:martial_tablet_')) {
             return {
                 canExecute: true,
@@ -252,7 +505,7 @@ global.ElyriumForgeAPI = {
             };
         }
 
-        // 3. Tier Template
+        // 4. Tier Template
         if (rId === 'kubejs:tier_upgrade_template') {
             return {
                 canExecute: true,
@@ -283,7 +536,10 @@ global.ElyriumForgeAPI = {
     },
 
     executeForge: function(player, gear, reagent, aegis) {
-        let evalData = this.evaluate(gear, reagent, aegis);
+        let evalData = this.evaluate(player, gear, reagent, aegis);
+        if (evalData.actionType === 'ASCENSION') {
+            return this.executeAscension(player, gear, reagent);
+        }
         if (!evalData.canExecute || evalData.actionType !== 'REINFORCE') {
             return {
                 status: 'INVALID',
@@ -421,6 +677,110 @@ global.ElyriumForgeAPI = {
             rank: rank,
             artName: tablet.hoverName.getString(),
             message: `⚔ Боевое Искусство Ранга ${rank} успешно инкрустировано!`
+        };
+    },
+
+    executeAscension: function(player, gear, catalyst) {
+        if (!gear || gear.isEmpty() || !catalyst || catalyst.isEmpty()) {
+            return { status: 'INVALID', resultGear: gear, message: 'Отсутствует оружие или катализатор' };
+        }
+
+        let evalData = this.evaluate(player, gear, catalyst, null);
+        if (!evalData.canExecute || evalData.actionType !== 'ASCENSION') {
+            return {
+                status: 'INVALID',
+                resultGear: gear,
+                consumeReagentCount: 0,
+                targetTier: evalData.currentTier || 1,
+                message: evalData.statusMessage || 'Возвышение невозможно'
+            };
+        }
+
+        let targetTier = evalData.targetTier;
+        let targetItemId = evalData.targetItemId;
+        let resultItem = null;
+        let isTrackA = false;
+
+        // Track A (Direct Item Replacement)
+        if (targetItemId && targetItemId !== gear.id && isValidItem(targetItemId)) {
+            resultItem = Item.of(targetItemId);
+            isTrackA = true;
+            // 100% NBT Transfer: deep copy customData / CompoundTag / components
+            if (gear.nbt) {
+                resultItem.nbt = gear.nbt.copy();
+            }
+            try {
+                let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
+                let cd = gear.get(DataComponents.CUSTOM_DATA);
+                if (cd) {
+                    let CustomData = Java.loadClass('net.minecraft.world.item.component.CustomData');
+                    resultItem.set(DataComponents.CUSTOM_DATA, CustomData.of(cd.copyTag()));
+                }
+                let cn = gear.get(DataComponents.CUSTOM_NAME);
+                if (cn) resultItem.set(DataComponents.CUSTOM_NAME, cn);
+                let enc = gear.get(DataComponents.ENCHANTMENTS);
+                if (enc) resultItem.set(DataComponents.ENCHANTMENTS, enc);
+            } catch (eComp) {}
+        } else {
+            // Track B (Unique / Mod Weapon NBT Ascension)
+            resultItem = gear.copy();
+        }
+
+        // Reset durability to 100%
+        resultItem.damageValue = 0;
+
+        // Stamp skd_tier and skd:tier_X
+        try {
+            if (resultItem.customData && typeof resultItem.customData.putInt === 'function') {
+                resultItem.customData.putInt('skd_tier', targetTier);
+                resultItem.customData.putBoolean('skd:tier_' + targetTier, true);
+            }
+        } catch (e1) {}
+
+        try {
+            let CompoundTag = Java.loadClass('net.minecraft.nbt.CompoundTag');
+            let CustomData = Java.loadClass('net.minecraft.world.item.component.CustomData');
+            let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
+            let tag = null;
+            try {
+                let cd = resultItem.get(DataComponents.CUSTOM_DATA);
+                if (cd) tag = cd.copyTag();
+            } catch (e2) {}
+            if (!tag) tag = new CompoundTag();
+            tag.putInt('skd_tier', targetTier);
+            tag.putBoolean('skd:tier_' + targetTier, true);
+            resultItem.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+        } catch (e3) {}
+
+        // Update reinforcement badge if reinforced
+        let curReinforce = getReinforceTag(resultItem);
+        if (curReinforce > 0) {
+            updateBadge(resultItem, curReinforce);
+        }
+
+        // Audio and visual celebrations
+        if (player) {
+            player.server.runCommandSilent(`playsound minecraft:ui.toast.challenge_complete player ${player.username} ~ ~ ~ 1.0 1.0`);
+            player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 1.0 1.2`);
+            player.server.runCommandSilent(`playsound minecraft:entity.player.levelup player ${player.username} ~ ~ ~ 1.0 1.2`);
+            player.server.runCommandSilent(`playsound minecraft:entity.lightning_bolt.thunder player ${player.username} ~ ~ ~ 0.8 1.4`);
+
+            let rawName = resultItem.hoverName.getString();
+            player.server.runCommandSilent(
+                `tellraw @a ["",{"text":"🌟 [ВЕЛИКОЕ ВОЗВЫШЕНИЕ] ","color":"gold","bold":true},{"text":"Герой ","color":"yellow"},{"text":"${player.username}","color":"white","bold":true},{"text":" возвысил артефакт ","color":"yellow"},{"text":"${rawName}","color":"aqua","bold":true},{"text":" до эпохи ","color":"yellow"},{"text":"ТИРА ${targetTier}","color":"light_purple","bold":true},{"text":"!","color":"gold"}]`
+            );
+        }
+
+        return {
+            status: 'SUCCESS',
+            resultGear: resultItem,
+            consumeReagentCount: 1,
+            consumeAegis: false,
+            targetTier: targetTier,
+            isTrackA: isTrackA,
+            oldLevel: curReinforce,
+            newLevel: curReinforce,
+            message: `✦ ВОЗВЫШЕНИЕ ЭПОХИ! Артефакт достиг Тира ${targetTier}! (100% NBT сохранены)`
         };
     }
 };

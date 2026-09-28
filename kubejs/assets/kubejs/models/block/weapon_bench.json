@@ -1,0 +1,235 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "kubejs:block/weapon_bench_top",
+    "top": "kubejs:block/weapon_bench_top",
+    "front": "kubejs:block/weapon_bench_front",
+    "side": "kubejs:block/weapon_bench_side",
+    "bottom": "kubejs:block/weapon_bench_bottom",
+    "legs": "kubejs:block/weapon_bench_legs",
+    "vice": "kubejs:block/weapon_bench_vice",
+    "grindstone": "kubejs:block/weapon_bench_grindstone",
+    "blueprint": "kubejs:block/weapon_bench_blueprint"
+  },
+  "gui_light": "side",
+  "display": {
+    "gui": {
+      "rotation": [ 30, 225, 0 ],
+      "translation": [ 0, 0, 0 ],
+      "scale": [ 0.625, 0.625, 0.625 ]
+    },
+    "ground": {
+      "rotation": [ 0, 0, 0 ],
+      "translation": [ 0, 3, 0 ],
+      "scale": [ 0.25, 0.25, 0.25 ]
+    },
+    "fixed": {
+      "rotation": [ 0, 90, 0 ],
+      "translation": [ 0, 0, 0 ],
+      "scale": [ 0.5, 0.5, 0.5 ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [ 75, 45, 0 ],
+      "translation": [ 0, 2.5, 0 ],
+      "scale": [ 0.375, 0.375, 0.375 ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [ 75, 45, 0 ],
+      "translation": [ 0, 2.5, 0 ],
+      "scale": [ 0.375, 0.375, 0.375 ]
+    },
+    "firstperson_righthand": {
+      "rotation": [ 0, 45, 0 ],
+      "translation": [ 0, 0, 0 ],
+      "scale": [ 0.4, 0.4, 0.4 ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [ 0, 225, 0 ],
+      "translation": [ 0, 0, 0 ],
+      "scale": [ 0.4, 0.4, 0.4 ]
+    }
+  },
+  "elements": [
+    {
+      "__comment": "Leg Front Left",
+      "from": [ 1, 0, 1 ],
+      "to": [ 4, 12, 4 ],
+      "faces": {
+        "down":  { "uv": [ 1, 1, 4, 4 ], "texture": "#bottom", "cullface": "down" },
+        "north": { "uv": [ 1, 4, 4, 16 ], "texture": "#legs" },
+        "south": { "uv": [ 1, 4, 4, 16 ], "texture": "#legs" },
+        "west":  { "uv": [ 1, 4, 4, 16 ], "texture": "#legs" },
+        "east":  { "uv": [ 1, 4, 4, 16 ], "texture": "#legs" }
+      }
+    },
+    {
+      "__comment": "Leg Front Right",
+      "from": [ 12, 0, 1 ],
+      "to": [ 15, 12, 4 ],
+      "faces": {
+        "down":  { "uv": [ 12, 1, 15, 4 ], "texture": "#bottom", "cullface": "down" },
+        "north": { "uv": [ 12, 4, 15, 16 ], "texture": "#legs" },
+        "south": { "uv": [ 12, 4, 15, 16 ], "texture": "#legs" },
+        "west":  { "uv": [ 1, 4, 4, 16 ], "texture": "#legs" },
+        "east":  { "uv": [ 12, 4, 15, 16 ], "texture": "#legs" }
+      }
+    },
+    {
+      "__comment": "Leg Back Left",
+      "from": [ 1, 0, 12 ],
+      "to": [ 4, 12, 15 ],
+      "faces": {
+        "down":  { "uv": [ 1, 12, 4, 15 ], "texture": "#bottom", "cullface": "down" },
+        "north": { "uv": [ 1, 4, 4, 16 ], "texture": "#legs" },
+        "south": { "uv": [ 1, 4, 4, 16 ], "texture": "#legs" },
+        "west":  { "uv": [ 1, 4, 4, 16 ], "texture": "#legs" },
+        "east":  { "uv": [ 1, 4, 4, 16 ], "texture": "#legs" }
+      }
+    },
+    {
+      "__comment": "Leg Back Right",
+      "from": [ 12, 0, 12 ],
+      "to": [ 15, 12, 15 ],
+      "faces": {
+        "down":  { "uv": [ 12, 12, 15, 15 ], "texture": "#bottom", "cullface": "down" },
+        "north": { "uv": [ 12, 4, 15, 16 ], "texture": "#legs" },
+        "south": { "uv": [ 12, 4, 15, 16 ], "texture": "#legs" },
+        "west":  { "uv": [ 1, 4, 4, 16 ], "texture": "#legs" },
+        "east":  { "uv": [ 12, 4, 15, 16 ], "texture": "#legs" }
+      }
+    },
+    {
+      "__comment": "Bottom Shelf",
+      "from": [ 2, 2, 2 ],
+      "to": [ 14, 3.5, 14 ],
+      "faces": {
+        "up":    { "uv": [ 2, 2, 14, 14 ], "texture": "#bottom" },
+        "down":  { "uv": [ 2, 2, 14, 14 ], "texture": "#bottom" },
+        "north": { "uv": [ 2, 13, 14, 15 ], "texture": "#side" },
+        "south": { "uv": [ 2, 13, 14, 15 ], "texture": "#side" },
+        "west":  { "uv": [ 2, 13, 14, 15 ], "texture": "#side" },
+        "east":  { "uv": [ 2, 13, 14, 15 ], "texture": "#side" }
+      }
+    },
+    {
+      "__comment": "Tabletop Slab",
+      "from": [ 0, 12, 0 ],
+      "to": [ 16, 16, 16 ],
+      "faces": {
+        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top" },
+        "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom" },
+        "north": { "uv": [ 0, 0, 16, 4 ], "texture": "#front" },
+        "south": { "uv": [ 0, 0, 16, 4 ], "texture": "#side" },
+        "west":  { "uv": [ 0, 0, 16, 4 ], "texture": "#side" },
+        "east":  { "uv": [ 0, 0, 16, 4 ], "texture": "#side" }
+      }
+    },
+    {
+      "__comment": "Vice Base",
+      "from": [ 0.5, 16, 1 ],
+      "to": [ 4.5, 17, 4 ],
+      "faces": {
+        "up":    { "uv": [ 1, 1, 5, 4 ], "texture": "#vice" },
+        "north": { "uv": [ 1, 1, 5, 2 ], "texture": "#vice" },
+        "south": { "uv": [ 1, 1, 5, 2 ], "texture": "#vice" },
+        "west":  { "uv": [ 1, 1, 4, 2 ], "texture": "#vice" },
+        "east":  { "uv": [ 1, 1, 4, 2 ], "texture": "#vice" }
+      }
+    },
+    {
+      "__comment": "Vice Fixed Jaw",
+      "from": [ 1, 17, 1.5 ],
+      "to": [ 4, 20, 2.5 ],
+      "faces": {
+        "up":    { "uv": [ 1, 2, 4, 3 ], "texture": "#vice" },
+        "north": { "uv": [ 1, 2, 4, 5 ], "texture": "#vice" },
+        "south": { "uv": [ 1, 2, 4, 5 ], "texture": "#vice" },
+        "west":  { "uv": [ 2, 2, 3, 5 ], "texture": "#vice" },
+        "east":  { "uv": [ 2, 2, 3, 5 ], "texture": "#vice" }
+      }
+    },
+    {
+      "__comment": "Vice Movable Jaw",
+      "from": [ 1, 17, 3.5 ],
+      "to": [ 4, 20, 4.5 ],
+      "faces": {
+        "up":    { "uv": [ 1, 4, 4, 5 ], "texture": "#vice" },
+        "north": { "uv": [ 1, 2, 4, 5 ], "texture": "#vice" },
+        "south": { "uv": [ 1, 2, 4, 5 ], "texture": "#vice" },
+        "west":  { "uv": [ 4, 2, 5, 5 ], "texture": "#vice" },
+        "east":  { "uv": [ 4, 2, 5, 5 ], "texture": "#vice" }
+      }
+    },
+    {
+      "__comment": "Vice Screw Rod",
+      "from": [ 2, 17.5, 0.5 ],
+      "to": [ 3, 18.5, 5 ],
+      "faces": {
+        "north": { "uv": [ 2, 2, 3, 3 ], "texture": "#vice" },
+        "south": { "uv": [ 2, 2, 3, 3 ], "texture": "#vice" },
+        "west":  { "uv": [ 1, 2, 5, 3 ], "texture": "#vice" },
+        "east":  { "uv": [ 1, 2, 5, 3 ], "texture": "#vice" },
+        "up":    { "uv": [ 1, 2, 5, 3 ], "texture": "#vice" },
+        "down":  { "uv": [ 1, 2, 5, 3 ], "texture": "#vice" }
+      }
+    },
+    {
+      "__comment": "Grindstone Left Bracket",
+      "from": [ 11.5, 16, 11 ],
+      "to": [ 12, 20, 15 ],
+      "faces": {
+        "up":    { "uv": [ 11, 11, 12, 15 ], "texture": "#vice" },
+        "north": { "uv": [ 11, 2, 12, 6 ], "texture": "#vice" },
+        "south": { "uv": [ 11, 2, 12, 6 ], "texture": "#vice" },
+        "west":  { "uv": [ 11, 2, 15, 6 ], "texture": "#vice" },
+        "east":  { "uv": [ 11, 2, 15, 6 ], "texture": "#vice" }
+      }
+    },
+    {
+      "__comment": "Grindstone Right Bracket",
+      "from": [ 15, 16, 11 ],
+      "to": [ 15.5, 20, 15 ],
+      "faces": {
+        "up":    { "uv": [ 15, 11, 16, 15 ], "texture": "#vice" },
+        "north": { "uv": [ 15, 2, 16, 6 ], "texture": "#vice" },
+        "south": { "uv": [ 15, 2, 16, 6 ], "texture": "#vice" },
+        "west":  { "uv": [ 11, 2, 15, 6 ], "texture": "#vice" },
+        "east":  { "uv": [ 11, 2, 15, 6 ], "texture": "#vice" }
+      }
+    },
+    {
+      "__comment": "Grindstone Wheel",
+      "from": [ 12.5, 16.5, 11 ],
+      "to": [ 14.5, 20.5, 15 ],
+      "faces": {
+        "up":    { "uv": [ 1, 1, 15, 15 ], "texture": "#grindstone" },
+        "down":  { "uv": [ 1, 1, 15, 15 ], "texture": "#grindstone" },
+        "north": { "uv": [ 1, 1, 15, 15 ], "texture": "#grindstone" },
+        "south": { "uv": [ 1, 1, 15, 15 ], "texture": "#grindstone" },
+        "west":  { "uv": [ 1, 1, 15, 15 ], "texture": "#grindstone" },
+        "east":  { "uv": [ 1, 1, 15, 15 ], "texture": "#grindstone" }
+      }
+    },
+    {
+      "__comment": "Parchment Blueprint Roll",
+      "from": [ 5, 16, 12.5 ],
+      "to": [ 10, 17.2, 14 ],
+      "faces": {
+        "up":    { "uv": [ 5, 12, 10, 14 ], "texture": "#blueprint" },
+        "down":  { "uv": [ 5, 12, 10, 14 ], "texture": "#blueprint" },
+        "north": { "uv": [ 5, 12, 10, 13 ], "texture": "#blueprint" },
+        "south": { "uv": [ 5, 12, 10, 13 ], "texture": "#blueprint" },
+        "west":  { "uv": [ 12, 12, 14, 13 ], "texture": "#blueprint" },
+        "east":  { "uv": [ 12, 12, 14, 13 ], "texture": "#blueprint" }
+      }
+    },
+    {
+      "__comment": "Open Blueprint Sheet",
+      "from": [ 5, 16.02, 7.5 ],
+      "to": [ 10.5, 16.05, 12.2 ],
+      "faces": {
+        "up": { "uv": [ 0, 0, 16, 16 ], "texture": "#blueprint" }
+      }
+    }
+  ]
+}

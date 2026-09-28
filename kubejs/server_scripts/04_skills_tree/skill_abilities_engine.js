@@ -452,13 +452,3 @@ PlayerEvents.chat(event => {
     }
 })
 
-// Sneak + Right Click on Air with weapon/staff/tool triggers Active [R]
-ItemEvents.rightClicked(event => {
-    let player = event.player
-    if (!player || !player.isCrouching()) return
-    let item = event.item
-    let id = String(item.id)
-    if (id.includes('sword') || id.includes('axe') || id.includes('staff') || id.includes('bow') || id.includes('dagger') || id.includes('scythe') || id.includes('claymore') || item.isEmpty()) {
-        triggerClassActive(player)
-    }
-})

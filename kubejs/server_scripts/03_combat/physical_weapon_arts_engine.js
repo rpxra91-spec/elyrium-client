@@ -659,22 +659,37 @@ function resolveInnateWeaponArt(player, isAirborne) {
 // RESOLVE EXTRA RUNIC SLOT ART (Shift + Right-Click)
 // ------------------------------------------------------------------------------
 
-function getInscribedWeaponArt(item) {
+function getSlotWeaponArt(item, slotNum) {
     if (!item || item.isEmpty()) return null;
+    let s = slotNum || 2;
     try {
-        if (item.nbt) {
-            if (item.nbt.contains('elyrium_inscribed_art')) return String(item.nbt.getString('elyrium_inscribed_art')).toLowerCase();
-            if (item.nbt.contains('skd_weapon_art')) return String(item.nbt.getString('skd_weapon_art')).toLowerCase();
-            if (item.nbt.contains('weapon_art')) return String(item.nbt.getString('weapon_art')).toLowerCase();
+        let tag = null;
+        if (item.customData) tag = item.customData;
+        else if (item.nbt) tag = item.nbt;
+        if (!tag) {
+            try {
+                let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
+                let cd = item.get(DataComponents.CUSTOM_DATA);
+                if (cd) tag = cd.copyTag();
+            } catch (eCd) {}
         }
-        if (item.customData) {
-            if (item.customData.contains('elyrium_inscribed_art')) return String(item.customData.getString('elyrium_inscribed_art')).toLowerCase();
-            if (item.customData.contains('skd_weapon_art')) return String(item.customData.getString('skd_weapon_art')).toLowerCase();
-            if (item.customData.contains('weapon_art')) return String(item.customData.getString('weapon_art')).toLowerCase();
+        if (tag) {
+            let key = 'skd_art_' + s;
+            if (tag.contains(key)) return String(tag.getString(key)).toLowerCase();
+            if (s === 2) {
+                if (tag.contains('elyrium_inscribed_art')) return String(tag.getString('elyrium_inscribed_art')).toLowerCase();
+                if (tag.contains('skd_weapon_art')) return String(tag.getString('skd_weapon_art')).toLowerCase();
+                if (tag.contains('weapon_art')) return String(tag.getString('weapon_art')).toLowerCase();
+            }
         }
     } catch (e) {}
     return null;
 }
+
+function getInscribedWeaponArt(item) {
+    return getSlotWeaponArt(item, 2);
+}
+
 
 // ------------------------------------------------------------------------------
 // EXECUTION ENGINE FOR ALL WEAPON ARTS
@@ -1470,11 +1485,12 @@ EntityEvents.beforeHurt(event => {
         if (mainHand && isSpear(mainHand)) {
             let hasShieldInOffhand = offHand && isShield(offHand);
             if (!hasShieldInOffhand) {
-                // Two-Handed Power Grip (+30% physical damage, +1.5m reach)
-                event.damage *= 1.30;
+                // Two-Handed Power Grip (+15% physical damage, +1.0m reach)
+                event.damage *= 1.15;
                 attacker.server.runCommandSilent(`particle minecraft:enchanted_hit ${victim.x} ${victim.y + 1} ${victim.z} 0.3 0.3 0.3 0.1 10 normal`);
             } else {
-                // Guard Thrust with Shield (thrust from behind raised guard)
+                // Guard Thrust with Shield (-10% damage for impenetrable safety)
+                event.damage *= 0.90;
                 broadcastPlayerArtAnimation(attacker, 'spell_engine:weapon_thrust_charge', 1.3);
                 attacker.server.runCommandSilent(`playsound minecraft:item.shield.block player ${attacker.username} ~ ~ ~ 0.8 1.4`);
                 attacker.server.runCommandSilent(`particle minecraft:crit ${victim.x} ${victim.y + 1} ${victim.z} 0.3 0.3 0.3 0.05 8 normal`);
@@ -1544,11 +1560,11 @@ ItemEvents.rightClicked(event => {
     } else {
         if (player.isCrouching()) {
             player.persistentData.putInt('skd_last_art_tick', currentAge);
-            let inscribedArt = getInscribedWeaponArt(mainHand);
+            let inscribedArt = getSlotWeaponArt(mainHand, 2);
             if (inscribedArt && WEAPON_ARTS[inscribedArt]) {
                 executeWeaponArt(player, inscribedArt, false, true);
             } else {
-                player.sendSystemMessage(Text.of('§7В руническом слоте оружия нет боевого искусства §8[Shift+ПКМ] §7(Инкрустируйте скрижаль на Адской Наковальне).'), true);
+                player.sendSystemMessage(Text.of('§7В слоте 2 оружия нет боевого искусства §8[Shift+ПКМ / Z] §7(Инкрустируйте скрижаль на Оружейном Столе).'), true);
                 player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.5 1.8`);
             }
             return;
@@ -1560,6 +1576,37 @@ ItemEvents.rightClicked(event => {
             }
             return;
         }
+    }
+});
+
+// ------------------------------------------------------------------------------
+// EVENT 2.5: NETWORK RECEIVER FOR [Z] & [X] WEAPON ARTS KEYS
+// ------------------------------------------------------------------------------
+
+NetworkEvents.dataReceived('elyrium:trigger_weapon_art', event => {
+    let player = event.player;
+    if (!player || !player.isAlive()) return;
+
+    let mainHand = player.mainHandItem;
+    if (!mainHand || mainHand.isEmpty() || !isAnyWeapon(mainHand)) {
+        player.sendSystemMessage(Text.of('§7Возьмите в руку оружие для использования боевого искусства.'), true);
+        return;
+    }
+
+    let slot = 2;
+    try {
+        if (event.data) {
+            slot = (typeof event.data.getInt === 'function' ? event.data.getInt('slot') : event.data.slot) || 2;
+        }
+    } catch (eData) {}
+
+    let artId = getSlotWeaponArt(mainHand, slot);
+    if (artId && WEAPON_ARTS[artId]) {
+        executeWeaponArt(player, artId, false, true);
+    } else {
+        let keyHint = slot === 2 ? '§e[Z] Слот 2' : '§6[X] Слот 3';
+        player.sendSystemMessage(Text.of(`§7В ${keyHint} нет боевого искусства (Инкрустируйте скрижаль на Оружейном Столе).`), true);
+        player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.5 1.8`);
     }
 });
 
@@ -1610,7 +1657,7 @@ PlayerEvents.tick(event => {
 
     if (isTwoHandedSpear && !hadSpearReach) {
         player.persistentData.putBoolean('skd_spear_reach_active', true);
-        player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier add elyrium:spear_reach 1.5 add_value`);
+        player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier add elyrium:spear_reach 1.0 add_value`);
     } else if (!isTwoHandedSpear && hadSpearReach) {
         player.persistentData.putBoolean('skd_spear_reach_active', false);
         player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier remove elyrium:spear_reach`);

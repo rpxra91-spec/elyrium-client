@@ -180,6 +180,25 @@ function renderReinforcementTooltips(tooltip, item) {
             tooltip.add(Text.of(`§6★ Заточка: §e+${reinforceLvl} §7(+${dmgBonus}% урона)`));
         }
 
+        // 1.1. Ascension Tier badge if ascended
+        let ascTier = 0;
+        try {
+            if (item.customData && item.customData.contains('skd_tier')) {
+                ascTier = item.customData.getInt('skd_tier');
+            } else if (item.nbt && item.nbt.contains('skd_tier')) {
+                ascTier = item.nbt.getInt('skd_tier');
+            }
+        } catch (eTier) {}
+        if (ascTier > 0) {
+            let nativeTier = getWeaponProgressionTier(item, id);
+            let diff = ascTier - nativeTier;
+            if (diff > 0) {
+                tooltip.add(Text.of(`§6★ Возвышение: §dТир ${ascTier} §7(+${diff * 22}% урона эпохи)`));
+            } else {
+                tooltip.add(Text.of(`§6★ Возвышение: §dТир ${ascTier}`));
+            }
+        }
+
         // 2. Elden Ring Scaling grades
         let primaryStat = 'Сила:     ';
         let secondaryStat = 'Ловкость: ';

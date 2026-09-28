@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-27T23:22:55.388531+00:00",
+  "generated_at": "2026-09-28T12:28:04.996095+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -3841,14 +3841,19 @@
       "size": 109
     },
     {
+      "path": "kubejs/assets/kubejs/blockstates/weapon_bench.json",
+      "sha256": "9331fc5c9fe6b1f9cf2180059dd54df13e6eb509189cac25294f9346c266cd16",
+      "size": 356
+    },
+    {
       "path": "kubejs/assets/kubejs/lang/en_us.json",
-      "sha256": "9180ea64e65ce6bb208f5e42bbf5586cc0453d9fed0d9998b27c1ab66627a0c2",
-      "size": 1814
+      "sha256": "78f40af65cd6aa303056d14e6f080b30a6a1e97fba9f5ecf74b3c1b14e5277ee",
+      "size": 2863
     },
     {
       "path": "kubejs/assets/kubejs/lang/ru_ru.json",
-      "sha256": "7708b099748a0518733f879a6101221f091f7119ffd507b427e138561d9b082a",
-      "size": 5247
+      "sha256": "a0e8653d8cc2da8f3894a3eb47ed112fa0b0759f98d8b605ae1cf2cc64b01cc8",
+      "size": 6695
     },
     {
       "path": "kubejs/assets/kubejs/models/block/infernal_anvil.json",
@@ -4001,6 +4006,76 @@
       "size": 1610
     },
     {
+      "path": "kubejs/assets/kubejs/models/block/weapon_bench.json",
+      "sha256": "6194e13dc03713eb2e580af9e13e06d16e6956c9dd885bdc8ac0f517c9fb5bd4",
+      "size": 8592
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ascension_catalyst_t10.json",
+      "sha256": "9782f139c10c7b56aaf3f0604918796e312b040f61abf4449ec6261615ba2824",
+      "size": 121
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ascension_catalyst_t11.json",
+      "sha256": "b041d080d7ebcbd9abdfaf160b1b7972694f2179e3bc3db00a5500c279fb4185",
+      "size": 121
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ascension_catalyst_t4.json",
+      "sha256": "0c8ba8e05c6a0e171a51541563404002b09d0ffd64aae96ec8696b5917034f6a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ascension_catalyst_t5.json",
+      "sha256": "fbd3af9d36241f1b52d152b65f4b73fc258fc865aae236df37812d4e69778469",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ascension_catalyst_t6.json",
+      "sha256": "50d54e368b6062cbbbb55d25fada84fe2d058f7f2cbdd98e6d443216b1229ffd",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ascension_catalyst_t7.json",
+      "sha256": "da8ecdf674dd1a7e141a2f0243e4bc68b83ee8eeb9208534456d69a73213b3f0",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ascension_catalyst_t8.json",
+      "sha256": "9e22a504a296324a2e8706117a97a3a3da186b04ca83ed8e9d73098b4bd6f158",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ascension_catalyst_t9.json",
+      "sha256": "be4cc892af86d1eea1a3fe58ba38dbe79874a10fdd991bf4d4d4e460fba925af",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_fire.json",
+      "sha256": "9cf86419aa20077361c6c0643deb20abb662ef70cf3ecb52019bdfd00862c5bd",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_frost.json",
+      "sha256": "f5c4dd6aa63bd94ad1f8943c3cafbc1a5607a344b4b742103fb1fb4ff92824c2",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_holy.json",
+      "sha256": "8965b748abd1fd66988201e361adf55f31fbdff5446009c606729498dda3672f",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_lightning.json",
+      "sha256": "00088a250c34764546b78310a2261293c5ba70a30440619265596ee35300fdd6",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_shadow.json",
+      "sha256": "646f786b9f5f397e25a8967ff6b8752dbb831052285c016f20680407b2fe1788",
+      "size": 115
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/essence_of_purification.json",
       "sha256": "1b70f0cdbdd7b14a5845ea51dcf6781323185b6f81e3adb7c6a43cd559315101",
       "size": 120
@@ -4119,6 +4194,16 @@
       "path": "kubejs/assets/kubejs/models/item/tier_upgrade_template.json",
       "sha256": "285a9809fa03d004f1da22fe26c8b635f0f00a4b399966f0b362a4207ff34466",
       "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/weapon_bench.json",
+      "sha256": "f33328bd608849e70ce8708cc03b4a581dd78702556981089d1c7cb8ff89cbb3",
+      "size": 44
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/weapon_chisel.json",
+      "sha256": "1a62a76ea1dcb29d50f9229a56446a0b93b37ce3ae92f0e2e8e578b539d60752",
+      "size": 106
     },
     {
       "path": "kubejs/assets/kubejs/models/item/world_heart.json",
@@ -4416,6 +4501,121 @@
       "size": 367
     },
     {
+      "path": "kubejs/assets/kubejs/textures/block/weapon_bench_blueprint.png",
+      "sha256": "93e60994fe510c4f9ba8619ac302205343cdfca980c09804be3f87af07ea31a3",
+      "size": 194
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/weapon_bench_bottom.png",
+      "sha256": "5fc67955ad87f1de19d8b2adabc92d3c32a5070775f3fc12b1e452144d9e5871",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/weapon_bench_front.png",
+      "sha256": "2a7de1141a4125b24884329d627a1cb19e84b59728ba5b293a28afebc0d543cc",
+      "size": 473
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/weapon_bench_grindstone.png",
+      "sha256": "fdc3aef00cf523ce3b4cb6ea25aec48bce3e1f59fad971aeae308eac2dd6d3aa",
+      "size": 429
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/weapon_bench_legs.png",
+      "sha256": "d8fa2933e37e9ff6728a9d6ded61ff8b831574fcf3caf4e139e43b22a6d3a30d",
+      "size": 106
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/weapon_bench_side.png",
+      "sha256": "0570d440e2f9f663cf98cf492e1b1b36f21014f85e55bfa480e1c698b732831e",
+      "size": 513
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/weapon_bench_top.png",
+      "sha256": "d92aebd62b3ac208d4acecc8fb51811bc66b307e3c9d3ce97ce73ae07862fb6d",
+      "size": 725
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/weapon_bench_top_n.png",
+      "sha256": "7e4297a0c170e01336e183a0cfa61b23f5bf84a0d480bd40c09a68f2b5e9ae12",
+      "size": 108
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/weapon_bench_top_s.png",
+      "sha256": "679503c9375349b5841c0d596917bd7698a3b1b663493ea9a249bb9c636eebe7",
+      "size": 187
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/weapon_bench_vice.png",
+      "sha256": "98a70c963d6f8560a8a43c9e3a6dec771e7dc8090878fb79c62e909cb81c4a36",
+      "size": 168
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/ascension_catalyst_t10.png",
+      "sha256": "d23fd51f45e923e521ef04ee2881e60ec7857d59963aaf50e238526f506cbdb5",
+      "size": 299
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/ascension_catalyst_t11.png",
+      "sha256": "a4383b89b4ac71669bdaeb651d4e81c08a773621e2e88c80806c53b7391cece9",
+      "size": 269
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/ascension_catalyst_t4.png",
+      "sha256": "d2c4b8ce9fb8e87a5015eb758b6b476c6c0770e5d894a5bb1c150a526f971f83",
+      "size": 294
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/ascension_catalyst_t5.png",
+      "sha256": "83b2055bf622e683a3961ea309f32580fa94ea8ae18577332070c7a02fb08033",
+      "size": 264
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/ascension_catalyst_t6.png",
+      "sha256": "acb432956d677799a7022924af166d0dd045a4c89f68194ae88038114183c64d",
+      "size": 270
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/ascension_catalyst_t7.png",
+      "sha256": "a68e90e25e04d411709fc939afdf99730b695a8d6d200ef04c020460b03a13bc",
+      "size": 255
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/ascension_catalyst_t8.png",
+      "sha256": "1e7f2b1cbb06c29ccd1d42fde01515eeb62bfc118082e36a0538d3c04b4de365",
+      "size": 287
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/ascension_catalyst_t9.png",
+      "sha256": "961fac325fd7b2377529707fe9d96d7db6e3040be8f76431c63c6e5f79c7f78f",
+      "size": 273
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/elemental_stone_fire.png",
+      "sha256": "c91dc9b1735699002beeb9993122b63c6f566cb3a3c4690a416d3576778c996c",
+      "size": 237
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/elemental_stone_frost.png",
+      "sha256": "3ee1b77e0cd8259d8bb7585dcd8b67b8332cb660854452628b782d47f1db019c",
+      "size": 234
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/elemental_stone_holy.png",
+      "sha256": "3331567f7668984388ce28845743cd8be1b047a610f2f268d465d4dc9fb6a0af",
+      "size": 234
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/elemental_stone_lightning.png",
+      "sha256": "8a02da707ad926aa562e068da9f953e3eb05175d698178325201f0b3fb5b2150",
+      "size": 232
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/elemental_stone_shadow.png",
+      "sha256": "5c6b5a1efc13a00a7643c4ee60eaea97863ff037a96cca4cd4689b25aed75fee",
+      "size": 242
+    },
+    {
       "path": "kubejs/assets/kubejs/textures/item/essence_of_purification.png",
       "sha256": "07272843256daa2dd82c20c447462c92b96d505478c7da9a3e6a4ca2411c604b",
       "size": 191
@@ -4559,6 +4759,16 @@
       "path": "kubejs/assets/kubejs/textures/item/tier_upgrade_template.png",
       "sha256": "1945a49ea7e2b9a8cb58040537fd872609f54df4ff6e851b7dcbacfa90732d19",
       "size": 337
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/weapon_chisel.png",
+      "sha256": "835d26faaa5fd8341787d229ffbaf3895af23d0f28d4b4ef7258d8dc27d46715",
+      "size": 236
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/weapon_chisel_s.png",
+      "sha256": "f3dc1116ad9a098d88901a8a4b9aa28a7988f0792d6daeca34b8af4d506fc3da",
+      "size": 85
     },
     {
       "path": "kubejs/assets/kubejs/textures/item/world_heart.png",
@@ -7527,8 +7737,8 @@
     },
     {
       "path": "kubejs/client_scripts/equipment_reinforcement_tooltips.js",
-      "sha256": "863e827686ebafe80772013845d4c837028cdd6caa0704542a4e35bfe69984d5",
-      "size": 13478
+      "sha256": "c8cd659bca66a9fc7330973d518a83aa1c71e8f4251797040ba7035d970d90a2",
+      "size": 14302
     },
     {
       "path": "kubejs/client_scripts/filter_early_weapons.js",
@@ -7594,6 +7804,11 @@
       "path": "kubejs/client_scripts/tier4_tooltips.js",
       "sha256": "a26b399994065034c9cd052a47965eda2f29c5128be90b35af9c3ccb5c23861b",
       "size": 3913
+    },
+    {
+      "path": "kubejs/client_scripts/weapon_arts_keybinds.js",
+      "sha256": "6e55a9254c3f680ae87167e17dee44829f7a4ed82480041cd5b987cae7be28ed",
+      "size": 2382
     },
     {
       "path": "kubejs/config/client.json",
@@ -7931,11 +8146,6 @@
       "size": 17199
     },
     {
-      "path": "kubejs/server_scripts/02_magic/staff_spell_system.js",
-      "sha256": "270c46d8791248e1251a06ac8594dee9510f149db5d23fb5d56e8f319b03d385",
-      "size": 4521
-    },
-    {
       "path": "kubejs/server_scripts/03_combat/anti_afk_damage_share.js",
       "sha256": "83c763b94ca7cc42a988e4c9f15489b777ca99df3294d20f4ca4295439834b63",
       "size": 1563
@@ -7956,14 +8166,24 @@
       "size": 5964
     },
     {
+      "path": "kubejs/server_scripts/03_combat/elemental_infusion_engine.js",
+      "sha256": "b5d1e2938688629612dec37f1b5427c16d9449b62a87ad234710540dd8f0540a",
+      "size": 22230
+    },
+    {
+      "path": "kubejs/server_scripts/03_combat/elemental_stone_recipes.js",
+      "sha256": "7c584525aebfc6508258005ee863b9f4a5838a61b7066e9991727e1c9777e890",
+      "size": 3194
+    },
+    {
       "path": "kubejs/server_scripts/03_combat/elyrium_forge_api.js",
-      "sha256": "9e555b86d2a56342b9c23cc38a6b9d3bbf61e456d0fd1ffdddbb4f2d9c5c5b98",
-      "size": 17831
+      "sha256": "a3f06d24ba440caf5e5a58ff9dd12772d780886fac76958e7ed033fc5afbbe04",
+      "size": 34124
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_engine.js",
-      "sha256": "2da06630c781b226347377b2ec815c6aee0778285a4737f49360af6d1b8bb6a6",
-      "size": 28881
+      "sha256": "614a8fd93668e3b1266f914fc70c9aadbef708cf89ae4dc1fdf445f71aef5045",
+      "size": 1803
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_recipes.js",
@@ -7982,8 +8202,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/infernal_anvil_gui.js",
-      "sha256": "5abab3d0cd8eb4b35d4cc104559a55bd791f0b4919114022a1abf9f81ddf537c",
-      "size": 59125
+      "sha256": "74f9b8a9af1cddfe9b205326b82ecd5fc20b284034e1c81a4a6d4ed3f31d3225",
+      "size": 61656
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_inscription.js",
@@ -8002,13 +8222,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "8f7317be11386d531e5eec3c4fc4d1a8cbe6e0f7f0d7d9e5b18166cf01a59e3b",
-      "size": 93753
-    },
-    {
-      "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
-      "sha256": "7077688a1af5b8bea89564510eb1ad739d3ed20f5d9f39146b42362334984453",
-      "size": 990
+      "sha256": "222bda1c3f77a5c492f435d326667450964766b73c28efd550917a8e42778264",
+      "size": 95460
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
@@ -8032,23 +8247,23 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/two_handed_offhand_lock.js",
-      "sha256": "6535bf4c9077708bee35042d09492208ba493edaafb09d5f1097477703fc3b9f",
-      "size": 4038
+      "sha256": "4499fc6a56f511f8d75e16647b32e9e01e62bdf211b66df852636ed932be3e26",
+      "size": 3974
     },
     {
-      "path": "kubejs/server_scripts/03_combat/weapon_attributes.js",
-      "sha256": "eddbbc601027d92a9321c34cab3eb8dd3c745b3f1f2385d114341c29e2114399",
-      "size": 458
+      "path": "kubejs/server_scripts/03_combat/weapon_bench_gui.js",
+      "sha256": "1345bc42e3dde932b1fd324568007d9477e5277cce00cc16ca60d10aa3043492",
+      "size": 98120
     },
     {
-      "path": "kubejs/server_scripts/03_combat/weapon_mastery.js",
-      "sha256": "73204b9126a8d2b50f8ddd5b94e1a712ac35b9620f942f44877a0ec409360cee",
-      "size": 8723
+      "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",
+      "sha256": "c464a1d9b451212e37e9acde6bfa8c162aec258070fab787fb56e7242169fcc3",
+      "size": 2428
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_reinforcement_scaling.js",
-      "sha256": "bc777cc12a57094cce0329fc9a08eb947f1d725c24e2471c323105a8d10bb9e3",
-      "size": 23812
+      "sha256": "0e6d54771d0f5651d079d1f7c998e46f80af0c6d7d6894ccf7990afc1c408a51",
+      "size": 28403
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/dynamic_class_resolver.js",
@@ -8131,11 +8346,6 @@
       "size": 14837
     },
     {
-      "path": "kubejs/server_scripts/06_world_colonies/abyss_sprint2_mechanics.js",
-      "sha256": "d58193a4a90450d480879e427a2398a853c25375045e0fe55756771ecbd42781",
-      "size": 25577
-    },
-    {
       "path": "kubejs/server_scripts/06_world_colonies/anti_grief_dungeon_lockdown.js",
       "sha256": "3fbab938a808d98d1d14ddd730077836c9dc36f4494c7658a569f67b24e239b6",
       "size": 4231
@@ -8147,8 +8357,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/capital_safe_haven.js",
-      "sha256": "87fe0fc97595429479bd16d9f95702d14c7f8acbfbadddddcc7ad916481b9172",
-      "size": 8881
+      "sha256": "be3c316f1e88858776dfe053b73476d3aa98e658c29404a2a2fefe13dd5851eb",
+      "size": 8798
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/colony_board.js",
@@ -8256,9 +8466,19 @@
       "size": 11191
     },
     {
+      "path": "kubejs/startup_scripts/ascension_catalysts.js",
+      "sha256": "9a9938638dffd620d682c29df5e7f106641315b28127c99973b85f3e32292ec2",
+      "size": 6216
+    },
+    {
       "path": "kubejs/startup_scripts/dodge_keybinds.js",
       "sha256": "87a505286ae6dc6b4682b1d52fcdbb3ffedfb0013ecdf13fd33342780fb836c9",
       "size": 1118
+    },
+    {
+      "path": "kubejs/startup_scripts/elemental_stones.js",
+      "sha256": "3d289267281fc7f192d772b99570cad1ddcde67ab3fbcf0a1aaa5621dd01b178",
+      "size": 6851
     },
     {
       "path": "kubejs/startup_scripts/infernal_anvil_block.js",
@@ -8294,6 +8514,16 @@
       "path": "kubejs/startup_scripts/tier4_items.js",
       "sha256": "8cfef829ac21892806295832fd5e0736c372fc551d67a3de873823101cbbb886",
       "size": 3123
+    },
+    {
+      "path": "kubejs/startup_scripts/weapon_bench_block.js",
+      "sha256": "6c740178300408edfa4155eb161d7cce25d3ac2a8131d10d32f6c28d0cd99e55",
+      "size": 975
+    },
+    {
+      "path": "kubejs/startup_scripts/weapon_chisel_item.js",
+      "sha256": "160f58101c354353b6446be8deee910a1f19541a9537c727663c69cd0914bb45",
+      "size": 1017
     },
     {
       "path": "mods/.index/aces-spell-utils.pw.toml",

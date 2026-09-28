@@ -21,9 +21,7 @@ function isTwoHandedWeapon(item) {
         id.includes('hammer') ||
         id.includes('greataxe') ||
         id.includes('twinblade') ||
-        id.includes('warglaive') ||
-        id.includes('spear') ||
-        id.includes('lance')) {
+        id.includes('warglaive')) {
         return true
     }
 

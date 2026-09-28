@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "kubejs:block/weapon_bench"
+    },
+    "facing=east": {
+      "model": "kubejs:block/weapon_bench",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "kubejs:block/weapon_bench",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "kubejs:block/weapon_bench",
+      "y": 270
+    }
+  }
+}

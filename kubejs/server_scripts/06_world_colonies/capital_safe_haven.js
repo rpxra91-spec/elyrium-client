@@ -183,7 +183,6 @@ ServerEvents.tick(event => {
     // Grant Peaceful Aura to all players inside Capital (R <= 300)
     overworld.players.forEach(player => {
         if (isInsideCapital(overworld, player.x, player.z)) {
-            player.potionEffects.add('minecraft:saturation', 80, 0, false, false);
             player.potionEffects.add('minecraft:regeneration', 80, 0, false, false);
         }
     });

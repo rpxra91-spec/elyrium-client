@@ -62,6 +62,78 @@ function getReinforceLevel(item) {
 }
 
 // ------------------------------------------------------------------------------
+// HELPER: Get skd_tier Level (1..11) from item NBT
+// ------------------------------------------------------------------------------
+function getAscendedTier(item) {
+    if (!item || item.isEmpty() || item.id === 'minecraft:air') return 0;
+    try {
+        if (item.customData && item.customData.contains('skd_tier')) {
+            return item.customData.getInt('skd_tier') || 0;
+        }
+        if (item.nbt && item.nbt.contains('skd_tier')) {
+            return item.nbt.getInt('skd_tier') || 0;
+        }
+    } catch (e) {}
+    try {
+        let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
+        let cd = item.get(DataComponents.CUSTOM_DATA);
+        if (cd) {
+            let tag = cd.copyTag();
+            if (tag && tag.contains('skd_tier')) return tag.getInt('skd_tier') || 0;
+        }
+    } catch (e2) {}
+    return 0;
+}
+
+// ------------------------------------------------------------------------------
+// HELPER: Get Native Baseline Weapon Tier (1..11)
+// ------------------------------------------------------------------------------
+function getNativeWeaponTier(item) {
+    if (!item || item.isEmpty() || item.id === 'minecraft:air') return 1;
+
+    let id = String(item.id).toLowerCase();
+
+    // Tier 11: DivineRPG Mortum, Apex Void Cataclysm
+    if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('the_incinerator') || id.includes('aquatooth') || id.includes('halite')) return 11;
+
+    // Tier 10: DivineRPG Apalachia & Skythern
+    if (id.includes('apalachia') || id.includes('skythern') || id.includes('divinerpg:apalachia') || id.includes('divinerpg:skythern')) return 10;
+
+    // Tier 9: DivineRPG Eden & Wildwood
+    if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) return 9;
+
+    // Tier 8: Deeper Darker (Otherside) / Warden
+    if (id.includes('sculk') || id.includes('echo') || id.includes('warden') || id.startsWith('deeperdarker:')) return 8;
+
+    // Tier 7: Eternal Starlight
+    if (id.includes('starlight') || id.includes('luminite') || id.startsWith('eternal_starlight:') || id.includes('thermal_springstone')) return 7;
+
+    // Tier 6: The End / Void / Ender Guardian
+    if (id.includes('dragon') || id.includes('void') || id.includes('ender_guardian') || id.includes('ender_golem') || id.includes('elytra') || id.includes('ascended')) return 6;
+
+    // Tier 5: The Aether & Deep Aether
+    if (id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie') || id.includes('skyjade') || id.startsWith('aether:') || id.startsWith('deep_aether:')) return 5;
+
+    // Tier 4: The Nether (Cinder Alloy, Netherite, Ignitium, Cataclysm)
+    if (id.includes('cinder') || id.includes('netherite') || id.includes('ignitium') || id.startsWith('cataclysm:') || id.includes('monstrosity') || id.includes('witherite') || id.includes('wither')) return 4;
+
+    // Tier 3: Diamond, Cobalt, Rune / Runes, Iron standard
+    if (id.includes('diamond') || id.includes('cobalt') || id.includes('rune') || id.includes('runic') || id.startsWith('runes:') || id.includes('amethyst') ||
+        (id.includes('iron') && !id.includes('early_iron') && !id.includes('crude_iron') && !id.includes('rusted_iron'))) {
+        return 3;
+    }
+
+    // Tier 2: Copper, Chain, Iron early, Gold, Bronze, Brass, Silver, Flint
+    if (id.includes('copper') || id.includes('chain') || id.includes('early_iron') || 
+        id.includes('crude_iron') || id.includes('rusted_iron') || id.includes('gold') || 
+        id.includes('golden') || id.includes('bronze') || id.includes('brass') || id.includes('silver') || id.includes('flint')) {
+        return 2;
+    }
+
+    return 1;
+}
+
+// ------------------------------------------------------------------------------
 // HELPER: Get Effective Player Stats (SimpleStats Perks + Potions + Curios)
 // ------------------------------------------------------------------------------
 function getPlayerEffectiveStats(player) {
@@ -297,6 +369,15 @@ EntityEvents.beforeHurt(event => {
         // 1. Base Reinforcement Damage Bonus (+5% per level, +50% at +10)
         let baseMultiplier = 1.0 + (wLvl * 0.05);
 
+        // 1.1. Ascension Tier Damage Bonus (+22% base damage per ascended tier above native)
+        let ascTier = getAscendedTier(weapon);
+        let nativeTier = getNativeWeaponTier(weapon);
+        let tierMultiplier = 1.0;
+        if (ascTier > nativeTier) {
+            let tierDelta = ascTier - nativeTier;
+            tierMultiplier = 1.0 + (tierDelta * 0.22);
+        }
+
         // 2. Elden Ring Attribute Scaling Bonus
         let statBonus = 0.0;
         let scalingData = getWeaponScalingData(weapon, wLvl, player);
@@ -310,7 +391,7 @@ EntityEvents.beforeHurt(event => {
         }
 
         // Apply combined multipliers
-        let totalMultiplier = baseMultiplier * (1.0 + statBonus);
+        let totalMultiplier = baseMultiplier * tierMultiplier * (1.0 + statBonus);
         if (totalMultiplier > 1.0) {
             event.damage = event.damage * totalMultiplier;
         }
@@ -468,6 +549,13 @@ PlayerEvents.chat(event => {
         player.tell(Text.gold('══════════════ [⚔️ МАТРИЦА СКАЛИРОВАНИЯ И ЗАКАЛКИ] ══════════════'));
         player.tell(Text.yellow('🗡️ Оружие: ').append(Text.white(wName)).append(Text.aqua(` [+${wLvl}]`)));
         player.tell(Text.gray(`   Базовый бонус урона: §a+${wLvl * 5}% §7(при +10 кап: +50%)`));
+
+        let ascTier = getAscendedTier(weapon);
+        let nativeTier = getNativeWeaponTier(weapon);
+        if (ascTier > nativeTier) {
+            let bonusPercent = (ascTier - nativeTier) * 22;
+            player.tell(Text.gold(`   🌟 Возвышение: §dТир ${ascTier} §7(Нативный: Т${nativeTier} | бонус эпохи: §a+${bonusPercent}%§7)`));
+        }
 
         let scalingData = getWeaponScalingData(weapon, wLvl, player);
         if (scalingData && scalingData.scalings) {

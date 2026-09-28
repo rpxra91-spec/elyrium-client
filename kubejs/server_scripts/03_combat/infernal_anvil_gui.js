@@ -4,7 +4,7 @@
 // ==============================================================================
 // Премиальный эргономичный графический интерфейс древнего Алтаря Преисподней.
 // Полностью отделен от логики расчетов и привязан к глобальному бэкенд-движку
-// global.ElyriumForgeAPI (разработанному Серверным Архитектором).
+// ElyriumForgeAPI (разработанному Серверным Архитектором).
 //
 // Архитектура экрана (4 ряда / 36 слотов верхнего алтаря + 36 слотов инвентаря игрока):
 //
@@ -100,6 +100,7 @@ function isValidAnvilReagent(item) {
     if (!item || item.isEmpty()) return false;
     let id = item.id;
     return id.startsWith('kubejs:smithing_stone_') ||
+           id.startsWith('kubejs:ascension_catalyst_t') ||
            id.startsWith('kubejs:martial_tablet_') ||
            id === 'kubejs:tier_upgrade_template';
 }
@@ -143,9 +144,9 @@ function getSlot2Item(session) {
     }
 
     let evalData = null;
-    if (global.ElyriumForgeAPI && session.equipment && !session.equipment.isEmpty()) {
+    if (ElyriumForgeAPI && session.equipment && !session.equipment.isEmpty()) {
         try {
-            evalData = global.ElyriumForgeAPI.evaluate(session.equipment, null, session.aegis);
+            evalData = ElyriumForgeAPI.evaluate(session.equipment, null, session.aegis);
         } catch (e) {}
     }
 
@@ -176,9 +177,9 @@ function getSlot3Item(session) {
     }
 
     let curLvl = 0;
-    if (global.ElyriumForgeAPI && session.equipment && !session.equipment.isEmpty()) {
+    if (ElyriumForgeAPI && session.equipment && !session.equipment.isEmpty()) {
         try {
-            curLvl = global.ElyriumForgeAPI.getReinforceLevel(session.equipment);
+            curLvl = ElyriumForgeAPI.getReinforceLevel(session.equipment);
         } catch (e) {}
     }
 
@@ -232,9 +233,9 @@ function getHammerDisplayData(session) {
     let buttonLore = [];
     let evalData = null;
 
-    if (global.ElyriumForgeAPI) {
+    if (ElyriumForgeAPI) {
         try {
-            evalData = global.ElyriumForgeAPI.evaluate(session.equipment, session.reagent, session.aegis);
+            evalData = ElyriumForgeAPI.evaluate(session.equipment, session.reagent, session.aegis);
         } catch (e) {
             console.error('[InfernalAnvil] Error calling ElyriumForgeAPI.evaluate: ' + e);
         }
@@ -302,6 +303,19 @@ function getHammerDisplayData(session) {
         buttonLore.push(Text.of('§a✓ Шанс гравировки: 100% (Гарантированно)'));
         buttonLore.push(Text.of('§8────────────────────────────────'));
         buttonLore.push(Text.of('§e▶ Нажмите ЛКМ для сокетирования приема!'));
+    } else if (evalData.actionType === 'ASCENSION') {
+        buttonItem = Item.of('minecraft:nether_star').enchant('minecraft:unbreaking', 1);
+        buttonName = '§6🔥 [ СОВЕРШИТЬ ВОЗВЫШЕНИЕ ЭПОХИ ] 🔥';
+
+        buttonLore.push(Text.of('§6✦ ══════════════════════════════ ✦'));
+        buttonLore.push(Text.of(`§eПредмет: §f${session.equipment.hoverName.getString()}`));
+        buttonLore.push(Text.of(`§eЭволюция: §bТир ${evalData.currentTier} §7➔ §6Тир ${evalData.targetTier}`));
+        buttonLore.push(Text.of(`§eВероятность успеха: §a100% (Гарантированно)`));
+        buttonLore.push(Text.of('§6✦ ══════════════════════════════ ✦'));
+        buttonLore.push(Text.of('§a✓ 100% сохранение: Заточка +N, сокеты, скрижали и стихии!'));
+        buttonLore.push(Text.of('§a✓ Прочность артефакта полностью восстанавливается!'));
+        buttonLore.push(Text.of('§8────────────────────────────────'));
+        buttonLore.push(Text.of('§e▶ Нажмите ЛКМ для совершения Возвышения!'));
     } else if (evalData.actionType === 'TIER_TEMPLATE') {
         buttonItem = Item.of('minecraft:smithing_table');
         buttonName = '§d[ 🌟 ПРЕЕМСТВЕННОСТЬ ТИРОВ ]';
@@ -516,9 +530,9 @@ function openInfernalAnvilGUI(player) {
                     player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
                 } else {
                     let neededStoneId = null;
-                    if (global.ElyriumForgeAPI && sess.equipment && !sess.equipment.isEmpty()) {
+                    if (ElyriumForgeAPI && sess.equipment && !sess.equipment.isEmpty()) {
                         try {
-                            let ev = global.ElyriumForgeAPI.evaluate(sess.equipment, null, sess.aegis);
+                            let ev = ElyriumForgeAPI.evaluate(sess.equipment, null, sess.aegis);
                             if (ev && ev.requiredReagentId) neededStoneId = ev.requiredReagentId;
                         } catch (e) {}
                     }
@@ -680,9 +694,9 @@ function openInfernalAnvilGUI(player) {
             let autoLoadStone = () => {
                 let sess = getOrCreateAnvilSession(player);
                 let neededStoneId = null;
-                if (global.ElyriumForgeAPI && sess.equipment && !sess.equipment.isEmpty()) {
+                if (ElyriumForgeAPI && sess.equipment && !sess.equipment.isEmpty()) {
                     try {
-                        let ev = global.ElyriumForgeAPI.evaluate(sess.equipment, null, sess.aegis);
+                        let ev = ElyriumForgeAPI.evaluate(sess.equipment, null, sess.aegis);
                         if (ev && ev.requiredReagentId) neededStoneId = ev.requiredReagentId;
                     } catch (e) {}
                 }
@@ -721,7 +735,7 @@ function openInfernalAnvilGUI(player) {
             let forgeClick = () => {
                 let sess = getOrCreateAnvilSession(player);
                 let hData = getHammerDisplayData(sess);
-                if (!hData.canForge || !hData.evalData || !global.ElyriumForgeAPI) {
+                if (!hData.canForge || !hData.evalData || !ElyriumForgeAPI) {
                     player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.7`);
                     return;
                 }
@@ -731,7 +745,7 @@ function openInfernalAnvilGUI(player) {
 
                 if (action === 'REINFORCE') {
                     // Вызов бэкенда закалки
-                    let result = global.ElyriumForgeAPI.executeForge(player, sess.equipment, sess.reagent, sess.aegis);
+                    let result = ElyriumForgeAPI.executeForge(player, sess.equipment, sess.reagent, sess.aegis);
 
                     if (result && result.status !== 'INVALID') {
                         // Списание реагента
@@ -772,7 +786,7 @@ function openInfernalAnvilGUI(player) {
                     }
                 } else if (action === 'MARTIAL_TABLET') {
                     // Вызов бэкенда инкрустации
-                    let result = global.ElyriumForgeAPI.executeMartialInscription(player, sess.equipment, sess.reagent);
+                    let result = ElyriumForgeAPI.executeMartialInscription(player, sess.equipment, sess.reagent);
                     if (result && result.status === 'SUCCESS') {
                         sess.reagent.shrink(1);
                         if (sess.reagent.isEmpty()) sess.reagent = null;
@@ -781,6 +795,21 @@ function openInfernalAnvilGUI(player) {
 
                         player.server.runCommandSilent(`particle minecraft:portal ${bx} ${by + 1.2} ${bz} 0.4 0.4 0.4 0.1 40`);
                         player.tell(Text.of(`§6${result.message}`));
+                    }
+                } else if (action === 'ASCENSION') {
+                    // Вызов бэкенда возвышения экипировки
+                    let result = ElyriumForgeAPI.executeAscension(player, sess.equipment, sess.reagent);
+                    if (result && result.status === 'SUCCESS') {
+                        sess.reagent.shrink(1);
+                        if (sess.reagent.isEmpty()) sess.reagent = null;
+                        sess.result = result.resultGear;
+                        sess.equipment = null;
+
+                        player.server.runCommandSilent(`particle minecraft:totem_of_undying ${bx} ${by + 1.5} ${bz} 0.5 0.5 0.5 0.2 60`);
+                        player.server.runCommandSilent(`particle minecraft:wax_off ${bx} ${by + 1.2} ${bz} 0.4 0.4 0.4 0.05 40`);
+                        player.tell(Text.of(`§6${result.message}`));
+                    } else if (result) {
+                        player.tell(Text.of(`§c${result.message || 'Ошибка возвышения'}`));
                     }
                 } else if (action === 'TIER_TEMPLATE') {
                     // Преемственность тиров проводится через ритуал двух рук в мире
