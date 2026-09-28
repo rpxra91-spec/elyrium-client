@@ -1,6 +1,6 @@
 // ==============================================================================
 // 🛠️ ELYRIUM RPG: WEAPONMASTER'S BENCH GUI & CHISEL SOCKET PUNCHING ENGINE
-// Minecraft 1.21.1 NeoForge | KubeJS Server Script (v1.0)
+// Minecraft 1.21.1 NeoForge | KubeJS Server Script (v1.1)
 // ==============================================================================
 // Premier 4-row RPG Interface for Weaponmaster's Bench:
 // - Slot I: Main Weapon Slot with In-World 3D Display sync.
@@ -8,10 +8,20 @@
 // - Slot 2: Secondary Martial Art (Tier 4+ Nether era).
 // - Slot 3: Tertiary Martial Art (Tier 7+ Astral era).
 // - Slot 4: Elemental Infusion (Fire, Frost, Lightning, Shadow, Holy).
+// - Slot 5: Apotheosis Gem (Ruby, Sapphire, Emerald, Diamond, Amethyst, Opal, Topaz, Onyx, Amber, Luminarite).
 // - Chisel & Socket Punching: 100% guaranteed master crafting with Weaponmaster's
 //   Chisel (kubejs:weapon_chisel) and Tier Ingot (Netherite/Cinder for Slot 2,
 //   Starlight/Luminite for Slot 3) without weapon breakage or RNG.
 // ==============================================================================
+
+var WB_SocketHelper = null;
+var WB_SocketedGems = null;
+try {
+    WB_SocketHelper = Java.loadClass('dev.shadowsoffire.apotheosis.socket.SocketHelper');
+    WB_SocketedGems = Java.loadClass('dev.shadowsoffire.apotheosis.socket.SocketedGems');
+} catch (e) {
+    console.error('[WeaponBench] Failed to load Apotheosis SocketHelper/SocketedGems: ' + e);
+}
 
 // Таблица названий и архетипов Боевых Искусств
 const WB_ART_INFO = {
@@ -617,6 +627,78 @@ function getSlotElementalItem(session) {
     }
 }
 
+function getSlotApotheosisGemItem(session) {
+    let gear = session.equipment;
+    if (!gear || gear.isEmpty()) {
+        return Item.of('minecraft:gray_stained_glass_pane')
+            .withCustomName(Text.of('§8✦ Слот 5: [Вставьте оружие] ✦'));
+    }
+
+    let rawGear = gear.getItemStack ? gear.getItemStack() : gear;
+    let sockets = 0;
+    let gems = null;
+    try {
+        if (WB_SocketHelper) {
+            sockets = WB_SocketHelper.getSockets(rawGear);
+            gems = WB_SocketHelper.getGems(rawGear);
+        }
+    } catch (e) {}
+
+    if (sockets <= 0) {
+        return Item.of('minecraft:iron_bars')
+            .withCustomName(Text.of('§c💎 Слот 5: [ГНЕЗДА НЕ ПРОБИТЫ]'))
+            .withLore([
+                Text.of('§7Оружие не имеет открытых гнезд самоцветов.'),
+                Text.of('§8────────────────────────────────'),
+                Text.of('§e• Пробейте Слот 2 (Т4+): §f+1 гнездо самоцвета'),
+                Text.of('§b• Пробейте Слот 3 (Т7+): §f+2 гнезда самоцветов'),
+                Text.of('§8────────────────────────────────'),
+                Text.of('§7Используйте Резец Оружейника в мастерской ниже.')
+            ]);
+    }
+
+    let installedGems = [];
+    if (gems) {
+        for (let i = 0; i < gems.size(); i++) {
+            let g = gems.get(i);
+            if (g && g.isValid && g.isValid()) {
+                installedGems.push(g);
+            }
+        }
+    }
+
+    if (installedGems.length > 0) {
+        let firstGem = installedGems[0];
+        let gemStack = firstGem.gemStack();
+        let gemName = (gemStack && gemStack.hoverName) ? gemStack.hoverName.getString() : 'Самоцвет Апофеоза';
+
+        let displayItem = (gemStack && !gemStack.isEmpty()) ? Item.of(gemStack.copy()) : Item.of('minecraft:amethyst_shard');
+        return displayItem
+            .withCustomName(Text.of(`§6💎 Слот 5: ${gemName}`))
+            .withLore([
+                Text.of('§8[Инкрустированный Самоцвет Апофеоза]'),
+                Text.of(`§7• Самоцвет: §e${gemName}`),
+                Text.of(`§7• Занято гнезд: §a${installedGems.length} / ${sockets}`),
+                Text.of('§8────────────────────────────────'),
+                Text.of('§a▶ Кликните сюда, чтобы безопасно извлечь'),
+                Text.of('   §aсамоцвет обратно в сумку.')
+            ]);
+    } else {
+        return Item.of('minecraft:amethyst_shard')
+            .withCustomName(Text.of(`§b💎 Слот 5: [ГНЕЗДО САМОЦВЕТА: ${sockets} СВОБОДНО] ✦`))
+            .withLore([
+                Text.of(`§7Доступно открытых гнезд: §a${sockets}`),
+                Text.of('§7Инкрустируйте любой Самоцвет Элириума:'),
+                Text.of('§c• Рубин  §9• Сапфир  §a• Изумруд  §b• Алмаз Колосса'),
+                Text.of('§5• Аметист Бездны  §f• Опал  §e• Топаз  §8• Оникс'),
+                Text.of('§6• Охотничий Янтарь  §d• Звездный Люминарит (Т7+)'),
+                Text.of('§8────────────────────────────────'),
+                Text.of('§a▶ Кликните сюда для автоматической инкрустации'),
+                Text.of('   §aподходящего самоцвета из вашей сумки!')
+            ]);
+    }
+}
+
 function getSlotChiselItem(session) {
     if (session.chisel && !session.chisel.isEmpty()) return session.chisel;
     return Item.of('minecraft:flint')
@@ -773,6 +855,7 @@ function openWeaponBenchGUI(player, block) {
                     Text.of('§e• Слот 2: Дополнительное искусство (Т4+).'),
                     Text.of('§e• Слот 3: Дополнительное искусство (Т7+).'),
                     Text.of('§e• Слот 4: Стихийный камень инфузии (25-30%).'),
+                    Text.of('§e• Слот 5: Самоцвет Апофеоза (Оружие/Щит/Броня).'),
                     Text.of('§8────────────────────────────────'),
                     Text.of('§a✓ Пробитие Резцом со 100% гарантией мастера.')
                 ]));
@@ -839,6 +922,27 @@ function openWeaponBenchGUI(player, block) {
                 let s3 = hasSocket3(gear) ? '§a[Открыт]' : (tier >= 7 ? '§e[Закрыт]' : '§c[Недоступен]');
                 let elem = getElementalInfusion(gear) ? '§b[' + getElementalInfusion(gear) + ']' : '§7[Нет]';
 
+                let rawGear = gear.getItemStack ? gear.getItemStack() : gear;
+                let apothSockets = 0;
+                let gemName = '§7[Нет]';
+                try {
+                    if (WB_SocketHelper) {
+                        apothSockets = WB_SocketHelper.getSockets(rawGear);
+                        let gems = WB_SocketHelper.getGems(rawGear);
+                        if (gems) {
+                            for (let i = 0; i < gems.size(); i++) {
+                                let g = gems.get(i);
+                                if (g && g.isValid && g.isValid()) {
+                                    let gst = g.gemStack();
+                                    gemName = '§6[' + (gst && gst.hoverName ? gst.hoverName.getString() : 'Самоцвет') + ']';
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                } catch (ePass) {}
+                let gemStatus = apothSockets > 0 ? (gemName !== '§7[Нет]' ? gemName : '§a[Свободно]') : '§c[Не открыто]';
+
                 s.setItem(Item.of('minecraft:compass')
                     .withCustomName(Text.of(`§6📊 [ ПАСПОРТ ЭКИПИРОВКИ: ТИР ${tier} ]`))
                     .withLore([
@@ -847,6 +951,7 @@ function openWeaponBenchGUI(player, block) {
                         Text.of(`§7• Боевой Слот 2: ${s2}`),
                         Text.of(`§7• Боевой Слот 3: ${s3}`),
                         Text.of(`§7• Стихийная Инфузия: ${elem}`),
+                        Text.of(`§7• Самоцвет Апофеоза: ${gemStatus}`),
                         Text.of('§8────────────────────────────────'),
                         Text.of('§2✓ Эволюция на Адской Наковальне 100% переносит сокеты!')
                     ]));
@@ -1140,7 +1245,120 @@ function openWeaponBenchGUI(player, block) {
             s.leftClicked = clickHandler; s.rightClicked = clickHandler;
         });
 
-        gui.slot(8, 1, s => { s.setItem(oakTrim); s.leftClicked = () => {}; s.rightClicked = () => {}; });
+        // СЛОТ 5: Самоцвет Апофеоза (X=8, Y=1)
+        gui.slot(8, 1, s => {
+            s.setItem(getSlotApotheosisGemItem(session));
+            let clickHandler = () => {
+                let sess = getOrCreateBenchSession(player, blockPos);
+                let gear = sess.equipment;
+                if (!gear || gear.isEmpty()) return;
+
+                if (!WB_SocketHelper) {
+                    player.tell(Text.of('§c✖ Ошибка: Модуль самоцветов Apotheosis не загружен.'));
+                    return;
+                }
+
+                let rawGear = gear.getItemStack ? gear.getItemStack() : gear;
+                let sockets = WB_SocketHelper.getSockets(rawGear);
+                if (sockets <= 0) {
+                    player.tell(Text.of('§eℹ В оружии нет открытых гнезд самоцветов! Пробейте сокет Резцом Оружейника ниже.'));
+                    player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
+                    return;
+                }
+
+                let gems = WB_SocketHelper.getGems(rawGear);
+                let installedGems = [];
+                if (gems) {
+                    for (let i = 0; i < gems.size(); i++) {
+                        let g = gems.get(i);
+                        if (g && g.isValid && g.isValid()) {
+                            installedGems.push(g);
+                        }
+                    }
+                }
+
+                if (installedGems.length > 0) {
+                    // Извлечение установленного гема (gemInstance.gemStack().copy()) в сумку
+                    let lastGem = installedGems[installedGems.length - 1];
+                    let extractedStack = lastGem.gemStack().copy();
+                    player.give(Item.of(extractedStack));
+
+                    if (installedGems.length === 1) {
+                        WB_SocketHelper.setGems(rawGear, WB_SocketedGems.EMPTY);
+                    } else {
+                        let newItems = new java.util.ArrayList();
+                        for (let i = 0; i < installedGems.length - 1; i++) {
+                            newItems.add(installedGems[i].gemStack().copy());
+                        }
+                        try {
+                            let ItemContainerContents = Java.loadClass('net.minecraft.world.item.component.ItemContainerContents');
+                            let ApothComponents = Java.loadClass('dev.shadowsoffire.apotheosis.Apoth$Components');
+                            let contents = ItemContainerContents.fromItems(newItems);
+                            rawGear.set(ApothComponents.SOCKETED_GEMS, contents);
+                        } catch (eCont) {
+                            WB_SocketHelper.setGems(rawGear, WB_SocketedGems.EMPTY);
+                        }
+                    }
+
+                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    player.tell(Text.of(`§a✓ Самоцвет «${extractedStack.hoverName.getString()}» безопасно извлечен в сумку.`));
+                } else {
+                    // Инкрустация: поиск подходящего apotheosis:gem в сумке игрока
+                    let inv = player.inventory;
+                    let foundGemStack = null;
+
+                    for (let i = 0; i < inv.size; i++) {
+                        let st = inv.getItem(i);
+                        if (st && !st.isEmpty() && st.id === 'apotheosis:gem') {
+                            let rawGem = st.getItemStack ? st.getItemStack() : st;
+                            try {
+                                if (WB_SocketHelper.canSocketGemInItem(rawGear, rawGem)) {
+                                    foundGemStack = st;
+                                    break;
+                                }
+                            } catch (eCheck) {}
+                        }
+                    }
+
+                    if (foundGemStack) {
+                        let rawGem = foundGemStack.getItemStack ? foundGemStack.getItemStack() : foundGemStack;
+                        let gemName = rawGem.hoverName.getString();
+                        let singleGem = rawGem.copy();
+                        singleGem.setCount(1);
+
+                        try {
+                            let socketedStack = WB_SocketHelper.socketGemInItem(rawGear, singleGem);
+                            if (socketedStack && !socketedStack.isEmpty()) {
+                                sess.equipment = Item.of(socketedStack);
+                                foundGemStack.shrink(1);
+
+                                player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 0.8 1.4`);
+                                player.server.runCommandSilent(`playsound minecraft:ui.stonecutter.take_result player ${player.username} ~ ~ ~ 1.0 1.2`);
+                                player.server.runCommandSilent(`particle minecraft:wax_off ${player.x} ${player.y + 1} ${player.z} 0.3 0.3 0.3 0.05 25`);
+                                player.server.runCommandSilent(`particle minecraft:enchanted_hit ${player.x} ${player.y + 1} ${player.z} 0.3 0.3 0.3 0.1 20`);
+                                player.tell(Text.of(`§a✦ [ЮВЕЛИР] Самоцвет «${gemName}» успешно инкрустирован в гнездо оружия! ✦`));
+                            } else {
+                                player.tell(Text.of('§c✖ Не удалось инкрустировать самоцвет в оружие.'));
+                            }
+                        } catch (eSock) {
+                            console.error('[WeaponBench] Error socketing gem: ' + eSock);
+                            player.tell(Text.of('§c✖ Ошибка при инкрустации самоцвета: ' + eSock));
+                        }
+                    } else {
+                        player.tell(Text.of('§eℹ В инвентаре не найдено подходящих самоцветов Apotheosis для данного оружия.'));
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
+                    }
+                }
+
+                if (sess.benchPos) {
+                    setStoredBenchWeapon(player.level, sess.benchPos, sess.equipment);
+                    updateBenchWorldDisplay(player.level, sess.benchPos, sess.equipment);
+                }
+                refreshWeaponBenchGUI(player, blockPos);
+            };
+            s.leftClicked = clickHandler;
+            s.rightClicked = clickHandler;
+        });
 
         // ======================================================================
         // РЯД 2 (Y=2): РЕЗЕЦ, ТИРОВЫЙ СЛИТОК И ПРОБИТИЕ СОКЕТОВ
@@ -1280,15 +1498,31 @@ function openWeaponBenchGUI(player, block) {
                     chisel.damageValue = curDmg + 1;
                 }
 
-                // Запись NBT в оружие
+                // Запись NBT в оружие и пробитие гнезд Apotheosis
                 let gTag = getOrCreateSafeCustomData(gear);
+                let rawGear = gear.getItemStack ? gear.getItemStack() : gear;
+                let curSockets = 0;
+                try {
+                    if (WB_SocketHelper) curSockets = WB_SocketHelper.getSockets(rawGear);
+                } catch (eSock) {}
+
                 if (gTag) {
                     if (targetSlot === 2) {
                         gTag.putBoolean('skd_socket_2', true);
                         gTag.putInt('skd_sockets', Math.max(getSocketCount(gear), 1));
+                        try {
+                            if (WB_SocketHelper) WB_SocketHelper.setSockets(rawGear, Math.max(1, curSockets));
+                        } catch (eApoth2) {
+                            console.error('[WeaponBench] Error setting Apotheosis socket 1: ' + eApoth2);
+                        }
                     } else if (targetSlot === 3) {
                         gTag.putBoolean('skd_socket_3', true);
                         gTag.putInt('skd_sockets', 2);
+                        try {
+                            if (WB_SocketHelper) WB_SocketHelper.setSockets(rawGear, Math.max(2, curSockets));
+                        } catch (eApoth3) {
+                            console.error('[WeaponBench] Error setting Apotheosis socket 2: ' + eApoth3);
+                        }
                     }
                 }
 
@@ -1315,8 +1549,8 @@ function openWeaponBenchGUI(player, block) {
             s.setItem(Item.of('minecraft:hopper')
                 .withCustomName(Text.of('§e🔄 [ ИЗВЛЕЧЬ ВСЕ СКРИЖАЛИ И КАМНИ ]'))
                 .withLore([
-                    Text.of('§7Безопасно извлекает все инкрустированные скрижали'),
-                    Text.of('§7и камень стихии обратно в инвентарь игрока.'),
+                    Text.of('§7Безопасно извлекает все инкрустированные скрижали,'),
+                    Text.of('§7камень стихии и самоцветы Апофеоза обратно в сумку.'),
                     Text.of('§8────────────────────────────────'),
                     Text.of('§a✓ Пробитые сокеты и заточка оружия полностью сохраняются!'),
                     Text.of('§e▶ Нажмите ЛКМ для извлечения.')
@@ -1365,6 +1599,31 @@ function openWeaponBenchGUI(player, block) {
                 if (elem) {
                     player.give(Item.of('kubejs:elemental_stone_' + elem));
                     extractedCount++;
+                }
+
+                // Слот 5: Извлечение всех Самоцветов Апофеоза
+                if (WB_SocketHelper) {
+                    try {
+                        let rawGear = gear.getItemStack ? gear.getItemStack() : gear;
+                        let gems = WB_SocketHelper.getGems(rawGear);
+                        let gemExtracted = 0;
+                        if (gems) {
+                            for (let i = 0; i < gems.size(); i++) {
+                                let g = gems.get(i);
+                                if (g && g.isValid && g.isValid()) {
+                                    let gemSt = g.gemStack().copy();
+                                    player.give(Item.of(gemSt));
+                                    gemExtracted++;
+                                }
+                            }
+                            if (gemExtracted > 0) {
+                                WB_SocketHelper.setGems(rawGear, WB_SocketedGems.EMPTY);
+                                extractedCount += gemExtracted;
+                            }
+                        }
+                    } catch (eGemEx) {
+                        console.error('[WeaponBench] Error extracting Apotheosis gems: ' + eGemEx);
+                    }
                 }
 
                 // Очистка тегов

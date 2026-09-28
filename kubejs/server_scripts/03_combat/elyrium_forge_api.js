@@ -721,6 +721,21 @@ global.ElyriumForgeAPI = {
                 let enc = gear.get(DataComponents.ENCHANTMENTS);
                 if (enc) resultItem.set(DataComponents.ENCHANTMENTS, enc);
             } catch (eComp) {}
+
+            // 100% Apotheosis Sockets and Gems Transfer
+            try {
+                let SocketHelper = Java.loadClass('dev.shadowsoffire.apotheosis.socket.SocketHelper');
+                let rawGear = gear.getItemStack ? gear.getItemStack() : gear;
+                let rawResult = resultItem.getItemStack ? resultItem.getItemStack() : resultItem;
+                let sockets = SocketHelper.getSockets(rawGear);
+                if (sockets > 0) {
+                    SocketHelper.setSockets(rawResult, sockets);
+                }
+                let gems = SocketHelper.getGems(rawGear);
+                if (gems && !gems.isEmpty()) {
+                    SocketHelper.setGems(rawResult, gems);
+                }
+            } catch (eApoth) {}
         } else {
             // Track B (Unique / Mod Weapon NBT Ascension)
             resultItem = gear.copy();

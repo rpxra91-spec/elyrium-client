@@ -1,0 +1,13 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:false"
+    }
+  ],
+  "type": "apotheosis:gem",
+  "weights": {
+    "weight": 0,
+    "quality": 0
+  },
+  "bonuses": []
+}

@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-28T12:28:04.996095+00:00",
+  "generated_at": "2026-09-28T18:49:25.973139+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -2169,6 +2169,16 @@
       "path": "kubejs/README.txt",
       "sha256": "989f3737ae4621b8ff6730bce4cbeeee756921e7e510e0c281c8a350501d98af",
       "size": 1203
+    },
+    {
+      "path": "kubejs/assets/apotheosis/lang/en_us.json",
+      "sha256": "d3c76dd205384c2d42acc8512124a5890461a67b9bb6617f6b1de3064fcf77c2",
+      "size": 775
+    },
+    {
+      "path": "kubejs/assets/apotheosis/lang/ru_ru.json",
+      "sha256": "1f8220c4983fdd051ee63e4b351cee62c4a014d18365d51cc96940d5e0ea2c32",
+      "size": 881
     },
     {
       "path": "kubejs/assets/elyrium/lang/en_us.json",
@@ -7831,6 +7841,171 @@
       "size": 120
     },
     {
+      "path": "kubejs/data/apotheosis/gems/amethyst_of_void.json",
+      "sha256": "0ba8312c633a7d6533c202844a5c57cb41bd9cf134baab30b9ee03097b156992",
+      "size": 1523
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/core/ballast.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/core/brawlers.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/core/breach.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/core/combatant.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/core/guardian.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/core/lightning.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/core/lunar.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/core/samurai.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/core/slipstream.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/core/solar.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/core/splendor.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/core/tyrannical.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/core/warlord.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/diamond_of_colossus.json",
+      "sha256": "cb9044bc9f6775d9e3b6d74114d37e8c0400ccfc36631ff761ea782de87dbb87",
+      "size": 1542
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/emerald_of_swiftness.json",
+      "sha256": "d1b525a4003a13730240448d326ffe9091449417ee3433487a72938e23213db1",
+      "size": 1591
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/hunters_amber.json",
+      "sha256": "30e089e237ec451776111798604a24d85382a75fb0652b2bc43728a64a315e20",
+      "size": 1586
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/onyx_of_crushing.json",
+      "sha256": "1e6b36ab5cbc04953106b241a07014c2704684a205f3bd86e728eea1bef82e3c",
+      "size": 1525
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/opal_of_zephyr.json",
+      "sha256": "2042f6a4d68509d8cdd6bf39c754a005cef7dd6e40a72c722fc9a4ad73be914e",
+      "size": 1575
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/overworld/earth.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/overworld/royalty.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/overworld/verdant_ruin.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/ruby_of_wrath.json",
+      "sha256": "ad9e82528fe01555af8b939165d4d3208ea5be303b379650fe3be1c97a3e6319",
+      "size": 1547
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/sapphire_of_precision.json",
+      "sha256": "bfea6042e272fa6d54494c1be00b617c6090e362eda607a04b1c988f423a18f3",
+      "size": 1559
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/starlight_luminarite.json",
+      "sha256": "534186bcd992187453cc92510fe11725814677edf3a73bc1fef947aad7a8c6b6",
+      "size": 1352
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/the_end/endersurge.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/the_end/mageslayer.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/the_nether/blood_lord.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/the_nether/inferno.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/the_nether/molten_breach.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/topaz_of_bulwark.json",
+      "sha256": "272334ad549b56de5cbbccc6e0f68bc6c67766695949cf4b3d3de1ee88a82a31",
+      "size": 1524
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/twilight/forest.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
+      "path": "kubejs/data/apotheosis/gems/twilight/queen.json",
+      "sha256": "059d04877e7e332cc67ee13fa8798a00e45061fbf78c16bc9cc8cc56258b6eb8",
+      "size": 188
+    },
+    {
       "path": "kubejs/data/elyrium/spell/crushing_uppercut.json",
       "sha256": "3feedc7c227af87955445c3502f44caa9e4c6892aea9408bffef9b3e6c35e1cd",
       "size": 1870
@@ -8177,8 +8352,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/elyrium_forge_api.js",
-      "sha256": "a3f06d24ba440caf5e5a58ff9dd12772d780886fac76958e7ed033fc5afbbe04",
-      "size": 34124
+      "sha256": "d65e8614a4b50998fd3a4951ac6af9642d95d889729b62d59ae19a3f61b5d5ff",
+      "size": 34875
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_engine.js",
@@ -8252,8 +8427,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_gui.js",
-      "sha256": "1345bc42e3dde932b1fd324568007d9477e5277cce00cc16ca60d10aa3043492",
-      "size": 98120
+      "sha256": "81e90623a4f612bf09c2f348b2e8b80673b335d4c200b623079155a53036245c",
+      "size": 112919
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",

@@ -1,0 +1,67 @@
+{
+  "type": "apotheosis:gem",
+  "unique": true,
+  "weights": {
+    "weight": 100,
+    "quality": 0.0
+  },
+  "bonuses": [
+    {
+      "type": "apotheosis:attribute",
+      "attribute": "minecraft:generic.attack_speed",
+      "operation": "add_multiplied_base",
+      "gem_class": {
+        "key": "weapons",
+        "types": [
+          "apotheosis:melee_weapon",
+          "apotheosis:trident",
+          "apotheosis:bow"
+        ]
+      },
+      "values": {
+        "cracked": 0.03,
+        "chipped": 0.05,
+        "flawed": 0.08,
+        "normal": 0.1,
+        "flawless": 0.12,
+        "perfect": 0.15
+      }
+    },
+    {
+      "type": "apotheosis:attribute",
+      "attribute": "minecraft:generic.movement_speed",
+      "operation": "add_multiplied_base",
+      "gem_class": "apotheosis:shield",
+      "values": {
+        "cracked": 0.02,
+        "chipped": 0.03,
+        "flawed": 0.04,
+        "normal": 0.05,
+        "flawless": 0.06,
+        "perfect": 0.08
+      }
+    },
+    {
+      "type": "apotheosis:attribute",
+      "attribute": "minecraft:generic.movement_speed",
+      "operation": "add_multiplied_base",
+      "gem_class": {
+        "key": "armor",
+        "types": [
+          "apotheosis:helmet",
+          "apotheosis:chestplate",
+          "apotheosis:leggings",
+          "apotheosis:boots"
+        ]
+      },
+      "values": {
+        "cracked": 0.015,
+        "chipped": 0.025,
+        "flawed": 0.035,
+        "normal": 0.045,
+        "flawless": 0.055,
+        "perfect": 0.07
+      }
+    }
+  ]
+}

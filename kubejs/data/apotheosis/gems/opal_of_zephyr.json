@@ -1,0 +1,67 @@
+{
+  "type": "apotheosis:gem",
+  "unique": true,
+  "weights": {
+    "weight": 100,
+    "quality": 0.0
+  },
+  "bonuses": [
+    {
+      "type": "apotheosis:attribute",
+      "attribute": "apothic_attributes:arrow_velocity",
+      "operation": "add_multiplied_base",
+      "gem_class": {
+        "key": "weapons",
+        "types": [
+          "apotheosis:melee_weapon",
+          "apotheosis:trident",
+          "apotheosis:bow"
+        ]
+      },
+      "values": {
+        "cracked": 0.04,
+        "chipped": 0.07,
+        "flawed": 0.1,
+        "normal": 0.14,
+        "flawless": 0.18,
+        "perfect": 0.22
+      }
+    },
+    {
+      "type": "apotheosis:attribute",
+      "attribute": "apothic_attributes:dodge_chance",
+      "operation": "add_value",
+      "gem_class": "apotheosis:shield",
+      "values": {
+        "cracked": 0.015,
+        "chipped": 0.025,
+        "flawed": 0.035,
+        "normal": 0.045,
+        "flawless": 0.06,
+        "perfect": 0.08
+      }
+    },
+    {
+      "type": "apotheosis:attribute",
+      "attribute": "apothic_attributes:dodge_chance",
+      "operation": "add_value",
+      "gem_class": {
+        "key": "armor",
+        "types": [
+          "apotheosis:helmet",
+          "apotheosis:chestplate",
+          "apotheosis:leggings",
+          "apotheosis:boots"
+        ]
+      },
+      "values": {
+        "cracked": 0.01,
+        "chipped": 0.015,
+        "flawed": 0.02,
+        "normal": 0.025,
+        "flawless": 0.035,
+        "perfect": 0.045
+      }
+    }
+  ]
+}
