@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-28T19:41:38.824578+00:00",
+  "generated_at": "2026-09-28T20:37:14.846723+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -337,7 +337,7 @@
     },
     {
       "path": "config/chunky/tasks/minecraft/overworld.properties",
-      "sha256": "12642a87db60a57a707eeb09c65a170379c4f81ab0796a3cb3eaa1b9b93657ff",
+      "sha256": "2ac58d9f1f4d462d476593164ceec3f077a9571b3c2159c6af8432e8a0f99ebd",
       "size": 129
     },
     {
@@ -1367,7 +1367,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "4743f317121e17fbc62000d8a5ee85d71691cc85343dc3ae92b2ae1935a42a4c",
+      "sha256": "573c4b7982e2c1f5d60b79cc102a7b20e430f333d5c3e18f2f7a9f23fd951de3",
       "size": 275
     },
     {
@@ -1417,8 +1417,8 @@
     },
     {
       "path": "config/rpg_series/loot_fallback_report.json",
-      "sha256": "39877d2913ce1eb840575fcad4200047341ada62cbe70d9de59c62a22f38be6c",
-      "size": 83024
+      "sha256": "7cf5e831b0c5f3d7f39c5e3d35c9bc3fc09b5676e2d86279672ec565c53f978f",
+      "size": 176
     },
     {
       "path": "config/rpg_series/loot_scrolls_v2.json",
@@ -1567,8 +1567,8 @@
     },
     {
       "path": "config/spell_engine/weapon_fallback.json",
-      "sha256": "3d2a7fe0c182bc6db4419a5c574a8e29ff336359360cd2ed7ff61ba751ed4c8d",
-      "size": 8238
+      "sha256": "7e14aba25c00907cb453361bc525ac2572ff4d2fa7aac115c22b2c310f73ed61",
+      "size": 7911
     },
     {
       "path": "config/spell_power/attributes.json",
@@ -8007,48 +8007,48 @@
     },
     {
       "path": "kubejs/data/elyrium/spell/crushing_uppercut.json",
-      "sha256": "3feedc7c227af87955445c3502f44caa9e4c6892aea9408bffef9b3e6c35e1cd",
-      "size": 1870
+      "sha256": "55263c944bb2823748e3f319b95c0d9ebe54f2b0d0a8ab1919b59f56bd208316",
+      "size": 1875
     },
     {
       "path": "kubejs/data/elyrium/spell/earth_sunder.json",
-      "sha256": "e5ceff171066ea10a7aaf8fc791263938aaf2c86c5fae8d13f0cee7674a38dfa",
-      "size": 2091
+      "sha256": "7b7e65f921ef0c66952f6d98358c5d50b7c1abcd9d932724dfb98f5e007b09fa",
+      "size": 2098
     },
     {
       "path": "kubejs/data/elyrium/spell/fan_barrage.json",
-      "sha256": "6c865a5de2df33abc665d321a01118e90f24019d19ead04c13268de4d62e84de",
-      "size": 988
+      "sha256": "bd97f577e2940164e05ffb7abbc20a64d05f8e657428429149ccfdc55cf50738",
+      "size": 992
     },
     {
       "path": "kubejs/data/elyrium/spell/iai_slash.json",
-      "sha256": "6caba0c6bed1aa22e7da88bcf5bba68ba3839ea122abfe4c7d756341a1012e1d",
-      "size": 1889
+      "sha256": "abfa901a40d9f37578e1da117fee53f01f457d044093fe64ed9f0d8bf8819f6b",
+      "size": 1896
     },
     {
       "path": "kubejs/data/elyrium/spell/piercing_thrust.json",
-      "sha256": "b8bd72fd0ebbd8582d2dbc268191327f93cc9a0df639bfbed45b7bddcddb9c6b",
-      "size": 1601
+      "sha256": "fa1b22ce0ec0a8ec54166faa49bc54853e1d3a31ef4a3832e0f5127c4b2e4e2e",
+      "size": 1607
     },
     {
       "path": "kubejs/data/elyrium/spell/reverse_sunder.json",
-      "sha256": "2e57da46233ae6da33bde7af25e886fca2fd04ef66e5a3b75d731d422120d082",
-      "size": 1937
+      "sha256": "2d21d4239783ce7690047f6646fc752221d3529a6cfe543844a1b8b50ef3576f",
+      "size": 1943
     },
     {
       "path": "kubejs/data/elyrium/spell/scissor_cross.json",
-      "sha256": "901613953b45834e24f5906d59fcb1ecde09d50a79faa916a2899869ea2b7dd8",
-      "size": 2313
+      "sha256": "b7baaa9ec06b35b972d81041f255b3f546d733b2d9c338b5bc24a3d77be75b1f",
+      "size": 2320
     },
     {
       "path": "kubejs/data/elyrium/spell/severing_cleave.json",
-      "sha256": "aacaaaa9918b12be0dc06ef8521bd115293953d513e6c0b1b29fcad91cebd21f",
-      "size": 2118
+      "sha256": "a2a47b13ced0836d278eea07d20c4423b32b8d384ff92d30433a8ce27149771e",
+      "size": 2122
     },
     {
       "path": "kubejs/data/elyrium/spell/whirlwind_cleave.json",
-      "sha256": "49e99adfa078ec0f93c58f390b620a2b1df613a67b5b4517d6405cc864538640",
-      "size": 1854
+      "sha256": "36fa3db1eeaf211b455f4e14d4f9a537c43d9be7f8ff36434c0fafd15ee9dc43",
+      "size": 1865
     },
     {
       "path": "kubejs/data/generated_frame_blocks.json",
@@ -8321,6 +8321,11 @@
       "size": 17199
     },
     {
+      "path": "kubejs/server_scripts/02_magic/staff_spell_system.js",
+      "sha256": "270c46d8791248e1251a06ac8594dee9510f149db5d23fb5d56e8f319b03d385",
+      "size": 4521
+    },
+    {
       "path": "kubejs/server_scripts/03_combat/anti_afk_damage_share.js",
       "sha256": "83c763b94ca7cc42a988e4c9f15489b777ca99df3294d20f4ca4295439834b63",
       "size": 1563
@@ -8397,8 +8402,13 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "222bda1c3f77a5c492f435d326667450964766b73c28efd550917a8e42778264",
-      "size": 95460
+      "sha256": "5b6894393008572d2a76ebd745ea2326ef92d8f5a7edc691c018982f002b7ef8",
+      "size": 96362
+    },
+    {
+      "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
+      "sha256": "7077688a1af5b8bea89564510eb1ad739d3ed20f5d9f39146b42362334984453",
+      "size": 990
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
@@ -8434,6 +8444,11 @@
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",
       "sha256": "c464a1d9b451212e37e9acde6bfa8c162aec258070fab787fb56e7242169fcc3",
       "size": 2428
+    },
+    {
+      "path": "kubejs/server_scripts/03_combat/weapon_mastery.js",
+      "sha256": "73204b9126a8d2b50f8ddd5b94e1a712ac35b9620f942f44877a0ec409360cee",
+      "size": 8723
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_reinforcement_scaling.js",
@@ -8519,6 +8534,11 @@
       "path": "kubejs/server_scripts/05_professions/utility_professions_mechanics.js",
       "sha256": "15e8e61fcf8836711c61ce3b04255a4ff2c6d5900f154c38bfaa305cf6a5abff",
       "size": 14837
+    },
+    {
+      "path": "kubejs/server_scripts/06_world_colonies/abyss_sprint2_mechanics.js",
+      "sha256": "d58193a4a90450d480879e427a2398a853c25375045e0fe55756771ecbd42781",
+      "size": 25577
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/anti_grief_dungeon_lockdown.js",
@@ -12754,6 +12774,51 @@
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/skills/wooden_shovel.png",
       "sha256": "bfc38df86276ca7a51affd8d9373e82c977ebd0608ce5d37855d301774cc17e8",
       "size": 423
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/spell/crushing_uppercut.png",
+      "sha256": "d36120f9cf7fed13e6c85ad67650c71e597a8da68e628c885c0822ea43cbca34",
+      "size": 678
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/spell/earth_sunder.png",
+      "sha256": "680c5ab0aab873b5b488b059ad92cd340ae22b694d8d2f5a0b171d62b7e6ad25",
+      "size": 670
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/spell/fan_barrage.png",
+      "sha256": "70a17ea55969f91610ebaaa2cd8d0a8e98115d2639663108ed0a30a31a76bc11",
+      "size": 718
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/spell/iai_slash.png",
+      "sha256": "7c3e56f75c8a785f682c8ce43d305a9f26ad0789d76a0ef3b6aad055001d149a",
+      "size": 668
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/spell/piercing_thrust.png",
+      "sha256": "1fd32e65ddf88a6dc2e7f0106ef4c5ef3fce43e0e9a81b3c2f3c2b6e8aed7750",
+      "size": 674
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/spell/reverse_sunder.png",
+      "sha256": "4a8d7a5817a356e1749cda24039fef4fbad2dd9adfd45aacd3a1f2faf5c8a1c2",
+      "size": 624
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/spell/scissor_cross.png",
+      "sha256": "7b522450a6e387c3bcb8cc6f61373214c1cc38a4371c00538288db57bbde8808",
+      "size": 514
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/spell/severing_cleave.png",
+      "sha256": "c0c9e61b44da319b5d33a191345c01e9fcb85356febbca9b7fddbcde1c205aad",
+      "size": 562
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/spell/whirlwind_cleave.png",
+      "sha256": "54b7704ce57efcc213fc0a3147c9dfedfecf16f86eb5e533bb9dc81aa957d132",
+      "size": 578
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/simplestats/lang/ru_ru.json",

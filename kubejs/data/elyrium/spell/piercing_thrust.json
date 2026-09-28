@@ -69,7 +69,7 @@
   ],
   "cost": {
     "cooldown": {
-      "group": "weapon",
+      "group": "weapon_spear",
       "attempt_duration": 0.5,
       "duration": 9.0
     }

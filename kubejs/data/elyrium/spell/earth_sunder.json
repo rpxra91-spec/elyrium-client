@@ -91,7 +91,7 @@
   },
   "cost": {
     "cooldown": {
-      "group": "weapon",
+      "group": "weapon_hammer",
       "attempt_duration": 0.5,
       "duration": 14.0
     }

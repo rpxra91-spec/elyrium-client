@@ -1538,7 +1538,26 @@ ItemEvents.rightClicked(event => {
     let hasShieldInOffhand = offHand && isShield(offHand);
     let isAirborne = (typeof player.onGround === 'function' ? !player.onGround() : !player.onGround) || player.fallDistance > 0.05;
 
-    // Control scheme:
+    // --------------------------------------------------------------------------
+    // Special Handling for Ranged Weapons (Bows & Crossbows):
+    //   - [ПКМ] (without Shift): Pure vanilla bow drawing & shooting.
+    //   - [Shift + ПКМ]: Innate Ranged Martial Art ('fan_barrage' / Slot 2).
+    // --------------------------------------------------------------------------
+    if (isBow(mainHand)) {
+        if (player.isCrouching()) {
+            player.persistentData.putInt('skd_last_art_tick', currentAge);
+            let art = getSlotWeaponArt(mainHand, 2) || resolveInnateWeaponArt(player, isAirborne);
+            if (art && WEAPON_ARTS[art]) {
+                executeWeaponArt(player, art, isAirborne, false);
+            }
+            return;
+        } else {
+            // Normal vanilla shooting: do not intercept
+            return;
+        }
+    }
+
+    // Control scheme for Melee:
     // With shield:
     //   - [ПКМ]: Standard vanilla shield block
     //   - [Shift + ПКМ]: Innate weapon art from behind shield (Slot 1)

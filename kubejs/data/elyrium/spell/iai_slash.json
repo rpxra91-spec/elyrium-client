@@ -80,7 +80,7 @@
   ],
   "cost": {
     "cooldown": {
-      "group": "weapon",
+      "group": "weapon_katana",
       "attempt_duration": 0.5,
       "duration": 10.0
     }

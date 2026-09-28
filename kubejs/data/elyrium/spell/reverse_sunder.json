@@ -85,7 +85,7 @@
   ],
   "cost": {
     "cooldown": {
-      "group": "weapon",
+      "group": "weapon_sword",
       "attempt_duration": 0.5,
       "duration": 10.0
     }

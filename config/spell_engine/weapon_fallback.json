@@ -269,7 +269,7 @@
     }
   },
   "ranged_weapons": {
-    "enabled": true,
+    "enabled": false,
     "blacklist": "",
     "enable_specifiers": true,
     "specifiers": [
