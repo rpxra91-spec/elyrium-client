@@ -4,69 +4,47 @@
 	"waves": [
 		{
 			"entities": [
-				{
-					"entity": "minecraft:zombie",
-					"count": 6
-				},
-				{
-					"entity": "minecraft:skeleton",
-					"count": 4
-				}
+				{ "entity": "minecraft:zombie", "count": 6 },
+				{ "entity": "minecraft:skeleton", "count": 4 }
 			],
 			"modifiers": [
-				{
-					"attribute": "generic.max_health",
-					"operation": "add_multiplied_total",
-					"value": 0.3
-				}
+				{ "attribute": "generic.max_health", "operation": "add_multiplied_total", "value": 0.2 }
 			],
 			"rewards": [
-				{
-					"type": "gateways:stack",
-					"stack": {
-						"id": "minecraft:iron_ingot",
-						"count": 8
-					}
-				}
+				{ "type": "gateways:stack", "stack": { "id": "minecraft:iron_ingot", "count": 8 } }
 			],
-			"max_wave_time": 1200,
-			"setup_time": 160
+			"max_wave_time": 1000,
+			"setup_time": 120
 		},
 		{
 			"entities": [
-				{
-					"entity": "undergarden:dweller",
-					"count": 4
-				},
-				{
-					"entity": "undergarden:rotwalker",
-					"count": 4
-				}
+				{ "entity": "minecraft:spider", "count": 5 },
+				{ "entity": "minecraft:creeper", "count": 2 }
 			],
 			"modifiers": [
-				{
-					"attribute": "generic.max_health",
-					"operation": "add_multiplied_total",
-					"value": 0.5
-				},
-				{
-					"attribute": "generic.attack_damage",
-					"operation": "add_value",
-					"value": 3.0
-				}
+				{ "attribute": "generic.movement_speed", "operation": "add_multiplied_total", "value": 0.1 }
+			],
+			"rewards": [
+				{ "type": "gateways:stack", "stack": { "id": "minecraft:copper_ingot", "count": 12 } }
+			],
+			"max_wave_time": 1000,
+			"setup_time": 120
+		},
+		{
+			"entities": [
+				{ "entity": "undergarden:dweller", "count": 4 },
+				{ "entity": "undergarden:rotwalker", "count": 4 }
+			],
+			"modifiers": [
+				{ "attribute": "generic.max_health", "operation": "add_multiplied_total", "value": 0.4 },
+				{ "attribute": "generic.attack_damage", "operation": "add_value", "value": 2.5 }
 			],
 			"rewards": [
 				{
 					"type": "gateways:stack_list",
 					"stacks": [
-						{
-							"id": "minecraft:gold_ingot",
-							"count": 6
-						},
-						{
-							"id": "kubejs:combat_bandage",
-							"count": 4
-						}
+						{ "id": "minecraft:gold_ingot", "count": 8 },
+						{ "id": "kubejs:combat_bandage", "count": 4 }
 					]
 				}
 			],
@@ -75,124 +53,163 @@
 		},
 		{
 			"entities": [
-				{
-					"entity": "undergarden:brute",
-					"count": 2
-				},
-				{
-					"entity": "undergarden:rotbeast",
-					"count": 2
-				},
-				{
-					"entity": "minecraft:witch",
-					"count": 2
-				}
+				{ "entity": "undergarden:brute", "count": 2 },
+				{ "entity": "undergarden:rotling", "count": 6 }
 			],
 			"modifiers": [
-				{
-					"attribute": "generic.max_health",
-					"operation": "add_multiplied_total",
-					"value": 0.7
-				},
-				{
-					"attribute": "generic.armor",
-					"operation": "add_value",
-					"value": 6
-				},
-				{
-					"attribute": "apothic_attributes:armor_pierce",
-					"operation": "add_value",
-					"value": 3
-				}
+				{ "attribute": "generic.max_health", "operation": "add_multiplied_total", "value": 0.5 },
+				{ "attribute": "generic.armor", "operation": "add_value", "value": 4 }
+			],
+			"rewards": [
+				{ "type": "gateways:stack", "stack": { "id": "undergarden:cloggrum_ingot", "count": 6 } }
+			],
+			"max_wave_time": 1200,
+			"setup_time": 160
+		},
+		{
+			"entities": [
+				{ "entity": "undergarden:rotbeast", "count": 2 },
+				{ "entity": "minecraft:witch", "count": 2 }
+			],
+			"modifiers": [
+				{ "attribute": "generic.max_health", "operation": "add_multiplied_total", "value": 0.6 },
+				{ "attribute": "apothic_attributes:armor_pierce", "operation": "add_value", "value": 3 }
 			],
 			"rewards": [
 				{
 					"type": "gateways:stack_list",
 					"stacks": [
-						{
-							"id": "minecraft:diamond",
-							"count": 3
-						},
-						{
-							"id": "undergarden:cloggrum_ingot",
-							"count": 4
-						}
+						{ "id": "minecraft:redstone", "count": 16 },
+						{ "id": "minecraft:lapis_lazuli", "count": 16 }
 					]
 				}
 			],
 			"max_wave_time": 1400,
+			"setup_time": 180
+		},
+		{
+			"entities": [
+				{ "entity": "undergarden:greater_dweller", "count": 3 },
+				{ "entity": "undergarden:rotwalker", "count": 6 }
+			],
+			"modifiers": [
+				{ "attribute": "generic.max_health", "operation": "add_multiplied_total", "value": 0.7 },
+				{ "attribute": "generic.attack_damage", "operation": "add_value", "value": 3.5 }
+			],
+			"rewards": [
+				{
+					"type": "gateways:stack_list",
+					"stacks": [
+						{ "id": "minecraft:diamond", "count": 4 },
+						{ "id": "kubejs:combat_bandage", "count": 6 }
+					]
+				}
+			],
+			"max_wave_time": 1400,
+			"setup_time": 180
+		},
+		{
+			"entities": [
+				{ "entity": "minecraft:piglin_brute", "count": 3 },
+				{ "entity": "minecraft:wither_skeleton", "count": 4 }
+			],
+			"modifiers": [
+				{ "attribute": "generic.max_health", "operation": "add_multiplied_total", "value": 0.8 },
+				{ "attribute": "generic.armor", "operation": "add_value", "value": 6 }
+			],
+			"rewards": [
+				{
+					"type": "gateways:stack_list",
+					"stacks": [
+						{ "id": "minecraft:blaze_rod", "count": 4 },
+						{ "id": "minecraft:netherite_scrap", "count": 1 }
+					]
+				}
+			],
+			"max_wave_time": 1500,
 			"setup_time": 200
+		},
+		{
+			"entities": [
+				{ "entity": "undergarden:rotbelcher", "count": 3 },
+				{ "entity": "undergarden:brute", "count": 3 }
+			],
+			"modifiers": [
+				{ "attribute": "generic.max_health", "operation": "add_multiplied_total", "value": 1.0 },
+				{ "attribute": "generic.attack_damage", "operation": "add_value", "value": 4.5 }
+			],
+			"rewards": [
+				{
+					"type": "gateways:stack_list",
+					"stacks": [
+						{ "id": "undergarden:froststeel_ingot", "count": 4 },
+						{ "id": "minecraft:diamond", "count": 4 }
+					]
+				}
+			],
+			"max_wave_time": 1600,
+			"setup_time": 200
+		},
+		{
+			"entities": [
+				{ "entity": "undergarden:greater_dweller", "count": 4 },
+				{ "entity": "undergarden:rotbeast", "count": 3 }
+			],
+			"modifiers": [
+				{ "attribute": "generic.max_health", "operation": "add_multiplied_total", "value": 1.2 },
+				{ "attribute": "generic.knockback_resistance", "operation": "add_value", "value": 0.6 }
+			],
+			"rewards": [
+				{
+					"type": "gateways:stack_list",
+					"stacks": [
+						{ "id": "minecraft:diamond_block", "count": 1 },
+						{ "id": "undergarden:utherium_crystal", "count": 2 }
+					]
+				}
+			],
+			"max_wave_time": 1800,
+			"setup_time": 220
 		},
 		{
 			"entities": [
 				{
 					"entity": "undergarden:forgotten_guardian",
-					"desc": "Чемпион Колизея: Забытый Страж",
+					"desc": "Великий Чемпион Колизея: Забытый Страж",
 					"modifiers": [
-						{
-							"attribute": "generic.max_health",
-							"operation": "add_multiplied_total",
-							"value": 1.2
-						},
-						{
-							"attribute": "generic.attack_damage",
-							"operation": "add_value",
-							"value": 6.0
-						},
-						{
-							"attribute": "generic.knockback_resistance",
-							"operation": "add_value",
-							"value": 0.8
-						}
+						{ "attribute": "generic.max_health", "operation": "add_multiplied_total", "value": 2.0 },
+						{ "attribute": "generic.attack_damage", "operation": "add_value", "value": 8.0 },
+						{ "attribute": "generic.knockback_resistance", "operation": "add_value", "value": 1.0 },
+						{ "attribute": "generic.armor", "operation": "add_value", "value": 10 }
 					]
 				},
-				{
-					"entity": "undergarden:greater_dweller",
-					"count": 2
-				}
+				{ "entity": "undergarden:brute", "count": 2 },
+				{ "entity": "undergarden:rotbelcher", "count": 2 }
 			],
 			"modifiers": [
-				{
-					"attribute": "generic.max_health",
-					"operation": "add_multiplied_total",
-					"value": 0.8
-				}
+				{ "attribute": "generic.max_health", "operation": "add_multiplied_total", "value": 1.5 }
 			],
 			"rewards": [
 				{
 					"type": "gateways:stack_list",
 					"stacks": [
-						{
-							"id": "minecraft:diamond_block",
-							"count": 1
-						},
-						{
-							"id": "undergarden:froststeel_ingot",
-							"count": 4
-						},
-						{
-							"id": "kubejs:sphere_of_ascension",
-							"count": 1
-						}
+						{ "id": "minecraft:netherite_ingot", "count": 1 },
+						{ "id": "kubejs:sphere_of_ascension", "count": 1 },
+						{ "id": "minecraft:diamond_block", "count": 2 },
+						{ "id": "minecraft:emerald_block", "count": 4 }
 					]
 				}
 			],
-			"max_wave_time": 1800,
-			"setup_time": 200
+			"max_wave_time": 2400,
+			"setup_time": 240
 		}
 	],
 	"rewards": [
 		{
 			"type": "gateways:stack_list",
 			"stacks": [
-				{
-					"id": "minecraft:netherite_scrap",
-					"count": 1
-				},
-				{
-					"id": "minecraft:emerald",
-					"count": 16
-				}
+				{ "id": "minecraft:netherite_ingot", "count": 1 },
+				{ "id": "minecraft:emerald", "count": 32 }
 			]
 		}
 	],

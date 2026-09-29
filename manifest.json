@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-29T08:54:36.457321+00:00",
+  "generated_at": "2026-09-29T09:07:59.349358+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8006,6 +8006,16 @@
       "size": 188
     },
     {
+      "path": "kubejs/data/elyrium/dimension/dungeons.json",
+      "sha256": "e69800fe94d23ad442d8a34213a2b12ea5137ece8c4aacd71e8da856f05aab3a",
+      "size": 288
+    },
+    {
+      "path": "kubejs/data/elyrium/dimension_type/dungeons_type.json",
+      "sha256": "ce155cba8a56562688371a735cf4c4fa0d4ce085fb64af1a02c4887ffbc7a673",
+      "size": 485
+    },
+    {
       "path": "kubejs/data/elyrium/spell/crushing_uppercut.json",
       "sha256": "55263c944bb2823748e3f319b95c0d9ebe54f2b0d0a8ab1919b59f56bd208316",
       "size": 1875
@@ -8052,8 +8062,8 @@
     },
     {
       "path": "kubejs/data/gateways/gateways/elyrium_colosseum.json",
-      "sha256": "72b1c5f02dfaf673a4d06c09cb817476fb2394de057af73cc1dd0ea45bbe359b",
-      "size": 3560
+      "sha256": "88f9422d3ac4b0807690c8852b11c8b48d01fd451bbd4011cea58723ffa696ca",
+      "size": 6383
     },
     {
       "path": "kubejs/data/generated_frame_blocks.json",
@@ -8616,6 +8626,11 @@
       "size": 30197
     },
     {
+      "path": "kubejs/server_scripts/06_world_colonies/dungeon_instance_manager.js",
+      "sha256": "37b8db68c999bb9d5c83fde8b869f228318dbc9168ff4b79edf7f079083e6b1f",
+      "size": 11169
+    },
+    {
       "path": "kubejs/server_scripts/06_world_colonies/guard_combat_abilities.js",
       "sha256": "d30d86b3e332d97df65f5052645ead016d24ffade6a80cdc0676274d5e5f27fa",
       "size": 3708
@@ -8649,6 +8664,11 @@
       "path": "kubejs/server_scripts/06_world_colonies/tavern_peace_zones.js",
       "sha256": "a0c03641017c4a9b5955ace760ffc7d8e85347fec96ebe0e92a85aa7b2531809",
       "size": 7484
+    },
+    {
+      "path": "kubejs/server_scripts/06_world_colonies/wandering_steles_engine.js",
+      "sha256": "be57b240a3cfeaaa5667b993cee0264a186f65a45e649cde0867c8da2954bdb4",
+      "size": 9597
     },
     {
       "path": "kubejs/server_scripts/07_recipes_filters/filter_early_weapons.js",
