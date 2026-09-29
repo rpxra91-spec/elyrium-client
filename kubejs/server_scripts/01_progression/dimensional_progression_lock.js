@@ -141,33 +141,10 @@ function checkDimensionAccess(player) {
     }
 }
 
-// Sector 1 Overworld boundary enforcement (R <= 1500)
+// Sector 1 Overworld boundary enforcement is now fully handled by
+// 06_world_colonies/sector_progression_engine.js with soft-gating miasma and 8 progressive sectors.
 function checkOverworldSectorAccess(player) {
-    if (!player || !player.isAlive()) return;
-    if (player.isCreative && player.isCreative()) return;
-    if (player.isSpectator && player.isSpectator()) return;
-    if (player.tags && (player.tags.contains('tier_bypass') || player.tags.contains('admin_bypass') || player.tags.contains('boundary_bypass'))) return;
-
-    let dimId = String(player.level.dimension);
-    if (!dimId.includes('overworld')) return;
-
-    let distSq = player.x * player.x + player.z * player.z;
-    if (distSq > SECTOR_1_RADIUS_SQ) {
-        let hasAccess = player.persistentData.getBoolean('skd_sector1_completed') || player.persistentData.getBoolean('skd_tier1_completed');
-        if (!hasAccess) {
-            let dist = Math.sqrt(distSq);
-            let factor = (SECTOR_1_RADIUS - 30) / dist;
-            let safeX = player.x * factor;
-            let safeZ = player.z * factor;
-
-            player.teleportTo('minecraft:overworld', safeX, player.y, safeZ, player.yaw, player.pitch);
-            player.potionEffects.add('minecraft:resistance', 60, 4, false, false);
-
-            player.sendSystemMessage(Text.of('§c⚡ Древний Барьер Рубежа (R=1500) не пропускает вас! Одолейте Хранителя Сектора I.'), true);
-            player.server.runCommandSilent(`playsound minecraft:block.respawn_anchor.deplete player ${player.username} ~ ~ ~ 1.0 0.8`);
-            player.server.runCommandSilent(`particle minecraft:electric_spark ${player.x} ${player.y + 1} ${player.z} 0.5 0.5 0.5 0.1 20 normal`);
-        }
-    }
+    // Handled by sector_progression_engine.js
 }
 
 // -----------------------------------------------------------------------------
@@ -180,14 +157,12 @@ ServerEvents.tick(event => {
     server.players.forEach(player => {
         if (!player || !player.isAlive()) return
         checkDimensionAccess(player)
-        checkOverworldSectorAccess(player)
     })
 })
 
 PlayerEvents.loggedIn(event => {
     let player = event.player
     checkDimensionAccess(player)
-    checkOverworldSectorAccess(player)
 })
 
 // -----------------------------------------------------------------------------

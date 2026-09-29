@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-29T09:07:59.349358+00:00",
+  "generated_at": "2026-09-29T09:28:24.583150+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8292,8 +8292,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/dimensional_progression_lock.js",
-      "sha256": "73e037a44258bd100e69d6627202f1fc0e6b8411c0affe3cbf564875e395633a",
-      "size": 19402
+      "sha256": "0935b3447566974f703ce2e628d5ee4f94cb273ce86f5d8ea7dc9e2a6f024e2b",
+      "size": 17927
     },
     {
       "path": "kubejs/server_scripts/01_progression/elyrium_continent_tp.js",
@@ -8631,14 +8631,19 @@
       "size": 11169
     },
     {
+      "path": "kubejs/server_scripts/06_world_colonies/endless_fringe_engine.js",
+      "sha256": "2e5dad871058c439379f54aa937f15b1c2c0c7e4882f4b4856f01c5321dac8bb",
+      "size": 4631
+    },
+    {
       "path": "kubejs/server_scripts/06_world_colonies/guard_combat_abilities.js",
       "sha256": "d30d86b3e332d97df65f5052645ead016d24ffade6a80cdc0676274d5e5f27fa",
       "size": 3708
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/minecolonies_limits.js",
-      "sha256": "7479019a1c589e391db979902be9d1c5a08b1dd8790d6f1199ef1933092a21c1",
-      "size": 6091
+      "sha256": "93569729ee563e547645c0ff38468f43cb0dde8d04200012dbab7a0cd52b3a87",
+      "size": 7497
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/outpost_garrison_engine.js",
@@ -8654,6 +8659,11 @@
       "path": "kubejs/server_scripts/06_world_colonies/procedural_toponymy_engine.js",
       "sha256": "b659e044272b37bca5b68918f45f8a27858e15b0fa01dfb165ebf1fb028c67bf",
       "size": 10580
+    },
+    {
+      "path": "kubejs/server_scripts/06_world_colonies/sector_progression_engine.js",
+      "sha256": "8b5c7370c05031fe9c992177391a59095bbada04991fc5c22af0deffaab7391e",
+      "size": 14932
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/server_idle_system.js",

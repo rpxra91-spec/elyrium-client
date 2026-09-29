@@ -71,6 +71,21 @@ BlockEvents.placed(event => {
 
     // Check if placing a Town Hall or Supply Camp block
     if (blockId.includes('blockhuttownhall') || blockId.includes('supplycamp')) {
+        let dim = String(event.level.dimension);
+        if (!dim.includes('overworld')) {
+            event.cancel();
+            player.displayClientMessage(Text.of('§c⚠ Колонии разрешено основывать только в Верхнем Мире!'), true);
+            return;
+        }
+
+        let distSq = block.x * block.x + block.z * block.z;
+        if (distSq > 1500 * 1500) {
+            event.cancel();
+            player.displayClientMessage(Text.of('§c⚠ Колонии разрешено основывать только в Секторе I (R <= 1500 блоков от спавна)!'), true);
+            player.server.runCommandSilent(`playsound minecraft:block.chest.locked player ${player.username} ${block.x} ${block.y} ${block.z} 1.0 0.8`);
+            return;
+        }
+
         let ownedCount = getPlayerOwnedColoniesCount(player);
         if (ownedCount >= 1) {
             event.cancel();
@@ -104,6 +119,15 @@ ItemEvents.rightClicked(event => {
 
     let itemId = item.id.toString();
     if (itemId.includes('supplycampplacer') || itemId.includes('supplychestdeployer')) {
+        let dim = String(player.level.dimension);
+        let distSq = player.x * player.x + player.z * player.z;
+        if (!dim.includes('overworld') || distSq > 1500 * 1500) {
+            event.cancel();
+            player.displayClientMessage(Text.of('§c⚠ Лагерь поселенцев разрешено разворачивать только в Секторе I (R <= 1500 блоков от спавна)!'), true);
+            player.server.runCommandSilent(`playsound minecraft:block.chest.locked player ${player.username} ~ ~ ~ 1.0 0.8`);
+            return;
+        }
+
         let ownedCount = getPlayerOwnedColoniesCount(player);
         if (ownedCount >= 1) {
             event.cancel();
