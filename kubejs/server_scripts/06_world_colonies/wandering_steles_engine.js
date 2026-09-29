@@ -38,7 +38,7 @@ const ElyriumSteleEngine = {
         server.runCommandSilent(`execute in ${dim} run summon interaction ${x + 0.5} ${y} ${z + 0.5} {width:1.6f,height:3.2f,Tags:["elyrium_stele","type_${type}","sector_${sec}","state_closed"]}`);
 
         // 2. Floating Block Display
-        server.runCommandSilent(`execute in ${dim} run summon block_display ${x + 0.5} ${y + 0.8} ${z + 0.5} {block_state:{Name:"${blockId}"},transformation:{scale:[1.2f,2.0f,1.2f],translation:[-0.6f,0.0f,-0.6f]},Tags:["elyrium_stele_display","type_${type}","sector_${sec}"]}`);
+        server.runCommandSilent(`execute in ${dim} run summon block_display ${x + 0.5} ${y + 0.8} ${z + 0.5} {block_state:{Name:"${blockId}"},transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1.2f,2.0f,1.2f],translation:[-0.6f,0.0f,-0.6f]},Tags:["elyrium_stele_display","type_${type}","sector_${sec}"]}`);
 
         // Announce nearby
         let level = server.getLevel(dim);

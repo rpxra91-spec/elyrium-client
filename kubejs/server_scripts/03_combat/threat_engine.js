@@ -175,7 +175,7 @@ function executeTankTaunt(player) {
 // EVENT HOOKS
 // ------------------------------------------------------------------------------
 
-EntityEvents.hurt(event => {
+EntityEvents.afterHurt(event => {
     let damage = event.damage;
     let victim = event.entity;
     let source = event.source;

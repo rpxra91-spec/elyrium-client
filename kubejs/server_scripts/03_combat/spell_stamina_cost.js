@@ -150,65 +150,6 @@ function notifyLowStamina(player, requiredCost, currentStam) {
     } catch (eSnd) {}
 }
 
-// ==============================================================================
-// РЕГИСТРАЦИЯ ХУКОВ СОБЫТИЙ SPELL ENGINE
-// ==============================================================================
-
-try {
-    if (J_SpellEvents && J_SpellEvents.CASTING_ATTEMPT && J_SpellEvents.CASTING_ATTEMPT.PRE) {
-        // 1. ПРОВЕРКА ВЫНОСЛИВОСТИ ДО НАЧАЛА КАСТА
-        J_SpellEvents.CASTING_ATTEMPT.PRE.register(args => {
-            try {
-                let player = args.caster();
-                if (!player || player.isCreative() || player.isSpectator()) return null;
-
-                let spellHolder = args.spell();
-                if (!spellHolder) return null;
-
-                let spellId = getSpellIdentifier(spellHolder);
-                if (!spellId) return null;
-
-                let stamCost = ELYRIUM_COMBAT_ART_STAMINA[spellId];
-                if (stamCost) {
-                    let curStam = getElyriumPlayerStamina(player);
-                    if (curStam < stamCost) {
-                        notifyLowStamina(player, stamCost, curStam);
-                        if (J_SpellAttempt && typeof J_SpellAttempt.none === 'function') {
-                            return J_SpellAttempt.none();
-                        }
-                    }
-                }
-            } catch (eAttempt) {
-                console.error('[Elyrium:SpellStamina] Error during casting attempt check: ' + eAttempt);
-            }
-            return null; // Разрешаем каст
-        });
-        console.info('[Elyrium:SpellStamina] Registered SpellEvents.CASTING_ATTEMPT.PRE hook successfully.');
-    }
-
-    if (J_SpellEvents && J_SpellEvents.SPELL_CAST) {
-        // 2. СПИСАНИЕ ВЫНОСЛИВОСТИ ПРИ РЕАЛЬНОМ СОВЕРШЕНИИ КАСТА
-        J_SpellEvents.SPELL_CAST.register(args => {
-            try {
-                let player = args.caster();
-                if (!player || player.isCreative() || player.isSpectator()) return;
-
-                let spellHolder = args.spell();
-                if (!spellHolder) return;
-
-                let spellId = getSpellIdentifier(spellHolder);
-                if (!spellId) return;
-
-                let stamCost = ELYRIUM_COMBAT_ART_STAMINA[spellId];
-                if (stamCost) {
-                    consumeElyriumPlayerStamina(player, stamCost);
-                }
-            } catch (eCast) {
-                console.error('[Elyrium:SpellStamina] Error during spell cast stamina consumption: ' + eCast);
-            }
-        });
-        console.info('[Elyrium:SpellStamina] Registered SpellEvents.SPELL_CAST hook successfully.');
-    }
-} catch (eHookInit) {
-    console.warn('[Elyrium:SpellStamina] Failed to initialize SpellEvents listeners: ' + eHookInit);
-}
+// Note: Raw Java StagedEvent.register requires compiled SAM classes that Rhino ArrowFunctions cannot be cast to.
+// Stamina consumption and checks are handled natively by physical_weapon_arts_engine.js executeWeaponArt.
+console.info('[Elyrium:SpellStamina] Spell stamina subsystem active (managed via KubeJS combat engine).');

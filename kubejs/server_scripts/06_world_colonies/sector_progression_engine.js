@@ -270,7 +270,7 @@ function applySectorBuffs(entity, sectorId) {
 // -----------------------------------------------------------------------------
 // 3. COMBAT SIGNATURE INTERACTIONS
 // -----------------------------------------------------------------------------
-EntityEvents.hurt(event => {
+EntityEvents.beforeHurt(event => {
     let source = event.source;
     let target = event.entity;
     if (!target) return;
