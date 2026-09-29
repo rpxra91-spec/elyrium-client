@@ -9,9 +9,9 @@
 
 const ElyriumLivesEngine = {
     getMaxLivesForSector: function(sector) {
-        if (sector <= 2) return -1; // Unlimited for early learning
-        if (sector <= 5) return 8;  // 8 lives for mid-tier
-        return 4;                   // 4 lives for high-tier
+        if (sector <= 2) return 5;  // 5 shared lives for early tiers
+        if (sector <= 5) return 4;  // 4 shared lives for mid tiers
+        return 3;                   // 3 shared lives for high tiers
     },
 
     initInstanceLives: function(server, instanceId, sector) {
@@ -45,12 +45,12 @@ const ElyriumLivesEngine = {
         let instInfo = sData.getCompound(instTag);
         let maxL = instInfo.getInt('lives_max');
         if (maxL <= 0) {
-            // Unlimited lives (Tier 1-2)
-            player.displayClientMessage(Component.literal('§e⚠ [СМЕРТЬ] Обучающий тир: вы возродитесь у входа без потери жизней!'), false);
-            return;
+            maxL = 5;
+            instInfo.putInt('lives_max', maxL);
         }
 
-        let left = instInfo.getInt('lives_left') - 1;
+        let curLeft = instInfo.contains('lives_left') ? instInfo.getInt('lives_left') : maxL;
+        let left = Math.max(0, curLeft - 1);
         instInfo.putInt('lives_left', left);
         sData.put(instTag, instInfo);
 
@@ -62,15 +62,36 @@ const ElyriumLivesEngine = {
             level.players.forEach(p => {
                 if (p.persistentData.getInt('elyrium_active_instance') === instId) {
                     p.playNotifySound('minecraft:block.bell.use', 'players', 1.0, 0.6);
-                    p.displayClientMessage(Component.literal(`§c☠ [ПОТЕРИ] §fИгрок §e${player.username}§f погиб! Осталось жизней группы: §c${left}§8/§e${maxL}`), false);
+                    p.displayClientMessage(Component.literal(`§c☠ [ПОТЕРИ] §fИгрок §e${player.username}§f пал! Осталось жизней группы: §c${left}§8/§e${maxL}`), false);
                 }
             });
         } else {
-            // Wipout / Expulsion
+            // Wipeout / Expulsion
             level.players.forEach(p => {
                 if (p.persistentData.getInt('elyrium_active_instance') === instId) {
                     p.playNotifySound('minecraft:entity.wither.death', 'players', 1.0, 0.8);
                     p.displayClientMessage(Component.literal('§4☠ [ПРОВАЛ ПОДЗЕМЕЛЬЯ] §cЖизни группы исчерпаны! Экспедиция провалена!'), false);
+
+                    // Apply Soul Trauma and Gear Wear Penalty for Dungeon Failure
+                    try {
+                        let streak = (p.persistentData.getInt('elyrium_death_streak') || 0) + 1;
+                        p.persistentData.putInt('elyrium_death_streak', Math.min(5, streak));
+                        p.persistentData.putBoolean('elyrium_soul_trauma', true);
+                        p.potionEffects.add('minecraft:weakness', 900, 0, false, true); // 45s
+                        p.potionEffects.add('minecraft:slowness', 900, 0, false, true);
+                        p.potionEffects.add('minecraft:mining_fatigue', 900, 0, false, true);
+
+                        ['head', 'chest', 'legs', 'feet', 'mainhand', 'offhand'].forEach(slot => {
+                            let item = p.getEquipment(slot);
+                            if (item && !item.isEmpty() && item.isDamageableItem()) {
+                                let maxDmg = item.maxDamage;
+                                let wear = Math.max(1, Math.floor(maxDmg * 0.05));
+                                item.damageValue = Math.min(maxDmg - 1, item.damageValue + wear);
+                            }
+                        });
+                        p.displayClientMessage(Component.literal('§c☠ [ТРАВМА ДУШИ] §7Провал экспедиции сломил ваш дух. Оружие и броня повреждены (-5%).'), false);
+                    } catch (ePen) {}
+
                     server.scheduleInTicks(40, () => {
                         let retDim = p.persistentData.getString('elyrium_return_dim') || 'minecraft:overworld';
                         let rx = p.persistentData.getDouble('elyrium_return_x') || 0;
@@ -110,10 +131,12 @@ PlayerEvents.tick(event => {
 
     if (player.y < 10) {
         let cellX = instId * 1500;
+        let server = player.server;
+        server.runCommandSilent(`execute in elyrium:dungeons run setblock ${cellX} 64 0 minecraft:stone_bricks`);
         player.fallDistance = 0.0;
         player.teleportTo('elyrium:dungeons', cellX + 0.5, 65.0, 0.5, player.yaw, 0);
         player.playNotifySound('minecraft:entity.enderman.teleport', 'players', 1.0, 0.8);
-        player.displayClientMessage(Component.literal('§c⚠ [СПАСЕНИЕ ИЗ БЕЗДНЫ] Вы сорвались в бездну! Возвращение во Входной Зал.'), false);
+        player.displayClientMessage(Component.literal('§c⚠ [СПАСЕНИЕ ИЗ БЕЗДНЫ] Вы сорвались в бездну! Возвращение во Входной Зал (-1 жизнь).'), false);
         ElyriumLivesEngine.handlePlayerDeath(player);
     }
 });
@@ -143,3 +166,7 @@ ServerEvents.tick(event => {
         player.displayClientMessage(Component.literal(`§6⚔ Инстанс #${instId} §8| §fЯрус: §e${floorStr} §8| §fЖизни: ${livesDisplay}`), true);
     });
 });
+
+// Export to global scope for cross-script access in KubeJS
+global.ElyriumLivesEngine = ElyriumLivesEngine;
+

@@ -22,7 +22,8 @@ function initArtsClientApi() {
 
 let artsKeyPrev = {
     z: false,
-    x: false
+    x: false,
+    attack: false
 };
 
 let lastArtKeySend = 0;
@@ -34,6 +35,7 @@ ClientEvents.tick(event => {
     if (!mc || !mc.player || mc.screen != null || mc.isPaused()) {
         artsKeyPrev.z = false;
         artsKeyPrev.x = false;
+        artsKeyPrev.attack = false;
         return;
     }
 
@@ -71,4 +73,69 @@ ClientEvents.tick(event => {
         }
     }
     artsKeyPrev.x = isXDown;
+
+    // 3. Shield Combat Combinations on Left-Click (LMB):
+    //    - Shield Raised (RMB) + Left-Click (LMB) -> Shield Bash!
+    //    - Shield in Offhand + Shift (Crouch) + Left-Click (LMB) -> Innate Weapon Art!
+    let isAttackDown = false;
+    try {
+        if (mc.options && mc.options.keyAttack && mc.options.keyAttack.isDown()) {
+            isAttackDown = true;
+        } else if (J_GLFW_ARTS.glfwGetMouseButton(windowHandle, 0) === 1) {
+            isAttackDown = true;
+        }
+    } catch (eAtt) {}
+
+    if (isAttackDown && !artsKeyPrev.attack) {
+        let offHand = mc.player.getOffhandItem ? mc.player.getOffhandItem() : mc.player.offHandItem;
+        let isShield = false;
+        if (offHand && !offHand.isEmpty()) {
+            let itemId = String(offHand.getItem ? offHand.getItem().toString() : offHand.id).toLowerCase();
+            if (itemId.includes('shield')) {
+                isShield = true;
+            }
+        }
+
+        if (isShield) {
+            let isBlocking = false;
+            try {
+                if (mc.player.isBlocking && mc.player.isBlocking()) {
+                    isBlocking = true;
+                } else if (mc.options && mc.options.keyUse && mc.options.keyUse.isDown()) {
+                    isBlocking = true;
+                } else if (J_GLFW_ARTS.glfwGetMouseButton(windowHandle, 1) === 1) {
+                    isBlocking = true;
+                }
+            } catch (eBlk) {}
+
+            let isCrouching = false;
+            try {
+                if (mc.player.isCrouching && mc.player.isCrouching()) {
+                    isCrouching = true;
+                } else if (mc.options && mc.options.keyShift && mc.options.keyShift.isDown()) {
+                    isCrouching = true;
+                }
+            } catch (eCrch) {}
+
+            // Combination 1: Shield Raised + LMB -> Shield Bash
+            if (isBlocking) {
+                if (now - lastArtKeySend >= 250) {
+                    lastArtKeySend = now;
+                    try {
+                        mc.player.sendData('elyrium:trigger_weapon_art', { action: 'shield_bash' });
+                    } catch (eNet) {}
+                }
+            }
+            // Combination 2: Holding Shield + Shift + LMB -> Main Hand Innate Art
+            else if (isCrouching) {
+                if (now - lastArtKeySend >= 250) {
+                    lastArtKeySend = now;
+                    try {
+                        mc.player.sendData('elyrium:trigger_weapon_art', { action: 'innate_art' });
+                    } catch (eNet) {}
+                }
+            }
+        }
+    }
+    artsKeyPrev.attack = isAttackDown;
 });

@@ -27,18 +27,20 @@ const ElyriumStelePalettes = {
 
 const ElyriumSteleEngine = {
     // Spawn a wandering stele at specified coordinates
-    spawnStele: function(server, dim, x, y, z, type, sector) {
+    spawnStele: function(server, dim, x, y, z, type, sector, isTest) {
         let sec = sector || 1;
         let pConfig = (ElyriumStelePalettes[sec] && ElyriumStelePalettes[sec][type]) || ElyriumStelePalettes[1][type];
 
         let blockId = pConfig.block;
         let displayName = pConfig.name;
+        let uid = `stele_uid_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
+        let testTag = isTest ? ',"test_stele"' : '';
 
         // 1. Interaction Hitbox (Width 1.6, Height 3.2)
-        server.runCommandSilent(`execute in ${dim} run summon interaction ${x + 0.5} ${y} ${z + 0.5} {width:1.6f,height:3.2f,Tags:["elyrium_stele","type_${type}","sector_${sec}","state_closed"]}`);
+        server.runCommandSilent(`execute in ${dim} run summon interaction ${x + 0.5} ${y} ${z + 0.5} {width:1.6f,height:3.2f,Tags:["elyrium_stele","type_${type}","sector_${sec}","state_closed","${uid}"${testTag}]}`);
 
         // 2. Floating Block Display
-        server.runCommandSilent(`execute in ${dim} run summon block_display ${x + 0.5} ${y + 0.8} ${z + 0.5} {block_state:{Name:"${blockId}"},transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1.2f,2.0f,1.2f],translation:[-0.6f,0.0f,-0.6f]},Tags:["elyrium_stele_display","type_${type}","sector_${sec}"]}`);
+        server.runCommandSilent(`execute in ${dim} run summon block_display ${x + 0.5} ${y + 0.8} ${z + 0.5} {block_state:{Name:"${blockId}"},transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1.2f,2.0f,1.2f],translation:[-0.6f,0.0f,-0.6f]},Tags:["elyrium_stele_display","type_${type}","sector_${sec}","${uid}"${testTag}]}`);
 
         // Announce nearby
         let level = server.getLevel(dim);
@@ -125,9 +127,9 @@ const ElyriumSteleEngine = {
     closeOrDiscardStele: function(steleEntity) {
         if (!steleEntity) return;
         let tags = steleEntity.tags;
-        let isSpawnStele = tags.contains('spawn_test_stele');
+        let isPermanent = tags.contains('spawn_test_stele') || tags.contains('test_stele');
 
-        if (isSpawnStele) {
+        if (isPermanent) {
             tags.remove('state_open');
             tags.add('state_closed');
             steleEntity.persistentData.remove('elyrium_portal_closes_at');
@@ -138,17 +140,20 @@ const ElyriumSteleEngine = {
             });
             toRemove.forEach(t => tags.remove(t));
         } else {
-            let sx = steleEntity.x;
-            let sy = steleEntity.y;
-            let sz = steleEntity.z;
             let sLevel = steleEntity.level;
             let dim = sLevel ? String(sLevel.dimension) : 'minecraft:overworld';
             let server = steleEntity.server;
 
+            // Find uid tag to kill corresponding block display
+            let uid = null;
+            tags.forEach(t => {
+                if (t.startsWith('stele_uid_')) uid = t;
+            });
+
             steleEntity.discard();
 
-            if (server) {
-                server.runCommandSilent(`execute in ${dim} run kill @e[type=minecraft:block_display,tag=elyrium_stele_display,x=${sx},y=${sy},z=${sz},distance=..3]`);
+            if (server && uid) {
+                server.runCommandSilent(`execute in ${dim} run kill @e[tag=${uid}]`);
             }
         }
     }
@@ -232,7 +237,8 @@ ServerEvents.commandRegistry(event => {
                         let player = ctx.source.player;
                         if (player) {
                             let pos = player.blockPosition();
-                            ElyriumSteleEngine.spawnStele(ctx.source.server, String(player.level.dimension), pos.x, pos.y, pos.z, 'colosseum', 1);
+                            ElyriumSteleEngine.spawnStele(ctx.source.server, String(player.level.dimension), pos.x, pos.y, pos.z, 'colosseum', 1, true);
+                            player.displayClientMessage(Component.literal('§a[STELE] Тестовая Стела Колизея установлена (перезаряжаемая)!'), true);
                         }
                         return 1;
                     })
@@ -242,11 +248,29 @@ ServerEvents.commandRegistry(event => {
                         let player = ctx.source.player;
                         if (player) {
                             let pos = player.blockPosition();
-                            ElyriumSteleEngine.spawnStele(ctx.source.server, String(player.level.dimension), pos.x, pos.y, pos.z, 'dungeon', 1);
+                            ElyriumSteleEngine.spawnStele(ctx.source.server, String(player.level.dimension), pos.x, pos.y, pos.z, 'dungeon', 1, true);
+                            player.displayClientMessage(Component.literal('§a[STELE] Тестовая Стела Подземелья установлена (перезаряжаемая)!'), true);
                         }
                         return 1;
                     })
                 )
             )
+            .then(Commands.literal('cleanup')
+                .executes(ctx => {
+                    let server = ctx.source.server;
+                    let player = ctx.source.player;
+                    let dim = player ? String(player.level.dimension) : 'minecraft:overworld';
+                    server.runCommandSilent(`execute in ${dim} run kill @e[tag=elyrium_stele]`);
+                    server.runCommandSilent(`execute in ${dim} run kill @e[tag=elyrium_stele_display]`);
+                    if (player) {
+                        player.displayClientMessage(Component.literal('§e[STELE] Все стелы и дисплеи в текущем мире удалены!'), true);
+                    }
+                    return 1;
+                })
+            )
     );
 });
+
+// Export to global scope for cross-script access in KubeJS
+global.ElyriumSteleEngine = ElyriumSteleEngine;
+

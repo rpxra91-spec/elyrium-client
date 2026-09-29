@@ -102,11 +102,15 @@ const ElyriumInstanceManager = {
         if (type === 'colosseum') {
             this.buildColosseumArena(server, cellX, cellY, cellZ, sector);
         } else if (type === 'dungeon') {
-            if (typeof ElyriumDungeonStitcher !== 'undefined') {
-                ElyriumDungeonStitcher.buildDungeon(server, nextId, sector);
+            let stitcher = global.ElyriumDungeonStitcher || (typeof ElyriumDungeonStitcher !== 'undefined' ? ElyriumDungeonStitcher : null);
+            if (stitcher) {
+                stitcher.buildDungeon(server, nextId, sector);
+            } else {
+                console.error(`[ELYRIUM CRITICAL] ElyriumDungeonStitcher not found when creating dungeon instance #${nextId}!`);
             }
-            if (typeof ElyriumLivesEngine !== 'undefined') {
-                ElyriumLivesEngine.initInstanceLives(server, nextId, sector);
+            let livesEngine = global.ElyriumLivesEngine || (typeof ElyriumLivesEngine !== 'undefined' ? ElyriumLivesEngine : null);
+            if (livesEngine) {
+                livesEngine.initInstanceLives(server, nextId, sector);
             }
         }
 
@@ -138,11 +142,18 @@ const ElyriumInstanceManager = {
 
         if (instType === 'colosseum') {
             // Teleport into Colosseum Arena
+            player.fallDistance = 0.0;
             player.teleportTo('elyrium:dungeons', cellX + 0.5, cellY + 2.0, cellZ + 5.5, 180, 0);
             player.playNotifySound('minecraft:entity.enderman.teleport', 'players', 1.0, 1.0);
             player.displayClientMessage(Component.literal('§6⚔ [КОЛИЗЕЙ ЭЛИРИУМА] §fВы вошли на Арену Испытаний!'), true);
         } else {
+            // Safety floor check at Entry Hall
+            server.runCommandSilent(`execute in elyrium:dungeons run setblock ${cellX} 64 0 minecraft:stone_bricks`);
+            server.runCommandSilent(`execute in elyrium:dungeons run setblock ${cellX} 65 0 minecraft:air`);
+            server.runCommandSilent(`execute in elyrium:dungeons run setblock ${cellX} 66 0 minecraft:air`);
+
             // Teleport into Floor 1 Entry Hall (Room 1 center is cellX + 0.5, Y=65.0, cellZ + 0.5)
+            player.fallDistance = 0.0;
             player.teleportTo('elyrium:dungeons', cellX + 0.5, 65.0, 0.5, 0, 0);
             player.playNotifySound('minecraft:ambient.cave', 'players', 1.0, 0.8);
             player.displayClientMessage(Component.literal('§5💀 [ПОДЗЕМЕЛЬЕ ЭЛИРИУМА] §fВы ступили в катакомбы Разлома! Одолейте хранителя герсы.'), false);
@@ -264,3 +275,7 @@ ServerEvents.commandRegistry(event => {
             )
     );
 });
+
+// Export to global scope for cross-script access in KubeJS
+global.ElyriumInstanceManager = ElyriumInstanceManager;
+

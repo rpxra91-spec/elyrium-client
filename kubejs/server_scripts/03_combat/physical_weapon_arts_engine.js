@@ -1458,6 +1458,26 @@ EntityEvents.beforeHurt(event => {
     if (attacker && attacker.isPlayer() && attacker.isAlive() && victim && victim.isAlive() && !victim.isPlayer()) {
         let mainHand = attacker.mainHandItem;
         let offHand = attacker.offHandItem;
+        let hasShield = (offHand && isShield(offHand)) || (mainHand && isShield(mainHand));
+
+        // Shield-equipped melee intercepts:
+        if (hasShield) {
+            // A. Shield raised with RMB -> Left-click triggers Shield Bash!
+            if (attacker.isBlocking()) {
+                executeWeaponArt(attacker, 'shield_bash', false, false);
+                event.cancel();
+                return;
+            }
+            // B. Shift + Left-click with shield -> Main hand innate weapon art!
+            if (attacker.isCrouching()) {
+                let innate = resolveInnateWeaponArt(attacker, false);
+                if (innate && WEAPON_ARTS[innate]) {
+                    executeWeaponArt(attacker, innate, false, false);
+                    event.cancel();
+                    return;
+                }
+            }
+        }
 
         // 1. Guard Counter Execution: Left-click within 1.5s window after blocking
         let counterUntil = attacker.persistentData.getLong('skd_guard_counter_window') || 0;
@@ -1564,6 +1584,20 @@ try {
     }
 } catch (eHook) {}
 
+function applyItemCooldown(player, item, ticks) {
+    try {
+        if (!player || !item) return;
+        let rawItem = item.getItem ? item.getItem() : item;
+        if (player.addItemCooldown) {
+            player.addItemCooldown(rawItem, ticks);
+        } else if (player.cooldowns && player.cooldowns.add) {
+            player.cooldowns.add(rawItem, ticks);
+        } else if (player.getCooldowns) {
+            player.getCooldowns().addCooldown(rawItem, ticks);
+        }
+    } catch (eCd) {}
+}
+
 // ------------------------------------------------------------------------------
 // EVENT 2: RIGHT-CLICK TRIGGER CONTROLS (ПКМ & SHIFT+ПКМ)
 // ------------------------------------------------------------------------------
@@ -1595,15 +1629,20 @@ ItemEvents.rightClicked(event => {
     // --------------------------------------------------------------------------
     // Special Handling for Ranged Weapons (Bows & Crossbows):
     //   - [ПКМ] (without Shift): Pure vanilla bow drawing & shooting.
-    //   - [Shift + ПКМ]: Innate Ranged Martial Art ('fan_barrage' / Slot 2).
+    //   - [Shift + ПКМ]: Innate Ranged Martial Art ('triple_shot' / Slot 2).
+    //   - Cooldown & cancel prevents unwanted vanilla zero-velocity stray arrow!
     // --------------------------------------------------------------------------
     if (isBow(mainHand)) {
         if (player.isCrouching()) {
             player.persistentData.putInt('skd_last_art_tick', currentAge);
+            player.persistentData.putLong('elyrium_last_bow_art_time', Date.now());
+            applyItemCooldown(player, mainHand, 14);
+
             let art = getSlotWeaponArt(mainHand, 2) || resolveInnateWeaponArt(player, isAirborne);
             if (art && WEAPON_ARTS[art]) {
                 executeWeaponArt(player, art, isAirborne, false);
             }
+            event.cancel();
             return;
         } else {
             // Normal vanilla shooting: do not intercept
@@ -1612,22 +1651,17 @@ ItemEvents.rightClicked(event => {
     }
 
     // Control scheme for Melee:
-    // With shield:
-    //   - [ПКМ]: Standard vanilla shield block
-    //   - [Shift + ПКМ]: Innate weapon art from behind shield (Slot 1)
+    // With shield in offhand:
+    //   - [ПКМ]: Standard vanilla shield block unhindered
+    //   - [Shift + ПКМ]: Unhindered (no shield bash here!)
+    //   - Shield Bash: Shield raised (RMB) + Left-Click (ЛКМ)
+    //   - Innate Art: Shift + Left-Click (Shift + ЛКМ)
     // Without shield:
     //   - [ПКМ]: Innate weapon art (Slot 1)
     //   - [Shift + ПКМ]: Inlaid runic art (Slot 2)
     if (hasShieldInOffhand) {
-        if (player.isCrouching()) {
-            player.persistentData.putInt('skd_last_art_tick', currentAge);
-            // Shield in offhand + crouching -> Shield Art: Shield Bash (Таранный Натиск)
-            executeWeaponArt(player, 'shield_bash', false, false);
-            return;
-        } else {
-            // Holding shield and not crouching -> standard vanilla shield block unhindered
-            return;
-        }
+        // Holding shield -> vanilla shield block unhindered (whether standing or crouching)
+        return;
     } else {
         if (player.isCrouching()) {
             player.persistentData.putInt('skd_last_art_tick', currentAge);
@@ -1649,7 +1683,7 @@ ItemEvents.rightClicked(event => {
 });
 
 // ------------------------------------------------------------------------------
-// EVENT 2.5: NETWORK RECEIVER FOR [Z] & [X] WEAPON ARTS KEYS
+// EVENT 2.5: NETWORK RECEIVER FOR [Z], [X] & SHIELD COMBAT PACKETS
 // ------------------------------------------------------------------------------
 
 NetworkEvents.dataReceived('elyrium:trigger_weapon_art', event => {
@@ -1657,25 +1691,77 @@ NetworkEvents.dataReceived('elyrium:trigger_weapon_art', event => {
     if (!player || !player.isAlive()) return;
 
     let mainHand = player.mainHandItem;
+    let offHand = player.offHandItem;
+    let hasShield = (offHand && !offHand.isEmpty() && isShield(offHand)) || (mainHand && !mainHand.isEmpty() && isShield(mainHand));
+
+    let action = null;
+    let slot = 0;
+    try {
+        if (event.data) {
+            if (event.data.action) action = String(event.data.action);
+            else if (typeof event.data.getString === 'function') action = event.data.getString('action');
+
+            if (event.data.slot) slot = Number(event.data.slot);
+            else if (typeof event.data.getInt === 'function') slot = event.data.getInt('slot');
+        }
+    } catch (eData) {}
+
+    // Action A: Shield Bash (Triggered by RMB Shield + LMB)
+    if (action === 'shield_bash') {
+        if (hasShield) {
+            executeWeaponArt(player, 'shield_bash', false, false);
+        }
+        return;
+    }
+
+    // Action B: Shield + Shift + LMB -> Main hand innate weapon art
+    if (action === 'innate_art' || action === 'shield_shift_lmb') {
+        if (!mainHand || mainHand.isEmpty() || !isAnyWeapon(mainHand)) {
+            player.sendSystemMessage(Text.of('§7Возьмите оружие в основную руку для боевого искусства.'), true);
+            return;
+        }
+        let innateArt = resolveInnateWeaponArt(player, false);
+        if (innateArt && WEAPON_ARTS[innateArt]) {
+            executeWeaponArt(player, innateArt, false, false);
+        }
+        return;
+    }
+
+    // Default: Slot 2 [Z] or Slot 3 [X]
     if (!mainHand || mainHand.isEmpty() || !isAnyWeapon(mainHand)) {
         player.sendSystemMessage(Text.of('§7Возьмите в руку оружие для использования боевого искусства.'), true);
         return;
     }
 
-    let slot = 2;
-    try {
-        if (event.data) {
-            slot = (typeof event.data.getInt === 'function' ? event.data.getInt('slot') : event.data.slot) || 2;
-        }
-    } catch (eData) {}
-
-    let artId = getSlotWeaponArt(mainHand, slot);
+    let targetSlot = slot || 2;
+    let artId = getSlotWeaponArt(mainHand, targetSlot);
     if (artId && WEAPON_ARTS[artId]) {
         executeWeaponArt(player, artId, false, true);
     } else {
-        let keyHint = slot === 2 ? '§e[Z] Слот 2' : '§6[X] Слот 3';
+        let keyHint = targetSlot === 2 ? '§e[Z] Слот 2' : '§6[X] Слот 3';
         player.sendSystemMessage(Text.of(`§7В ${keyHint} нет боевого искусства (Инкрустируйте скрижаль на Оружейном Столе).`), true);
         player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.5 1.8`);
+    }
+});
+
+// Stray uncharged arrow suppressor: cancels zero-velocity arrows right after bow arts
+EntityEvents.spawned(event => {
+    let entity = event.entity;
+    if (!entity) return;
+    let type = String(entity.type);
+    if (!type.includes('arrow')) return;
+
+    let owner = entity.owner;
+    if (owner && owner.isPlayer && owner.isPlayer()) {
+        let lastBowArt = owner.persistentData.getLong('elyrium_last_bow_art_time') || 0;
+        let now = Date.now();
+        if (now - lastBowArt < 1200) {
+            let m = entity.deltaMovement;
+            let speed = m ? Math.sqrt(m.x * m.x + m.y * m.y + m.z * m.z) : 0;
+            if (speed < 0.9) {
+                event.cancel();
+            }
+        }
     }
 });
 

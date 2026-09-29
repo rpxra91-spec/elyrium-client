@@ -148,8 +148,14 @@ const ElyriumDungeonStitcher = {
             server.runCommandSilent(`execute in elyrium:dungeons run ${commandStr}`);
         };
 
-        // Solid safety foundation at spawn cell (originX - 5 .. originX + 5, Z: -5 .. +5)
-        cmd(`fill ${originX - 5} ${originY} ${originZ - 5} ${originX + 5} ${originY} ${originZ + 5} ${pal.floor}`);
+        // 1. Force load dungeon chunks so /fill and /setblock commands succeed reliably
+        cmd(`forceload add ${originX - 32} -32 ${originX + 32} 160`);
+
+        // 2. Solid safety foundation at spawn cell (originX - 8 .. originX + 8, Z: -8 .. +8)
+        cmd(`fill ${originX - 8} ${originY} ${originZ - 8} ${originX + 8} ${originY} ${originZ + 8} ${pal.floor}`);
+        cmd(`fill ${originX - 8} ${originY + 6} ${originZ - 8} ${originX + 8} ${originY + 6} ${originZ + 8} ${pal.ceiling}`);
+
+        console.log(`[ELYRIUM] Procedural 2-Floor Dungeon #${instanceId} (Sector ${sector}) generated at ${originX}, ${originY}, ${originZ}`);
 
         // =========================================================================
         // TIER I: UPPER HALLS (Y = 64)
@@ -413,3 +419,7 @@ ServerEvents.commandRegistry(event => {
             )
     );
 });
+
+// Export to global scope for cross-script access in KubeJS
+global.ElyriumDungeonStitcher = ElyriumDungeonStitcher;
+
