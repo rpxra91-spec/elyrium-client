@@ -126,6 +126,43 @@ ServerEvents.loaded(event => {
         server.runCommandSilent('chunky start');
         console.log('[Elyrium] Launched Chunky pre-generation: radius 500 at (0, 0).');
     });
+
+    // 4. Test Dungeon Entrance Stele at Spawn (X: 5, Y: 76, Z: 0)
+    server.scheduleInTicks(60, () => {
+        if (typeof ElyriumSteleEngine !== 'undefined') {
+            server.runCommandSilent('kill @e[tag=spawn_test_stele]');
+            server.runCommandSilent('kill @e[tag=elyrium_stele,distance=..15]');
+            server.runCommandSilent('kill @e[tag=elyrium_stele_display,distance=..15]');
+            ElyriumSteleEngine.spawnStele(server, 'minecraft:overworld', 5, 76, 0, 'dungeon', 1);
+            server.runCommandSilent('tag @e[tag=elyrium_stele,distance=..15] add spawn_test_stele');
+            server.runCommandSilent('tag @e[tag=elyrium_stele_display,distance=..15] add spawn_test_stele');
+            console.log('[Elyrium] Test Dungeon Stele successfully deployed at Spawn (5, 76, 0).');
+        }
+    });
+});
+
+// Quick command to re-summon the entrance anytime: /spawn_dungeon_stele
+ServerEvents.commandRegistry(event => {
+    let { commands: Commands } = event;
+    event.register(
+        Commands.literal('spawn_dungeon_stele')
+            .requires(s => s.hasPermission(2))
+            .executes(ctx => {
+                let player = ctx.source.player;
+                let server = ctx.source.server;
+                let px = player ? Math.floor(player.x) : 5;
+                let py = player ? Math.floor(player.y) : 76;
+                let pz = player ? Math.floor(player.z) : 0;
+                let dim = player ? String(player.level.dimension) : 'minecraft:overworld';
+                if (typeof ElyriumSteleEngine !== 'undefined') {
+                    ElyriumSteleEngine.spawnStele(server, dim, px, py, pz, 'dungeon', 1);
+                    if (player) {
+                        player.displayClientMessage(Component.literal(`§a[DUNGEON] Стела Подземелья заспавнена на (${px}, ${py}, ${pz})! ПКМ для входа.`), false);
+                    }
+                }
+                return 1;
+            })
+    );
 });
 
 // ------------------------------------------------------------------------------

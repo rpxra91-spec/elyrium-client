@@ -140,8 +140,8 @@ const ElyriumInstanceManager = {
             player.playNotifySound('minecraft:entity.enderman.teleport', 'players', 1.0, 1.0);
             player.displayClientMessage(Component.literal('§6⚔ [КОЛИЗЕЙ ЭЛИРИУМА] §fВы вошли на Арену Испытаний!'), true);
         } else {
-            // Teleport into Floor 1 Entry Hall (Room 1 center is cellX + 7.5, Y=65.0, cellZ + 7.5)
-            player.teleportTo('elyrium:dungeons', cellX + 7.5, 65.0, cellZ + 7.5, 0, 0);
+            // Teleport into Floor 1 Entry Hall (Room 1 center is cellX + 0.5, Y=65.0, cellZ + 0.5)
+            player.teleportTo('elyrium:dungeons', cellX + 0.5, 65.0, 0.5, 0, 0);
             player.playNotifySound('minecraft:ambient.cave', 'players', 1.0, 0.8);
             player.displayClientMessage(Component.literal('§5💀 [ПОДЗЕМЕЛЬЕ ЭЛИРИУМА] §fВы ступили в катакомбы Разлома! Одолейте хранителя герсы.'), false);
         }
