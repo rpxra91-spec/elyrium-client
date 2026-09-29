@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-28T21:39:34.243117+00:00",
+  "generated_at": "2026-09-29T08:54:36.457321+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8051,6 +8051,11 @@
       "size": 1865
     },
     {
+      "path": "kubejs/data/gateways/gateways/elyrium_colosseum.json",
+      "sha256": "72b1c5f02dfaf673a4d06c09cb817476fb2394de057af73cc1dd0ea45bbe359b",
+      "size": 3560
+    },
+    {
       "path": "kubejs/data/generated_frame_blocks.json",
       "sha256": "c43936002567fafca7a9d8dd1b8fda3c01c118d5ac759e14c5a96ed4addcb339",
       "size": 499
@@ -8381,6 +8386,11 @@
       "size": 13294
     },
     {
+      "path": "kubejs/server_scripts/03_combat/healing_support.js",
+      "sha256": "2ce6ba6a5c5c88f97cec75dfac73225893abc731a27bd9113e8c1a87fff2a7d3",
+      "size": 3354
+    },
+    {
       "path": "kubejs/server_scripts/03_combat/infernal_anvil_gui.js",
       "sha256": "74f9b8a9af1cddfe9b205326b82ecd5fc20b284034e1c81a4a6d4ed3f31d3225",
       "size": 61656
@@ -8426,6 +8436,11 @@
       "size": 9467
     },
     {
+      "path": "kubejs/server_scripts/03_combat/threat_engine.js",
+      "sha256": "3f4d3204b8d77f5c23cf8f268db7cd21b2b69f72bcb4166f7c7f39e472b1e462",
+      "size": 7985
+    },
+    {
       "path": "kubejs/server_scripts/03_combat/tier_combat_matrix.js",
       "sha256": "77fa3784a71a8d1d9db3433c421afb7035e917633c687c1fe6a87a097b17c85f",
       "size": 12141
@@ -8434,6 +8449,11 @@
       "path": "kubejs/server_scripts/03_combat/two_handed_offhand_lock.js",
       "sha256": "4499fc6a56f511f8d75e16647b32e9e01e62bdf211b66df852636ed932be3e26",
       "size": 3974
+    },
+    {
+      "path": "kubejs/server_scripts/03_combat/wave_defense_arena.js",
+      "sha256": "1d762c040846011e651ac9ef9666ee3743082daccad95565733801e42bf052f9",
+      "size": 1386
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_gui.js",
@@ -8534,6 +8554,11 @@
       "path": "kubejs/server_scripts/05_professions/utility_professions_mechanics.js",
       "sha256": "15e8e61fcf8836711c61ce3b04255a4ff2c6d5900f154c38bfaa305cf6a5abff",
       "size": 14837
+    },
+    {
+      "path": "kubejs/server_scripts/05_progression/undergarden_balance.js",
+      "sha256": "9d9ef12b2335ccf9061056b153769b83d60660afcb87c77b8b058d5912449bda",
+      "size": 3956
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/abyss_sprint2_mechanics.js",
@@ -8697,8 +8722,8 @@
     },
     {
       "path": "kubejs/startup_scripts/rpg_items.js",
-      "sha256": "7ef0769d9f104d500f284bfa26d9bf7cf3092551a869ecc32d7912c4deec7568",
-      "size": 5100
+      "sha256": "3c9281db6fa40c9bc99fc1de4baad994dd7bbe2eb09c9a98876b9af811f3f258",
+      "size": 6779
     },
     {
       "path": "kubejs/startup_scripts/smithing_reinforcement_items.js",
@@ -9431,6 +9456,11 @@
       "size": 174668
     },
     {
+      "path": "mods/GatewaysToEternity-1.21.1-5.1.0.jar",
+      "sha256": "7e7df9c4e436ed0ac2a7728102724d5272dc2eef34c7df786074c8d27d888cd9",
+      "size": 649614
+    },
+    {
       "path": "mods/Iceberg-1.21.1-neoforge-1.3.2.jar",
       "sha256": "0d620c975619b04110b94a73d5b42d252563ff59c1eae9d21ab2ee7e38460a3c",
       "size": 213853
@@ -9514,6 +9544,11 @@
       "path": "mods/TerraBlender-neoforge-1.21.1-4.1.0.8.jar",
       "sha256": "edb34c388fe17ea88d0a7fd11174bbf8ae8f28a4c8ce886f1bf9a5cf0ebc36b8",
       "size": 120364
+    },
+    {
+      "path": "mods/The_Undergarden-1.21.1-0.9.6.jar",
+      "sha256": "49e3db6ce2cf6864e9d45f0633de95bc3ef72cbd5ebffee493fca7198d30ccb0",
+      "size": 45294936
     },
     {
       "path": "mods/YungsApi-1.21.1-NeoForge-5.1.6.jar",
