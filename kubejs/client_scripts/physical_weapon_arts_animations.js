@@ -39,12 +39,50 @@ function initAnimationApi() {
 }
 
 function playRealPlayerAnimation(targetPlayer, animId, speed) {
-    if (!targetPlayer) return;
+    if (!targetPlayer || !animId) return;
     initAnimationApi();
+
+    // Sanitize animation ID (strip unexpected surrounding quotes)
+    let cleanAnimId = String(animId).trim();
+    while (cleanAnimId.startsWith('"') || cleanAnimId.startsWith("'")) {
+        cleanAnimId = cleanAnimId.substring(1);
+    }
+    while (cleanAnimId.endsWith('"') || cleanAnimId.endsWith("'")) {
+        cleanAnimId = cleanAnimId.substring(0, cleanAnimId.length - 1);
+    }
+    cleanAnimId = cleanAnimId.trim();
+    if (!cleanAnimId) return;
 
     let animPlayed = false;
     let s = (typeof speed === 'number' && speed > 0) ? speed : 1.0;
-    let rawPlayer = targetPlayer.minecraftPlayer || targetPlayer.minecraftEntity || targetPlayer.entity || targetPlayer;
+
+    let mc = null;
+    try {
+        mc = J_Minecraft ? J_Minecraft.getInstance() : null;
+    } catch (e) {}
+
+    // Ensure we resolve directly to native AbstractClientPlayer (mc.player or native entity)
+    let rawPlayer = null;
+    if (mc && mc.player) {
+        let isLocal = (targetPlayer === Client.player || targetPlayer === mc.player);
+        if (!isLocal && targetPlayer.getUUID && mc.player.getUUID) {
+            try {
+                if (targetPlayer.getUUID().equals(mc.player.getUUID())) isLocal = true;
+            } catch (eUuid) {}
+        }
+        if (isLocal) {
+            rawPlayer = mc.player;
+        }
+    }
+
+    if (!rawPlayer) {
+        if (targetPlayer.minecraftPlayer) rawPlayer = targetPlayer.minecraftPlayer;
+        else if (targetPlayer.minecraftEntity) rawPlayer = targetPlayer.minecraftEntity;
+        else if (targetPlayer.rawPlayer) rawPlayer = targetPlayer.rawPlayer;
+        else if (targetPlayer.entity) rawPlayer = targetPlayer.entity;
+        else if (targetPlayer.player) rawPlayer = targetPlayer.player;
+        else rawPlayer = targetPlayer;
+    }
 
     // 1. Primary: Spell Engine AnimatablePlayer Mixin (if present)
     try {
@@ -58,10 +96,10 @@ function playRealPlayerAnimation(targetPlayer, animId, speed) {
             }
             if (releaseType) {
                 if (typeof rawPlayer.playSpellAnimation === 'function') {
-                    rawPlayer.playSpellAnimation(releaseType, String(animId), s);
+                    rawPlayer.playSpellAnimation(releaseType, cleanAnimId, s);
                     animPlayed = true;
                 } else if (typeof targetPlayer.playSpellAnimation === 'function') {
-                    targetPlayer.playSpellAnimation(releaseType, String(animId), s);
+                    targetPlayer.playSpellAnimation(releaseType, cleanAnimId, s);
                     animPlayed = true;
                 }
             }
@@ -71,7 +109,7 @@ function playRealPlayerAnimation(targetPlayer, animId, speed) {
     // 2. Secondary / Direct: KosmX PlayerAnimationAccess & PlayerAnimationRegistry
     if (!animPlayed && J_PlayerAnimationRegistry && J_PlayerAnimationAccess && J_ResourceLocation) {
         try {
-            let resLoc = J_ResourceLocation.parse(String(animId));
+            let resLoc = J_ResourceLocation.parse(cleanAnimId);
             let animationData = J_PlayerAnimationRegistry.getAnimation(resLoc);
             if (animationData) {
                 let stack = J_PlayerAnimationAccess.getPlayerAnimLayer(rawPlayer);

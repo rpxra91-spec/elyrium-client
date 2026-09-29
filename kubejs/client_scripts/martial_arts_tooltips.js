@@ -296,10 +296,10 @@ function resolveInnateWeaponArt(item) {
         return 'shield_bash';
     }
 
-    // 2. Bows & Crossbows: Fan Barrage
+    // 2. Bows & Crossbows: Piercing Shot (Силовой / Бронебойный Выстрел)
     if (id.includes('bow') || id.includes('crossbow') ||
         item.hasTag('c:tools/bows') || item.hasTag('c:tools/crossbows')) {
-        return 'fan_barrage';
+        return 'piercing_shot';
     }
 
     // 3. Katanas: Phantom Thrust / Iai Slash

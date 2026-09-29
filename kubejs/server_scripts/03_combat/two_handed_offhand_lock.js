@@ -1,49 +1,95 @@
 // ==============================================================================
-// ⚔️ SKD AINCRAD: TWO-HANDED WEAPON OFFHAND LOCKDOWN
+// ⚔️ ELYRIUM RPG: TWO-HANDED WEAPON OFFHAND LOCKDOWN (v2.0)
+// Minecraft 1.21.1 NeoForge | KubeJS Server Script
 // ==============================================================================
-// Prevents players from holding shields, secondary weapons, or tools in offhand
-// when wielding heavy two-handed weaponry (claymore, greathammer, greatsword,
-// halberd, scythe, breaker, or items explicitly configured with two_handed = true).
+// Functionally disables the offhand slot without dropping or removing items:
+// 1. When wielding heavy two-handed weaponry (claymore, greatsword, greathammer,
+//    spears/lances, bows, crossbows, or items configured with two_handed = true):
+//    - Sets player flag 'skd_offhand_locked' = true.
+//    - Blocks shield blocking and offhand item usage (event.cancel()).
+//    - Displays: '§c✋ Двуручный хват: использование второй руки заблокировано!'
+//    - The shield / item stays safely in the offhand inventory slot!
+// 2. Integrates with shield_guard_posture.js (no guard posture/defense benefits).
+// 3. Network syncs 'elyrium:offhand_lock_state' to client for first-person hiding.
 // ==============================================================================
+
+let J_WeaponRegistry_2H = null;
+try {
+    J_WeaponRegistry_2H = Java.loadClass('net.bettercombat.logic.WeaponRegistry');
+} catch (eClass) {}
 
 function isTwoHandedWeapon(item) {
-    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false
+    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
 
-    let id = String(item.id).toLowerCase()
+    // 1. Better Combat WeaponRegistry check
+    if (J_WeaponRegistry_2H) {
+        try {
+            let rawStack = item.getItemStack ? item.getItemStack() : (item.minecraftItemStack || item);
+            let attrs = J_WeaponRegistry_2H.getAttributes(rawStack);
+            if (attrs) {
+                if (typeof attrs.two_handed === 'function' && attrs.two_handed()) return true;
+                if (attrs.two_handed === true) return true;
+                if (typeof attrs.isTwoHanded === 'function' && attrs.isTwoHanded()) return true;
+            }
+        } catch (eBc) {}
+    }
 
-    // 1. Explicit 2H weapon types & keywords
+    let id = String(item.id).toLowerCase();
+
+    // 2. Bows and Crossbows
+    if (id.includes('bow') || id.includes('crossbow') ||
+        item.hasTag('c:tools/bows') || item.hasTag('c:tools/crossbows')) {
+        return true;
+    }
+
+    // 3. Spears, Lances, Polearms, Staves, Glaives
+    if (id.includes('spear') || id.includes('lance') || id.includes('glaive') ||
+        id.includes('halberd') || id.includes('polearm') || id.includes('staff') ||
+        id.includes('quarterstaff') || id.includes('pike') ||
+        item.hasTag('c:tools/spears') || item.hasTag('c:spears')) {
+        return true;
+    }
+
+    // 4. Heavy Melee & Two-Handed Swords / Hammers / Scythes
     if (id.includes('claymore') ||
         id.includes('greathammer') ||
         id.includes('greatsword') ||
-        id.includes('halberd') ||
         id.includes('scythe') ||
         id.includes('breaker') ||
         id.includes('hammer') ||
         id.includes('greataxe') ||
+        id.includes('warhammer') ||
+        id.includes('maul') ||
         id.includes('twinblade') ||
-        id.includes('warglaive')) {
-        return true
+        id.includes('warglaive') ||
+        id.includes('zweihander') ||
+        id.includes('colossal')) {
+        return true;
     }
 
-    // 2. Data/Tag checks
+    // 5. Data Tags
     if (item.hasTag('c:two_handed') || item.hasTag('bettercombat:two_handed') || item.hasTag('skd:two_handed')) {
-        return true
+        return true;
     }
 
-    return false
+    return false;
 }
 
 function isOffhandRestricted(item) {
-    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false
+    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
 
-    let id = String(item.id).toLowerCase()
+    let id = String(item.id).toLowerCase();
 
     // 1. Shields
-    if (id.includes('shield') || item.hasTag('c:tools/shields') || item.hasTag('c:shields')) {
-        return true
+    if (id.includes('shield') ||
+        item.hasTag('c:tools/shields') ||
+        item.hasTag('c:shields') ||
+        item.hasTag('forge:shields') ||
+        item.hasTag('minecraft:shields')) {
+        return true;
     }
 
-    // 2. Weapons
+    // 2. Weapons & Combat Tools
     if (id.includes('sword') || id.includes('blade') || id.includes('dagger') ||
         id.includes('axe') || id.includes('katana') || id.includes('rapier') ||
         id.includes('mace') || id.includes('spear') || id.includes('staff') ||
@@ -52,54 +98,116 @@ function isOffhandRestricted(item) {
         item.hasTag('minecraft:swords') || item.hasTag('minecraft:axes') ||
         item.hasTag('c:tools/swords') || item.hasTag('c:tools/axes') ||
         item.hasTag('c:tools/bows') || item.hasTag('c:tools/crossbows')) {
-        return true
+        return true;
     }
 
-    // 3. Heavy Tools
+    // 3. Heavy Harvesting Tools
     if (id.includes('pickaxe') || id.includes('shovel') || id.includes('hoe') ||
         item.hasTag('minecraft:pickaxes') || item.hasTag('minecraft:shovels') ||
         item.hasTag('minecraft:hoes') || item.hasTag('c:tools/pickaxes') ||
         item.hasTag('c:tools/shovels') || item.hasTag('c:tools/hoes')) {
-        return true
+        return true;
     }
 
-    return false
+    return false;
 }
 
 function enforceTwoHandedRestriction(player) {
-    if (!player || !player.isAlive()) return
-    if (player.isCreative() || player.isSpectator()) return
+    if (!player || !player.isAlive()) return;
+    if (player.isCreative() || player.isSpectator()) return;
 
-    let mainHand = player.mainHandItem
-    if (!isTwoHandedWeapon(mainHand)) return
+    let mainHand = player.mainHandItem;
+    let offHand = player.offHandItem;
 
-    let offHand = player.offHandItem
-    if (!isOffhandRestricted(offHand)) return
+    let is2H = isTwoHandedWeapon(mainHand);
+    let isOffRestricted = isOffhandRestricted(offHand);
+    let shouldLock = is2H && isOffRestricted;
 
-    // Move offhand item to inventory or drop
-    let offhandCopy = offHand.copy()
-    player.setOffHandItem(Item.empty)
+    let prevLocked = player.persistentData.getBoolean('skd_offhand_locked');
 
-    // Give back to player inventory (spawns dropped entity if full)
-    player.give(offhandCopy)
+    if (shouldLock) {
+        if (!prevLocked) {
+            player.persistentData.putBoolean('skd_offhand_locked', true);
+            try { player.sendData('elyrium:offhand_lock_state', { locked: true }); } catch (eNet) {}
+        }
 
-    // Audio-visual feedback
-    player.playSound('minecraft:item.armor.equip_iron', 1.0, 0.9)
-    player.sendSystemMessage(Text.of('§c✋ Двуручное оружие требует хвата обеими руками! Вторая рука заблокирована.'), true)
+        // If player was actively using/blocking with offhand, drop usage immediately
+        if (player.isUsingItem && player.isUsingItem()) {
+            let useItem = player.useItem;
+            if (useItem && (useItem === offHand || String(useItem.id).includes('shield'))) {
+                try { player.stopUsingItem(); } catch (eStop) {}
+            }
+        }
+    } else {
+        if (prevLocked) {
+            player.persistentData.putBoolean('skd_offhand_locked', false);
+            try { player.sendData('elyrium:offhand_lock_state', { locked: false }); } catch (eNet) {}
+        }
+    }
 }
 
-// 1. Tick check (every 4 ticks / 0.2s for responsive check)
+// 1. Periodic tick check (every 4 ticks / 0.2s for responsive state)
 PlayerEvents.tick(event => {
-    let player = event.player
-    let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0)
-    if (tick % 4 !== 0) return
-    enforceTwoHandedRestriction(player)
-})
+    let player = event.player;
+    if (!player) return;
+    let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0);
+    if (tick % 4 !== 0) return;
+    enforceTwoHandedRestriction(player);
+});
 
-// 2. Inventory change / slot swap trigger
+// 2. Inventory change / hotbar slot swap
 PlayerEvents.inventoryChanged(event => {
-    let player = event.player
+    let player = event.player;
     if (player) {
-        enforceTwoHandedRestriction(player)
+        enforceTwoHandedRestriction(player);
     }
-})
+});
+
+// 3. Player connection sync
+PlayerEvents.loggedIn(event => {
+    let player = event.player;
+    if (player) {
+        enforceTwoHandedRestriction(player);
+        let locked = player.persistentData.getBoolean('skd_offhand_locked');
+        try { player.sendData('elyrium:offhand_lock_state', { locked: locked }); } catch (eNet) {}
+    }
+});
+
+// 4. Intercept Right-Clicks when offhand is locked:
+ItemEvents.firstRightClicked(event => {
+    let player = event.player;
+    if (!player) return;
+    if (!player.persistentData.getBoolean('skd_offhand_locked')) return;
+
+    let hand = String(event.hand || '');
+    let isOffhandInteraction = hand.toLowerCase().includes('off');
+    let item = event.item;
+    let offHand = player.offHandItem;
+
+    if (isOffhandInteraction || (item && offHand && item.id === offHand.id && isOffhandRestricted(offHand))) {
+        event.cancel();
+        let now = Date.now();
+        let lastMsg = player.persistentData.getLong('skd_last_2h_warn_time') || 0;
+        if (now - lastMsg > 1000) {
+            player.persistentData.putLong('skd_last_2h_warn_time', now);
+            player.sendSystemMessage(Text.of('§c✋ Двуручный хват: использование второй руки заблокировано!'), true);
+            player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.4 1.5`);
+        }
+    }
+});
+
+ItemEvents.rightClicked(event => {
+    let player = event.player;
+    if (!player) return;
+    if (!player.persistentData.getBoolean('skd_offhand_locked')) return;
+
+    let hand = String(event.hand || '');
+    let isOffhandInteraction = hand.toLowerCase().includes('off');
+    let item = event.item;
+    let offHand = player.offHandItem;
+
+    if (isOffhandInteraction || (item && offHand && item.id === offHand.id && isOffhandRestricted(offHand))) {
+        event.cancel();
+        try { player.stopUsingItem(); } catch (eStop) {}
+    }
+});

@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-29T22:58:51.117805+00:00",
+  "generated_at": "2026-09-29T23:52:28.713242+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -337,7 +337,7 @@
     },
     {
       "path": "config/chunky/tasks/minecraft/overworld.properties",
-      "sha256": "4ec280c4d8f3c365c048797e04e954ccf4c0b6d0e2be025334891fc779788642",
+      "sha256": "1b4c3c3bcf60c5aee88830df1690ca9877fd699f14a786ba60bef1f01d2eef01",
       "size": 129
     },
     {
@@ -1377,7 +1377,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "deedef6bee7d01e1f402f715a5acca5cb543936cbdeacecda34235ecb9d541aa",
+      "sha256": "858fd28a084819ccfc96a952c48c23fb4a3e8fc760e0fac5a6c2924ee6b0eda9",
       "size": 275
     },
     {
@@ -1577,8 +1577,8 @@
     },
     {
       "path": "config/spell_engine/weapon_fallback.json",
-      "sha256": "4cbe33e73acc0de37692224bae18bb7a23f317ef26bfde705972efce15fbd620",
-      "size": 7947
+      "sha256": "889e56aed0551c89d776ef1286ad76d1d1cb528c420eb122ae2e91105ff6ce8e",
+      "size": 7943
     },
     {
       "path": "config/spell_power/attributes.json",
@@ -7802,8 +7802,8 @@
     },
     {
       "path": "kubejs/client_scripts/martial_arts_tooltips.js",
-      "sha256": "95904203724cf89d90eb7ec0d1f6ac376adbdfc117a489099f637b3ff1076465",
-      "size": 25341
+      "sha256": "79a0777dac4e446276807c965be97bf75e1aa71327819e2c53b171de651c4402",
+      "size": 25402
     },
     {
       "path": "kubejs/client_scripts/modular_multitool_tooltips.js",
@@ -7812,8 +7812,8 @@
     },
     {
       "path": "kubejs/client_scripts/physical_weapon_arts_animations.js",
-      "sha256": "c9470f3cd5b62f1f1296d606dc719aaa475ae70ca622a342a46ccf24f057dcf1",
-      "size": 6650
+      "sha256": "a27cece83482de2a84e37703e99eadc2f7a001a0742d5e92eb5043ca79072ec5",
+      "size": 8080
     },
     {
       "path": "kubejs/client_scripts/simplestats_anti_exploit.js",
@@ -7836,9 +7836,14 @@
       "size": 3913
     },
     {
+      "path": "kubejs/client_scripts/two_handed_offhand_client.js",
+      "sha256": "c917ad030cbaeebf045d649163e2c9e21b2c44e0d5fb16683654164f1647e69d",
+      "size": 5821
+    },
+    {
       "path": "kubejs/client_scripts/weapon_arts_keybinds.js",
-      "sha256": "bb343462f355c10783053ef324de5274877f83c28848c9c7d1180316c682275e",
-      "size": 6076
+      "sha256": "1df553799db638e85f6dab3942363928fc4d62d37585445f098a6616fdd5cdd0",
+      "size": 6794
     },
     {
       "path": "kubejs/config/client.json",
@@ -8447,8 +8452,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "6d3748e5cbcff3b82323cc3b8a56b0a7bc1a6fc60ce80981f993d60ad98134ec",
-      "size": 108753
+      "sha256": "38671d4a6d69340020699fe120e53df3bfcdc458ba36379559aa842d3a77224e",
+      "size": 109784
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
@@ -8457,8 +8462,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
-      "sha256": "bb4b3b982ab11f3659a025844c7ec2bb2c9c96d48103ba3cccbd0897447271f0",
-      "size": 12218
+      "sha256": "3e5ba67e53993ac7a4baf2ade227a2ce89f0201e3dc98cfc27c258c41b3791d2",
+      "size": 12290
     },
     {
       "path": "kubejs/server_scripts/03_combat/souls_dodge_engine.js",
@@ -8482,8 +8487,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/two_handed_offhand_lock.js",
-      "sha256": "4499fc6a56f511f8d75e16647b32e9e01e62bdf211b66df852636ed932be3e26",
-      "size": 3974
+      "sha256": "1bff00bd057d88457713d1ca075766d129fc922ab9df5947c69f700fbd3b9021",
+      "size": 8537
     },
     {
       "path": "kubejs/server_scripts/03_combat/wave_defense_arena.js",
@@ -8657,8 +8662,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_instance_manager.js",
-      "sha256": "d0935cefa3a19171a4f280c551221bf737abd3a1d22ec15609e114dd11478be1",
-      "size": 13149
+      "sha256": "5dd2b353d97a661a5bd166a57da37121033d5df4e5d7454f24b9e2f127bad4f5",
+      "size": 13083
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_lives_engine.js",
@@ -8667,8 +8672,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_room_stitcher.js",
-      "sha256": "0fd4b166171df1d1d2b8f40eeb4c71c61a043149426de66c1ce7f0db307e04be",
-      "size": 23492
+      "sha256": "2057512de436836aa95f0b6a8d173a976c59284770d61588985bcb4b5bfc34cd",
+      "size": 19692
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/endless_fringe_engine.js",

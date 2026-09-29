@@ -147,12 +147,11 @@ const ElyriumInstanceManager = {
             player.playNotifySound('minecraft:entity.enderman.teleport', 'players', 1.0, 1.0);
             player.displayClientMessage(Component.literal('§6⚔ [КОЛИЗЕЙ ЭЛИРИУМА] §fВы вошли на Арену Испытаний!'), true);
         } else {
-            // Safety floor check at Entry Hall
-            server.runCommandSilent(`execute in elyrium:dungeons run setblock ${cellX} 64 0 minecraft:stone_bricks`);
-            server.runCommandSilent(`execute in elyrium:dungeons run setblock ${cellX} 65 0 minecraft:air`);
-            server.runCommandSilent(`execute in elyrium:dungeons run setblock ${cellX} 66 0 minecraft:air`);
+            // Safety starter pavilion check at Entry Hall
+            server.runCommandSilent(`execute in elyrium:dungeons run fill ${cellX - 4} 64 -4 ${cellX + 4} 64 4 minecraft:stone_bricks replace minecraft:air`);
+            server.runCommandSilent(`execute in elyrium:dungeons run fill ${cellX - 3} 65 -3 ${cellX + 3} 69 3 minecraft:air`);
 
-            // Teleport into Floor 1 Entry Hall (Room 1 center is cellX + 0.5, Y=65.0, cellZ + 0.5)
+            // Teleport into Floor 1 Entry Hall (safe starter platform)
             player.fallDistance = 0.0;
             player.teleportTo('elyrium:dungeons', cellX + 0.5, 65.0, 0.5, 0, 0);
             player.playNotifySound('minecraft:ambient.cave', 'players', 1.0, 0.8);

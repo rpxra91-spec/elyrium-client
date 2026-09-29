@@ -229,6 +229,7 @@ EntityEvents.beforeHurt(event => {
     let player = victim;
 
     if (!player.isBlocking()) return;
+    if (player.persistentData.getBoolean('skd_offhand_locked')) return;
 
     let source = event.source;
     if (!source) return;

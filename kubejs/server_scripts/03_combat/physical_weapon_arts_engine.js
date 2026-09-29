@@ -602,9 +602,9 @@ function resolveInnateWeaponArt(player, isAirborne) {
 
     let mainId = String(mainItem.id).toLowerCase();
 
-    // 1. Bows & Crossbows: Fan Barrage (Веерный Залп)
+    // 1. Bows & Crossbows: Piercing Shot (Силовой / Бронебойный Выстрел)
     if (isBow(mainItem)) {
-        return 'fan_barrage';
+        return 'piercing_shot';
     }
 
     // 2. Katanas: Phantom Thrust / Iai Slash (Фантомный Выпад)
@@ -714,32 +714,40 @@ function syncSpellEngineCooldown(player, artId, cdMs) {
         if (!rawPlayer || !mcLevel || !J_ResourceLocation) return;
 
         let cm = (typeof rawPlayer.getCooldownManager === 'function') ? rawPlayer.getCooldownManager() : ((typeof player.getCooldownManager === 'function') ? player.getCooldownManager() : null);
-        let spellRl = J_ResourceLocation.parse('elyrium:' + artId);
         let durTicks = Math.round(cdMs / 50);
 
-        if (cm) {
-            if (J_SpellRegistry) {
-                try {
-                    let registry = J_SpellRegistry.from(mcLevel);
-                    if (registry) {
-                        let opt = registry.getHolder(spellRl);
-                        if (opt && opt.isPresent()) {
-                            cm.set(opt.get(), durTicks, true);
-                        }
-                    }
-                } catch (eReg) {}
-            }
-            try {
-                cm.set(spellRl, durTicks, true);
-            } catch (eRl) {}
+        let spellList = ['elyrium:' + artId];
+        if (artId === 'piercing_shot') {
+            spellList.push('archers:power_shot');
+            spellList.push('elyrium:fan_barrage');
         }
 
-        if (J_SpellCooldownPacket && J_Platform) {
-            try {
-                let pkt = new J_SpellCooldownPacket(spellRl, durTicks);
-                J_Platform.util().networkS2C_Send(rawPlayer, pkt);
-            } catch (ePkt) {}
-        }
+        spellList.forEach(spellStr => {
+            let spellRl = J_ResourceLocation.parse(spellStr);
+            if (cm) {
+                if (J_SpellRegistry) {
+                    try {
+                        let registry = J_SpellRegistry.from(mcLevel);
+                        if (registry) {
+                            let opt = registry.getHolder(spellRl);
+                            if (opt && opt.isPresent()) {
+                                cm.set(opt.get(), durTicks, true);
+                            }
+                        }
+                    } catch (eReg) {}
+                }
+                try {
+                    cm.set(spellRl, durTicks, true);
+                } catch (eRl) {}
+            }
+
+            if (J_SpellCooldownPacket && J_Platform) {
+                try {
+                    let pkt = new J_SpellCooldownPacket(spellRl, durTicks);
+                    J_Platform.util().networkS2C_Send(rawPlayer, pkt);
+                } catch (ePkt) {}
+            }
+        });
     } catch (eSync) {}
 }
 
@@ -1146,7 +1154,7 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
         player.sendSystemMessage(Text.of(`§a🏹 ВЕЕРНЫЙ ЗАЛП! §f5 спектральных стрел веером ${stamTag}`), true);
 
     // ==========================================================================
-    // 11. PIERCING SHOT (Бронебойный Выстрел: 25b piercing beam, 100% armor bypass, 220% dmg)
+    // 11. PIERCING SHOT (Бронебойный / Силовой Выстрел: 25b piercing beam, 100% armor bypass, 220% dmg)
     // ==========================================================================
     } else if (resolvedId === 'piercing_shot') {
         let totalDmg = baseDmg * art.dmgMult;
@@ -1155,32 +1163,43 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
         let nx = look.x / hLen;
         let ny = look.y / hLen;
         let nz = look.z / hLen;
-        let hitEntities = new Set();
-        let hits = 0;
 
-        for (let d = 1.0; d <= maxDist; d += 1.0) {
-            let px = player.x + nx * d;
-            let py = player.y + player.eyeHeight - 0.1 + ny * d;
-            let pz = player.z + nz * d;
+        player.server.runCommandSilent(`playsound minecraft:item.crossbow.loading_middle player ${u} ~ ~ ~ 1.1 1.2`);
+        player.server.runCommandSilent(`particle minecraft:crit ${player.x + nx * 0.8} ${player.y + player.eyeHeight - 0.1} ${player.z + nz * 0.8} 0.2 0.2 0.2 0.1 8 normal`);
 
-            player.server.runCommandSilent(`particle minecraft:sonic_boom ${px} ${py} ${pz} 0 0 0 0 1 normal`);
-            player.server.runCommandSilent(`particle minecraft:crit ${px} ${py} ${pz} 0.15 0.15 0.15 0.05 3 normal`);
+        player.server.scheduleInTicks(7, () => {
+            if (!player || !player.isAlive()) return;
 
-            let b = AABB.of(px - 1.2, py - 1.2, pz - 1.2, px + 1.2, py + 1.2, pz + 1.2);
-            let ents = level.getEntitiesWithin(b);
-            ents.forEach(ent => {
-                if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive() && !hitEntities.has(ent.id)) {
-                    hitEntities.add(ent.id);
-                    dealArtDamage(player, ent, totalDmg, true); // 100% Armor Bypass
-                    ent.knockback(0.9, -nx, -nz);
-                    hits++;
-                }
-            });
-        }
+            // Broadcast arrow release animation
+            broadcastPlayerArtAnimation(player, 'spell_engine:archery_release', 1.2);
 
-        player.server.runCommandSilent(`playsound minecraft:entity.warden.sonic_boom player ${u} ${player.x} ${player.y} ${player.z} 1.2 1.4`);
-        player.server.runCommandSilent(`playsound minecraft:entity.arrow.shoot player ${u} ${player.x} ${player.y} ${player.z} 1.5 0.6`);
-        player.sendSystemMessage(Text.of(`§a🎯 БРОНЕБОЙНЫЙ ВЫСТРЕЛ! §fЧистый урон: §e${Math.round(totalDmg)} §7(25 блоков пробоя) | Поражено: §a${hits} ${stamTag}`), true);
+            let hitEntities = new Set();
+            let hits = 0;
+
+            for (let d = 1.0; d <= maxDist; d += 1.0) {
+                let px = player.x + nx * d;
+                let py = player.y + player.eyeHeight - 0.1 + ny * d;
+                let pz = player.z + nz * d;
+
+                player.server.runCommandSilent(`particle minecraft:sonic_boom ${px} ${py} ${pz} 0 0 0 0 1 normal`);
+                player.server.runCommandSilent(`particle minecraft:crit ${px} ${py} ${pz} 0.15 0.15 0.15 0.05 3 normal`);
+
+                let b = AABB.of(px - 1.2, py - 1.2, pz - 1.2, px + 1.2, py + 1.2, pz + 1.2);
+                let ents = level.getEntitiesWithin(b);
+                ents.forEach(ent => {
+                    if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive() && !hitEntities.has(ent.id)) {
+                        hitEntities.add(ent.id);
+                        dealArtDamage(player, ent, totalDmg, true); // 100% Armor Bypass
+                        ent.knockback(0.9, -nx, -nz);
+                        hits++;
+                    }
+                });
+            }
+
+            player.server.runCommandSilent(`playsound minecraft:entity.warden.sonic_boom player ${u} ${player.x} ${player.y} ${player.z} 1.2 1.4`);
+            player.server.runCommandSilent(`playsound minecraft:entity.arrow.shoot player ${u} ${player.x} ${player.y} ${player.z} 1.5 0.6`);
+            player.sendSystemMessage(Text.of(`§a🎯 СИЛОВОЙ ВЫСТРЕЛ! §fЧистый урон: §e${Math.round(totalDmg)} §7(25 блоков пробоя) | Поражено: §a${hits} ${stamTag}`), true);
+        });
 
     // ==========================================================================
     // 12. ARROW RAIN (Град Стрел: skyward shot, 12-arrow rain strikes 6m area after 1.2s)

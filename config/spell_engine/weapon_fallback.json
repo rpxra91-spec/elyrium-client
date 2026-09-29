@@ -282,7 +282,7 @@
           "slot": "",
           "max_spell_count": 0,
           "spell_ids": [
-            "elyrium:fan_barrage"
+            "archers:power_shot"
           ],
           "extra_tier_binding": 0
         }
@@ -296,7 +296,7 @@
           "slot": "",
           "max_spell_count": 0,
           "spell_ids": [
-            "elyrium:fan_barrage"
+            "archers:power_shot"
           ],
           "extra_tier_binding": 0
         }
@@ -310,7 +310,7 @@
           "slot": "",
           "max_spell_count": 0,
           "spell_ids": [
-            "elyrium:fan_barrage"
+            "archers:power_shot"
           ],
           "extra_tier_binding": 0
         }
@@ -323,7 +323,7 @@
       "slot": "",
       "max_spell_count": 0,
       "spell_ids": [
-        "elyrium:fan_barrage"
+        "archers:power_shot"
       ],
       "extra_tier_binding": 0
     }

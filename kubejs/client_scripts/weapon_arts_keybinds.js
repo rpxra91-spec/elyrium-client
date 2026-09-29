@@ -139,6 +139,13 @@ ClientEvents.tick(event => {
                     try {
                         mc.player.sendData('elyrium:trigger_weapon_art', { action: 'shield_bash' });
                     } catch (eNet) {}
+                    try {
+                        if (mc.options && mc.options.keyAttack) {
+                            mc.options.keyAttack.setDown(false);
+                            while (mc.options.keyAttack.consumeClick()) {}
+                        }
+                    } catch (eOpt) {}
+                    try { mc.missTime = 10; } catch (eMiss) {}
                 }
             }
             // Combination 2: Holding Shield + Shift + LMB -> Main Hand Innate Art
@@ -148,6 +155,13 @@ ClientEvents.tick(event => {
                     try {
                         mc.player.sendData('elyrium:trigger_weapon_art', { action: 'innate_art' });
                     } catch (eNet) {}
+                    try {
+                        if (mc.options && mc.options.keyAttack) {
+                            mc.options.keyAttack.setDown(false);
+                            while (mc.options.keyAttack.consumeClick()) {}
+                        }
+                    } catch (eOpt) {}
+                    try { mc.missTime = 10; } catch (eMiss) {}
                 }
             }
         }
