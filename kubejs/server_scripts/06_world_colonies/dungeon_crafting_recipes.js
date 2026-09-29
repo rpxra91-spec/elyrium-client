@@ -178,6 +178,7 @@ ServerEvents.recipes(event => {
 EntityEvents.drops(event => {
     let entity = event.entity;
     if (!entity || !entity.level) return;
+    if (!entity.isLiving() || (entity.isPlayer && entity.isPlayer())) return;
 
     let dim = String(entity.level.dimension);
     let server = entity.level.server;
@@ -275,9 +276,8 @@ EntityEvents.drops(event => {
     // --------------------------------------------------------------------------
 
     if (isBoss) {
-        // Финальные боссы: 1-2 эссенции + 5% шанс на выпадение случайной оскверненной вещи
-        let essenceCount = Math.random() < 0.50 ? 2 : 1;
-        event.addDrop(Item.of(`kubejs:dungeon_essence_t${tier}`, essenceCount));
+        // Финальный босс: гарантированно 1 эссенция + 5% шанс на джекпот оскверненной вещи (клинок или панцирь)
+        event.addDrop(Item.of(`kubejs:dungeon_essence_t${tier}`, 1));
 
         // 5% Джекпот Очищения
         if (Math.random() < 0.05) {
@@ -297,9 +297,8 @@ EntityEvents.drops(event => {
             }
         }
     } else if (isMiniboss) {
-        // Мини-боссы: 1 гарантированная эссенция + 50% шанс на 2-ю
-        let minibossCount = 1 + (Math.random() < 0.50 ? 1 : 0);
-        event.addDrop(Item.of(`kubejs:dungeon_essence_t${tier}`, minibossCount));
+        // Проходной мини-босс: гарантированно 1 эссенция
+        event.addDrop(Item.of(`kubejs:dungeon_essence_t${tier}`, 1));
 
         if (server) {
             let x = entity.x;
@@ -309,8 +308,8 @@ EntityEvents.drops(event => {
             server.runCommandSilent(`execute in ${dim} run playsound minecraft:entity.experience_orb.pickup master @a[distance=..32] ${x} ${y} ${z} 0.9 1.1`);
         }
     } else if (isDungeonMob) {
-        // Элитные мобы подземелья: 40% шанс дропа 1 эссенции
-        if (Math.random() < 0.40) {
+        // Элитные мобы подземелья (4 пака за ран): 20% шанс дропа 1 эссенции
+        if (Math.random() < 0.20) {
             event.addDrop(Item.of(`kubejs:dungeon_essence_t${tier}`, 1));
         }
     }
