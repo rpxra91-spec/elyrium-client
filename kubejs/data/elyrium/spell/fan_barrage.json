@@ -40,6 +40,8 @@
   },
   "cost": {
     "cooldown": {
+      "group": "weapon_bow",
+      "attempt_duration": 0.5,
       "duration": 10.0
     }
   }

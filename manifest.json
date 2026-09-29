@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-29T22:36:57.970728+00:00",
+  "generated_at": "2026-09-29T22:58:51.117805+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8047,8 +8047,8 @@
     },
     {
       "path": "kubejs/data/elyrium/spell/fan_barrage.json",
-      "sha256": "fe7dae9545c753b8fa9ffff0192abc0914d3b11883890b06766dfd16d8710796",
-      "size": 806
+      "sha256": "ee87e03aaf9763b0c66ee89c1ce6627c7b4e4b3c6664b2d2763a7fb49f3067fa",
+      "size": 866
     },
     {
       "path": "kubejs/data/elyrium/spell/iai_slash.json",
@@ -8447,8 +8447,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "98a0ead2a36205a5f8e96e80b9084296a80fe786a852f2014850f94f2f2771e6",
-      "size": 106200
+      "sha256": "6d3748e5cbcff3b82323cc3b8a56b0a7bc1a6fc60ce80981f993d60ad98134ec",
+      "size": 108753
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
@@ -8467,8 +8467,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/spell_stamina_cost.js",
-      "sha256": "f58cbc04c1e3c62a7b8f9b3ac7f5b7310a7a65b9193c06e4bb402bd9466b69c9",
-      "size": 11378
+      "sha256": "eb37c71a8b8519871898738f567556f099a8b00bb9e007388187d2b6a4dcdf39",
+      "size": 11843
     },
     {
       "path": "kubejs/server_scripts/03_combat/threat_engine.js",

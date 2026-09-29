@@ -697,27 +697,48 @@ function getInscribedWeaponArt(item) {
 
 let J_SpellRegistry = null;
 let J_ResourceLocation = null;
+let J_SpellCooldownPacket = null;
+let J_Platform = null;
 try {
     J_SpellRegistry = Java.loadClass('net.spell_engine.api.spell.registry.SpellRegistry');
     J_ResourceLocation = Java.loadClass('net.minecraft.resources.ResourceLocation');
+    J_SpellCooldownPacket = Java.loadClass('net.spell_engine.network.Packets$SpellCooldown');
+    J_Platform = Java.loadClass('net.spell_engine.Platform');
 } catch (eClass) {}
 
 function syncSpellEngineCooldown(player, artId, cdMs) {
     if (!player || !artId || !cdMs) return;
     try {
-        if (!player.getCooldownManager || !J_SpellRegistry || !J_ResourceLocation) return;
-        let cm = player.getCooldownManager();
-        if (!cm) return;
+        let rawPlayer = player.minecraftPlayer || player;
+        let mcLevel = player.level ? (player.level.minecraftLevel || player.level) : (rawPlayer.level ? (rawPlayer.level.minecraftLevel || rawPlayer.level) : null);
+        if (!rawPlayer || !mcLevel || !J_ResourceLocation) return;
 
+        let cm = (typeof rawPlayer.getCooldownManager === 'function') ? rawPlayer.getCooldownManager() : ((typeof player.getCooldownManager === 'function') ? player.getCooldownManager() : null);
         let spellRl = J_ResourceLocation.parse('elyrium:' + artId);
-        let registry = J_SpellRegistry.from(player.level);
-        if (!registry) return;
+        let durTicks = Math.round(cdMs / 50);
 
-        let opt = registry.getHolder(spellRl);
-        if (opt && opt.isPresent()) {
-            let holder = opt.get();
-            let durTicks = Math.round(cdMs / 50);
-            cm.set(holder, durTicks, true);
+        if (cm) {
+            if (J_SpellRegistry) {
+                try {
+                    let registry = J_SpellRegistry.from(mcLevel);
+                    if (registry) {
+                        let opt = registry.getHolder(spellRl);
+                        if (opt && opt.isPresent()) {
+                            cm.set(opt.get(), durTicks, true);
+                        }
+                    }
+                } catch (eReg) {}
+            }
+            try {
+                cm.set(spellRl, durTicks, true);
+            } catch (eRl) {}
+        }
+
+        if (J_SpellCooldownPacket && J_Platform) {
+            try {
+                let pkt = new J_SpellCooldownPacket(spellRl, durTicks);
+                J_Platform.util().networkS2C_Send(rawPlayer, pkt);
+            } catch (ePkt) {}
         }
     } catch (eSync) {}
 }
@@ -1580,9 +1601,14 @@ try {
     if (J_SpellEvents && J_SpellEvents.SPELL_CAST) {
         J_SpellEvents.SPELL_CAST.register(args => {
             try {
-                let p = args.player ? args.player() : args.player;
+                let p = null;
+                if (args) {
+                    if (args.caster) p = typeof args.caster === 'function' ? args.caster() : args.caster;
+                    else if (args.player) p = typeof args.player === 'function' ? args.player() : args.player;
+                }
                 if (!p || !p.isAlive()) return;
-                let spellHolder = args.spell ? args.spell() : args.spell;
+                let spellHolder = null;
+                if (args.spell) spellHolder = typeof args.spell === 'function' ? args.spell() : args.spell;
                 let spellId = '';
                 if (spellHolder) {
                     try {
@@ -1599,11 +1625,19 @@ try {
                 }
 
                 if (spellId.startsWith('elyrium:') || spellId.startsWith('archers:')) {
+                    let now = Date.now();
+                    let lastDrain = p.persistentData.getLong('skd_last_stam_drain_time') || 0;
+                    if (now - lastDrain < 350) {
+                        // Already consumed by ItemEvents.rightClicked within debounce window
+                        return;
+                    }
+
                     let stamCost = 30;
                     if (spellId.includes('cleave') || spellId.includes('sunder')) stamCost = 35;
                     else if (spellId.includes('scissor') || spellId.includes('dagger')) stamCost = 25;
                     else if (spellId.includes('barrage')) stamCost = 30;
 
+                    p.persistentData.putLong('skd_last_stam_drain_time', now);
                     if (!consumePlayerStamina(p, stamCost)) {
                         p.sendSystemMessage(Text.of('§c⚡ Недостаточно выносливости для боевого искусства!'), true);
                         p.server.runCommandSilent(`playsound minecraft:entity.player.breath player ${p.username} ~ ~ ~ 0.8 1.4`);
@@ -1716,12 +1750,16 @@ ItemEvents.rightClicked(event => {
                 }
             } catch (eCd) {}
 
-            if (isOnCooldown) {
+            let innateArt = resolveInnateWeaponArt(player, isAirborne);
+            let artData = innateArt ? WEAPON_ARTS[innateArt] : null;
+            let resolvedId = (artData && artData.id) ? artData.id : innateArt;
+            let now = Date.now();
+            let cdEnd = player.persistentData.getLong('skd_cd_' + resolvedId) || 0;
+
+            if (isOnCooldown || now < cdEnd) {
                 return;
             }
 
-            let innateArt = resolveInnateWeaponArt(player, isAirborne);
-            let artData = innateArt ? WEAPON_ARTS[innateArt] : null;
             let stamCost = (artData && artData.stamina) ? artData.stamina : 30;
             let currentStam = getPlayerStamina(player);
 
@@ -1733,6 +1771,14 @@ ItemEvents.rightClicked(event => {
             }
 
             player.persistentData.putInt('skd_last_art_tick', currentAge);
+            player.persistentData.putLong('skd_last_stam_drain_time', now);
+            if (artData) {
+                player.persistentData.putLong('skd_cd_' + resolvedId, now + artData.cdMs);
+                player.persistentData.putString('skd_active_cd_art', resolvedId);
+                player.persistentData.putLong('skd_active_cd_end', now + artData.cdMs);
+                syncSpellEngineCooldown(player, resolvedId, artData.cdMs);
+            }
+            consumePlayerStamina(player, stamCost);
             return;
         }
     }

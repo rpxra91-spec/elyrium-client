@@ -174,6 +174,7 @@ function initSpellEngineStaminaHooks() {
                     let player = null;
                     try {
                         player = typeof args.caster === 'function' ? args.caster() : args.caster;
+                        if (!player && args.player) player = typeof args.player === 'function' ? args.player() : args.player;
                     } catch (eCaster) {}
                     if (!player) return null;
 
@@ -212,6 +213,7 @@ function initSpellEngineStaminaHooks() {
                     let player = null;
                     try {
                         player = typeof args.caster === 'function' ? args.caster() : args.caster;
+                        if (!player && args.player) player = typeof args.player === 'function' ? args.player() : args.player;
                     } catch (eCaster) {}
                     if (!player) return;
 
@@ -227,16 +229,18 @@ function initSpellEngineStaminaHooks() {
                     let stamCost = ELYRIUM_COMBAT_ART_STAMINA[spellId];
                     if (!stamCost || stamCost <= 0) return;
 
-                    // Защита от двойного списания (debounce 250мс)
+                    // Защита от двойного списания (debounce 350мс с skd_last_stam_drain_time)
                     let now = Date.now();
                     let safeSpellKey = 'elyrium_last_cost_' + spellId.replace(/[^a-zA-Z0-9_]/g, '_');
                     let pData = player.persistentData;
                     if (pData) {
                         let lastCastTime = pData.getLong(safeSpellKey) || 0;
-                        if (now - lastCastTime < 250) {
+                        let lastDrain = pData.getLong('skd_last_stam_drain_time') || 0;
+                        if (now - lastCastTime < 350 || now - lastDrain < 350) {
                             return;
                         }
                         pData.putLong(safeSpellKey, now);
+                        pData.putLong('skd_last_stam_drain_time', now);
                     }
 
                     consumeElyriumPlayerStamina(player, stamCost);
