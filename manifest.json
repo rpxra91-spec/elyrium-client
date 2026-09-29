@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-29T16:23:47.741712+00:00",
+  "generated_at": "2026-09-29T18:08:50.452273+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -127,8 +127,8 @@
     },
     {
       "path": "config/apotheosis/name_generation.cfg",
-      "sha256": "3ee3301222be7804b6a76048ed68fb8e7a0a7687fdea586373afc3208283dd9e",
-      "size": 138672
+      "sha256": "123c908eef0eda903f7e8934fab1fc88c06bbf4699ddfc26953742e996914900",
+      "size": 141169
     },
     {
       "path": "config/apothic_spawners.cfg",
@@ -641,6 +641,16 @@
       "size": 628
     },
     {
+      "path": "config/cristellib/undergarden/structure_placement_config.json5",
+      "sha256": "454ffa75bab1f9806e61895bedc3aa5f6f0d122ea013ea7e30e13f6213357fcb",
+      "size": 406
+    },
+    {
+      "path": "config/cristellib/undergarden/structure_toggle_config.json5",
+      "sha256": "f8d8304e690a1a851a58af20f42fbdf23ec87af613630be91a429630128cf567",
+      "size": 237
+    },
+    {
       "path": "config/cristellib/underground_bunkers/structure_placement_config.json5",
       "sha256": "0afacb90ea7018a5a362d0d4ee0acf6937ffe26a064b7df10fda9ed8c6c1b70a",
       "size": 131
@@ -972,8 +982,8 @@
     },
     {
       "path": "config/jei/ingredient-list-mod-sort-order.ini",
-      "sha256": "6d7a5151ad177f7130573029fde9018103e3dfaace26374ee190226956a398f8",
-      "size": 741
+      "sha256": "48fb800893abe3d2b60165e0cafdf61ee344fecfb8f018da7d2f93e696cbb735",
+      "size": 780
     },
     {
       "path": "config/jei/ingredient-list-type-sort-order.ini",
@@ -1002,8 +1012,8 @@
     },
     {
       "path": "config/jei/recipe-category-sort-order.ini",
-      "sha256": "10788dca94781d39e68ef9fd2f3b49671485df11db3160293b1160a72498f32c",
-      "size": 2134
+      "sha256": "130e80f84d9c3d183c1b0836dd21fcfc900431d09f93b1ef4458d691a75caaaa",
+      "size": 2156
     },
     {
       "path": "config/jei/world/local/Новый мир/lookupHistory.json",
@@ -1367,7 +1377,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "346288d1f76f81246b9bfac8083a85171ccb05ed3c058d52007f9b626e93d743",
+      "sha256": "f302af303ad1b58592f6bf4eb5948491a5549eb4f8964c923144ef855887ec91",
       "size": 275
     },
     {
@@ -1517,8 +1527,8 @@
     },
     {
       "path": "config/sound_physics_remastered/sound_rates.properties",
-      "sha256": "0e8bc7d9601e8ac613c4ea25ec0673b5a3e8b970de3a6af90d9a5ec2856bbd59",
-      "size": 473133
+      "sha256": "9dae95038f7e70e391d5a15a0e40cc479ccfeadb7ad1b8d561c6cfab924ad62d",
+      "size": 478151
     },
     {
       "path": "config/sound_physics_remastered/soundphysics.properties",
@@ -1542,8 +1552,8 @@
     },
     {
       "path": "config/spell_engine/client.json5",
-      "sha256": "3e768ba2f07e6369c6e757fe8b83e954a6e44900836a44da3e94ceb65687b5f2",
-      "size": 793
+      "sha256": "8b300b9c16afc4898adaf1908a8b8f01559fd8a08ab0b27e43bf9cd1f15e110a",
+      "size": 792
     },
     {
       "path": "config/spell_engine/elemental_weaknesses.json",
@@ -1854,6 +1864,16 @@
       "path": "config/trashcans-common.toml",
       "sha256": "fb6c4d845cbd973d89a35b4291eb7135b69c2ab9640605828b2bdd3bcea8c2d4",
       "size": 300
+    },
+    {
+      "path": "config/undergarden-client.toml",
+      "sha256": "ab5b1367d21e5da8d6fcd452fdd478c165c67bca3c89e1b1695f807a5a1530b8",
+      "size": 389
+    },
+    {
+      "path": "config/undergarden-common.toml",
+      "sha256": "cdb708c114ced82472ca08de297237dd3fe7022802ebc48abc577c56fec6bf78",
+      "size": 343
     },
     {
       "path": "config/vanilla_structures/placement_structure_config.json5",
@@ -8332,8 +8352,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/world_spawn_setup.js",
-      "sha256": "e315e47590f12a270d5bdb2909e9c8ddd564488b6d0e285c97fea1314bdbb007",
-      "size": 11082
+      "sha256": "ba054d5c6c7b982833ac981ac216d58e83b18f62691b6367194821c1886f0c54",
+      "size": 13063
     },
     {
       "path": "kubejs/server_scripts/02_magic/spell_capacity_engine.js",
@@ -8362,8 +8382,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/death_penalty_engine.js",
-      "sha256": "56bbb377f364435c689fea7241585b111cd146841bf8f1251dc11d40fee81f53",
-      "size": 5964
+      "sha256": "61902fc26b3b077514466d1366e7c44936ec9b5c843b902b6133252658c58967",
+      "size": 6065
     },
     {
       "path": "kubejs/server_scripts/03_combat/elemental_infusion_engine.js",
@@ -8427,8 +8447,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "ce3d53b454d5ede864581e9360e93af7f7437e208022d8a9613207c51f9a6e68",
-      "size": 99190
+      "sha256": "4905a3015a9e1c724ed15872217a86d3e10184cff1ffa5679b08ad0533d608d1",
+      "size": 99183
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
@@ -8637,18 +8657,18 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_instance_manager.js",
-      "sha256": "37b8db68c999bb9d5c83fde8b869f228318dbc9168ff4b79edf7f079083e6b1f",
-      "size": 11169
+      "sha256": "e7c9bc7698e8adb70b199cc69151fa512d7bb03294d04fec320b88973a9bbdd4",
+      "size": 12233
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_lives_engine.js",
-      "sha256": "b1070e11236faf6726b741821a82f8851b0f740907c7e42fa47c5531068a8eb0",
-      "size": 5636
+      "sha256": "f28f6900aa22669f37ed33a9ea34a3c88fd9c7694d5b52ff6fb6192ab82288b5",
+      "size": 6576
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_room_stitcher.js",
-      "sha256": "253f547d418cbca89c99477fd96b4ea620e7c8ca9980169a2e40e1ef115fb075",
-      "size": 20780
+      "sha256": "3dd00f1e8bf7bceb1c9fe3a3a0f67961d26fb893937dffdf1e36348a8d80a4e6",
+      "size": 21584
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/endless_fringe_engine.js",
@@ -8697,8 +8717,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/wandering_steles_engine.js",
-      "sha256": "be57b240a3cfeaaa5667b993cee0264a186f65a45e649cde0867c8da2954bdb4",
-      "size": 9597
+      "sha256": "c95dfac3ed2c98672eb030f796b89f8358e892c330988a24dd803e1f56064a5f",
+      "size": 10865
     },
     {
       "path": "kubejs/server_scripts/07_recipes_filters/filter_early_weapons.js",

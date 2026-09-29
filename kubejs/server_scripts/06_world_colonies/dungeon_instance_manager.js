@@ -25,6 +25,8 @@ const ElyriumInstanceManager = {
             pillarBlock = 'minecraft:nether_brick_fence';
         }
 
+        let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
+
         // 1. Clear bounding box and build floor
         for (let x = -radius - 2; x <= radius + 2; x++) {
             for (let z = -radius - 2; z <= radius + 2; z++) {
@@ -34,10 +36,10 @@ const ElyriumInstanceManager = {
 
                 if (distSq <= radius * radius) {
                     // Floor
-                    server.runCommandSilent(`setblock ${bx} ${originY} ${bz} ${distSq >= (radius - 2) * (radius - 2) ? rimBlock : floorBlock}`);
+                    cmd(`setblock ${bx} ${originY} ${bz} ${distSq >= (radius - 2) * (radius - 2) ? rimBlock : floorBlock}`);
                     // Air above
                     for (let y = 1; y <= 6; y++) {
-                        server.runCommandSilent(`setblock ${bx} ${originY + y} ${bz} minecraft:air`);
+                        cmd(`setblock ${bx} ${originY + y} ${bz} minecraft:air`);
                     }
 
                     // Outer perimeter fence
@@ -46,7 +48,7 @@ const ElyriumInstanceManager = {
                         let isGate = (Math.abs(x) <= 1 && Math.abs(z) >= radius - 2) || (Math.abs(z) <= 1 && Math.abs(x) >= radius - 2);
                         if (!isGate) {
                             for (let y = 1; y <= 3; y++) {
-                                server.runCommandSilent(`setblock ${bx} ${originY + y} ${bz} minecraft:iron_bars`);
+                                cmd(`setblock ${bx} ${originY + y} ${bz} minecraft:iron_bars`);
                             }
                         }
                     }
@@ -62,13 +64,13 @@ const ElyriumInstanceManager = {
             let px = originX + pos[0];
             let pz = originZ + pos[1];
             for (let y = 1; y <= 4; y++) {
-                server.runCommandSilent(`setblock ${px} ${originY + y} ${pz} ${pillarBlock}`);
+                cmd(`setblock ${px} ${originY + y} ${pz} ${pillarBlock}`);
             }
-            server.runCommandSilent(`setblock ${px} ${originY + 5} ${pz} minecraft:soul_lantern[hanging=false]`);
+            cmd(`setblock ${px} ${originY + 5} ${pz} minecraft:soul_lantern[hanging=false]`);
         });
 
         // 3. Central altar
-        server.runCommandSilent(`setblock ${originX} ${originY + 1} ${originZ} minecraft:chiseled_tuff_bricks`);
+        cmd(`setblock ${originX} ${originY + 1} ${originZ} minecraft:chiseled_tuff_bricks`);
     },
 
     // Create a new instance for party
@@ -162,13 +164,13 @@ const ElyriumInstanceManager = {
         if (!level) return;
 
         // 1. Reward Chest in center
-        server.runCommandSilent(`setblock ${cellX} ${cellY + 1} ${cellZ - 2} minecraft:chest[facing=south]{CustomName:'{"text":"Сундук Победителя Колизея","color":"gold"}'}`);
+        server.runCommandSilent(`execute in elyrium:dungeons run setblock ${cellX} ${cellY + 1} ${cellZ - 2} minecraft:chest[facing=south]{CustomName:'{"text":"Сундук Победителя Колизея","color":"gold"}'}`);
 
         // 2. Portal of Triumph (Golden floating rift)
-        server.runCommandSilent(`summon interaction ${cellX + 0.5} ${cellY + 1} ${cellZ + 0.5} {width:2.0f,height:3.0f,Tags:["elyrium_triumph_portal","inst_${instanceId}"]}`);
+        server.runCommandSilent(`execute in elyrium:dungeons run summon interaction ${cellX + 0.5} ${cellY + 1} ${cellZ + 0.5} {width:2.0f,height:3.0f,Tags:["elyrium_triumph_portal","inst_${instanceId}"]}`);
 
         // Visual frame of triumph portal
-        server.runCommandSilent(`summon block_display ${cellX + 0.5} ${cellY + 1.2} ${cellZ + 0.5} {block_state:{Name:"minecraft:gilded_blackstone"},transformation:{scale:[1.8f,2.8f,0.2f],translation:[-0.9f,0.0f,-0.1f]},Tags:["elyrium_triumph_display","inst_${instanceId}"]}`);
+        server.runCommandSilent(`execute in elyrium:dungeons run summon block_display ${cellX + 0.5} ${cellY + 1.2} ${cellZ + 0.5} {block_state:{Name:"minecraft:gilded_blackstone"},transformation:{scale:[1.8f,2.8f,0.2f],translation:[-0.9f,0.0f,-0.1f]},Tags:["elyrium_triumph_display","inst_${instanceId}"]}`);
 
         // Sound & celebratory fireworks
         level.players.forEach(p => {

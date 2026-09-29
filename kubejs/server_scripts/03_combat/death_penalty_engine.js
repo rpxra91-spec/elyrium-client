@@ -69,7 +69,7 @@ EntityEvents.death(event => {
 
 // Apply Soul Trauma upon respawning
 PlayerEvents.respawned(event => {
-    let player = event.player;
+    let player = event.entity || event.player;
     if (!player) return;
 
     let streak = player.persistentData.getInt('elyrium_death_streak') || 1;
@@ -85,7 +85,10 @@ PlayerEvents.respawned(event => {
     player.potionEffects.add('minecraft:mining_fatigue', durationTicks, 0, false, true);
 
     // Play eerie heartbeat / chime
-    player.server.runCommandSilent(`playsound minecraft:entity.warden.heartbeat player ${player.username} ~ ~ ~ 1.0 0.8`);
+    let server = event.server || player.server;
+    if (server) {
+        server.runCommandSilent(`playsound minecraft:entity.warden.heartbeat player ${player.username} ~ ~ ~ 1.0 0.8`);
+    }
 
     // Atmospheric feedback
     if (streak <= 1) {
@@ -103,7 +106,7 @@ PlayerEvents.respawned(event => {
 
 // Cleansing: Consuming hot/hearty dishes dispels Soul Trauma
 ItemEvents.foodEaten(event => {
-    let player = event.player;
+    let player = event.player || event.entity;
     let item = event.item;
     if (!player || !item) return;
 

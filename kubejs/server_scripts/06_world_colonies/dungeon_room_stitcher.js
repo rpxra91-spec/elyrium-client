@@ -91,7 +91,9 @@ const ElyriumDungeonStitcher = {
 
     // Build hollow box (room)
     buildRoom: function(server, minX, minY, minZ, maxX, maxY, maxZ, pal) {
-        let cmd = server.runCommandSilent.bind(server);
+        let cmd = (commandStr) => {
+            server.runCommandSilent(`execute in elyrium:dungeons run ${commandStr}`);
+        };
         // Floor
         cmd(`fill ${minX} ${minY} ${minZ} ${maxX} ${minY} ${maxZ} ${pal.floor}`);
         // Ceiling
@@ -107,7 +109,9 @@ const ElyriumDungeonStitcher = {
 
     // Build straight corridor
     buildCorridorZ: function(server, x, y, minZ, maxZ, width, height, pal) {
-        let cmd = server.runCommandSilent.bind(server);
+        let cmd = (commandStr) => {
+            server.runCommandSilent(`execute in elyrium:dungeons run ${commandStr}`);
+        };
         let halfW = Math.floor(width / 2);
         // Floor & Ceiling
         cmd(`fill ${x - halfW} ${y} ${minZ} ${x + halfW} ${y} ${maxZ} ${pal.floor}`);
@@ -120,7 +124,9 @@ const ElyriumDungeonStitcher = {
     },
 
     buildCorridorX: function(server, minX, maxX, y, z, width, height, pal) {
-        let cmd = server.runCommandSilent.bind(server);
+        let cmd = (commandStr) => {
+            server.runCommandSilent(`execute in elyrium:dungeons run ${commandStr}`);
+        };
         let halfW = Math.floor(width / 2);
         // Floor & Ceiling
         cmd(`fill ${minX} ${y} ${z - halfW} ${maxX} ${y} ${z + halfW} ${pal.floor}`);
@@ -138,7 +144,12 @@ const ElyriumDungeonStitcher = {
         let originX = instanceId * 1500;
         let originY = 64;
         let originZ = 0;
-        let cmd = server.runCommandSilent.bind(server);
+        let cmd = (commandStr) => {
+            server.runCommandSilent(`execute in elyrium:dungeons run ${commandStr}`);
+        };
+
+        // Solid safety foundation at spawn cell (originX - 5 .. originX + 5, Z: -5 .. +5)
+        cmd(`fill ${originX - 5} ${originY} ${originZ - 5} ${originX + 5} ${originY} ${originZ + 5} ${pal.floor}`);
 
         // =========================================================================
         // TIER I: UPPER HALLS (Y = 64)
@@ -261,7 +272,7 @@ const ElyriumDungeonStitcher = {
         let gz = instInfo.getDouble('gate_z');
 
         // Remove iron bars barrier
-        server.runCommandSilent(`fill ${gx - 2} ${gy + 1} ${gz} ${gx + 2} ${gy + 4} ${gz} minecraft:air`);
+        server.runCommandSilent(`execute in elyrium:dungeons run fill ${gx - 2} ${gy + 1} ${gz} ${gx + 2} ${gy + 4} ${gz} minecraft:air`);
 
         // Sound & Notification
         let level = server.getLevel('elyrium:dungeons');
@@ -281,24 +292,24 @@ const ElyriumDungeonStitcher = {
         for (let i = 0; i < 4; i++) {
             let ox = (i % 2 === 0 ? 2 : -2);
             let oz = (i < 2 ? 2 : -2);
-            server.runCommandSilent(`summon ${mobType} ${x + ox} ${y} ${z + oz} {Tags:["inst_${instanceId}","dungeon_elite","${packName}"],CustomName:'{"text":"Элитный Страж Зала","color":"red"}'}`);
+            server.runCommandSilent(`execute in elyrium:dungeons run summon ${mobType} ${x + ox} ${y} ${z + oz} {Tags:["inst_${instanceId}","dungeon_elite","${packName}"],CustomName:'{"text":"Элитный Страж Зала","color":"red"}'}`);
         }
     },
 
     spawnMiniBoss: function(server, x, y, z, sector, instanceId) {
         let bossType = sector >= 4 ? 'minecraft:piglin_brute' : (sector >= 2 ? 'minecraft:wither_skeleton' : 'minecraft:iron_golem');
-        server.runCommandSilent(`summon ${bossType} ${x} ${y} ${z} {Tags:["inst_${instanceId}","dungeon_miniboss"],CustomName:'{"text":"Хранитель Катакомб [Мини-Босс]","color":"gold","bold":true}'}`);
+        server.runCommandSilent(`execute in elyrium:dungeons run summon ${bossType} ${x} ${y} ${z} {Tags:["inst_${instanceId}","dungeon_miniboss"],CustomName:'{"text":"Хранитель Катакомб [Мини-Босс]","color":"gold","bold":true}'}`);
     },
 
     spawnAbyssGuards: function(server, x, y, z, sector, instanceId) {
         let mobType = sector >= 6 ? 'minecraft:enderman' : (sector >= 3 ? 'minecraft:wither_skeleton' : 'minecraft:piglin_brute');
-        server.runCommandSilent(`summon ${mobType} ${x - 3} ${y} ${z} {Tags:["inst_${instanceId}","dungeon_abyss_guard"],CustomName:'{"text":"Страж Бездны","color":"dark_purple"}'}`);
-        server.runCommandSilent(`summon ${mobType} ${x + 3} ${y} ${z} {Tags:["inst_${instanceId}","dungeon_abyss_guard"],CustomName:'{"text":"Страж Бездны","color":"dark_purple"}'}`);
+        server.runCommandSilent(`execute in elyrium:dungeons run summon ${mobType} ${x - 3} ${y} ${z} {Tags:["inst_${instanceId}","dungeon_abyss_guard"],CustomName:'{"text":"Страж Бездны","color":"dark_purple"}'}`);
+        server.runCommandSilent(`execute in elyrium:dungeons run summon ${mobType} ${x + 3} ${y} ${z} {Tags:["inst_${instanceId}","dungeon_abyss_guard"],CustomName:'{"text":"Страж Бездны","color":"dark_purple"}'}`);
     },
 
     spawnFinalBoss: function(server, x, y, z, sector, instanceId) {
         let bossType = sector >= 6 ? 'minecraft:warden' : (sector >= 4 ? 'minecraft:elder_guardian' : (sector >= 2 ? 'minecraft:wither_skeleton' : 'minecraft:iron_golem'));
-        server.runCommandSilent(`summon ${bossType} ${x} ${y} ${z} {Tags:["inst_${instanceId}","dungeon_boss"],CustomName:'{"text":"Владыка Недр Подземелья","color":"dark_red","bold":true}'}`);
+        server.runCommandSilent(`execute in elyrium:dungeons run summon ${bossType} ${x} ${y} ${z} {Tags:["inst_${instanceId}","dungeon_boss"],CustomName:'{"text":"Владыка Недр Подземелья","color":"dark_red","bold":true}'}`);
     }
 };
 
@@ -335,11 +346,11 @@ EntityEvents.death(event => {
         let bz = instInfo.getDouble('boss_throne_z');
 
         // Spawn Victory Chest with loot
-        server.runCommandSilent(`setblock ${bx} ${by + 1} ${bz} minecraft:chest[facing=south]{CustomName:'{"text":"Сундук Победы Подземелья","color":"gold"}'}`);
+        server.runCommandSilent(`execute in elyrium:dungeons run setblock ${bx} ${by + 1} ${bz} minecraft:chest[facing=south]{CustomName:'{"text":"Сундук Победы Подземелья","color":"gold"}'}`);
 
         // Spawn Golden Portal of Triumph
-        server.runCommandSilent(`summon interaction ${bx + 0.5} ${by + 1} ${bz + 4.5} {width:2.0f,height:3.0f,Tags:["elyrium_triumph_portal","inst_${instanceId}"]}`);
-        server.runCommandSilent(`summon block_display ${bx + 0.5} ${by + 1.2} ${bz + 4.5} {block_state:{Name:"minecraft:gilded_blackstone"},transformation:{scale:[1.8f,2.8f,0.2f],translation:[-0.9f,0.0f,-0.1f]},Tags:["elyrium_triumph_display","inst_${instanceId}"]}`);
+        server.runCommandSilent(`execute in elyrium:dungeons run summon interaction ${bx + 0.5} ${by + 1} ${bz + 4.5} {width:2.0f,height:3.0f,Tags:["elyrium_triumph_portal","inst_${instanceId}"]}`);
+        server.runCommandSilent(`execute in elyrium:dungeons run summon block_display ${bx + 0.5} ${by + 1.2} ${bz + 4.5} {block_state:{Name:"minecraft:gilded_blackstone"},transformation:{scale:[1.8f,2.8f,0.2f],translation:[-0.9f,0.0f,-0.1f]},Tags:["elyrium_triumph_display","inst_${instanceId}"]}`);
 
         let level = server.getLevel('elyrium:dungeons');
         if (level) {
@@ -395,7 +406,7 @@ ServerEvents.commandRegistry(event => {
                     player.persistentData.putString('elyrium_return_dim', String(player.level.dimension));
                     player.persistentData.putInt('elyrium_active_instance', id);
 
-                    player.teleportTo('elyrium:dungeons', cellX + 0.5, 66.0, 0.5, 180, 0);
+                    player.teleportTo('elyrium:dungeons', cellX + 0.5, 65.0, 0.5, 180, 0);
                     player.displayClientMessage(Component.literal(`§6⚔ [ПОДЗЕМЕЛЬЕ #${id}] §fВы вошли в верхний чертог!`), true);
                     return 1;
                 })

@@ -97,6 +97,27 @@ EntityEvents.death(event => {
     ElyriumLivesEngine.handlePlayerDeath(entity);
 });
 
+// Void rescue in dungeons: if player falls below Y < 10, teleport back to room 1 and deduct 1 life
+PlayerEvents.tick(event => {
+    let player = event.player;
+    if (!player || !player.isAlive()) return;
+
+    let dim = String(player.level.dimension);
+    if (!dim.includes('dungeons')) return;
+
+    let instId = player.persistentData.getInt('elyrium_active_instance');
+    if (instId <= 0) return;
+
+    if (player.y < 10) {
+        let cellX = instId * 1500;
+        player.fallDistance = 0.0;
+        player.teleportTo('elyrium:dungeons', cellX + 0.5, 65.0, 0.5, player.yaw, 0);
+        player.playNotifySound('minecraft:entity.enderman.teleport', 'players', 1.0, 0.8);
+        player.displayClientMessage(Component.literal('§c⚠ [СПАСЕНИЕ ИЗ БЕЗДНЫ] Вы сорвались в бездну! Возвращение во Входной Зал.'), false);
+        ElyriumLivesEngine.handlePlayerDeath(player);
+    }
+});
+
 // Real-time Action Bar HUD
 ServerEvents.tick(event => {
     let server = event.server;

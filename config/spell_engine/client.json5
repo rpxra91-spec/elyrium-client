@@ -12,7 +12,7 @@
 	"spell_hotbar_7_defer": "NONE",
 	"spell_hotbar_8_defer": "NONE",
 	"spell_hotbar_9_defer": "NONE",
-	"sneakingByPassSpellHotbar": false,
+	"sneakingByPassSpellHotbar": true,
 	"useKeyHighPriority": false,
 	"renderBeamsHighLuminance": true,
 	"highlightTarget": true,

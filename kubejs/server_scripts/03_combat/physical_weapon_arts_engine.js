@@ -1621,13 +1621,11 @@ ItemEvents.rightClicked(event => {
     if (hasShieldInOffhand) {
         if (player.isCrouching()) {
             player.persistentData.putInt('skd_last_art_tick', currentAge);
-            let innateArt = resolveInnateWeaponArt(player, isAirborne);
-            if (innateArt) {
-                executeWeaponArt(player, innateArt, isAirborne, false);
-            }
+            // Shield in offhand + crouching -> Shield Art: Shield Bash (Таранный Натиск)
+            executeWeaponArt(player, 'shield_bash', false, false);
             return;
         } else {
-            // Holding shield and not crouching -> standard vanilla shield block
+            // Holding shield and not crouching -> standard vanilla shield block unhindered
             return;
         }
     } else {

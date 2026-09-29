@@ -111,12 +111,44 @@ const ElyriumSteleEngine = {
 
             if (now > closesAt) {
                 player.displayClientMessage(Component.literal('§c⏳ Время врат истекло! Портал закрылся.'), true);
-                steleEntity.discard();
+                this.closeOrDiscardStele(steleEntity);
                 return;
             }
 
             if (targetInst > 0) {
                 ElyriumInstanceManager.enterInstance(player, targetInst);
+            }
+        }
+    },
+
+    // Safely close or discard stele
+    closeOrDiscardStele: function(steleEntity) {
+        if (!steleEntity) return;
+        let tags = steleEntity.tags;
+        let isSpawnStele = tags.contains('spawn_test_stele');
+
+        if (isSpawnStele) {
+            tags.remove('state_open');
+            tags.add('state_closed');
+            steleEntity.persistentData.remove('elyrium_portal_closes_at');
+            steleEntity.persistentData.remove('elyrium_target_instance');
+            let toRemove = [];
+            tags.forEach(t => {
+                if (t.startsWith('inst_')) toRemove.push(t);
+            });
+            toRemove.forEach(t => tags.remove(t));
+        } else {
+            let sx = steleEntity.x;
+            let sy = steleEntity.y;
+            let sz = steleEntity.z;
+            let sLevel = steleEntity.level;
+            let dim = sLevel ? String(sLevel.dimension) : 'minecraft:overworld';
+            let server = steleEntity.server;
+
+            steleEntity.discard();
+
+            if (server) {
+                server.runCommandSilent(`execute in ${dim} run kill @e[type=minecraft:block_display,tag=elyrium_stele_display,x=${sx},y=${sy},z=${sz},distance=..3]`);
             }
         }
     }
@@ -169,7 +201,7 @@ ServerEvents.tick(event => {
             // Check expiry
             let closesAt = ent.persistentData.getLong('elyrium_portal_closes_at') || 0;
             if (now > closesAt) {
-                ent.discard();
+                ElyriumSteleEngine.closeOrDiscardStele(ent);
                 continue;
             }
             // Swirling portal vortex
