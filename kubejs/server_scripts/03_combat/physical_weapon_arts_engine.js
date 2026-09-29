@@ -602,9 +602,9 @@ function resolveInnateWeaponArt(player, isAirborne) {
 
     let mainId = String(mainItem.id).toLowerCase();
 
-    // 1. Bows & Crossbows: Triple Rapid Shot (Беглая Тройка / Быстрые Выстрелы)
+    // 1. Bows & Crossbows: Fan Barrage (Веерный Залп)
     if (isBow(mainItem)) {
-        return 'triple_shot';
+        return 'fan_barrage';
     }
 
     // 2. Katanas: Phantom Thrust / Iai Slash (Фантомный Выпад)
@@ -692,6 +692,37 @@ function getInscribedWeaponArt(item) {
 
 
 // ------------------------------------------------------------------------------
+// SPELL ENGINE COOLDOWN INTEGRATION
+// ------------------------------------------------------------------------------
+
+let J_SpellRegistry = null;
+let J_ResourceLocation = null;
+try {
+    J_SpellRegistry = Java.loadClass('net.spell_engine.api.spell.registry.SpellRegistry');
+    J_ResourceLocation = Java.loadClass('net.minecraft.resources.ResourceLocation');
+} catch (eClass) {}
+
+function syncSpellEngineCooldown(player, artId, cdMs) {
+    if (!player || !artId || !cdMs) return;
+    try {
+        if (!player.getCooldownManager || !J_SpellRegistry || !J_ResourceLocation) return;
+        let cm = player.getCooldownManager();
+        if (!cm) return;
+
+        let spellRl = J_ResourceLocation.parse('elyrium:' + artId);
+        let registry = J_SpellRegistry.from(player.level);
+        if (!registry) return;
+
+        let opt = registry.getHolder(spellRl);
+        if (opt && opt.isPresent()) {
+            let holder = opt.get();
+            let durTicks = Math.round(cdMs / 50);
+            cm.set(holder, durTicks, true);
+        }
+    } catch (eSync) {}
+}
+
+// ------------------------------------------------------------------------------
 // EXECUTION ENGINE FOR ALL WEAPON ARTS
 // ------------------------------------------------------------------------------
 
@@ -711,22 +742,18 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
 
     // Check Cooldown
     if (now < cdEnd) {
-        if (resolvedId !== 'fan_barrage') {
-            let leftSec = ((cdEnd - now) / 1000).toFixed(1);
-            player.sendSystemMessage(Text.of(`§c⏳ «${art.name}» перезаряжается: ${leftSec} сек`), true);
-            player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.5 1.8`);
-        }
+        let leftSec = ((cdEnd - now) / 1000).toFixed(1);
+        player.sendSystemMessage(Text.of(`§c⏳ «${art.name}» перезаряжается: ${leftSec} сек`), true);
+        player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.5 1.8`);
         return;
     }
 
     // Check & Consume Stamina
     let stamCost = art.stamina || 30;
     if (!consumePlayerStamina(player, stamCost)) {
-        if (resolvedId !== 'fan_barrage') {
-            let cur = getPlayerStamina(player);
-            player.sendSystemMessage(Text.of(`§c⚡ Недостаточно выносливости! Требуется: §e${stamCost} §c(У вас: §7${cur}§c)`), true);
-            player.server.runCommandSilent(`playsound minecraft:entity.player.breath player ${player.username} ~ ~ ~ 0.8 1.4`);
-        }
+        let cur = getPlayerStamina(player);
+        player.sendSystemMessage(Text.of(`§c⚡ Недостаточно выносливости! Требуется: §e${stamCost} §c(У вас: §7${cur}§c)`), true);
+        player.server.runCommandSilent(`playsound minecraft:entity.player.breath player ${player.username} ~ ~ ~ 0.8 1.4`);
         return;
     }
 
@@ -734,6 +761,9 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
     player.persistentData.putLong(cdKey, now + art.cdMs);
     player.persistentData.putString('skd_active_cd_art', resolvedId);
     player.persistentData.putLong('skd_active_cd_end', now + art.cdMs);
+
+    // Sync Cooldown to Spell Engine Cooldown Manager (updates HUD spell icon & client)
+    syncSpellEngineCooldown(player, resolvedId, art.cdMs);
 
     // Broadcast Real Skeletal Animation
     broadcastPlayerArtAnimation(player, art.anim, art.animSpeed || 1.0);
@@ -1703,7 +1733,6 @@ ItemEvents.rightClicked(event => {
             }
 
             player.persistentData.putInt('skd_last_art_tick', currentAge);
-            consumePlayerStamina(player, stamCost);
             return;
         }
     }

@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-29T21:46:39.871905+00:00",
+  "generated_at": "2026-09-29T22:36:57.970728+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -337,7 +337,7 @@
     },
     {
       "path": "config/chunky/tasks/minecraft/overworld.properties",
-      "sha256": "be13b8b4a65aaf5b5951da973170efecc0708afc952b3ab375bbb932689712db",
+      "sha256": "4ec280c4d8f3c365c048797e04e954ccf4c0b6d0e2be025334891fc779788642",
       "size": 129
     },
     {
@@ -1377,7 +1377,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "31bec17729b90ebe78d1b4afefab397172584581cdae43522dc061a36c043003",
+      "sha256": "deedef6bee7d01e1f402f715a5acca5cb543936cbdeacecda34235ecb9d541aa",
       "size": 275
     },
     {
@@ -1577,8 +1577,8 @@
     },
     {
       "path": "config/spell_engine/weapon_fallback.json",
-      "sha256": "3927fd44261c8c49d3ede1c35756350b78d3b8427d03d4d687df4aebc46d55e5",
-      "size": 7910
+      "sha256": "4cbe33e73acc0de37692224bae18bb7a23f317ef26bfde705972efce15fbd620",
+      "size": 7947
     },
     {
       "path": "config/spell_power/attributes.json",
@@ -8047,8 +8047,8 @@
     },
     {
       "path": "kubejs/data/elyrium/spell/fan_barrage.json",
-      "sha256": "bd97f577e2940164e05ffb7abbc20a64d05f8e657428429149ccfdc55cf50738",
-      "size": 992
+      "sha256": "fe7dae9545c753b8fa9ffff0192abc0914d3b11883890b06766dfd16d8710796",
+      "size": 806
     },
     {
       "path": "kubejs/data/elyrium/spell/iai_slash.json",
@@ -8447,8 +8447,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "30aab9cd0d12b2377e5974272c8e58056604531b53c29948e2bbcb8fe86a015e",
-      "size": 105102
+      "sha256": "98a0ead2a36205a5f8e96e80b9084296a80fe786a852f2014850f94f2f2771e6",
+      "size": 106200
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
@@ -8467,8 +8467,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/spell_stamina_cost.js",
-      "sha256": "6e759e22e0eac636d0c1c1323c476f18e12bdb56d750ee68b442f5543130fe55",
-      "size": 6929
+      "sha256": "f58cbc04c1e3c62a7b8f9b3ac7f5b7310a7a65b9193c06e4bb402bd9466b69c9",
+      "size": 11378
     },
     {
       "path": "kubejs/server_scripts/03_combat/threat_engine.js",

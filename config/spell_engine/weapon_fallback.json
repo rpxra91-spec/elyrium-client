@@ -322,7 +322,9 @@
       "pool": "",
       "slot": "",
       "max_spell_count": 0,
-      "spell_ids": [],
+      "spell_ids": [
+        "elyrium:fan_barrage"
+      ],
       "extra_tier_binding": 0
     }
   }

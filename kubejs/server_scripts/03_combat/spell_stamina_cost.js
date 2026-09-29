@@ -3,7 +3,7 @@
 // ==============================================================================
 // Файл: kubejs/server_scripts/03_combat/spell_stamina_cost.js
 // Назначение: Проверка запаса выносливости игрока перед началом каста (PRE)
-//             и списание выносливости при успешном завершении каста (SPELL_CAST).
+//             и списание выносливости при успешном потреблении стоимости (COST_CONSUME).
 // Синхронизация: Зеркально в Server и Client.
 // ==============================================================================
 
@@ -23,11 +23,15 @@ const ELYRIUM_COMBAT_ART_STAMINA = {
 let J_SpellEvents = null;
 let J_SpellAttempt = null;
 let J_Component = null;
+let J_CastingAttemptEvent = null;
+let J_SpellCostConsumeEvent = null;
 
 try {
     J_SpellEvents = Java.loadClass('net.spell_engine.api.spell.event.SpellEvents');
-    J_SpellAttempt = Java.loadClass('net.spell_engine.internals.casting.SpellCast');
+    J_SpellAttempt = Java.loadClass('net.spell_engine.internals.casting.SpellCast$Attempt');
     J_Component = Java.loadClass('net.minecraft.network.chat.Component');
+    J_CastingAttemptEvent = Java.loadClass('net.spell_engine.api.spell.event.SpellEvents$CastingAttemptEvent');
+    J_SpellCostConsumeEvent = Java.loadClass('net.spell_engine.api.spell.event.SpellEvents$SpellCostConsumeEvent');
 } catch (eClassLoad) {
     console.warn('[Elyrium:SpellStamina] Could not pre-load Java classes: ' + eClassLoad);
 }
@@ -74,9 +78,9 @@ function getElyriumPlayerStamina(player) {
         return global.getPlayerStamina(player);
     }
     let pData = player.persistentData;
-    if (!pData.contains('elyrium_stamina')) {
+    if (!pData || !pData.contains('elyrium_stamina')) {
         let maxStam = getElyriumPlayerMaxStamina(player);
-        pData.putInt('elyrium_stamina', maxStam);
+        if (pData) pData.putInt('elyrium_stamina', maxStam);
         return maxStam;
     }
     return pData.getInt('elyrium_stamina');
@@ -150,6 +154,104 @@ function notifyLowStamina(player, requiredCost, currentStam) {
     } catch (eSnd) {}
 }
 
-// Note: Raw Java StagedEvent.register requires compiled SAM classes that Rhino ArrowFunctions cannot be cast to.
-// Stamina consumption and checks are handled natively by physical_weapon_arts_engine.js executeWeaponArt.
-console.info('[Elyrium:SpellStamina] Spell stamina subsystem active (managed via KubeJS combat engine).');
+// Регистрация нативных обработчиков событий Spell Engine
+let isSpellStaminaRegistered = false;
+
+function initSpellEngineStaminaHooks() {
+    if (isSpellStaminaRegistered) return;
+    if (!J_SpellEvents || !J_CastingAttemptEvent || !J_SpellCostConsumeEvent || !J_SpellAttempt) {
+        console.warn('[Elyrium:SpellStamina] SpellEvents or SAM interfaces unavailable, skipping hook registration.');
+        return;
+    }
+
+    try {
+        // 1. ПРОВЕРКА ВЫНОСЛИВОСТИ ПЕРЕД КАСТОМ (PRE)
+        // Блокирует запуск каста, звуков и анимаций при недостатке выносливости
+        let attemptListener = new J_CastingAttemptEvent({
+            onCastingAttempt: function(args) {
+                try {
+                    if (!args) return null;
+                    let player = null;
+                    try {
+                        player = typeof args.caster === 'function' ? args.caster() : args.caster;
+                    } catch (eCaster) {}
+                    if (!player) return null;
+
+                    let spellHolder = null;
+                    try {
+                        spellHolder = typeof args.spell === 'function' ? args.spell() : args.spell;
+                    } catch (eSp) {}
+                    if (!spellHolder) return null;
+
+                    let spellId = getSpellIdentifier(spellHolder);
+                    if (!spellId) return null;
+
+                    let stamCost = ELYRIUM_COMBAT_ART_STAMINA[spellId];
+                    if (!stamCost || stamCost <= 0) return null;
+
+                    let curStam = getElyriumPlayerStamina(player);
+                    if (curStam < stamCost) {
+                        notifyLowStamina(player, stamCost, curStam);
+                        return J_SpellAttempt.none();
+                    }
+                } catch (eAttempt) {
+                    console.error('[Elyrium:SpellStamina] Error in onCastingAttempt: ' + eAttempt);
+                }
+                return null;
+            }
+        });
+
+        J_SpellEvents.CASTING_ATTEMPT.PRE.register(attemptListener);
+
+        // 2. СПИСАНИЕ ВЫНОСЛИВОСТИ ПРИ ПОТРЕБЛЕНИИ СТОИМОСТИ (COST_CONSUME)
+        // Срабатывает в момент фактического каста / применения затрат заклинания
+        let costListener = new J_SpellCostConsumeEvent({
+            onSpellCostConsume: function(args) {
+                try {
+                    if (!args) return;
+                    let player = null;
+                    try {
+                        player = typeof args.caster === 'function' ? args.caster() : args.caster;
+                    } catch (eCaster) {}
+                    if (!player) return;
+
+                    let spellHolder = null;
+                    try {
+                        spellHolder = typeof args.spell === 'function' ? args.spell() : args.spell;
+                    } catch (eSp) {}
+                    if (!spellHolder) return;
+
+                    let spellId = getSpellIdentifier(spellHolder);
+                    if (!spellId) return;
+
+                    let stamCost = ELYRIUM_COMBAT_ART_STAMINA[spellId];
+                    if (!stamCost || stamCost <= 0) return;
+
+                    // Защита от двойного списания (debounce 250мс)
+                    let now = Date.now();
+                    let safeSpellKey = 'elyrium_last_cost_' + spellId.replace(/[^a-zA-Z0-9_]/g, '_');
+                    let pData = player.persistentData;
+                    if (pData) {
+                        let lastCastTime = pData.getLong(safeSpellKey) || 0;
+                        if (now - lastCastTime < 250) {
+                            return;
+                        }
+                        pData.putLong(safeSpellKey, now);
+                    }
+
+                    consumeElyriumPlayerStamina(player, stamCost);
+                } catch (eCost) {
+                    console.error('[Elyrium:SpellStamina] Error in onSpellCostConsume: ' + eCost);
+                }
+            }
+        });
+
+        J_SpellEvents.COST_CONSUME.register(costListener);
+        isSpellStaminaRegistered = true;
+        console.info('[Elyrium:SpellStamina] Successfully registered Spell Engine CASTING_ATTEMPT.PRE and COST_CONSUME stamina hooks.');
+    } catch (eRegister) {
+        console.error('[Elyrium:SpellStamina] Failed to register Spell Engine hooks: ' + eRegister);
+    }
+}
+
+initSpellEngineStaminaHooks();
