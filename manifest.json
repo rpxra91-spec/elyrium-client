@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-29T10:43:32.289684+00:00",
+  "generated_at": "2026-09-29T13:53:58.399986+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8626,6 +8626,11 @@
       "size": 2309
     },
     {
+      "path": "kubejs/server_scripts/06_world_colonies/dungeon_crafting_recipes.js",
+      "sha256": "10c45f295c37ca04c691ef4a457ab2f0691c468e915af9c153a8388d4c72e941",
+      "size": 14919
+    },
+    {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_instance_engine.js",
       "sha256": "0c82e5ccbe2dd866b892b6df9c514c6dad6a9bca942397a22113b47ddff681da",
       "size": 30197
@@ -8757,8 +8762,8 @@
     },
     {
       "path": "kubejs/startup_scripts/rpg_items.js",
-      "sha256": "3c9281db6fa40c9bc99fc1de4baad994dd7bbe2eb09c9a98876b9af811f3f258",
-      "size": 6779
+      "sha256": "b370595938f1eb274f0133b734728dac72ab323ed727b9d9918fb548c48a3564",
+      "size": 35456
     },
     {
       "path": "kubejs/startup_scripts/smithing_reinforcement_items.js",
