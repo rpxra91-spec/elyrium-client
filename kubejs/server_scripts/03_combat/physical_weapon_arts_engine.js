@@ -1675,8 +1675,35 @@ ItemEvents.rightClicked(event => {
             return;
         } else {
             // [ПКМ] without crouch: Handled natively by Spell Engine (Slot 1 Innate Art).
-            // Spell Engine executes the single smooth attack animation and radial cooldown on the HUD slot.
-            // Eliminates duplicate KubeJS actionbar text and double animations.
+            // Check weapon cooldown before consuming stamina or allowing action
+            let rawItem = mainHand.getItem ? mainHand.getItem() : mainHand.item;
+            let isOnCooldown = false;
+            try {
+                if (player.cooldowns && typeof player.cooldowns.isOnCooldown === 'function') {
+                    isOnCooldown = player.cooldowns.isOnCooldown(rawItem);
+                } else if (player.getCooldowns && typeof player.getCooldowns === 'function') {
+                    isOnCooldown = player.getCooldowns().isOnCooldown(rawItem);
+                }
+            } catch (eCd) {}
+
+            if (isOnCooldown) {
+                return;
+            }
+
+            let innateArt = resolveInnateWeaponArt(player, isAirborne);
+            let artData = innateArt ? WEAPON_ARTS[innateArt] : null;
+            let stamCost = (artData && artData.stamina) ? artData.stamina : 30;
+            let currentStam = getPlayerStamina(player);
+
+            if (currentStam < stamCost) {
+                event.cancel();
+                player.sendSystemMessage(Text.of(`§c⚡ Недостаточно выносливости! Требуется: §e${stamCost} §c(У вас: §7${currentStam}§c)`), true);
+                player.server.runCommandSilent(`playsound minecraft:entity.player.breath player ${player.username} ~ ~ ~ 0.8 1.4`);
+                return;
+            }
+
+            player.persistentData.putInt('skd_last_art_tick', currentAge);
+            consumePlayerStamina(player, stamCost);
             return;
         }
     }
@@ -1694,15 +1721,29 @@ NetworkEvents.dataReceived('elyrium:trigger_weapon_art', event => {
     let offHand = player.offHandItem;
     let hasShield = (offHand && !offHand.isEmpty() && isShield(offHand)) || (mainHand && !mainHand.isEmpty() && isShield(mainHand));
 
-    let action = null;
+    let action = '';
     let slot = 0;
     try {
         if (event.data) {
-            if (event.data.action) action = String(event.data.action);
-            else if (typeof event.data.getString === 'function') action = event.data.getString('action');
+            let rawAction = null;
+            if (event.data.action !== undefined && event.data.action !== null) {
+                rawAction = event.data.action;
+            } else if (typeof event.data.getString === 'function') {
+                rawAction = event.data.getString('action');
+            }
+            if (rawAction != null) {
+                action = String(rawAction).trim();
+            }
 
-            if (event.data.slot) slot = Number(event.data.slot);
-            else if (typeof event.data.getInt === 'function') slot = event.data.getInt('slot');
+            let rawSlot = null;
+            if (event.data.slot !== undefined && event.data.slot !== null) {
+                rawSlot = event.data.slot;
+            } else if (typeof event.data.getInt === 'function') {
+                rawSlot = event.data.getInt('slot');
+            }
+            if (rawSlot != null) {
+                slot = Number(rawSlot);
+            }
         }
     } catch (eData) {}
 
@@ -1710,6 +1751,8 @@ NetworkEvents.dataReceived('elyrium:trigger_weapon_art', event => {
     if (action === 'shield_bash') {
         if (hasShield) {
             executeWeaponArt(player, 'shield_bash', false, false);
+        } else {
+            player.sendSystemMessage(Text.of('§7Экипируйте щит для выполнения удара щитом.'), true);
         }
         return;
     }
@@ -1724,6 +1767,11 @@ NetworkEvents.dataReceived('elyrium:trigger_weapon_art', event => {
         if (innateArt && WEAPON_ARTS[innateArt]) {
             executeWeaponArt(player, innateArt, false, false);
         }
+        return;
+    }
+
+    // Guard: If action was specified but didn't match, do NOT fall through to Slot 2 [Z]!
+    if (action && action.length > 0) {
         return;
     }
 

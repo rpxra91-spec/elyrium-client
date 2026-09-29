@@ -88,18 +88,23 @@ ClientEvents.tick(event => {
 
     if (isAttackDown && !artsKeyPrev.attack) {
         let offHand = mc.player.getOffhandItem ? mc.player.getOffhandItem() : mc.player.offHandItem;
+        let mainHand = mc.player.getMainHandItem ? mc.player.getMainHandItem() : mc.player.mainHandItem;
         let isShield = false;
-        if (offHand && !offHand.isEmpty()) {
-            let itemId = String(offHand.getItem ? offHand.getItem().toString() : offHand.id).toLowerCase();
-            if (itemId.includes('shield')) {
-                isShield = true;
-            }
+        let checkShieldItem = function(stack) {
+            if (!stack || stack.isEmpty()) return false;
+            let id = String(stack.getItem ? stack.getItem().toString() : (stack.id || '')).toLowerCase();
+            return id.includes('shield');
+        };
+        if (checkShieldItem(offHand) || checkShieldItem(mainHand)) {
+            isShield = true;
         }
 
         if (isShield) {
             let isBlocking = false;
             try {
                 if (mc.player.isBlocking && mc.player.isBlocking()) {
+                    isBlocking = true;
+                } else if (mc.player.isUsingItem && mc.player.isUsingItem()) {
                     isBlocking = true;
                 } else if (mc.options && mc.options.keyUse && mc.options.keyUse.isDown()) {
                     isBlocking = true;
@@ -112,7 +117,11 @@ ClientEvents.tick(event => {
             try {
                 if (mc.player.isCrouching && mc.player.isCrouching()) {
                     isCrouching = true;
+                } else if (mc.player.isShiftKeyDown && mc.player.isShiftKeyDown()) {
+                    isCrouching = true;
                 } else if (mc.options && mc.options.keyShift && mc.options.keyShift.isDown()) {
+                    isCrouching = true;
+                } else if (J_GLFW_ARTS.glfwGetKey(windowHandle, 340) === 1 || J_GLFW_ARTS.glfwGetKey(windowHandle, 344) === 1) {
                     isCrouching = true;
                 }
             } catch (eCrch) {}

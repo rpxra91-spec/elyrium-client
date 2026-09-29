@@ -84,27 +84,33 @@ const DUNGEON_PALETTES = {
     }
 };
 
+const DUNGEON_PREFABS = {
+    // Modular pre-built structure templates from YungsBetterStrongholds & YungsBetterDungeons
+    1: { // Overworld Catacombs
+        entry: 'betterstrongholds:starts/junction_lg',
+        hallway: 'betterstrongholds:hallways/hallway_4',
+        combat1: 'betterstrongholds:rooms/armoury_md',
+        treasury: 'betterstrongholds:rooms/treasure_room_lg',
+        miniboss: 'betterstrongholds:rooms/library_md',
+        stairs: 'betterstrongholds:stairs/spiral_stairs_2floor_0',
+        depths: 'betterstrongholds:rooms/prison_lg',
+        boss_throne: 'betterstrongholds:portal_rooms/portal_room'
+    }
+};
+
 const ElyriumDungeonStitcher = {
     getPalette: function(sector) {
         return DUNGEON_PALETTES[sector] || DUNGEON_PALETTES[1];
     },
 
-    // Build hollow box (room)
-    buildRoom: function(server, minX, minY, minZ, maxX, maxY, maxZ, pal) {
-        let cmd = (commandStr) => {
-            server.runCommandSilent(`execute in elyrium:dungeons run ${commandStr}`);
-        };
-        // Floor
-        cmd(`fill ${minX} ${minY} ${minZ} ${maxX} ${minY} ${maxZ} ${pal.floor}`);
-        // Ceiling
-        cmd(`fill ${minX} ${maxY} ${minZ} ${maxX} ${maxY} ${maxZ} ${pal.ceiling}`);
-        // Walls
-        cmd(`fill ${minX} ${minY + 1} ${minZ} ${maxX} ${maxY - 1} ${minZ} ${pal.wall}`);
-        cmd(`fill ${minX} ${minY + 1} ${maxZ} ${maxX} ${maxY - 1} ${maxZ} ${pal.wall}`);
-        cmd(`fill ${minX} ${minY + 1} ${minZ} ${minX} ${maxY - 1} ${maxZ} ${pal.wall}`);
-        cmd(`fill ${maxX} ${minY + 1} ${minZ} ${maxX} ${maxY - 1} ${maxZ} ${pal.wall}`);
-        // Clear Interior
-        cmd(`fill ${minX + 1} ${minY + 1} ${minZ + 1} ${maxX - 1} ${maxY - 1} ${maxZ - 1} minecraft:air`);
+    getPrefabs: function(sector) {
+        return DUNGEON_PREFABS[sector] || DUNGEON_PREFABS[1];
+    },
+
+    // Place high-detail NBT structure template
+    placeTemplate: function(server, templateId, x, y, z, rotation) {
+        let rot = rotation || 'none';
+        server.runCommandSilent(`execute in elyrium:dungeons run place template ${templateId} ${x} ${y} ${z} ${rot}`);
     },
 
     // Build straight corridor
@@ -113,13 +119,10 @@ const ElyriumDungeonStitcher = {
             server.runCommandSilent(`execute in elyrium:dungeons run ${commandStr}`);
         };
         let halfW = Math.floor(width / 2);
-        // Floor & Ceiling
         cmd(`fill ${x - halfW} ${y} ${minZ} ${x + halfW} ${y} ${maxZ} ${pal.floor}`);
         cmd(`fill ${x - halfW} ${y + height} ${minZ} ${x + halfW} ${y + height} ${maxZ} ${pal.ceiling}`);
-        // Walls
         cmd(`fill ${x - halfW} ${y + 1} ${minZ} ${x - halfW} ${y + height - 1} ${maxZ} ${pal.wall}`);
         cmd(`fill ${x + halfW} ${y + 1} ${minZ} ${x + halfW} ${y + height - 1} ${maxZ} ${pal.wall}`);
-        // Interior Air
         cmd(`fill ${x - halfW + 1} ${y + 1} ${minZ} ${x + halfW - 1} ${y + height - 1} ${maxZ} minecraft:air`);
     },
 
@@ -128,19 +131,17 @@ const ElyriumDungeonStitcher = {
             server.runCommandSilent(`execute in elyrium:dungeons run ${commandStr}`);
         };
         let halfW = Math.floor(width / 2);
-        // Floor & Ceiling
         cmd(`fill ${minX} ${y} ${z - halfW} ${maxX} ${y} ${z + halfW} ${pal.floor}`);
         cmd(`fill ${minX} ${y + height} ${z - halfW} ${maxX} ${y + height} ${z + halfW} ${pal.ceiling}`);
-        // Walls
         cmd(`fill ${minX} ${y + 1} ${z - halfW} ${maxX} ${y + height - 1} ${z - halfW} ${pal.wall}`);
         cmd(`fill ${minX} ${y + 1} ${z + halfW} ${maxX} ${y + height - 1} ${z + halfW} ${pal.wall}`);
-        // Interior Air
         cmd(`fill ${minX} ${y + 1} ${z - halfW + 1} ${maxX} ${y + height - 1} ${z + halfW - 1} minecraft:air`);
     },
 
-    // Main 2-tier Dungeon Generator
+    // Main 2-tier Dungeon Generator using pre-built structure templates
     buildDungeon: function(server, instanceId, sector) {
         let pal = this.getPalette(sector);
+        let prefabs = this.getPrefabs(sector);
         let originX = instanceId * 1500;
         let originY = 64;
         let originZ = 0;
@@ -148,126 +149,107 @@ const ElyriumDungeonStitcher = {
             server.runCommandSilent(`execute in elyrium:dungeons run ${commandStr}`);
         };
 
-        // 1. Force load dungeon chunks so /fill and /setblock commands succeed reliably
+        // 1. Force load dungeon chunks so /place template commands succeed reliably
         cmd(`forceload add ${originX - 32} -32 ${originX + 32} 160`);
 
-        // 2. Solid safety foundation at spawn cell (originX - 8 .. originX + 8, Z: -8 .. +8)
+        // 2. Solid safety foundation at spawn cell
         cmd(`fill ${originX - 8} ${originY} ${originZ - 8} ${originX + 8} ${originY} ${originZ + 8} ${pal.floor}`);
         cmd(`fill ${originX - 8} ${originY + 6} ${originZ - 8} ${originX + 8} ${originY + 6} ${originZ + 8} ${pal.ceiling}`);
 
-        console.log(`[ELYRIUM] Procedural 2-Floor Dungeon #${instanceId} (Sector ${sector}) generated at ${originX}, ${originY}, ${originZ}`);
+        console.log(`[ELYRIUM] Prefab Structure Dungeon #${instanceId} (Sector ${sector}) generating at ${originX}, ${originY}, ${originZ}`);
 
         // =========================================================================
-        // TIER I: UPPER HALLS (Y = 64)
+        // TIER I: UPPER HALLS (Y = 64) - PREFAB STRUCTURES
         // =========================================================================
 
-        // 1. Entry Hall (X - 5 .. X + 5, Z - 5 .. Z + 5, Height 6)
-        this.buildRoom(server, originX - 5, originY, originZ - 5, originX + 5, originY + 6, originZ + 5, pal);
-        // Light in Entry Hall
-        cmd(`setblock ${originX} ${originY + 5} ${originZ} ${pal.light}`);
+        // 1. Entry Hall: Grand Multi-Tier Junction (31x24x31)
+        this.placeTemplate(server, prefabs.entry, originX - 15, originY, originZ - 15);
+        this.placeTemplate(server, 'betterstrongholds:statues/statue_sword', originX - 4, originY + 1, originZ + 5);
+        this.placeTemplate(server, 'betterstrongholds:statues/statue_sword', originX + 2, originY + 1, originZ + 5);
 
-        // 2. Corridor 1 (Z: +5 to +18)
-        this.buildCorridorZ(server, originX, originY, originZ + 5, originZ + 18, 5, 5, pal);
+        // 2. Corridor 1 (Prefab Stronghold Hallways)
+        this.placeTemplate(server, prefabs.hallway, originX - 2, originY, originZ + 16);
+        this.placeTemplate(server, prefabs.hallway, originX - 2, originY, originZ + 21);
+        cmd(`fill ${originX - 1} ${originY + 1} ${originZ + 15} ${originX + 1} ${originY + 3} ${originZ + 17} minecraft:air`);
 
-        // 3. Combat Chamber 1 (Z: +18 to +34, X: -8 to +8, Height 7)
-        this.buildRoom(server, originX - 8, originY, originZ + 18, originX + 8, originY + 7, originZ + 34, pal);
-        // Open entrances
-        cmd(`fill ${originX - 1} ${originY + 1} ${originZ + 18} ${originX + 1} ${originY + 3} ${originZ + 18} minecraft:air`);
-        cmd(`fill ${originX - 1} ${originY + 1} ${originZ + 34} ${originX + 1} ${originY + 3} ${originZ + 34} minecraft:air`);
-        // Torches & Pillars
-        cmd(`setblock ${originX - 5} ${originY + 1} ${originZ + 22} ${pal.pillar}`);
-        cmd(`setblock ${originX + 5} ${originY + 1} ${originZ + 22} ${pal.pillar}`);
-        cmd(`setblock ${originX - 5} ${originY + 1} ${originZ + 30} ${pal.pillar}`);
-        cmd(`setblock ${originX + 5} ${originY + 1} ${originZ + 30} ${pal.pillar}`);
-        // Spawners / Elite Mobs
-        this.spawnElitePack(server, originX, originY + 1, originZ + 26, sector, instanceId, 'combat_1');
+        // 3. Combat Chamber 1: High-Detail Armoury Hall (13x8x13)
+        this.placeTemplate(server, prefabs.combat1, originX - 6, originY, originZ + 26);
+        cmd(`fill ${originX - 1} ${originY + 1} ${originZ + 25} ${originX + 1} ${originY + 3} ${originZ + 27} minecraft:air`);
+        cmd(`fill ${originX - 1} ${originY + 1} ${originZ + 38} ${originX + 1} ${originY + 3} ${originZ + 40} minecraft:air`);
+        // Spawners / Elite Mobs in Armoury
+        this.spawnElitePack(server, originX, originY + 1, originZ + 32, sector, instanceId, 'combat_1');
 
-        // 4. T-Junction Corridor (Z: +34 to +45) with East Branch to Treasury
-        this.buildCorridorZ(server, originX, originY, originZ + 34, originZ + 45, 5, 5, pal);
+        // 4. T-Junction Corridor with East Branch to Treasury
+        this.placeTemplate(server, prefabs.hallway, originX - 2, originY, originZ + 40);
 
-        // Side Treasury Wing (East: X +2 to +18, Z: +35 to +45)
-        this.buildCorridorX(server, originX + 2, originX + 10, originY, originZ + 40, 5, 5, pal);
-        this.buildRoom(server, originX + 10, originY, originZ + 35, originX + 20, originY + 6, originZ + 45, pal);
-        cmd(`fill ${originX + 10} ${originY + 1} ${originZ + 39} ${originX + 10} ${originY + 3} ${originZ + 41} minecraft:air`);
+        // Side Treasury Wing: Grand Vaulted Treasure Room (19x16x19)
+        this.buildCorridorX(server, originX + 2, originX + 10, originY, originZ + 42, 3, 3, pal);
+        this.placeTemplate(server, prefabs.treasury, originX + 10, originY, originZ + 33);
+        cmd(`fill ${originX + 9} ${originY + 1} ${originZ + 41} ${originX + 11} ${originY + 3} ${originZ + 43} minecraft:air`);
         // Treasury Chest
-        cmd(`setblock ${originX + 18} ${originY + 1} ${originZ + 40} minecraft:chest[facing=west]{CustomName:'{"text":"Сокровищница Подземелья","color":"gold"}'}`);
+        cmd(`setblock ${originX + 19} ${originY + 1} ${originZ + 42} minecraft:chest[facing=west]{CustomName:'{"text":"Сокровищница Подземелья","color":"gold"}'}`);
 
-        // 5. Mini-Boss Chamber (Z: +45 to +65, X: -10 to +10, Height 8)
-        this.buildRoom(server, originX - 10, originY, originZ + 45, originX + 10, originY + 8, originZ + 65, pal);
-        cmd(`fill ${originX - 1} ${originY + 1} ${originZ + 45} ${originX + 1} ${originY + 3} ${originZ + 45} minecraft:air`);
+        // 5. Mini-Boss Chamber: Grand Library Hall (17x8x25)
+        this.placeTemplate(server, prefabs.miniboss, originX - 8, originY, originZ + 45);
+        cmd(`fill ${originX - 1} ${originY + 1} ${originZ + 44} ${originX + 1} ${originY + 3} ${originZ + 46} minecraft:air`);
+        cmd(`fill ${originX - 1} ${originY + 1} ${originZ + 69} ${originX + 1} ${originY + 3} ${originZ + 71} minecraft:air`);
         // Mini-Boss Spawn
-        this.spawnMiniBoss(server, originX, originY + 1, originZ + 55, sector, instanceId);
+        this.spawnMiniBoss(server, originX, originY + 1, originZ + 57, sector, instanceId);
 
-        // 6. Gated Portcullis (Locked until Mini-Boss killed) at Z = +65
-        cmd(`fill ${originX - 2} ${originY + 1} ${originZ + 65} ${originX + 2} ${originY + 4} ${originZ + 65} ${pal.gate}`);
-
-        // =========================================================================
-        // VERTICAL DESCENT SHAFT (Y = 64 down to Y = 32)
-        // =========================================================================
-        let shaftZ = originZ + 75;
-        this.buildCorridorZ(server, originX, originY, originZ + 65, shaftZ, 5, 5, pal);
-        // Vertical well 7x7 from Y=64 down to Y=32
-        cmd(`fill ${originX - 3} 32 ${shaftZ - 3} ${originX + 3} 70 ${shaftZ + 3} ${pal.wall}`);
-        cmd(`fill ${originX - 2} 33 ${shaftZ - 2} ${originX + 2} 69 ${shaftZ + 2} minecraft:air`);
-        // Spiral staircase steps
-        for (let dy = 0; dy <= 32; dy++) {
-            let sy = 64 - dy;
-            let angle = (dy * 45) * (Math.PI / 180.0);
-            let sx = originX + Math.round(Math.cos(angle) * 1.5);
-            let sz = shaftZ + Math.round(Math.sin(angle) * 1.5);
-            cmd(`setblock ${sx} ${sy} ${sz} ${pal.floor}`);
-        }
+        // 6. Gated Portcullis (Locked until Mini-Boss killed) at Z = +71
+        cmd(`fill ${originX - 2} ${originY + 1} ${originZ + 71} ${originX + 2} ${originY + 4} ${originZ + 71} ${pal.gate}`);
 
         // =========================================================================
-        // TIER II: THE DEPTHS & BOSS THRONE ROOM (Y = 32)
+        // VERTICAL DESCENT SHAFT (Y = 64 down to Y = 32) - SPIRAL STAIR TOWER
+        // =========================================================================
+        let shaftZ = originZ + 74;
+        cmd(`fill ${originX - 1} ${originY + 1} ${originZ + 71} ${originX + 1} ${originY + 3} ${shaftZ + 1} minecraft:air`);
+        cmd(`fill ${originX - 1} ${originY} ${originZ + 71} ${originX + 1} ${originY} ${shaftZ + 1} ${pal.floor}`);
+        cmd(`fill ${originX - 1} ${originY + 4} ${originZ + 71} ${originX + 1} ${originY + 4} ${shaftZ + 1} ${pal.ceiling}`);
+
+        // Double-stacked Spiral Staircase Tower (7x16x7 each, connecting Y=64 to Y=32)
+        this.placeTemplate(server, prefabs.stairs, originX - 3, 48, shaftZ);
+        this.placeTemplate(server, prefabs.stairs, originX - 3, 32, shaftZ);
+
+        // =========================================================================
+        // TIER II: THE DEPTHS & BOSS THRONE ROOM (Y = 32) - PREFAB STRUCTURES
         // =========================================================================
         let lowerY = 32;
 
-        // 7. Abyss Guardian Hall (Z: +80 to +98, X: -8 to +8, Height 7)
-        this.buildRoom(server, originX - 8, lowerY, originZ + 80, originX + 8, lowerY + 7, originZ + 98, pal);
-        this.buildCorridorZ(server, originX, lowerY, shaftZ + 2, originZ + 80, 5, 5, pal);
-        cmd(`fill ${originX - 1} ${lowerY + 1} ${originZ + 80} ${originX + 1} ${lowerY + 3} ${originZ + 80} minecraft:air`);
-        cmd(`fill ${originX - 1} ${lowerY + 1} ${originZ + 98} ${originX + 1} ${lowerY + 3} ${originZ + 98} minecraft:air`);
+        // 7. Abyss Guardian Hall: Dungeon Prison Complex (19x8x19)
+        this.placeTemplate(server, prefabs.depths, originX - 9, lowerY, originZ + 85);
+        cmd(`fill ${originX - 1} ${lowerY + 1} ${shaftZ + 7} ${originX + 1} ${lowerY + 3} ${originZ + 86} minecraft:air`);
+        cmd(`fill ${originX - 1} ${lowerY} ${shaftZ + 7} ${originX + 1} ${lowerY} ${originZ + 86} ${pal.floor}`);
+        cmd(`fill ${originX - 1} ${lowerY + 4} ${shaftZ + 7} ${originX + 1} ${lowerY + 4} ${originZ + 86} ${pal.ceiling}`);
+        // Exit from Prison to Boss Corridor
+        cmd(`fill ${originX - 1} ${lowerY + 1} ${originZ + 103} ${originX + 1} ${lowerY + 3} ${originZ + 106} minecraft:air`);
+        cmd(`fill ${originX - 1} ${lowerY} ${originZ + 103} ${originX + 1} ${lowerY} ${originZ + 106} ${pal.floor}`);
+        cmd(`fill ${originX - 1} ${lowerY + 4} ${originZ + 103} ${originX + 1} ${lowerY + 4} ${originZ + 106} ${pal.ceiling}`);
         // Spawn Abyss Guards
-        this.spawnAbyssGuards(server, originX, lowerY + 1, originZ + 89, sector, instanceId);
+        this.spawnAbyssGuards(server, originX, lowerY + 1, originZ + 94, sector, instanceId);
 
-        // 8. Corridor to Throne Room (Z: +98 to +110)
-        this.buildCorridorZ(server, originX, lowerY, originZ + 98, originZ + 110, 5, 5, pal);
+        // 8. Grand Boss Throne Room: Majestic Sunken Portal Chamber (25x14x19)
+        let bossZ = originZ + 105;
+        this.placeTemplate(server, prefabs.boss_throne, originX - 12, lowerY, bossZ);
+        cmd(`fill ${originX - 2} ${lowerY + 1} ${bossZ - 1} ${originX + 2} ${lowerY + 4} ${bossZ + 2} minecraft:air`);
 
-        // 9. Grand Boss Throne Room (Z: +110 to +136, X: -13 to +13, Height 10)
-        this.buildRoom(server, originX - 13, lowerY, originZ + 110, originX + 13, lowerY + 10, originZ + 136, pal);
-        cmd(`fill ${originX - 2} ${lowerY + 1} ${originZ + 110} ${originX + 2} ${lowerY + 4} ${originZ + 110} minecraft:air`);
+        // Spawn Final Boss on the Central Dais
+        this.spawnFinalBoss(server, originX, lowerY + 2, originZ + 115, sector, instanceId);
 
-        // Grand Pillars at 4 corners
-        let pillars = [
-            [-8, 116], [8, 116], [-8, 130], [8, 130]
-        ];
-        pillars.forEach(p => {
-            cmd(`fill ${originX + p[0]} ${lowerY + 1} ${originZ + p[1]} ${originX + p[0]} ${lowerY + 8} ${originZ + p[1]} ${pal.pillar}`);
-            cmd(`setblock ${originX + p[0]} ${lowerY + 4} ${originZ + p[1]} ${pal.light}`);
-        });
-
-        // Boss Throne Dais
-        cmd(`fill ${originX - 3} ${lowerY + 1} ${originZ + 128} ${originX + 3} ${lowerY + 1} ${originZ + 133} ${pal.accent}`);
-
-        // Spawn Final Boss
-        this.spawnFinalBoss(server, originX, lowerY + 2, originZ + 126, sector, instanceId);
-
-        // Register Portcullis Coordinates in persistentData
+        // Register Portcullis & Boss Coordinates in persistentData
         let pData = server.persistentData;
         let instTag = `inst_${instanceId}`;
         let instInfo = pData.getCompound(instTag);
         instInfo.putDouble('gate_x', originX);
         instInfo.putDouble('gate_y', originY);
-        instInfo.putDouble('gate_z', originZ + 65);
+        instInfo.putDouble('gate_z', originZ + 71);
         instInfo.putDouble('boss_throne_x', originX);
         instInfo.putDouble('boss_throne_y', lowerY);
-        instInfo.putDouble('boss_throne_z', originZ + 126);
+        instInfo.putDouble('boss_throne_z', originZ + 115);
         pData.put(instTag, instInfo);
     },
 
-    // Unlock Portcullis Gate when Mini-Boss dies
-    unlockPortcullis: function(server, instanceId) {
+        unlockPortcullis: function(server, instanceId) {
         let pData = server.persistentData;
         let instTag = `inst_${instanceId}`;
         if (!pData.contains(instTag)) return;

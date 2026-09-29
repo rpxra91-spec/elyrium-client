@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-29T20:52:01.207444+00:00",
+  "generated_at": "2026-09-29T21:31:24.572353+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -337,7 +337,7 @@
     },
     {
       "path": "config/chunky/tasks/minecraft/overworld.properties",
-      "sha256": "d4e5b07cc92a20a19c84094c63dfdd80ad09867726d0ed5343e6598cd6bfebda",
+      "sha256": "be13b8b4a65aaf5b5951da973170efecc0708afc952b3ab375bbb932689712db",
       "size": 129
     },
     {
@@ -1377,7 +1377,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "02db1378ab8cad9ff81e4786ea949d5aa37c3743b2eadfabbc3adba4ab0051ad",
+      "sha256": "31bec17729b90ebe78d1b4afefab397172584581cdae43522dc061a36c043003",
       "size": 275
     },
     {
@@ -1427,8 +1427,8 @@
     },
     {
       "path": "config/rpg_series/loot_fallback_report.json",
-      "sha256": "39877d2913ce1eb840575fcad4200047341ada62cbe70d9de59c62a22f38be6c",
-      "size": 83024
+      "sha256": "7cf5e831b0c5f3d7f39c5e3d35c9bc3fc09b5676e2d86279672ec565c53f978f",
+      "size": 176
     },
     {
       "path": "config/rpg_series/loot_scrolls_v2.json",
@@ -1577,8 +1577,8 @@
     },
     {
       "path": "config/spell_engine/weapon_fallback.json",
-      "sha256": "2a75fa720cee3d69521e6984c0d9a3f01be323215f4289541a1d338a8835f3f0",
-      "size": 7899
+      "sha256": "3927fd44261c8c49d3ede1c35756350b78d3b8427d03d4d687df4aebc46d55e5",
+      "size": 7910
     },
     {
       "path": "config/spell_power/attributes.json",
@@ -7837,8 +7837,8 @@
     },
     {
       "path": "kubejs/client_scripts/weapon_arts_keybinds.js",
-      "sha256": "08ffb98db57b3d00a0d17f29900ed62337f6ebe8ac9650f0e7fa93b9af3366b2",
-      "size": 5074
+      "sha256": "2a555f231deb180f5c18ecebbc0cc05c6ee4a4982febed83a7bd4e4ae3039883",
+      "size": 5708
     },
     {
       "path": "kubejs/config/client.json",
@@ -8447,8 +8447,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "90501f3a18e06102882790856538776b5cd8ba065fc41ce9c3b248784495a3d6",
-      "size": 102724
+      "sha256": "35cf71ccc35bd50624e13d701a955400d9482c5b9e7292749953b8e1ae152aeb",
+      "size": 104853
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
@@ -8667,8 +8667,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_room_stitcher.js",
-      "sha256": "4d7a878436cdc1facc7f19b1dd0f8b80afaa4677688ad9015052bc0e53c35533",
-      "size": 22192
+      "sha256": "4e9cf70a784b043c61958fcbb8d19bc5411719bdccde663a38fc1327da572e3f",
+      "size": 22181
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/endless_fringe_engine.js",
