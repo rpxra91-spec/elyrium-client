@@ -99,6 +99,13 @@ const ElyriumInstanceManager = {
 
         if (type === 'colosseum') {
             this.buildColosseumArena(server, cellX, cellY, cellZ, sector);
+        } else if (type === 'dungeon') {
+            if (typeof ElyriumDungeonStitcher !== 'undefined') {
+                ElyriumDungeonStitcher.buildDungeon(server, nextId, sector);
+            }
+            if (typeof ElyriumLivesEngine !== 'undefined') {
+                ElyriumLivesEngine.initInstanceLives(server, nextId, sector);
+            }
         }
 
         return nextId;
@@ -115,6 +122,7 @@ const ElyriumInstanceManager = {
         }
 
         let instInfo = pData.getCompound(instanceTag);
+        let instType = instInfo.getString('type') || 'dungeon';
         let cellX = instInfo.getDouble('origin_x');
         let cellY = instInfo.getDouble('origin_y');
         let cellZ = instInfo.getDouble('origin_z');
@@ -126,11 +134,17 @@ const ElyriumInstanceManager = {
         player.persistentData.putString('elyrium_return_dim', String(player.level.dimension));
         player.persistentData.putInt('elyrium_active_instance', instanceId);
 
-        // Teleport into arena
-        player.teleportTo('elyrium:dungeons', cellX + 0.5, cellY + 2.0, cellZ + 5.5, 180, 0);
-        player.playNotifySound('minecraft:entity.enderman.teleport', 'players', 1.0, 1.0);
-
-        player.displayClientMessage(Component.literal('§6⚔ [КОЛИЗЕЙ ЭЛИРИУМА] §fВы вошли на Арену Испытаний!'), true);
+        if (instType === 'colosseum') {
+            // Teleport into Colosseum Arena
+            player.teleportTo('elyrium:dungeons', cellX + 0.5, cellY + 2.0, cellZ + 5.5, 180, 0);
+            player.playNotifySound('minecraft:entity.enderman.teleport', 'players', 1.0, 1.0);
+            player.displayClientMessage(Component.literal('§6⚔ [КОЛИЗЕЙ ЭЛИРИУМА] §fВы вошли на Арену Испытаний!'), true);
+        } else {
+            // Teleport into Floor 1 Entry Hall (Room 1 center is cellX + 7.5, Y=65.0, cellZ + 7.5)
+            player.teleportTo('elyrium:dungeons', cellX + 7.5, 65.0, cellZ + 7.5, 0, 0);
+            player.playNotifySound('minecraft:ambient.cave', 'players', 1.0, 0.8);
+            player.displayClientMessage(Component.literal('§5💀 [ПОДЗЕМЕЛЬЕ ЭЛИРИУМА] §fВы ступили в катакомбы Разлома! Одолейте хранителя герсы.'), false);
+        }
     },
 
     // Spawn Golden Portal of Triumph and Reward Chest
