@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-29T09:28:24.583150+00:00",
+  "generated_at": "2026-09-29T10:43:32.289684+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8287,8 +8287,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/boundary_wall_lockdown.js",
-      "sha256": "1bfbf1411984f0b81f3f49621fa0a7573e1a0c8034725c71d3b27e4571dc7e28",
-      "size": 13118
+      "sha256": "f994c8af2b982f19c60624a8ccd8006d2ab1302d3afc7eb178c2545ccf7faf50",
+      "size": 26362
     },
     {
       "path": "kubejs/server_scripts/01_progression/dimensional_progression_lock.js",
@@ -8319,6 +8319,11 @@
       "path": "kubejs/server_scripts/01_progression/return_scroll_system.js",
       "sha256": "1e4f6e326cd0ded81712a55710521e09868f08915f4b63f9bfb471ad74008c8a",
       "size": 6019
+    },
+    {
+      "path": "kubejs/server_scripts/01_progression/sector_wall_generator.js",
+      "sha256": "eecbad55c605e035af276936e2331a627594cb96d11db09183f9c8477729e82e",
+      "size": 32700
     },
     {
       "path": "kubejs/server_scripts/01_progression/world_progression_gossip.js",
