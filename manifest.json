@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-29T21:31:24.572353+00:00",
+  "generated_at": "2026-09-29T21:45:51.406958+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -7837,8 +7837,8 @@
     },
     {
       "path": "kubejs/client_scripts/weapon_arts_keybinds.js",
-      "sha256": "2a555f231deb180f5c18ecebbc0cc05c6ee4a4982febed83a7bd4e4ae3039883",
-      "size": 5708
+      "sha256": "bb343462f355c10783053ef324de5274877f83c28848c9c7d1180316c682275e",
+      "size": 6076
     },
     {
       "path": "kubejs/config/client.json",
@@ -8447,8 +8447,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "35cf71ccc35bd50624e13d701a955400d9482c5b9e7292749953b8e1ae152aeb",
-      "size": 104853
+      "sha256": "30aab9cd0d12b2377e5974272c8e58056604531b53c29948e2bbcb8fe86a015e",
+      "size": 105102
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
@@ -8667,8 +8667,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_room_stitcher.js",
-      "sha256": "4e9cf70a784b043c61958fcbb8d19bc5411719bdccde663a38fc1327da572e3f",
-      "size": 22181
+      "sha256": "0fd4b166171df1d1d2b8f40eeb4c71c61a043149426de66c1ce7f0db307e04be",
+      "size": 23492
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/endless_fringe_engine.js",

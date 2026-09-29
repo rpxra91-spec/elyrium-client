@@ -1680,7 +1680,7 @@ ItemEvents.rightClicked(event => {
             let isOnCooldown = false;
             try {
                 if (player.cooldowns && typeof player.cooldowns.isOnCooldown === 'function') {
-                    isOnCooldown = player.cooldowns.isOnCooldown(rawItem);
+                    isOnCooldown = player.cooldowns.isOnCooldown(rawItem) || player.cooldowns.isOnCooldown(mainHand);
                 } else if (player.getCooldowns && typeof player.getCooldowns === 'function') {
                     isOnCooldown = player.getCooldowns().isOnCooldown(rawItem);
                 }
@@ -1725,21 +1725,26 @@ NetworkEvents.dataReceived('elyrium:trigger_weapon_art', event => {
     let slot = 0;
     try {
         if (event.data) {
+            let d = event.data;
             let rawAction = null;
-            if (event.data.action !== undefined && event.data.action !== null) {
-                rawAction = event.data.action;
-            } else if (typeof event.data.getString === 'function') {
-                rawAction = event.data.getString('action');
+            if (typeof d.contains === 'function' && d.contains('action')) {
+                rawAction = d.getString('action');
+            } else if (d.action !== undefined && d.action !== null) {
+                rawAction = d.action;
+            } else if (typeof d.getString === 'function') {
+                rawAction = d.getString('action');
             }
             if (rawAction != null) {
                 action = String(rawAction).trim();
             }
 
             let rawSlot = null;
-            if (event.data.slot !== undefined && event.data.slot !== null) {
-                rawSlot = event.data.slot;
-            } else if (typeof event.data.getInt === 'function') {
-                rawSlot = event.data.getInt('slot');
+            if (typeof d.contains === 'function' && d.contains('slot')) {
+                rawSlot = d.getInt('slot');
+            } else if (d.slot !== undefined && d.slot !== null) {
+                rawSlot = d.slot;
+            } else if (typeof d.getInt === 'function') {
+                rawSlot = d.getInt('slot');
             }
             if (rawSlot != null) {
                 slot = Number(rawSlot);

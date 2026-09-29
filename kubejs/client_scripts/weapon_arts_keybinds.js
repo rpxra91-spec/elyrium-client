@@ -93,7 +93,11 @@ ClientEvents.tick(event => {
         let checkShieldItem = function(stack) {
             if (!stack || stack.isEmpty()) return false;
             let id = String(stack.getItem ? stack.getItem().toString() : (stack.id || '')).toLowerCase();
-            return id.includes('shield');
+            if (id.includes('shield')) return true;
+            try {
+                if (stack.hasTag && (stack.hasTag('c:tools/shields') || stack.hasTag('minecraft:shields') || stack.hasTag('c:shields'))) return true;
+            } catch (eT) {}
+            return false;
         };
         if (checkShieldItem(offHand) || checkShieldItem(mainHand)) {
             isShield = true;
@@ -120,6 +124,8 @@ ClientEvents.tick(event => {
                 } else if (mc.player.isShiftKeyDown && mc.player.isShiftKeyDown()) {
                     isCrouching = true;
                 } else if (mc.options && mc.options.keyShift && mc.options.keyShift.isDown()) {
+                    isCrouching = true;
+                } else if (mc.options && mc.options.keySneak && mc.options.keySneak.isDown()) {
                     isCrouching = true;
                 } else if (J_GLFW_ARTS.glfwGetKey(windowHandle, 340) === 1 || J_GLFW_ARTS.glfwGetKey(windowHandle, 344) === 1) {
                     isCrouching = true;
