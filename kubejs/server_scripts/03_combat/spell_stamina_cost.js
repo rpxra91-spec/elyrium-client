@@ -16,7 +16,9 @@ const ELYRIUM_COMBAT_ART_STAMINA = {
     'elyrium:piercing_thrust': 25,    // Копья — Бронебойный Прокол
     'elyrium:scissor_cross': 25,      // Кинжалы — Ножницы
     'elyrium:iai_slash': 30,          // Катаны — Фантомный Выпад (Иай)
-    'elyrium:fan_barrage': 30         // Луки — Веерный Залп
+    'elyrium:fan_barrage': 30,        // Луки — Веерный Залп
+    'elyrium:piercing_shot': 35,      // Луки — Бронебойный Выстрел
+    'archers:power_shot': 35          // Луки — Силовой Выстрел (Spell Engine)
 };
 
 // Вспомогательные классы Minecraft / Spell Engine

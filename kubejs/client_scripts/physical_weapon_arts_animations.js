@@ -137,14 +137,16 @@ function playRealPlayerAnimation(targetPlayer, animId, speed) {
         } catch (eKosmx) {}
     }
 
-    // 3. Client Arm Swing Feedback
-    try {
-        if (typeof rawPlayer.swing === 'function') {
-            rawPlayer.swing(rawPlayer.usedItemHand || 'main_hand');
-        } else if (typeof targetPlayer.swing === 'function') {
-            targetPlayer.swing(targetPlayer.usedItemHand || 'main_hand');
-        }
-    } catch (eSwing) {}
+    // 3. Client Arm Swing Feedback (only as fallback if no 3D skeletal animation was played)
+    if (!animPlayed) {
+        try {
+            if (typeof rawPlayer.swing === 'function') {
+                rawPlayer.swing(rawPlayer.usedItemHand || 'main_hand');
+            } else if (typeof targetPlayer.swing === 'function') {
+                targetPlayer.swing(targetPlayer.usedItemHand || 'main_hand');
+            }
+        } catch (eSwing) {}
+    }
 }
 
 // ------------------------------------------------------------------------------

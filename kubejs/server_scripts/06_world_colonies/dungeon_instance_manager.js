@@ -148,7 +148,7 @@ const ElyriumInstanceManager = {
             player.displayClientMessage(Component.literal('§6⚔ [КОЛИЗЕЙ ЭЛИРИУМА] §fВы вошли на Арену Испытаний!'), true);
         } else {
             // Safety starter pavilion check at Entry Hall
-            server.runCommandSilent(`execute in elyrium:dungeons run fill ${cellX - 4} 64 -4 ${cellX + 4} 64 4 minecraft:stone_bricks replace minecraft:air`);
+            server.runCommandSilent(`execute in elyrium:dungeons run fill ${cellX - 4} 64 -4 ${cellX + 4} 64 4 minecraft:stone_bricks`);
             server.runCommandSilent(`execute in elyrium:dungeons run fill ${cellX - 3} 65 -3 ${cellX + 3} 69 3 minecraft:air`);
 
             // Teleport into Floor 1 Entry Hall (safe starter platform)

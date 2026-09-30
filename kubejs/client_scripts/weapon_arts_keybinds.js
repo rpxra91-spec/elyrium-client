@@ -10,6 +10,8 @@
 
 let J_GLFW_ARTS = null;
 let J_MC_ARTS = null;
+let J_MC_BC = null;
+let J_PlayerAttackAnimatable = null;
 
 function initArtsClientApi() {
     if (!J_GLFW_ARTS) {
@@ -17,6 +19,12 @@ function initArtsClientApi() {
     }
     if (!J_MC_ARTS) {
         try { J_MC_ARTS = Java.loadClass('net.minecraft.client.Minecraft'); } catch (e) {}
+    }
+    if (!J_MC_BC) {
+        try { J_MC_BC = Java.loadClass('net.bettercombat.api.MinecraftClient_BetterCombat'); } catch (e) {}
+    }
+    if (!J_PlayerAttackAnimatable) {
+        try { J_PlayerAttackAnimatable = Java.loadClass('net.bettercombat.client.animation.PlayerAttackAnimatable'); } catch (e) {}
     }
 }
 
@@ -146,6 +154,16 @@ ClientEvents.tick(event => {
                         }
                     } catch (eOpt) {}
                     try { mc.missTime = 10; } catch (eMiss) {}
+                    try {
+                        if (J_MC_BC && J_MC_BC.isInstance(mc)) {
+                            mc.cancelUpswing();
+                        }
+                    } catch (eBc1) {}
+                    try {
+                        if (J_PlayerAttackAnimatable && J_PlayerAttackAnimatable.isInstance(mc.player)) {
+                            mc.player.stopAttackAnimation();
+                        }
+                    } catch (eBc2) {}
                 }
             }
             // Combination 2: Holding Shield + Shift + LMB -> Main Hand Innate Art
@@ -162,6 +180,16 @@ ClientEvents.tick(event => {
                         }
                     } catch (eOpt) {}
                     try { mc.missTime = 10; } catch (eMiss) {}
+                    try {
+                        if (J_MC_BC && J_MC_BC.isInstance(mc)) {
+                            mc.cancelUpswing();
+                        }
+                    } catch (eBc3) {}
+                    try {
+                        if (J_PlayerAttackAnimatable && J_PlayerAttackAnimatable.isInstance(mc.player)) {
+                            mc.player.stopAttackAnimation();
+                        }
+                    } catch (eBc4) {}
                 }
             }
         }

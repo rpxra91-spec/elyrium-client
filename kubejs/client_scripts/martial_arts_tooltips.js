@@ -297,7 +297,7 @@ function resolveInnateWeaponArt(item) {
     }
 
     // 2. Bows & Crossbows: Piercing Shot (Силовой / Бронебойный Выстрел)
-    if (id.includes('bow') || id.includes('crossbow') ||
+    if (((id.includes('bow') && !id.includes('bowl')) || id.includes('crossbow')) ||
         item.hasTag('c:tools/bows') || item.hasTag('c:tools/crossbows')) {
         return 'piercing_shot';
     }

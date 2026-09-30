@@ -52,7 +52,7 @@ function checkTwoHandedClient(item) {
     }
 
     let id = String(item.id || '').toLowerCase();
-    if (id.includes('bow') || id.includes('crossbow')) return true;
+    if (((id.includes('bow') && !id.includes('bowl')) || id.includes('crossbow'))) return true;
     if (id.includes('spear') || id.includes('lance') || id.includes('halberd') || id.includes('glaive') || id.includes('staff')) return true;
     if (id.includes('claymore') || id.includes('greathammer') || id.includes('greatsword') ||
         id.includes('scythe') || id.includes('breaker') || id.includes('hammer') ||

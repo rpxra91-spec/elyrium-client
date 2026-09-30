@@ -496,8 +496,9 @@ function isSpear(item) {
 function isBow(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
     let id = String(item.id).toLowerCase();
-    return id.includes('bow') || id.includes('crossbow') ||
-           item.hasTag('c:tools/bows') || item.hasTag('c:tools/crossbows');
+    return ((id.includes('bow') && !id.includes('bowl')) || id.includes('crossbow') ||
+            item.hasTag('c:tools/bows') || item.hasTag('c:tools/crossbows') ||
+            item.hasTag('minecraft:enchantable/bow') || item.hasTag('minecraft:enchantable/crossbow'));
 }
 
 function isShield(item) {
@@ -1173,13 +1174,20 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
             // Broadcast arrow release animation
             broadcastPlayerArtAnimation(player, 'spell_engine:archery_release', 1.2);
 
+            // Re-evaluate aim at release tick for perfect crosshair accuracy
+            let curLook = player.getLookAngle();
+            let curHLen = Math.max(0.01, Math.sqrt(curLook.x * curLook.x + curLook.y * curLook.y + curLook.z * curLook.z));
+            let rnx = curLook.x / curHLen;
+            let rny = curLook.y / curHLen;
+            let rnz = curLook.z / curHLen;
+
             let hitEntities = new Set();
             let hits = 0;
 
             for (let d = 1.0; d <= maxDist; d += 1.0) {
-                let px = player.x + nx * d;
-                let py = player.y + player.eyeHeight - 0.1 + ny * d;
-                let pz = player.z + nz * d;
+                let px = player.x + rnx * d;
+                let py = player.y + player.eyeHeight - 0.1 + rny * d;
+                let pz = player.z + rnz * d;
 
                 player.server.runCommandSilent(`particle minecraft:sonic_boom ${px} ${py} ${pz} 0 0 0 0 1 normal`);
                 player.server.runCommandSilent(`particle minecraft:crit ${px} ${py} ${pz} 0.15 0.15 0.15 0.05 3 normal`);
@@ -1190,7 +1198,7 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
                     if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive() && !hitEntities.has(ent.id)) {
                         hitEntities.add(ent.id);
                         dealArtDamage(player, ent, totalDmg, true); // 100% Armor Bypass
-                        ent.knockback(0.9, -nx, -nz);
+                        ent.knockback(0.9, -rnx, -rnz);
                         hits++;
                     }
                 });
@@ -1706,7 +1714,8 @@ ItemEvents.rightClicked(event => {
     if (player.persistentData.getInt('skd_last_art_tick') === currentAge) return;
 
     let offHand = player.offHandItem;
-    let hasShieldInOffhand = offHand && isShield(offHand);
+    let isOffhandLocked = player.persistentData.getBoolean('skd_offhand_locked');
+    let hasShieldInOffhand = offHand && isShield(offHand) && !isOffhandLocked;
     let isAirborne = (typeof player.onGround === 'function' ? !player.onGround() : !player.onGround) || player.fallDistance > 0.05;
 
     // --------------------------------------------------------------------------

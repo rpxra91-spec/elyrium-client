@@ -111,16 +111,11 @@ const ElyriumDungeonStitcher = {
         };
 
         // 1. Solid floor
-        cmd(`fill ${cx - radiusXZ} ${cy} ${cz - radiusXZ} ${cx + radiusXZ} ${cy} ${cz + radiusXZ} ${floorBlock} replace minecraft:air`);
-        cmd(`fill ${cx - radiusXZ} ${cy} ${cz - radiusXZ} ${cx + radiusXZ} ${cy} ${cz + radiusXZ} ${floorBlock} replace minecraft:cave_air`);
+        cmd(`fill ${cx - radiusXZ} ${cy} ${cz - radiusXZ} ${cx + radiusXZ} ${cy} ${cz + radiusXZ} ${floorBlock}`);
 
-        // 2. Clear air volume from ground up to ceiling
-        cmd(`fill ${cx - radiusXZ} ${cy + 1} ${cz - radiusXZ} ${cx + radiusXZ} ${cy + heightY} ${cz + radiusXZ} minecraft:air replace minecraft:stone`);
-        cmd(`fill ${cx - radiusXZ} ${cy + 1} ${cz - radiusXZ} ${cx + radiusXZ} ${cy + heightY} ${cz + radiusXZ} minecraft:air replace minecraft:cobblestone`);
-        cmd(`fill ${cx - radiusXZ} ${cy + 1} ${cz - radiusXZ} ${cx + radiusXZ} ${cy + heightY} ${cz + radiusXZ} minecraft:air replace minecraft:deepslate`);
-        cmd(`fill ${cx - radiusXZ} ${cy + 1} ${cz - radiusXZ} ${cx + radiusXZ} ${cy + heightY} ${cz + radiusXZ} minecraft:air replace minecraft:dirt`);
-        cmd(`fill ${cx - radiusXZ} ${cy + 1} ${cz - radiusXZ} ${cx + radiusXZ} ${cy + heightY} ${cz + radiusXZ} minecraft:air replace minecraft:gravel`);
-        cmd(`fill ${cx - radiusXZ} ${cy + 1} ${cz - radiusXZ} ${cx + radiusXZ} ${cy + heightY} ${cz + radiusXZ} minecraft:air replace minecraft:sand`);
+        // 2. Unconditionally clear inner air volume from ground up to ceiling (leaving outer boundary)
+        let innerR = Math.max(1, radiusXZ - 1);
+        cmd(`fill ${cx - innerR} ${cy + 1} ${cz - innerR} ${cx + innerR} ${cy + heightY} ${cz + innerR} minecraft:air`);
 
         // 3. Remove stray jigsaw / structure blocks
         cmd(`fill ${cx - radiusXZ - 2} ${cy} ${cz - radiusXZ - 2} ${cx + radiusXZ + 2} ${cy + heightY + 2} ${cz + radiusXZ + 2} minecraft:air replace minecraft:jigsaw`);
@@ -139,8 +134,8 @@ const ElyriumDungeonStitcher = {
             server.runCommandSilent(`execute in elyrium:dungeons run ${commandStr}`);
         };
 
-        // 1. Force load dungeon chunk area
-        cmd(`forceload add ${originX - 128} -128 ${originX + 128} 128`);
+        // 1. Force load dungeon chunk area (safe radius under 256 chunk limit)
+        cmd(`forceload add ${originX - 96} -96 ${originX + 96} 96`);
 
         console.log(`[ELYRIUM] Mega-Dungeon Structure #${instanceId} (${structInfo.id}) generating at ${originX}, ${originY}, ${originZ}`);
 
@@ -167,23 +162,23 @@ const ElyriumDungeonStitcher = {
         // 3. Invoke Native Mod Structure Generation via /place structure
         cmd(`place structure ${structInfo.id} ${originX} ${structInfo.y} ${originZ + structInfo.zOffset}`);
 
-        // 4. Ensure clear transition corridor from Starter Pavilion into Dungeon Structure
-        cmd(`fill ${originX - 2} 64 4 ${originX + 2} 64 ${originZ + structInfo.zOffset + 4} ${pal.floor}`);
-        cmd(`fill ${originX - 2} 65 4 ${originX + 2} 68 ${originZ + structInfo.zOffset + 4} minecraft:air`);
-        cmd(`fill ${originX - 3} 65 4 ${originX - 3} 68 ${originZ + structInfo.zOffset + 4} ${pal.wall}`);
-        cmd(`fill ${originX + 3} 65 4 ${originX + 3} 68 ${originZ + structInfo.zOffset + 4} ${pal.wall}`);
-        cmd(`fill ${originX - 3} 69 4 ${originX + 3} 69 ${originZ + structInfo.zOffset + 4} ${pal.ceiling}`);
-
         // Clean any stray jigsaw / structure blocks in proximity
         cmd(`fill ${originX - 64} 30 -32 ${originX + 64} 90 128 minecraft:air replace minecraft:jigsaw`);
         cmd(`fill ${originX - 64} 30 -32 ${originX + 64} 90 128 minecraft:air replace minecraft:structure_block`);
 
-        // 5. Open Hall 1: Elite Combat Pack (Upper Catacombs)
+        // 4. Open Hall 1: Elite Combat Pack (Upper Catacombs, radius 5, Z=28)
         let hall1Z = originZ + 28;
         this.prepareOpenHall(server, originX, 64, hall1Z, 5, 5, pal.floor);
         this.spawnElitePack(server, originX, 65, hall1Z, sector, instanceId, 'combat_1');
 
-        // 6. Open Hall 2: Mini-Boss Chamber & Treasury
+        // Corridor 1: Starter Pavilion (Z=4) into Hall 1 (Z=23)
+        cmd(`fill ${originX - 2} 64 4 ${originX + 2} 64 ${hall1Z - 5} ${pal.floor}`);
+        cmd(`fill ${originX - 2} 65 4 ${originX + 2} 68 ${hall1Z - 5} minecraft:air`);
+        cmd(`fill ${originX - 3} 65 4 ${originX - 3} 68 ${hall1Z - 5} ${pal.wall}`);
+        cmd(`fill ${originX + 3} 65 4 ${originX + 3} 68 ${hall1Z - 5} ${pal.wall}`);
+        cmd(`fill ${originX - 3} 69 4 ${originX + 3} 69 ${hall1Z - 5} ${pal.ceiling}`);
+
+        // 5. Open Hall 2: Mini-Boss Chamber & Treasury (radius 6, Z=54, Y=60)
         let miniBossZ = originZ + 54;
         let miniBossY = 60;
         this.prepareOpenHall(server, originX, miniBossY, miniBossZ, 6, 6, pal.floor);
@@ -192,21 +187,51 @@ const ElyriumDungeonStitcher = {
         // Treasury Chest in Mini-Boss chamber
         cmd(`setblock ${originX + 4} ${miniBossY + 1} ${miniBossZ} minecraft:chest[facing=west]{CustomName:'{"text":"Сокровищница Подземелья","color":"gold"}'}`);
 
-        // 7. Gated Portcullis (Locked until Mini-Boss killed) at Z = miniBossZ + 8
+        // Corridor 2: Hall 1 (Z=33, Y=64) to Hall 2 (Z=48, Y=60) descending ramp
+        for (let cz = 34; cz <= 48; cz++) {
+            let cy = 64 - Math.floor((cz - 33) * 4 / 15);
+            cmd(`fill ${originX - 2} ${cy} ${cz} ${originX + 2} ${cy} ${cz} ${pal.floor}`);
+            cmd(`fill ${originX - 2} ${cy + 1} ${cz} ${originX + 2} ${cy + 4} ${cz} minecraft:air`);
+            cmd(`fill ${originX - 3} ${cy + 1} ${cz} ${originX - 3} ${cy + 4} ${cz} ${pal.wall}`);
+            cmd(`fill ${originX + 3} ${cy + 1} ${cz} ${originX + 3} ${cy + 4} ${cz} ${pal.wall}`);
+            cmd(`fill ${originX - 3} ${cy + 5} ${cz} ${originX + 3} ${cy + 5} ${cz} ${pal.ceiling}`);
+        }
+
+        // 6. Gated Portcullis (Locked until Mini-Boss killed) at Z = miniBossZ + 8
         let gateZ = miniBossZ + 8;
         cmd(`fill ${originX - 2} ${miniBossY + 1} ${gateZ} ${originX + 2} ${miniBossY + 4} ${gateZ} ${pal.gate}`);
 
-        // 8. Open Hall 3: Deep Abyss Guards (Lower Floor)
+        // 7. Open Hall 3: Deep Abyss Guards (Lower Floor, radius 6, Z=80, Y=50)
         let abyssZ = gateZ + 18;
         let abyssY = 50;
         this.prepareOpenHall(server, originX, abyssY, abyssZ, 6, 6, pal.floor);
         this.spawnAbyssGuards(server, originX, abyssY + 1, abyssZ, sector, instanceId);
 
-        // 9. Open Hall 4: Grand Boss Throne Dais
+        // Corridor 3: Gate (Z=63, Y=60) to Hall 3 (Z=74, Y=50) grand descending stairs
+        for (let cz = 63; cz <= 74; cz++) {
+            let cy = 60 - Math.min(10, cz - 62);
+            cmd(`fill ${originX - 2} ${cy} ${cz} ${originX + 2} ${cy} ${cz} ${pal.floor}`);
+            cmd(`fill ${originX - 2} ${cy + 1} ${cz} ${originX + 2} ${cy + 4} ${cz} minecraft:air`);
+            cmd(`fill ${originX - 3} ${cy + 1} ${cz} ${originX - 3} ${cy + 4} ${cz} ${pal.wall}`);
+            cmd(`fill ${originX + 3} ${cy + 1} ${cz} ${originX + 3} ${cy + 4} ${cz} ${pal.wall}`);
+            cmd(`fill ${originX - 3} ${cy + 5} ${cz} ${originX + 3} ${cy + 5} ${cz} ${pal.ceiling}`);
+        }
+
+        // 8. Open Hall 4: Grand Boss Throne Dais (radius 8, Z=104, Y=48)
         let bossZ = abyssZ + 24;
         let bossY = 48;
         this.prepareOpenHall(server, originX, bossY, bossZ, 8, 8, pal.floor);
         this.spawnFinalBoss(server, originX, bossY + 1, bossZ, sector, instanceId);
+
+        // Corridor 4: Hall 3 (Z=86, Y=50) to Hall 4 (Z=96, Y=48)
+        for (let cz = 87; cz <= 96; cz++) {
+            let cy = (cz <= 91) ? 49 : 48;
+            cmd(`fill ${originX - 2} ${cy} ${cz} ${originX + 2} ${cy} ${cz} ${pal.floor}`);
+            cmd(`fill ${originX - 2} ${cy + 1} ${cz} ${originX + 2} ${cy + 4} ${cz} minecraft:air`);
+            cmd(`fill ${originX - 3} ${cy + 1} ${cz} ${originX - 3} ${cy + 4} ${cz} ${pal.wall}`);
+            cmd(`fill ${originX + 3} ${cy + 1} ${cz} ${originX + 3} ${cy + 4} ${cz} ${pal.wall}`);
+            cmd(`fill ${originX - 3} ${cy + 5} ${cz} ${originX + 3} ${cy + 5} ${cz} ${pal.ceiling}`);
+        }
 
         // Register Portcullis & Boss Coordinates in persistentData
         let pData = server.persistentData;
@@ -257,7 +282,7 @@ const ElyriumDungeonStitcher = {
     },
 
     spawnMiniBoss: function(server, x, y, z, sector, instanceId) {
-        let bossType = sector >= 4 ? 'minecraft:piglin_brute' : (sector >= 2 ? 'minecraft:wither_skeleton' : 'minecraft:iron_golem');
+        let bossType = sector >= 4 ? 'minecraft:piglin_brute' : (sector >= 2 ? 'minecraft:wither_skeleton' : 'minecraft:vindicator');
         server.runCommandSilent(`execute in elyrium:dungeons run summon ${bossType} ${x} ${y} ${z} {Tags:["inst_${instanceId}","dungeon_miniboss"],CustomName:'{"text":"Хранитель Катакомб [Мини-Босс]","color":"gold","bold":true}'}`);
     },
 
@@ -268,7 +293,7 @@ const ElyriumDungeonStitcher = {
     },
 
     spawnFinalBoss: function(server, x, y, z, sector, instanceId) {
-        let bossType = sector >= 6 ? 'minecraft:warden' : (sector >= 4 ? 'minecraft:elder_guardian' : (sector >= 2 ? 'minecraft:wither_skeleton' : 'minecraft:iron_golem'));
+        let bossType = sector >= 6 ? 'minecraft:warden' : (sector >= 4 ? 'minecraft:elder_guardian' : (sector >= 2 ? 'minecraft:wither_skeleton' : 'minecraft:piglin_brute'));
         server.runCommandSilent(`execute in elyrium:dungeons run summon ${bossType} ${x} ${y} ${z} {Tags:["inst_${instanceId}","dungeon_boss"],CustomName:'{"text":"Владыка Недр Подземелья","color":"dark_red","bold":true}'}`);
     }
 };

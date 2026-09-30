@@ -43,14 +43,16 @@ function getReinforceLevel(item) {
 
 function getActiveShield(player) {
     if (!player) return null;
+    let isOffLocked = player.persistentData ? player.persistentData.getBoolean('skd_offhand_locked') : false;
     try {
         if (player.useItem && !player.useItem.isEmpty() && isShield(player.useItem)) {
+            if (isOffLocked && player.useItem === player.offHandItem) return null;
             return player.useItem;
         }
     } catch (e) {}
 
     let off = player.offHandItem;
-    if (off && !off.isEmpty() && isShield(off)) return off;
+    if (off && !off.isEmpty() && isShield(off) && !isOffLocked) return off;
 
     let main = player.mainHandItem;
     if (main && !main.isEmpty() && isShield(main)) return main;

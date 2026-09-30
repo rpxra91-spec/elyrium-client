@@ -37,8 +37,9 @@ function isTwoHandedWeapon(item) {
     let id = String(item.id).toLowerCase();
 
     // 2. Bows and Crossbows
-    if (id.includes('bow') || id.includes('crossbow') ||
-        item.hasTag('c:tools/bows') || item.hasTag('c:tools/crossbows')) {
+    if (((id.includes('bow') && !id.includes('bowl')) || id.includes('crossbow')) ||
+        item.hasTag('c:tools/bows') || item.hasTag('c:tools/crossbows') ||
+        item.hasTag('minecraft:enchantable/bow') || item.hasTag('minecraft:enchantable/crossbow')) {
         return true;
     }
 
@@ -93,7 +94,7 @@ function isOffhandRestricted(item) {
     if (id.includes('sword') || id.includes('blade') || id.includes('dagger') ||
         id.includes('axe') || id.includes('katana') || id.includes('rapier') ||
         id.includes('mace') || id.includes('spear') || id.includes('staff') ||
-        id.includes('bow') || id.includes('crossbow') || id.includes('trident') ||
+        (id.includes('bow') && !id.includes('bowl')) || id.includes('crossbow') || id.includes('trident') ||
         id.includes('scythe') || id.includes('hammer') || id.includes('glaive') ||
         item.hasTag('minecraft:swords') || item.hasTag('minecraft:axes') ||
         item.hasTag('c:tools/swords') || item.hasTag('c:tools/axes') ||
@@ -184,11 +185,15 @@ ItemEvents.firstRightClicked(event => {
     let item = event.item;
     let offHand = player.offHandItem;
 
-    if (isOffhandInteraction || (item && offHand && item.id === offHand.id && isOffhandRestricted(offHand))) {
+    if (isOffhandInteraction || (item && offHand && item === offHand && isOffhandRestricted(offHand))) {
         event.cancel();
         let now = Date.now();
+        let lastArtTick = player.persistentData.getInt('skd_last_art_tick') || 0;
+        let currentAge = (typeof player.age === 'number') ? player.age : (typeof player.tickCount === 'number' ? player.tickCount : 0);
+        let justUsedArt = (Math.abs(currentAge - lastArtTick) <= 2);
         let lastMsg = player.persistentData.getLong('skd_last_2h_warn_time') || 0;
-        if (now - lastMsg > 1000) {
+
+        if (!justUsedArt && (now - lastMsg > 1000)) {
             player.persistentData.putLong('skd_last_2h_warn_time', now);
             player.sendSystemMessage(Text.of('§c✋ Двуручный хват: использование второй руки заблокировано!'), true);
             player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.4 1.5`);
@@ -206,7 +211,7 @@ ItemEvents.rightClicked(event => {
     let item = event.item;
     let offHand = player.offHandItem;
 
-    if (isOffhandInteraction || (item && offHand && item.id === offHand.id && isOffhandRestricted(offHand))) {
+    if (isOffhandInteraction || (item && offHand && item === offHand && isOffhandRestricted(offHand))) {
         event.cancel();
         try { player.stopUsingItem(); } catch (eStop) {}
     }
