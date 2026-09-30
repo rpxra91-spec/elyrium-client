@@ -220,6 +220,23 @@ function triggerGuardBreak(player, shieldItem, server) {
 
     // 6. Actionbar notification
     player.sendSystemMessage(Text.of('§4⚠ БЛОК ПРОБИТ! (Guard Break) §cЩит выбит из рук!'), true);
+
+    // 7. Sync broken posture to client HUD
+    let maxPost = 100 + (getReinforceLevel(shieldItem) * 50);
+    syncPlayerPosture(player, maxPost, maxPost, true);
+}
+
+function syncPlayerPosture(player, curAbsorbed, maxPosture, hasShield) {
+    if (!player) return;
+    try {
+        let cur = Math.max(0, Math.round(maxPosture - (curAbsorbed || 0)));
+        let max = Math.round(maxPosture);
+        player.sendData('elyrium:sync_posture', {
+            posture: cur,
+            maxPosture: max,
+            hasShield: !!hasShield
+        });
+    } catch (e) {}
 }
 
 // ------------------------------------------------------------------------------
@@ -295,11 +312,14 @@ EntityEvents.beforeHurt(event => {
         let color = pct > 50 ? '§a' : (pct > 25 ? '§e' : '§c');
         let blocksText = isElemental && throughRate > 0 ? ` §7(Пробито: §c${Math.round(throughRate * 100)}%§7)` : '';
         player.sendSystemMessage(Text.of(`§6🛡 Блок: ${color}${Math.round(remaining)}§7/§f${maxPosture} §7(Стойка ${color}${pct}%§7)${blocksText}`), true);
+
+        // Zero-Latency Posture HUD Sync
+        syncPlayerPosture(player, newAbsorbed, maxPosture, true);
     }
 });
 
 // ------------------------------------------------------------------------------
-// 2. POSTURE RECOVERY ENGINE (20 posture per second when not blocking)
+// 2. POSTURE RECOVERY & HUD SYNC ENGINE (20 posture per second when not blocking)
 // ------------------------------------------------------------------------------
 PlayerEvents.tick(event => {
     let player = event.player;
@@ -309,17 +329,30 @@ PlayerEvents.tick(event => {
 
     let pData = player.persistentData;
     let absorbed = pData.getFloat('skd_guard_absorbed') || 0;
-    if (absorbed <= 0) return;
 
-    // Posture does not recover while actively holding block
-    if (player.isBlocking()) return;
+    let shieldItem = getActiveShield(player);
+    let hasShield = shieldItem != null;
+    let maxPosture = hasShield ? (100 + (getReinforceLevel(shieldItem) * 50)) : 100;
 
-    // 20 posture/sec = 5 posture per 5 ticks (0.25s)
-    let newAbsorbed = Math.max(0, absorbed - 5.0);
-    if (newAbsorbed <= 0.01) {
-        pData.remove('skd_guard_absorbed');
-    } else {
-        pData.putFloat('skd_guard_absorbed', newAbsorbed);
+    if (absorbed > 0) {
+        // Posture does not recover while actively holding block
+        if (!player.isBlocking()) {
+            // 20 posture/sec = 5 posture per 5 ticks (0.25s)
+            let newAbsorbed = Math.max(0, absorbed - 5.0);
+            if (newAbsorbed <= 0.01) {
+                pData.remove('skd_guard_absorbed');
+                newAbsorbed = 0;
+            } else {
+                pData.putFloat('skd_guard_absorbed', newAbsorbed);
+            }
+            syncPlayerPosture(player, newAbsorbed, maxPosture, hasShield);
+        } else {
+            // Actively blocking with absorbed posture - sync status
+            syncPlayerPosture(player, absorbed, maxPosture, hasShield);
+        }
+    } else if (tick % 20 === 0) {
+        // Heartbeat sync every 1 second when fully recovered
+        syncPlayerPosture(player, 0, maxPosture, hasShield);
     }
 });
 
@@ -328,7 +361,10 @@ PlayerEvents.tick(event => {
 // ------------------------------------------------------------------------------
 EntityEvents.death(event => {
     let entity = event.entity;
-    if (entity && entity.isPlayer() && entity.persistentData) {
-        entity.persistentData.remove('skd_guard_absorbed');
+    if (entity && entity.isPlayer()) {
+        if (entity.persistentData) {
+            entity.persistentData.remove('skd_guard_absorbed');
+        }
+        syncPlayerPosture(entity, 0, 100, false);
     }
 });

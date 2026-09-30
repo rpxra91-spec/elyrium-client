@@ -1,10 +1,14 @@
-// Shows English Original Name and Item ID in Tooltips
+// Shows English Original Name and Item ID in Tooltips (Shift inspection only)
 ItemEvents.modifyTooltips(event => {
     event.modify('*', tooltip => {
         let item = tooltip.item
         if (!item) return
         let id = String(item.id)
         if (id.startsWith('minecraft:')) return
+
+        // Keep player tooltips clean: only show technical ID/Original name when Shift is held
+        let isShift = (typeof tooltip.isShift === 'function') ? tooltip.isShift() : (tooltip.shift || false);
+        if (!isShift) return;
 
         let parts = id.split(':')
         if (parts.length > 1) {

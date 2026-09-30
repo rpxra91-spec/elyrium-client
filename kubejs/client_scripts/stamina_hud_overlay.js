@@ -43,6 +43,13 @@ let clientMaxStamina = 100;
 let displayedStamina = 100;
 let isInitialSync = true;
 
+// Client-side shield posture state
+let clientPosture = 100;
+let clientMaxPosture = 100;
+let displayedPosture = 100;
+let clientHasShield = false;
+let isInitialPostureSync = true;
+
 // API export for other client scripts
 var ElyriumClientStamina = {
     get current() { return clientStamina; },
@@ -56,8 +63,14 @@ var ElyriumClientStamina = {
     }
 };
 
+var ElyriumClientPosture = {
+    get current() { return clientPosture; },
+    get max() { return clientMaxPosture; },
+    get hasShield() { return clientHasShield; }
+};
+
 // ------------------------------------------------------------------------------
-// 1. NETWORK RECEIVER: 'elyrium:sync_stamina'
+// 1. NETWORK RECEIVERS: 'elyrium:sync_stamina' & 'elyrium:sync_posture'
 // ------------------------------------------------------------------------------
 NetworkEvents.dataReceived('elyrium:sync_stamina', event => {
     try {
@@ -82,8 +95,34 @@ NetworkEvents.dataReceived('elyrium:sync_stamina', event => {
     } catch (eNet) {}
 });
 
+NetworkEvents.dataReceived('elyrium:sync_posture', event => {
+    try {
+        let data = event.data;
+        if (!data) return;
+
+        let post = (typeof data.posture === 'number') ? data.posture : 
+                   (data.getInt ? data.getInt('posture') : null);
+        let max = (typeof data.maxPosture === 'number') ? data.maxPosture : 
+                  (data.getInt ? data.getInt('maxPosture') : null);
+        let shield = (typeof data.hasShield === 'boolean') ? data.hasShield : 
+                     (data.getBoolean ? data.getBoolean('hasShield') : false);
+
+        if (post != null) {
+            clientPosture = post;
+            if (isInitialPostureSync) {
+                displayedPosture = post;
+            }
+        }
+        if (max != null && max > 0) {
+            clientMaxPosture = max;
+        }
+        clientHasShield = shield;
+        isInitialPostureSync = false;
+    } catch (ePostNet) {}
+});
+
 // ------------------------------------------------------------------------------
-// 2. HUD RENDER ROUTINE
+// 2. HUD RENDER ROUTINE: STAMINA BAR & SHIELD POSTURE BAR
 // ------------------------------------------------------------------------------
 function renderStaminaBar(guiGraphics) {
     if (!guiGraphics) return;
@@ -131,6 +170,8 @@ function renderStaminaBar(guiGraphics) {
         const COLOR_BG = (0xCC111827 | 0);         // Semi-transparent #111827 (-871294937)
         const COLOR_AMBER_TOP = (0xFFF59E0B | 0);  // Amber Gradient Start #F59E0B (-680437)
         const COLOR_AMBER_BOT = (0xFFD97706 | 0);  // Amber Gradient End #D97706 (-2525434)
+        const COLOR_CYAN_TOP = (0xFF38BDF8 | 0);   // Sky Blue Start #38BDF8
+        const COLOR_CYAN_BOT = (0xFF0284C7 | 0);   // Steel/Ocean Blue End #0284C7
         const COLOR_TEXT = (0xFFFFFFFF | 0);       // Crisp White (-1)
 
         // 1. Draw 1px Outer Border (81 x 6)
@@ -174,6 +215,63 @@ function renderStaminaBar(guiGraphics) {
                 let textX = x + Math.round((BAR_WIDTH - textWidth) / 2);
                 let textY = y - 1;
                 guiGraphics.drawString(font, text, textX, textY, COLOR_TEXT, true);
+            }
+        }
+
+        // ----------------------------------------------------------------------
+        // 5. SHIELD GUARD POSTURE BAR (Above Stamina Bar: y - 8)
+        // ----------------------------------------------------------------------
+        let shouldRenderPosture = clientHasShield || (displayedPosture < (clientMaxPosture - 0.5));
+        if (shouldRenderPosture) {
+            let py = y - 8; // Exactly 8 px above Stamina bar
+
+            displayedPosture += (clientPosture - displayedPosture) * 0.35;
+            if (Math.abs(clientPosture - displayedPosture) < 0.2) {
+                displayedPosture = clientPosture;
+            }
+
+            let postProgress = Math.max(0.0, Math.min(1.0, displayedPosture / Math.max(1, clientMaxPosture)));
+            let postFillWidth = Math.round(innerWidth * postProgress);
+
+            // 5.1. Draw Posture 1px Outer Border
+            guiGraphics.fill(x | 0, py | 0, (x + BAR_WIDTH) | 0, (py + BAR_HEIGHT) | 0, COLOR_BORDER);
+
+            // 5.2. Draw Posture Inner Background
+            guiGraphics.fill((x + 1) | 0, (py + 1) | 0, (x + BAR_WIDTH - 1) | 0, (py + BAR_HEIGHT - 1) | 0, COLOR_BG);
+
+            // 5.3. Draw Cyan/Steel Blue Gradient Posture Bar
+            if (postFillWidth > 0) {
+                try {
+                    guiGraphics.fillGradient((x + 1) | 0, (py + 1) | 0, (x + 1 + postFillWidth) | 0, (py + BAR_HEIGHT - 1) | 0, 0, COLOR_CYAN_TOP, COLOR_CYAN_BOT);
+                } catch (eGradP) {
+                    guiGraphics.fill((x + 1) | 0, (py + 1) | 0, (x + 1 + postFillWidth) | 0, (py + BAR_HEIGHT - 1) | 0, COLOR_CYAN_TOP);
+                }
+            }
+
+            // 5.4. Draw Centered Text: 🛡 [cur]/[max]
+            let curPostInt = Math.max(0, Math.round(displayedPosture));
+            let maxPostInt = Math.round(clientMaxPosture);
+            let postText = `🛡 ${curPostInt}/${maxPostInt}`;
+
+            if (font) {
+                let postTextWidth = font.width(postText);
+                let pose = guiGraphics.pose ? guiGraphics.pose() : null;
+
+                if (pose) {
+                    const SCALE = 0.7;
+                    pose.pushPose();
+                    pose.scale(SCALE, SCALE, 1.0);
+
+                    let scaledPX = (x + (BAR_WIDTH - postTextWidth * SCALE) / 2) / SCALE;
+                    let scaledPY = (py + (BAR_HEIGHT - 7.5 * SCALE) / 2) / SCALE;
+
+                    guiGraphics.drawString(font, postText, Math.round(scaledPX), Math.round(scaledPY), COLOR_TEXT, true);
+                    pose.popPose();
+                } else {
+                    let textPX = x + Math.round((BAR_WIDTH - postTextWidth) / 2);
+                    let textPY = py - 1;
+                    guiGraphics.drawString(font, postText, textPX, textPY, COLOR_TEXT, true);
+                }
             }
         }
     } catch (e) {

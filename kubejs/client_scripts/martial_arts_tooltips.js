@@ -272,6 +272,10 @@ function isShield(item) {
 function isAnyWeapon(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
     let id = String(item.id).toLowerCase();
+    // Exclude magic staves, wands, and spellbooks from physical martial arts!
+    if (id.includes('staff') || id.includes('wand') || id.includes('scepter') || id.includes('spellbook')) {
+        return false;
+    }
     return item.hasTag('c:tools/melee_weapon') ||
            item.hasTag('minecraft:swords') ||
            item.hasTag('minecraft:axes') ||
@@ -285,6 +289,31 @@ function isAnyWeapon(item) {
            id.includes('halberd') || id.includes('axe') || id.includes('bow') ||
            id.includes('crossbow') || id.includes('hammer') || id.includes('mace') ||
            id.includes('sai') || id.includes('trident');
+}
+
+function getWeaponProgressionTier(item, id) {
+    if (!item || item.isEmpty() || item.id === 'minecraft:air') return 1;
+    for (let t = 11; t >= 1; t--) {
+        if (item.hasTag(`skd:tier_${t}`) || item.hasTag(`c:tools/tier_${t}`)) return t;
+    }
+    if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('aquatooth') || id.includes('halite')) return 11;
+    if (id.includes('apalachia') || id.includes('skythern') || id.includes('divinerpg:apalachia') || id.includes('divinerpg:skythern')) return 10;
+    if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) return 9;
+    if (id.includes('sculk') || id.includes('echo') || id.includes('warden') || id.startsWith('deeperdarker:')) return 8;
+    if (id.includes('starlight') || id.includes('luminite') || id.startsWith('eternal_starlight:') || id.includes('thermal_springstone')) return 7;
+    if (id.includes('dragon') || id.includes('void') || id.includes('ender_guardian') || id.includes('ender_golem') || id.includes('elytra') || id.includes('ascended')) return 6;
+    if (id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie') || id.includes('skyjade') || id.startsWith('aether:') || id.startsWith('deep_aether:')) return 5;
+    if (id.includes('cinder') || id.includes('netherite') || id.startsWith('cataclysm:') || id.includes('ignitium') || id.includes('witherite') || id.includes('monstrosity') || id.includes('wither')) return 4;
+    if (id.includes('diamond') || id.includes('cobalt') || id.includes('rune') || id.includes('runic') || id.startsWith('runes:') || id.includes('amethyst') ||
+        (id.includes('iron') && !id.includes('early_iron') && !id.includes('crude_iron') && !id.includes('rusted_iron'))) {
+        return 3;
+    }
+    if (id.includes('copper') || id.includes('chain') || id.includes('early_iron') || 
+        id.includes('crude_iron') || id.includes('rusted_iron') || id.includes('gold') || 
+        id.includes('golden') || id.includes('bronze') || id.includes('brass') || id.includes('silver') || id.includes('flint')) {
+        return 2;
+    }
+    return 1;
 }
 
 function resolveInnateWeaponArt(item) {
@@ -439,35 +468,103 @@ function renderMartialTooltips(lines, item) {
     // --------------------------------------------------------------------------
     if (!isAnyWeapon(item)) return;
 
-    // A. Innate Archetype Skill
-    let innateKey = resolveInnateWeaponArt(item);
-    let innateArt = innateKey ? WEAPON_ARTS[innateKey] : null;
-    if (innateArt) {
-        lines.add(Text.of('§6⚔ Врожденный прием: §e[' + innateArt.name + '] §8[ПКМ / Shift+ПКМ со щитом]'));
-        lines.add(Text.of('  §7• Эффект: §f' + innateArt.desc));
-        lines.add(Text.of('  §7• Расход: §b' + innateArt.stamina + ' Выносливости §7| Откат: §a' + innateArt.baseCd + 'с'));
+    let tier = getWeaponProgressionTier(item, id);
+    let tag = null;
+    try {
+        if (item.customData) tag = item.customData;
+        else if (item.getCustomData) tag = item.getCustomData();
+        else if (item.nbt) tag = item.nbt;
+    } catch (eTag) {}
+
+    // --------------------------------------------------------------------------
+    // A. СЛОТ 1: Врожденный или Инкрустированный Боевой Прием [ПКМ]
+    // --------------------------------------------------------------------------
+    let art1Key = tag ? (tag.getString('skd_art_1') || tag.getString('skd_weapon_art')) : null;
+    if (art1Key && art1Key.length > 0) art1Key = art1Key.toLowerCase().replace('kubejs:', '').trim();
+    if (!art1Key || !WEAPON_ARTS[art1Key]) {
+        art1Key = resolveInnateWeaponArt(item);
     }
 
-    // B. Spear Mechanics (Universal Grip)
+    if (art1Key && WEAPON_ARTS[art1Key]) {
+        let art1 = WEAPON_ARTS[art1Key];
+        let rank1 = tag ? (tag.getInt('skd_art_1_rank') || tag.getInt('skd_art_rank') || 1) : 1;
+        let rankStr1 = getArtRankRoman(rank1);
+        let cd1 = calculateScaledCooldown(art1.baseCd, rank1);
+        lines.add(Text.of('§6⚡ Боевой прием I: §e[' + art1.name + (rank1 > 1 ? ' ' + rankStr1 : '') + '] §8[ПКМ]'));
+        lines.add(Text.of('  §7• Эффект: §f' + art1.desc));
+        lines.add(Text.of('  §7• Расход: §b' + art1.stamina + ' Выносливости §7| Откат: §a' + cd1 + 'с'));
+    }
+
+    // --------------------------------------------------------------------------
+    // B. СЛОТ 2: Дополнительный прием Т4+ (Клавиша Z)
+    // --------------------------------------------------------------------------
+    if (tier >= 4) {
+        let hasSocket2 = tag && (tag.getBoolean('skd_socket_2') || tag.contains('skd_art_2'));
+        let art2Key = tag ? (tag.getString('skd_art_2') || tag.getString('elyrium_inscribed_art')) : '';
+        if (art2Key && art2Key.length > 0) art2Key = art2Key.toLowerCase().replace('kubejs:', '').trim();
+
+        if (art2Key && WEAPON_ARTS[art2Key]) {
+            let art2 = WEAPON_ARTS[art2Key];
+            let rank2 = tag ? (tag.getInt('skd_art_2_rank') || 1) : 1;
+            let rankStr2 = getArtRankRoman(rank2);
+            let cd2 = calculateScaledCooldown(art2.baseCd, rank2);
+            lines.add(Text.of('§e⚔ Боевой прием II: §e[' + art2.name + ' ' + rankStr2 + '] §8[Клавиша Z]'));
+            lines.add(Text.of('  §7• Эффект: §f' + art2.desc));
+            lines.add(Text.of('  §7• Расход: §b' + art2.stamina + ' Выносливости §7| Откат: §a' + cd2 + 'с'));
+        } else if (hasSocket2) {
+            lines.add(Text.of('§8⚔ Боевой прием II: §7[Слот открыт — Пусто] §8[Клавиша Z]'));
+        } else {
+            lines.add(Text.of('§8⚔ Боевой прием II: §8[Слот закрыт — Пробейте Резцом Т4] §8[Z]'));
+        }
+    }
+
+    // --------------------------------------------------------------------------
+    // C. СЛОТ 3: Дополнительный прием Т7+ (Клавиша X)
+    // --------------------------------------------------------------------------
+    if (tier >= 7) {
+        let hasSocket3 = tag && (tag.getBoolean('skd_socket_3') || tag.contains('skd_art_3'));
+        let art3Key = tag ? tag.getString('skd_art_3') : '';
+        if (art3Key && art3Key.length > 0) art3Key = art3Key.toLowerCase().replace('kubejs:', '').trim();
+
+        if (art3Key && WEAPON_ARTS[art3Key]) {
+            let art3 = WEAPON_ARTS[art3Key];
+            let rank3 = tag ? (tag.getInt('skd_art_3_rank') || 1) : 1;
+            let rankStr3 = getArtRankRoman(rank3);
+            let cd3 = calculateScaledCooldown(art3.baseCd, rank3);
+            lines.add(Text.of('§e⚔ Боевой прием III: §e[' + art3.name + ' ' + rankStr3 + '] §8[Клавиша X]'));
+            lines.add(Text.of('  §7• Эффект: §f' + art3.desc));
+            lines.add(Text.of('  §7• Расход: §b' + art3.stamina + ' Выносливости §7| Откат: §a' + cd3 + 'с'));
+        } else if (hasSocket3) {
+            lines.add(Text.of('§8⚔ Боевой прием III: §7[Слот открыт — Пусто] §8[Клавиша X]'));
+        } else {
+            lines.add(Text.of('§8⚔ Боевой прием III: §8[Слот закрыт — Пробейте Резцом Т7] §8[X]'));
+        }
+    }
+
+    // --------------------------------------------------------------------------
+    // D. СЛОТ 4: Стихийная Инфузия (Камень Стихии на Верстаке)
+    // --------------------------------------------------------------------------
+    let elem = tag ? (tag.getString('skd_elemental_infusion') || '') : '';
+    if (elem && elem.length > 0) {
+        let elemNames = {
+            'fire': '§c🔥 Стихия клинка: §f[Пламя Незера (+20% огня)]',
+            'ice': '§b❄ Стихия клинка: §f[Вечный Лед (+20% холода)]',
+            'lightning': '§e⚡ Стихия клинка: §f[Грозовой Разряд (+20% молнии)]',
+            'abyss': '§5🌑 Стихия клинка: §f[Зов Бездны (+20% тьмы)]',
+            'holy': '§6✨ Стихия клинка: §f[Святое Сияние (+20% святого урона)]'
+        };
+        lines.add(Text.of(elemNames[elem] || ('§c🔥 Стихия клинка: §f[' + elem + ']')));
+    }
+
+    // --------------------------------------------------------------------------
+    // E. Специальные механики хвата (Копья, Двуручники)
+    // --------------------------------------------------------------------------
     if (isSpear(item)) {
         lines.add(Text.of('§6🔱 Универсальный хват копья:'));
         lines.add(Text.of('  §a• Со щитом: §fУкол из-за блока (защита щита не сбрасывается)'));
         lines.add(Text.of('  §a• Без щита: §fДвуручный силовой хват (+30% урона, +1.5м дальность)'));
-    }
-
-    // C. Extra Runic Slot
-    let runicKey = extractInscribedWeaponArt(item);
-    if (runicKey && WEAPON_ARTS[runicKey]) {
-        let rArt = WEAPON_ARTS[runicKey];
-        let rRank = extractWeaponArtRank(item);
-        let rankStr = getArtRankRoman(rRank);
-        let cd = calculateScaledCooldown(rArt.baseCd, rRank);
-
-        lines.add(Text.of('§d💎 Рунический навык: §e[' + rArt.name + ' §6' + rankStr + '§e] §8[Shift+ПКМ]'));
-        lines.add(Text.of('  §7• Эффект: §f' + rArt.desc));
-        lines.add(Text.of('  §7• Расход: §b' + rArt.stamina + ' Выносливости §7| Откат: §a' + cd + 'с'));
-    } else {
-        lines.add(Text.of('§8💎 Рунический слот: [Пусто — инкрустируйте скрижаль на Наковальне] §8[Shift+ПКМ]'));
+    } else if (isTwoHandedWeapon(item)) {
+        lines.add(Text.of('§7⚔ Двуручный хват: §8Вторая рука блокируется для тяжелого оружия'));
     }
 }
 
