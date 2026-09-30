@@ -35,6 +35,46 @@ function getPlayerByName(server, name) {
     return found
 }
 
+function getRegistryAccess(server) {
+    if (!server) return null;
+    try {
+        if (server.minecraftServer && server.minecraftServer.registryAccess) return server.minecraftServer.registryAccess();
+        if (server.overworld && server.overworld.minecraftLevel) return server.overworld.minecraftLevel.registryAccess();
+        if (server.registryAccess) return server.registryAccess();
+    } catch (e) {}
+    return null;
+}
+
+function storeTradeReturnItem(server, username, item) {
+    if (!server || !server.persistentData || !username || !item || item.isEmpty()) return;
+    try {
+        let root = server.persistentData.getCompound('elyrium_trade_returns');
+        if (!root) {
+            let CompoundTag = Java.loadClass('net.minecraft.nbt.CompoundTag');
+            root = new CompoundTag();
+            server.persistentData.put('elyrium_trade_returns', root);
+        }
+        let userKey = username.toLowerCase();
+        let ListTag = Java.loadClass('net.minecraft.nbt.ListTag');
+        let userList = root.getList(userKey, 10);
+        if (!userList) {
+            userList = new ListTag();
+            root.put(userKey, userList);
+        }
+        let regAccess = getRegistryAccess(server);
+        let nmsStack = item.itemStack || item;
+        if (regAccess && nmsStack.saveOptional) {
+            let saved = nmsStack.saveOptional(regAccess);
+            userList.add(saved);
+        } else if (nmsStack.save) {
+            let saved = nmsStack.save(regAccess);
+            userList.add(saved);
+        }
+    } catch (e) {
+        console.error('[TradeReturn] Error saving return item: ' + e);
+    }
+}
+
 function cancelTrade(server, username, reason) {
     let sessionKey = null
     let session = null
@@ -51,12 +91,20 @@ function cancelTrade(server, username, reason) {
     let p1 = getPlayerByName(server, session.p1)
     let p2 = getPlayerByName(server, session.p2)
 
-    // Return escrow items safely
-    if (session.p1Item && p1) {
-        p1.give(session.p1Item)
+    // Return escrow items safely (to online player or offline storage buffer)
+    if (session.p1Item && !session.p1Item.isEmpty()) {
+        if (p1 && p1.isAlive()) {
+            p1.give(session.p1Item)
+        } else {
+            storeTradeReturnItem(server, session.p1, session.p1Item)
+        }
     }
-    if (session.p2Item && p2) {
-        p2.give(session.p2Item)
+    if (session.p2Item && !session.p2Item.isEmpty()) {
+        if (p2 && p2.isAlive()) {
+            p2.give(session.p2Item)
+        } else {
+            storeTradeReturnItem(server, session.p2, session.p2Item)
+        }
     }
 
     // Clear slowness
@@ -339,5 +387,49 @@ EntityEvents.death(event => {
     let entity = event.entity
     if (entity && entity.isPlayer()) {
         cancelTrade(entity.server, entity.username, 'Партнер погиб.')
+    }
+})
+
+// Return offline escrow items upon player login
+PlayerEvents.loggedIn(event => {
+    let player = event.player
+    if (!player) return
+    let server = player.server
+    if (!server || !server.persistentData) return
+
+    let root = server.persistentData.getCompound('elyrium_trade_returns')
+    let userKey = player.username.toLowerCase()
+    if (!root || !root.contains(userKey)) return
+
+    let userList = root.getList(userKey, 10)
+    if (!userList || userList.isEmpty()) {
+        root.remove(userKey)
+        return
+    }
+
+    let regAccess = getRegistryAccess(server)
+    let ItemStackClass = Java.loadClass('net.minecraft.world.item.ItemStack')
+
+    let count = 0
+    for (let i = 0; i < userList.size(); i++) {
+        let tag = userList.getCompound(i)
+        try {
+            let nmsStack = null
+            if (regAccess && ItemStackClass.parseOptional) {
+                nmsStack = ItemStackClass.parseOptional(regAccess, tag)
+            }
+            if (nmsStack && !nmsStack.isEmpty()) {
+                player.give(Item.of(nmsStack))
+                count++
+            }
+        } catch (e) {
+            console.error('[TradeReturn] Error restoring item for ' + player.username + ': ' + e)
+        }
+    }
+    root.remove(userKey)
+
+    if (count > 0) {
+        player.tell(Text.of(`§a🤝 [Торговля] Вам возвращено ${count} предм. из оффлайн-буфера торговли!`))
+        server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.2`)
     }
 })

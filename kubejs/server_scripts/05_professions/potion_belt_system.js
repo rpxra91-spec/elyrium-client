@@ -101,22 +101,50 @@ function findPotionInInventory(player, type) {
     return null
 }
 
-function isTargetPotion(itemStack, type) {
-    let id = String(itemStack.id).toLowerCase()
-
-    if (type === 'hp') {
-        if (id === 'minecraft:potion' || id === 'minecraft:splash_potion') {
-            // Check NBT / potion contents for healing / regeneration
-            let nbt = itemStack.nbt
-            if (nbt) {
-                let nbtStr = nbt.toString().toLowerCase()
-                if (nbtStr.includes('healing') || nbtStr.includes('regeneration')) {
-                    return true
+function getPotionContentsString(itemStack) {
+    if (!itemStack || itemStack.isEmpty()) return ''
+    let result = ''
+    try {
+        let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents')
+        let rawStack = itemStack.itemStack || itemStack
+        if (rawStack && rawStack.get) {
+            let pc = rawStack.get(DataComponents.POTION_CONTENTS)
+            if (pc) {
+                result += ' ' + pc.toString()
+                if (pc.potion && pc.potion().isPresent()) {
+                    let pKey = pc.potion().get().unwrapKey()
+                    if (pKey && pKey.isPresent()) {
+                        result += ' ' + pKey.get().location().toString()
+                    }
                 }
             }
         }
+    } catch (e) {}
+
+    try {
+        if (itemStack.nbt) result += ' ' + itemStack.nbt.toString()
+        if (itemStack.customData) result += ' ' + itemStack.customData.toString()
+    } catch (e2) {}
+
+    return result.toLowerCase()
+}
+
+function isTargetPotion(itemStack, type) {
+    let id = String(itemStack.id).toLowerCase()
+    let contentStr = getPotionContentsString(itemStack)
+
+    if (type === 'hp') {
+        if (id === 'minecraft:potion' || id === 'minecraft:splash_potion' || id === 'minecraft:lingering_potion') {
+            // Check DataComponents (minecraft:potion_contents) & NBT for healing / regeneration
+            if (contentStr.includes('healing') || contentStr.includes('regeneration') || contentStr.includes('instant_health')) {
+                return true
+            }
+        }
         // Modded healing potions
-        if (id.includes('greater_healing_potion') || id.includes('healing_potion') || id.includes('health_potion') || id.includes('healing_elixir')) {
+        if (id.includes('greater_healing_potion') || id.includes('healing_potion') || id.includes('health_potion') || id.includes('healing_elixir') || id.includes('regeneration_potion')) {
+            return true
+        }
+        if (contentStr.includes('healing') || contentStr.includes('regeneration') || contentStr.includes('instant_health')) {
             return true
         }
     } else if (type === 'mana') {
@@ -124,8 +152,7 @@ function isTargetPotion(itemStack, type) {
         if (id.includes('mana') || id.includes('elixir') || id.includes('instant_mana')) {
             return true
         }
-        let nbt = itemStack.nbt
-        if (nbt && nbt.toString().toLowerCase().includes('mana')) {
+        if (contentStr.includes('mana')) {
             return true
         }
     }
@@ -135,9 +162,10 @@ function isTargetPotion(itemStack, type) {
 
 function applyPotionEffects(player, itemStack, type) {
     let id = String(itemStack.id).toLowerCase()
+    let contentStr = getPotionContentsString(itemStack)
 
     if (type === 'hp') {
-        let isStrong = id.includes('greater') || id.includes('strong') || (itemStack.nbt && itemStack.nbt.toString().includes('strong'))
+        let isStrong = id.includes('greater') || id.includes('strong') || contentStr.includes('strong')
         if (isStrong) {
             player.potionEffects.add('minecraft:instant_health', 1, 1, false, true)
             player.potionEffects.add('minecraft:regeneration', 120, 1, false, true)

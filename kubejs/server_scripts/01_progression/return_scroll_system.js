@@ -103,6 +103,9 @@ ServerEvents.tick(event => {
                     mainHand.shrink(1)
                 } else if (offHand && offHand.id === 'kubejs:town_scroll') {
                     offHand.shrink(1)
+                } else {
+                    cancelChannel(server, username, '(Свиток отсутствует в руках)')
+                    return
                 }
             }
 
@@ -130,6 +133,19 @@ EntityEvents.beforeHurt(event => {
     }
 })
 
+// Interrupt on dropping scroll (Key Q exploit prevention)
+ItemEvents.dropped(event => {
+    let player = event.player
+    let item = event.item
+    if (!player || !item) return
+
+    if (item.id === 'kubejs:town_scroll') {
+        if (activeChannels.has(player.username)) {
+            cancelChannel(player.server, player.username, '(Свиток выброшен)')
+        }
+    }
+})
+
 // Right click item event
 ItemEvents.rightClicked(event => {
     let player = event.player
@@ -148,7 +164,11 @@ PlayerEvents.chat(event => {
     if (!player) return
 
     if (msg === '.recall' || msg === '.home' || msg === '!recall' || msg === '!home') {
-        startReturnRitual(player, false)
+        if (player.hasPermission(2)) {
+            startReturnRitual(player, false)
+        } else {
+            player.tell('§cДля возвращения используйте физический Свиток Возвращения в руках!')
+        }
         event.cancel()
     }
 })

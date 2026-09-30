@@ -78,7 +78,7 @@ function getOrCreateBenchSession(player, blockPos) {
     return activeBenchSessions.get(uuid);
 }
 
-function clearAndRefundSession(player, force) {
+function clearAndRefundBenchSession(player, force) {
     let uuid = player.uuid.toString();
     let session = activeBenchSessions.get(uuid);
     if (!session) return;
@@ -165,7 +165,25 @@ function getSafeItemCustomData(item) {
         if (item.getCustomData) return item.getCustomData();
         if (item.nbt) return item.nbt;
     } catch (e) {}
+    try {
+        let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
+        let cd = item.get(DataComponents.CUSTOM_DATA);
+        if (cd) return cd.copyTag();
+    } catch (e2) {}
     return null;
+}
+
+function saveSafeItemCustomData(item, tag) {
+    if (!item || item.isEmpty() || !tag) return;
+    try {
+        let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
+        let CustomData = Java.loadClass('net.minecraft.world.item.component.CustomData');
+        item.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+    } catch (e) {
+        try {
+            if (item.setCustomData) item.setCustomData(tag);
+        } catch (e2) {}
+    }
 }
 
 function getOrCreateSafeCustomData(item) {
@@ -175,7 +193,7 @@ function getOrCreateSafeCustomData(item) {
     try {
         let CompoundTag = Java.loadClass('net.minecraft.nbt.CompoundTag');
         tag = new CompoundTag();
-        if (item.setCustomData) item.setCustomData(tag);
+        saveSafeItemCustomData(item, tag);
         return tag;
     } catch (e) {}
     return null;
@@ -824,6 +842,9 @@ function openWeaponBenchGUI(player, block) {
 
     player.openChestGUI(Text.of('🛠 §6§lОРУЖЕЙНЫЙ ВЕРСТАК §8✦ §eЭЛИРИУМ'), 4, gui => {
         gui.playerSlots = true;
+        gui.closed = () => {
+            clearAndRefundBenchSession(player, false);
+        };
 
         // ----------------------------------------------------------------------
         // 1. ДЕКОРАТИВНЫЙ ФРЕЙМ И СТАТУСНЫЙ ЭКРАН
@@ -1524,6 +1545,14 @@ function openWeaponBenchGUI(player, block) {
                             console.error('[WeaponBench] Error setting Apotheosis socket 2: ' + eApoth3);
                         }
                     }
+
+                    try {
+                        let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
+                        let CustomData = Java.loadClass('net.minecraft.world.item.component.CustomData');
+                        gear.set(DataComponents.CUSTOM_DATA, CustomData.of(gTag));
+                    } catch (eSave) {
+                        saveSafeItemCustomData(gear, gTag);
+                    }
                 }
 
                 // Аудио и визуальные эффекты
@@ -1635,6 +1664,7 @@ function openWeaponBenchGUI(player, block) {
                     gTag.remove('elyrium_inscribed_art');
                     gTag.remove('skd_art_3'); gTag.remove('skd_art_3_rank');
                     gTag.remove('skd_elemental_infusion'); gTag.remove('skd_elemental_stone');
+                    saveSafeItemCustomData(gear, gTag);
                 }
 
                 if (extractedCount > 0) {
@@ -1764,6 +1794,7 @@ function openWeaponBenchGUI(player, block) {
                                     } else if (targetSlot === 2) {
                                         gTag.putString('elyrium_inscribed_art', artId);
                                     }
+                                    saveSafeItemCustomData(gear, gTag);
                                 }
                                 player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                                 player.tell(Text.of(`§a✓ Скрижаль инкрустирована в Слот ${targetSlot}!`));
@@ -1784,7 +1815,10 @@ function openWeaponBenchGUI(player, block) {
         // 8,3: Выход
         gui.slot(8, 3, s => {
             s.setItem(Item.of('minecraft:barrier').withCustomName(Text.of('§c✖ [ ЗАКРЫТЬ МЕНЮ ]')));
-            let clickHandler = () => { player.closeChestGUI(); };
+            let clickHandler = () => {
+                clearAndRefundBenchSession(player, true);
+                player.closeChestGUI();
+            };
             s.leftClicked = clickHandler; s.rightClicked = clickHandler;
         });
 
@@ -1861,6 +1895,7 @@ function openWeaponBenchGUI(player, block) {
                     if (gTag) {
                         gTag.putString('skd_elemental_infusion', info.elem);
                         gTag.putString('skd_elemental_stone', clickedItem.id);
+                        saveSafeItemCustomData(gear, gTag);
                     }
                     player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                     player.server.runCommandSilent(`particle minecraft:wax_off ${player.x} ${player.y + 1} ${player.z} 0.3 0.3 0.3 0.05 20`);
@@ -1899,6 +1934,7 @@ function openWeaponBenchGUI(player, block) {
                             } else if (targetSlot === 2) {
                                 gTag.putString('elyrium_inscribed_art', artId);
                             }
+                            saveSafeItemCustomData(gear, gTag);
                         }
                         player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                         player.server.runCommandSilent(`particle minecraft:wax_off ${player.x} ${player.y + 1} ${player.z} 0.3 0.3 0.3 0.05 20`);
@@ -2025,14 +2061,14 @@ BlockEvents.broken('kubejs:weapon_bench', event => {
 PlayerEvents.inventoryClosed(event => {
     let player = event.player;
     if (player) {
-        clearAndRefundSession(player, false);
+        clearAndRefundBenchSession(player, false);
     }
 });
 
 PlayerEvents.loggedOut(event => {
     let player = event.player;
     if (player) {
-        clearAndRefundSession(player, true);
+        clearAndRefundBenchSession(player, true);
     }
 });
 

@@ -60,7 +60,7 @@ function getOrCreateAnvilSession(player) {
     return activeAnvilSessions.get(uuid);
 }
 
-function clearAndRefundSession(player, force) {
+function clearAndRefundAnvilSession(player, force) {
     let uuid = player.uuid.toString();
     let session = activeAnvilSessions.get(uuid);
     if (!session) return;
@@ -407,6 +407,9 @@ function openInfernalAnvilGUI(player) {
     // Открываем экран с эпическим стилизованным заголовком
     player.openChestGUI(Text.of('🔥 §4§lАДСКИЙ АЛТАРЬ КОВКИ §c✦ §6ЭЛИРИУМ'), 4, gui => {
         gui.playerSlots = true;
+        gui.closed = () => {
+            clearAndRefundAnvilSession(player, false);
+        };
 
         // ======================================================================
         // ДЕКОРАТИВНЫЙ ИНФЕРНАЛЬНЫЙ ФРЕЙМ (АРХИТЕКТУРА ЗАЛА ОГНЯ)
@@ -878,7 +881,7 @@ function openInfernalAnvilGUI(player) {
                     Text.of('§e▶ Нажмите для закрытия Алтаря.')
                 ]));
             let closeHandler = () => {
-                clearAndRefundSession(player, true);
+                clearAndRefundAnvilSession(player, true);
                 player.closeMenu();
             };
             s.leftClicked = closeHandler;
@@ -1028,14 +1031,14 @@ ItemEvents.rightClicked(event => {
 PlayerEvents.inventoryClosed(event => {
     let player = event.player;
     if (player) {
-        clearAndRefundSession(player, false);
+        clearAndRefundAnvilSession(player, false);
     }
 });
 
 PlayerEvents.loggedOut(event => {
     let player = event.player;
     if (player) {
-        clearAndRefundSession(player, true);
+        clearAndRefundAnvilSession(player, true);
     }
 });
 

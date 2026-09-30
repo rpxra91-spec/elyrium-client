@@ -1,8 +1,8 @@
 {
-  "version": "0.1.1",
+  "version": "0.1.2",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-30T13:49:24.964140+00:00",
+  "generated_at": "2026-09-30T14:24:01.393096+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8632,8 +8632,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/escape_scroll_system.js",
-      "sha256": "497d4c7581ecb2a14c7a3c22afa7f09acf75cdb61e2dcdf39c06aacd501e7b94",
-      "size": 3688
+      "sha256": "b4bcb73a4d61285baa8e45e1f9ffeb26263672ba42182aa0449b97317ae70b9e",
+      "size": 3893
     },
     {
       "path": "kubejs/server_scripts/01_progression/progression_portal_engine.js",
@@ -8642,8 +8642,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/return_scroll_system.js",
-      "sha256": "1e4f6e326cd0ded81712a55710521e09868f08915f4b63f9bfb471ad74008c8a",
-      "size": 6019
+      "sha256": "0097c5ac702be2305309bd43d6963d548f2174015d4aa568fcc8cc9054a6a4d6",
+      "size": 6790
     },
     {
       "path": "kubejs/server_scripts/01_progression/sector_wall_generator.js",
@@ -8732,8 +8732,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/infernal_anvil_gui.js",
-      "sha256": "74f9b8a9af1cddfe9b205326b82ecd5fc20b284034e1c81a4a6d4ed3f31d3225",
-      "size": 61656
+      "sha256": "f1da498b7b8188f7a02e414ff7909f2a8f0c200a1b451f0b180f2dd6085e71ab",
+      "size": 61774
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_inscription.js",
@@ -8792,8 +8792,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_gui.js",
-      "sha256": "81e90623a4f612bf09c2f348b2e8b80673b335d4c200b623079155a53036245c",
-      "size": 112919
+      "sha256": "9dd4490bc96757146b9ea7da41466c5bd56bed2664bb33b4ea576c6d722b0234",
+      "size": 114489
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",
@@ -8872,13 +8872,13 @@
     },
     {
       "path": "kubejs/server_scripts/05_professions/player_trade_system.js",
-      "sha256": "d61573415d17f10e4508ed9e2dd3d5c471312073dd7e925217e3e69f419d9b64",
-      "size": 14173
+      "sha256": "21953238ccc73eced93754c311c9d9491241fb3d5bf5fd874ba1227b10be5432",
+      "size": 17716
     },
     {
       "path": "kubejs/server_scripts/05_professions/potion_belt_system.js",
-      "sha256": "5c8ad9dc7f9113699d7c57e1e4514ac5d834396070933983c6a39af13541c31f",
-      "size": 8792
+      "sha256": "6c3c7ddf3edee6028b534707f22359032b65ed0f981ebebcc3d6bb4b68648b99",
+      "size": 9980
     },
     {
       "path": "kubejs/server_scripts/05_professions/utility_professions_mechanics.js",
@@ -10584,6 +10584,2376 @@
       "path": "mods/yet_another_config_lib_v3-3.8.2+1.21.1-neoforge.jar",
       "sha256": "b5c30321b46cfaa521645a04aff89d2804d8167a25bb23ad4b1ae8da73093a2f",
       "size": 1118651
+    },
+    {
+      "path": "moonlight-global-datapacks/aincrad_mobs/data/aincrad/function/spawn_boss_f5.mcfunction",
+      "sha256": "0f4bd97662b95fc81d3c4e28d8517b8a621a25a8cfdb27212827f55561ca34b6",
+      "size": 1946
+    },
+    {
+      "path": "moonlight-global-datapacks/aincrad_mobs/data/aincrad/function/spawn_champion_f1.mcfunction",
+      "sha256": "596ee96b1127675572a674e6eb7ab6cee2b39b7e5f3ecce15a4bee7fd9b0f9bf",
+      "size": 1820
+    },
+    {
+      "path": "moonlight-global-datapacks/aincrad_mobs/data/aincrad/loot_table/bosses/boss_f5_warlord.json",
+      "sha256": "e8a172773346718812dd8150df2319003b14dd0c813d1f7c17591e1b63679c3d",
+      "size": 4867
+    },
+    {
+      "path": "moonlight-global-datapacks/aincrad_mobs/data/aincrad/loot_table/champions/champion_f1.json",
+      "sha256": "4debe345768ed5190b35bb6ca4f3bd66d12e8c3f6c0f06f181c3aa3f88bda96c",
+      "size": 2470
+    },
+    {
+      "path": "moonlight-global-datapacks/aincrad_mobs/data/aincrad/loot_table/shards/crucible_shard.json",
+      "sha256": "87c40382a5f8349f646ac4c41604cb9a34ed37076acf93ba8f627465c1c94726",
+      "size": 1344
+    },
+    {
+      "path": "moonlight-global-datapacks/aincrad_mobs/data/aincrad/loot_table/shards/siege_shard.json",
+      "sha256": "8b05c959353fdff54ce360cb8fbc263917d6a0201c84fb81ad6379c77c64a8d1",
+      "size": 1347
+    },
+    {
+      "path": "moonlight-global-datapacks/aincrad_mobs/data/aincrad/loot_table/shards/trophy_shard.json",
+      "sha256": "4593a6ca167985925e1b823cbdb18f9880192ece18bf075fe248cdda34f82777",
+      "size": 1338
+    },
+    {
+      "path": "moonlight-global-datapacks/aincrad_mobs/pack.mcmeta",
+      "sha256": "7da1ac18696fe903b8b87a7e5327116196b4bcc613ce39b4c12de0a41fb02012",
+      "size": 131
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_continent_01/data/elyrium/dimension/continent_01.json",
+      "sha256": "c17ab68c73b5f9fb90ac83cfe2f51316948ec7bf68db5934337401866f8423ea",
+      "size": 2071
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_continent_01/data/elyrium/dimension_type/continent_type.json",
+      "sha256": "389447cd8c9afc38e3b3dc509409443e0e7c97f9ee90daa298fecfc7c8806b49",
+      "size": 545
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_continent_01/data/elyrium/worldgen/noise_settings/continent_noise.json",
+      "sha256": "ee376c229a386090f5a2d3574ffd9059e7016604e8e7e969a9d80beb93f4c134",
+      "size": 6657
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_continent_01/pack.mcmeta",
+      "sha256": "21d51786c04fda589cba02971ab17813a99fb66546f247ab7901197797d48a36",
+      "size": 122
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_dungeons/data/elyrium/dimension/inst_end.json",
+      "sha256": "4a39265fc621ca7e0503c0e91fc858ab94a3f62532f07622339a499a0088607d",
+      "size": 337
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_dungeons/data/elyrium/dimension/inst_nether.json",
+      "sha256": "5f12cc515aaa272d5771370e6b23e0063a63da4588b37341287a73cf324a1821",
+      "size": 363
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_dungeons/data/elyrium/dimension/inst_overworld.json",
+      "sha256": "2b07232f579ba7c6df36af9e37883fe1df5e4d146e3d62f3bd1657130cea8618",
+      "size": 347
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_dungeons/data/elyrium/dimension/pocket_realm.json",
+      "sha256": "065633dca1b82104cfa9312c8746fcd3751b6889379e870d41028e5ca843e355",
+      "size": 339
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_dungeons/data/elyrium/dimension_type/dungeon_end_type.json",
+      "sha256": "751ea8ef5713d3845682bec3770bb6ac4add53476eb24e74f0bac2dc7c5cba6b",
+      "size": 570
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_dungeons/data/elyrium/dimension_type/dungeon_nether_type.json",
+      "sha256": "0a9927519f5bc9fe5338f98bc794e8689ab77fbdd708a93b8898369d6c874fbd",
+      "size": 597
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_dungeons/data/elyrium/dimension_type/dungeon_overworld_type.json",
+      "sha256": "be1264d3e37c912146c74a2dc7ce4aa555d0a646e2b8c4b793986465de622178",
+      "size": 581
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_dungeons/data/elyrium/dimension_type/pocket_realm_type.json",
+      "sha256": "c40ea64ab7ef8c9f9df2b849b4e3966ee9ef14399193716803be8d3850ad8081",
+      "size": 576
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_dungeons/pack.mcmeta",
+      "sha256": "04a77d44f9dbe9778a12e50e843ffd8a1cc13f015f7a827a278d40b9192e96ab",
+      "size": 113
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/gui/celestial_constellation_bg.png",
+      "sha256": "377bdb134a3f43017c56f63020fc460bbbb133132a1c27c98c1235e7605ed6a5",
+      "size": 202236
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_class.png",
+      "sha256": "b28e192bd4a146f7c8526e7deb7dc5a3d512afbcfdfa4af0088e14e2463db858",
+      "size": 319
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_crafting_1.png",
+      "sha256": "c8b5eb9febc10a069707df79a7ad9c2ac87233b9bbfab8a09b9946f19fc68cd3",
+      "size": 304
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_crafting_notable_1.png",
+      "sha256": "808a7fa5813e33a2eb1dacc6f701b62ddfa7110b0abf4ff00be3f0cebff4be9a",
+      "size": 290
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_crit_1.png",
+      "sha256": "6abb1e22fab74b5f0f7fbba8fbd308289532f2d6366a8b50c2a4e370dbb7bf3a",
+      "size": 304
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_crit_notable_1.png",
+      "sha256": "d5d66ed8fbe07e924416967f761d080e4d48561ec8839bfaedf502fb9a3580ba",
+      "size": 325
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_defensive_1.png",
+      "sha256": "e93f490a102b30c1f58a1c9b475a4bdbad9e83339fee231b01f3704250652e5a",
+      "size": 309
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_defensive_crafting_1.png",
+      "sha256": "e61d82128395b7ef9ee32669e45b67579536994ef1ef727043035b5ad93df9aa",
+      "size": 296
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_defensive_crafting_keystone_1.png",
+      "sha256": "b8034b9df0805b2ca887acc2739bfb98bccb49d30d08fd58db53598fa245a203",
+      "size": 270
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_defensive_keystone_1.png",
+      "sha256": "21b746430c67e7aa04f9478007b3ddd7a8ab970663a1b681c14959f8ca9362a5",
+      "size": 284
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_defensive_notable_1.png",
+      "sha256": "ff4d993b56347c8fc32289a43656fd9a1d1afb28a6a9b4ef481c687938cbd609",
+      "size": 308
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_healing_1.png",
+      "sha256": "046e6d293b623956f238a1e1d4b853bdd702825593488121f94bf770072376d3",
+      "size": 273
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_healing_notable_1.png",
+      "sha256": "bc8c7df0f83029a0aa02d2049abe1f47f7d7affcda47152e7d5d7ceda33c5bbc",
+      "size": 318
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_lesser_1.png",
+      "sha256": "35a61e1aed1b99bd324be16fc8a6d8b3ed6aec31da9397fabed41e0b2fe66c10",
+      "size": 305
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_life_1.png",
+      "sha256": "4c0f0edf8a28a890b8201d566511c1111a935874eebdee8d51e22c29dc39acdd",
+      "size": 307
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_life_notable_1.png",
+      "sha256": "6e262ad04c2c71d3f298b691cb0a8715a28e5b1a5fe80522e1c040c891e19447",
+      "size": 318
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_mastery.png",
+      "sha256": "75e5194b0d2e3ed8727bb50f4ae97f18a52f119bf7257626f0e2099645f6a63f",
+      "size": 275
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_offensive_1.png",
+      "sha256": "7e7773da4a81691082d8d0b15c9b9627c20e794d8f169f3479aedf9ea4065ab9",
+      "size": 305
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_offensive_crafting_1.png",
+      "sha256": "c9fc7e4b654919e1b1736afb16117ee2baee257f405eafeb0f2471908a6710f9",
+      "size": 310
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_offensive_crafting_keystone_1.png",
+      "sha256": "5cd206b52cf0417add34ca3d2c4b502313d3e51354eeb9710055d826b0a3a17e",
+      "size": 275
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_offensive_keystone_1.png",
+      "sha256": "cf0ced5986108c1f10e4e0bf7a648c587d277f97d3379520961ed40299d2f7e0",
+      "size": 272
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_offensive_notable_1.png",
+      "sha256": "e37de250f94b5991beea7ad2c6cc6b7ad114c5afb9369d1eae34b17c2adb064b",
+      "size": 317
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_speed_1.png",
+      "sha256": "03aca77f4fc9a09af4aec484c05f58879afe91d512a7b1a8407098632f32e81f",
+      "size": 304
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_speed_notable_1.png",
+      "sha256": "c7943e32268d23c102ba437d1a75234ea18702f8ca7bd574f45e3a84424a51ef",
+      "size": 329
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_1.png",
+      "sha256": "e55051273c449f4b3e1542624e616947a551f7093845e9a0919f0c4650eae19e",
+      "size": 279
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_1_crafting_1.png",
+      "sha256": "4b8dbd8578b9948a41d5767d50fd707cdbbf573375bf617f1c43f6af053b3516",
+      "size": 269
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_1_crafting_notable_1.png",
+      "sha256": "2d79b0f7f975d9c1da6816c236ff3200d9d7f5bdaf75a4eb7c62bc37851beee2",
+      "size": 282
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_1_defensive_1.png",
+      "sha256": "dc73f5c080823205d3f61697f490c1c5ff33e8f3efc88fa009d32d5c9f29ee04",
+      "size": 333
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_1_mastery.png",
+      "sha256": "2b2419bd6350a3b946bffef6435cfc0b95ee8130e3807f31f8049d0993d8c723",
+      "size": 338
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_1_offensive_1.png",
+      "sha256": "a7a22a70417e61a9e772640cf112f4b7276b6622cf0fac8e3fff23861918e398",
+      "size": 265
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_1_offensive_notable_1.png",
+      "sha256": "44e9ff6a95a49a1daaf7a1b8ab07578df96c4e0ff16043c07368504fe7ba2375",
+      "size": 249
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_1_poison.png",
+      "sha256": "d835b5a14b903354c84e5bd1fb276ccae30635fc22dc80afaa7c3d84b1f0b15e",
+      "size": 249
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_2.png",
+      "sha256": "c2ad5795ada99aa05e1b7211ccb59432acc4d98704e775bd362ec4c16ad8c84b",
+      "size": 259
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_2_crafting_1.png",
+      "sha256": "384c203a4a8fb0dfe45accf96ea1f95622b0e0ab2c1fbd0518d5fd9f458242e9",
+      "size": 276
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_2_crafting_notable_1.png",
+      "sha256": "26c8b31fa12a5437b07aed597bd7702a120d32e9e123c4af0e7bb42b7f530e8a",
+      "size": 284
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_2_defensive_1.png",
+      "sha256": "e93f490a102b30c1f58a1c9b475a4bdbad9e83339fee231b01f3704250652e5a",
+      "size": 309
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_2_life_1.png",
+      "sha256": "12e99e41a51db562109a9bcc8d58a572b95ced5f8c047cfbe00a21932262e2aa",
+      "size": 248
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_2_life_notable_1.png",
+      "sha256": "77507590ebc6cdc3e47d436446762399690a443347dc99b00e0cdfa4cad96fb8",
+      "size": 246
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_2_mastery.png",
+      "sha256": "28cb1cfb2ccb8c233deb96f3c53cc91813a9aa9bd282c39f5119c62b2d19d01b",
+      "size": 246
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_subclass_special_1.png",
+      "sha256": "4fcdd29626d4878b25b0d15eee55df9104f48ea18c47394e70b8b7c49b0e12cb",
+      "size": 281
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/amethrine_pendant.png",
+      "sha256": "da90bb6a437c5c6f23fdf45c284b0b02e930b6291b934cd06ec703c5a9f15796",
+      "size": 316
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_class.png",
+      "sha256": "9751c22a67f4034f3debd315a03dc7bde95c4715a1c6760ae95c3a320ee44053",
+      "size": 328
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_crafting_1.png",
+      "sha256": "6cae8365e11528b2c63f1169e1a3bbccce28a73bb1176271d12be5f416c59f30",
+      "size": 289
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_crafting_notable_1.png",
+      "sha256": "700f4b51957fe409d3a8cd4a170b137fb4b96324f3cb6b4afc43a9e3ff0abc68",
+      "size": 293
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_crit_1.png",
+      "sha256": "ac7e161fb3378be0f71ffb2aa3c83acf99229f254052c29960a1a38a557a08d7",
+      "size": 289
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_crit_notable_1.png",
+      "sha256": "ff1ad0c3e34e358c52a621fa562717e77b30793ba24ed096692ea4b37ef77815",
+      "size": 293
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_defensive_1.png",
+      "sha256": "24cf2153412aacb94ca4bedadb8dda80449d0548267bf572f38c5a2d75b53e60",
+      "size": 284
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_defensive_crafting_1.png",
+      "sha256": "115a69f18c1827fee52d42b3f418c9e9b12e98d2723f2c4404820668f20cb155",
+      "size": 294
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_defensive_crafting_keystone_1.png",
+      "sha256": "84baad1a6ad4cbfd8fdbea96a67eea013f41d99fe02850774db71dfb543e13aa",
+      "size": 328
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_defensive_keystone_1.png",
+      "sha256": "eff1a278cc17b221105bb1792af2c63e0170b3afa1628a7ad5bf2dc4cf93193e",
+      "size": 309
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_defensive_notable_1.png",
+      "sha256": "3673918001b65a6f6464711ec34733ccc5aa7f75324af2198c4b5d3cfbb39097",
+      "size": 315
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_healing_1.png",
+      "sha256": "551f9c3211dd6f89437431b8552248ea84de9cd7d34a50cfc556c021f2213b45",
+      "size": 273
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_healing_notable_1.png",
+      "sha256": "1987be77dafcacd55c9400c598ce27ab461a4308fea8f494d34784283f275e36",
+      "size": 293
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_lesser_1.png",
+      "sha256": "6740a9ac5caf66f14f0383e94a27117b32efb2c936f4cf6f576f94e278884e87",
+      "size": 305
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_life_1.png",
+      "sha256": "dec378929ceac118b79743369e93ee61473b5d070a26f65bddcb1e09375c83d3",
+      "size": 274
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_life_notable_1.png",
+      "sha256": "c3d344b34e5cd2bc3792a981baa013723c26bd1439e40e263ac29d08a7f581de",
+      "size": 279
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_mastery.png",
+      "sha256": "c0f9c86d52955b8a97dc37afd29f0d46229f95bee832fcc98c979e233d1b23e9",
+      "size": 318
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_offensive_1.png",
+      "sha256": "febdd3e571867a390c96e9c7f69491f236d2709e54b563ddfcca07ee1d29d37e",
+      "size": 280
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_offensive_crafting_1.png",
+      "sha256": "30ff2eae4278fa12f0b2b9bcbc37239d67fc6c8ebb1e0a73fb228c1dd0bd2911",
+      "size": 278
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_offensive_crafting_keystone_1.png",
+      "sha256": "55cea31b5c640bb8ad979de88f3726aad70463837d36db38a51c1f1c32c14b85",
+      "size": 279
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_offensive_keystone_1.png",
+      "sha256": "f9b5c9ce07820dc9849315d9fff7200230e75136ece1cbee20a95eef60240f1f",
+      "size": 315
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_offensive_notable_1.png",
+      "sha256": "387d09817028dea2eddaf5c70415931ca85ada0363ace6dd4e711701a5926b01",
+      "size": 279
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_speed_1.png",
+      "sha256": "33fe65862e68cb76269473bc45ad41d9eb75cf99a1c500f54519e57bc6cc2195",
+      "size": 274
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_speed_notable_1.png",
+      "sha256": "bf45e52bacf6d3e5d9d69ddde7936113f7775cfe4305a0619d7fab1c2af7fc40",
+      "size": 279
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_1.png",
+      "sha256": "44ce16137a006be723078ea33fda9fa1d24bc70c685effd233fcbd23ceac95ad",
+      "size": 280
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_1_crafting_1.png",
+      "sha256": "5bf76f8f16c51e6b9c19bfc77b2d1bfab079a0b816e118324ac885b1b14de1f2",
+      "size": 253
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_1_crafting_notable_1.png",
+      "sha256": "ec46e3a7f3a9c998797b391abd41325fd86c95ddb62efd78fbc9ad91dfb569bc",
+      "size": 253
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_1_defensive_1.png",
+      "sha256": "b2a619428fb86090742e28c217ac3da37363459977790af288004018994004ed",
+      "size": 293
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_1_mastery.png",
+      "sha256": "8358273296ceeb9f650adfc977156c8f8e6a055ba7367cc6d79dc7d1b85a01cb",
+      "size": 273
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_1_offensive_1.png",
+      "sha256": "d06f28a2a79a26c1a3987384abfb27c0f0e9f8f20d7599c4de95c1aa332080c8",
+      "size": 251
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_1_offensive_notable_1.png",
+      "sha256": "36a65509bbf5b3ca69595ac91d0516e5730cd77872ba6c040083a155f40d9cc1",
+      "size": 266
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_2.png",
+      "sha256": "0e8b4fd3290ba835207a362edab898ed342a06e2f83ed554e5d813cc06187c24",
+      "size": 562
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_2_crafting_1.png",
+      "sha256": "57a91b5abb3d190ac349cbe80441280a33ede290c1c08fdf331c7c8089b2db1e",
+      "size": 417
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_2_crafting_notable_1.png",
+      "sha256": "254f9c7abc52199d0428595e1184b6f393dd91d1781abe08b2f389e51e14f458",
+      "size": 262
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_2_defensive_1.png",
+      "sha256": "24cf2153412aacb94ca4bedadb8dda80449d0548267bf572f38c5a2d75b53e60",
+      "size": 284
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_2_life_1.png",
+      "sha256": "19b8bda8fadd54c0142d76d6ba0c66851c92875248451f8c1a5cba8db96ccdfd",
+      "size": 292
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_2_life_notable_1.png",
+      "sha256": "10555a7901941570f883bd05839f142f22a94d9502591958d50a1b342f5d9e3d",
+      "size": 270
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_2_mastery.png",
+      "sha256": "e081787d17341f905f4e664cd2cf5e9b53c3dcd00f2b51b23849dea593500e0c",
+      "size": 422
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blacksmith_subclass_special_1.png",
+      "sha256": "35b1c6175fcdde4fd2a3f7f255c5a7bfac7cfbd56354d77c936bcf065e9ffcf9",
+      "size": 270
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/blood_hammer.png",
+      "sha256": "7107b364ec62f2cbe6bdddfdbe78a76e5243cf3345cc0e709b5150bac783f2c8",
+      "size": 3161
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/book_.png",
+      "sha256": "cf97a68a35b656e948702418ca830fa5b0d23b74298e543a6639fd1e18c2e80a",
+      "size": 291
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/book_blood.png",
+      "sha256": "15b4a991d1cdabe5acc6244aaf8f5d118e2edc92718c938d80be3089cc14c390",
+      "size": 328
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/book_eldritch.png",
+      "sha256": "bca48d78f11e0f845fcaf72338550a0b5bf8831fd8234e6d0b8046a6e835b9ea",
+      "size": 320
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/book_ender.png",
+      "sha256": "5dfd353c76b2a978e65c2aacb328f4732c2142f6134146886230e93835068729",
+      "size": 335
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/book_fire.png",
+      "sha256": "3d5c7a107b9301b4e10b3c20c8f985fa7cf05a215e99e88bf56058385ebd67ae",
+      "size": 328
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/book_holy.png",
+      "sha256": "c1d9d643e020bd6cfe8a87abb1581ad0718a8fbf2a4ac608731cf8603bd70a56",
+      "size": 335
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/book_ice.png",
+      "sha256": "91b33b368e7c3d2ef3fa092fe44e6b67c0f1fee0af0db77f3f2e6b1c8ed01837",
+      "size": 345
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/book_lightning.png",
+      "sha256": "59b112c0d0c1ce38d3e65d1af54842194a8021ed42ef34ac0fe89ee70c92ff76",
+      "size": 339
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/book_nature.png",
+      "sha256": "c001082f16e5e4aac8dd83fadaa0480a0b7cc681601e4b50f0404138d252945f",
+      "size": 328
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/book_summon.png",
+      "sha256": "e7a70c9ba8ee7c961c65d95add242b00c7f8c5c86f526eed55b725b40fddf64c",
+      "size": 349
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/bow.png",
+      "sha256": "20f00391d3c06b03fc69fdf262a994f60d45bad6e334ebbdb8aae53e0ccc1fac",
+      "size": 3101
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/class.png",
+      "sha256": "6611e9c782eb030edd27762eba758754482601c3b13e3084945d2e69cccce180",
+      "size": 9554
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/coin.png",
+      "sha256": "811188a4b59b61af9387079efb732953c7ce8c9fe0bc35814fc008670154f905",
+      "size": 296
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/coin_bag.png",
+      "sha256": "1168efbeea99189bb420cfd98463e4b0a29c3558f6fc17849001c91f775d2f29",
+      "size": 300
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/coin_pile_item.png",
+      "sha256": "b0cdd5d55621bd014c6438eec00b21e8fc1008fba65dc59aaf74a9fe29daeec2",
+      "size": 293
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_class.png",
+      "sha256": "99c2771ba1d42d9fc2e29fb237614f850a8c854533ee81205875af6da3cec4ea",
+      "size": 353
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_crafting_1.png",
+      "sha256": "0f32c474f273e2483e795659b3f559d2f860a48f4762c0ae1099e3bc7092d2a3",
+      "size": 337
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_crafting_notable_1.png",
+      "sha256": "75684650e86091c955e78e96929bb007b0d883ba427b27f899341b895199a35c",
+      "size": 337
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_crit_1.png",
+      "sha256": "15a999068d601e2ca2feee41461f634be3c8205dc577eb594533e9e59e7046c9",
+      "size": 297
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_crit_notable_1.png",
+      "sha256": "db57a9af827b43cc5d245962325c345af37c0b52461a110629e67438aa372111",
+      "size": 286
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_defensive_1.png",
+      "sha256": "5e478aee80df7af1714da02e2204ac29f35115a72aa8f90718aefa0eee87fa5f",
+      "size": 274
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_defensive_crafting_1.png",
+      "sha256": "2b89dc2faf8c26abaee03b5f593334c0b5822b35d727377beca3045c21b9c3ec",
+      "size": 294
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_defensive_crafting_keystone_1.png",
+      "sha256": "22fd7c8fec74947dd28bed77948d5773383f1fe734407890bb8999aa50946ca7",
+      "size": 367
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_defensive_keystone_1.png",
+      "sha256": "c0ae4b1ddf6646e2fdf72796aedf6ff868d79a51faedf6a77ca316aec7c83af4",
+      "size": 380
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_defensive_notable_1.png",
+      "sha256": "d998a5c14e86b07ab04911f2bfc198d4d88cdf86c53e33284bc522e8fac461af",
+      "size": 388
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_healing_1.png",
+      "sha256": "efbc40f89ea980ff49a6570fbfd62297444b496234105017d445427cb5b781a6",
+      "size": 273
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_healing_notable_1.png",
+      "sha256": "679a737e806ff4bf55ce52c510896b553fefe6d4efaa9b3da0a28065682f5457",
+      "size": 305
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_lesser_1.png",
+      "sha256": "80354eef96902584d3c8fe45849e06b199f0e50f7a5387afea244ad9ceb93801",
+      "size": 326
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_life_1.png",
+      "sha256": "48cdd461e71d0605026aba4dfc3780cad9687eea090b246c12fd70c642e49e24",
+      "size": 318
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_life_notable_1.png",
+      "sha256": "a7cb5e0b10997c11bd31d5a32824240fbc9b8e509a1900231f42f10abf02ad71",
+      "size": 318
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_mastery.png",
+      "sha256": "eeb00fb35535130dd3b4db6508a66b18a4e8fd59988187d0de712bff70a44539",
+      "size": 424
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_offensive_1.png",
+      "sha256": "fcb12e043826c5fcccf7881382bbd931f083a63dc16b2d2775977069bfd997b0",
+      "size": 286
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_offensive_crafting_1.png",
+      "sha256": "6825a1c2e36e307d7cea7cbba5ee678001b33373cecdd63ea77e81fa48852fa6",
+      "size": 313
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_offensive_crafting_keystone_1.png",
+      "sha256": "1f54bd0eb774d335017fa85977fd9886891c45cf6761b73680f81ff1a23e2a95",
+      "size": 307
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_offensive_keystone_1.png",
+      "sha256": "d4d13b7666f0b9038d91c523e25e8dbfad69ac303f511096c2c4f0607219f0b4",
+      "size": 318
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_offensive_notable_1.png",
+      "sha256": "15376c134367b018ba3396bed566fdd71275682b1e02561a382d79eb10faad2e",
+      "size": 302
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_speed_1.png",
+      "sha256": "6df232be5cc2851b92eccd6cbffff82d3c8ee2c0a96b6aa8a277a58e1e55f73f",
+      "size": 301
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_speed_notable_1.png",
+      "sha256": "5c1f41d08570143eadb9c5d46b4b7267a688d170f666dc0dd582b72c8f738e87",
+      "size": 310
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_1.png",
+      "sha256": "e428ff1a48ab01a0b7406f230f804a79adae99aa852ba0301da023dfa08aacad",
+      "size": 274
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_1_crafting_1.png",
+      "sha256": "e1d4c4c7d4ff16601f47db79d7304cd6acf56aa518cee6897ad41f6e896d5656",
+      "size": 265
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_1_crafting_notable_1.png",
+      "sha256": "266729549729b00800ec89403f6bfc4b40316aeb90e5985372be2d8b15a8b7c8",
+      "size": 265
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_1_defensive_1.png",
+      "sha256": "5e478aee80df7af1714da02e2204ac29f35115a72aa8f90718aefa0eee87fa5f",
+      "size": 274
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_1_mastery.png",
+      "sha256": "d170964bcdbd37d075b8dc8b9c2b155ca108fd844079bfff7322625975c09990",
+      "size": 258
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_1_offensive_1.png",
+      "sha256": "b76103a4b5af39cd2b0cb3883cf62e405c39405bd9a4ca3a8521457d65c6e7b5",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_1_offensive_notable_1.png",
+      "sha256": "59dcc9d394d3d69fe4512149724ce97d3585b92de9e8129df29b3b86fd5b1ff6",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_2.png",
+      "sha256": "3293760f6392cae79040b5134b5d9261b46624fed0c2ba5a548f7caf81db107a",
+      "size": 270
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_2_crafting_1.png",
+      "sha256": "a138e95a6737b8266f58ea6e700a968eee4f9d5b224fe6b0cefa6a50ace1a71d",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_2_crafting_notable_1.png",
+      "sha256": "34a6936ddf6df6a9353e9caab482e1c474952c699ebabce6cfd599bbc41b2828",
+      "size": 269
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_2_defensive_1.png",
+      "sha256": "b2a619428fb86090742e28c217ac3da37363459977790af288004018994004ed",
+      "size": 293
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_2_life_1.png",
+      "sha256": "72eb7982717b73fac819aa7c9ddfce043b656d66d6b888a8265bb4c244fa83b1",
+      "size": 244
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_2_life_notable_1.png",
+      "sha256": "63e71ba2447626d4a3b0ca82a1c4204839ca30050947aa8995d7c532923c52a8",
+      "size": 269
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_2_mastery.png",
+      "sha256": "19a59e5c6f4deedade00fbd653660aacb03b3c508c4008ecef8bd650066b4d8d",
+      "size": 267
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/cook_subclass_special_1.png",
+      "sha256": "d8903890f93d657db7ea6db05908c704ce874e5e607c672a2df3fd3730f7513a",
+      "size": 241
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/crystal_tear.png",
+      "sha256": "443a12dec4558d129c29f461c8de5fdbe5fdf357fe613c4f3885e93987bc96dd",
+      "size": 280
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/diamond_shovel.png",
+      "sha256": "5c9e2be7bc8fe26c79673193840dfa18f1199df45a93ee628150838ea78413ca",
+      "size": 367
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/elemental_fragment.png",
+      "sha256": "7de4371932c4605a674eed1c759f6f3ffd9cb8066e14a91ccb11547c265e7846",
+      "size": 387
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_class.png",
+      "sha256": "046aa4196be1ca3fd0fa33ba8cbbcaec2bf6d5fd466cc2e2e153b6b9ea0d9ca3",
+      "size": 313
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_crafting_1.png",
+      "sha256": "1bfc5d1ed6804e0f4517ee3d762b679188bc02fb59647c8d50e92dd29b03041b",
+      "size": 274
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_crafting_notable_1.png",
+      "sha256": "fef98d41fe79b000e5292aa97dd568c90ef473922c499966429d97b94c63b4ad",
+      "size": 293
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_crit_1.png",
+      "sha256": "b1ea3a63569720213f56a58637c1093e2beb2eaa95c097514b8019abceb6804b",
+      "size": 258
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_crit_notable_1.png",
+      "sha256": "4fe5185258d203093b532a12fa51d6ba201151b26a7d34ba73e80ee82c9139fa",
+      "size": 265
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_defensive_1.png",
+      "sha256": "5e478aee80df7af1714da02e2204ac29f35115a72aa8f90718aefa0eee87fa5f",
+      "size": 274
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_defensive_crafting_1.png",
+      "sha256": "6c30346ddb136d3edff547467f89e7d5130d2637917b92366bd53c7c8c1ed053",
+      "size": 273
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_defensive_crafting_keystone_1.png",
+      "sha256": "f2c6b20616c6b7b8250c7cbedd8f7ef6d408f954375806a9aff6dd3625bd679d",
+      "size": 313
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_defensive_keystone_1.png",
+      "sha256": "c78801f333ceebcbb42eae3d4cc9e3a82d78efc164bb9ee5bacc4820b435b5c3",
+      "size": 290
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_defensive_notable_1.png",
+      "sha256": "88bce3a76108c96cbf109d426e6adfc37b9fc16895acad321d4dc38a08aa8cae",
+      "size": 293
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_healing_1.png",
+      "sha256": "efbc40f89ea980ff49a6570fbfd62297444b496234105017d445427cb5b781a6",
+      "size": 273
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_healing_notable_1.png",
+      "sha256": "758709edb646e9965a82d6d8cbfca8eeb27744d0e53b0833ae43a283ff447aee",
+      "size": 293
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_lesser_1.png",
+      "sha256": "77cc4a0c7dfed9ae628ba2e81506c83259ad643c926001720b27dc97ccd2a270",
+      "size": 273
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_life_1.png",
+      "sha256": "9f958d5e5674c369c3707908d7e463b4f7de3789180f1ed227014d465443463d",
+      "size": 266
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_life_notable_1.png",
+      "sha256": "50961bbb3e2e9242ff99553c2966b3d96d02dd0f519f162135b0f7aa228d216d",
+      "size": 282
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_mastery.png",
+      "sha256": "6cdf47099451e5997d9ed88984af0768e6b96a8a3208a3bd959523aaf981bc6c",
+      "size": 313
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_offensive_1.png",
+      "sha256": "7b7450dfc7784aafe5131f3de73b90522a34ea37332442329bea6eb4879532b1",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_offensive_crafting_1.png",
+      "sha256": "dc86f63100fbd83e9d0bd4b427ae898c879e6ddec4d34e4f8dd2b87fc579ceda",
+      "size": 270
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_offensive_crafting_keystone_1.png",
+      "sha256": "6071656cdd707edfca39dbeb64fe8c954503d608331c53deadd5f10e0996b625",
+      "size": 313
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_offensive_keystone_1.png",
+      "sha256": "e5c4b94bc2bd992d8c976a5cbe0ca735497bf5daf2fda6b9bcc77b3dee02c306",
+      "size": 274
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_offensive_notable_1.png",
+      "sha256": "6c9b414d0dba5800e76b3675db446795ae447f9b62ccb6fecd63423f1c2b65d2",
+      "size": 243
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_speed_1.png",
+      "sha256": "f5e2484ad5451d9407aa0ed720e75c1485e7ad1e25f0d83ec819e31e6013f890",
+      "size": 258
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_speed_notable_1.png",
+      "sha256": "4a1964a50f6730bac98d7d49130d0968fe269ea95da3d14ee130004e1b523846",
+      "size": 272
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_1.png",
+      "sha256": "c39a0137126dbe43d8681eab6ab7fa7f687d14ba374b3c49dd50a0dbc360b911",
+      "size": 261
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_1_crafting_1.png",
+      "sha256": "82033d4c8fe30c3677fe2becbc4a610439b338579fbd403b9c11ba8da531588c",
+      "size": 268
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_1_crafting_notable_1.png",
+      "sha256": "11bb024d592b3451d1e8f50c0867a7c4f34892d9c176b331087b29eefe7cd727",
+      "size": 273
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_1_defensive_1.png",
+      "sha256": "31c9378977739ca12e52c49bc3718ada1a23a4497bfe6b919436d9660d5ebd1d",
+      "size": 328
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_1_mastery.png",
+      "sha256": "e977e17af73e869e30648c348b0ec5d1957cf09356b7319dd3ea2159ebd4f3a7",
+      "size": 259
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_1_offensive_1.png",
+      "sha256": "2503d5cc86f187460e37ffd4e56384266a64963d62745178bc0d03e634b72b3b",
+      "size": 280
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_1_offensive_notable_1.png",
+      "sha256": "811f2f6f42d4d59ac3425a611b2aab69eeb66bb7bc3ef667c7f26c4657f946ba",
+      "size": 273
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_2.png",
+      "sha256": "bf487e4adf83c45a6d13351f41d937d49b5f46e7e816de3712b3399649c25b6e",
+      "size": 291
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_2_crafting_1.png",
+      "sha256": "2ff14bf38a5f1b254d86e76a9a8df5c27554a359243f303d16ae1523f72636ba",
+      "size": 291
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_2_crafting_notable_1.png",
+      "sha256": "9ba81e8d023894364b6553e3682227a6a971bd9f7e5ac36cfe3aef63bde9f618",
+      "size": 284
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_2_defensive_1.png",
+      "sha256": "5e478aee80df7af1714da02e2204ac29f35115a72aa8f90718aefa0eee87fa5f",
+      "size": 274
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_2_life_1.png",
+      "sha256": "cf97a68a35b656e948702418ca830fa5b0d23b74298e543a6639fd1e18c2e80a",
+      "size": 291
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_2_life_notable_1.png",
+      "sha256": "8977e39e0e5a45121a038e281e53b14bd8585c23ecd8294ba12690d617661e86",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_2_mastery.png",
+      "sha256": "7d83f2079d617bee6027e29c89f4d52a86b8768cf5d1cfc002de5002a7e0fb19",
+      "size": 283
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/enchanter_subclass_special_1.png",
+      "sha256": "8ff639cec61787f935ccb90e51e1560865ce57ca8c2679c505a771f3e0c175b3",
+      "size": 278
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/gateway.png",
+      "sha256": "e42d03d16e6d6658b7ec3e3c1fccc64aa0734b39933eca5ccb191e3c43b4563d",
+      "size": 14348
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/gobscraps.png",
+      "sha256": "6e6f6e165907d203008eea8a78b2854378069349bc1c4441a22451401e40634d",
+      "size": 292
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/gobsteel_crossbow.png",
+      "sha256": "538372e904c2c57072cd41e3d0b37e81460a56b43b710632803b132d8f2eb713",
+      "size": 354
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/golden_shovel.png",
+      "sha256": "03a53356cf303f4af376d35b5df3caaaf8cc7772e521972a2dc3b683949213c0",
+      "size": 372
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/healing.png",
+      "sha256": "8de1b0b3f0a713b5497e0d615dc0d4612d88b6af119a6390a04980b463649d9b",
+      "size": 564
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_class.png",
+      "sha256": "0f561cd225830c00dc312c8956eec9e4af6a8e2da674715599a8845897a04c49",
+      "size": 226
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_crafting_1.png",
+      "sha256": "7746a5c0be33fb048b1f6ae1b65e19504eee88bd7d8fec9a175bd087103f984e",
+      "size": 240
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_crafting_notable_1.png",
+      "sha256": "b3665fce673769166332e1ee4f9c681f69405ad9298227581a5b232f535dbc7d",
+      "size": 240
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_crit_1.png",
+      "sha256": "5de73a19edf1b251f4542b6f78e9f0a764eab7ceffef3a2858ae47a5e85c80ac",
+      "size": 240
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_crit_notable_1.png",
+      "sha256": "d46b61154bc6de94449ebb4f8a68f6a385253fba00a7d0e85c56e31e79f2e58e",
+      "size": 240
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_defensive_1.png",
+      "sha256": "e93f490a102b30c1f58a1c9b475a4bdbad9e83339fee231b01f3704250652e5a",
+      "size": 309
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_defensive_crafting_1.png",
+      "sha256": "c06826bffd01a3708ce5a7e81b6a57eb522542aa49cbbdd6d529410e7701375a",
+      "size": 288
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_defensive_crafting_keystone_1.png",
+      "sha256": "1850023fd6b7b5baed7874e1c0d9bdb6667ebc267264007f10cabbbca5fe163f",
+      "size": 264
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_defensive_crafting_notable_1.png",
+      "sha256": "a855c7bfd8b9333a501c5be3614332169ef8f92592ab5730d5ec34e4cc2206a8",
+      "size": 299
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_defensive_keystone_1.png",
+      "sha256": "d7d2208a78bb0df70e50e9de18aa839561952be13225a96cf4cde03821462c80",
+      "size": 319
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_defensive_notable_1.png",
+      "sha256": "329aa7101a2a8c4e23539089289b4243d8fdea33ae0f41aca106ecf5816ea760",
+      "size": 299
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_defensive_notable_2.png",
+      "sha256": "3e18f7bcd401954606e2ae92ccc26a3cc186237c1b02f0b761fab6a493e230a8",
+      "size": 303
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_healing_1.png",
+      "sha256": "046e6d293b623956f238a1e1d4b853bdd702825593488121f94bf770072376d3",
+      "size": 273
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_healing_notable_1.png",
+      "sha256": "63e5a97c9447ad2b269f9a39b0af2e1ffd3acf8d836968bf1a47623578f8ecfc",
+      "size": 240
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_lesser_1.png",
+      "sha256": "0f561cd225830c00dc312c8956eec9e4af6a8e2da674715599a8845897a04c49",
+      "size": 226
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_life_1.png",
+      "sha256": "79dc8acbfa9b78dd6c4539f4137dcdb6d807b5efecc117f20c79b2b895f46140",
+      "size": 320
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_life_notable_1.png",
+      "sha256": "cddf825c7a2f174fb968dc9cc341eddca754358bb00be70bbc4fb86b37efc7e5",
+      "size": 316
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_mastery.png",
+      "sha256": "932135b0778f50b63d1b773aecffe1bebba6c312cc18e6dc56f36a85cc7bd954",
+      "size": 291
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_offensive_1.png",
+      "sha256": "1703c1b0c01df2f97a3972e16e451ae4402f6e4a0b81e366566de29bfe7e9c24",
+      "size": 240
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_offensive_crafting_1.png",
+      "sha256": "f090303203b63086c93483947e1d77226471612031ae956778c877d7f81a5bc7",
+      "size": 255
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_offensive_crafting_keystone_1.png",
+      "sha256": "4236788004b18d6531ec46b9846d223eb5886d0c1508c5c5003e4ea07bfe20aa",
+      "size": 286
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_offensive_crafting_notable_1.png",
+      "sha256": "7b6456e85fa5bc7612e4b0d973cd143b60973e2665c2305dc3b2ca4875c5e16c",
+      "size": 284
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_offensive_keystone_1.png",
+      "sha256": "0da3fc75712f563a5a264a442347dbe0d1ec921bd61ee1bccfc06a92db14b09a",
+      "size": 247
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_offensive_notable_1.png",
+      "sha256": "eac3ea4f77f4801e7f02cba35e1f9383fe27f4d21167e328348cbacad0167f7b",
+      "size": 240
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_speed_1.png",
+      "sha256": "5bc2602f08e4a4d34a02062698c616310460c2ce126a7afd18cf6fe9cb4c9b57",
+      "size": 255
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_speed_notable_1.png",
+      "sha256": "9acdd53bd0a816c5146f9218d5f617501dc026f7331bd9bb722acf214b06e3f6",
+      "size": 267
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_1.png",
+      "sha256": "f5b66e2749a82b4a825b5c5acf08d931959c83a877959d40abcda40a0afaa3f6",
+      "size": 270
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_1_crafting_1.png",
+      "sha256": "7014d4465e12a84379baaafa26bee7c7b72c6f4ec384d070fc0aa2577799952e",
+      "size": 236
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_1_crafting_notable_1.png",
+      "sha256": "06db633bd241d438212e36856e19c28abbf388d260d97c4decdb8ed8292fcf49",
+      "size": 254
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_1_defensive_1.png",
+      "sha256": "e93f490a102b30c1f58a1c9b475a4bdbad9e83339fee231b01f3704250652e5a",
+      "size": 309
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_1_mastery.png",
+      "sha256": "26808370b2e4dda7a9a860b00928f597291a99a675b6e36ec91c8f7bca5f1625",
+      "size": 270
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_1_offensive_1.png",
+      "sha256": "9ef4a896d64ce0e4359924663fecefc66c4fa76258b6729330cac2a1c6c07ea1",
+      "size": 236
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_1_offensive_notable_1.png",
+      "sha256": "ae0230d5056a81a5825486be50405e68fde825ec1fae15f3ca528ebc9b34b27c",
+      "size": 249
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_2.png",
+      "sha256": "c30db0e47660872a5d66612e50392e031db1442bd3efb391eb135d567a5ba7f6",
+      "size": 234
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_2_crafting_1.png",
+      "sha256": "6ebf5ff4e2970ffbd8128908848acd57f280fe327113bdce48dfdebd30299251",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_2_crafting_notable_1.png",
+      "sha256": "2fe8b6d547649fddfee995af0bd35ef5b0fc198017128af3e66ec4ea23faa765",
+      "size": 225
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_2_defensive_1.png",
+      "sha256": "31c9378977739ca12e52c49bc3718ada1a23a4497bfe6b919436d9660d5ebd1d",
+      "size": 328
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_2_life_1.png",
+      "sha256": "ed11c797e402383a961556fc4d0448402eba1c9fd466d11b64ce7a3fcb266923",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_2_life_notable_1.png",
+      "sha256": "399d7c4b988d83a79ce6e179aca9cf38ad43bb7db946230382da15918614b2eb",
+      "size": 278
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_2_mastery.png",
+      "sha256": "33951b5047fe45a9e41caf564b09f3fb47a92c88bf1c70eb6cd44aad69392abd",
+      "size": 278
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/hunter_subclass_special_1.png",
+      "sha256": "03d631909087b6fa59be879c25c5209f3e7e60e80d86a3fa616a4bd7b3403078",
+      "size": 272
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/iron_shovel.png",
+      "sha256": "35435844145f03f6cf0abb9465de473742453fdf9847dfd0726abf83c806f34e",
+      "size": 356
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/keystone.png",
+      "sha256": "d1fb9ce0164e4fb9e840d43a76be95b4c9a6fa2b05a6e88906d5f55b93958161",
+      "size": 9486
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/lesser.png",
+      "sha256": "4c727b7130eeab05c7bc69691296b0783329887b917b49b7551eaa72d99f1afd",
+      "size": 3632
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/mana_regen.png",
+      "sha256": "01322fade2588766f5fab2d9240404ffca2c28e621007e79e943df24ce87f07c",
+      "size": 3051
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/max_book_blood.png",
+      "sha256": "aaced90c5c2ee0d8c240fdd21cd21f179513b7913c64b52c5be963db6f92ea5e",
+      "size": 440
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/max_book_eldritch.png",
+      "sha256": "66951e88a2d0bdce43a0ecab263c74bfee66601d86e05087da0d37ca53425366",
+      "size": 422
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/max_book_ender.png",
+      "sha256": "8b58e7c80226cba92330699881774a6dfa1d597b8f6d06304d837235bf89d5e4",
+      "size": 448
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/max_book_ice.png",
+      "sha256": "bdfae9de2b8bd6d18f0512e451899a0c58fffd1968c97acdbff0f1a89ceb9c3f",
+      "size": 430
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/max_book_lightning.png",
+      "sha256": "336e3bbc212dd92439f2812d81c0f2b75268b7c3f67251f8b08b9b71c062a344",
+      "size": 428
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/max_book_nature.png",
+      "sha256": "c51bb5b93a64d6e42040a3e4935ef367d342ead5b795e4f0fb01c2ffbece0b46",
+      "size": 404
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/max_book_summon.png",
+      "sha256": "890d8db526b4675af86707f1a01c5d4cdaf944d9d670eab6ffb882c899085d9f",
+      "size": 446
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/max_mana.png",
+      "sha256": "b69d0d48b2c54f1f3d3d7af6561314af15ed09fec31bd055ec3847bab6eda7c6",
+      "size": 3023
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/max_mana_1.png",
+      "sha256": "2b85e2a77c411881efa68ffbf76ffad3db119abc1664f5922c28b78ca301b08c",
+      "size": 315
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_class.png",
+      "sha256": "bd69f04a7f64a1b7e08bb3cf67a3cf13a322e4bebac6d7d00f6046dfddf75443",
+      "size": 284
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_crafting_1.png",
+      "sha256": "9f4fd52ad81678d328eea800ae5fea0b2aa26ea81d889776bc0bee256bce7ecf",
+      "size": 236
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_crafting_notable_1.png",
+      "sha256": "bc7df0ad5478a0d30b680a31bd90000937903f5db2ac7a38be02de435a380fd1",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_crit_1.png",
+      "sha256": "2a0708c5b124c1750baa31c80f7029457cccebe0b9ad3affc466fd3b7461ce87",
+      "size": 236
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_crit_notable_1.png",
+      "sha256": "7578432f400c59ec6459c2e8b9128828bbbe3364328b1f72eb941e8ade389706",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_defensive_1.png",
+      "sha256": "24cf2153412aacb94ca4bedadb8dda80449d0548267bf572f38c5a2d75b53e60",
+      "size": 284
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_defensive_crafting_1.png",
+      "sha256": "d9f229cbfc44cd1e4ae345e47fde3720b64b490971e452b16b0183e29c124c0f",
+      "size": 236
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_defensive_crafting_keystone_1.png",
+      "sha256": "438161615af136c5e64a4efb7c6c16e112737e66179e7d598107c01686d5f49a",
+      "size": 294
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_defensive_keystone_1.png",
+      "sha256": "a84d89af69fe960a1acec410a963b0ccb99f220f659fc24314a20367d938d58d",
+      "size": 294
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_defensive_notable_1.png",
+      "sha256": "3c9a95d40f1c847a30e0f6cadb284ef4410f066ae6907d5b355995269f690d26",
+      "size": 282
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_healing_1.png",
+      "sha256": "551f9c3211dd6f89437431b8552248ea84de9cd7d34a50cfc556c021f2213b45",
+      "size": 273
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_healing_notable_1.png",
+      "sha256": "c3b9feeedb30f149fdec387938db2b1f5f796b6b4568fbf9304c275703d712ad",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_lesser_1.png",
+      "sha256": "6a155911826c236469abda7fedfb2fbd0f4294f41c93c1b181096def7706ecb9",
+      "size": 276
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_life_1.png",
+      "sha256": "283c9d298ef98f197d075d063577a56be14c8bc433ebc827286ba72709be35d1",
+      "size": 236
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_life_notable_1.png",
+      "sha256": "fc73d9f32b37cf2445bd6b997cf8569e4241425e05b422a6a3bc31be82b4071d",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_mastery.png",
+      "sha256": "4fe4a809c22f5740bcf11d903b3350c92a350972e7d40f773ca27afcad577164",
+      "size": 294
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_offensive_1.png",
+      "sha256": "057bdcf5a8676aa53ca0a8fa0b642724e3090355f31a2137e7d7fffa941502dc",
+      "size": 236
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_offensive_crafting_1.png",
+      "sha256": "20c891a647027728436e6983bba55bc0c518fcd58188508450ad31656d2c09dd",
+      "size": 236
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_offensive_crafting_keystone_1.png",
+      "sha256": "175633488b7ae6794e73d5163a3157de03f17cba3cc9b4b160aed3eba1ae91b3",
+      "size": 294
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_offensive_keystone_1.png",
+      "sha256": "1237808055906e1ffe0b2659ae69c344e7360fdd711cb1bd1522e7cc3d332063",
+      "size": 294
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_offensive_notable_1.png",
+      "sha256": "8fd0ee5498f39a5f0837c523b514349dcbeb52b5134c60d14a6b9cab3c79b208",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_speed_1.png",
+      "sha256": "a6b0872e879fa752b69db09f67a0567d5186d3583cd0fc055969d7284e926cf6",
+      "size": 236
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_speed_notable_1.png",
+      "sha256": "25bb54cda81ec58e7ca5e2af4198de24aff22539443ee6c19fb6fda0161dffb1",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_1.png",
+      "sha256": "f72d792c235e898e72ce172ab8d1c65209850a2c70a26ebbd13e9a7d440d067b",
+      "size": 611
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_1_crafting_1.png",
+      "sha256": "467b812cf2bafe53323c8cd2f01dbc9ec9b80be24cfc1565ca2cc946e96aa523",
+      "size": 457
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_1_crafting_notable_1.png",
+      "sha256": "c03103de3361aefffb8bb3cd6f50797708cc7a906f832220c430a06b0663cc2c",
+      "size": 535
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_1_defensive_1.png",
+      "sha256": "24cf2153412aacb94ca4bedadb8dda80449d0548267bf572f38c5a2d75b53e60",
+      "size": 284
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_1_mastery.png",
+      "sha256": "4879c91a8a2befbdad5082a2ff1c16da951366283150e80ff6e1355005345ace",
+      "size": 298
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_1_offensive_1.png",
+      "sha256": "b76103a4b5af39cd2b0cb3883cf62e405c39405bd9a4ca3a8521457d65c6e7b5",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_1_offensive_notable_1.png",
+      "sha256": "00ab82cfd2c43f3c8a6bb72dcb91a94ece3d58b63ff242bb747a9c5f47765cc4",
+      "size": 270
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_2.png",
+      "sha256": "c3237d56a54ea5c7c68810eeebf649ba7afe6fc80e32890fdad3ac716fd7f690",
+      "size": 263
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_2_crafting_1.png",
+      "sha256": "78469ff4f2710d81ebaf4e3868cdb7b3b19b9f7c774baca26a23659250362e77",
+      "size": 236
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_2_crafting_notable_1.png",
+      "sha256": "78e6af1044b683b50a356b82c88902965f69ef99358c1be91f3f7e870a17c475",
+      "size": 252
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_2_defensive_1.png",
+      "sha256": "dc73f5c080823205d3f61697f490c1c5ff33e8f3efc88fa009d32d5c9f29ee04",
+      "size": 333
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_2_life_1.png",
+      "sha256": "414cbf793fb8810d2e5be23402fb83c413520c5569465ffbf00c9ead97f1ceb6",
+      "size": 284
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_2_life_notable_1.png",
+      "sha256": "3bd0550a1e82c3f3d7705ee67ff5969560b6abf414b144f03f491c98cfaa5653",
+      "size": 266
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_2_mastery.png",
+      "sha256": "6461fb0be39883820f4c7bd604105b91ba6687404ee5ba44f20e54e0a9a79477",
+      "size": 276
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/miner_subclass_special_1.png",
+      "sha256": "419fec133f35bac304d2ded480f040164e10be363057ed3b53b2d2a0977b58e1",
+      "size": 266
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/netherite_shovel.png",
+      "sha256": "34051da608d79e87d2c12e4da6a6d93ec9e6285da89c0dfdb9741e553fc2a5e5",
+      "size": 451
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/notable.png",
+      "sha256": "3b1b3c2233aa40503130139e594013fd5cabb02c127b3eefbf4d2bbbd6b2a96e",
+      "size": 6162
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/poison.png",
+      "sha256": "1f797ad2be4640e6c6392ca77dc250760e0524cd15336946aab47038f41520c4",
+      "size": 483
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/resistance.png",
+      "sha256": "c78801f333ceebcbb42eae3d4cc9e3a82d78efc164bb9ee5bacc4820b435b5c3",
+      "size": 290
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/scroll.png",
+      "sha256": "0d1c7ee956b11b131671bccb1b258e5c28dd653034a915963da38234668f5fd9",
+      "size": 2477
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/scroll_binding.png",
+      "sha256": "180336d22f57b751c16363f44e2bc96d12b9d58851f28a1bae588954d0012bbf",
+      "size": 2202
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/scroll_blue.png",
+      "sha256": "8852be2c450ba51fb33ec449bf8432a3de3832c7b508840d113e08a5fa48de0a",
+      "size": 2511
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/scroll_dark.png",
+      "sha256": "5629203475f30858acede8cf8fd88fa54b212d2c195c0be6f8e501b13d0dd65d",
+      "size": 2474
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/seashell_shard.png",
+      "sha256": "5d64d95889ae4760d7b0f34e69bb7001be432963b2d77432b0cb0680f001f21c",
+      "size": 264
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/spell_blood.png",
+      "sha256": "e4c5f4b00cfec853802dddb435b41c2f0571225119985426052903c3f2b40141",
+      "size": 365
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/spell_eldritch.png",
+      "sha256": "02d07002135a8e6365818602aaddf9afe20a803444b9aab05e09f12b745e1ad1",
+      "size": 433
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/spell_ender.png",
+      "sha256": "82412dc9c7c7cd1fc07a96eea70135a497fcbe70514c995d450778520094dfe3",
+      "size": 376
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/spell_fire.png",
+      "sha256": "3f540eec8c8662d693379ba9d0d3ad3e982537b727ac713173d8e4d9466046d0",
+      "size": 354
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/spell_holy.png",
+      "sha256": "376aca5f51219cf0e64ce2d3d3b37b3c0be9e20562e19d5b79f27b9a74e838d6",
+      "size": 352
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/spell_ice.png",
+      "sha256": "c6a0288365ba7e58dd4eec39177393ba01dbfc225a1a9e2b1521fa84387bcdd1",
+      "size": 372
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/spell_lightning.png",
+      "sha256": "018fcc1b183632b61d67b10d420e420378bad57ce794aed62b8a41db540e7a3f",
+      "size": 354
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/spell_nature.png",
+      "sha256": "05fb88b6f74fc9dbe69cc023c380879f306e649a8fef6ebec4d4b234fd8dbfba",
+      "size": 368
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/spell_summon.png",
+      "sha256": "96c411345dc47bd85dcedf128876d624d486921d64b7572541d65ddfc96de6ed",
+      "size": 348
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/stone_shovel.png",
+      "sha256": "9512fd72e9da827d8dd7a6592f9c1e3f88437e8e14a7a49c67c1b51c3aecf054",
+      "size": 418
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/the_rock.png",
+      "sha256": "eab81fd3cab46ffaed3879000e056a87aedd59e4fb3733742f55c86994c8ebbf",
+      "size": 291
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/void.png",
+      "sha256": "c0a777ac17270291b2dc040f8541c315dbba6b0f9cf94ed86d05b1f6978dab9d",
+      "size": 120
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/wooden_shovel.png",
+      "sha256": "bfc38df86276ca7a51affd8d9373e82c977ebd0608ce5d37855d301774cc17e8",
+      "size": 423
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/data/elyrium/puffish_skills/categories/celestial_tree/category.json",
+      "sha256": "96238a569435accb60c2f7f429cd6152b6fa3b18f33ab4444557caace466a6c1",
+      "size": 863
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/data/elyrium/puffish_skills/categories/celestial_tree/connections.json",
+      "sha256": "5c3f30e99044730e701f2bbea33a7038554cc5396bf40bb0bfaaad6d9c0def3f",
+      "size": 92850
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/data/elyrium/puffish_skills/categories/celestial_tree/definitions.json",
+      "sha256": "4042d93bf9b7855e408a86eebc7787afd027fbd22346475f3f0f6ae186125c82",
+      "size": 819465
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/data/elyrium/puffish_skills/categories/celestial_tree/experience.json",
+      "sha256": "50bd91b1e8347190e7d94773f146c4e00aca44372f266df5beb0708b5c22dba1",
+      "size": 161
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/data/elyrium/puffish_skills/categories/celestial_tree/skills.json",
+      "sha256": "fa564ed0a11d5a494353a7ddcc38bb402b25c0ca14d892997ec453dcc61644f9",
+      "size": 106848
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/data/elyrium/puffish_skills/config.json",
+      "sha256": "bb2c139fc8ef293ec4700df16aec6e01c4ce7adc892c0f6baa230b9d60e5445a",
+      "size": 67
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/pack.mcmeta",
+      "sha256": "3a404b25d1e7c5956ddfa0bd66174c5380eb7b6bea2c4e7dd6e2cddad0098be0",
+      "size": 148
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/cataclysm/worldgen/structure_set/abandoned_structures.json",
+      "sha256": "e71be5f565dab5e882ba414dd1348991d9152ed5b0cd93bfdfd2be395b7156c6",
+      "size": 417
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/cataclysm/worldgen/structure_set/desert_structures.json",
+      "sha256": "36103e02705400009e1906a05cd34fee3dcd90d47d42cca34986e835fdcc9813",
+      "size": 416
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/cataclysm/worldgen/structure_set/ruined_citadel.json",
+      "sha256": "873012742c6fc07d21ba71db62272505a69d9791e2fcda8656f23545e4b78186",
+      "size": 337
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise/worldgen/structure/aviary.json",
+      "sha256": "1a1f7928d20ecf71ef9b2e5b5a49df1df4f369168538e95592bba692727cd43f",
+      "size": 678
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise/worldgen/structure/bandit_towers.json",
+      "sha256": "cb0d88260519ad6347ee857299a6153e50e77249a2985718e11ee827e0aac516",
+      "size": 474
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise/worldgen/structure/foundry.json",
+      "sha256": "6faded31d7e7ccdb1ab9821817557afea89714f7391868da5843402222ce0646",
+      "size": 464
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise/worldgen/structure/greenwood_pub.json",
+      "sha256": "5dc10c0f32057b4ccaf8b1ff06d420336809060b14e09bd7b5ba02f471df2660",
+      "size": 518
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise/worldgen/structure/infested_temple.json",
+      "sha256": "d34db77a5cf29e4e3d0553e007544d883d61a9b94435ecba72ac1a06c0a3e1e3",
+      "size": 739
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise/worldgen/structure/keep_kayra.json",
+      "sha256": "0e15268ed0709d6a3c431e14a0916a567d815d9b55320de452c91c13e0671a87",
+      "size": 491
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise/worldgen/structure/kisegi_sanctuary.json",
+      "sha256": "40d665fec4f0d7ed9d4ffccf19474fb5ac5e90882237cb6209031c692bf3c2b6",
+      "size": 734
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise/worldgen/structure/mechanical_nest.json",
+      "sha256": "033f86723f0cca2052a91ece84e302f394fe38f0b7e0eb9891f3a26d3f105fef",
+      "size": 473
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise/worldgen/structure/shiraz_palace.json",
+      "sha256": "46a71185b6514aa50f57a82f2096d90c4ac7480646581974b74bc4a7a752c996",
+      "size": 528
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise/worldgen/structure/thornborn_towers.json",
+      "sha256": "4659738c68fe32dcc9b40efc66e38194215d7ba46ed9d6564d80f188f9819d9d",
+      "size": 486
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise/worldgen/structure_set/major_structures.json",
+      "sha256": "0fe74e9bc7532d086272e0a538cbd7845bd3b0385ab12eee03b3fc4388aad99a",
+      "size": 2937
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise/worldgen/structure_set/minor_structures.json",
+      "sha256": "9c43edd885496d8970599fa91f250cac3a15f97dd019753e875386f4978447d1",
+      "size": 668
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise_seven_seas/tags/worldgen/biome/has_structure/corsair_corvette_biomes.json",
+      "sha256": "71127eb4c0cb0f758668740866ab5640e1c8aedc3ccff55ae2ee358a894aed3c",
+      "size": 89
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise_seven_seas/tags/worldgen/biome/has_structure/pirate_junk_biomes.json",
+      "sha256": "71127eb4c0cb0f758668740866ab5640e1c8aedc3ccff55ae2ee358a894aed3c",
+      "size": 89
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise_seven_seas/tags/worldgen/biome/has_structure/small_yacht_biomes.json",
+      "sha256": "71127eb4c0cb0f758668740866ab5640e1c8aedc3ccff55ae2ee358a894aed3c",
+      "size": 89
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise_seven_seas/tags/worldgen/biome/has_structure/unicorn_galleon_biomes.json",
+      "sha256": "71127eb4c0cb0f758668740866ab5640e1c8aedc3ccff55ae2ee358a894aed3c",
+      "size": 89
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise_seven_seas/tags/worldgen/biome/has_structure/victory_frigate_biomes.json",
+      "sha256": "71127eb4c0cb0f758668740866ab5640e1c8aedc3ccff55ae2ee358a894aed3c",
+      "size": 89
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/dungeons_arise_seven_seas/worldgen/structure_set/minor_structures.json",
+      "sha256": "c3e5970ffb87f1b37b1ee196446c912519800d580702d983e5a18c4e4c2ecdea",
+      "size": 644
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/boundary_wall/caledonia_gate_portal.nbt",
+      "sha256": "74b878fa3ec5af398ebf244c24df99d05e3dc9438de4082c3990b295a5d40d7b",
+      "size": 4266
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/boundary_wall/caledonia_gate_tavern.nbt",
+      "sha256": "bba259d1907585f14b05cb8e784437d1a2fcef851855e20220767ed116ba5ec7",
+      "size": 9862
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/boundary_wall/caledonia_grand_gate_inn.nbt",
+      "sha256": "26b66c874ad6708cd8743c0970a670442a6c2a5b3a0ca5c9aa473af0ce86b1aa",
+      "size": 9726
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/boundary_wall/caledonia_medium.nbt",
+      "sha256": "fc641545bec181b834785ca4cf150f121a805bc2468aea86ad175cd8f504ceb9",
+      "size": 1922
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/boundary_wall/caledonia_wall_corner.nbt",
+      "sha256": "4a77b5547fef53316f22764fceef2cc7050781fc067f4ef494fd2a7128d59d17",
+      "size": 1408
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/boundary_wall/caledonia_wall_long.nbt",
+      "sha256": "d60b4d7199abe1ca8c033905b5472bc998247aa9755c83fa536010c92894ac74",
+      "size": 3699
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/boundary_wall/caledonia_wall_medium.nbt",
+      "sha256": "b4928026ef65de15268603c6c5cccf615c072d33ec6233f89604b30068d77ece",
+      "size": 2698
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/boundary_wall/caledonia_wall_short.nbt",
+      "sha256": "4a1cb7b47c928b642cd64cdee544b8d85f3f095853b69bdadf4bf1533698f091",
+      "size": 1443
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/boundary_wall/caledonia_wall_tower.nbt",
+      "sha256": "03b78e8389f56826c3946a8e9627294dfe8838314411c62885f9f43996fcaf58",
+      "size": 4127
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/boundary_wall/wall_bastion_watchtower.nbt",
+      "sha256": "ede9cca2cfd4f130cffa8d9391deb597a56d21f0c6bc56cd576c53d1aa470c05",
+      "size": 5193
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/boundary_wall/wall_corner_16.nbt",
+      "sha256": "f709b3c09d49537d4c53678a0ed1fca0c143ef2701033cf4cbd9fffeeb17a396",
+      "size": 5097
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/boundary_wall/wall_sea_gateway.nbt",
+      "sha256": "4ad688d7d856c02ae9ee4f1e0615f98096bb3ea2fc1e8344d9e514bc6b1e2f23",
+      "size": 36578
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/boundary_wall/wall_straight_16.nbt",
+      "sha256": "8ab393ac3c669eec8d2d0c2d30a2ccb86986e1110ebedbc64d38527d263dd526",
+      "size": 4955
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_modular_family_home.nbt",
+      "sha256": "2a6c0c21d2dd8e2bcbbf560b6a3d36d9f2e2b406409f0f49c3779ac886560767",
+      "size": 3742
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_modular_manor.nbt",
+      "sha256": "b95491a76cf32a544b0e4aeb5df18d4ecc26de983f8f2b5f3d14223e8bf96cd4",
+      "size": 8007
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_modular_studio.nbt",
+      "sha256": "14cd4725de2efaaa000e421ce7127a896cb0d5e8b62a369bcd731403db876425",
+      "size": 2124
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_residence_apartments_t3.nbt",
+      "sha256": "62ba7f056677ddb89fbc55725784716f6c3056c7a0945779273836d8783e95da",
+      "size": 10979
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_residence_apartments_t4.nbt",
+      "sha256": "36378b648593d84e0d80e32e09718721bee1ad6b30948f37fcfeb36557b391fe",
+      "size": 11972
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_residence_apartments_t5.nbt",
+      "sha256": "6b82a1ed45db823f74677855730b55859b117c2cb5f244dc4c28fa43c29c5bf9",
+      "size": 13028
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_road_corner_7.nbt",
+      "sha256": "7f05e0700ff3d4c470cede7beb67179051d39f3358d788c678397fd41358197e",
+      "size": 1866
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_road_crossroad_7.nbt",
+      "sha256": "3574eeebfeac00c9af6717354aca0975caa97e89132976feffdb59bc3e7ba6f6",
+      "size": 1720
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_road_straight_19.nbt",
+      "sha256": "64c55e9bd85a851e82fb2b45506f51b423c76f6680b0d7a66d09763af19468c0",
+      "size": 3796
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_road_tee_junction.nbt",
+      "sha256": "6b07e494cb97415dc093427047613e35cf3ea62e81e4dc1aed2c21243784a74e",
+      "size": 1760
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_tavern_social_hub.nbt",
+      "sha256": "c73b4db27ded3f23e9dadcd280b0aabdbc180f52594828ee08ae096ddbd72d4c",
+      "size": 9212
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_townhall_grand.nbt",
+      "sha256": "7719ad225c0fac7f2a17c40d1646be14d379cf47efaa5bc8125f599aba660061",
+      "size": 12903
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_villa_alchemist_manor.nbt",
+      "sha256": "941046c84e4fe0f9cbdaaf2792cd6b0725bfefca56eb48cf279cc5f329c78d97",
+      "size": 10971
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_villa_baker_cottage.nbt",
+      "sha256": "5f60b1b8cfc84f24cf90f010f89f761db9a88c44e587d1faaf30e9f74c68fea8",
+      "size": 5291
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_villa_blacksmith_estate.nbt",
+      "sha256": "f6a037e108f650181f2f87effc72e514917ff1b40dc36c9381f6c9175319828e",
+      "size": 7523
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_villa_fisherman_haven.nbt",
+      "sha256": "877b0989c32f80fabd2415ffa9b6b0821e3b3858983fb2d4cb1920ebf07789cb",
+      "size": 5769
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_villa_fletcher_lodge.nbt",
+      "sha256": "1fe5c24a88a05e5abf595cecccebdda42ac78798d7b513b17753418bfc214af1",
+      "size": 6511
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/capital/capital_villa_lumberjack_cabin.nbt",
+      "sha256": "b85fc8ee1c610b7c9896ae90d188f8475e5d483af6921c4d576d1ba8a37b1e6c",
+      "size": 4535
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/nordic_wall/nordic_gate.nbt",
+      "sha256": "83247f1ebdadfc1e6a45e5879111df4ca55ada001ca1b0c293a39477642848f2",
+      "size": 6170
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/nordic_wall/nordic_round_barbican.nbt",
+      "sha256": "36c8420a0e1d9087d995ec9de343b812071dcee7aef9ddcd5e206b179ae0432d",
+      "size": 12083
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/nordic_wall/nordic_round_tower.nbt",
+      "sha256": "d3f18ea6dfc7cc1de9f0e722e0d529406654d06a0d4dcea28eb4c8a5d0b4ff34",
+      "size": 3131
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/nordic_wall/nordic_square_barbican.nbt",
+      "sha256": "4285c605a313c3db64bab8e36496101d178214810e8d376852490fac73c56dc6",
+      "size": 13362
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/nordic_wall/nordic_stairs.nbt",
+      "sha256": "29fbafa1ae0487850a1bf5126cb016fd401b03bc7d9e93fc50686559411ca97e",
+      "size": 3954
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/nordic_wall/nordic_wall_large.nbt",
+      "sha256": "d0c9f7e29a01649afbde86de8283a5ead14ef2d91c6040fb765bbef5080bf48c",
+      "size": 4511
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/outposts/outpost_mdo_blacksmith.nbt",
+      "sha256": "4cf66504ec6e93fe94f6824e51b4f8a739c51c065188c1b5298ef7f9877a49a1",
+      "size": 4715
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/outposts/outpost_mdo_guardtower.nbt",
+      "sha256": "9bcac062b77e8b421c81e9779994176bd919b82a96212ac50ce36fe9990466d5",
+      "size": 2493
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/outposts/outpost_mdo_tavern.nbt",
+      "sha256": "1b3517b4255b6a16db2a2265ea21bf938c487ac007c3eedc8f03d2bdec4bf30f",
+      "size": 8756
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/outposts/outpost_nordic_barracks.nbt",
+      "sha256": "a6b612978cba3563c17c899c58e631c548015c04d86178fcc0d73e6d7b693e76",
+      "size": 14833
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/outposts/outpost_nordic_battletower.nbt",
+      "sha256": "db13fcb10a5513266f282d6c30f8231fbc167c8e418b9504952f41c1ff4b641f",
+      "size": 4995
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/outposts/outpost_nordic_mead_hall.nbt",
+      "sha256": "7893e0a1dd0abc5c406f94b90be17b5f7ed0dbefc9becc0cb044aadd87e7c4f2",
+      "size": 12699
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/settlements/caledonia_gatehouse.nbt",
+      "sha256": "0e5ce5fc4d8b3ef11dda0450db518068510547d7369084fd9d9245acc8853e1d",
+      "size": 5036
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/settlements/caledonia_tavern_inn.nbt",
+      "sha256": "25ce4ba09eb4552ed9d7d9f8ac5677575de70c805f72d49189e2767726ff9e15",
+      "size": 3235
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/settlements/caledonia_watchtower.nbt",
+      "sha256": "051ec0690405fdec7b13eb0b1638e6cd722b08838f2b7a52e471c6c36c990438",
+      "size": 3415
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_broken_wagon.nbt",
+      "sha256": "7ca893445e94975871ccb05d87e9afca87093f94858503d9672b87140b500e48",
+      "size": 465
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_cairn_marker.nbt",
+      "sha256": "16fd34a1496ce64f8801ec8cf9c6a4dbf76dc31c832b5d683cbad7e77f4692f8",
+      "size": 357
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_campfire_bivouac.nbt",
+      "sha256": "fd58c30453c34af49b31dbffbe4eaf16369cf1468b725fb637ed40dfc1309925",
+      "size": 376
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_crossroad_fork.nbt",
+      "sha256": "48c112e10436b8243c796cb41a53514119fda0c69dbd3d66be8d1dd7d6257d14",
+      "size": 525
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_crossroad_signpost_01.nbt",
+      "sha256": "3d8507c2d2dfa477670cf7fbc4469395b9f9a0763c0246a691a7803d11419cf5",
+      "size": 482
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_crossroad_signpost_02.nbt",
+      "sha256": "29b7414b55b5d7398118e8e85e46c3d3ee4e011fbcf909cb53c41e7159edecae",
+      "size": 474
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_decayed_well.nbt",
+      "sha256": "3d39f26cd136cdd4619285b343413c619591f7265522e4acd41c2fe53a850e81",
+      "size": 430
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_hanging_lantern_post.nbt",
+      "sha256": "7b7e4d3c95745dd6da97aaffec5cbf988afd7d3de240f68806523e357a0def12",
+      "size": 331
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_milestone_obelisk.nbt",
+      "sha256": "91a6a212124023904c03040a57ff54205c149d9380b58ab41980f9c2a39ce562",
+      "size": 384
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_overgrown_curve_01.nbt",
+      "sha256": "7f4554bd1fa36129a7dc25fb519ef1b0dafcb7984c7c3ae588d78ac402eb823f",
+      "size": 387
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_overgrown_straight_01.nbt",
+      "sha256": "0342f105d1fb864145ca4741e276a23da7b3196abbd826e2b8803b3e2d9aacdb",
+      "size": 352
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_pilgrim_rest_bench.nbt",
+      "sha256": "a7e362ab87ad3bf77841114b35c3419f36963d3f6ef5d3e18de8508e728884c4",
+      "size": 350
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_roadside_shrine.nbt",
+      "sha256": "91c3c2bb041ccb5a6b7047606f16d87c4b5b95a2accc06f4e18361d6cb83e033",
+      "size": 395
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_wanderer_grave.nbt",
+      "sha256": "7548cab0ac3cab204ebfad7a847aed67cf041d92124eee59eb65088bd22b9f3a",
+      "size": 351
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_wayfarer_tent.nbt",
+      "sha256": "61b0b142844eed9017778666fcf78eafe27ee292d602a8375c5a2c0bb834ba50",
+      "size": 392
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/structure/wayfarer_trails/trail_wooden_turnstile.nbt",
+      "sha256": "ee9c7dd6b50a4e0afea0e2a4d076544d018b4f230af7161a151c7a6f7581e001",
+      "size": 494
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/alpine_and_peaks.json",
+      "sha256": "39d6c00db8cc295a16d4338c98b278922dde9a091e0fb023631650499cd5fb68",
+      "size": 385
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/arid_and_desert.json",
+      "sha256": "4a7beb0f9ac053d5ac39926ffed7d3aba06f7ddd0347462c0d111e30d2614d34",
+      "size": 284
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/alpine_and_peaks.json",
+      "sha256": "39d6c00db8cc295a16d4338c98b278922dde9a091e0fb023631650499cd5fb68",
+      "size": 385
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/arid_and_desert.json",
+      "sha256": "4a7beb0f9ac053d5ac39926ffed7d3aba06f7ddd0347462c0d111e30d2614d34",
+      "size": 284
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/boreal_and_taiga.json",
+      "sha256": "39bc62f3ba5645a40158ee5add078a86f5afc43fb95b9764a8322592a256937a",
+      "size": 582
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/boundary_wall_land.json",
+      "sha256": "567fdbf144814bb519d15024ff4aa3a8dff7ddee3c89d7a58d9969d5fd90a4cf",
+      "size": 456
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/boundary_wall_sea.json",
+      "sha256": "eeb1107924ce68a36020be6ec3eec967539a8d576ad751adf50ab75d430e396c",
+      "size": 232
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/caves_and_underground.json",
+      "sha256": "8120e69b88e718ae62ebbbb951ccaee2f3555aed7d43dcce0119e10492a2f967",
+      "size": 345
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/coastal_and_shores.json",
+      "sha256": "aed621a91ef3327ef28a97f99e3aa45b163765260e7a0fd4ee973f9fa6c39621",
+      "size": 424
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/jungle_and_tropical.json",
+      "sha256": "e48eac07d68879642b1de9524a2ea9490e8fc50b114f18d134423009fac7d643",
+      "size": 339
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/ocean_and_deep_waters.json",
+      "sha256": "330167d46c6e3dbb6dbea7f108bebc43b4b1aff0a0d7d4d16552e4a085b9bd93",
+      "size": 409
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/overland_trails.json",
+      "sha256": "4752fe23a8f8bc613cdef3389a1d79024828f1628be0191ae44f0ea19e102285",
+      "size": 416
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/savanna_and_scrubland.json",
+      "sha256": "6ba2ab43dd1fd60f0f8e69a43d4a789a7f1f7c4cb349b07888e1884a08d4eb59",
+      "size": 295
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/snowy_and_icy.json",
+      "sha256": "b52b637754cb40dded41ddced72575d73d71cf45e9ca90adb1bf269de874ce89",
+      "size": 470
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/swamp_and_decay.json",
+      "sha256": "b06b189420f00c0681ca9ea05c1cbefd972503100aadd148b4948d567583f2e7",
+      "size": 614
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/temperate_forests.json",
+      "sha256": "bf273e6464d0f86e9a433aa906873b4168a9cdf499a7a50658245a9eaedf61fd",
+      "size": 796
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/biomes/temperate_plains.json",
+      "sha256": "993612cb375345ad1d68e47fbdd20f90d89550dc6c326df5434bce0dd28a650f",
+      "size": 451
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/boreal_and_taiga.json",
+      "sha256": "39bc62f3ba5645a40158ee5add078a86f5afc43fb95b9764a8322592a256937a",
+      "size": 582
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/boundary_wall_land.json",
+      "sha256": "567fdbf144814bb519d15024ff4aa3a8dff7ddee3c89d7a58d9969d5fd90a4cf",
+      "size": 456
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/boundary_wall_sea.json",
+      "sha256": "eeb1107924ce68a36020be6ec3eec967539a8d576ad751adf50ab75d430e396c",
+      "size": 232
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/caves_and_underground.json",
+      "sha256": "8120e69b88e718ae62ebbbb951ccaee2f3555aed7d43dcce0119e10492a2f967",
+      "size": 345
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/coastal_and_shores.json",
+      "sha256": "aed621a91ef3327ef28a97f99e3aa45b163765260e7a0fd4ee973f9fa6c39621",
+      "size": 424
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/jungle_and_tropical.json",
+      "sha256": "e48eac07d68879642b1de9524a2ea9490e8fc50b114f18d134423009fac7d643",
+      "size": 339
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/ocean_and_deep_waters.json",
+      "sha256": "330167d46c6e3dbb6dbea7f108bebc43b4b1aff0a0d7d4d16552e4a085b9bd93",
+      "size": 409
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/overland_trails.json",
+      "sha256": "4752fe23a8f8bc613cdef3389a1d79024828f1628be0191ae44f0ea19e102285",
+      "size": 416
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/savanna_and_scrubland.json",
+      "sha256": "6ba2ab43dd1fd60f0f8e69a43d4a789a7f1f7c4cb349b07888e1884a08d4eb59",
+      "size": 295
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/snowy_and_icy.json",
+      "sha256": "b52b637754cb40dded41ddced72575d73d71cf45e9ca90adb1bf269de874ce89",
+      "size": 470
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/swamp_and_decay.json",
+      "sha256": "b06b189420f00c0681ca9ea05c1cbefd972503100aadd148b4948d567583f2e7",
+      "size": 614
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/temperate_forests.json",
+      "sha256": "bf273e6464d0f86e9a433aa906873b4168a9cdf499a7a50658245a9eaedf61fd",
+      "size": 796
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/biome/temperate_plains.json",
+      "sha256": "993612cb375345ad1d68e47fbdd20f90d89550dc6c326df5434bce0dd28a650f",
+      "size": 451
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/structure/major_dungeon.json",
+      "sha256": "46b1bafedcc53bd05b48eaa6e513925669f4d09502b35601aa7c990d200d7eff",
+      "size": 709
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/structure/micro_camp.json",
+      "sha256": "8af041b705c44a11b40b87e3597b9f7cbe32f5ad3ed9dfe24e9fe8d83b998ade",
+      "size": 871
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/structure/outpost.json",
+      "sha256": "2fbc5b5ccd0624d8aef715f9756f6a4ae3ad7c3acd3aa7e2c72aa8099693328e",
+      "size": 667
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/tags/worldgen/structure/settlement.json",
+      "sha256": "4bf4604fa199e8b1b44f6c6c193442341c277478d624e4f6406c2608119ee0ec",
+      "size": 227
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/structure/boundary_wall_land.json",
+      "sha256": "3014b7ed9a033c90a3ca432c392fbe4db7312d7bb90fe8fc19a715a455487724",
+      "size": 397
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/structure/boundary_wall_sea.json",
+      "sha256": "1b3246d62c534ce86dc8e147d522807be26e6abaa3050419e22abc40d5eabfee",
+      "size": 394
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/structure/outpost_frontier.json",
+      "sha256": "7f72d1ae7db43ce63a9b1acfbc0341a4b8fda712e5f6d1448e01638a1aa5a57d",
+      "size": 396
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/structure/outpost_nordic.json",
+      "sha256": "8147b76ba3ac4eefc212726999b70c6a3e98488d35ed6486d1ae9ba3cb963b42",
+      "size": 394
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/structure/wayfarer_trails.json",
+      "sha256": "891832affbb143bce3e9e30400335c84ef09428afa5c13ed5d17ef2280196aef",
+      "size": 408
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/structure_set/boundary_wall_land.json",
+      "sha256": "eb6a53448b1de4c9991f02032776caa608d7705e12493eb774ea3b3700ef8d98",
+      "size": 305
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/structure_set/boundary_wall_sea.json",
+      "sha256": "f2c5d26580635dab57c9efd190405b242e28d1fa36c4d7c1ddce0e92cf3d3148",
+      "size": 303
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/structure_set/outposts_frontier.json",
+      "sha256": "0593e7b447b3cdb466441bff3ebaf9a552379de5600857e58189aa1a62790099",
+      "size": 224
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/structure_set/outposts_nordic.json",
+      "sha256": "ed2789b62537967541ae2bc9e7c5dee65de0d0848204bc7966980218b3af8daf",
+      "size": 222
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/structure_set/wayfarer_trails.json",
+      "sha256": "2d70613ed12e461c9f08ac14cd5aa1cc6db37491d5c416f2858258a2e56ea932",
+      "size": 235
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/template_pool/boundary_wall/land.json",
+      "sha256": "2fb89aa7b980fc660bc3476724996fc7e7182622a51731274c33727edea9900f",
+      "size": 2632
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/template_pool/boundary_wall/sea.json",
+      "sha256": "d51217d259d5c5c90cb239037b96d6ca3a8a060f89c7f74a2d1b1dd955c22d89",
+      "size": 344
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/template_pool/outposts/frontier.json",
+      "sha256": "80e7b76e046fd72c710b44dc08b021202ab6fdb2be1ae0a72285bedfcb43b8e2",
+      "size": 841
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/template_pool/outposts/nordic.json",
+      "sha256": "3de8d30d4c1f07fb8162497d45b6ad8a81f1b350fa6444735a5c7ec788195a09",
+      "size": 850
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/elyrium/worldgen/template_pool/wayfarer_trails/all.json",
+      "sha256": "2728ca3d2c24db090b1415205b5e638906cea12199c2d8a37d527ed7bb1ece1e",
+      "size": 4361
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/imst/worldgen/structure_set/common.json",
+      "sha256": "938545c721f439a59a63571db151ce122f8136b9086a7fff2abc880970350ae3",
+      "size": 1772
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/imst/worldgen/structure_set/rare.json",
+      "sha256": "3d7e1849fd53005145ddae7d45b939f7d555140ebe65a8c264cef2223778088f",
+      "size": 838
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/irons_spellbooks/worldgen/structure_set/ancient_battleground.json",
+      "sha256": "e95a22fb942023add8af37592e7835aa8f73f9998fdcc1273186a6514f1c41d4",
+      "size": 350
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/irons_spellbooks/worldgen/structure_set/mangrove_hut.json",
+      "sha256": "ee029a766d917d9bd1d638ae9ca107a3660be722dd9c908d68222efe2d7986b2",
+      "size": 242
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/irons_spellbooks/worldgen/structure_set/mountain_tower.json",
+      "sha256": "101845da68e4264cd8ed4be832dcfe4f0731fed348d6a1fa16584bbbab3f1364",
+      "size": 244
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/minecraft/worldgen/structure_set/villages.json",
+      "sha256": "0572832176c6a629b5437095d44d3e030750a1e48ad3a781b6c2b1589e27c6d7",
+      "size": 149
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/totw_modded/tags/worldgen/biome/has_structure/badlands_tower.json",
+      "sha256": "f99a7205c788300b3d35adfc01d9a512d4037b49ec3af453c25c30185f23ad0a",
+      "size": 83
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/totw_modded/tags/worldgen/biome/has_structure/derelict_grass_tower.json",
+      "sha256": "81b1b6cc5f09e556122a986d6c764a530f195ca7c116f98cb9ec3f406780aafc",
+      "size": 84
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/totw_modded/tags/worldgen/biome/has_structure/derelict_tower.json",
+      "sha256": "81b1b6cc5f09e556122a986d6c764a530f195ca7c116f98cb9ec3f406780aafc",
+      "size": 84
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/totw_modded/tags/worldgen/biome/has_structure/desert_tower.json",
+      "sha256": "f99a7205c788300b3d35adfc01d9a512d4037b49ec3af453c25c30185f23ad0a",
+      "size": 83
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/totw_modded/tags/worldgen/biome/has_structure/ice_tower.json",
+      "sha256": "9621cfc335f778b70466a34dc129a00690b92910f24329cae74df69c8bbbda31",
+      "size": 81
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/totw_modded/tags/worldgen/biome/has_structure/jungle_tower.json",
+      "sha256": "329d02972a624c6f7b56cca46db620fcff652561fa851d7753a9afd015613387",
+      "size": 87
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/totw_modded/tags/worldgen/biome/has_structure/ocean_tower.json",
+      "sha256": "71127eb4c0cb0f758668740866ab5640e1c8aedc3ccff55ae2ee358a894aed3c",
+      "size": 89
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/totw_modded/tags/worldgen/biome/has_structure/ocean_warm_tower.json",
+      "sha256": "71127eb4c0cb0f758668740866ab5640e1c8aedc3ccff55ae2ee358a894aed3c",
+      "size": 89
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/totw_modded/tags/worldgen/biome/has_structure/regular_tower.json",
+      "sha256": "81b1b6cc5f09e556122a986d6c764a530f195ca7c116f98cb9ec3f406780aafc",
+      "size": 84
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/data/totw_modded/worldgen/structure_set/overworld.json",
+      "sha256": "926c3eb19da2674645d41bbd7b9518975d3405cd857e00c9c24b1308756cc6f2",
+      "size": 852
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_worldgen_overhaul/pack.mcmeta",
+      "sha256": "b53e6c3079fff2139c781e2f2c1785d023f9bffb823c1495c73f5bc14f468fb6",
+      "size": 108
+    },
+    {
+      "path": "moonlight-global-datapacks/skd_abyss_layer_01/data/skd_abyss/dimension/layer_01.json",
+      "sha256": "dafb0f94004283aa5fbbacb80eb74c0308f3e7d79cf287827818dfd2b7af0915",
+      "size": 240
+    },
+    {
+      "path": "moonlight-global-datapacks/skd_abyss_layer_01/data/skd_abyss/dimension_type/layer_01_type.json",
+      "sha256": "72923a45b79e1b7f9bd7b02fbd828fa6cc68060d247c17183d903b46e39ff345",
+      "size": 502
+    },
+    {
+      "path": "moonlight-global-datapacks/skd_abyss_layer_01/data/skd_abyss/worldgen/noise_settings/layer_01_noise.json",
+      "sha256": "b31355b4f92320cb422dca0136e81b03caae77fbc5b3354e62264ad6efd0f341",
+      "size": 3693
+    },
+    {
+      "path": "moonlight-global-datapacks/skd_abyss_layer_01/pack.mcmeta",
+      "sha256": "aeb70202ea1fae83fcaa5a348d3fd782a0c68426b9107f7d25b02f21db58cfe7",
+      "size": 138
     },
     {
       "path": "resourcepacks/.index/pixlli.pw.toml",

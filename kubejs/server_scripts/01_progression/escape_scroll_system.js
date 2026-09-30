@@ -82,7 +82,11 @@ PlayerEvents.chat(event => {
     if (!player) return
 
     if (msg === '.escape' || msg === '!escape') {
-        executeEmergencyEscape(player, false)
+        if (player.hasPermission(2)) {
+            executeEmergencyEscape(player, false)
+        } else {
+            player.tell('§cДля побега используйте физический Свиток Побега в руках!')
+        }
         event.cancel()
     }
 })
