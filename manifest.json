@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-30T00:01:48.452520+00:00",
+  "generated_at": "2026-09-30T06:22:26.213400+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -337,8 +337,8 @@
     },
     {
       "path": "config/chunky/tasks/minecraft/overworld.properties",
-      "sha256": "1b4c3c3bcf60c5aee88830df1690ca9877fd699f14a786ba60bef1f01d2eef01",
-      "size": 129
+      "sha256": "a1b32aad914655df78c9262797f59a2d9d7a5ad0d7150b23a260f7d212f1ed57",
+      "size": 130
     },
     {
       "path": "config/citadel-common.toml",
@@ -1377,7 +1377,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "858fd28a084819ccfc96a952c48c23fb4a3e8fc760e0fac5a6c2924ee6b0eda9",
+      "sha256": "1dda1fcad02470a8f7e77176a8dbf5e2d40dec27a321d0ccad92342dd1ab6e55",
       "size": 275
     },
     {
@@ -7812,8 +7812,8 @@
     },
     {
       "path": "kubejs/client_scripts/physical_weapon_arts_animations.js",
-      "sha256": "7cde50eee3b623930a1a58632553d7cde79479e7e9f25646d43b6ca6273f7278",
-      "size": 8195
+      "sha256": "459e4ba971e9dd6119d5853ad7de3d3112df7f61daf6ef3789bd39662f4bf9a4",
+      "size": 11527
     },
     {
       "path": "kubejs/client_scripts/simplestats_anti_exploit.js",
@@ -7842,8 +7842,8 @@
     },
     {
       "path": "kubejs/client_scripts/weapon_arts_keybinds.js",
-      "sha256": "177fd878d4b81640c6654f78149aa9e1a8174efd34182834c43559ac633848d6",
-      "size": 8080
+      "sha256": "3804e064423181e4016427aaabac3642fd0fdd1e3167c6db7716d418099ca6e5",
+      "size": 7564
     },
     {
       "path": "kubejs/config/client.json",
@@ -8031,9 +8031,79 @@
       "size": 188
     },
     {
+      "path": "kubejs/data/betterdungeons/tags/worldgen/biome/has_structure/skeleton_dungeon.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/betterdungeons/tags/worldgen/biome/has_structure/small_dungeon.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/betterdungeons/tags/worldgen/biome/has_structure/small_nether_dungeon.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/betterdungeons/tags/worldgen/biome/has_structure/spider_dungeon.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/betterdungeons/tags/worldgen/biome/has_structure/zombie_dungeon.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/c/tags/worldgen/biome/is_overworld.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/cataclysm/tags/worldgen/biome/has_structure/ancient_factory_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/cataclysm/tags/worldgen/biome/has_structure/burning_arena_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/cataclysm/tags/worldgen/biome/has_structure/cursed_pyramid_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/cataclysm/tags/worldgen/biome/has_structure/frosted_prison_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/cataclysm/tags/worldgen/biome/has_structure/ruined_citadel_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/cataclysm/tags/worldgen/biome/has_structure/soul_black_smith_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/cataclysm/tags/worldgen/biome/has_structure/sunken_city_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/abandoned_temple_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
       "path": "kubejs/data/elyrium/dimension/dungeons.json",
-      "sha256": "e69800fe94d23ad442d8a34213a2b12ea5137ece8c4aacd71e8da856f05aab3a",
-      "size": 288
+      "sha256": "d8bb1f55657cc4a981037dfa242631689f8546ca2101e499b3bd3e27a82c55ac",
+      "size": 305
     },
     {
       "path": "kubejs/data/elyrium/dimension_type/dungeons_type.json",
@@ -8086,6 +8156,11 @@
       "size": 1865
     },
     {
+      "path": "kubejs/data/elyrium/worldgen/biome/dungeon_abyss.json",
+      "sha256": "3f7885423d48819c81b39ee13405242d19ea83a5aa75f039b724b7f31aa84116",
+      "size": 740
+    },
+    {
       "path": "kubejs/data/gateways/gateways/elyrium_colosseum.json",
       "sha256": "88f9422d3ac4b0807690c8852b11c8b48d01fd451bbd4011cea58723ffa696ca",
       "size": 6383
@@ -8104,6 +8179,11 @@
       "path": "kubejs/data/known_portal_frames.json",
       "sha256": "e85440e872d97813b43c37bb52dc2150f13e8ac8ba6271bb9643940ed8085d2d",
       "size": 212
+    },
+    {
+      "path": "kubejs/data/minecraft/tags/worldgen/biome/is_overworld.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
     },
     {
       "path": "kubejs/data/progression_portals.json",
@@ -8452,8 +8532,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "405d6c83c80eb43135c56ac179194a56bc5ee9bfe67815cf2f5ad3ed56549b96",
-      "size": 110415
+      "sha256": "c02d5aff904464e613f2e92211d5854edaf3dc6e5f47e1b00892354f1136f1d1",
+      "size": 110429
     },
     {
       "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
@@ -8672,8 +8752,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_room_stitcher.js",
-      "sha256": "08d487b99f86df9b202a10ad32c5cba837e2581bc05f7dd85fb69f42b49bb200",
-      "size": 20829
+      "sha256": "f3c3d59a02f1e1f690ad29f3baff3023b54896b40637415298e70b6960581510",
+      "size": 25279
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/endless_fringe_engine.js",

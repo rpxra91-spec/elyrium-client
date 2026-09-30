@@ -84,27 +84,29 @@ function playRealPlayerAnimation(targetPlayer, animId, speed) {
         else rawPlayer = targetPlayer;
     }
 
-    // 1. Primary: Spell Engine AnimatablePlayer Mixin (if present)
-    try {
-        let playFunc = rawPlayer.playSpellAnimation || targetPlayer.playSpellAnimation;
-        if (typeof playFunc === 'function' && J_SpellCastAnimationEnum) {
-            let releaseType = null;
-            try {
-                releaseType = J_SpellCastAnimationEnum.RELEASE || J_SpellCastAnimationEnum.valueOf('RELEASE');
-            } catch (eRel) {
-                try { releaseType = J_SpellCastAnimationEnum.values()[0]; } catch (eVals) {}
-            }
-            if (releaseType) {
-                if (typeof rawPlayer.playSpellAnimation === 'function') {
-                    rawPlayer.playSpellAnimation(releaseType, cleanAnimId, s);
-                    animPlayed = true;
-                } else if (typeof targetPlayer.playSpellAnimation === 'function') {
-                    targetPlayer.playSpellAnimation(releaseType, cleanAnimId, s);
-                    animPlayed = true;
+    // 1. Primary: Spell Engine AnimatablePlayer Mixin (if present, but skip for Better Combat)
+    if (!cleanAnimId.startsWith('bettercombat:')) {
+        try {
+            let playFunc = rawPlayer.playSpellAnimation || targetPlayer.playSpellAnimation;
+            if (typeof playFunc === 'function' && J_SpellCastAnimationEnum) {
+                let releaseType = null;
+                try {
+                    releaseType = J_SpellCastAnimationEnum.RELEASE || J_SpellCastAnimationEnum.valueOf('RELEASE');
+                } catch (eRel) {
+                    try { releaseType = J_SpellCastAnimationEnum.values()[0]; } catch (eVals) {}
+                }
+                if (releaseType) {
+                    if (typeof rawPlayer.playSpellAnimation === 'function') {
+                        rawPlayer.playSpellAnimation(releaseType, cleanAnimId, s);
+                        animPlayed = true;
+                    } else if (typeof targetPlayer.playSpellAnimation === 'function') {
+                        targetPlayer.playSpellAnimation(releaseType, cleanAnimId, s);
+                        animPlayed = true;
+                    }
                 }
             }
-        }
-    } catch (eSpell) {}
+        } catch (eSpell) {}
+    }
 
     // 2. Secondary / Direct: KosmX PlayerAnimationAccess & PlayerAnimationRegistry
     if (!animPlayed && J_PlayerAnimationRegistry && J_PlayerAnimationAccess && J_ResourceLocation) {
@@ -114,6 +116,19 @@ function playRealPlayerAnimation(targetPlayer, animId, speed) {
             if (animationData) {
                 let stack = J_PlayerAnimationAccess.getPlayerAnimLayer(rawPlayer);
                 if (stack) {
+                    // Guaranteed removal of any previous layer 1000 before adding new animation
+                    try {
+                        stack.removeLayer(1000);
+                    } catch (eRem) {}
+
+                    // Clear any previously tracked cleanups for this stack
+                    for (let i = activeKosmxLayers.length - 1; i >= 0; i--) {
+                        if (activeKosmxLayers[i].stack === stack) {
+                            try { activeKosmxLayers[i].animPlayer.stop(); } catch (eSt) {}
+                            activeKosmxLayers.splice(i, 1);
+                        }
+                    }
+
                     let animPlayer = null;
                     if (typeof animationData.playAnimation === 'function') {
                         animPlayer = animationData.playAnimation();
@@ -131,6 +146,21 @@ function playRealPlayerAnimation(targetPlayer, animId, speed) {
 
                         stack.addAnimLayer(1000, animPlayer);
                         animPlayed = true;
+
+                        // Calculate animation length in ticks
+                        let lengthTicks = 20;
+                        try {
+                            if (animationData.stopTick && animationData.stopTick > 0) {
+                                lengthTicks = animationData.stopTick;
+                            } else if (animationData.endTick && animationData.endTick > 0) {
+                                lengthTicks = animationData.endTick;
+                            } else if (typeof animationData.getLength === 'function') {
+                                lengthTicks = animationData.getLength();
+                            }
+                        } catch (eLen) {}
+
+                        let durationTicks = Math.max(8, Math.ceil(lengthTicks / s));
+                        scheduleKosmxCleanup(stack, animPlayer, durationTicks);
                     }
                 }
             }
@@ -186,3 +216,55 @@ NetworkEvents.dataReceived('elyrium:play_player_art_anim', event => {
         playRealPlayerAnimation(targetPlayer, animId, speed);
     }
 });
+
+// ------------------------------------------------------------------------------
+// GUARANTEED KOSMX LAYER CLEANUP SCHEDULER (Client Tick)
+// ------------------------------------------------------------------------------
+
+let activeKosmxLayers = [];
+let clientAnimTickCount = 0;
+
+function scheduleKosmxCleanup(stack, animPlayer, durationTicks) {
+    if (!stack || !animPlayer) return;
+    let targetTick = clientAnimTickCount + Math.max(5, durationTicks);
+    activeKosmxLayers.push({
+        stack: stack,
+        animPlayer: animPlayer,
+        expireTick: targetTick
+    });
+}
+
+ClientEvents.tick(event => {
+    clientAnimTickCount++;
+    if (activeKosmxLayers.length === 0) return;
+
+    for (let i = activeKosmxLayers.length - 1; i >= 0; i--) {
+        let item = activeKosmxLayers[i];
+        let shouldRemove = false;
+        try {
+            if (clientAnimTickCount >= item.expireTick) {
+                shouldRemove = true;
+            } else if (item.animPlayer && typeof item.animPlayer.isActive === 'function' && !item.animPlayer.isActive()) {
+                shouldRemove = true;
+            }
+        } catch (e) {
+            shouldRemove = true;
+        }
+
+        if (shouldRemove) {
+            try {
+                if (item.animPlayer && typeof item.animPlayer.stop === 'function') {
+                    item.animPlayer.stop();
+                }
+            } catch (eStop) {}
+            try {
+                if (item.stack) {
+                    item.stack.removeLayer(1000);
+                    item.stack.removeLayer(item.animPlayer);
+                }
+            } catch (eRem) {}
+            activeKosmxLayers.splice(i, 1);
+        }
+    }
+});
+

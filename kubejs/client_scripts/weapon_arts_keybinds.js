@@ -60,10 +60,36 @@ ClientEvents.tick(event => {
     let isZDown = (J_GLFW_ARTS.glfwGetKey(windowHandle, 90) === 1); // 90 = GLFW_KEY_Z
     let isXDown = (J_GLFW_ARTS.glfwGetKey(windowHandle, 88) === 1); // 88 = GLFW_KEY_X
 
+    // Helper to immediately suppress Minecraft & Better Combat attacks
+    function suppressCombatAttack() {
+        try {
+            if (mc.options && mc.options.keyAttack) {
+                mc.options.keyAttack.setDown(false);
+                while (mc.options.keyAttack.consumeClick()) {}
+            }
+        } catch (eOpt) {}
+        try { mc.missTime = 10; } catch (eMiss) {}
+        try {
+            if (typeof mc.cancelUpswing === 'function') {
+                mc.cancelUpswing();
+            } else if (J_MC_BC && J_MC_BC.isInstance(mc)) {
+                mc.cancelUpswing();
+            }
+        } catch (eBc1) {}
+        try {
+            if (typeof mc.player.stopAttackAnimation === 'function') {
+                mc.player.stopAttackAnimation(0);
+            } else if (J_PlayerAttackAnimatable && J_PlayerAttackAnimatable.isInstance(mc.player)) {
+                mc.player.stopAttackAnimation(0);
+            }
+        } catch (eBc2) {}
+    }
+
     // 1. Trigger Slot 2 on [Z] key press
     if (isZDown && !artsKeyPrev.z) {
         if (now - lastArtKeySend >= 250) {
             lastArtKeySend = now;
+            suppressCombatAttack();
             try {
                 mc.player.sendData('elyrium:trigger_weapon_art', { slot: 2 });
             } catch (eNet) {}
@@ -75,6 +101,7 @@ ClientEvents.tick(event => {
     if (isXDown && !artsKeyPrev.x) {
         if (now - lastArtKeySend >= 250) {
             lastArtKeySend = now;
+            suppressCombatAttack();
             try {
                 mc.player.sendData('elyrium:trigger_weapon_art', { slot: 3 });
             } catch (eNet) {}
@@ -144,52 +171,20 @@ ClientEvents.tick(event => {
             if (isBlocking) {
                 if (now - lastArtKeySend >= 250) {
                     lastArtKeySend = now;
+                    suppressCombatAttack();
                     try {
                         mc.player.sendData('elyrium:trigger_weapon_art', { action: 'shield_bash' });
                     } catch (eNet) {}
-                    try {
-                        if (mc.options && mc.options.keyAttack) {
-                            mc.options.keyAttack.setDown(false);
-                            while (mc.options.keyAttack.consumeClick()) {}
-                        }
-                    } catch (eOpt) {}
-                    try { mc.missTime = 10; } catch (eMiss) {}
-                    try {
-                        if (J_MC_BC && J_MC_BC.isInstance(mc)) {
-                            mc.cancelUpswing();
-                        }
-                    } catch (eBc1) {}
-                    try {
-                        if (J_PlayerAttackAnimatable && J_PlayerAttackAnimatable.isInstance(mc.player)) {
-                            mc.player.stopAttackAnimation();
-                        }
-                    } catch (eBc2) {}
                 }
             }
             // Combination 2: Holding Shield + Shift + LMB -> Main Hand Innate Art
             else if (isCrouching) {
                 if (now - lastArtKeySend >= 250) {
                     lastArtKeySend = now;
+                    suppressCombatAttack();
                     try {
                         mc.player.sendData('elyrium:trigger_weapon_art', { action: 'innate_art' });
                     } catch (eNet) {}
-                    try {
-                        if (mc.options && mc.options.keyAttack) {
-                            mc.options.keyAttack.setDown(false);
-                            while (mc.options.keyAttack.consumeClick()) {}
-                        }
-                    } catch (eOpt) {}
-                    try { mc.missTime = 10; } catch (eMiss) {}
-                    try {
-                        if (J_MC_BC && J_MC_BC.isInstance(mc)) {
-                            mc.cancelUpswing();
-                        }
-                    } catch (eBc3) {}
-                    try {
-                        if (J_PlayerAttackAnimatable && J_PlayerAttackAnimatable.isInstance(mc.player)) {
-                            mc.player.stopAttackAnimation();
-                        }
-                    } catch (eBc4) {}
                 }
             }
         }

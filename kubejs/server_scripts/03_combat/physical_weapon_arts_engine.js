@@ -48,7 +48,7 @@ const WEAPON_ARTS = {
         cdMs: 12000,
         stamina: 40,
         dmgMult: 1.8,
-        anim: 'spell_engine:two_handed_spinning',
+        anim: 'bettercombat:two_handed_spin',
         animSpeed: 1.1,
         desc: 'Размашистый круговой клив на 360° в радиусе 4.5б: 180% урона и круговое отбрасывание врагов.'
     },
@@ -59,7 +59,7 @@ const WEAPON_ARTS = {
         cdMs: 10000,
         stamina: 30,
         dmgMult: 1.9,
-        anim: 'spell_engine:weapon_thrust_full',
+        anim: 'bettercombat:two_handed_stab_right',
         animSpeed: 1.2,
         desc: 'Мгновенный рывок вперед на 6 блоков сквозь строй врагов: 190% урона и кровотечение на 5с.'
     },
@@ -70,7 +70,7 @@ const WEAPON_ARTS = {
         cdMs: 11000,
         stamina: 35,
         dmgMult: 2.1,
-        anim: 'spell_engine:weapon_cleave',
+        anim: 'bettercombat:one_handed_slash_horizontal_right',
         animSpeed: 1.0,
         desc: 'Мощный фронтальный дуговой удар (120°, 4м): 210% урона, игнорирует 40% брони цели.'
     },
@@ -81,7 +81,7 @@ const WEAPON_ARTS = {
         cdMs: 14000,
         stamina: 45,
         dmgMult: 2.0,
-        anim: 'spell_engine:weapon_one_handed_slam',
+        anim: 'bettercombat:two_handed_slam',
         animSpeed: 0.95,
         desc: 'Удар в землю с 5-метровой радиальной волной: 200% урона, подбрасывает в воздух и накладывает Замедление IV.'
     },
@@ -92,7 +92,7 @@ const WEAPON_ARTS = {
         cdMs: 11000,
         stamina: 30,
         dmgMult: 2.2,
-        anim: 'spell_engine:weapon_mace_uppercut_start',
+        anim: 'bettercombat:one_handed_uppercut_right',
         animSpeed: 1.1,
         desc: 'Восходящий удар снизу-вверх: 220% урона, подбрасывает одиночную цель на 4 блока с оглушением на 2с.'
     },
@@ -103,7 +103,7 @@ const WEAPON_ARTS = {
         cdMs: 9000,
         stamina: 25,
         dmgMult: 1.75,
-        anim: 'spell_engine:weapon_thrust_charge',
+        anim: 'bettercombat:one_handed_stab',
         animSpeed: 1.25,
         desc: 'Линейный выпад на 5.5 блоков со 100% игнорированием брони цели и сильным отталкиванием.'
     },
@@ -114,7 +114,7 @@ const WEAPON_ARTS = {
         cdMs: 8000,
         stamina: 25,
         dmgMult: 2.2,
-        anim: 'spell_engine:weapon_dual_slash_cross',
+        anim: 'bettercombat:dual_handed_slash_cross',
         animSpeed: 1.2,
         desc: 'Скрещенный рассекающий удар двумя клинками: 2x 110% урона и наложение Глубоких Ран (-30% регенерации).'
     },
@@ -136,7 +136,7 @@ const WEAPON_ARTS = {
         cdMs: 10000,
         stamina: 30,
         dmgMult: 1.95,
-        anim: 'spell_engine:two_handed_slash_vertical_slash',
+        anim: 'bettercombat:two_handed_slash_vertical_right',
         animSpeed: 1.0,
         desc: 'Возвратный вертикальный взмах снизу-вверх: 195% урона, сбивает блок врагов и накладывает Слабость II на 4с.'
     },
@@ -210,7 +210,7 @@ const WEAPON_ARTS = {
         cdMs: 12000,
         stamina: 35,
         dmgMult: 1.6,
-        anim: 'spell_engine:weapon_slam_jump',
+        anim: 'bettercombat:one_handed_slam',
         animSpeed: 1.1,
         desc: 'Рывок вперед со щитом на 5 блоков: сбивает врагов с ног, наносит урон от стойкости и оглушает на 2с.'
     },
@@ -288,11 +288,11 @@ const WEAPON_ARTS = {
     // --------------------------------------------------------------------------
     // COMPATIBILITY ALIASES
     // --------------------------------------------------------------------------
-    seismic_cleave: { id: 'whirlwind_cleave', name: 'Вихревой Размах', enName: 'Whirlwind Cleave', cdMs: 12000, stamina: 40, dmgMult: 1.8, anim: 'spell_engine:two_handed_spinning', desc: 'Размашистый круговой клив.' },
-    tectonic_rupture: { id: 'earth_sunder', name: 'Сотрясение Земли', enName: 'Earth Sunder', cdMs: 14000, stamina: 45, dmgMult: 2.0, anim: 'spell_engine:weapon_one_handed_slam', desc: 'Удар в землю с радиальной волной.' },
-    shield_breaker: { id: 'severing_cleave', name: 'Рассекающий Клив', enName: 'Severing Cleave', cdMs: 11000, stamina: 35, dmgMult: 2.1, anim: 'spell_engine:weapon_cleave', desc: 'Мощный фронтальный дуговой удар.' },
-    parry_counter: { id: 'reverse_sunder', name: 'Реверсивный Раскол', enName: 'Reverse Sunder', cdMs: 10000, stamina: 30, dmgMult: 1.95, anim: 'spell_engine:two_handed_slash_vertical_slash', desc: 'Возвратный вертикальный взмах.' },
-    juggernaut_rush: { id: 'shield_bash', name: 'Таранный Натиск', enName: 'Shield Bash', cdMs: 12000, stamina: 35, dmgMult: 1.6, anim: 'spell_engine:weapon_slam_jump', desc: 'Таранный рывок со щитом.' }
+    seismic_cleave: { id: 'whirlwind_cleave', name: 'Вихревой Размах', enName: 'Whirlwind Cleave', cdMs: 12000, stamina: 40, dmgMult: 1.8, anim: 'bettercombat:two_handed_spin', desc: 'Размашистый круговой клив.' },
+    tectonic_rupture: { id: 'earth_sunder', name: 'Сотрясение Земли', enName: 'Earth Sunder', cdMs: 14000, stamina: 45, dmgMult: 2.0, anim: 'bettercombat:two_handed_slam', desc: 'Удар в землю с радиальной волной.' },
+    shield_breaker: { id: 'severing_cleave', name: 'Рассекающий Клив', enName: 'Severing Cleave', cdMs: 11000, stamina: 35, dmgMult: 2.1, anim: 'bettercombat:one_handed_slash_horizontal_right', desc: 'Мощный фронтальный дуговой удар.' },
+    parry_counter: { id: 'reverse_sunder', name: 'Реверсивный Раскол', enName: 'Reverse Sunder', cdMs: 10000, stamina: 30, dmgMult: 1.95, anim: 'bettercombat:two_handed_slash_vertical_right', desc: 'Возвратный вертикальный взмах.' },
+    juggernaut_rush: { id: 'shield_bash', name: 'Таранный Натиск', enName: 'Shield Bash', cdMs: 12000, stamina: 35, dmgMult: 1.6, anim: 'bettercombat:one_handed_slam', desc: 'Таранный рывок со щитом.' }
 };
 
 // ------------------------------------------------------------------------------
@@ -1570,7 +1570,7 @@ EntityEvents.beforeHurt(event => {
             victim.potionEffects.add('minecraft:mining_fatigue', 60, 1, false, true);
 
             // Broadcast counter-attack animation
-            broadcastPlayerArtAnimation(attacker, 'spell_engine:weapon_twinstrike_slash_1', 1.3);
+            broadcastPlayerArtAnimation(attacker, 'bettercombat:two_handed_slash_vertical_right', 1.3);
 
             attacker.server.runCommandSilent(`playsound minecraft:entity.player.attack.crit player ${attacker.username} ~ ~ ~ 1.5 1.1`);
             attacker.server.runCommandSilent(`playsound minecraft:item.shield.block player ${attacker.username} ~ ~ ~ 1.4 1.6`);
@@ -1589,7 +1589,7 @@ EntityEvents.beforeHurt(event => {
             } else {
                 // Guard Thrust with Shield (-10% damage for impenetrable safety)
                 event.damage *= 0.90;
-                broadcastPlayerArtAnimation(attacker, 'spell_engine:weapon_thrust_charge', 1.3);
+                broadcastPlayerArtAnimation(attacker, 'bettercombat:one_handed_stab', 1.3);
                 attacker.server.runCommandSilent(`playsound minecraft:item.shield.block player ${attacker.username} ~ ~ ~ 0.8 1.4`);
                 attacker.server.runCommandSilent(`particle minecraft:crit ${victim.x} ${victim.y + 1} ${victim.z} 0.3 0.3 0.3 0.05 8 normal`);
             }

@@ -104,25 +104,51 @@ const ElyriumDungeonStitcher = {
         }
     },
 
-    // Ensures wide open space with solid floor and completely cleared air (prevents wall suffocation)
-    prepareOpenHall: function(server, cx, cy, cz, radiusXZ, heightY, floorBlock) {
+    // Ensures wide open space with solid multi-layer floor, 4 sealed walls, solid ceiling and lights (no void exposure)
+    prepareOpenHall: function(server, cx, cy, cz, radiusXZ, heightY, pal) {
         let cmd = (commandStr) => {
             server.runCommandSilent(`execute in elyrium:dungeons run ${commandStr}`);
         };
 
-        // 1. Solid floor
-        cmd(`fill ${cx - radiusXZ} ${cy} ${cz - radiusXZ} ${cx + radiusXZ} ${cy} ${cz + radiusXZ} ${floorBlock}`);
+        // 1. Deep solid subfloor foundation (so no void is ever visible under broken blocks)
+        cmd(`fill ${cx - radiusXZ} ${cy - 3} ${cz - radiusXZ} ${cx + radiusXZ} ${cy - 1} ${cz + radiusXZ} ${pal.wall}`);
 
-        // 2. Unconditionally clear inner air volume from ground up to ceiling (leaving outer boundary)
+        // 2. Room floor
+        cmd(`fill ${cx - radiusXZ} ${cy} ${cz - radiusXZ} ${cx + radiusXZ} ${cy} ${cz + radiusXZ} ${pal.floor}`);
+
+        // 3. Sealed perimeter walls (North, South, West, East)
+        cmd(`fill ${cx - radiusXZ} ${cy + 1} ${cz - radiusXZ} ${cx + radiusXZ} ${cy + heightY} ${cz - radiusXZ} ${pal.wall}`);
+        cmd(`fill ${cx - radiusXZ} ${cy + 1} ${cz + radiusXZ} ${cx + radiusXZ} ${cy + heightY} ${cz + radiusXZ} ${pal.wall}`);
+        cmd(`fill ${cx - radiusXZ} ${cy + 1} ${cz - radiusXZ} ${cx - radiusXZ} ${cy + heightY} ${cz + radiusXZ} ${pal.wall}`);
+        cmd(`fill ${cx + radiusXZ} ${cy + 1} ${cz - radiusXZ} ${cx + radiusXZ} ${cy + heightY} ${cz + radiusXZ} ${pal.wall}`);
+
+        // 4. Solid ceiling enclosing the room from above
+        cmd(`fill ${cx - radiusXZ} ${cy + heightY} ${cz - radiusXZ} ${cx + radiusXZ} ${cy + heightY} ${cz + radiusXZ} ${pal.ceiling}`);
+
+        // 5. Clear interior room air volume
         let innerR = Math.max(1, radiusXZ - 1);
-        cmd(`fill ${cx - innerR} ${cy + 1} ${cz - innerR} ${cx + innerR} ${cy + heightY} ${cz + innerR} minecraft:air`);
+        cmd(`fill ${cx - innerR} ${cy + 1} ${cz - innerR} ${cx + innerR} ${cy + heightY - 1} ${cz + innerR} minecraft:air`);
 
-        // 3. Remove stray jigsaw / structure blocks
+        // 6. Carve North and South connecting arch doorways (aligned with 5-wide corridors)
+        cmd(`fill ${cx - 2} ${cy + 1} ${cz - radiusXZ} ${cx + 2} ${cy + 4} ${cz - radiusXZ} minecraft:air`);
+        cmd(`fill ${cx - 2} ${cy + 1} ${cz + radiusXZ} ${cx + 2} ${cy + 4} ${cz + radiusXZ} minecraft:air`);
+
+        // 7. Corner Light Pillars & Wall Torches
+        cmd(`setblock ${cx - radiusXZ + 1} ${cy + 1} ${cz - radiusXZ + 1} ${pal.pillar}`);
+        cmd(`setblock ${cx - radiusXZ + 1} ${cy + 2} ${cz - radiusXZ + 1} ${pal.light}`);
+        cmd(`setblock ${cx + radiusXZ - 1} ${cy + 1} ${cz - radiusXZ + 1} ${pal.pillar}`);
+        cmd(`setblock ${cx + radiusXZ - 1} ${cy + 2} ${cz - radiusXZ + 1} ${pal.light}`);
+        cmd(`setblock ${cx - radiusXZ + 1} ${cy + 1} ${cz + radiusXZ - 1} ${pal.pillar}`);
+        cmd(`setblock ${cx - radiusXZ + 1} ${cy + 2} ${cz + radiusXZ - 1} ${pal.light}`);
+        cmd(`setblock ${cx + radiusXZ - 1} ${cy + 1} ${cz + radiusXZ - 1} ${pal.pillar}`);
+        cmd(`setblock ${cx + radiusXZ - 1} ${cy + 2} ${cz + radiusXZ - 1} ${pal.light}`);
+
+        // 8. Remove stray jigsaw / structure blocks
         cmd(`fill ${cx - radiusXZ - 2} ${cy} ${cz - radiusXZ - 2} ${cx + radiusXZ + 2} ${cy + heightY + 2} ${cz + radiusXZ + 2} minecraft:air replace minecraft:jigsaw`);
         cmd(`fill ${cx - radiusXZ - 2} ${cy} ${cz - radiusXZ - 2} ${cx + radiusXZ + 2} ${cy + heightY + 2} ${cz + radiusXZ + 2} minecraft:air replace minecraft:structure_block`);
     },
 
-    // Build the Dungeon instance using native mod structures
+    // Build the Dungeon instance using native mod structures and robust protective hull
     buildDungeon: function(server, instanceId, sector) {
         let pal = this.getPalette(sector);
         let structInfo = this.getStructureForSector(sector);
@@ -139,7 +165,11 @@ const ElyriumDungeonStitcher = {
 
         console.log(`[ELYRIUM] Mega-Dungeon Structure #${instanceId} (${structInfo.id}) generating at ${originX}, ${originY}, ${originZ}`);
 
-        // 2. Build Safe Starter Entrance Pavilion at [originX, 64, 0]
+        // 2. MONOLITHIC PROTECTIVE SUB-FOUNDATION SLAB (Enclosing entire dungeon from below)
+        cmd(`fill ${originX - 16} 38 -8 ${originX + 16} 47 124 ${pal.wall}`);
+
+        // 3. Build Safe Starter Entrance Pavilion at [originX, 64, 0]
+        cmd(`fill ${originX - 4} 61 -4 ${originX + 4} 63 4 ${pal.wall}`); // Subfloor
         cmd(`fill ${originX - 4} 64 -4 ${originX + 4} 64 4 ${pal.floor}`);
         cmd(`fill ${originX - 4} 65 -4 ${originX + 4} 69 4 minecraft:air`);
         cmd(`fill ${originX - 4} 70 -4 ${originX + 4} 70 4 ${pal.ceiling}`);
@@ -147,7 +177,7 @@ const ElyriumDungeonStitcher = {
         // Side walls and decorative pillars
         cmd(`fill ${originX - 4} 65 -4 ${originX - 4} 69 4 ${pal.wall}`);
         cmd(`fill ${originX + 4} 65 -4 ${originX + 4} 69 4 ${pal.wall}`);
-        cmd(`fill ${originX - 4} 65 -4 ${originX + 4} 69 -4 ${pal.wall}`);
+        cmd(`fill ${originX - 4} 65 -4 ${originX + 4} 69 -4 ${pal.wall}`); // Back wall
 
         // Corner Light Pillars
         cmd(`setblock ${originX - 3} 65 -3 ${pal.pillar}`);
@@ -159,30 +189,51 @@ const ElyriumDungeonStitcher = {
         cmd(`setblock ${originX + 3} 65 3 ${pal.pillar}`);
         cmd(`setblock ${originX + 3} 66 3 ${pal.light}`);
 
-        // 3. Invoke Native Mod Structure Generation via /place structure
+        // 4. Monolithic Base Platform for Structures (Prevents placement failure in void)
+        cmd(`fill ${originX - 16} ${structInfo.y - 2} ${originZ + structInfo.zOffset - 4} ${originX + 16} ${structInfo.y} ${originZ + structInfo.zOffset + 36} ${pal.floor}`);
+
+        // 5. Invoke Native Mod Structure Generation via /place structure
         cmd(`place structure ${structInfo.id} ${originX} ${structInfo.y} ${originZ + structInfo.zOffset}`);
+
+        // 6. Robust Native Dungeon Props / Templates for authentic decoration
+        if (sector <= 1) {
+            cmd(`place template betterdungeons:small_dungeon/shells/small_shell_7x7 ${originX - 3} ${structInfo.y + 1} ${originZ + structInfo.zOffset + 6} none none 1.0`);
+            cmd(`place template betterdungeons:zombie_dungeon/tombstone/tombstone_chest_open_0 ${originX - 4} 65 24 none none 1.0`);
+            cmd(`place template betterdungeons:zombie_dungeon/tombstone/tombstone_spawner_open_0 ${originX + 3} 65 24 none none 1.0`);
+        }
 
         // Clean any stray jigsaw / structure blocks in proximity
         cmd(`fill ${originX - 64} 30 -32 ${originX + 64} 90 128 minecraft:air replace minecraft:jigsaw`);
         cmd(`fill ${originX - 64} 30 -32 ${originX + 64} 90 128 minecraft:air replace minecraft:structure_block`);
 
-        // 4. Open Hall 1: Elite Combat Pack (Upper Catacombs, radius 5, Z=28)
+        // 7. Open Hall 1: Elite Combat Pack (Upper Catacombs, radius 5, Z=28)
         let hall1Z = originZ + 28;
-        this.prepareOpenHall(server, originX, 64, hall1Z, 5, 5, pal.floor);
+        this.prepareOpenHall(server, originX, 64, hall1Z, 5, 5, pal);
         this.spawnElitePack(server, originX, 65, hall1Z, sector, instanceId, 'combat_1');
 
         // Corridor 1: Starter Pavilion (Z=4) into Hall 1 (Z=23)
+        cmd(`fill ${originX - 3} 61 4 ${originX + 3} 63 ${hall1Z - 5} ${pal.wall}`); // Subfloor
         cmd(`fill ${originX - 2} 64 4 ${originX + 2} 64 ${hall1Z - 5} ${pal.floor}`);
         cmd(`fill ${originX - 2} 65 4 ${originX + 2} 68 ${hall1Z - 5} minecraft:air`);
         cmd(`fill ${originX - 3} 65 4 ${originX - 3} 68 ${hall1Z - 5} ${pal.wall}`);
         cmd(`fill ${originX + 3} 65 4 ${originX + 3} 68 ${hall1Z - 5} ${pal.wall}`);
         cmd(`fill ${originX - 3} 69 4 ${originX + 3} 69 ${hall1Z - 5} ${pal.ceiling}`);
+        cmd(`setblock ${originX - 2} 67 10 ${pal.light}`);
+        cmd(`setblock ${originX + 2} 67 10 ${pal.light}`);
+        cmd(`setblock ${originX - 2} 67 18 ${pal.light}`);
+        cmd(`setblock ${originX + 2} 67 18 ${pal.light}`);
 
-        // 5. Open Hall 2: Mini-Boss Chamber & Treasury (radius 6, Z=54, Y=60)
+        // 8. Open Hall 2: Mini-Boss Chamber & Treasury (radius 6, Z=54, Y=60)
         let miniBossZ = originZ + 54;
         let miniBossY = 60;
-        this.prepareOpenHall(server, originX, miniBossY, miniBossZ, 6, 6, pal.floor);
+        this.prepareOpenHall(server, originX, miniBossY, miniBossZ, 6, 6, pal);
         this.spawnMiniBoss(server, originX, miniBossY + 1, miniBossZ, sector, instanceId);
+
+        // Native props in Hall 2
+        if (sector <= 1) {
+            cmd(`place template betterdungeons:zombie_dungeon/cubby/cubby_double_0 ${originX - 5} ${miniBossY + 1} ${miniBossZ - 3} none none 1.0`);
+            cmd(`place template betterdungeons:zombie_dungeon/cubby/cubby_double_0 ${originX + 2} ${miniBossY + 1} ${miniBossZ - 3} 180_clockwise none 1.0`);
+        }
 
         // Treasury Chest in Mini-Boss chamber
         cmd(`setblock ${originX + 4} ${miniBossY + 1} ${miniBossZ} minecraft:chest[facing=west]{CustomName:'{"text":"Сокровищница Подземелья","color":"gold"}'}`);
@@ -190,47 +241,59 @@ const ElyriumDungeonStitcher = {
         // Corridor 2: Hall 1 (Z=33, Y=64) to Hall 2 (Z=48, Y=60) descending ramp
         for (let cz = 34; cz <= 48; cz++) {
             let cy = 64 - Math.floor((cz - 33) * 4 / 15);
-            cmd(`fill ${originX - 2} ${cy} ${cz} ${originX + 2} ${cy} ${cz} ${pal.floor}`);
+            cmd(`fill ${originX - 3} ${cy - 3} ${cz} ${originX + 3} ${cy} ${cz} ${pal.floor}`);
             cmd(`fill ${originX - 2} ${cy + 1} ${cz} ${originX + 2} ${cy + 4} ${cz} minecraft:air`);
             cmd(`fill ${originX - 3} ${cy + 1} ${cz} ${originX - 3} ${cy + 4} ${cz} ${pal.wall}`);
             cmd(`fill ${originX + 3} ${cy + 1} ${cz} ${originX + 3} ${cy + 4} ${cz} ${pal.wall}`);
             cmd(`fill ${originX - 3} ${cy + 5} ${cz} ${originX + 3} ${cy + 5} ${cz} ${pal.ceiling}`);
+            if (cz % 4 === 0) {
+                cmd(`setblock ${originX - 2} ${cy + 3} ${cz} ${pal.light}`);
+                cmd(`setblock ${originX + 2} ${cy + 3} ${cz} ${pal.light}`);
+            }
         }
 
-        // 6. Gated Portcullis (Locked until Mini-Boss killed) at Z = miniBossZ + 8
+        // 9. Gated Portcullis (Locked until Mini-Boss killed) at Z = miniBossZ + 8
         let gateZ = miniBossZ + 8;
         cmd(`fill ${originX - 2} ${miniBossY + 1} ${gateZ} ${originX + 2} ${miniBossY + 4} ${gateZ} ${pal.gate}`);
 
-        // 7. Open Hall 3: Deep Abyss Guards (Lower Floor, radius 6, Z=80, Y=50)
+        // 10. Open Hall 3: Deep Abyss Guards (Lower Floor, radius 6, Z=80, Y=50)
         let abyssZ = gateZ + 18;
         let abyssY = 50;
-        this.prepareOpenHall(server, originX, abyssY, abyssZ, 6, 6, pal.floor);
+        this.prepareOpenHall(server, originX, abyssY, abyssZ, 6, 6, pal);
         this.spawnAbyssGuards(server, originX, abyssY + 1, abyssZ, sector, instanceId);
 
         // Corridor 3: Gate (Z=63, Y=60) to Hall 3 (Z=74, Y=50) grand descending stairs
         for (let cz = 63; cz <= 74; cz++) {
             let cy = 60 - Math.min(10, cz - 62);
-            cmd(`fill ${originX - 2} ${cy} ${cz} ${originX + 2} ${cy} ${cz} ${pal.floor}`);
+            cmd(`fill ${originX - 3} ${cy - 3} ${cz} ${originX + 3} ${cy} ${cz} ${pal.floor}`);
             cmd(`fill ${originX - 2} ${cy + 1} ${cz} ${originX + 2} ${cy + 4} ${cz} minecraft:air`);
             cmd(`fill ${originX - 3} ${cy + 1} ${cz} ${originX - 3} ${cy + 4} ${cz} ${pal.wall}`);
             cmd(`fill ${originX + 3} ${cy + 1} ${cz} ${originX + 3} ${cy + 4} ${cz} ${pal.wall}`);
             cmd(`fill ${originX - 3} ${cy + 5} ${cz} ${originX + 3} ${cy + 5} ${cz} ${pal.ceiling}`);
+            if (cz % 3 === 0) {
+                cmd(`setblock ${originX - 2} ${cy + 3} ${cz} ${pal.light}`);
+                cmd(`setblock ${originX + 2} ${cy + 3} ${cz} ${pal.light}`);
+            }
         }
 
-        // 8. Open Hall 4: Grand Boss Throne Dais (radius 8, Z=104, Y=48)
+        // 11. Open Hall 4: Grand Boss Throne Dais (radius 8, Z=104, Y=48)
         let bossZ = abyssZ + 24;
         let bossY = 48;
-        this.prepareOpenHall(server, originX, bossY, bossZ, 8, 8, pal.floor);
+        this.prepareOpenHall(server, originX, bossY, bossZ, 8, 8, pal);
         this.spawnFinalBoss(server, originX, bossY + 1, bossZ, sector, instanceId);
 
         // Corridor 4: Hall 3 (Z=86, Y=50) to Hall 4 (Z=96, Y=48)
         for (let cz = 87; cz <= 96; cz++) {
             let cy = (cz <= 91) ? 49 : 48;
-            cmd(`fill ${originX - 2} ${cy} ${cz} ${originX + 2} ${cy} ${cz} ${pal.floor}`);
+            cmd(`fill ${originX - 3} ${cy - 3} ${cz} ${originX + 3} ${cy} ${cz} ${pal.floor}`);
             cmd(`fill ${originX - 2} ${cy + 1} ${cz} ${originX + 2} ${cy + 4} ${cz} minecraft:air`);
             cmd(`fill ${originX - 3} ${cy + 1} ${cz} ${originX - 3} ${cy + 4} ${cz} ${pal.wall}`);
             cmd(`fill ${originX + 3} ${cy + 1} ${cz} ${originX + 3} ${cy + 4} ${cz} ${pal.wall}`);
             cmd(`fill ${originX - 3} ${cy + 5} ${cz} ${originX + 3} ${cy + 5} ${cz} ${pal.ceiling}`);
+            if (cz % 3 === 0) {
+                cmd(`setblock ${originX - 2} ${cy + 3} ${cz} ${pal.light}`);
+                cmd(`setblock ${originX + 2} ${cy + 3} ${cz} ${pal.light}`);
+            }
         }
 
         // Register Portcullis & Boss Coordinates in persistentData
