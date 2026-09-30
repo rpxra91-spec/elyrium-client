@@ -605,7 +605,8 @@ function isSpear(item) {
     let id = String(item.id).toLowerCase();
     return id.includes('spear') || id.includes('halberd') || id.includes('lance') ||
            id.includes('glaive') || id.includes('polearm') || id.includes('trident') ||
-           id.includes('pike') || item.hasTag('c:tools/spears') || item.hasTag('c:spears');
+           id.includes('pike') || item.hasTag('c:tools/spears') || item.hasTag('c:spears') ||
+           item.hasTag('c:tools/polearms') || item.hasTag('c:polearms');
 }
 
 function isBow(item) {
@@ -715,6 +716,12 @@ function getSafeStepDistance(level, startX, startY, startZ, normX, normZ, maxDis
 function resolveInnateWeaponArt(player, isAirborne) {
     let mainItem = player.mainHandItem;
     if (!mainItem || mainItem.isEmpty()) return null;
+
+    // Check customized Slot 1 art from Weaponmaster's Bench first
+    let slot1Art = getSlotWeaponArt(mainItem, 1);
+    if (slot1Art && WEAPON_ARTS[slot1Art]) {
+        return slot1Art;
+    }
 
     let mainId = String(mainItem.id).toLowerCase();
 
@@ -1605,8 +1612,16 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
     // 22. IRON STANCE (Стальная Стойка: 3.5s buff, +50% absorption, hyper-armor)
     // ==========================================================================
     } else if (resolvedId === 'iron_stance') {
-        player.potionEffects.add('minecraft:resistance', 70, 2, false, true); // Resistance III
         player.persistentData.putLong('elyrium_iron_stance_until', now + 3500);
+
+        // 100% Hyper-Armor Knockback Immunity via Attribute Modifier (idempotent remove before add)
+        player.server.runCommandSilent(`attribute ${u} minecraft:generic.knockback_resistance modifier remove elyrium:iron_stance_kb`);
+        player.server.runCommandSilent(`attribute ${u} minecraft:generic.knockback_resistance modifier add elyrium:iron_stance_kb 1.0 add_value`);
+        player.server.scheduleInTicks(70, () => {
+            if (player) {
+                player.server.runCommandSilent(`attribute ${u} minecraft:generic.knockback_resistance modifier remove elyrium:iron_stance_kb`);
+            }
+        });
 
         player.server.runCommandSilent(`playsound minecraft:block.anvil.land player ${u} ${player.x} ${player.y} ${player.z} 1.5 1.1`);
         player.server.runCommandSilent(`playsound minecraft:item.armor.equip_netherite player ${u} ${player.x} ${player.y} ${player.z} 1.2 0.8`);
@@ -2022,6 +2037,10 @@ EntityEvents.beforeHurt(event => {
         let ironStanceUntil = victim.persistentData.getLong('elyrium_iron_stance_until') || 0;
         if (ironStanceUntil > 0 && now <= ironStanceUntil) {
             event.damage *= 0.50;
+            applyEntityMotion(victim, 0, 0, 0);
+            victim.server.scheduleInTicks(1, () => {
+                if (victim && victim.isAlive()) applyEntityMotion(victim, 0, 0, 0);
+            });
             victim.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${victim.username} ~ ~ ~ 0.8 1.8`);
             victim.server.runCommandSilent(`particle minecraft:wax_off ${victim.x} ${victim.y + 1} ${victim.z} 0.3 0.3 0.3 0.05 10 normal`);
         }
@@ -2606,6 +2625,10 @@ PlayerEvents.loggedOut(event => {
             player.persistentData.putBoolean('skd_spear_reach_active', false);
             player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier remove elyrium:spear_reach`);
         }
+        if (player.persistentData && player.persistentData.getLong('elyrium_iron_stance_until') > 0) {
+            player.persistentData.remove('elyrium_iron_stance_until');
+            player.server.runCommandSilent(`attribute ${player.username} minecraft:generic.knockback_resistance modifier remove elyrium:iron_stance_kb`);
+        }
     }
 });
 
@@ -2622,6 +2645,8 @@ PlayerEvents.respawned(event => {
     if (player && player.persistentData) {
         player.persistentData.putBoolean('skd_spear_reach_active', false);
         player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier remove elyrium:spear_reach`);
+        player.persistentData.remove('elyrium_iron_stance_until');
+        player.server.runCommandSilent(`attribute ${player.username} minecraft:generic.knockback_resistance modifier remove elyrium:iron_stance_kb`);
         let curStam = getPlayerStamina(player);
         let maxStam = getPlayerMaxStamina(player);
         updateStaminaBossBar(player, curStam, maxStam);

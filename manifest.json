@@ -1,8 +1,8 @@
 {
-  "version": "0.2.0",
+  "version": "0.2.1",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-30T21:28:59.817686+00:00",
+  "generated_at": "2026-09-30T21:49:59.265109+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8037,8 +8037,8 @@
     },
     {
       "path": "kubejs/client_scripts/martial_arts_tooltips.js",
-      "sha256": "27628b62ebf9d52041d405c387e61e4013568c51447746dad7e99adc9295e2f8",
-      "size": 36817
+      "sha256": "a1d581f8719c60c481f6756cafa2a8b96ec3727c130705033f9fe0977c9de88f",
+      "size": 37874
     },
     {
       "path": "kubejs/client_scripts/modular_multitool_tooltips.js",
@@ -8977,13 +8977,13 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_inscription.js",
-      "sha256": "0a2984cef833cb340bdaa0b10616acf7d0b8e07564b540b375fe2af8f7bdfc74",
-      "size": 53481
+      "sha256": "ac9acd29e72ed8259992152046e742e23e22e694804e13d0561574dabd297fbc",
+      "size": 53772
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_loot.js",
-      "sha256": "4dde8da7d07ce661aaad379d1999cd3e2ada07a071619e7d4232694107c7d081",
-      "size": 28638
+      "sha256": "561c0b142c97ea2e11b6bff40404f8ac57fd33a00e09411139dfd7f90e2e6718",
+      "size": 34435
     },
     {
       "path": "kubejs/server_scripts/03_combat/party_xp_share.js",
@@ -8992,8 +8992,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "bf100391ea4eacf7c9e47c7152d0a744357bc42668729d46d2eeb9ce5eb1cbd9",
-      "size": 142347
+      "sha256": "5bacf4d9c678f50c9a258ad410008a4e2c496867551050ee587dbb2db9d6cfef",
+      "size": 143932
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
@@ -9037,8 +9037,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",
-      "sha256": "6ff61528e7da914ee7ca3da62a49f35fe8fcb15b5f7ae12b5fd2873bad030cba",
-      "size": 6209
+      "sha256": "5eead56c1362b50fae404e7ab04ca0c256b15e795d28570876ee172a5cee0fcb",
+      "size": 8481
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_reinforcement_scaling.js",
@@ -9292,8 +9292,8 @@
     },
     {
       "path": "kubejs/server_scripts/99_tests/elyrium_end_to_end_test.js",
-      "sha256": "5e5bc73c5d46fa5404ff16b59ba7232f2482e60ccce4479f65d5d631609f1d89",
-      "size": 19400
+      "sha256": "ccc1f2da488dfaa10166f6681bce14c36e2aa3a94d86a9c8e9d2ffb2c003a512",
+      "size": 18911
     },
     {
       "path": "kubejs/startup_scripts/ascension_catalysts.js",

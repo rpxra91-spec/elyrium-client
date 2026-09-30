@@ -88,7 +88,23 @@ ServerEvents.recipes(event => {
         { id: 'kubejs:martial_tablet_blood_rend', essence: 'kubejs:dungeon_essence_t4', ingot: 'skd:cinder_alloy_ingot', altIngot: 'minecraft:netherite_scrap', key: 'blood_rend' },
         { id: 'kubejs:martial_tablet_seismic_slam', essence: 'kubejs:dungeon_essence_t2', ingot: 'minecraft:iron_ingot', key: 'seismic_slam' },
         { id: 'kubejs:martial_tablet_shadow_step', essence: 'kubejs:dungeon_essence_t3', ingot: 'minecraft:diamond', key: 'shadow_step' },
-        { id: 'kubejs:martial_tablet_arrow_barrage', essence: 'kubejs:dungeon_essence_t1', ingot: 'minecraft:copper_ingot', key: 'arrow_barrage' }
+        { id: 'kubejs:martial_tablet_arrow_barrage', essence: 'kubejs:dungeon_essence_t1', ingot: 'minecraft:copper_ingot', key: 'arrow_barrage' },
+
+        // 14 Additional Classic & Elemental Arts
+        { id: 'kubejs:martial_tablet_reverse_sunder', essence: 'kubejs:dungeon_essence_t1', ingot: 'minecraft:copper_ingot', key: 'reverse_sunder' },
+        { id: 'kubejs:martial_tablet_crushing_uppercut', essence: 'kubejs:dungeon_essence_t1', ingot: 'minecraft:copper_ingot', key: 'crushing_uppercut' },
+        { id: 'kubejs:martial_tablet_severing_cleave', essence: 'kubejs:dungeon_essence_t2', ingot: 'minecraft:iron_ingot', key: 'severing_cleave' },
+        { id: 'kubejs:martial_tablet_piercing_thrust', essence: 'kubejs:dungeon_essence_t2', ingot: 'minecraft:iron_ingot', key: 'piercing_thrust' },
+        { id: 'kubejs:martial_tablet_scissor_cross', essence: 'kubejs:dungeon_essence_t2', ingot: 'minecraft:iron_ingot', key: 'scissor_cross' },
+        { id: 'kubejs:martial_tablet_tactical_backstep', essence: 'kubejs:dungeon_essence_t2', ingot: 'minecraft:iron_ingot', key: 'tactical_backstep' },
+        { id: 'kubejs:martial_tablet_triple_shot', essence: 'kubejs:dungeon_essence_t2', ingot: 'minecraft:iron_ingot', key: 'triple_shot' },
+        { id: 'kubejs:martial_tablet_arrow_rain', essence: 'kubejs:dungeon_essence_t3', ingot: 'minecraft:diamond', key: 'arrow_rain' },
+        { id: 'kubejs:martial_tablet_piercing_shot', essence: 'kubejs:dungeon_essence_t3', ingot: 'minecraft:diamond', key: 'piercing_shot' },
+        { id: 'kubejs:martial_tablet_unwavering_bulwark', essence: 'kubejs:dungeon_essence_t3', ingot: 'minecraft:diamond', key: 'unwavering_bulwark' },
+        { id: 'kubejs:martial_tablet_flame_vortex', essence: 'kubejs:dungeon_essence_t4', ingot: 'skd:cinder_alloy_ingot', altIngot: 'minecraft:netherite_scrap', key: 'flame_vortex' },
+        { id: 'kubejs:martial_tablet_frost_stomp', essence: 'kubejs:dungeon_essence_t4', ingot: 'skd:cinder_alloy_ingot', altIngot: 'minecraft:netherite_scrap', key: 'frost_stomp' },
+        { id: 'kubejs:martial_tablet_lightning_smite', essence: 'kubejs:dungeon_essence_t4', ingot: 'skd:cinder_alloy_ingot', altIngot: 'minecraft:netherite_scrap', key: 'lightning_smite' },
+        { id: 'kubejs:martial_tablet_holy_blade', essence: 'kubejs:dungeon_essence_t4', ingot: 'skd:cinder_alloy_ingot', altIngot: 'minecraft:netherite_scrap', key: 'holy_blade' }
     ];
 
     TABLET_RECIPES.forEach(tab => {

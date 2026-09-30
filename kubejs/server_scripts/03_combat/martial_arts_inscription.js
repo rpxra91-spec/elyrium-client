@@ -226,6 +226,15 @@ function isShield(item) {
            id.includes('shield');
 }
 
+function isSpear(item, id) {
+    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
+    let itemId = id || String(item.id).toLowerCase();
+    return itemId.includes('spear') || itemId.includes('halberd') || itemId.includes('lance') ||
+           itemId.includes('glaive') || itemId.includes('polearm') || itemId.includes('trident') ||
+           itemId.includes('pike') || item.hasTag('c:tools/spears') || item.hasTag('c:spears') ||
+           item.hasTag('c:tools/polearms') || item.hasTag('c:polearms');
+}
+
 function isArtCompatibleWithWeapon(weaponItem, artId) {
     if (!weaponItem || weaponItem.isEmpty() || weaponItem.id === 'minecraft:air') return false;
     let id = String(weaponItem.id).toLowerCase();
@@ -251,18 +260,18 @@ function isArtCompatibleWithWeapon(weaponItem, artId) {
             return is2HHeavyWeapon(weaponItem, id) || isBludgeoningWeapon(weaponItem, id);
 
         case 'sweeping_sweep':
-            return is2HHeavyWeapon(weaponItem, id) || id.includes('spear') || id.includes('lance') || id.includes('halberd') || id.includes('polearm');
+            return is2HHeavyWeapon(weaponItem, id) || isSpear(weaponItem, id);
 
         case 'iai_slash':
         case 'lightning_thrust':
         case 'piercing_thrust':
         case 'thousand_cuts':
         case 'blood_rend':
-            return isFinesseBladeWeapon(weaponItem, id) || isDaggerLightWeapon(weaponItem, id) || id.includes('spear') || id.includes('lance') || id.includes('halberd');
+            return isFinesseBladeWeapon(weaponItem, id) || isDaggerLightWeapon(weaponItem, id) || isSpear(weaponItem, id);
 
         case 'spear_flurry':
         case 'polearm_vault':
-            return id.includes('spear') || id.includes('lance') || id.includes('halberd') || id.includes('pike') || id.includes('rapier') || id.includes('polearm') || id.includes('glaive');
+            return isSpear(weaponItem, id) || id.includes('rapier');
 
         case 'crushing_uppercut':
         case 'seismic_slam':

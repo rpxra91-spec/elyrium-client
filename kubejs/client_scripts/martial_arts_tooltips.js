@@ -294,7 +294,10 @@ const WEAPON_ARTS = {
     'shield_breaker': { name: 'Рассекающий Клив', desc: 'Фронтальный дуговой удар с пробитием брони.', weapons: 'Секиры, боевые топоры', baseCd: 11, stamina: 35, archetype: 'Раскалывание Защиты' },
     'parry_counter': { name: 'Стальная Стойка', desc: 'Бафф на 3.5 сек: +50% поглощения урона, гипер-броня.', weapons: 'Мечи, топоры, молоты', baseCd: 15, stamina: 35, archetype: 'Несгибаемость' },
     'juggernaut': { name: 'Таранный Натиск', desc: 'Рывок вперед со щитом.', weapons: 'Щиты', baseCd: 12, stamina: 35, archetype: 'Таранная Оборона' },
-    'arrow_barrage': { name: 'Веерный Залп', desc: 'Выпуск веера из 5 спектральных стрел.', weapons: 'Луки, арбалеты', baseCd: 10, stamina: 30, archetype: 'Стрелковый Веер' }
+    'arrow_barrage': { name: 'Веерный Залп', desc: 'Выпуск веера из 5 спектральных стрел.', weapons: 'Луки, арбалеты', baseCd: 10, stamina: 30, archetype: 'Стрелковый Веер' },
+    'lightning_thrust': { name: 'Фантомный Выпад (Иай)', desc: 'Мгновенный рывок сквозь строй врагов на 6 блоков (190% урона и кровотечение на 5с).', weapons: 'Катаны, нодати, рапиры, сабли', baseCd: 10, stamina: 30, archetype: 'Стремительное Иай' },
+    'blood_rend': { name: 'Кровавая Жатва', desc: 'Серповидный удар с вампиризмом: исцеляет заклинателя на 15% от нанесенного урона.', weapons: 'Любое боевое оружие', baseCd: 12, stamina: 35, archetype: 'Алый Вампиризм' },
+    'seismic_slam': { name: 'Сотрясение Земли', desc: 'Удар в землю с 5-метровой радиальной волной: 200% урона, подброс и Замедление IV.', weapons: 'Боевые молоты, булавы, палицы', baseCd: 14, stamina: 45, archetype: 'Сейсмический Разлом' }
 };
 
 function getArtRankRoman(rank) {

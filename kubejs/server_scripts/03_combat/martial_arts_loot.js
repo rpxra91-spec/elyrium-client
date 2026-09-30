@@ -173,6 +173,123 @@ const TABLETS_METADATA = {
             return id.includes('bow') || id.includes('crossbow');
         },
         weaponDesc: 'Луки, арбалеты'
+    },
+    'kubejs:martial_tablet_reverse_sunder': {
+        key: 'reverse_sunder',
+        name: 'Реверсивный Раскол',
+        validWeapon: function(id) {
+            return id.includes('sword') || id.includes('blade') || id.includes('claymore') || 
+                   id.includes('katana') || id.includes('axe') || id.includes('saber');
+        },
+        weaponDesc: 'Одноручные и двуручные мечи, палаши, топоры'
+    },
+    'kubejs:martial_tablet_crushing_uppercut': {
+        key: 'crushing_uppercut',
+        name: 'Сокрушительный Апперкот',
+        validWeapon: function(id) {
+            return id.includes('hammer') || id.includes('mace') || id.includes('club') || 
+                   id.includes('flail') || id.includes('fist') || id.includes('knuckle');
+        },
+        weaponDesc: 'Булавы, молоты, кастеты, палицы'
+    },
+    'kubejs:martial_tablet_severing_cleave': {
+        key: 'severing_cleave',
+        name: 'Рассекающий Клив',
+        validWeapon: function(id) {
+            return id.includes('claymore') || id.includes('greatsword') || id.includes('greataxe') || 
+                   id.includes('axe') || id.includes('battleaxe');
+        },
+        weaponDesc: 'Секиры, боевые топоры, клейморы'
+    },
+    'kubejs:martial_tablet_piercing_thrust': {
+        key: 'piercing_thrust',
+        name: 'Бронебойный Прокол',
+        validWeapon: function(id) {
+            return id.includes('spear') || id.includes('halberd') || id.includes('pike') || 
+                   id.includes('lance') || id.includes('rapier') || id.includes('glaive') || id.includes('trident');
+        },
+        weaponDesc: 'Копья, пики, алебарды, рапиры'
+    },
+    'kubejs:martial_tablet_scissor_cross': {
+        key: 'scissor_cross',
+        name: 'Ножницы',
+        validWeapon: function(id) {
+            return id.includes('dagger') || id.includes('knife') || id.includes('sai') || 
+                   id.includes('sword') || id.includes('blade') || id.includes('twinblade');
+        },
+        weaponDesc: 'Парные клинки, кинжалы, мечи'
+    },
+    'kubejs:martial_tablet_tactical_backstep': {
+        key: 'tactical_backstep',
+        name: 'Тактический Отскок',
+        validWeapon: function(id) {
+            return id.includes('bow') || id.includes('crossbow');
+        },
+        weaponDesc: 'Луки, арбалеты'
+    },
+    'kubejs:martial_tablet_triple_shot': {
+        key: 'triple_shot',
+        name: 'Беглая Тройка',
+        validWeapon: function(id) {
+            return id.includes('bow') || id.includes('crossbow');
+        },
+        weaponDesc: 'Луки, арбалеты'
+    },
+    'kubejs:martial_tablet_arrow_rain': {
+        key: 'arrow_rain',
+        name: 'Град Стрел',
+        validWeapon: function(id) {
+            return id.includes('bow') || id.includes('crossbow');
+        },
+        weaponDesc: 'Луки, составные луки'
+    },
+    'kubejs:martial_tablet_piercing_shot': {
+        key: 'piercing_shot',
+        name: 'Бронебойный Выстрел',
+        validWeapon: function(id) {
+            return id.includes('bow') || id.includes('crossbow');
+        },
+        weaponDesc: 'Луки, длинные луки, арбалеты'
+    },
+    'kubejs:martial_tablet_unwavering_bulwark': {
+        key: 'unwavering_bulwark',
+        name: 'Непоколебимый Оплот',
+        validWeapon: function(id) {
+            return id.includes('shield');
+        },
+        weaponDesc: 'Щиты, башенные щиты'
+    },
+    'kubejs:martial_tablet_flame_vortex': {
+        key: 'flame_vortex',
+        name: 'Пламенный Вихрь',
+        validWeapon: function(id) {
+            return true;
+        },
+        weaponDesc: 'Любое боевое оружие'
+    },
+    'kubejs:martial_tablet_frost_stomp': {
+        key: 'frost_stomp',
+        name: 'Ледяная Поступь',
+        validWeapon: function(id) {
+            return true;
+        },
+        weaponDesc: 'Любое боевое оружие'
+    },
+    'kubejs:martial_tablet_lightning_smite': {
+        key: 'lightning_smite',
+        name: 'Громовой Раскат',
+        validWeapon: function(id) {
+            return true;
+        },
+        weaponDesc: 'Любое боевое оружие'
+    },
+    'kubejs:martial_tablet_holy_blade': {
+        key: 'holy_blade',
+        name: 'Священный Клинок',
+        validWeapon: function(id) {
+            return true;
+        },
+        weaponDesc: 'Любое боевое оружие'
     }
 };
 
@@ -416,7 +533,9 @@ function selectTabletForTier(target) {
             'kubejs:martial_tablet_lightning_thrust',
             'kubejs:martial_tablet_arrow_barrage',
             'kubejs:martial_tablet_iron_stance',
-            'kubejs:martial_tablet_helm_splitter'
+            'kubejs:martial_tablet_helm_splitter',
+            'kubejs:martial_tablet_reverse_sunder',
+            'kubejs:martial_tablet_crushing_uppercut'
         ];
         rank = 1;
     } else if (t === 2) {
@@ -428,7 +547,12 @@ function selectTabletForTier(target) {
             'kubejs:martial_tablet_iron_stance',
             'kubejs:martial_tablet_sweeping_sweep',
             'kubejs:martial_tablet_spear_flurry',
-            'kubejs:martial_tablet_helm_splitter'
+            'kubejs:martial_tablet_helm_splitter',
+            'kubejs:martial_tablet_severing_cleave',
+            'kubejs:martial_tablet_piercing_thrust',
+            'kubejs:martial_tablet_scissor_cross',
+            'kubejs:martial_tablet_tactical_backstep',
+            'kubejs:martial_tablet_triple_shot'
         ];
         rank = Math.random() < 0.3 ? 2 : 1;
     } else if (t === 3) {
@@ -440,7 +564,10 @@ function selectTabletForTier(target) {
             'kubejs:martial_tablet_juggernaut',
             'kubejs:martial_tablet_bone_crusher',
             'kubejs:martial_tablet_polearm_vault',
-            'kubejs:martial_tablet_unstoppable_charge'
+            'kubejs:martial_tablet_unstoppable_charge',
+            'kubejs:martial_tablet_arrow_rain',
+            'kubejs:martial_tablet_piercing_shot',
+            'kubejs:martial_tablet_unwavering_bulwark'
         ];
         rank = Math.random() < 0.5 ? 2 : 1;
     } else if (t === 4) {
@@ -453,7 +580,9 @@ function selectTabletForTier(target) {
             'kubejs:martial_tablet_earth_fracture',
             'kubejs:martial_tablet_bone_crusher',
             'kubejs:martial_tablet_unstoppable_charge',
-            'kubejs:martial_tablet_explosive_shot'
+            'kubejs:martial_tablet_explosive_shot',
+            'kubejs:martial_tablet_flame_vortex',
+            'kubejs:martial_tablet_frost_stomp'
         ];
         rank = Math.random() < 0.4 ? 3 : 2;
     } else if (t === 5) {
@@ -465,7 +594,9 @@ function selectTabletForTier(target) {
             'kubejs:martial_tablet_seismic_slam',
             'kubejs:martial_tablet_polearm_vault',
             'kubejs:martial_tablet_thousand_cuts',
-            'kubejs:martial_tablet_spear_flurry'
+            'kubejs:martial_tablet_spear_flurry',
+            'kubejs:martial_tablet_holy_blade',
+            'kubejs:martial_tablet_lightning_smite'
         ];
         rank = Math.random() < 0.5 ? 3 : 2;
     } else if (t === 6) {
@@ -477,7 +608,9 @@ function selectTabletForTier(target) {
             'kubejs:martial_tablet_earth_sunder',
             'kubejs:martial_tablet_thousand_cuts',
             'kubejs:martial_tablet_explosive_shot',
-            'kubejs:martial_tablet_polearm_vault'
+            'kubejs:martial_tablet_polearm_vault',
+            'kubejs:martial_tablet_frost_stomp',
+            'kubejs:martial_tablet_lightning_smite'
         ];
         rank = Math.random() < 0.4 ? 4 : 3;
     } else if (t === 7) {
@@ -488,7 +621,9 @@ function selectTabletForTier(target) {
             'kubejs:martial_tablet_arrow_barrage',
             'kubejs:martial_tablet_earth_fracture',
             'kubejs:martial_tablet_spear_flurry',
-            'kubejs:martial_tablet_unstoppable_charge'
+            'kubejs:martial_tablet_unstoppable_charge',
+            'kubejs:martial_tablet_flame_vortex',
+            'kubejs:martial_tablet_holy_blade'
         ];
         rank = Math.random() < 0.5 ? 4 : 3;
     } else if (t === 8) {
@@ -498,7 +633,9 @@ function selectTabletForTier(target) {
             'kubejs:martial_tablet_seismic_slam',
             'kubejs:martial_tablet_earth_sunder',
             'kubejs:martial_tablet_bone_crusher',
-            'kubejs:martial_tablet_thousand_cuts'
+            'kubejs:martial_tablet_thousand_cuts',
+            'kubejs:martial_tablet_frost_stomp',
+            'kubejs:martial_tablet_blood_rend'
         ];
         rank = Math.random() < 0.4 ? 5 : 4;
     } else {

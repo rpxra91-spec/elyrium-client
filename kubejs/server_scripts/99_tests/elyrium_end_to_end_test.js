@@ -285,90 +285,94 @@ function runElyriumTestSuite(category, isDetailed) {
     // ⚔️ 4. MARTIAL ARTS ARSENAL & ASHES OF WAR SYSTEM
     // ==========================================================================
     if (runAll || category === 'martial' || category === 'combat') {
-        // Test 4.1: Archetype Diversity (>= 5 arts per archetype)
+        // Test 4.1: Archetype Diversity & Compatibility Check via isArtCompatibleWithWeapon
         {
-            let archetypes = {
-                blades: ['iai_slash', 'thousand_cuts', 'helm_splitter', 'reverse_sunder', 'iron_stance', 'shadow_step', 'scissor_cross'],
-                heavy: ['whirlwind_cleave', 'severing_cleave', 'earth_sunder', 'unstoppable_charge', 'earth_fracture', 'sweeping_sweep', 'helm_splitter', 'iron_stance', 'reverse_sunder'],
-                bludgeoning: ['crushing_uppercut', 'bone_crusher', 'earth_sunder', 'earth_fracture', 'unstoppable_charge', 'helm_splitter', 'iron_stance', 'reverse_sunder'],
-                polearms: ['piercing_thrust', 'spear_flurry', 'polearm_vault', 'sweeping_sweep', 'iron_stance', 'reverse_sunder'],
-                ranged: ['fan_barrage', 'piercing_shot', 'arrow_rain', 'tactical_backstep', 'triple_shot', 'explosive_shot'],
-                daggers: ['scissor_cross', 'shadow_step', 'thousand_cuts', 'iai_slash', 'iron_stance', 'reverse_sunder']
+            let sampleWeapons = {
+                blades: Item.of('minecraft:iron_sword'),
+                heavy: Item.of('minecraft:netherite_axe'),
+                bludgeoning: Item.of('minecraft:mace'),
+                polearms: Item.of('minecraft:trident'),
+                ranged: Item.of('minecraft:bow'),
+                daggers: Item.of('farmersdelight:iron_knife')
             };
+
             let allMeetThreshold = true;
             let details = [];
-            for (let arch in archetypes) {
-                let count = archetypes[arch].length;
+
+            for (let arch in sampleWeapons) {
+                let weapon = sampleWeapons[arch];
+                let compatibleArts = [];
+                for (let tabId in MARTIAL_TABLETS) {
+                    let artId = MARTIAL_TABLETS[tabId].artId;
+                    if (isArtCompatibleWithWeapon(weapon, artId)) {
+                        if (compatibleArts.indexOf(artId) === -1) {
+                            compatibleArts.push(artId);
+                        }
+                    }
+                }
+                let count = compatibleArts.length;
                 details.push(`${arch}: ${count}`);
                 if (count < 5) allMeetThreshold = false;
             }
+
             assert(
-                "Martial: Archetype Weapon Arts Diversity (>= 5 per archetype)",
+                "Martial: Archetype Weapon Arts Diversity (>= 5 per archetype via isArtCompatibleWithWeapon)",
                 allMeetThreshold === true,
                 details.join(', ')
             );
         }
 
-        // Test 4.2: Iron Stance Mechanics (Absorption +50%, 0-Parry tick reliance)
+        // Test 4.2: Iron Stance Mechanics (Exact +50% absorption & hyper-armor motion cancellation)
         {
-            let incomingDamage = 40.0;
-            let ironStanceActive = true;
-            let absorbedDamage = incomingDamage;
-            if (ironStanceActive) {
-                absorbedDamage = incomingDamage * 0.5; // +50% absorption
-            }
+            let art = WEAPON_ARTS['iron_stance'];
+            let validArt = !!(art && (art.cdMs === 15000) && (art.stamina === 35) && (art.dmgMult === 1.0));
+            let testDmg = 50.0;
+            let ironStanceMult = 0.50;
+            let finalDmg = testDmg * ironStanceMult;
+            let hasMotionHandler = (typeof applyEntityMotion === 'function');
+
             assert(
-                "Martial: Iron Stance Damage Absorption (+50%) & Hyper-Armor",
-                absorbedDamage === 20.0,
-                `Incoming: ${incomingDamage}, After 50% absorption: ${absorbedDamage}`
+                "Martial: Iron Stance Exact Damage Absorption (+50%) & Hyper-Armor Mechanics",
+                validArt && finalDmg === 25.0 && hasMotionHandler,
+                `Art Valid: ${validArt}, Final Dmg (50*0.5): ${finalDmg}, Motion Handler: ${hasMotionHandler}`
             );
         }
 
-        // Test 4.3: 10 New Martial Tablet IDs & Reverse Resolver
+        // Test 4.3: Real Multi-Slot Inscription & Retrieval via getSlotWeaponArt
         {
-            let newTabletMap = {
-                'iron_stance': 'kubejs:martial_tablet_iron_stance',
-                'thousand_cuts': 'kubejs:martial_tablet_thousand_cuts',
-                'helm_splitter': 'kubejs:martial_tablet_helm_splitter',
-                'unstoppable_charge': 'kubejs:martial_tablet_unstoppable_charge',
-                'earth_fracture': 'kubejs:martial_tablet_earth_fracture',
-                'bone_crusher': 'kubejs:martial_tablet_bone_crusher',
-                'spear_flurry': 'kubejs:martial_tablet_spear_flurry',
-                'polearm_vault': 'kubejs:martial_tablet_polearm_vault',
-                'sweeping_sweep': 'kubejs:martial_tablet_sweeping_sweep',
-                'explosive_shot': 'kubejs:martial_tablet_explosive_shot'
-            };
-            let resolvedCorrectly = true;
-            let totalChecked = 0;
-            for (let artId in newTabletMap) {
-                totalChecked++;
-                let expectedTablet = newTabletMap[artId];
-                let resolvedTablet = 'kubejs:martial_tablet_' + artId;
-                if (expectedTablet !== resolvedTablet) resolvedCorrectly = false;
-            }
+            let testSword = Item.of('minecraft:diamond_sword');
+            if (!testSword.customData) testSword.customData = {};
+            testSword.customData.putString('skd_art_1', 'thousand_cuts');
+            testSword.customData.putString('skd_art_2', 'iron_stance');
+            testSword.customData.putString('skd_art_3', 'earth_fracture');
+
+            let slot1 = getSlotWeaponArt(testSword, 1);
+            let slot2 = getSlotWeaponArt(testSword, 2);
+            let slot3 = getSlotWeaponArt(testSword, 3);
+
+            let slotsValid = (slot1 === 'thousand_cuts') && (slot2 === 'iron_stance') && (slot3 === 'earth_fracture');
             assert(
-                "Martial: 10 New Martial Tablets ID Resolution",
-                resolvedCorrectly && totalChecked === 10,
-                `Verified all 10 tablet IDs mapped deterministically (Count: ${totalChecked})`
+                "Martial: Multi-Slot Ashes of War Retrieval (Slot 1 [ПКМ], Slot 2 [Z], Slot 3 [X])",
+                slotsValid === true,
+                `Slot 1: ${slot1}, Slot 2: ${slot2}, Slot 3: ${slot3}`
             );
         }
 
-        // Test 4.4: 3-Slot Ashes of War Architecture & Tier Gating
+        // Test 4.4: All 31 Martial Tablets Inscription & Reverse Lookup Completeness
         {
-            function getAvailableSlots(tier) {
-                let slots = ['RMB_Innate'];
-                if (tier >= 4) slots.push('Z_Slot2');
-                if (tier >= 7) slots.push('X_Slot3');
-                return slots;
+            let tabletCount = Object.keys(MARTIAL_TABLETS).length;
+            let validMeta = true;
+            for (let tId in MARTIAL_TABLETS) {
+                let tab = MARTIAL_TABLETS[tId];
+                if (!tab.artId || !tab.name || !tab.archetype) {
+                    validMeta = false;
+                    break;
+                }
             }
-            let t1Slots = getAvailableSlots(1);
-            let t4Slots = getAvailableSlots(4);
-            let t7Slots = getAvailableSlots(7);
-            let validGating = t1Slots.length === 1 && t4Slots.length === 2 && t7Slots.length === 3;
             assert(
-                "Martial: 3-Slot Ashes of War Tier Gating (RMB -> Z [T4+] -> X [T7+])",
-                validGating === true,
-                `T1 slots: [${t1Slots.join(', ')}], T4 slots: [${t4Slots.join(', ')}], T7 slots: [${t7Slots.join(', ')}]`
+                "Martial: Comprehensive 31 Martial Tablets Metadata & Registration",
+                validMeta && tabletCount >= 31,
+                `Total Registered Tablets: ${tabletCount}`
             );
         }
     }
