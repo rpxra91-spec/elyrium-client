@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-30T06:58:07.307530+00:00",
+  "generated_at": "2026-09-30T07:34:31.959781+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -7796,11 +7796,6 @@
       "size": 605
     },
     {
-      "path": "kubejs/client_scripts/main.js",
-      "sha256": "3df46f0add819bf2602642215b5c62f0581ffdaaf97e77c80a8c4d966e05adcf",
-      "size": 116
-    },
-    {
       "path": "kubejs/client_scripts/martial_arts_tooltips.js",
       "sha256": "fb6c16e06d04bcfe6601cfd43ff203d82cfba2cb69605f37f82d14805b3d563d",
       "size": 25430
@@ -8639,11 +8634,6 @@
       "path": "kubejs/server_scripts/01_progression/escape_scroll_system.js",
       "sha256": "497d4c7581ecb2a14c7a3c22afa7f09acf75cdb61e2dcdf39c06aacd501e7b94",
       "size": 3688
-    },
-    {
-      "path": "kubejs/server_scripts/01_progression/procedural_wall_engine.js",
-      "sha256": "557235a505579a2c85f222bcb6ca8a0f7dad0c2878ec52e3fc206dc1e1e24e96",
-      "size": 7610
     },
     {
       "path": "kubejs/server_scripts/01_progression/progression_portal_engine.js",
