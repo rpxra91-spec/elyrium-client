@@ -2,7 +2,7 @@
   "version": "0.1.2",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-30T14:24:01.393096+00:00",
+  "generated_at": "2026-09-30T15:22:22.288947+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8792,8 +8792,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_gui.js",
-      "sha256": "9dd4490bc96757146b9ea7da41466c5bd56bed2664bb33b4ea576c6d722b0234",
-      "size": 114489
+      "sha256": "073f54ec891460ea2f800149c36152131a3039124a5a490d9c29ec896b8eaab3",
+      "size": 114985
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",

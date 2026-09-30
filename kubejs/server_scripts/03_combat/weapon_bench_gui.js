@@ -1020,6 +1020,7 @@ function openWeaponBenchGUI(player, block) {
                         gTag.remove('skd_art_1_rank');
                         gTag.remove('skd_weapon_art');
                         gTag.remove('skd_art_rank');
+                        saveSafeItemCustomData(gear, gTag);
                     }
                     player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.2`);
                     player.tell(Text.of('§a✓ Скрижаль Слота 1 безопасно возвращена в сумку.'));
@@ -1044,6 +1045,7 @@ function openWeaponBenchGUI(player, block) {
                             gTag.putInt('skd_art_1_rank', rank);
                             gTag.putString('skd_weapon_art', artId);
                             gTag.putInt('skd_art_rank', rank);
+                            saveSafeItemCustomData(gear, gTag);
                         }
                         player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                         player.server.runCommandSilent(`particle minecraft:wax_off ${player.x} ${player.y + 1} ${player.z} 0.3 0.3 0.3 0.05 20`);
@@ -1098,6 +1100,7 @@ function openWeaponBenchGUI(player, block) {
                         gTag.remove('skd_art_2');
                         gTag.remove('skd_art_2_rank');
                         gTag.remove('elyrium_inscribed_art');
+                        saveSafeItemCustomData(gear, gTag);
                     }
                     player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.2`);
                     player.tell(Text.of('§a✓ Скрижаль Слота 2 безопасно возвращена в сумку.'));
@@ -1120,6 +1123,7 @@ function openWeaponBenchGUI(player, block) {
                             gTag.putString('skd_art_2', artId);
                             gTag.putInt('skd_art_2_rank', rank);
                             gTag.putString('elyrium_inscribed_art', artId);
+                            saveSafeItemCustomData(gear, gTag);
                         }
                         player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                         player.server.runCommandSilent(`particle minecraft:wax_off ${player.x} ${player.y + 1} ${player.z} 0.3 0.3 0.3 0.05 20`);
@@ -1173,6 +1177,7 @@ function openWeaponBenchGUI(player, block) {
                     if (gTag) {
                         gTag.remove('skd_art_3');
                         gTag.remove('skd_art_3_rank');
+                        saveSafeItemCustomData(gear, gTag);
                     }
                     player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.2`);
                     player.tell(Text.of('§a✓ Скрижаль Слота 3 безопасно возвращена в сумку.'));
@@ -1194,6 +1199,7 @@ function openWeaponBenchGUI(player, block) {
                         if (gTag) {
                             gTag.putString('skd_art_3', artId);
                             gTag.putInt('skd_art_3_rank', rank);
+                            saveSafeItemCustomData(gear, gTag);
                         }
                         player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                         player.server.runCommandSilent(`particle minecraft:wax_off ${player.x} ${player.y + 1} ${player.z} 0.3 0.3 0.3 0.05 20`);
@@ -1229,6 +1235,7 @@ function openWeaponBenchGUI(player, block) {
                     if (gTag) {
                         gTag.remove('skd_elemental_infusion');
                         gTag.remove('skd_elemental_stone');
+                        saveSafeItemCustomData(gear, gTag);
                     }
                     player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.2`);
                     player.tell(Text.of('§a✓ Камень Стихии возвращен в сумку.'));
@@ -1249,6 +1256,7 @@ function openWeaponBenchGUI(player, block) {
                         if (gTag) {
                             gTag.putString('skd_elemental_infusion', info.elem);
                             gTag.putString('skd_elemental_stone', found.id);
+                            saveSafeItemCustomData(gear, gTag);
                         }
                         player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                         player.server.runCommandSilent(`particle minecraft:wax_off ${player.x} ${player.y + 1} ${player.z} 0.3 0.3 0.3 0.05 20`);
