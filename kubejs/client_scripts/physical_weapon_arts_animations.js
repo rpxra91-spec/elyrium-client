@@ -18,6 +18,7 @@ let J_FirstPersonMode = null;
 let J_ResourceLocation = null;
 let J_SpellCastAnimationEnum = null;
 let J_Minecraft = null;
+let J_Integer_ARTS = null;
 let isAnimationApiInitialized = false;
 
 function initAnimationApi() {
@@ -29,6 +30,7 @@ function initAnimationApi() {
         J_FirstPersonMode = Java.loadClass('dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode');
         J_ResourceLocation = Java.loadClass('net.minecraft.resources.ResourceLocation');
         J_Minecraft = Java.loadClass('net.minecraft.client.Minecraft');
+        J_Integer_ARTS = Java.loadClass('java.lang.Integer');
     } catch (e) {}
 
     try {
@@ -119,7 +121,14 @@ function playRealPlayerAnimation(targetPlayer, animId, speed) {
                     // Guaranteed removal of any previous layer 1000 before adding new animation
                     try {
                         stack.removeLayer(1000);
-                    } catch (eRem) {}
+                    } catch (eRem) {
+                        try {
+                            if (J_Integer_ARTS) {
+                                let mRem = stack.getClass().getMethod('removeLayer', J_Integer_ARTS.TYPE);
+                                if (mRem) mRem.invoke(stack, J_Integer_ARTS.valueOf(1000));
+                            }
+                        } catch (eRem2) {}
+                    }
 
                     // Clear any previously tracked cleanups for this stack
                     for (let i = activeKosmxLayers.length - 1; i >= 0; i--) {
@@ -261,8 +270,17 @@ ClientEvents.tick(event => {
             } catch (eStop) {}
             try {
                 if (item.stack) {
-                    item.stack.removeLayer(1000);
-                    item.stack.removeLayer(item.animPlayer);
+                    try {
+                        item.stack.removeLayer(1000);
+                    } catch (eR1) {
+                        try {
+                            if (J_Integer_ARTS) {
+                                let mRem = item.stack.getClass().getMethod('removeLayer', J_Integer_ARTS.TYPE);
+                                if (mRem) mRem.invoke(item.stack, J_Integer_ARTS.valueOf(1000));
+                            }
+                        } catch (eR2) {}
+                    }
+                    try { item.stack.removeLayer(item.animPlayer); } catch (eR3) {}
                 }
             } catch (eRem) {}
             activeKosmxLayers.splice(i, 1);

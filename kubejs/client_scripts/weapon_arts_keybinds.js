@@ -13,6 +13,7 @@ let J_MC_ARTS = null;
 let J_MC_BC = null;
 let J_PlayerAttackAnimatable = null;
 let J_Integer_ARTS = null;
+let J_Float_ARTS = null;
 
 function initArtsClientApi() {
     if (!J_GLFW_ARTS) {
@@ -29,6 +30,9 @@ function initArtsClientApi() {
     }
     if (!J_Integer_ARTS) {
         try { J_Integer_ARTS = Java.loadClass('java.lang.Integer'); } catch (e) {}
+    }
+    if (!J_Float_ARTS) {
+        try { J_Float_ARTS = Java.loadClass('java.lang.Float'); } catch (e) {}
     }
 }
 
@@ -88,17 +92,20 @@ ClientEvents.tick(event => {
         try {
             if (typeof mc.player.stopAttackAnimation === 'function') {
                 mc.player.stopAttackAnimation(0);
-            } else if (J_PlayerAttackAnimatable) {
-                try {
-                    let intType = J_Integer_ARTS ? J_Integer_ARTS.TYPE : null;
-                    let m = intType ? J_PlayerAttackAnimatable.getMethod('stopAttackAnimation', intType) : null;
-                    if (m) {
-                        m.invoke(mc.player, java.lang.Integer.valueOf(0));
-                    } else {
-                        J_PlayerAttackAnimatable.cast(mc.player).stopAttackAnimation(0);
+            }
+        } catch (eStop1) {}
+        try {
+            if (J_PlayerAttackAnimatable) {
+                let zeroFloat = J_Float_ARTS ? J_Float_ARTS.valueOf(0.0) : 0.0;
+                for (let m of J_PlayerAttackAnimatable.getMethods()) {
+                    if (m.getName() === 'stopAttackAnimation') {
+                        let params = m.getParameterTypes();
+                        if (params.length === 0) {
+                            m.invoke(mc.player);
+                        } else if (params.length === 1) {
+                            m.invoke(mc.player, zeroFloat);
+                        }
                     }
-                } catch (eInv2) {
-                    try { J_PlayerAttackAnimatable.cast(mc.player).stopAttackAnimation(0); } catch (eC2) {}
                 }
             }
         } catch (eBc2) {}
