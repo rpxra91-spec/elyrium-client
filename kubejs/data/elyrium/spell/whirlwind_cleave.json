@@ -19,7 +19,7 @@
   },
   "release": {
     "animation": {
-      "id": "spell_engine:two_handed_spinning",
+      "id": "bettercombat:two_handed_spin",
       "speed": 1.1
     },
     "visuals": {

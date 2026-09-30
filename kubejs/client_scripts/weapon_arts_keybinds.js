@@ -12,6 +12,7 @@ let J_GLFW_ARTS = null;
 let J_MC_ARTS = null;
 let J_MC_BC = null;
 let J_PlayerAttackAnimatable = null;
+let J_Integer_ARTS = null;
 
 function initArtsClientApi() {
     if (!J_GLFW_ARTS) {
@@ -25,6 +26,9 @@ function initArtsClientApi() {
     }
     if (!J_PlayerAttackAnimatable) {
         try { J_PlayerAttackAnimatable = Java.loadClass('net.bettercombat.client.animation.PlayerAttackAnimatable'); } catch (e) {}
+    }
+    if (!J_Integer_ARTS) {
+        try { J_Integer_ARTS = Java.loadClass('java.lang.Integer'); } catch (e) {}
     }
 }
 
@@ -72,15 +76,30 @@ ClientEvents.tick(event => {
         try {
             if (typeof mc.cancelUpswing === 'function') {
                 mc.cancelUpswing();
-            } else if (J_MC_BC && J_MC_BC.isInstance(mc)) {
-                mc.cancelUpswing();
+            } else if (J_MC_BC) {
+                try {
+                    let m = J_MC_BC.getMethod('cancelUpswing');
+                    if (m) m.invoke(mc);
+                } catch (eInv) {
+                    try { J_MC_BC.cast(mc).cancelUpswing(); } catch (eC) {}
+                }
             }
         } catch (eBc1) {}
         try {
             if (typeof mc.player.stopAttackAnimation === 'function') {
                 mc.player.stopAttackAnimation(0);
-            } else if (J_PlayerAttackAnimatable && J_PlayerAttackAnimatable.isInstance(mc.player)) {
-                mc.player.stopAttackAnimation(0);
+            } else if (J_PlayerAttackAnimatable) {
+                try {
+                    let intType = J_Integer_ARTS ? J_Integer_ARTS.TYPE : null;
+                    let m = intType ? J_PlayerAttackAnimatable.getMethod('stopAttackAnimation', intType) : null;
+                    if (m) {
+                        m.invoke(mc.player, java.lang.Integer.valueOf(0));
+                    } else {
+                        J_PlayerAttackAnimatable.cast(mc.player).stopAttackAnimation(0);
+                    }
+                } catch (eInv2) {
+                    try { J_PlayerAttackAnimatable.cast(mc.player).stopAttackAnimation(0); } catch (eC2) {}
+                }
             }
         } catch (eBc2) {}
     }
@@ -121,7 +140,7 @@ ClientEvents.tick(event => {
         }
     } catch (eAtt) {}
 
-    if (isAttackDown && !artsKeyPrev.attack) {
+    if (isAttackDown) {
         let offHand = mc.player.getOffhandItem ? mc.player.getOffhandItem() : mc.player.offHandItem;
         let mainHand = mc.player.getMainHandItem ? mc.player.getMainHandItem() : mc.player.mainHandItem;
         let isShield = false;
@@ -167,24 +186,29 @@ ClientEvents.tick(event => {
                 }
             } catch (eCrch) {}
 
-            // Combination 1: Shield Raised + LMB -> Shield Bash
-            if (isBlocking) {
-                if (now - lastArtKeySend >= 250) {
-                    lastArtKeySend = now;
-                    suppressCombatAttack();
-                    try {
-                        mc.player.sendData('elyrium:trigger_weapon_art', { action: 'shield_bash' });
-                    } catch (eNet) {}
-                }
+            // Unconditionally suppress Better Combat / Vanilla attack when blocking or crouching with shield
+            if (isBlocking || isCrouching) {
+                suppressCombatAttack();
             }
-            // Combination 2: Holding Shield + Shift + LMB -> Main Hand Innate Art
-            else if (isCrouching) {
-                if (now - lastArtKeySend >= 250) {
-                    lastArtKeySend = now;
-                    suppressCombatAttack();
-                    try {
-                        mc.player.sendData('elyrium:trigger_weapon_art', { action: 'innate_art' });
-                    } catch (eNet) {}
+
+            if (!artsKeyPrev.attack) {
+                // Combination 1: Shield Raised + LMB -> Shield Bash
+                if (isBlocking) {
+                    if (now - lastArtKeySend >= 250) {
+                        lastArtKeySend = now;
+                        try {
+                            mc.player.sendData('elyrium:trigger_weapon_art', { action: 'shield_bash' });
+                        } catch (eNet) {}
+                    }
+                }
+                // Combination 2: Holding Shield + Shift + LMB -> Main Hand Innate Art
+                else if (isCrouching) {
+                    if (now - lastArtKeySend >= 250) {
+                        lastArtKeySend = now;
+                        try {
+                            mc.player.sendData('elyrium:trigger_weapon_art', { action: 'innate_art' });
+                        } catch (eNet) {}
+                    }
                 }
             }
         }

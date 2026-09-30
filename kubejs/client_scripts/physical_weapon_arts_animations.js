@@ -150,7 +150,9 @@ function playRealPlayerAnimation(targetPlayer, animId, speed) {
                         // Calculate animation length in ticks
                         let lengthTicks = 20;
                         try {
-                            if (animationData.stopTick && animationData.stopTick > 0) {
+                            if (typeof animPlayer.getStopTick === 'function' && animPlayer.getStopTick() > 0) {
+                                lengthTicks = animPlayer.getStopTick();
+                            } else if (animationData.stopTick && animationData.stopTick > 0) {
                                 lengthTicks = animationData.stopTick;
                             } else if (animationData.endTick && animationData.endTick > 0) {
                                 lengthTicks = animationData.endTick;
@@ -159,7 +161,7 @@ function playRealPlayerAnimation(targetPlayer, animId, speed) {
                             }
                         } catch (eLen) {}
 
-                        let durationTicks = Math.max(8, Math.ceil(lengthTicks / s));
+                        let durationTicks = Math.min(60, Math.max(8, Math.ceil(lengthTicks / s)));
                         scheduleKosmxCleanup(stack, animPlayer, durationTicks);
                     }
                 }

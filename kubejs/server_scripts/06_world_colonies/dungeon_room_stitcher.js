@@ -20,7 +20,9 @@ const DUNGEON_PALETTES = {
         pillar: 'minecraft:polished_andesite',
         light: 'minecraft:lantern',
         gate: 'minecraft:iron_bars',
-        ceiling: 'minecraft:cobblestone'
+        ceiling: 'minecraft:cobblestone',
+        sarcophagus: 'minecraft:deepslate_bricks',
+        sarcophagus_wall: 'minecraft:stone_bricks'
     },
     2: { // Nether
         floor: 'minecraft:polished_blackstone',
@@ -29,7 +31,9 @@ const DUNGEON_PALETTES = {
         pillar: 'minecraft:gilded_blackstone',
         light: 'minecraft:soul_lantern',
         gate: 'minecraft:iron_bars',
-        ceiling: 'minecraft:nether_bricks'
+        ceiling: 'minecraft:nether_bricks',
+        sarcophagus: 'minecraft:polished_blackstone_bricks',
+        sarcophagus_wall: 'minecraft:polished_blackstone'
     },
     3: { // Aether
         floor: 'minecraft:smooth_sandstone',
@@ -38,7 +42,9 @@ const DUNGEON_PALETTES = {
         pillar: 'minecraft:polished_diorite',
         light: 'minecraft:sea_lantern',
         gate: 'minecraft:iron_bars',
-        ceiling: 'minecraft:smooth_quartz'
+        ceiling: 'minecraft:smooth_quartz',
+        sarcophagus: 'minecraft:smooth_sandstone',
+        sarcophagus_wall: 'minecraft:quartz_bricks'
     },
     4: { // The End
         floor: 'minecraft:end_stone_bricks',
@@ -47,7 +53,9 @@ const DUNGEON_PALETTES = {
         pillar: 'minecraft:obsidian',
         light: 'minecraft:end_rod',
         gate: 'minecraft:iron_bars',
-        ceiling: 'minecraft:end_stone'
+        ceiling: 'minecraft:end_stone',
+        sarcophagus: 'minecraft:end_stone_bricks',
+        sarcophagus_wall: 'minecraft:purpur_block'
     },
     5: { // Eternal Starlight
         floor: 'minecraft:prismarine_bricks',
@@ -56,7 +64,9 @@ const DUNGEON_PALETTES = {
         pillar: 'minecraft:chiseled_stone_bricks',
         light: 'minecraft:sea_lantern',
         gate: 'minecraft:iron_bars',
-        ceiling: 'minecraft:prismarine'
+        ceiling: 'minecraft:prismarine',
+        sarcophagus: 'minecraft:dark_prismarine',
+        sarcophagus_wall: 'minecraft:prismarine_bricks'
     },
     6: { // Deeper Darker
         floor: 'minecraft:deepslate_bricks',
@@ -65,7 +75,9 @@ const DUNGEON_PALETTES = {
         pillar: 'minecraft:reinforced_deepslate',
         light: 'minecraft:soul_lantern',
         gate: 'minecraft:iron_bars',
-        ceiling: 'minecraft:cobbled_deepslate'
+        ceiling: 'minecraft:cobbled_deepslate',
+        sarcophagus: 'minecraft:deepslate_bricks',
+        sarcophagus_wall: 'minecraft:polished_deepslate'
     },
     7: { // DivineRPG Eden
         floor: 'minecraft:smooth_sandstone',
@@ -74,7 +86,9 @@ const DUNGEON_PALETTES = {
         pillar: 'minecraft:chiseled_sandstone',
         light: 'minecraft:glowstone',
         gate: 'minecraft:iron_bars',
-        ceiling: 'minecraft:sandstone'
+        ceiling: 'minecraft:sandstone',
+        sarcophagus: 'minecraft:cut_sandstone',
+        sarcophagus_wall: 'minecraft:smooth_sandstone'
     },
     8: { // DivineRPG Mortum
         floor: 'minecraft:polished_blackstone',
@@ -83,9 +97,46 @@ const DUNGEON_PALETTES = {
         pillar: 'minecraft:netherite_block',
         light: 'minecraft:soul_lantern',
         gate: 'minecraft:iron_bars',
-        ceiling: 'minecraft:blackstone'
+        ceiling: 'minecraft:blackstone',
+        sarcophagus: 'minecraft:crying_obsidian',
+        sarcophagus_wall: 'minecraft:polished_blackstone'
     }
 };
+
+// Safe recursive fill preventing Vanilla /fill volume limit (32,768 blocks) overflows
+function safeFill(server, x1, y1, z1, x2, y2, z2, block, extra) {
+    let minX = Math.min(x1, x2);
+    let maxX = Math.max(x1, x2);
+    let minY = Math.min(y1, y2);
+    let maxY = Math.max(y1, y2);
+    let minZ = Math.min(z1, z2);
+    let maxZ = Math.max(z1, z2);
+    let extraStr = extra ? (' ' + extra) : '';
+
+    let dx = maxX - minX + 1;
+    let dy = maxY - minY + 1;
+    let dz = maxZ - minZ + 1;
+    let vol = dx * dy * dz;
+
+    if (vol <= 30000) {
+        server.runCommandSilent(`execute in elyrium:dungeons run fill ${minX} ${minY} ${minZ} ${maxX} ${maxY} ${maxZ} ${block}${extraStr}`);
+        return;
+    }
+
+    if (dz >= dx && dz >= dy) {
+        let midZ = Math.floor((minZ + maxZ) / 2);
+        safeFill(server, minX, minY, minZ, maxX, maxY, midZ, block, extra);
+        safeFill(server, minX, minY, midZ + 1, maxX, maxY, maxZ, block, extra);
+    } else if (dy >= dx && dy >= dz) {
+        let midY = Math.floor((minY + maxY) / 2);
+        safeFill(server, minX, minY, minZ, maxX, midY, maxZ, block, extra);
+        safeFill(server, minX, midY + 1, minZ, maxX, maxY, maxZ, block, extra);
+    } else {
+        let midX = Math.floor((minX + maxX) / 2);
+        safeFill(server, minX, minY, minZ, midX, maxY, maxZ, block, extra);
+        safeFill(server, midX + 1, minY, minZ, maxX, maxY, maxZ, block, extra);
+    }
+}
 
 const ElyriumDungeonStitcher = {
     getPalette: function(sector) {
@@ -104,6 +155,58 @@ const ElyriumDungeonStitcher = {
         }
     },
 
+    // Constructs an impenetrable, fully enclosed subterranean sarcophagus so the player never sees the void
+    buildSarcophagus: function(server, originX, pal) {
+        let floorBlock = pal.sarcophagus || pal.wall;
+        let wallBlock = pal.sarcophagus_wall || pal.wall;
+        let ceilBlock = pal.ceiling || pal.wall;
+
+        // 1. Monolithic Bedrock/Deepslate Sub-Foundation Slab (Y: 36..44 across entire dungeon bounds)
+        safeFill(server, originX - 32, 36, -16, originX + 32, 44, 128, floorBlock);
+
+        // 2. Sealed Perimeter Walls (2 blocks thick from Y=36 up to Y=76)
+        // West Wall
+        safeFill(server, originX - 32, 36, -16, originX - 31, 76, 128, wallBlock);
+        // East Wall
+        safeFill(server, originX + 31, 36, -16, originX + 32, 76, 128, wallBlock);
+        // North Wall
+        safeFill(server, originX - 32, 36, -16, originX + 32, 76, -15, wallBlock);
+        // South Wall
+        safeFill(server, originX - 32, 36, 127, originX + 32, 76, 128, wallBlock);
+
+        // 3. Sealed Monolithic Ceiling Slab (2 blocks thick Y: 75..76)
+        safeFill(server, originX - 32, 75, -16, originX + 32, 76, 128, ceilBlock);
+
+        // 4. Perimeter Atmosphere Lighting on Inner Wall faces (Y=52 and Y=66)
+        let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
+        for (let cz = -8; cz <= 120; cz += 16) {
+            cmd(`setblock ${originX - 30} 52 ${cz} ${pal.pillar}`);
+            cmd(`setblock ${originX - 30} 53 ${cz} ${pal.light}`);
+            cmd(`setblock ${originX + 30} 52 ${cz} ${pal.pillar}`);
+            cmd(`setblock ${originX + 30} 53 ${cz} ${pal.light}`);
+
+            cmd(`setblock ${originX - 30} 66 ${cz} ${pal.pillar}`);
+            cmd(`setblock ${originX - 30} 67 ${cz} ${pal.light}`);
+            cmd(`setblock ${originX + 30} 66 ${cz} ${pal.pillar}`);
+            cmd(`setblock ${originX + 30} 67 ${cz} ${pal.light}`);
+        }
+        for (let cx = originX - 24; cx <= originX + 24; cx += 16) {
+            cmd(`setblock ${cx} 52 -14 ${pal.pillar}`);
+            cmd(`setblock ${cx} 53 -14 ${pal.light}`);
+            cmd(`setblock ${cx} 52 126 ${pal.pillar}`);
+            cmd(`setblock ${cx} 53 126 ${pal.light}`);
+        }
+    },
+
+    // Generates a massive solid monolithic base platform directly under mod structures
+    // Prevents jigsaw/stairs descending into void, eliminates floating stairs completely
+    buildStructurePlatform: function(server, originX, structInfo, pal) {
+        let zStart = structInfo.zOffset - 8;
+        let zEnd = structInfo.zOffset + 48;
+        // Fills from top of subfoundation (Y=44) up to structure baseline Y
+        safeFill(server, originX - 28, 44, zStart, originX + 28, structInfo.y, zEnd, pal.floor);
+    },
+
     // Ensures wide open space with solid multi-layer floor, 4 sealed walls, solid ceiling and lights (no void exposure)
     prepareOpenHall: function(server, cx, cy, cz, radiusXZ, heightY, pal) {
         let cmd = (commandStr) => {
@@ -111,23 +214,23 @@ const ElyriumDungeonStitcher = {
         };
 
         // 1. Deep solid subfloor foundation (so no void is ever visible under broken blocks)
-        cmd(`fill ${cx - radiusXZ} ${cy - 3} ${cz - radiusXZ} ${cx + radiusXZ} ${cy - 1} ${cz + radiusXZ} ${pal.wall}`);
+        safeFill(server, cx - radiusXZ, cy - 3, cz - radiusXZ, cx + radiusXZ, cy - 1, cz + radiusXZ, pal.wall);
 
         // 2. Room floor
-        cmd(`fill ${cx - radiusXZ} ${cy} ${cz - radiusXZ} ${cx + radiusXZ} ${cy} ${cz + radiusXZ} ${pal.floor}`);
+        safeFill(server, cx - radiusXZ, cy, cz - radiusXZ, cx + radiusXZ, cy, cz + radiusXZ, pal.floor);
 
         // 3. Sealed perimeter walls (North, South, West, East)
-        cmd(`fill ${cx - radiusXZ} ${cy + 1} ${cz - radiusXZ} ${cx + radiusXZ} ${cy + heightY} ${cz - radiusXZ} ${pal.wall}`);
-        cmd(`fill ${cx - radiusXZ} ${cy + 1} ${cz + radiusXZ} ${cx + radiusXZ} ${cy + heightY} ${cz + radiusXZ} ${pal.wall}`);
-        cmd(`fill ${cx - radiusXZ} ${cy + 1} ${cz - radiusXZ} ${cx - radiusXZ} ${cy + heightY} ${cz + radiusXZ} ${pal.wall}`);
-        cmd(`fill ${cx + radiusXZ} ${cy + 1} ${cz - radiusXZ} ${cx + radiusXZ} ${cy + heightY} ${cz + radiusXZ} ${pal.wall}`);
+        safeFill(server, cx - radiusXZ, cy + 1, cz - radiusXZ, cx + radiusXZ, cy + heightY, cz - radiusXZ, pal.wall);
+        safeFill(server, cx - radiusXZ, cy + 1, cz + radiusXZ, cx + radiusXZ, cy + heightY, cz + radiusXZ, pal.wall);
+        safeFill(server, cx - radiusXZ, cy + 1, cz - radiusXZ, cx - radiusXZ, cy + heightY, cz + radiusXZ, pal.wall);
+        safeFill(server, cx + radiusXZ, cy + 1, cz - radiusXZ, cx + radiusXZ, cy + heightY, cz + radiusXZ, pal.wall);
 
         // 4. Solid ceiling enclosing the room from above
-        cmd(`fill ${cx - radiusXZ} ${cy + heightY} ${cz - radiusXZ} ${cx + radiusXZ} ${cy + heightY} ${cz + radiusXZ} ${pal.ceiling}`);
+        safeFill(server, cx - radiusXZ, cy + heightY, cz - radiusXZ, cx + radiusXZ, cy + heightY, cz + radiusXZ, pal.ceiling);
 
         // 5. Clear interior room air volume
         let innerR = Math.max(1, radiusXZ - 1);
-        cmd(`fill ${cx - innerR} ${cy + 1} ${cz - innerR} ${cx + innerR} ${cy + heightY - 1} ${cz + innerR} minecraft:air`);
+        safeFill(server, cx - innerR, cy + 1, cz - innerR, cx + innerR, cy + heightY - 1, cz + innerR, 'minecraft:air');
 
         // 6. Carve North and South connecting arch doorways (aligned with 5-wide corridors)
         cmd(`fill ${cx - 2} ${cy + 1} ${cz - radiusXZ} ${cx + 2} ${cy + 4} ${cz - radiusXZ} minecraft:air`);
@@ -161,23 +264,26 @@ const ElyriumDungeonStitcher = {
         };
 
         // 1. Force load dungeon chunk area (safe radius under 256 chunk limit)
-        cmd(`forceload add ${originX - 96} -96 ${originX + 96} 96`);
+        cmd(`forceload add ${originX - 96} -96 ${originX + 96} 144`);
 
         console.log(`[ELYRIUM] Mega-Dungeon Structure #${instanceId} (${structInfo.id}) generating at ${originX}, ${originY}, ${originZ}`);
 
-        // 2. MONOLITHIC PROTECTIVE SUB-FOUNDATION SLAB (Enclosing entire dungeon from below)
-        cmd(`fill ${originX - 16} 38 -8 ${originX + 16} 47 124 ${pal.wall}`);
+        // 2. SEALED STONE SARCOPHAGUS ENCLOSURE (Monolithic floor, 4 walls, solid ceiling, lights)
+        this.buildSarcophagus(server, originX, pal);
 
-        // 3. Build Safe Starter Entrance Pavilion at [originX, 64, 0]
-        cmd(`fill ${originX - 4} 61 -4 ${originX + 4} 63 4 ${pal.wall}`); // Subfloor
-        cmd(`fill ${originX - 4} 64 -4 ${originX + 4} 64 4 ${pal.floor}`);
-        cmd(`fill ${originX - 4} 65 -4 ${originX + 4} 69 4 minecraft:air`);
-        cmd(`fill ${originX - 4} 70 -4 ${originX + 4} 70 4 ${pal.ceiling}`);
+        // 3. SOLID MONOLITHIC STRUCTURE BASE PLATFORM (Guarantees zero floating stairs or pits)
+        this.buildStructurePlatform(server, originX, structInfo, pal);
+
+        // 4. Build Safe Starter Entrance Pavilion at [originX, 64, 0]
+        safeFill(server, originX - 4, 61, -4, originX + 4, 63, 4, pal.wall); // Subfloor
+        safeFill(server, originX - 4, 64, -4, originX + 4, 64, 4, pal.floor);
+        safeFill(server, originX - 4, 65, -4, originX + 4, 69, 4, 'minecraft:air');
+        safeFill(server, originX - 4, 70, -4, originX + 4, 70, 4, pal.ceiling);
 
         // Side walls and decorative pillars
-        cmd(`fill ${originX - 4} 65 -4 ${originX - 4} 69 4 ${pal.wall}`);
-        cmd(`fill ${originX + 4} 65 -4 ${originX + 4} 69 4 ${pal.wall}`);
-        cmd(`fill ${originX - 4} 65 -4 ${originX + 4} 69 -4 ${pal.wall}`); // Back wall
+        safeFill(server, originX - 4, 65, -4, originX - 4, 69, 4, pal.wall);
+        safeFill(server, originX + 4, 65, -4, originX + 4, 69, 4, pal.wall);
+        safeFill(server, originX - 4, 65, -4, originX + 4, 69, -4, pal.wall); // Back wall
 
         // Corner Light Pillars
         cmd(`setblock ${originX - 3} 65 -3 ${pal.pillar}`);
@@ -188,9 +294,6 @@ const ElyriumDungeonStitcher = {
         cmd(`setblock ${originX - 3} 66 3 ${pal.light}`);
         cmd(`setblock ${originX + 3} 65 3 ${pal.pillar}`);
         cmd(`setblock ${originX + 3} 66 3 ${pal.light}`);
-
-        // 4. Monolithic Base Platform for Structures (Prevents placement failure in void)
-        cmd(`fill ${originX - 16} ${structInfo.y - 2} ${originZ + structInfo.zOffset - 4} ${originX + 16} ${structInfo.y} ${originZ + structInfo.zOffset + 36} ${pal.floor}`);
 
         // 5. Invoke Native Mod Structure Generation via /place structure
         cmd(`place structure ${structInfo.id} ${originX} ${structInfo.y} ${originZ + structInfo.zOffset}`);
@@ -203,8 +306,8 @@ const ElyriumDungeonStitcher = {
         }
 
         // Clean any stray jigsaw / structure blocks in proximity
-        cmd(`fill ${originX - 64} 30 -32 ${originX + 64} 90 128 minecraft:air replace minecraft:jigsaw`);
-        cmd(`fill ${originX - 64} 30 -32 ${originX + 64} 90 128 minecraft:air replace minecraft:structure_block`);
+        safeFill(server, originX - 64, 30, -32, originX + 64, 90, 128, 'minecraft:air replace minecraft:jigsaw');
+        safeFill(server, originX - 64, 30, -32, originX + 64, 90, 128, 'minecraft:air replace minecraft:structure_block');
 
         // 7. Open Hall 1: Elite Combat Pack (Upper Catacombs, radius 5, Z=28)
         let hall1Z = originZ + 28;
@@ -212,12 +315,12 @@ const ElyriumDungeonStitcher = {
         this.spawnElitePack(server, originX, 65, hall1Z, sector, instanceId, 'combat_1');
 
         // Corridor 1: Starter Pavilion (Z=4) into Hall 1 (Z=23)
-        cmd(`fill ${originX - 3} 61 4 ${originX + 3} 63 ${hall1Z - 5} ${pal.wall}`); // Subfloor
-        cmd(`fill ${originX - 2} 64 4 ${originX + 2} 64 ${hall1Z - 5} ${pal.floor}`);
-        cmd(`fill ${originX - 2} 65 4 ${originX + 2} 68 ${hall1Z - 5} minecraft:air`);
-        cmd(`fill ${originX - 3} 65 4 ${originX - 3} 68 ${hall1Z - 5} ${pal.wall}`);
-        cmd(`fill ${originX + 3} 65 4 ${originX + 3} 68 ${hall1Z - 5} ${pal.wall}`);
-        cmd(`fill ${originX - 3} 69 4 ${originX + 3} 69 ${hall1Z - 5} ${pal.ceiling}`);
+        safeFill(server, originX - 3, 61, 4, originX + 3, 63, hall1Z - 5, pal.wall); // Subfloor
+        safeFill(server, originX - 2, 64, 4, originX + 2, 64, hall1Z - 5, pal.floor);
+        safeFill(server, originX - 2, 65, 4, originX + 2, 68, hall1Z - 5, 'minecraft:air');
+        safeFill(server, originX - 3, 65, 4, originX - 3, 68, hall1Z - 5, pal.wall);
+        safeFill(server, originX + 3, 65, 4, originX + 3, 68, hall1Z - 5, pal.wall);
+        safeFill(server, originX - 3, 69, 4, originX + 3, 69, hall1Z - 5, pal.ceiling);
         cmd(`setblock ${originX - 2} 67 10 ${pal.light}`);
         cmd(`setblock ${originX + 2} 67 10 ${pal.light}`);
         cmd(`setblock ${originX - 2} 67 18 ${pal.light}`);

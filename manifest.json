@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-30T06:23:52.215342+00:00",
+  "generated_at": "2026-09-30T06:45:39.225923+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -7812,8 +7812,8 @@
     },
     {
       "path": "kubejs/client_scripts/physical_weapon_arts_animations.js",
-      "sha256": "459e4ba971e9dd6119d5853ad7de3d3112df7f61daf6ef3789bd39662f4bf9a4",
-      "size": 11527
+      "sha256": "2c72f8580a88c64ebc099110c1d2a6cdac87b922f03ad8c6169d2b9ad1220fd7",
+      "size": 11732
     },
     {
       "path": "kubejs/client_scripts/simplestats_anti_exploit.js",
@@ -7842,8 +7842,8 @@
     },
     {
       "path": "kubejs/client_scripts/weapon_arts_keybinds.js",
-      "sha256": "3804e064423181e4016427aaabac3642fd0fdd1e3167c6db7716d418099ca6e5",
-      "size": 7564
+      "sha256": "668997e33e1afee856577e28399686fe30ae2adad4a8c9c7f493923bda529c25",
+      "size": 8641
     },
     {
       "path": "kubejs/config/client.json",
@@ -8061,6 +8061,11 @@
       "size": 101
     },
     {
+      "path": "kubejs/data/cataclysm/tags/worldgen/biome/has_structure/acropolis_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
       "path": "kubejs/data/cataclysm/tags/worldgen/biome/has_structure/ancient_factory_biomes.json",
       "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
       "size": 101
@@ -8101,6 +8106,231 @@
       "size": 101
     },
     {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/aviary_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/bandit_towers_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/bandit_village_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/bathhouse_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/ceryneian_hind_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/coliseum_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/fishing_hut_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/foundry_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/giant_mushroom_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/greenwood_pub_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/heavenly_challenger_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/heavenly_conqueror_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/heavenly_rider_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/illager_campsite_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/illager_corsair_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/illager_fort_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/illager_galley_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/illager_windmill_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/infested_temple_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/jungle_tree_house_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/keep_kayra_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/kisegi_sanctuary_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/lighthouse_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/mechanical_nest_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/merchant_campsite_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/mining_complex_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/mining_system_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/monastery_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/mushroom_house_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/mushroom_mines_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/mushroom_village_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/plague_asylum_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/scorched_mines_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/shiraz_palace_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/small_blimp_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/small_prairie_house_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/thornborn_towers_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/typhon_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/undead_pirate_ship_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise/tags/worldgen/biome/has_structure/wishing_well_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise_seven_seas/tags/worldgen/biome/has_structure/corsair_corvette_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise_seven_seas/tags/worldgen/biome/has_structure/pirate_junk_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise_seven_seas/tags/worldgen/biome/has_structure/small_yacht_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise_seven_seas/tags/worldgen/biome/has_structure/unicorn_galleon_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
+      "path": "kubejs/data/dungeons_arise_seven_seas/tags/worldgen/biome/has_structure/victory_frigate_biomes.json",
+      "sha256": "671516315eb61c15707baeaf1ad6e853c1563730b0e80d327fca71ed4c0a94dc",
+      "size": 101
+    },
+    {
       "path": "kubejs/data/elyrium/dimension/dungeons.json",
       "sha256": "d8bb1f55657cc4a981037dfa242631689f8546ca2101e499b3bd3e27a82c55ac",
       "size": 305
@@ -8112,7 +8342,7 @@
     },
     {
       "path": "kubejs/data/elyrium/spell/crushing_uppercut.json",
-      "sha256": "55263c944bb2823748e3f319b95c0d9ebe54f2b0d0a8ab1919b59f56bd208316",
+      "sha256": "613be25a8cae921130231ac3324b6c5abd26dea2dceb0f029a81b0dcd251c1de",
       "size": 1875
     },
     {
@@ -8152,8 +8382,8 @@
     },
     {
       "path": "kubejs/data/elyrium/spell/whirlwind_cleave.json",
-      "sha256": "36fa3db1eeaf211b455f4e14d4f9a537c43d9be7f8ff36434c0fafd15ee9dc43",
-      "size": 1865
+      "sha256": "ce7f716812b44971363c8d3637283d5a04ada9a056fd7d5a0c193882da0ff4f5",
+      "size": 1861
     },
     {
       "path": "kubejs/data/elyrium/worldgen/biome/dungeon_abyss.json",
@@ -8752,8 +8982,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_room_stitcher.js",
-      "sha256": "f3c3d59a02f1e1f690ad29f3baff3023b54896b40637415298e70b6960581510",
-      "size": 25279
+      "sha256": "306a80dea9a17d5aa34b96cb30e6937b8e05f05c1038bc6d26f352e3a802f869",
+      "size": 30184
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/endless_fringe_engine.js",
