@@ -174,7 +174,7 @@ function performClientDodge(forwardInput, strafeInput) {
         fwd = 1;
     }
 
-    let yawRad = Math.toRadians(player.yRot);
+    let yawRad = player.yRot * (Math.PI / 180.0);
     let fx = -Math.sin(yawRad);
     let fz = Math.cos(yawRad);
     let rx = Math.cos(yawRad);

@@ -8,7 +8,7 @@
 // 4. Return to Overworld: Restores player to the exact entry coordinates.
 // ==============================================================================
 
-const ElyriumInstanceManager = {
+var ElyriumInstanceManager = {
     // Generate circular Colosseum Arena at coordinates
     buildColosseumArena: function(server, originX, originY, originZ, sector) {
         let level = server.getLevel('elyrium:dungeons');
@@ -102,13 +102,13 @@ const ElyriumInstanceManager = {
         if (type === 'colosseum') {
             this.buildColosseumArena(server, cellX, cellY, cellZ, sector);
         } else if (type === 'dungeon') {
-            let stitcher = global.ElyriumDungeonStitcher || (typeof ElyriumDungeonStitcher !== 'undefined' ? ElyriumDungeonStitcher : null);
+            let stitcher = typeof ElyriumDungeonStitcher !== 'undefined' ? ElyriumDungeonStitcher : null;
             if (stitcher) {
                 stitcher.buildDungeon(server, nextId, sector);
             } else {
                 console.error(`[ELYRIUM CRITICAL] ElyriumDungeonStitcher not found when creating dungeon instance #${nextId}!`);
             }
-            let livesEngine = global.ElyriumLivesEngine || (typeof ElyriumLivesEngine !== 'undefined' ? ElyriumLivesEngine : null);
+            let livesEngine = typeof ElyriumLivesEngine !== 'undefined' ? ElyriumLivesEngine : null;
             if (livesEngine) {
                 livesEngine.initInstanceLives(server, nextId, sector);
             }
@@ -275,6 +275,5 @@ ServerEvents.commandRegistry(event => {
     );
 });
 
-// Export to global scope for cross-script access in KubeJS
-global.ElyriumInstanceManager = ElyriumInstanceManager;
+
 

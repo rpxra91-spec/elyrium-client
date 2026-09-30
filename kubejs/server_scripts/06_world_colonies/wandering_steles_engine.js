@@ -25,7 +25,7 @@ const ElyriumStelePalettes = {
     }
 };
 
-const ElyriumSteleEngine = {
+var ElyriumSteleEngine = {
     // Spawn a wandering stele at specified coordinates
     spawnStele: function(server, dim, x, y, z, type, sector, isTest) {
         let sec = sector || 1;
@@ -271,6 +271,5 @@ ServerEvents.commandRegistry(event => {
     );
 });
 
-// Export to global scope for cross-script access in KubeJS
-global.ElyriumSteleEngine = ElyriumSteleEngine;
+
 

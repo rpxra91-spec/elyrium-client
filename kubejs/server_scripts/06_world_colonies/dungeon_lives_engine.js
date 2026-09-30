@@ -7,7 +7,7 @@
 // 3. Expulsion back to overworld upon exhausting all group lives.
 // ==============================================================================
 
-const ElyriumLivesEngine = {
+var ElyriumLivesEngine = {
     getMaxLivesForSector: function(sector) {
         if (sector <= 2) return 5;  // 5 shared lives for early tiers
         if (sector <= 5) return 4;  // 4 shared lives for mid tiers
@@ -167,6 +167,5 @@ ServerEvents.tick(event => {
     });
 });
 
-// Export to global scope for cross-script access in KubeJS
-global.ElyriumLivesEngine = ElyriumLivesEngine;
+
 

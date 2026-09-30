@@ -1,8 +1,8 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-30T09:32:34.862255+00:00",
+  "generated_at": "2026-09-30T13:49:24.964140+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -7762,8 +7762,8 @@
     },
     {
       "path": "kubejs/client_scripts/dodge_camera_fx.js",
-      "sha256": "4ee9a083d0f43e277081ba0c7b91ff906c2ed29a91c1c052833c08a1fc32a44d",
-      "size": 13412
+      "sha256": "16c6bbbffcd200e160421ee5954d48bc479a37878a54d65f5749f4780a1a634b",
+      "size": 13416
     },
     {
       "path": "kubejs/client_scripts/equipment_reinforcement_tooltips.js",
@@ -8756,11 +8756,6 @@
       "size": 110429
     },
     {
-      "path": "kubejs/server_scripts/03_combat/set_bonuses.js",
-      "sha256": "7077688a1af5b8bea89564510eb1ad739d3ed20f5d9f39146b42362334984453",
-      "size": 990
-    },
-    {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
       "sha256": "6a31dcb26031ab485085534c68dcc88d4338d6c19f5510d143a40b7e134e0a51",
       "size": 12499
@@ -8787,8 +8782,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/two_handed_offhand_lock.js",
-      "sha256": "40099bbd81250bdff32622a2092685d5cb00e94d6c631bb903c70f0312b38b60",
-      "size": 8986
+      "sha256": "828178d7c50fe39149f8c2bf10cd0afdfa77f1ccfd64ebbe2b8c3c98f18900a1",
+      "size": 8962
     },
     {
       "path": "kubejs/server_scripts/03_combat/wave_defense_arena.js",
@@ -8804,11 +8799,6 @@
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",
       "sha256": "c464a1d9b451212e37e9acde6bfa8c162aec258070fab787fb56e7242169fcc3",
       "size": 2428
-    },
-    {
-      "path": "kubejs/server_scripts/03_combat/weapon_mastery.js",
-      "sha256": "73204b9126a8d2b50f8ddd5b94e1a712ac35b9620f942f44877a0ec409360cee",
-      "size": 8723
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_reinforcement_scaling.js",
@@ -8962,18 +8952,18 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_instance_manager.js",
-      "sha256": "148ad7e8fb4b55b6b08fa882cb21fb3221a2e08e4607660cbbe1f78f83913dda",
-      "size": 13061
+      "sha256": "6c0bada581099dfe7f3fdb350af1847d95cd11f75ba87346f9aa302a6937e637",
+      "size": 12878
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_lives_engine.js",
-      "sha256": "fe94439bb4eb3947981661879c3f3b279fea3b80b423396ca5c4667b10103c1b",
-      "size": 8239
+      "sha256": "71e4cc0e25205006dcc4c978012fe09e281083657f5227b677941725f560fa45",
+      "size": 8130
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_room_stitcher.js",
-      "sha256": "478c254615adbcb99f0305e51215e79c7ff9796db4d98b987f72faef3e3b3b88",
-      "size": 30277
+      "sha256": "82ff236f067bea9189da6bd79a421747edd71ff7f827e2038b3d496756fc9eef",
+      "size": 30160
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/endless_fringe_engine.js",
@@ -9007,8 +8997,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/sector_progression_engine.js",
-      "sha256": "49fa7de603da971b097e2f93754eea8b4bc737ed8acafc86b8662dafc5351569",
-      "size": 14938
+      "sha256": "be4cd02e335f446c844d0b5337316793b8223d1998b3b01ea51b5dc34efa9633",
+      "size": 14958
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/server_idle_system.js",
@@ -9022,8 +9012,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/wandering_steles_engine.js",
-      "sha256": "92e683c74d0d3fd90654caf53f41a4a5159663f83f0160d13646602563a7470c",
-      "size": 12436
+      "sha256": "7a4c00d4df26b0b22922ccb6b06b6185fa9ba0db4eb7c6de69653334e5fa4495",
+      "size": 12327
     },
     {
       "path": "kubejs/server_scripts/07_recipes_filters/filter_early_weapons.js",

@@ -186,7 +186,6 @@ ItemEvents.firstRightClicked(event => {
     let offHand = player.offHandItem;
 
     if (isOffhandInteraction || (item && offHand && item === offHand && isOffhandRestricted(offHand))) {
-        event.cancel();
         let now = Date.now();
         let lastArtTick = player.persistentData.getInt('skd_last_art_tick') || 0;
         let currentAge = (typeof player.age === 'number') ? player.age : (typeof player.tickCount === 'number' ? player.tickCount : 0);

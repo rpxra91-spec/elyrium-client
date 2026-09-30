@@ -138,7 +138,7 @@ function safeFill(server, x1, y1, z1, x2, y2, z2, block, extra) {
     }
 }
 
-const ElyriumDungeonStitcher = {
+var ElyriumDungeonStitcher = {
     getPalette: function(sector) {
         return DUNGEON_PALETTES[sector] || DUNGEON_PALETTES[1];
     },
@@ -565,5 +565,4 @@ ServerEvents.commandRegistry(event => {
     );
 });
 
-// Export to global scope for cross-script access in KubeJS
-global.ElyriumDungeonStitcher = ElyriumDungeonStitcher;
+

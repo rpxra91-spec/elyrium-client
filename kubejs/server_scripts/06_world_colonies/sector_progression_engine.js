@@ -281,7 +281,7 @@ EntityEvents.beforeHurt(event => {
     let attacker = source.actual;
 
     // A. SECTOR 3: AETHER IMMUNITY TO FALL DAMAGE FOR MOBS
-    if (source.is('fall') && target.isMonster()) {
+    if (source.getType() === 'minecraft:fall' && target.isMonster()) {
         let sec = target.persistentData.getInt('elyrium_sector');
         if (sec === 3) {
             event.cancel();
