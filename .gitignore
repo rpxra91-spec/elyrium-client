@@ -22,8 +22,8 @@ logs/
 crash-reports/
 usercache.json
 usernamecache.json
-XaeroWaypoints*/
-xaero/
+/XaeroWaypoints*/
+/xaero/
 .patch_temp*/
 CustomSkinLoader/
 resourcepacks/*.zip
