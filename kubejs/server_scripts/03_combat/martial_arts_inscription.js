@@ -62,7 +62,19 @@ const MARTIAL_TABLETS = {
     'kubejs:martial_tablet_frost_stomp': { artId: 'frost_stomp', name: 'Ледяная Поступь', archetype: 'any', allowedDesc: 'Любое боевое оружие' },
     'kubejs:martial_tablet_lightning_smite': { artId: 'lightning_smite', name: 'Громовой Раскат', archetype: 'any', allowedDesc: 'Любое боевое оружие' },
     'kubejs:martial_tablet_blood_rend': { artId: 'blood_harvest', name: 'Кровавая Жатва', archetype: 'any', allowedDesc: 'Любое боевое оружие' },
-    'kubejs:martial_tablet_holy_blade': { artId: 'holy_blade', name: 'Священный Клинок', archetype: 'any', allowedDesc: 'Любое боевое оружие' }
+    'kubejs:martial_tablet_holy_blade': { artId: 'holy_blade', name: 'Священный Клинок', archetype: 'any', allowedDesc: 'Любое боевое оружие' },
+
+    // 10 Expanded Weapon Arts
+    'kubejs:martial_tablet_iron_stance': { artId: 'iron_stance', name: 'Стальная Стойка', archetype: 'any', allowedDesc: 'Универсальное (мечи, катаны, топоры, молоты, копья, кинжалы)' },
+    'kubejs:martial_tablet_thousand_cuts': { artId: 'thousand_cuts', name: 'Танец Тысячи Лезвий', archetype: 'finesse', allowedDesc: 'Клинковое / Ловкое (катаны, рапиры, кинжалы, сабли)' },
+    'kubejs:martial_tablet_helm_splitter': { artId: 'helm_splitter', name: 'Разрубатель Шлемов', archetype: 'any_melee', allowedDesc: 'Мечи, катаны, боевые топоры, молоты' },
+    'kubejs:martial_tablet_unstoppable_charge': { artId: 'unstoppable_charge', name: 'Неумолимый Натиск', archetype: 'heavy', allowedDesc: 'Двуручные мечи, клейморы, секиры, тяжелые молоты' },
+    'kubejs:martial_tablet_earth_fracture': { artId: 'earth_fracture', name: 'Камнеломный Разлом', archetype: 'heavy', allowedDesc: 'Двуручи, боевые топоры, молоты' },
+    'kubejs:martial_tablet_bone_crusher': { artId: 'bone_crusher', name: 'Дробитель Черепов', archetype: 'bludgeoning', allowedDesc: 'Молоты, булавы, палицы, кастеты' },
+    'kubejs:martial_tablet_spear_flurry': { artId: 'spear_flurry', name: 'Шквал Пяти Уколов', archetype: 'finesse', allowedDesc: 'Копья, пики, алебарды, рапиры' },
+    'kubejs:martial_tablet_polearm_vault': { artId: 'polearm_vault', name: 'Шестовой Прыжок', archetype: 'spear', allowedDesc: 'Копья, пики, алебарды, шесты' },
+    'kubejs:martial_tablet_sweeping_sweep': { artId: 'sweeping_sweep', name: 'Опрокидывающий Мах', archetype: 'heavy', allowedDesc: 'Двуручные мечи, секиры, алебарды, копья' },
+    'kubejs:martial_tablet_explosive_shot': { artId: 'explosive_shot', name: 'Разрывной Выстрел', archetype: 'ranged', allowedDesc: 'Стрелковое (луки, арбалеты)' }
 };
 
 const ART_NAMES = {
@@ -87,6 +99,16 @@ const ART_NAMES = {
     'lightning_smite': 'Громовой Раскат',
     'blood_harvest': 'Кровавая Жатва',
     'holy_blade': 'Священный Клинок',
+    'iron_stance': 'Стальная Стойка',
+    'thousand_cuts': 'Танец Тысячи Лезвий',
+    'helm_splitter': 'Разрубатель Шлемов',
+    'unstoppable_charge': 'Неумолимый Натиск',
+    'earth_fracture': 'Камнеломный Разлом',
+    'bone_crusher': 'Дробитель Черепов',
+    'spear_flurry': 'Шквал Пяти Уколов',
+    'polearm_vault': 'Шестовой Прыжок',
+    'sweeping_sweep': 'Опрокидывающий Мах',
+    'explosive_shot': 'Разрывной Выстрел',
     // Legacy
     'juggernaut_rush': 'Таранный Натиск',
     'lightning_thrust': 'Фантомный Выпад',
@@ -224,24 +246,39 @@ function isArtCompatibleWithWeapon(weaponItem, artId) {
         case 'earth_sunder':
         case 'severing_cleave':
         case 'juggernaut_rush':
-            return is2HHeavyWeapon(weaponItem, id);
+        case 'unstoppable_charge':
+        case 'earth_fracture':
+            return is2HHeavyWeapon(weaponItem, id) || isBludgeoningWeapon(weaponItem, id);
+
+        case 'sweeping_sweep':
+            return is2HHeavyWeapon(weaponItem, id) || id.includes('spear') || id.includes('lance') || id.includes('halberd') || id.includes('polearm');
 
         case 'iai_slash':
         case 'lightning_thrust':
         case 'piercing_thrust':
+        case 'thousand_cuts':
         case 'blood_rend':
-            return isFinesseBladeWeapon(weaponItem, id) || id.includes('spear') || id.includes('lance') || id.includes('halberd');
+            return isFinesseBladeWeapon(weaponItem, id) || isDaggerLightWeapon(weaponItem, id) || id.includes('spear') || id.includes('lance') || id.includes('halberd');
+
+        case 'spear_flurry':
+        case 'polearm_vault':
+            return id.includes('spear') || id.includes('lance') || id.includes('halberd') || id.includes('pike') || id.includes('rapier') || id.includes('polearm') || id.includes('glaive');
 
         case 'crushing_uppercut':
         case 'seismic_slam':
+        case 'bone_crusher':
             return isBludgeoningWeapon(weaponItem, id);
 
         case 'scissor_cross':
         case 'shadow_step':
-            return isDaggerLightWeapon(weaponItem, id) || id.includes('rapier');
+            return isDaggerLightWeapon(weaponItem, id) || id.includes('rapier') || id.includes('katana');
 
+        case 'helm_splitter':
+            return isWeaponItem(weaponItem) && !isRangedWeapon(weaponItem, id) && !isShield(weaponItem);
+
+        case 'iron_stance':
         case 'reverse_sunder':
-            return isWeaponItem(weaponItem);
+            return isWeaponItem(weaponItem) || isShield(weaponItem);
 
         case 'fan_barrage':
         case 'arrow_barrage':
@@ -249,6 +286,7 @@ function isArtCompatibleWithWeapon(weaponItem, artId) {
         case 'arrow_rain':
         case 'tactical_backstep':
         case 'triple_shot':
+        case 'explosive_shot':
             return isRangedWeapon(weaponItem, id);
 
         case 'shield_bash':

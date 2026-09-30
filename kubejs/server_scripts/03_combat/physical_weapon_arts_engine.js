@@ -286,12 +286,127 @@ const WEAPON_ARTS = {
     },
 
     // --------------------------------------------------------------------------
+    // 10 EXPANDED WEAPON ARTS (ASHES OF WAR EXPANSION)
+    // --------------------------------------------------------------------------
+    iron_stance: {
+        id: 'iron_stance',
+        name: 'Стальная Стойка',
+        enName: 'Iron Stance / Endure',
+        cdMs: 15000,
+        stamina: 35,
+        dmgMult: 1.0,
+        anim: 'bettercombat:two_handed_guard',
+        animSpeed: 1.0,
+        desc: 'Бафф на 3.5 сек: +50% поглощения урона, несбиваемость и 100% гипер-броня от отбрасывания.'
+    },
+    thousand_cuts: {
+        id: 'thousand_cuts',
+        name: 'Танец Тысячи Лезвий',
+        enName: 'Thousand Cuts',
+        cdMs: 10000,
+        stamina: 35,
+        dmgMult: 2.5,
+        anim: 'bettercombat:dual_handed_slash_cross',
+        animSpeed: 1.3,
+        desc: 'Серия из 5 молниеносных рассекающих ударов (суммарно 250% урона) с кровотоком.'
+    },
+    helm_splitter: {
+        id: 'helm_splitter',
+        name: 'Разрубатель Шлемов',
+        enName: 'Helm Splitter',
+        cdMs: 12000,
+        stamina: 35,
+        dmgMult: 2.3,
+        anim: 'bettercombat:two_handed_slash_vertical_right',
+        animSpeed: 1.1,
+        desc: 'Прыжок вперед с вертикальным нисходящим ударом в голову: 230% урона и стан цели на 2 сек.'
+    },
+    unstoppable_charge: {
+        id: 'unstoppable_charge',
+        name: 'Неумолимый Натиск',
+        enName: 'Unstoppable Charge',
+        cdMs: 14000,
+        stamina: 45,
+        dmgMult: 2.1,
+        anim: 'bettercombat:two_handed_slam',
+        animSpeed: 1.1,
+        desc: 'Таранный натиск вперед на 7 блоков с гипер-бронёй: 210% урона и раскидывание врагов.'
+    },
+    earth_fracture: {
+        id: 'earth_fracture',
+        name: 'Камнеломный Разлом',
+        enName: 'Earth Fracture',
+        cdMs: 15000,
+        stamina: 40,
+        dmgMult: 2.0,
+        anim: 'bettercombat:two_handed_slam',
+        animSpeed: 1.0,
+        desc: 'Удар в землю, пускающий трещину на 8 метров: 200% урона, подброс врагов и Замедление III.'
+    },
+    bone_crusher: {
+        id: 'bone_crusher',
+        name: 'Дробитель Черепов',
+        enName: 'Bone Crusher',
+        cdMs: 13000,
+        stamina: 40,
+        dmgMult: 2.4,
+        anim: 'bettercombat:one_handed_uppercut_right',
+        animSpeed: 1.0,
+        desc: 'Сокрушающий удар молотом: 240% урона, 100% Guard Break стойки щита и оглушение на 2.5с.'
+    },
+    spear_flurry: {
+        id: 'spear_flurry',
+        name: 'Шквал Пяти Уколов',
+        enName: 'Spear Flurry',
+        cdMs: 10000,
+        stamina: 30,
+        dmgMult: 2.25,
+        anim: 'bettercombat:one_handed_stab',
+        animSpeed: 1.4,
+        desc: 'Пулеметная серия из 5 уколов с 5.5 блоков: 225% урона, пробитие брони и сбитие атак.'
+    },
+    polearm_vault: {
+        id: 'polearm_vault',
+        name: 'Шестовой Прыжок',
+        enName: 'Polearm Vault',
+        cdMs: 12000,
+        stamina: 35,
+        dmgMult: 2.2,
+        anim: 'spell_engine:weapon_slam_jump',
+        animSpeed: 1.2,
+        desc: 'Шестовой взлет на 4.5 блока в воздух и пикирующий удар в землю: 220% урона и сбивание с ног.'
+    },
+    sweeping_sweep: {
+        id: 'sweeping_sweep',
+        name: 'Опрокидывающий Мах',
+        enName: 'Sweeping Sweep',
+        cdMs: 11000,
+        stamina: 35,
+        dmgMult: 1.8,
+        anim: 'bettercombat:two_handed_spin',
+        animSpeed: 1.1,
+        desc: 'Низкая круговая подсечка на 360° в радиусе 4.5м: 180% урона со сбитием с ног (нокдаун).'
+    },
+    explosive_shot: {
+        id: 'explosive_shot',
+        name: 'Разрывной Выстрел',
+        enName: 'Explosive Shot',
+        cdMs: 13000,
+        stamina: 40,
+        dmgMult: 2.2,
+        anim: 'spell_engine:archery_release',
+        animSpeed: 1.2,
+        desc: 'Выстрел детонирующей стрелой на 30м: взрыв по площади 4.5м, 220% урона, поджог и отбрасывание.'
+    },
+
+    // --------------------------------------------------------------------------
     // COMPATIBILITY ALIASES
     // --------------------------------------------------------------------------
     seismic_cleave: { id: 'whirlwind_cleave', name: 'Вихревой Размах', enName: 'Whirlwind Cleave', cdMs: 12000, stamina: 40, dmgMult: 1.8, anim: 'bettercombat:two_handed_spin', desc: 'Размашистый круговой клив.' },
     tectonic_rupture: { id: 'earth_sunder', name: 'Сотрясение Земли', enName: 'Earth Sunder', cdMs: 14000, stamina: 45, dmgMult: 2.0, anim: 'bettercombat:two_handed_slam', desc: 'Удар в землю с радиальной волной.' },
     shield_breaker: { id: 'severing_cleave', name: 'Рассекающий Клив', enName: 'Severing Cleave', cdMs: 11000, stamina: 35, dmgMult: 2.1, anim: 'bettercombat:one_handed_slash_horizontal_right', desc: 'Мощный фронтальный дуговой удар.' },
-    parry_counter: { id: 'reverse_sunder', name: 'Реверсивный Раскол', enName: 'Reverse Sunder', cdMs: 10000, stamina: 30, dmgMult: 1.95, anim: 'bettercombat:two_handed_slash_vertical_right', desc: 'Возвратный вертикальный взмах.' },
+    parry_counter: { id: 'iron_stance', name: 'Стальная Стойка', enName: 'Iron Stance', cdMs: 15000, stamina: 35, dmgMult: 1.0, anim: 'bettercombat:two_handed_guard', desc: 'Универсальная стойка защиты.' },
+    parry: { id: 'iron_stance', name: 'Стальная Стойка', enName: 'Iron Stance', cdMs: 15000, stamina: 35, dmgMult: 1.0, anim: 'bettercombat:two_handed_guard', desc: 'Универсальная стойка защиты.' },
     juggernaut_rush: { id: 'shield_bash', name: 'Таранный Натиск', enName: 'Shield Bash', cdMs: 12000, stamina: 35, dmgMult: 1.6, anim: 'bettercombat:one_handed_slam', desc: 'Таранный рывок со щитом.' }
 };
 
@@ -1485,11 +1600,410 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
         player.server.runCommandSilent(`playsound minecraft:block.amethyst_block.chime player ${u} ${player.x} ${player.y} ${player.z} 1.4 1.2`);
         player.server.runCommandSilent(`particle minecraft:totem_of_undying ${player.x} ${player.y + 1} ${player.z} 0.8 0.5 0.8 0.2 30 normal`);
         player.sendSystemMessage(Text.of(`§e✨ СВЯЩЕННЫЙ КЛИНОК! §fСвятой урон: §e${Math.round(totalDmg)} §7+ Регенерация II | Задето: §a${hits} ${stamTag}`), true);
+
+    // ==========================================================================
+    // 22. IRON STANCE (Стальная Стойка: 3.5s buff, +50% absorption, hyper-armor)
+    // ==========================================================================
+    } else if (resolvedId === 'iron_stance') {
+        player.potionEffects.add('minecraft:resistance', 70, 2, false, true); // Resistance III
+        player.persistentData.putLong('elyrium_iron_stance_until', now + 3500);
+
+        player.server.runCommandSilent(`playsound minecraft:block.anvil.land player ${u} ${player.x} ${player.y} ${player.z} 1.5 1.1`);
+        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_netherite player ${u} ${player.x} ${player.y} ${player.z} 1.2 0.8`);
+        player.server.runCommandSilent(`particle minecraft:wax_off ${player.x} ${player.y + 0.5} ${player.z} 0.5 0.5 0.5 0.05 35 normal`);
+        player.server.runCommandSilent(`particle minecraft:block minecraft:iron_block ${player.x} ${player.y + 0.3} ${player.z} 0.6 0.3 0.6 0.1 25 normal`);
+        player.sendSystemMessage(Text.of(`§7🛡 СТАЛЬНАЯ СТОЙКА! §f[+50% поглощения урона + 100% гипер-броня на 3.5с] ${stamTag}`), true);
+
+    // ==========================================================================
+    // 23. THOUSAND CUTS (Танец Тысячи Лезвий: 5 rapid strikes with bleed)
+    // ==========================================================================
+    } else if (resolvedId === 'thousand_cuts') {
+        let radius = 4.5;
+        let singleStrikeDmg = (baseDmg * art.dmgMult) / 5.0; // 5 hits total
+        let aabb = AABB.of(player.x - radius, player.y - 1.5, player.z - radius, player.x + radius, player.y + 2.5, player.z + radius);
+
+        for (let strike = 0; strike < 5; strike++) {
+            player.server.scheduleInTicks(strike * 2, () => {
+                if (!player || !player.isAlive()) return;
+                let curEnts = level.getEntitiesWithin(aabb);
+                curEnts.forEach(ent => {
+                    if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
+                        let dx = ent.x - player.x;
+                        let dz = ent.z - player.z;
+                        let dist = Math.max(0.1, Math.sqrt(dx * dx + dz * dz));
+                        if (dist <= radius) {
+                            dealArtDamage(player, ent, singleStrikeDmg, false);
+                            try {
+                                ent.potionEffects.add('apothic_attributes:bleeding', 100, 1, false, true);
+                            } catch (eb) {
+                                ent.potionEffects.add('minecraft:wither', 60, 0, false, true);
+                            }
+                        }
+                    }
+                });
+                let pLook = player.getLookAngle();
+                let fx = player.x + pLook.x * 2.0;
+                let fy = player.y + 1.0;
+                let fz = player.z + pLook.z * 2.0;
+                player.server.runCommandSilent(`playsound minecraft:entity.player.attack.sweep player ${u} ${fx} ${fy} ${fz} 1.2 ${1.0 + strike * 0.15}`);
+                player.server.runCommandSilent(`particle minecraft:sweep_attack ${fx} ${fy} ${fz} 0.5 0.3 0.5 0.1 8 normal`);
+                player.server.runCommandSilent(`particle minecraft:crimson_spore ${fx} ${fy} ${fz} 0.4 0.4 0.4 0.05 10 normal`);
+            });
+        }
+        player.sendSystemMessage(Text.of(`§c⚔ ТАНЕЦ ТЫСЯЧИ ЛЕЗВИЙ! §f5 молниеносных ударов с кровотоком ${stamTag}`), true);
+
+    // ==========================================================================
+    // 24. HELM SPLITTER (Разрубатель Шлемов: leap + downward vertical strike + stun)
+    // ==========================================================================
+    } else if (resolvedId === 'helm_splitter') {
+        let hLen = Math.max(0.01, Math.sqrt(look.x * look.x + look.z * look.z));
+        let normX = look.x / hLen;
+        let normZ = look.z / hLen;
+        applyEntityMotion(player, normX * 0.7, 0.45, normZ * 0.7);
+
+        player.server.scheduleInTicks(6, () => {
+            if (!player || !player.isAlive()) return;
+            let targetX = player.x + normX * 1.5;
+            let targetY = player.y;
+            let targetZ = player.z + normZ * 1.5;
+            let totalDmg = baseDmg * art.dmgMult;
+            let radius = 2.5;
+            let box = AABB.of(targetX - radius, targetY - 1.0, targetZ - radius, targetX + radius, targetY + 2.5, targetZ + radius);
+            let ents = level.getEntitiesWithin(box);
+            let hits = 0;
+
+            ents.forEach(ent => {
+                if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
+                    dealArtDamage(player, ent, totalDmg, false);
+                    ent.potionEffects.add('minecraft:slowness', 40, 4, false, true); // Stun 2s
+                    ent.potionEffects.add('minecraft:weakness', 80, 2, false, true);
+                    ent.potionEffects.add('minecraft:mining_fatigue', 40, 2, false, true);
+                    applyEntityMotion(ent, 0, -0.4, 0);
+                    hits++;
+                }
+            });
+
+            player.server.runCommandSilent(`playsound minecraft:entity.player.attack.crit player ${u} ${targetX} ${targetY} ${targetZ} 1.6 0.9`);
+            player.server.runCommandSilent(`playsound minecraft:block.anvil.place player ${u} ${targetX} ${targetY} ${targetZ} 1.3 1.2`);
+            player.server.runCommandSilent(`particle minecraft:crit ${targetX} ${targetY + 1} ${targetZ} 0.8 0.5 0.8 0.2 30 normal`);
+            player.server.runCommandSilent(`particle minecraft:block minecraft:stone ${targetX} ${targetY + 0.2} ${targetZ} 0.8 0.2 0.8 0.1 20 normal`);
+            player.sendSystemMessage(Text.of(`§6⚔ РАЗРУБАТЕЛЬ ШЛЕМОВ! §fУрон: §e${Math.round(totalDmg)} §7(Стан 2с) | Задето: §a${hits} ${stamTag}`), true);
+        });
+
+    // ==========================================================================
+    // 25. UNSTOPPABLE CHARGE (Неумолимый Натиск: 7b forward rush with hyper-armor)
+    // ==========================================================================
+    } else if (resolvedId === 'unstoppable_charge') {
+        let totalDmg = baseDmg * art.dmgMult;
+        let hLen = Math.max(0.01, Math.sqrt(look.x * look.x + look.z * look.z));
+        let normX = look.x / hLen;
+        let normZ = look.z / hLen;
+
+        player.potionEffects.add('minecraft:resistance', 30, 3, false, true);
+        applyEntityMotion(player, normX * 1.4, 0.1, normZ * 1.4);
+
+        let startX = player.x;
+        let startY = player.y;
+        let startZ = player.z;
+        let stepDist = getSafeStepDistance(level, startX, startY, startZ, normX, normZ, 7.0);
+        let endX = startX + normX * stepDist;
+        let endZ = startZ + normZ * stepDist;
+
+        let corridor = AABB.of(
+            Math.min(startX, endX) - 1.8, startY - 1.0, Math.min(startZ, endZ) - 1.8,
+            Math.max(startX, endX) + 1.8, startY + 2.5, Math.max(startZ, endZ) + 1.8
+        );
+        let ents = level.getEntitiesWithin(corridor);
+        let hits = 0;
+
+        ents.forEach(ent => {
+            if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
+                dealArtDamage(player, ent, totalDmg, false);
+                let perpX = -normZ;
+                let perpZ = normX;
+                applyEntityMotion(ent, perpX * 0.8, 0.4, perpZ * 0.8);
+                ent.potionEffects.add('minecraft:slowness', 40, 2, false, true);
+                hits++;
+            }
+        });
+
+        player.server.runCommandSilent(`playsound minecraft:entity.ravager.roar player ${u} ${player.x} ${player.y} ${player.z} 1.3 1.2`);
+        player.server.runCommandSilent(`playsound minecraft:entity.player.attack.knockback player ${u} ${player.x} ${player.y} ${player.z} 1.5 0.7`);
+        player.server.runCommandSilent(`particle minecraft:cloud ${player.x} ${player.y + 0.3} ${player.z} 1.0 0.2 1.0 0.1 20 normal`);
+        player.server.runCommandSilent(`particle minecraft:sweep_attack ${player.x} ${player.y + 1} ${player.z} 1.2 0.3 1.2 0.1 15 normal`);
+        player.sendSystemMessage(Text.of(`§c🛡 НЕУМОЛИМЫЙ НАТИСК! §fУрон: §e${Math.round(totalDmg)} §7(Таран 7б) | Раскинуто: §a${hits} ${stamTag}`), true);
+
+    // ==========================================================================
+    // 26. EARTH FRACTURE (Камнеломный Разлом: 8m ground fissure)
+    // ==========================================================================
+    } else if (resolvedId === 'earth_fracture') {
+        let totalDmg = baseDmg * art.dmgMult;
+        let hLen = Math.max(0.01, Math.sqrt(look.x * look.x + look.z * look.z));
+        let normX = look.x / hLen;
+        let normZ = look.z / hLen;
+        let maxDist = 8.0;
+        let hitEntities = new Set();
+        let hits = 0;
+
+        player.server.runCommandSilent(`playsound minecraft:entity.iron_golem.attack player ${u} ${player.x} ${player.y} ${player.z} 1.4 0.7`);
+        player.server.runCommandSilent(`playsound minecraft:block.stone.break player ${u} ${player.x} ${player.y} ${player.z} 1.3 0.8`);
+
+        for (let d = 1.0; d <= maxDist; d += 1.0) {
+            let fx = player.x + normX * d;
+            let fy = player.y;
+            let fz = player.z + normZ * d;
+
+            player.server.runCommandSilent(`particle minecraft:block minecraft:dirt ${fx} ${fy + 0.2} ${fz} 0.3 0.4 0.3 0.1 8 normal`);
+            player.server.runCommandSilent(`particle minecraft:block minecraft:stone ${fx} ${fy + 0.3} ${fz} 0.3 0.5 0.3 0.15 10 normal`);
+
+            let b = AABB.of(fx - 1.2, fy - 1.0, fz - 1.2, fx + 1.2, fy + 2.5, fz + 1.2);
+            let ents = level.getEntitiesWithin(b);
+            ents.forEach(ent => {
+                if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive() && !hitEntities.has(ent.id)) {
+                    hitEntities.add(ent.id);
+                    dealArtDamage(player, ent, totalDmg, false);
+                    applyEntityMotion(ent, 0, 0.45, 0);
+                    ent.potionEffects.add('minecraft:slowness', 80, 2, false, true);
+                    hits++;
+                }
+            });
+        }
+        player.sendSystemMessage(Text.of(`§6🌋 КАМНЕЛОМНЫЙ РАЗЛОМ! §fУрон: §e${Math.round(totalDmg)} §7(Разлом 8м) | Подброшено: §a${hits} ${stamTag}`), true);
+
+    // ==========================================================================
+    // 27. BONE CRUSHER (Дробитель Черепов: 100% Guard Break + Stun 2.5s)
+    // ==========================================================================
+    } else if (resolvedId === 'bone_crusher') {
+        let totalDmg = baseDmg * art.dmgMult;
+        let radius = 3.5;
+        let aabb = AABB.of(player.x - radius, player.y - 1.5, player.z - radius, player.x + radius, player.y + 2.5, player.z + radius);
+        let ents = level.getEntitiesWithin(aabb);
+        let hits = 0;
+
+        ents.forEach(ent => {
+            if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
+                dealArtDamage(player, ent, totalDmg, false);
+
+                // 100% Guard Break on shields / posture
+                if (ent.isBlocking && ent.isBlocking()) {
+                    try {
+                        if (typeof ent.disableShield === 'function') ent.disableShield(true);
+                    } catch (es) {}
+                }
+                if (ent.persistentData && ent.persistentData.contains('elyrium_guard_posture')) {
+                    ent.persistentData.putInt('elyrium_guard_posture', 0);
+                    ent.persistentData.putLong('elyrium_posture_broken_until', Date.now() + 5000);
+                }
+
+                ent.potionEffects.add('minecraft:slowness', 50, 4, false, true);
+                ent.potionEffects.add('minecraft:mining_fatigue', 50, 4, false, true);
+                ent.potionEffects.add('minecraft:weakness', 80, 3, false, true);
+                applyEntityMotion(ent, 0, -0.3, 0);
+                hits++;
+            }
+        });
+
+        player.server.runCommandSilent(`playsound minecraft:item.shield.break player ${u} ${player.x} ${player.y} ${player.z} 1.5 0.8`);
+        player.server.runCommandSilent(`playsound minecraft:block.anvil.land player ${u} ${player.x} ${player.y} ${player.z} 1.3 0.7`);
+        player.server.runCommandSilent(`particle minecraft:enchanted_hit ${player.x + look.x * 2} ${player.y + 1} ${player.z + look.z * 2} 0.6 0.4 0.6 0.2 25 normal`);
+        player.server.runCommandSilent(`particle minecraft:crit ${player.x + look.x * 2} ${player.y + 1} ${player.z + look.z * 2} 0.5 0.5 0.5 0.1 20 normal`);
+        player.sendSystemMessage(Text.of(`§e🔨 ДРОБИТЕЛЬ ЧЕРЕПОВ! §fУрон: §e${Math.round(totalDmg)} §7(100% Guard Break + Стан 2.5с) | Задето: §a${hits} ${stamTag}`), true);
+
+    // ==========================================================================
+    // 28. SPEAR FLURRY (Шквал Пяти Уколов: 5 rapid thrusts with 5.5b reach)
+    // ==========================================================================
+    } else if (resolvedId === 'spear_flurry') {
+        let singleStrikeDmg = (baseDmg * art.dmgMult) / 5.0; // 5 hits total
+        let hLen = Math.max(0.01, Math.sqrt(look.x * look.x + look.y * look.y + look.z * look.z));
+        let normX = look.x / hLen;
+        let normY = look.y / hLen;
+        let normZ = look.z / hLen;
+        let reach = 5.5;
+
+        for (let strike = 0; strike < 5; strike++) {
+            player.server.scheduleInTicks(strike * 2, () => {
+                if (!player || !player.isAlive()) return;
+                let curLook = player.getLookAngle();
+                let curHLen = Math.max(0.01, Math.sqrt(curLook.x * curLook.x + curLook.y * curLook.y + curLook.z * curLook.z));
+                let cnx = curLook.x / curHLen;
+                let cny = curLook.y / curHLen;
+                let cnz = curLook.z / curHLen;
+
+                let hitSet = new Set();
+                for (let d = 1.0; d <= reach; d += 0.8) {
+                    let px = player.x + cnx * d;
+                    let py = player.y + player.eyeHeight - 0.1 + cny * d;
+                    let pz = player.z + cnz * d;
+
+                    let b = AABB.of(px - 0.8, py - 0.8, pz - 0.8, px + 0.8, py + 0.8, pz + 0.8);
+                    let ents = level.getEntitiesWithin(b);
+                    ents.forEach(ent => {
+                        if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive() && !hitSet.has(ent.id)) {
+                            hitSet.add(ent.id);
+                            dealArtDamage(player, ent, singleStrikeDmg, false);
+                            ent.knockback(0.4, -cnx, -cnz);
+                        }
+                    });
+                }
+
+                let fx = player.x + cnx * 2.5;
+                let fy = player.y + player.eyeHeight - 0.1 + cny * 2.5;
+                let fz = player.z + cnz * 2.5;
+                player.server.runCommandSilent(`playsound minecraft:item.trident.throw player ${u} ${fx} ${fy} ${fz} 1.1 ${1.2 + strike * 0.1}`);
+                player.server.runCommandSilent(`particle minecraft:sweep_attack ${fx} ${fy} ${fz} 0.3 0.3 0.3 0.05 5 normal`);
+                player.server.runCommandSilent(`particle minecraft:crit ${fx} ${fy} ${fz} 0.2 0.2 0.2 0.05 4 normal`);
+            });
+        }
+        player.sendSystemMessage(Text.of(`§b🔱 ШКВАЛ ПЯТИ УКОЛОВ! §fПулеметная серия уколов с 5.5 блоков ${stamTag}`), true);
+
+    // ==========================================================================
+    // 29. POLEARM VAULT (Шестовой Прыжок: 4.5b vault + ground dive impact)
+    // ==========================================================================
+    } else if (resolvedId === 'polearm_vault') {
+        let totalDmg = baseDmg * art.dmgMult;
+        let hLen = Math.max(0.01, Math.sqrt(look.x * look.x + look.z * look.z));
+        let normX = look.x / hLen;
+        let normZ = look.z / hLen;
+
+        applyEntityMotion(player, normX * 0.5, 0.85, normZ * 0.5);
+        player.server.runCommandSilent(`playsound minecraft:entity.wind_charge.wind_burst player ${u} ${player.x} ${player.y} ${player.z} 1.4 1.2`);
+        player.server.runCommandSilent(`particle minecraft:gust ${player.x} ${player.y + 0.3} ${player.z} 0.5 0.2 0.5 0.1 15 normal`);
+
+        player.server.scheduleInTicks(9, () => {
+            if (!player || !player.isAlive()) return;
+            applyEntityMotion(player, normX * 0.6, -1.0, normZ * 0.6);
+
+            player.server.scheduleInTicks(4, () => {
+                if (!player || !player.isAlive()) return;
+                let radius = 4.0;
+                let aabb = AABB.of(player.x - radius, player.y - 1.5, player.z - radius, player.x + radius, player.y + 2.5, player.z + radius);
+                let ents = level.getEntitiesWithin(aabb);
+                let hits = 0;
+
+                ents.forEach(ent => {
+                    if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
+                        dealArtDamage(player, ent, totalDmg, false);
+                        ent.potionEffects.add('minecraft:slowness', 40, 3, false, true);
+                        hits++;
+                    }
+                });
+
+                player.server.runCommandSilent(`playsound minecraft:entity.player.attack.strong player ${u} ${player.x} ${player.y} ${player.z} 1.5 0.8`);
+                player.server.runCommandSilent(`playsound minecraft:block.stone.break player ${u} ${player.x} ${player.y} ${player.z} 1.3 0.7`);
+                player.server.runCommandSilent(`particle minecraft:explosion ${player.x} ${player.y + 0.2} ${player.z} 0.8 0.2 0.8 0.1 1 normal`);
+                player.server.runCommandSilent(`particle minecraft:sweep_attack ${player.x} ${player.y + 0.5} ${player.z} 1.5 0.2 1.5 0.1 20 normal`);
+                player.sendSystemMessage(Text.of(`§a🔱 ШЕСТОВОЙ ПРЫЖОК! §fУрон: §e${Math.round(totalDmg)} §7(Пикирующий удар) | Сбито: §a${hits} ${stamTag}`), true);
+            });
+        });
+
+    // ==========================================================================
+    // 30. SWEEPING SWEEP (Опрокидывающий Мах: 360° low leg sweep, knockdown)
+    // ==========================================================================
+    } else if (resolvedId === 'sweeping_sweep') {
+        let totalDmg = baseDmg * art.dmgMult;
+        let radius = 4.5;
+        let aabb = AABB.of(player.x - radius, player.y - 1.5, player.z - radius, player.x + radius, player.y + 2.5, player.z + radius);
+        let ents = level.getEntitiesWithin(aabb);
+        let hits = 0;
+
+        ents.forEach(ent => {
+            if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
+                let dx = ent.x - player.x;
+                let dz = ent.z - player.z;
+                let dist = Math.max(0.1, Math.sqrt(dx * dx + dz * dz));
+                if (dist <= radius) {
+                    dealArtDamage(player, ent, totalDmg, false);
+                    applyEntityMotion(ent, 0, -0.4, 0);
+                    ent.potionEffects.add('minecraft:slowness', 50, 3, false, true);
+                    hits++;
+                }
+            }
+        });
+
+        player.server.runCommandSilent(`playsound minecraft:entity.player.attack.sweep player ${u} ${player.x} ${player.y} ${player.z} 1.5 0.7`);
+        player.server.runCommandSilent(`playsound minecraft:block.wood.break player ${u} ${player.x} ${player.y} ${player.z} 1.2 0.9`);
+        player.server.runCommandSilent(`particle minecraft:sweep_attack ${player.x} ${player.y + 0.3} ${player.z} 1.8 0.1 1.8 0.1 25 normal`);
+        player.server.runCommandSilent(`particle minecraft:block minecraft:oak_wood ${player.x} ${player.y + 0.2} ${player.z} 1.2 0.2 1.2 0.1 15 normal`);
+        player.sendSystemMessage(Text.of(`§6🌪 ОПРОКИДЫВАЮЩИЙ МАХ! §fУрон: §e${Math.round(totalDmg)} §7(Нокдаун 360°) | Сбито: §a${hits} ${stamTag}`), true);
+
+    // ==========================================================================
+    // 31. EXPLOSIVE SHOT (Разрывной Выстрел: 30m projectile, 4.5m AOE fire burst)
+    // ==========================================================================
+    } else if (resolvedId === 'explosive_shot') {
+        let totalDmg = baseDmg * art.dmgMult;
+        let maxDist = 30.0;
+        let hLen = Math.max(0.01, Math.sqrt(look.x * look.x + look.y * look.y + look.z * look.z));
+        let rnx = look.x / hLen;
+        let rny = look.y / hLen;
+        let rnz = look.z / hLen;
+
+        player.server.runCommandSilent(`playsound minecraft:entity.arrow.shoot player ${u} ~ ~ ~ 1.3 0.8`);
+        player.server.runCommandSilent(`particle minecraft:flame ${player.x + rnx} ${player.y + player.eyeHeight - 0.1 + rny} ${player.z + rnz} 0.2 0.2 0.2 0.05 10 normal`);
+
+        player.server.scheduleInTicks(5, () => {
+            if (!player || !player.isAlive()) return;
+            let impactX = player.x + rnx * maxDist;
+            let impactY = player.y + player.eyeHeight - 0.1 + rny * maxDist;
+            let impactZ = player.z + rnz * maxDist;
+
+            for (let d = 1.0; d <= maxDist; d += 0.8) {
+                let cx = player.x + rnx * d;
+                let cy = player.y + player.eyeHeight - 0.1 + rny * d;
+                let cz = player.z + rnz * d;
+
+                player.server.runCommandSilent(`particle minecraft:smoke ${cx} ${cy} ${cz} 0.05 0.05 0.05 0.01 2 normal`);
+                player.server.runCommandSilent(`particle minecraft:flame ${cx} ${cy} ${cz} 0.05 0.05 0.05 0.01 1 normal`);
+
+                let box = AABB.of(cx - 0.8, cy - 0.8, cz - 0.8, cx + 0.8, cy + 0.8, cz + 0.8);
+                let hitEnts = level.getEntitiesWithin(box);
+                let hasHitEnt = false;
+                for (let e of hitEnts) {
+                    if (e && e.isLiving() && !e.isPlayer() && e.isAlive()) {
+                        hasHitEnt = true;
+                        break;
+                    }
+                }
+
+                let b = level.getBlock(Math.floor(cx), Math.floor(cy), Math.floor(cz));
+                let blocksMotion = b && b.blockState && b.blockState.blocksMotion();
+
+                if (hasHitEnt || blocksMotion || d >= maxDist - 0.8) {
+                    impactX = cx;
+                    impactY = cy;
+                    impactZ = cz;
+                    break;
+                }
+            }
+
+            let radius = 4.5;
+            let detBox = AABB.of(impactX - radius, impactY - 2.0, impactZ - radius, impactX + radius, impactY + 3.0, impactZ + radius);
+            let ents = level.getEntitiesWithin(detBox);
+            let hits = 0;
+
+            ents.forEach(ent => {
+                if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive()) {
+                    let dx = ent.x - impactX;
+                    let dz = ent.z - impactZ;
+                    let dist = Math.max(0.1, Math.sqrt(dx * dx + dz * dz));
+                    if (dist <= radius) {
+                        dealArtDamage(player, ent, totalDmg, false);
+                        ent.setSecondsOnFire(5);
+                        ent.knockback(0.8, -dx / dist, -dz / dist);
+                        hits++;
+                    }
+                }
+            });
+
+            player.server.runCommandSilent(`playsound minecraft:entity.generic.explode player ${u} ${impactX} ${impactY} ${impactZ} 1.6 1.0`);
+            player.server.runCommandSilent(`particle minecraft:explosion_emitter ${impactX} ${impactY} ${impactZ} 0 0 0 0 1 normal`);
+            player.server.runCommandSilent(`particle minecraft:flame ${impactX} ${impactY} ${impactZ} 1.5 0.5 1.5 0.15 35 normal`);
+            player.sendSystemMessage(Text.of(`§c💥 РАЗРЫВНОЙ ВЫСТРЕЛ! §fВзрыв: §e${Math.round(totalDmg)} §7урона (AOE 4.5м + Огонь) | Задето: §a${hits} ${stamTag}`), true);
+        });
     }
 }
 
 // ------------------------------------------------------------------------------
-// EVENT 1: COMBAT INTERACTIONS (GUARD COUNTER, SPEAR GRIP, BULWARK REFLECT)
+// EVENT 1: COMBAT INTERACTIONS (GUARD COUNTER, SPEAR GRIP, BULWARK REFLECT, IRON STANCE)
 // ------------------------------------------------------------------------------
 
 EntityEvents.beforeHurt(event => {
@@ -1501,9 +2015,17 @@ EntityEvents.beforeHurt(event => {
     let now = Date.now();
 
     // ==========================================================================
-    // A. INCOMING DAMAGE TO PLAYER: SHIELD BLOCK & BULWARK REFLECT
+    // A. INCOMING DAMAGE TO PLAYER: SHIELD BLOCK & BULWARK REFLECT & IRON STANCE
     // ==========================================================================
     if (victim && victim.isPlayer() && victim.isAlive()) {
+        // 0. Iron Stance (+50% damage absorption & hyper-armor)
+        let ironStanceUntil = victim.persistentData.getLong('elyrium_iron_stance_until') || 0;
+        if (ironStanceUntil > 0 && now <= ironStanceUntil) {
+            event.damage *= 0.50;
+            victim.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${victim.username} ~ ~ ~ 0.8 1.8`);
+            victim.server.runCommandSilent(`particle minecraft:wax_off ${victim.x} ${victim.y + 1} ${victim.z} 0.3 0.3 0.3 0.05 10 normal`);
+        }
+
         // 1. Unwavering Bulwark Reflect (30% reflected damage)
         let bulwarkUntil = victim.persistentData.getLong('skd_unwavering_bulwark_until') || 0;
         if (bulwarkUntil > 0 && now <= bulwarkUntil && attacker && attacker.isLiving() && attacker !== victim) {
@@ -1983,7 +2505,7 @@ function printArtsList(player) {
     player.tell('§6═══════════════════════════════════════════════════');
     player.tell('§e⚔ БОЕВЫЕ ИСКУССТВА ЭЛИРИУМА: КАТАЛОГ СИСТЕМЫ');
     player.tell('§6═══════════════════════════════════════════════════');
-    player.tell('§b1. 9 Чисто Боевых Мили-Умений:');
+    player.tell('§b1. Ближний Бой и Владение Клинком:');
     player.tell('  §6• Вихревой Размах §7(360° клив 4.5б, 180% урон, 40⚡)');
     player.tell('  §6• Фантомный Выпад §7(рывок 6б сквозь врагов, 190% урон, кровотечение, 30⚡)');
     player.tell('  §6• Рассекающий Клив §7(дуговой удар 4м, 210% урон, 40% пробой брони, 35⚡)');
@@ -1993,12 +2515,22 @@ function printArtsList(player) {
     player.tell('  §6• Ножницы §7(перекрестный удар клинками, 2x110% урон, глубокие раны, 25⚡)');
     player.tell('  §6• Теневой Шаг §7(блинк за спину 5.5б, невидимость 1.2с, 100% крит, 20⚡)');
     player.tell('  §6• Реверсивный Раскол §7(вертикальный взмах, 195% урон, сбив блока, 30⚡)');
-    player.tell('§b2. 5 Боевых Умений Луков:');
+    player.tell('  §e• Стальная Стойка §7(универсальный бафф: +50% защита, гипер-броня 3.5с, 35⚡)');
+    player.tell('  §c• Танец Тысячи Лезвий §7(серия 5 быстрых рассечений, 250% урон + кровоток, 35⚡)');
+    player.tell('  §6• Разрубатель Шлемов §7(прыжок + нисходящий удар, 230% урон, стан 2с, 35⚡)');
+    player.tell('  §c• Неумолимый Натиск §7(таран 7б вперед с гипер-бронёй, 210% урон, 45⚡)');
+    player.tell('  §6• Камнеломный Разлом §7(трещина в земле на 8м, 200% урон, подброс в воздух, 40⚡)');
+    player.tell('  §e• Дробитель Черепов §7(сокрушение молотом, 240% урон, 100% Guard Break, стан 2.5с, 40⚡)');
+    player.tell('  §b• Шквал Пяти Уколов §7(пулеметная серия уколов с 5.5б, 225% урон, 30⚡)');
+    player.tell('  §a• Шестовой Прыжок §7(взлет на 4.5б и пикирующий удар по площади, 220% урон, 35⚡)');
+    player.tell('  §6• Опрокидывающий Мах §7(круговая подсечка на 360°, сбитие с ног, 180% урон, 35⚡)');
+    player.tell('§b2. Стрелковые Боевые Умения (Луки / Арбалеты):');
     player.tell('  §6• Веерный Залп §7(5 спектральных стрел веером, 30⚡)');
     player.tell('  §6• Бронебойный Выстрел §7(пробивающий луч 25б, 100% пробой брони, 220% урон, 35⚡)');
     player.tell('  §6• Град Стрел §7(выстрел в зенит, шквал 12 стрел в зону 6м, 45⚡)');
     player.tell('  §6• Тактический Отскок §7(отскок назад 5б + замедляющая стрела, 25⚡)');
     player.tell('  §6• Беглая Тройка §7(очередь из 3 скорострельных стрел, 30⚡)');
+    player.tell('  §c• Разрывной Выстрел §7(выстрел детонирующей стрелой на 30м, взрыв 4.5м + поджог, 40⚡)');
     player.tell('§b3. 2 Умения Щита + Контрудар:');
     player.tell('  §6• Таранный Натиск §7(рывок 5б, отталкивание, стан 2с, 35⚡)');
     player.tell('  §6• Непоколебимый Оплот §7(бастион 3.5с: 80% защита, 30% отражение урона, 40⚡)');

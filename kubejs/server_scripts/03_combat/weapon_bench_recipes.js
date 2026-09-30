@@ -63,4 +63,57 @@ ServerEvents.recipes(event => {
         C: 'skd:cinder_alloy_ingot',
         S: 'minecraft:stick'
     }).id('elyrium:crafting/weapon_chisel_cinder');
+
+    // --------------------------------------------------------------------------
+    // 3. MARTIAL TABLET RECIPES (HYBRID CRAFTING: ESSENCE + INGOT + SLAB)
+    // --------------------------------------------------------------------------
+    const TABLET_RECIPES = [
+        // 10 Expanded Arts (Ashes of War)
+        { id: 'kubejs:martial_tablet_iron_stance', essence: 'kubejs:dungeon_essence_t2', ingot: 'minecraft:iron_ingot', key: 'iron_stance' },
+        { id: 'kubejs:martial_tablet_thousand_cuts', essence: 'kubejs:dungeon_essence_t3', ingot: 'minecraft:diamond', key: 'thousand_cuts' },
+        { id: 'kubejs:martial_tablet_helm_splitter', essence: 'kubejs:dungeon_essence_t2', ingot: 'minecraft:iron_ingot', key: 'helm_splitter' },
+        { id: 'kubejs:martial_tablet_unstoppable_charge', essence: 'kubejs:dungeon_essence_t3', ingot: 'minecraft:diamond', key: 'unstoppable_charge' },
+        { id: 'kubejs:martial_tablet_earth_fracture', essence: 'kubejs:dungeon_essence_t4', ingot: 'skd:cinder_alloy_ingot', altIngot: 'minecraft:netherite_scrap', key: 'earth_fracture' },
+        { id: 'kubejs:martial_tablet_bone_crusher', essence: 'kubejs:dungeon_essence_t3', ingot: 'minecraft:diamond', key: 'bone_crusher' },
+        { id: 'kubejs:martial_tablet_spear_flurry', essence: 'kubejs:dungeon_essence_t2', ingot: 'minecraft:iron_ingot', key: 'spear_flurry' },
+        { id: 'kubejs:martial_tablet_polearm_vault', essence: 'kubejs:dungeon_essence_t3', ingot: 'minecraft:diamond', key: 'polearm_vault' },
+        { id: 'kubejs:martial_tablet_sweeping_sweep', essence: 'kubejs:dungeon_essence_t2', ingot: 'minecraft:iron_ingot', key: 'sweeping_sweep' },
+        { id: 'kubejs:martial_tablet_explosive_shot', essence: 'kubejs:dungeon_essence_t4', ingot: 'skd:cinder_alloy_ingot', altIngot: 'minecraft:netherite_scrap', key: 'explosive_shot' },
+
+        // 8 Legacy Arts
+        { id: 'kubejs:martial_tablet_whirlwind', essence: 'kubejs:dungeon_essence_t1', ingot: 'minecraft:copper_ingot', key: 'whirlwind' },
+        { id: 'kubejs:martial_tablet_earth_sunder', essence: 'kubejs:dungeon_essence_t2', ingot: 'minecraft:iron_ingot', key: 'earth_sunder' },
+        { id: 'kubejs:martial_tablet_juggernaut', essence: 'kubejs:dungeon_essence_t3', ingot: 'minecraft:diamond', key: 'juggernaut' },
+        { id: 'kubejs:martial_tablet_lightning_thrust', essence: 'kubejs:dungeon_essence_t1', ingot: 'minecraft:copper_ingot', key: 'lightning_thrust' },
+        { id: 'kubejs:martial_tablet_blood_rend', essence: 'kubejs:dungeon_essence_t4', ingot: 'skd:cinder_alloy_ingot', altIngot: 'minecraft:netherite_scrap', key: 'blood_rend' },
+        { id: 'kubejs:martial_tablet_seismic_slam', essence: 'kubejs:dungeon_essence_t2', ingot: 'minecraft:iron_ingot', key: 'seismic_slam' },
+        { id: 'kubejs:martial_tablet_shadow_step', essence: 'kubejs:dungeon_essence_t3', ingot: 'minecraft:diamond', key: 'shadow_step' },
+        { id: 'kubejs:martial_tablet_arrow_barrage', essence: 'kubejs:dungeon_essence_t1', ingot: 'minecraft:copper_ingot', key: 'arrow_barrage' }
+    ];
+
+    TABLET_RECIPES.forEach(tab => {
+        // Primary Recipe
+        event.shaped(tab.id, [
+            ' E ',
+            'ISI',
+            ' E '
+        ], {
+            E: tab.essence,
+            I: tab.ingot,
+            S: 'minecraft:smooth_stone_slab'
+        }).id(`elyrium:crafting/tablet_${tab.key}`);
+
+        // Alternative Recipe for T4 (Netherite Scrap)
+        if (tab.altIngot) {
+            event.shaped(tab.id, [
+                ' E ',
+                'ISI',
+                ' E '
+            ], {
+                E: tab.essence,
+                I: tab.altIngot,
+                S: 'minecraft:smooth_stone_slab'
+            }).id(`elyrium:crafting/tablet_${tab.key}_alt`);
+        }
+    });
 });

@@ -45,7 +45,17 @@ const WB_ART_INFO = {
     'frost_stomp': { name: 'Ледяная Поступь', archetype: 'any', desc: 'Конус льда: 185% урона холодом + Заморозка' },
     'lightning_smite': { name: 'Громовой Раскат', archetype: 'any', desc: 'Нисходящая молния: 200% урона молнией' },
     'blood_harvest': { name: 'Кровавая Жатва', archetype: 'any', desc: 'Рассечение: 195% урона + вампиризм 20%' },
-    'holy_blade': { name: 'Священный Клинок', archetype: 'any', desc: 'Святой удар: 210% урона по нежити' }
+    'holy_blade': { name: 'Священный Клинок', archetype: 'any', desc: 'Святой удар: 210% урона по нежити' },
+    'iron_stance': { name: 'Стальная Стойка', archetype: 'any', desc: 'Бафф на 3.5с: +50% защиты, 100% гипер-броня от отбрасывания' },
+    'thousand_cuts': { name: 'Танец Тысячи Лезвий', archetype: 'finesse', desc: 'Серия 5 быстрых рассечений (250% урона) с кровотоком' },
+    'helm_splitter': { name: 'Разрубатель Шлемов', archetype: 'any_melee', desc: 'Прыжок вперед с вертикальным нисходящим ударом (230% урона, стан 2с)' },
+    'unstoppable_charge': { name: 'Неумолимый Натиск', archetype: 'heavy', desc: 'Таран на 7м вперед с гипер-бронёй (210% урона, раскидывание)' },
+    'earth_fracture': { name: 'Камнеломный Разлом', archetype: 'heavy', desc: 'Трещина в земле на 8м: 200% урона, подброс врагов и Замедление III' },
+    'bone_crusher': { name: 'Дробитель Черепов', archetype: 'bludgeoning', desc: 'Удар молотом: 240% урона, 100% Guard Break стойки щита и стан 2.5с' },
+    'spear_flurry': { name: 'Шквал Пяти Уколов', archetype: 'finesse', desc: 'Пулеметная серия уколов с 5.5б: 225% урона, сбитие атак' },
+    'polearm_vault': { name: 'Шестовой Прыжок', archetype: 'spear', desc: 'Шестовой взлет на 4.5м и пикирующий удар в землю (220% урона)' },
+    'sweeping_sweep': { name: 'Опрокидывающий Мах', archetype: 'heavy', desc: 'Низкая круговая подсечка на 360° (180% урона, нокдаун)' },
+    'explosive_shot': { name: 'Разрывной Выстрел', archetype: 'ranged', desc: 'Выстрел разрывной стрелой: детонация на 4.5м (220% урона, огонь)' }
 };
 
 const WB_ELEMENTAL_STONES = {
@@ -320,9 +330,57 @@ function extractTabletArtId(tabletItem) {
         'frost_stomp': 'frost_stomp',
         'lightning_smite': 'lightning_smite',
         'blood_rend': 'blood_harvest',
-        'holy_blade': 'holy_blade'
+        'holy_blade': 'holy_blade',
+        'iron_stance': 'iron_stance',
+        'thousand_cuts': 'thousand_cuts',
+        'helm_splitter': 'helm_splitter',
+        'unstoppable_charge': 'unstoppable_charge',
+        'earth_fracture': 'earth_fracture',
+        'bone_crusher': 'bone_crusher',
+        'spear_flurry': 'spear_flurry',
+        'polearm_vault': 'polearm_vault',
+        'sweeping_sweep': 'sweeping_sweep',
+        'explosive_shot': 'explosive_shot'
     };
     return MAP[id] || id;
+}
+
+function getTabletIdForArt(artId) {
+    if (!artId) return 'kubejs:martial_tablet_whirlwind';
+    const REVERSE_MAP = {
+        'whirlwind_cleave': 'kubejs:martial_tablet_whirlwind',
+        'earth_sunder': 'kubejs:martial_tablet_earth_sunder',
+        'severing_cleave': 'kubejs:martial_tablet_severing_cleave',
+        'iai_slash': 'kubejs:martial_tablet_lightning_thrust',
+        'crushing_uppercut': 'kubejs:martial_tablet_crushing_uppercut',
+        'piercing_thrust': 'kubejs:martial_tablet_piercing_thrust',
+        'scissor_cross': 'kubejs:martial_tablet_scissor_cross',
+        'shadow_step': 'kubejs:martial_tablet_shadow_step',
+        'reverse_sunder': 'kubejs:martial_tablet_reverse_sunder',
+        'fan_barrage': 'kubejs:martial_tablet_arrow_barrage',
+        'piercing_shot': 'kubejs:martial_tablet_piercing_shot',
+        'arrow_rain': 'kubejs:martial_tablet_arrow_rain',
+        'tactical_backstep': 'kubejs:martial_tablet_tactical_backstep',
+        'triple_shot': 'kubejs:martial_tablet_triple_shot',
+        'shield_bash': 'kubejs:martial_tablet_juggernaut',
+        'unwavering_bulwark': 'kubejs:martial_tablet_unwavering_bulwark',
+        'flame_vortex': 'kubejs:martial_tablet_flame_vortex',
+        'frost_stomp': 'kubejs:martial_tablet_frost_stomp',
+        'lightning_smite': 'kubejs:martial_tablet_lightning_smite',
+        'blood_harvest': 'kubejs:martial_tablet_blood_rend',
+        'holy_blade': 'kubejs:martial_tablet_holy_blade',
+        'iron_stance': 'kubejs:martial_tablet_iron_stance',
+        'thousand_cuts': 'kubejs:martial_tablet_thousand_cuts',
+        'helm_splitter': 'kubejs:martial_tablet_helm_splitter',
+        'unstoppable_charge': 'kubejs:martial_tablet_unstoppable_charge',
+        'earth_fracture': 'kubejs:martial_tablet_earth_fracture',
+        'bone_crusher': 'kubejs:martial_tablet_bone_crusher',
+        'spear_flurry': 'kubejs:martial_tablet_spear_flurry',
+        'polearm_vault': 'kubejs:martial_tablet_polearm_vault',
+        'sweeping_sweep': 'kubejs:martial_tablet_sweeping_sweep',
+        'explosive_shot': 'kubejs:martial_tablet_explosive_shot'
+    };
+    return REVERSE_MAP[artId] || ('kubejs:martial_tablet_' + artId);
 }
 
 function extractTabletRank(tabletItem) {
@@ -1004,8 +1062,7 @@ function openWeaponBenchGUI(player, block) {
 
                 let inscribed = getWeaponArtInSlot(gear, 1);
                 if (inscribed) {
-                    // Извлечение скрижали назад
-                    let tabletId = 'kubejs:martial_tablet_' + inscribed;
+                    let tabletId = getTabletIdForArt(inscribed);
                     let tabItem = Item.of(tabletId);
                     if (tabItem.isEmpty()) tabItem = Item.of('kubejs:martial_tablet_whirlwind');
                     let r = getWeaponArtRankInSlot(gear, 1);
@@ -1087,7 +1144,7 @@ function openWeaponBenchGUI(player, block) {
 
                 let inscribed = getWeaponArtInSlot(gear, 2);
                 if (inscribed) {
-                    let tabletId = 'kubejs:martial_tablet_' + inscribed;
+                    let tabletId = getTabletIdForArt(inscribed);
                     let tabItem = Item.of(tabletId);
                     if (tabItem.isEmpty()) tabItem = Item.of('kubejs:martial_tablet_lightning_thrust');
                     let r = getWeaponArtRankInSlot(gear, 2);
@@ -1165,7 +1222,7 @@ function openWeaponBenchGUI(player, block) {
 
                 let inscribed = getWeaponArtInSlot(gear, 3);
                 if (inscribed) {
-                    let tabletId = 'kubejs:martial_tablet_' + inscribed;
+                    let tabletId = getTabletIdForArt(inscribed);
                     let tabItem = Item.of(tabletId);
                     if (tabItem.isEmpty()) tabItem = Item.of('kubejs:martial_tablet_holy_blade');
                     let r = getWeaponArtRankInSlot(gear, 3);
@@ -1601,7 +1658,7 @@ function openWeaponBenchGUI(player, block) {
                 // Слот 1
                 let art1 = getWeaponArtInSlot(gear, 1);
                 if (art1) {
-                    let tab = Item.of('kubejs:martial_tablet_' + art1);
+                    let tab = Item.of(getTabletIdForArt(art1));
                     if (tab.isEmpty()) tab = Item.of('kubejs:martial_tablet_whirlwind');
                     let r = getWeaponArtRankInSlot(gear, 1);
                     let tTag = getOrCreateSafeCustomData(tab);
@@ -1612,7 +1669,7 @@ function openWeaponBenchGUI(player, block) {
                 // Слот 2
                 let art2 = getWeaponArtInSlot(gear, 2);
                 if (art2) {
-                    let tab = Item.of('kubejs:martial_tablet_' + art2);
+                    let tab = Item.of(getTabletIdForArt(art2));
                     if (tab.isEmpty()) tab = Item.of('kubejs:martial_tablet_lightning_thrust');
                     let r = getWeaponArtRankInSlot(gear, 2);
                     let tTag = getOrCreateSafeCustomData(tab);
@@ -1623,7 +1680,7 @@ function openWeaponBenchGUI(player, block) {
                 // Слот 3
                 let art3 = getWeaponArtInSlot(gear, 3);
                 if (art3) {
-                    let tab = Item.of('kubejs:martial_tablet_' + art3);
+                    let tab = Item.of(getTabletIdForArt(art3));
                     if (tab.isEmpty()) tab = Item.of('kubejs:martial_tablet_holy_blade');
                     let r = getWeaponArtRankInSlot(gear, 3);
                     let tTag = getOrCreateSafeCustomData(tab);

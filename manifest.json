@@ -1,8 +1,8 @@
 {
-  "version": "0.1.4",
+  "version": "0.2.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-30T15:46:22.660292+00:00",
+  "generated_at": "2026-09-30T21:28:59.817686+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -4146,9 +4146,29 @@
       "size": 125
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_arrow_rain.json",
+      "sha256": "874536844780de8959fe9b57464fbcdca193872a277afdabea7cb6029484385e",
+      "size": 122
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/martial_tablet_blood_rend.json",
       "sha256": "a27f5acedbf64518eaba0e732be2cb6e8c732127f19d3447d5e6973205ce3c00",
       "size": 122
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_bone_crusher.json",
+      "sha256": "5b8f353b52085ec3244d4d6270120890020affbb3476e54729097c9efbb94991",
+      "size": 124
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_crushing_uppercut.json",
+      "sha256": "0ffd47a7c9fd5a3f1f6978cf5d58e4fe69004bc5f92f419e8ebb3cfffaa697b1",
+      "size": 129
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_earth_fracture.json",
+      "sha256": "d29bff0d1dfd475354fbe79600efeb9afccee1c1cde256ad20120301d541d373",
+      "size": 126
     },
     {
       "path": "kubejs/assets/kubejs/models/item/martial_tablet_earth_sunder.json",
@@ -4156,9 +4176,44 @@
       "size": 124
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_explosive_shot.json",
+      "sha256": "5f64fbcf01b42c2ac9331515e53a21c9c1ec9538de2ef3d74d8b59d9918b4a18",
+      "size": 126
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_flame_vortex.json",
+      "sha256": "83200e070f2daf6eff276e8e3a9e72a48b4c466f3b2f6af0bc7e01bb4eed1fd1",
+      "size": 124
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_frost_stomp.json",
+      "sha256": "ea87d1e4839c226d478b78359194ffe2f0c38ffbf43bd7094be3c80445887d3d",
+      "size": 123
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_helm_splitter.json",
+      "sha256": "f66ffda82a5b1cf2f18cd7cc3fdb883cdd1b729c1a426b5431c10b4fae21b023",
+      "size": 125
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_holy_blade.json",
+      "sha256": "23b07d69564f73b1bfc2de7b3aed8fb7b1589b21916a5064b99791fc046b59ec",
+      "size": 122
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_iron_stance.json",
+      "sha256": "4d4e9e3c5c8b56f2c9e110fe4d44cc63d64041c9c8712a69b0e1a402f3e29430",
+      "size": 123
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/martial_tablet_juggernaut.json",
       "sha256": "4e7b408e5e70aaaa7d34df07e1314d80dd0f32d7a8a1ca3518adcf3323939460",
       "size": 122
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_lightning_smite.json",
+      "sha256": "59c46397a052840e782975e4d11caef45c6d7c4f9e9dc15f038696e0a3eb0b23",
+      "size": 127
     },
     {
       "path": "kubejs/assets/kubejs/models/item/martial_tablet_lightning_thrust.json",
@@ -4166,14 +4221,79 @@
       "size": 128
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_piercing_shot.json",
+      "sha256": "45ec54a382b3febe9f7d5311a41ace2a2934a547876252a7ce95343179a913a4",
+      "size": 125
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_piercing_thrust.json",
+      "sha256": "776f087df87796f83664d67e5d20a7fec43a5b1a5985c230ab656008d1366f8f",
+      "size": 127
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_polearm_vault.json",
+      "sha256": "386099b1d9fdda0a3cbc38c254ad2b837083ad141cfa0655bf818b108c2a1182",
+      "size": 125
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_reverse_sunder.json",
+      "sha256": "add767c87e4b924579d5edccd9f57b865785d9795ecfae942793da5a2b17b9bb",
+      "size": 126
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_scissor_cross.json",
+      "sha256": "e26cc8f2057d339db731ee09a35bb4bb8f1360c6ffced590318c74945896acdf",
+      "size": 125
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/martial_tablet_seismic_slam.json",
       "sha256": "d9549c9b30d9187de80800fda8f04903e56449fc9e85172c1df5495d12e9a2e5",
       "size": 124
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_severing_cleave.json",
+      "sha256": "875fc64e6bd293d5ce6bafe6a6c6612a1d8016a8dd64885a0e9c75e59cbe786e",
+      "size": 127
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/martial_tablet_shadow_step.json",
       "sha256": "f2257f9691c2b55eb0ebda6b64e1aef4d486f98d51cbb16c668c098904c8236b",
       "size": 123
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_spear_flurry.json",
+      "sha256": "b7cc71d89c35f8d3b24bddd5ffc8df1c968664b213eca1f178accfd465d68026",
+      "size": 124
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_sweeping_sweep.json",
+      "sha256": "0dce0701533a7c24c296144a004499bc26ded8906c01f403f5aa401dd637870d",
+      "size": 126
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_tactical_backstep.json",
+      "sha256": "655ad22b647a2d85130b858e060b929d6ae5b6c7fccfa650af3df6d507c01e1e",
+      "size": 129
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_thousand_cuts.json",
+      "sha256": "7fe98c9a39b8494e847cf9986e9f30c12a5cdec760bbcfbfe8582ff1e8ba4fe1",
+      "size": 125
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_triple_shot.json",
+      "sha256": "9c7ff07bb038846dc062798768d1dd81ac29c496b163c2950f698e1ad62f1011",
+      "size": 123
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_unstoppable_charge.json",
+      "sha256": "b2982e264a350e56bb5e31cd5b8755b3ef755bcd780363535f2c30f8eaf72845",
+      "size": 130
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/martial_tablet_unwavering_bulwark.json",
+      "sha256": "f1c3a308d0e5a0d435bb358ff29b921b52125ceced8aa21cc455ab6ed807390d",
+      "size": 130
     },
     {
       "path": "kubejs/assets/kubejs/models/item/martial_tablet_whirlwind.json",
@@ -4661,9 +4781,29 @@
       "size": 280
     },
     {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_arrow_rain.png",
+      "sha256": "acfa73d2f0631d91e915d76620b875537d5c7ea97df7d71b3dff63a6b734ff9f",
+      "size": 311
+    },
+    {
       "path": "kubejs/assets/kubejs/textures/item/martial_tablet_blood_rend.png",
       "sha256": "2b9083869d70c3cdf1d344cdaf752c208e02888a60e10dd76bc56ee7a0d3df9e",
       "size": 320
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_bone_crusher.png",
+      "sha256": "f384cbaed745d76741ef44dac2c942dcef77382e6496ee2f349aab24d3c6fcd9",
+      "size": 277
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_crushing_uppercut.png",
+      "sha256": "9c14ff824f67ae2f701e50bc9c54593be2481eb324f1b145526660f1d7197fae",
+      "size": 297
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_earth_fracture.png",
+      "sha256": "f42fe68bbae778c75af553df7d91b6dd307219243aea0b862b21473210448da1",
+      "size": 293
     },
     {
       "path": "kubejs/assets/kubejs/textures/item/martial_tablet_earth_sunder.png",
@@ -4671,9 +4811,44 @@
       "size": 302
     },
     {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_explosive_shot.png",
+      "sha256": "ba887fe5df42d0fcd0922b585fc8f389b16841a75f6af3af5bc25734890a5e9b",
+      "size": 295
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_flame_vortex.png",
+      "sha256": "d9c00c913578348a39b8816708654dddf33f7b6e16f43dd229b1c08125439e8d",
+      "size": 283
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_frost_stomp.png",
+      "sha256": "4480ae6360920e41f76aad29976a33ff4a2d16945b8d94a9a729a65d3a00994f",
+      "size": 272
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_helm_splitter.png",
+      "sha256": "060af04088f370670dc9ce75c0ac4afda1c49c9e84756fb108c59765f07e1a04",
+      "size": 281
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_holy_blade.png",
+      "sha256": "6f9f9c82f85c81028db3068651b210b09d96fafdf8c67233cdeb228cc578bd8b",
+      "size": 278
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_iron_stance.png",
+      "sha256": "e19ab589c0a744dd906759164f6b2ed03c6e14d29776a26ebc9124e269c78371",
+      "size": 280
+    },
+    {
       "path": "kubejs/assets/kubejs/textures/item/martial_tablet_juggernaut.png",
       "sha256": "9b3f42cfe642ae27559b91db5d3bc9971dcbc8c9e5293c69beb0e568c40e6857",
       "size": 282
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_lightning_smite.png",
+      "sha256": "4b06b55c87b69b30d54dc61fb5e4ef445ae99b698838561600e405c1ef6e392c",
+      "size": 284
     },
     {
       "path": "kubejs/assets/kubejs/textures/item/martial_tablet_lightning_thrust.png",
@@ -4681,14 +4856,79 @@
       "size": 307
     },
     {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_piercing_shot.png",
+      "sha256": "5fc28e46f0a53a8f56134245012a3e19d225ef0da1f996fda8704734609da6e8",
+      "size": 286
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_piercing_thrust.png",
+      "sha256": "f52dadd6ae65d8b83a056bb9346a8c4fbb8a1003dddfcb156a78aab2649e4b2a",
+      "size": 298
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_polearm_vault.png",
+      "sha256": "afaf9f1aee26484ab7ea717c4a3347b0ec46b52223dce5685420fd70ea9e97d1",
+      "size": 281
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_reverse_sunder.png",
+      "sha256": "e08e47bd9164a84ae3283538cacd97214e5df9d0638d538bdf4492fc7255973b",
+      "size": 272
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_scissor_cross.png",
+      "sha256": "22b652c2f531e7dd816aab193b24253c456417be6b530e4d6f22a1fd8e749d25",
+      "size": 301
+    },
+    {
       "path": "kubejs/assets/kubejs/textures/item/martial_tablet_seismic_slam.png",
       "sha256": "95ced06c62a4f6f39541b03e8155d15f03864ef1c94fb0c1a7132f21c7ea31cc",
       "size": 301
     },
     {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_severing_cleave.png",
+      "sha256": "92baa98a8cfd8f42282743e683cdf359c8ff5ea22b8ffabcc4c72fe638f59ae4",
+      "size": 283
+    },
+    {
       "path": "kubejs/assets/kubejs/textures/item/martial_tablet_shadow_step.png",
       "sha256": "9f4d1302bb6ecdb328d5f6c895b7b733b1dc9b7abc79c1f418d2a57eb2b3c2fc",
       "size": 317
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_spear_flurry.png",
+      "sha256": "687cacb9ea1e19cd5482e45e1313e65d472b95bdb689eb200f9565b910502ece",
+      "size": 295
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_sweeping_sweep.png",
+      "sha256": "9d13cfdfb0761ab5cda70363bca1738675e3b364b089d20df2440d801d560dfe",
+      "size": 275
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_tactical_backstep.png",
+      "sha256": "3ad6edea0c03256136cee46394ae8f661995b3395f9ac8f28cfc914f76a7170b",
+      "size": 274
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_thousand_cuts.png",
+      "sha256": "0bdc19e906435841546c30b394e950ea62f73422d400e38ae7d6bee9c6444cfb",
+      "size": 294
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_triple_shot.png",
+      "sha256": "c7883d1b50d41047af22ffe8f68c2aad3c420d1911f198a3f10a53a0fbd6d574",
+      "size": 311
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_unstoppable_charge.png",
+      "sha256": "c9dc7a06b3b6f6fd950b21a8c99804c20c217c1d6e1d4a6e015599386e86548d",
+      "size": 298
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/martial_tablet_unwavering_bulwark.png",
+      "sha256": "53d8b9b98e56b7528f28beddaca9934e312431f08ce3cda8bc0fcb05791a8b51",
+      "size": 289
     },
     {
       "path": "kubejs/assets/kubejs/textures/item/martial_tablet_whirlwind.png",
@@ -7797,8 +8037,8 @@
     },
     {
       "path": "kubejs/client_scripts/martial_arts_tooltips.js",
-      "sha256": "577f3a924f1c26174615ddfb64734fc70dc9512af564754e7eaf4cd41287d738",
-      "size": 32425
+      "sha256": "27628b62ebf9d52041d405c387e61e4013568c51447746dad7e99adc9295e2f8",
+      "size": 36817
     },
     {
       "path": "kubejs/client_scripts/modular_multitool_tooltips.js",
@@ -8737,13 +8977,13 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_inscription.js",
-      "sha256": "d49af336570a9eac72afa6712aa16cd154c00a2dbcbce2d99cacd3b4b4d0bb8d",
-      "size": 49772
+      "sha256": "0a2984cef833cb340bdaa0b10616acf7d0b8e07564b540b375fe2af8f7bdfc74",
+      "size": 53481
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_loot.js",
-      "sha256": "53e64dde3045d67b2c458e4a76587ead7ecea86baaf268d7bb34f615cd189008",
-      "size": 21453
+      "sha256": "4dde8da7d07ce661aaad379d1999cd3e2ada07a071619e7d4232694107c7d081",
+      "size": 28638
     },
     {
       "path": "kubejs/server_scripts/03_combat/party_xp_share.js",
@@ -8752,8 +8992,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "c02d5aff904464e613f2e92211d5854edaf3dc6e5f47e1b00892354f1136f1d1",
-      "size": 110429
+      "sha256": "bf100391ea4eacf7c9e47c7152d0a744357bc42668729d46d2eeb9ce5eb1cbd9",
+      "size": 142347
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
@@ -8792,13 +9032,13 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_gui.js",
-      "sha256": "073f54ec891460ea2f800149c36152131a3039124a5a490d9c29ec896b8eaab3",
-      "size": 114985
+      "sha256": "3255c151dbf9c12c0e771744ac47a5db0f2afd069095bd3819647e407abfcc28",
+      "size": 119493
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",
-      "sha256": "c464a1d9b451212e37e9acde6bfa8c162aec258070fab787fb56e7242169fcc3",
-      "size": 2428
+      "sha256": "6ff61528e7da914ee7ca3da62a49f35fe8fcb15b5f7ae12b5fd2873bad030cba",
+      "size": 6209
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_reinforcement_scaling.js",
@@ -9052,8 +9292,8 @@
     },
     {
       "path": "kubejs/server_scripts/99_tests/elyrium_end_to_end_test.js",
-      "sha256": "4e35f9481df8dc98f14fa43074753fc248454f4bec515bc76ec52a6de5fcec7a",
-      "size": 14540
+      "sha256": "5e5bc73c5d46fa5404ff16b59ba7232f2482e60ccce4479f65d5d631609f1d89",
+      "size": 19400
     },
     {
       "path": "kubejs/startup_scripts/ascension_catalysts.js",
@@ -9077,8 +9317,8 @@
     },
     {
       "path": "kubejs/startup_scripts/martial_arts_items.js",
-      "sha256": "5fe3ed8c4a8d9b6863c107180a711e626507a52b935b1b00f8a963af81366c12",
-      "size": 14794
+      "sha256": "da69fb35ddc9d22926579d640c4e988b0241a4c4209d9d2d94844cba859e2b67",
+      "size": 21263
     },
     {
       "path": "kubejs/startup_scripts/modular_multitool_items.js",

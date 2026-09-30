@@ -83,6 +83,96 @@ const TABLETS_METADATA = {
             return id.includes('bow') || id.includes('crossbow');
         },
         weaponDesc: 'Луки, арбалеты'
+    },
+    'kubejs:martial_tablet_iron_stance': {
+        key: 'iron_stance',
+        name: 'Стальная Стойка',
+        validWeapon: function(id) {
+            return id.includes('sword') || id.includes('blade') || id.includes('katana') || 
+                   id.includes('axe') || id.includes('hammer') || id.includes('mace') || 
+                   id.includes('spear') || id.includes('halberd') || id.includes('dagger');
+        },
+        weaponDesc: 'Мечи, катаны, топоры, молоты, копья, кинжалы'
+    },
+    'kubejs:martial_tablet_thousand_cuts': {
+        key: 'thousand_cuts',
+        name: 'Танец Тысячи Лезвий',
+        validWeapon: function(id) {
+            return id.includes('katana') || id.includes('rapier') || id.includes('dagger') || 
+                   id.includes('sai') || id.includes('saber') || id.includes('blade');
+        },
+        weaponDesc: 'Катаны, рапиры, кинжалы, сабли'
+    },
+    'kubejs:martial_tablet_helm_splitter': {
+        key: 'helm_splitter',
+        name: 'Разрубатель Шлемов',
+        validWeapon: function(id) {
+            return id.includes('sword') || id.includes('blade') || id.includes('katana') || 
+                   id.includes('axe') || id.includes('hammer') || id.includes('mace');
+        },
+        weaponDesc: 'Мечи, катаны, боевые топоры, молоты'
+    },
+    'kubejs:martial_tablet_unstoppable_charge': {
+        key: 'unstoppable_charge',
+        name: 'Неумолимый Натиск',
+        validWeapon: function(id) {
+            return id.includes('claymore') || id.includes('greatsword') || id.includes('greataxe') || 
+                   id.includes('heavy') || id.includes('hammer') || id.includes('battleaxe');
+        },
+        weaponDesc: 'Двуручные мечи, клейморы, секиры, тяжелые молоты'
+    },
+    'kubejs:martial_tablet_earth_fracture': {
+        key: 'earth_fracture',
+        name: 'Камнеломный Разлом',
+        validWeapon: function(id) {
+            return id.includes('claymore') || id.includes('greatsword') || id.includes('greataxe') || 
+                   id.includes('hammer') || id.includes('mace') || id.includes('battleaxe');
+        },
+        weaponDesc: 'Двуручи, секиры, боевые молоты'
+    },
+    'kubejs:martial_tablet_bone_crusher': {
+        key: 'bone_crusher',
+        name: 'Дробитель Черепов',
+        validWeapon: function(id) {
+            return id.includes('hammer') || id.includes('mace') || id.includes('club') || 
+                   id.includes('flail');
+        },
+        weaponDesc: 'Молоты, булавы, палицы, кастеты'
+    },
+    'kubejs:martial_tablet_spear_flurry': {
+        key: 'spear_flurry',
+        name: 'Шквал Пяти Уколов',
+        validWeapon: function(id) {
+            return id.includes('spear') || id.includes('halberd') || id.includes('pike') || 
+                   id.includes('rapier') || id.includes('trident') || id.includes('glaive');
+        },
+        weaponDesc: 'Копья, пики, алебарды, рапиры'
+    },
+    'kubejs:martial_tablet_polearm_vault': {
+        key: 'polearm_vault',
+        name: 'Шестовой Прыжок',
+        validWeapon: function(id) {
+            return id.includes('spear') || id.includes('halberd') || id.includes('pike') || 
+                   id.includes('glaive') || id.includes('staff');
+        },
+        weaponDesc: 'Копья, пики, алебарды, шесты'
+    },
+    'kubejs:martial_tablet_sweeping_sweep': {
+        key: 'sweeping_sweep',
+        name: 'Опрокидывающий Мах',
+        validWeapon: function(id) {
+            return id.includes('claymore') || id.includes('greatsword') || id.includes('greataxe') || 
+                   id.includes('halberd') || id.includes('spear') || id.includes('battleaxe');
+        },
+        weaponDesc: 'Двуручные мечи, секиры, алебарды, копья'
+    },
+    'kubejs:martial_tablet_explosive_shot': {
+        key: 'explosive_shot',
+        name: 'Разрывной Выстрел',
+        validWeapon: function(id) {
+            return id.includes('bow') || id.includes('crossbow');
+        },
+        weaponDesc: 'Луки, арбалеты'
     }
 };
 
@@ -321,34 +411,95 @@ function selectTabletForTier(target) {
     let rank = 1;
 
     if (t === 1) {
-        pool = ['kubejs:martial_tablet_whirlwind', 'kubejs:martial_tablet_lightning_thrust', 'kubejs:martial_tablet_arrow_barrage'];
+        pool = [
+            'kubejs:martial_tablet_whirlwind',
+            'kubejs:martial_tablet_lightning_thrust',
+            'kubejs:martial_tablet_arrow_barrage',
+            'kubejs:martial_tablet_iron_stance',
+            'kubejs:martial_tablet_helm_splitter'
+        ];
         rank = 1;
     } else if (t === 2) {
-        pool = ['kubejs:martial_tablet_whirlwind', 'kubejs:martial_tablet_earth_sunder', 'kubejs:martial_tablet_lightning_thrust', 'kubejs:martial_tablet_arrow_barrage'];
+        pool = [
+            'kubejs:martial_tablet_whirlwind',
+            'kubejs:martial_tablet_earth_sunder',
+            'kubejs:martial_tablet_lightning_thrust',
+            'kubejs:martial_tablet_arrow_barrage',
+            'kubejs:martial_tablet_iron_stance',
+            'kubejs:martial_tablet_sweeping_sweep',
+            'kubejs:martial_tablet_spear_flurry',
+            'kubejs:martial_tablet_helm_splitter'
+        ];
         rank = Math.random() < 0.3 ? 2 : 1;
     } else if (t === 3) {
         // Stronghold / Sector 3
-        pool = ['kubejs:martial_tablet_earth_sunder', 'kubejs:martial_tablet_seismic_slam', 'kubejs:martial_tablet_shadow_step', 'kubejs:martial_tablet_juggernaut'];
+        pool = [
+            'kubejs:martial_tablet_earth_sunder',
+            'kubejs:martial_tablet_seismic_slam',
+            'kubejs:martial_tablet_shadow_step',
+            'kubejs:martial_tablet_juggernaut',
+            'kubejs:martial_tablet_bone_crusher',
+            'kubejs:martial_tablet_polearm_vault',
+            'kubejs:martial_tablet_unstoppable_charge'
+        ];
         rank = Math.random() < 0.5 ? 2 : 1;
     } else if (t === 4) {
         // Nether Bridge / Bastion
-        pool = ['kubejs:martial_tablet_juggernaut', 'kubejs:martial_tablet_blood_rend', 'kubejs:martial_tablet_earth_sunder', 'kubejs:martial_tablet_seismic_slam'];
+        pool = [
+            'kubejs:martial_tablet_juggernaut',
+            'kubejs:martial_tablet_blood_rend',
+            'kubejs:martial_tablet_earth_sunder',
+            'kubejs:martial_tablet_seismic_slam',
+            'kubejs:martial_tablet_earth_fracture',
+            'kubejs:martial_tablet_bone_crusher',
+            'kubejs:martial_tablet_unstoppable_charge',
+            'kubejs:martial_tablet_explosive_shot'
+        ];
         rank = Math.random() < 0.4 ? 3 : 2;
     } else if (t === 5) {
         // Aether Dungeons
-        pool = ['kubejs:martial_tablet_whirlwind', 'kubejs:martial_tablet_lightning_thrust', 'kubejs:martial_tablet_arrow_barrage', 'kubejs:martial_tablet_seismic_slam'];
+        pool = [
+            'kubejs:martial_tablet_whirlwind',
+            'kubejs:martial_tablet_lightning_thrust',
+            'kubejs:martial_tablet_arrow_barrage',
+            'kubejs:martial_tablet_seismic_slam',
+            'kubejs:martial_tablet_polearm_vault',
+            'kubejs:martial_tablet_thousand_cuts',
+            'kubejs:martial_tablet_spear_flurry'
+        ];
         rank = Math.random() < 0.5 ? 3 : 2;
     } else if (t === 6) {
         // End City
-        pool = ['kubejs:martial_tablet_shadow_step', 'kubejs:martial_tablet_blood_rend', 'kubejs:martial_tablet_juggernaut', 'kubejs:martial_tablet_earth_sunder'];
+        pool = [
+            'kubejs:martial_tablet_shadow_step',
+            'kubejs:martial_tablet_blood_rend',
+            'kubejs:martial_tablet_juggernaut',
+            'kubejs:martial_tablet_earth_sunder',
+            'kubejs:martial_tablet_thousand_cuts',
+            'kubejs:martial_tablet_explosive_shot',
+            'kubejs:martial_tablet_polearm_vault'
+        ];
         rank = Math.random() < 0.4 ? 4 : 3;
     } else if (t === 7) {
         // Eternal Starlight
-        pool = ['kubejs:martial_tablet_lightning_thrust', 'kubejs:martial_tablet_whirlwind', 'kubejs:martial_tablet_arrow_barrage'];
+        pool = [
+            'kubejs:martial_tablet_lightning_thrust',
+            'kubejs:martial_tablet_whirlwind',
+            'kubejs:martial_tablet_arrow_barrage',
+            'kubejs:martial_tablet_earth_fracture',
+            'kubejs:martial_tablet_spear_flurry',
+            'kubejs:martial_tablet_unstoppable_charge'
+        ];
         rank = Math.random() < 0.5 ? 4 : 3;
     } else if (t === 8) {
         // Deeper Darker
-        pool = ['kubejs:martial_tablet_shadow_step', 'kubejs:martial_tablet_seismic_slam', 'kubejs:martial_tablet_earth_sunder'];
+        pool = [
+            'kubejs:martial_tablet_shadow_step',
+            'kubejs:martial_tablet_seismic_slam',
+            'kubejs:martial_tablet_earth_sunder',
+            'kubejs:martial_tablet_bone_crusher',
+            'kubejs:martial_tablet_thousand_cuts'
+        ];
         rank = Math.random() < 0.4 ? 5 : 4;
     } else {
         // DivineRPG (Tiers 9 - 11)
@@ -450,6 +601,8 @@ if (typeof LootEvents !== 'undefined') {
                 pool.addItem('kubejs:martial_tablet_whirlwind').weight(10);
                 pool.addItem('kubejs:martial_tablet_lightning_thrust').weight(10);
                 pool.addItem('kubejs:martial_tablet_arrow_barrage').weight(10);
+                pool.addItem('kubejs:martial_tablet_iron_stance').weight(8);
+                pool.addItem('kubejs:martial_tablet_helm_splitter').weight(8);
                 pool.addEmpty(20);
             });
         });
@@ -462,6 +615,9 @@ if (typeof LootEvents !== 'undefined') {
                 pool.addItem('kubejs:martial_tablet_earth_sunder').weight(12);
                 pool.addItem('kubejs:martial_tablet_seismic_slam').weight(12);
                 pool.addItem('kubejs:martial_tablet_shadow_step').weight(12);
+                pool.addItem('kubejs:martial_tablet_bone_crusher').weight(10);
+                pool.addItem('kubejs:martial_tablet_polearm_vault').weight(10);
+                pool.addItem('kubejs:martial_tablet_unstoppable_charge').weight(10);
                 pool.addEmpty(15);
             });
         });
@@ -474,6 +630,9 @@ if (typeof LootEvents !== 'undefined') {
                 pool.addItem('kubejs:martial_tablet_juggernaut').weight(15);
                 pool.addItem('kubejs:martial_tablet_blood_rend').weight(15);
                 pool.addItem('kubejs:martial_tablet_earth_sunder').weight(10);
+                pool.addItem('kubejs:martial_tablet_earth_fracture').weight(12);
+                pool.addItem('kubejs:martial_tablet_explosive_shot').weight(12);
+                pool.addItem('kubejs:martial_tablet_bone_crusher').weight(10);
                 pool.addEmpty(15);
             });
         });
@@ -491,6 +650,9 @@ if (typeof LootEvents !== 'undefined') {
                 pool.addItem('kubejs:martial_tablet_lightning_thrust').weight(12);
                 pool.addItem('kubejs:martial_tablet_arrow_barrage').weight(12);
                 pool.addItem('kubejs:martial_tablet_seismic_slam').weight(12);
+                pool.addItem('kubejs:martial_tablet_polearm_vault').weight(12);
+                pool.addItem('kubejs:martial_tablet_thousand_cuts').weight(12);
+                pool.addItem('kubejs:martial_tablet_spear_flurry').weight(12);
                 pool.addEmpty(10);
             });
         });
@@ -504,6 +666,9 @@ if (typeof LootEvents !== 'undefined') {
                 pool.addItem('kubejs:martial_tablet_blood_rend').weight(15);
                 pool.addItem('kubejs:martial_tablet_juggernaut').weight(15);
                 pool.addItem('kubejs:martial_tablet_earth_sunder').weight(15);
+                pool.addItem('kubejs:martial_tablet_thousand_cuts').weight(15);
+                pool.addItem('kubejs:martial_tablet_explosive_shot').weight(15);
+                pool.addItem('kubejs:martial_tablet_polearm_vault').weight(15);
                 pool.addEmpty(10);
             });
         });

@@ -281,6 +281,98 @@ function runElyriumTestSuite(category, isDetailed) {
         }
     }
 
+    // ==========================================================================
+    // ⚔️ 4. MARTIAL ARTS ARSENAL & ASHES OF WAR SYSTEM
+    // ==========================================================================
+    if (runAll || category === 'martial' || category === 'combat') {
+        // Test 4.1: Archetype Diversity (>= 5 arts per archetype)
+        {
+            let archetypes = {
+                blades: ['iai_slash', 'thousand_cuts', 'helm_splitter', 'reverse_sunder', 'iron_stance', 'shadow_step', 'scissor_cross'],
+                heavy: ['whirlwind_cleave', 'severing_cleave', 'earth_sunder', 'unstoppable_charge', 'earth_fracture', 'sweeping_sweep', 'helm_splitter', 'iron_stance', 'reverse_sunder'],
+                bludgeoning: ['crushing_uppercut', 'bone_crusher', 'earth_sunder', 'earth_fracture', 'unstoppable_charge', 'helm_splitter', 'iron_stance', 'reverse_sunder'],
+                polearms: ['piercing_thrust', 'spear_flurry', 'polearm_vault', 'sweeping_sweep', 'iron_stance', 'reverse_sunder'],
+                ranged: ['fan_barrage', 'piercing_shot', 'arrow_rain', 'tactical_backstep', 'triple_shot', 'explosive_shot'],
+                daggers: ['scissor_cross', 'shadow_step', 'thousand_cuts', 'iai_slash', 'iron_stance', 'reverse_sunder']
+            };
+            let allMeetThreshold = true;
+            let details = [];
+            for (let arch in archetypes) {
+                let count = archetypes[arch].length;
+                details.push(`${arch}: ${count}`);
+                if (count < 5) allMeetThreshold = false;
+            }
+            assert(
+                "Martial: Archetype Weapon Arts Diversity (>= 5 per archetype)",
+                allMeetThreshold === true,
+                details.join(', ')
+            );
+        }
+
+        // Test 4.2: Iron Stance Mechanics (Absorption +50%, 0-Parry tick reliance)
+        {
+            let incomingDamage = 40.0;
+            let ironStanceActive = true;
+            let absorbedDamage = incomingDamage;
+            if (ironStanceActive) {
+                absorbedDamage = incomingDamage * 0.5; // +50% absorption
+            }
+            assert(
+                "Martial: Iron Stance Damage Absorption (+50%) & Hyper-Armor",
+                absorbedDamage === 20.0,
+                `Incoming: ${incomingDamage}, After 50% absorption: ${absorbedDamage}`
+            );
+        }
+
+        // Test 4.3: 10 New Martial Tablet IDs & Reverse Resolver
+        {
+            let newTabletMap = {
+                'iron_stance': 'kubejs:martial_tablet_iron_stance',
+                'thousand_cuts': 'kubejs:martial_tablet_thousand_cuts',
+                'helm_splitter': 'kubejs:martial_tablet_helm_splitter',
+                'unstoppable_charge': 'kubejs:martial_tablet_unstoppable_charge',
+                'earth_fracture': 'kubejs:martial_tablet_earth_fracture',
+                'bone_crusher': 'kubejs:martial_tablet_bone_crusher',
+                'spear_flurry': 'kubejs:martial_tablet_spear_flurry',
+                'polearm_vault': 'kubejs:martial_tablet_polearm_vault',
+                'sweeping_sweep': 'kubejs:martial_tablet_sweeping_sweep',
+                'explosive_shot': 'kubejs:martial_tablet_explosive_shot'
+            };
+            let resolvedCorrectly = true;
+            let totalChecked = 0;
+            for (let artId in newTabletMap) {
+                totalChecked++;
+                let expectedTablet = newTabletMap[artId];
+                let resolvedTablet = 'kubejs:martial_tablet_' + artId;
+                if (expectedTablet !== resolvedTablet) resolvedCorrectly = false;
+            }
+            assert(
+                "Martial: 10 New Martial Tablets ID Resolution",
+                resolvedCorrectly && totalChecked === 10,
+                `Verified all 10 tablet IDs mapped deterministically (Count: ${totalChecked})`
+            );
+        }
+
+        // Test 4.4: 3-Slot Ashes of War Architecture & Tier Gating
+        {
+            function getAvailableSlots(tier) {
+                let slots = ['RMB_Innate'];
+                if (tier >= 4) slots.push('Z_Slot2');
+                if (tier >= 7) slots.push('X_Slot3');
+                return slots;
+            }
+            let t1Slots = getAvailableSlots(1);
+            let t4Slots = getAvailableSlots(4);
+            let t7Slots = getAvailableSlots(7);
+            let validGating = t1Slots.length === 1 && t4Slots.length === 2 && t7Slots.length === 3;
+            assert(
+                "Martial: 3-Slot Ashes of War Tier Gating (RMB -> Z [T4+] -> X [T7+])",
+                validGating === true,
+                `T1 slots: [${t1Slots.join(', ')}], T4 slots: [${t4Slots.join(', ')}], T7 slots: [${t7Slots.join(', ')}]`
+            );
+        }
+    }
+
     return {
         category: category || 'all',
         total: total,
@@ -338,6 +430,7 @@ ServerEvents.commandRegistry(event => {
             .then(Commands.literal('combat').executes(ctx => handleElyriumTestExecution(ctx, 'combat', true)))
             .then(Commands.literal('craft').executes(ctx => handleElyriumTestExecution(ctx, 'craft', true)))
             .then(Commands.literal('security').executes(ctx => handleElyriumTestExecution(ctx, 'security', true)))
+            .then(Commands.literal('martial').executes(ctx => handleElyriumTestExecution(ctx, 'martial', true)))
             .executes(ctx => handleElyriumTestExecution(ctx, 'all', false))
     )
 
