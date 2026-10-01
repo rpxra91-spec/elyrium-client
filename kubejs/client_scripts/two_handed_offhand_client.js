@@ -1,9 +1,10 @@
 // ==============================================================================
-// ⚔️ ELYRIUM RPG: TWO-HANDED OFFHAND VISUAL HIDER (CLIENT SCRIPT)
+// ⚔️ ELYRIUM RPG: TWO-HANDED OFFHAND VISUAL HIDER (CLIENT SCRIPT v1.2)
 // Minecraft 1.21.1 NeoForge | KubeJS Client Script
 // ==============================================================================
 // Hides the offhand shield/item rendering in first person when holding
-// a two-handed weapon (claymore, greatsword, bows, crossbows, spears, etc.)
+// a heavy melee two-handed weapon (claymore, greatsword, scythe, greathammer, etc.)
+// Bows/crossbows are NOT hidden (shield stays visible and safe in offhand).
 // ==============================================================================
 
 let J_RenderHandEvent_2H = null;
@@ -17,21 +18,12 @@ let isTwoHandedApiInit = false;
 let isClientOffhandLocked = false;
 let isRenderHandSubscribed = false;
 
-let J_RenderPlayerEventPre_2H = null;
-let J_RenderPlayerEventPost_2H = null;
-let J_ItemStack_2H = null;
-let isRenderPlayerSubscribed = false;
-let stashedOffhandItem = null;
-
 function initTwoHandedClientApi() {
     if (isTwoHandedApiInit) return;
     try {
         J_RenderHandEvent_2H = Java.loadClass('net.neoforged.neoforge.client.event.RenderHandEvent');
         J_InteractionHand_2H = Java.loadClass('net.minecraft.world.InteractionHand');
         J_Minecraft_2H = Java.loadClass('net.minecraft.client.Minecraft');
-        J_RenderPlayerEventPre_2H = Java.loadClass('net.neoforged.neoforge.client.event.RenderPlayerEvent$Pre');
-        J_RenderPlayerEventPost_2H = Java.loadClass('net.neoforged.neoforge.client.event.RenderPlayerEvent$Post');
-        J_ItemStack_2H = Java.loadClass('net.minecraft.world.item.ItemStack');
     } catch (e) {}
 
     try {
@@ -49,6 +41,7 @@ function initTwoHandedClientApi() {
 function checkTwoHandedClient(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
 
+    // Better Combat WeaponRegistry check
     if (J_WeaponRegistry_Client2H) {
         try {
             let rawStack = item.getItemStack ? item.getItemStack() : (item.minecraftItemStack || item);
@@ -61,7 +54,8 @@ function checkTwoHandedClient(item) {
     }
 
     let id = String(item.id || '').toLowerCase();
-    if (((id.includes('bow') && !id.includes('bowl')) || id.includes('crossbow'))) return true;
+
+    // Heavy Melee Two-Handed Weapons
     if (id.includes('spear') || id.includes('lance') || id.includes('halberd') || id.includes('glaive') || id.includes('staff')) return true;
     if (id.includes('claymore') || id.includes('greathammer') || id.includes('greatsword') ||
         id.includes('scythe') || id.includes('breaker') || id.includes('hammer') ||
@@ -118,29 +112,19 @@ NetworkEvents.dataReceived('elyrium:offhand_lock_state', event => {
         let d = event.data;
         if (typeof d.locked === 'boolean') {
             isClientOffhandLocked = d.locked;
-        } else if (typeof d.getBoolean === 'function') {
-            isClientOffhandLocked = d.getBoolean('locked');
         }
-    } catch (e) {}
+    } catch (eNet) {}
 });
 
-// 2. Client-side tick to check lock state proactively
+// 2. Client tick initialization & safe event subscription
 ClientEvents.tick(event => {
     initTwoHandedClientApi();
 
-    let mc = J_Minecraft_2H ? J_Minecraft_2H.getInstance() : null;
-    if (mc && mc.player) {
-        let mainItem = mc.player.getMainHandItem ? mc.player.getMainHandItem() : mc.player.mainHandItem;
-        let offItem = mc.player.getOffhandItem ? mc.player.getOffhandItem() : mc.player.offHandItem;
-        isClientOffhandLocked = checkTwoHandedClient(mainItem) && isOffhandRestrictedClient(offItem);
-    }
-
-    // Lazy subscription to RenderHandEvent
     if (!isRenderHandSubscribed && J_RenderHandEvent_2H) {
         try {
             if (typeof NativeEvents !== 'undefined') {
-                NativeEvents.onEvent(J_RenderHandEvent_2H, event => {
-                    handleRenderHand(event);
+                NativeEvents.onEvent(J_RenderHandEvent_2H, ev => {
+                    handleRenderHand(ev);
                 });
                 isRenderHandSubscribed = true;
             } else if (J_NeoForge_2H && J_Consumer_2H) {
@@ -154,60 +138,4 @@ ClientEvents.tick(event => {
             }
         } catch (eSub) {}
     }
-
-    // Lazy subscription to RenderPlayerEvent (3rd person offhand hider)
-    if (!isRenderPlayerSubscribed && J_RenderPlayerEventPre_2H && J_RenderPlayerEventPost_2H) {
-        try {
-            if (typeof NativeEvents !== 'undefined') {
-                NativeEvents.onEvent(J_RenderPlayerEventPre_2H, event => {
-                    handleRenderPlayerPre(event);
-                });
-                NativeEvents.onEvent(J_RenderPlayerEventPost_2H, event => {
-                    handleRenderPlayerPost(event);
-                });
-                isRenderPlayerSubscribed = true;
-            } else if (J_NeoForge_2H && J_Consumer_2H) {
-                let preListener = new J_Consumer_2H({
-                    accept: function(ev) { handleRenderPlayerPre(ev); }
-                });
-                let postListener = new J_Consumer_2H({
-                    accept: function(ev) { handleRenderPlayerPost(ev); }
-                });
-                J_NeoForge_2H.EVENT_BUS.addListener(preListener);
-                J_NeoForge_2H.EVENT_BUS.addListener(postListener);
-                isRenderPlayerSubscribed = true;
-            }
-        } catch (eSubPlayer) {}
-    }
 });
-
-function handleRenderPlayerPre(event) {
-    if (!event) return;
-    try {
-        let player = event.getEntity ? event.getEntity() : null;
-        if (!player) return;
-
-        let mainItem = player.getMainHandItem ? player.getMainHandItem() : player.mainHandItem;
-        let offItem = player.getOffhandItem ? player.getOffhandItem() : player.offHandItem;
-
-        if (checkTwoHandedClient(mainItem) && isOffhandRestrictedClient(offItem)) {
-            stashedOffhandItem = offItem;
-            if (J_ItemStack_2H && J_InteractionHand_2H) {
-                player.setItemInHand(J_InteractionHand_2H.OFF_HAND, J_ItemStack_2H.EMPTY);
-            }
-        }
-    } catch (ePre) {}
-}
-
-function handleRenderPlayerPost(event) {
-    if (!event) return;
-    try {
-        if (stashedOffhandItem) {
-            let player = event.getEntity ? event.getEntity() : null;
-            if (player && J_InteractionHand_2H) {
-                player.setItemInHand(J_InteractionHand_2H.OFF_HAND, stashedOffhandItem);
-            }
-            stashedOffhandItem = null;
-        }
-    } catch (ePost) {}
-}

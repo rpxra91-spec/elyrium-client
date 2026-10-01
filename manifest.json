@@ -1,8 +1,8 @@
 {
-  "version": "0.4.0",
+  "version": "0.4.1",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-01T18:54:42.582258+00:00",
+  "generated_at": "2026-10-01T19:51:31.453393+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -1377,7 +1377,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "94f59203f1941462fe85c4dea3d0e5e9fb76ebb6c2d27f50c19120b7364cbd5a",
+      "sha256": "f17e9e4521779f4034a6fbed1cfef7b22a2099d3a6d30b5e1fe5dadbb6a149bf",
       "size": 275
     },
     {
@@ -2222,8 +2222,8 @@
     },
     {
       "path": "kubejs/assets/elyrium/player_animations/roll.json",
-      "sha256": "cb94dcf346bf86260e6a54b27d2b4de85d683a36ddff386800e022a231a8ab5c",
-      "size": 1846
+      "sha256": "20527b241a5eb2fca7e09431e46695ab125d82cbd4542138bf486e348e9bec04",
+      "size": 3053
     },
     {
       "path": "kubejs/assets/elyrium/textures/gui/celestial_constellation_bg.png",
@@ -8237,8 +8237,8 @@
     },
     {
       "path": "kubejs/client_scripts/dodge_camera_fx.js",
-      "sha256": "bbe0e47443b592acfd02e53eaeaec583c8c6dd114f8a1b6289ff09d883d52942",
-      "size": 14430
+      "sha256": "c780c0efb2b760f77a7d7fa9ba01eee7119cbeb11d4edc6df00ad73ec80ada35",
+      "size": 14791
     },
     {
       "path": "kubejs/client_scripts/equipment_reinforcement_tooltips.js",
@@ -8297,8 +8297,8 @@
     },
     {
       "path": "kubejs/client_scripts/stamina_hud_overlay.js",
-      "sha256": "923cc87eb7e4d7ee6646fe954af541f67445abeb4e1af1afc785492215f28c2c",
-      "size": 17830
+      "sha256": "20dd112ec168d1b76be0e23dc9e9644b2d2aa740192cdb6d597c388e87a90394",
+      "size": 19000
     },
     {
       "path": "kubejs/client_scripts/tier4_tooltips.js",
@@ -8312,8 +8312,8 @@
     },
     {
       "path": "kubejs/client_scripts/two_handed_offhand_client.js",
-      "sha256": "a337a8279ed51c450a8483d84d9f427642f793900853bddbafc465f19914ee25",
-      "size": 8583
+      "sha256": "d926c20e6b5b09e771d720e1bc403afb48794edae15702298580dcacd765e21c",
+      "size": 5355
     },
     {
       "path": "kubejs/client_scripts/weapon_arts_keybinds.js",
@@ -9242,8 +9242,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "f8bbf4bfbbebf10cc833ca4bce283bad76202db60c7da2071576d45d193876b4",
-      "size": 141662
+      "sha256": "a858bdf6a52bf5f38ca121ba520400b6a45b31adfd548113f1795820a911f2f3",
+      "size": 141736
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
@@ -9252,8 +9252,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/souls_dodge_engine.js",
-      "sha256": "3399999cac049fbf81d86f32917cfa1c0e7626bfcafe3349815c372e50d01895",
-      "size": 10465
+      "sha256": "18ea4d16ca97e9a48289eddebbf99e7b8dc00f8b719ea7ab4f441a439dd9b8c8",
+      "size": 10402
     },
     {
       "path": "kubejs/server_scripts/03_combat/spell_stamina_cost.js",
@@ -9272,8 +9272,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/two_handed_offhand_lock.js",
-      "sha256": "828178d7c50fe39149f8c2bf10cd0afdfa77f1ccfd64ebbe2b8c3c98f18900a1",
-      "size": 8962
+      "sha256": "82396c656e1ac71f843c83d7b691ee3b62fcb7e0ab74d2709c74e4afb9e8a664",
+      "size": 8644
     },
     {
       "path": "kubejs/server_scripts/03_combat/wave_defense_arena.js",
@@ -16127,7 +16127,7 @@
     },
     {
       "path": "shaderpacks/superDuperVanilla.zip.txt",
-      "sha256": "9de363f0b20427ffd801727e408bce580175c06fb61174620bdd334380f47f14",
+      "sha256": "92d329669b021a9dece9ddff6194415a9db2fa28088e9b58b854f11cc66e6079",
       "size": 231
     }
   ]

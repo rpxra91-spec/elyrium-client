@@ -1,24 +1,25 @@
 // ==============================================================================
 // ⚔️ ELYRIUM RPG: UNIFIED CLASSIC RPG HUD (HEALTH, HUNGER, SATURATION, STAMINA)
-// Minecraft 1.21.1 NeoForge | KubeJS Client Script
+// Minecraft 1.21.1 NeoForge | KubeJS Client Script (v2.1)
 // ==============================================================================
 // 1. Suppresses vanilla hearts and chicken drumsticks via RenderGuiLayerEvent$Pre:
 //    - VanillaGuiLayers.PLAYER_HEALTH
 //    - VanillaGuiLayers.FOOD_LEVEL
-// 2. Renders clean, modern, symmetrical RPG status bars in RenderGuiEvent$Post:
+// 2. Renders clean, modern, symmetrical RPG status bars:
 //    - LEFT SIDE:
 //      * Health Bar (81x7 px, Ruby Red, Damage Lag-Trail, Absorption Shield)
 //      * Stamina Bar (81x6 px, Amber Gold, Permanent 100% visible, Shield Block Aura)
 //    - RIGHT SIDE:
 //      * Hunger & Saturation Bar (81x7 px, Caramel Orange with Golden Saturation Overlay)
-//      * (Mana Bar from Iron's Spells aligns directly above Hunger)
-// 3. Zero-Latency Network Sync: listens to 'elyrium:sync_stamina' and 'elyrium:sync_posture'
+// 3. NeoForge 1.21.1 Compatible: uses RenderType.gui(), 5-arg drawString, and safeFill fallbacks.
+// 4. Zero-Latency Network Sync: listens to 'elyrium:sync_stamina'
 // ==============================================================================
 
 let J_Minecraft = null;
 let J_RenderGuiEventPost = null;
 let J_RenderGuiLayerEventPre = null;
 let J_VanillaGuiLayers = null;
+let J_RenderType = null;
 let J_NeoForge = null;
 let J_Consumer = null;
 let isStaminaHudApiLoaded = false;
@@ -40,6 +41,9 @@ function initStaminaHudApi() {
         J_VanillaGuiLayers = Java.loadClass('net.neoforged.neoforge.client.gui.VanillaGuiLayers');
     } catch (e) {}
     try {
+        J_RenderType = Java.loadClass('net.minecraft.client.renderer.RenderType');
+    } catch (e) {}
+    try {
         J_NeoForge = Java.loadClass('net.neoforged.neoforge.common.NeoForge');
         J_Consumer = Java.loadClass('java.util.function.Consumer');
     } catch (e) {}
@@ -56,6 +60,9 @@ let isInitialSync = true;
 let displayedHealth = 20;
 let lagHealth = 20;
 let lastDamageTime = 0;
+
+// Render de-duplication per frame
+let lastRenderedTick = -1;
 
 // API export for other client scripts
 var ElyriumClientStamina = {
@@ -97,25 +104,78 @@ NetworkEvents.dataReceived('elyrium:sync_stamina', event => {
 });
 
 // ------------------------------------------------------------------------------
-// 2. LAYER SUPPRESSION: Suppress Vanilla Hearts and Drumsticks
+// 2. SAFE RENDERING PRIMITIVES (NeoForge 1.21.1 Compatible)
 // ------------------------------------------------------------------------------
-function handleLayerPre(event) {
-    if (!event) return;
-    try {
-        let name = event.getName ? event.getName() : null;
-        if (!name || !J_VanillaGuiLayers) return;
+function safeFill(guiGraphics, x1, y1, x2, y2, color) {
+    if (!guiGraphics) return;
+    let ix1 = x1 | 0;
+    let iy1 = y1 | 0;
+    let ix2 = x2 | 0;
+    let iy2 = y2 | 0;
+    let icol = color | 0;
 
-        // Cancel vanilla player hearts
-        if (name.equals(J_VanillaGuiLayers.PLAYER_HEALTH)) {
-            event.setCanceled(true);
-            return;
-        }
-        // Cancel vanilla food / hunger drumsticks
-        if (name.equals(J_VanillaGuiLayers.FOOD_LEVEL)) {
-            event.setCanceled(true);
-            return;
-        }
-    } catch (eLayer) {}
+    // 1. Try 1.21.1 RenderType.gui()
+    if (J_RenderType) {
+        try {
+            let rType = J_RenderType.gui ? J_RenderType.gui() : null;
+            if (rType) {
+                guiGraphics.fill(rType, ix1, iy1, ix2, iy2, icol);
+                return;
+            }
+        } catch (e1) {}
+    }
+    // 2. Try fillGradient(x1, y1, x2, y2, 0, color, color)
+    try {
+        guiGraphics.fillGradient(ix1, iy1, ix2, iy2, 0, icol, icol);
+        return;
+    } catch (e2) {}
+    // 3. Try legacy 5-arg fill
+    try {
+        guiGraphics.fill(ix1, iy1, ix2, iy2, icol);
+    } catch (e3) {}
+}
+
+function safeFillGradient(guiGraphics, x1, y1, x2, y2, colorFrom, colorTo) {
+    if (!guiGraphics) return;
+    let ix1 = x1 | 0;
+    let iy1 = y1 | 0;
+    let ix2 = x2 | 0;
+    let iy2 = y2 | 0;
+    let colFrom = colorFrom | 0;
+    let colTo = colorTo | 0;
+
+    if (J_RenderType) {
+        try {
+            let rType = J_RenderType.gui ? J_RenderType.gui() : null;
+            if (rType) {
+                guiGraphics.fillGradient(rType, ix1, iy1, ix2, iy2, 0, colFrom, colTo);
+                return;
+            }
+        } catch (e1) {}
+    }
+    try {
+        guiGraphics.fillGradient(ix1, iy1, ix2, iy2, 0, colFrom, colTo);
+        return;
+    } catch (e2) {}
+    safeFill(guiGraphics, ix1, iy1, ix2, iy2, colFrom);
+}
+
+function safeDrawString(guiGraphics, font, text, x, y, color) {
+    if (!guiGraphics || !font) return;
+    let ix = Math.round(x);
+    let iy = Math.round(y);
+    let icol = color | 0;
+    let str = String(text);
+
+    // 1. Try 1.21.1 5-arg drawString(font, text, x, y, color)
+    try {
+        guiGraphics.drawString(font, str, ix, iy, icol);
+        return;
+    } catch (e1) {}
+    // 2. Try legacy 6-arg drawString(font, text, x, y, color, dropShadow)
+    try {
+        guiGraphics.drawString(font, str, ix, iy, icol, true);
+    } catch (e2) {}
 }
 
 // ------------------------------------------------------------------------------
@@ -133,8 +193,9 @@ function renderMasterRpgHud(guiGraphics) {
         if (mc.screen != null) return;
 
         let player = mc.player;
-        let screenWidth = guiGraphics.guiWidth ? guiGraphics.guiWidth() : mc.getWindow().getGuiScaledWidth();
-        let screenHeight = guiGraphics.guiHeight ? guiGraphics.guiHeight() : mc.getWindow().getGuiScaledHeight();
+        let window = mc.getWindow();
+        let screenWidth = window ? window.getGuiScaledWidth() : (guiGraphics.guiWidth ? guiGraphics.guiWidth() : 400);
+        let screenHeight = window ? window.getGuiScaledHeight() : (guiGraphics.guiHeight ? guiGraphics.guiHeight() : 300);
 
         const BAR_WIDTH = 81;
         const HP_BAR_HEIGHT = 7;
@@ -153,13 +214,12 @@ function renderMasterRpgHud(guiGraphics) {
         const COLOR_BORDER = (0xFF1F2937 | 0);       // Dark Slate #1F2937
         const COLOR_BG = (0xCC111827 | 0);           // Deep Graphite 80% opacity #111827
         const COLOR_TEXT = (0xFFFFFFFF | 0);         // Crisp White
-        const COLOR_TEXT_SHADOW = (0xFF000000 | 0);
 
         // ----------------------------------------------------------------------
         // A. HEALTH BAR (Left Side, Bottom Row: y = bottomY)
         // ----------------------------------------------------------------------
-        let curHealth = player.getHealth ? player.getHealth() : player.health;
-        let maxHealth = player.getMaxHealth ? player.getMaxHealth() : player.maxHealth;
+        let curHealth = player.getHealth ? player.getHealth() : (player.health || 20);
+        let maxHealth = player.getMaxHealth ? player.getMaxHealth() : (player.maxHealth || 20);
         let absorption = player.getAbsorptionAmount ? player.getAbsorptionAmount() : (player.absorptionAmount || 0);
 
         // Track lag-trail for damage
@@ -183,45 +243,34 @@ function renderMasterRpgHud(guiGraphics) {
         let hpY = bottomY;
 
         // 1. Outer Border
-        guiGraphics.fill(leftX | 0, hpY | 0, (leftX + BAR_WIDTH) | 0, (hpY + HP_BAR_HEIGHT) | 0, COLOR_BORDER);
+        safeFill(guiGraphics, leftX, hpY, leftX + BAR_WIDTH, hpY + HP_BAR_HEIGHT, COLOR_BORDER);
         // 2. Background
-        guiGraphics.fill((leftX + 1) | 0, (hpY + 1) | 0, (leftX + BAR_WIDTH - 1) | 0, (hpY + HP_BAR_HEIGHT - 1) | 0, COLOR_BG);
+        safeFill(guiGraphics, leftX + 1, hpY + 1, leftX + BAR_WIDTH - 1, hpY + HP_BAR_HEIGHT - 1, COLOR_BG);
 
-        // 3. Damage Lag-Trail (White / Light Red)
+        // 3. Damage Lag-Trail (Light Red)
         if (lagFillWidth > hpFillWidth) {
-            const COLOR_LAG = (0xFFFECACA | 0); // Light Red #FECACA
-            guiGraphics.fill((leftX + 1 + hpFillWidth) | 0, (hpY + 1) | 0, (leftX + 1 + lagFillWidth) | 0, (hpY + HP_BAR_HEIGHT - 1) | 0, COLOR_LAG);
+            const COLOR_LAG = (0xFFFECACA | 0);
+            safeFill(guiGraphics, leftX + 1 + hpFillWidth, hpY + 1, leftX + 1 + lagFillWidth, hpY + HP_BAR_HEIGHT - 1, COLOR_LAG);
         }
 
         // 4. Ruby Red Health Gradient
         if (hpFillWidth > 0) {
             const COLOR_HP_TOP = (0xFFEF4444 | 0); // Red #EF4444
             const COLOR_HP_BOT = (0xFF991B1B | 0); // Crimson #991B1B
-            try {
-                guiGraphics.fillGradient((leftX + 1) | 0, (hpY + 1) | 0, (leftX + 1 + hpFillWidth) | 0, (hpY + HP_BAR_HEIGHT - 1) | 0, 0, COLOR_HP_TOP, COLOR_HP_BOT);
-            } catch (eHGrad) {
-                guiGraphics.fill((leftX + 1) | 0, (hpY + 1) | 0, (leftX + 1 + hpFillWidth) | 0, (hpY + HP_BAR_HEIGHT - 1) | 0, COLOR_HP_TOP);
-            }
+            safeFillGradient(guiGraphics, leftX + 1, hpY + 1, leftX + 1 + hpFillWidth, hpY + HP_BAR_HEIGHT - 1, COLOR_HP_TOP, COLOR_HP_BOT);
         }
 
         // 5. Golden Absorption Shield Overlay
-        if (absorption > 0) {
+        if (absorption > 0.1) {
             let absProgress = Math.max(0.0, Math.min(1.0, absorption / Math.max(1, maxHealth)));
             let absFillWidth = Math.round(innerWidth * absProgress);
-            const COLOR_ABS_TOP = (0x99F59E0B | 0); // Amber/Gold semi-transparent
-            const COLOR_ABS_BOT = (0x99D97706 | 0);
-            try {
-                guiGraphics.fillGradient((leftX + 1) | 0, (hpY + 1) | 0, (leftX + 1 + absFillWidth) | 0, (hpY + HP_BAR_HEIGHT - 1) | 0, 0, COLOR_ABS_TOP, COLOR_ABS_BOT);
-            } catch (eAbs) {
-                guiGraphics.fill((leftX + 1) | 0, (hpY + 1) | 0, (leftX + 1 + absFillWidth) | 0, (hpY + HP_BAR_HEIGHT - 1) | 0, COLOR_ABS_TOP);
-            }
+            const COLOR_ABS_TOP = (0xCCFBBF24 | 0); // Amber Gold
+            const COLOR_ABS_BOT = (0xCCD97706 | 0);
+            safeFillGradient(guiGraphics, leftX + 1, hpY + 1, leftX + 1 + absFillWidth, hpY + HP_BAR_HEIGHT - 1, COLOR_ABS_TOP, COLOR_ABS_BOT);
         }
 
-        // 6. Text: ♥ [cur]/[max]
-        let curHPInt = Math.max(0, Math.round(curHealth));
-        let maxHPInt = Math.round(maxHealth);
-        let hpText = `♥ ${curHPInt}/${maxHPInt}` + (absorption > 0 ? ` (+${Math.round(absorption)})` : '');
-
+        // 6. Text: ♥ [cur] / [max]
+        let hpText = `♥ ${Math.ceil(curHealth)}/${Math.ceil(maxHealth)}` + (absorption > 0.1 ? ` (+${Math.ceil(absorption)})` : '');
         if (font && pose) {
             const SCALE = 0.72;
             let tw = font.width(hpText);
@@ -229,57 +278,55 @@ function renderMasterRpgHud(guiGraphics) {
             pose.scale(SCALE, SCALE, 1.0);
             let tx = (leftX + (BAR_WIDTH - tw * SCALE) / 2) / SCALE;
             let ty = (hpY + (HP_BAR_HEIGHT - 7.5 * SCALE) / 2) / SCALE;
-            guiGraphics.drawString(font, hpText, Math.round(tx), Math.round(ty), COLOR_TEXT, true);
+            safeDrawString(guiGraphics, font, hpText, tx, ty, COLOR_TEXT);
             pose.popPose();
         }
 
         // ----------------------------------------------------------------------
-        // B. STAMINA BAR (Left Side, Above Health: y = hpY - 8)
+        // B. PERMANENT STAMINA BAR (Left Side, Top Row: y = bottomY - 9)
         // ----------------------------------------------------------------------
-        let stamY = hpY - 8;
+        let stamY = bottomY - 9;
         displayedStamina += (clientStamina - displayedStamina) * 0.35;
-        if (Math.abs(clientStamina - displayedStamina) < 0.2) displayedStamina = clientStamina;
+        if (Math.abs(clientStamina - displayedStamina) < 0.1) displayedStamina = clientStamina;
 
-        let stamProgress = Math.max(0.0, Math.min(1.0, displayedStamina / Math.max(1, clientMaxStamina)));
+        let maxStam = Math.max(1, clientMaxStamina);
+        let stamProgress = Math.max(0.0, Math.min(1.0, displayedStamina / maxStam));
         let stamFillWidth = Math.round(innerWidth * stamProgress);
 
         let isBlocking = player.isBlocking ? player.isBlocking() : false;
-        const COLOR_STAM_BORDER = isBlocking ? (0xFF38BDF8 | 0) : COLOR_BORDER; // Cyan highlight if blocking!
+        let COLOR_STAM_BORDER = isBlocking ? (0xFF06B6D4 | 0) : COLOR_BORDER; // Cyan glow on block
 
-        guiGraphics.fill(leftX | 0, stamY | 0, (leftX + BAR_WIDTH) | 0, (stamY + STAM_BAR_HEIGHT) | 0, COLOR_STAM_BORDER);
-        guiGraphics.fill((leftX + 1) | 0, (stamY + 1) | 0, (leftX + BAR_WIDTH - 1) | 0, (stamY + STAM_BAR_HEIGHT - 1) | 0, COLOR_BG);
+        // 1. Outer Border
+        safeFill(guiGraphics, leftX, stamY, leftX + BAR_WIDTH, stamY + STAM_BAR_HEIGHT, COLOR_STAM_BORDER);
+        // 2. Background
+        safeFill(guiGraphics, leftX + 1, stamY + 1, leftX + BAR_WIDTH - 1, stamY + STAM_BAR_HEIGHT - 1, COLOR_BG);
 
+        // 3. Stamina Gradient (Amber / Emerald Gold)
         if (stamFillWidth > 0) {
-            const COLOR_AMBER_TOP = (0xFFF59E0B | 0);
-            const COLOR_AMBER_BOT = (0xFFD97706 | 0);
-            try {
-                guiGraphics.fillGradient((leftX + 1) | 0, (stamY + 1) | 0, (leftX + 1 + stamFillWidth) | 0, (stamY + STAM_BAR_HEIGHT - 1) | 0, 0, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
-            } catch (eSGrad) {
-                guiGraphics.fill((leftX + 1) | 0, (stamY + 1) | 0, (leftX + 1 + stamFillWidth) | 0, (stamY + STAM_BAR_HEIGHT - 1) | 0, COLOR_AMBER_TOP);
-            }
+            const COLOR_AMBER_TOP = (0xFFF59E0B | 0); // Amber #F59E0B
+            const COLOR_AMBER_BOT = (0xFFB45309 | 0); // Bronze Amber #B45309
+            safeFillGradient(guiGraphics, leftX + 1, stamY + 1, leftX + 1 + stamFillWidth, stamY + STAM_BAR_HEIGHT - 1, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
         }
 
-        let curStamInt = Math.max(0, Math.round(displayedStamina));
-        let maxStamInt = Math.round(clientMaxStamina);
-        let stamText = (isBlocking ? `🛡 ` : `⚡ `) + `${curStamInt}/${maxStamInt}`;
-
+        // 4. Text: ⚡ [stam] / [max]
+        let stamText = `⚡ ${Math.round(clientStamina)}/${Math.round(maxStam)}`;
         if (font && pose) {
-            const SCALE = 0.70;
+            const SCALE = 0.65;
             let tw = font.width(stamText);
             pose.pushPose();
             pose.scale(SCALE, SCALE, 1.0);
             let tx = (leftX + (BAR_WIDTH - tw * SCALE) / 2) / SCALE;
             let ty = (stamY + (STAM_BAR_HEIGHT - 7.5 * SCALE) / 2) / SCALE;
-            guiGraphics.drawString(font, stamText, Math.round(tx), Math.round(ty), COLOR_TEXT, true);
+            safeDrawString(guiGraphics, font, stamText, tx, ty, COLOR_TEXT);
             pose.popPose();
         }
 
         // ----------------------------------------------------------------------
-        // C. HUNGER & SATURATION BAR (Right Side, Bottom Row: x = rightX, y = bottomY)
+        // C. HUNGER & SATURATION BAR (Right Side, Bottom Row: y = bottomY)
         // ----------------------------------------------------------------------
         let foodData = player.getFoodData ? player.getFoodData() : null;
-        let foodLevel = foodData && typeof foodData.getFoodLevel === 'function' ? foodData.getFoodLevel() : 20;
-        let saturation = foodData && typeof foodData.getSaturationLevel === 'function' ? foodData.getSaturationLevel() : 0.0;
+        let foodLevel = foodData ? (foodData.getFoodLevel ? foodData.getFoodLevel() : 20) : 20;
+        let saturation = foodData ? (foodData.getSaturationLevel ? foodData.getSaturationLevel() : 5) : 5;
 
         let foodProgress = Math.max(0.0, Math.min(1.0, foodLevel / 20.0));
         let foodFillWidth = Math.round(innerWidth * foodProgress);
@@ -287,32 +334,24 @@ function renderMasterRpgHud(guiGraphics) {
         let foodY = bottomY;
 
         // 1. Outer Border
-        guiGraphics.fill(rightX | 0, foodY | 0, (rightX + BAR_WIDTH) | 0, (foodY + FOOD_BAR_HEIGHT) | 0, COLOR_BORDER);
+        safeFill(guiGraphics, rightX, foodY, rightX + BAR_WIDTH, foodY + FOOD_BAR_HEIGHT, COLOR_BORDER);
         // 2. Background
-        guiGraphics.fill((rightX + 1) | 0, (foodY + 1) | 0, (rightX + BAR_WIDTH - 1) | 0, (foodY + FOOD_BAR_HEIGHT - 1) | 0, COLOR_BG);
+        safeFill(guiGraphics, rightX + 1, foodY + 1, rightX + BAR_WIDTH - 1, foodY + FOOD_BAR_HEIGHT - 1, COLOR_BG);
 
         // 3. Caramel Orange Food Bar
         if (foodFillWidth > 0) {
-            const COLOR_FOOD_TOP = (0xFFEA580C | 0); // Orange #EA580C
-            const COLOR_FOOD_BOT = (0xFFC2410C | 0); // Rust #C2410C
-            try {
-                guiGraphics.fillGradient((rightX + 1) | 0, (foodY + 1) | 0, (rightX + 1 + foodFillWidth) | 0, (foodY + FOOD_BAR_HEIGHT - 1) | 0, 0, COLOR_FOOD_TOP, COLOR_FOOD_BOT);
-            } catch (eFGrad) {
-                guiGraphics.fill((rightX + 1) | 0, (foodY + 1) | 0, (rightX + 1 + foodFillWidth) | 0, (foodY + FOOD_BAR_HEIGHT - 1) | 0, COLOR_FOOD_TOP);
-            }
+            const COLOR_FOOD_TOP = (0xFFFB923C | 0); // Orange #FB923C
+            const COLOR_FOOD_BOT = (0xFFC2410C | 0); // Dark Orange #C2410C
+            safeFillGradient(guiGraphics, rightX + 1, foodY + 1, rightX + 1 + foodFillWidth, foodY + FOOD_BAR_HEIGHT - 1, COLOR_FOOD_TOP, COLOR_FOOD_BOT);
         }
 
-        // 4. Glowing Golden Saturation Overlay (Saturation can go up to foodLevel)
+        // 4. Glowing Golden Saturation Overlay
         if (saturation > 0.1) {
             let satProgress = Math.max(0.0, Math.min(1.0, saturation / 20.0));
             let satFillWidth = Math.round(innerWidth * satProgress);
-            const COLOR_SAT_TOP = (0xAAFACC15 | 0); // Gold Yellow with shimmer
+            const COLOR_SAT_TOP = (0xAAFACC15 | 0);
             const COLOR_SAT_BOT = (0xAAEAB308 | 0);
-            try {
-                guiGraphics.fillGradient((rightX + 1) | 0, (foodY + 1) | 0, (rightX + 1 + satFillWidth) | 0, (foodY + FOOD_BAR_HEIGHT - 1) | 0, 0, COLOR_SAT_TOP, COLOR_SAT_BOT);
-            } catch (eSat) {
-                guiGraphics.fill((rightX + 1) | 0, (foodY + 1) | 0, (rightX + 1 + satFillWidth) | 0, (foodY + FOOD_BAR_HEIGHT - 1) | 0, COLOR_SAT_TOP);
-            }
+            safeFillGradient(guiGraphics, rightX + 1, foodY + 1, rightX + 1 + satFillWidth, foodY + FOOD_BAR_HEIGHT - 1, COLOR_SAT_TOP, COLOR_SAT_BOT);
         }
 
         // 5. Text: 🍗 [food]/20 (+[sat])
@@ -326,20 +365,49 @@ function renderMasterRpgHud(guiGraphics) {
             pose.scale(SCALE, SCALE, 1.0);
             let tx = (rightX + (BAR_WIDTH - tw * SCALE) / 2) / SCALE;
             let ty = (foodY + (FOOD_BAR_HEIGHT - 7.5 * SCALE) / 2) / SCALE;
-            guiGraphics.drawString(font, foodText, Math.round(tx), Math.round(ty), COLOR_TEXT, true);
+            safeDrawString(guiGraphics, font, foodText, tx, ty, COLOR_TEXT);
             pose.popPose();
         }
 
-    } catch (eHud) {}
+    } catch (eHud) {
+        try {
+            console.error('[Elyrium HUD Render Error]: ' + eHud);
+        } catch (eLog) {}
+    }
 }
 
 // ------------------------------------------------------------------------------
 // 4. REGISTRATION: Layer Suppression & Master HUD Render
 // ------------------------------------------------------------------------------
+function handleLayerPre(event) {
+    if (!event) return;
+    try {
+        let name = event.getName ? event.getName() : null;
+        if (!name || !J_VanillaGuiLayers) return;
+
+        // Cancel vanilla player hearts AND render custom HUD
+        if (name.equals(J_VanillaGuiLayers.PLAYER_HEALTH)) {
+            event.setCanceled(true);
+            let gg = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
+            if (gg) {
+                renderMasterRpgHud(gg);
+            }
+            return;
+        }
+        // Cancel vanilla food / hunger drumsticks
+        if (name.equals(J_VanillaGuiLayers.FOOD_LEVEL)) {
+            event.setCanceled(true);
+            return;
+        }
+    } catch (eLayer) {
+        try { console.error('[Elyrium Layer Error]: ' + eLayer); } catch (eL) {}
+    }
+}
+
 try {
     initStaminaHudApi();
 
-    // 1. Layer Pre Listener (Suppress Hearts and Drumsticks)
+    // 1. Layer Pre Listener (Suppress Hearts and Drumsticks + render custom HUD)
     if (J_RenderGuiLayerEventPre && !isLayerListenerRegistered) {
         if (typeof NativeEvents !== 'undefined') {
             NativeEvents.onEvent(J_RenderGuiLayerEventPre, event => {
@@ -355,7 +423,7 @@ try {
         }
     }
 
-    // 2. Render Gui Post Listener (Master RPG HUD)
+    // 2. Render Gui Post Listener (Fallback Master RPG HUD)
     if (J_RenderGuiEventPost && !isRenderListenerRegistered) {
         if (typeof NativeEvents !== 'undefined') {
             NativeEvents.onEvent(J_RenderGuiEventPost, event => {

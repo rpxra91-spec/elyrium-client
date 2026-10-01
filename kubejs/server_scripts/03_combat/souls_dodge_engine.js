@@ -13,12 +13,12 @@
 // ==============================================================================
 
 const DODGE_CONFIG = {
-    iframeTicks: 8, // 8 ticks = 0.40s invulnerability window for light
-    cooldownTicks: 12, // 12 ticks = 0.60s anti-spam delay between dodges
+    iframeTicks: 8, // 8 ticks = 0.40s invulnerability window
+    cooldownTicks: 20, // 20 ticks = 1.00s tactical cooldown between dodges
     tiers: {
         light: {
             maxWeight: 4,
-            stamina: 14,
+            stamina: 25,
             horizSpeed: 0.58,
             vertSpeed: 0.10,
             animSpeed: 1.25,
@@ -27,7 +27,7 @@ const DODGE_CONFIG = {
         },
         medium: {
             maxWeight: 8,
-            stamina: 24,
+            stamina: 35,
             horizSpeed: 0.46,
             vertSpeed: 0.08,
             animSpeed: 1.05,
@@ -36,9 +36,9 @@ const DODGE_CONFIG = {
         },
         heavy: {
             maxWeight: 12,
-            stamina: 30,
-            horizSpeed: 0.65,
-            vertSpeed: 0.05,
+            stamina: 45,
+            horizSpeed: 0.72,
+            vertSpeed: 0.08,
             animSpeed: 1.00,
             sound: 'minecraft:entity.iron_golem.step',
             soundPitch: 0.8
@@ -220,16 +220,16 @@ NetworkEvents.dataReceived('elyrium:player_dodge', event => {
 
     player.setDeltaMovement(new Vec3(vx, vy, vz));
     player.hurtMarked = true;
+    player.hasImpulse = true;
+    pData.putLong('elyrium_stamina_regen_delay_until', Date.now() + 1500);
 
-    // 6. I-Frames: Exactly 7 ticks (0.35s) Invulnerability
+    // 6. I-Frames: Exactly 8 ticks (0.40s) Invulnerability
     pData.putLong('elyrium_dodge_iframe_until', nowTime + DODGE_CONFIG.iframeTicks);
 
-    // 7. Fat Roll Extra Effect (if heavy armor)
+    // 7. Fat Roll / Heavy Sound
     if (armorWeight > DODGE_CONFIG.tiers.medium.maxWeight) {
-        // Heavy armor fat roll sound and slight recovery delay
         try {
             player.server.runCommandSilent(`playsound minecraft:item.armor.equip_netherite player ${player.username} ~ ~ ~ 1.0 0.8`);
-            player.potionEffects.add('minecraft:slowness', 8, 0, false, false);
         } catch (eFat) {}
     }
 

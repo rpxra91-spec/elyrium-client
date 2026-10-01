@@ -67,7 +67,7 @@ let keyPrevStates = {
 };
 
 let lastDodgeTimestamp = 0;
-const DODGE_CLIENT_COOLDOWN_MS = 600; // Anti-spam combat cooldown
+const DODGE_CLIENT_COOLDOWN_MS = 1000; // Anti-spam tactical combat cooldown (1.0s)
 
 // Camera tilt state variables
 let cameraFxActive = false;
@@ -81,40 +81,38 @@ let cameraTargetPitch = 0.0;
  */
 function getClientArmorWeight(player) {
     if (!player) return 0;
-
-    let slots = [
-        player.headArmorItem,
-        player.chestArmorItem,
-        player.legsArmorItem,
-        player.feetArmorItem
-    ];
-
     let weight = 0;
-    for (let i = 0; i < slots.length; i++) {
-        let it = slots[i];
-        if (!it || it.isEmpty() || it.id === 'minecraft:air') continue;
-        let id = it.id.toLowerCase();
+    try {
+        let inv = player.getInventory ? player.getInventory() : (player.inventory || null);
+        let armorList = inv ? (inv.armor || inv.armorSlots) : null;
+        if (armorList) {
+            for (let i = 0; i < armorList.size(); i++) {
+                let it = armorList.get(i);
+                if (!it || it.isEmpty()) continue;
+                let id = String(it.getItem ? it.getItem().toString() : (it.id || '')).toLowerCase();
 
-        if (
-            id.includes('netherite') || id.includes('diamond') || id.includes('plate') ||
-            id.includes('heavy') || id.includes('knight') || id.includes('ignitium') ||
-            id.includes('warden') || id.includes('sculk') || id.includes('gravitite') ||
-            id.includes('mortum') || id.includes('apalachia') || id.includes('skythern') ||
-            id.includes('ancient') || id.includes('o_yoroi') || id.includes('golem') ||
-            id.includes('titan') || id.includes('steel')
-        ) {
-            weight += 3;
-        } else if (
-            id.includes('iron') || id.includes('chainmail') || id.includes('chain') ||
-            id.includes('copper') || id.includes('gold') || id.includes('golden') ||
-            id.includes('bronze') || id.includes('silver') || id.includes('zanite') ||
-            id.includes('scale') || id.includes('mail') || id.includes('reinforced')
-        ) {
-            weight += 2;
-        } else {
-            weight += 1;
+                if (
+                    id.includes('netherite') || id.includes('diamond') || id.includes('plate') ||
+                    id.includes('heavy') || id.includes('knight') || id.includes('ignitium') ||
+                    id.includes('warden') || id.includes('sculk') || id.includes('gravitite') ||
+                    id.includes('mortum') || id.includes('apalachia') || id.includes('skythern') ||
+                    id.includes('ancient') || id.includes('o_yoroi') || id.includes('golem') ||
+                    id.includes('titan') || id.includes('steel')
+                ) {
+                    weight += 3;
+                } else if (
+                    id.includes('iron') || id.includes('chainmail') || id.includes('chain') ||
+                    id.includes('copper') || id.includes('gold') || id.includes('golden') ||
+                    id.includes('bronze') || id.includes('silver') || id.includes('zanite') ||
+                    id.includes('scale') || id.includes('mail') || id.includes('reinforced')
+                ) {
+                    weight += 2;
+                } else {
+                    weight += 1;
+                }
+            }
         }
-    }
+    } catch (eInv) {}
     return Math.min(12, weight);
 }
 
@@ -202,29 +200,29 @@ function performClientDodge(forwardInput, strafeInput) {
     let horizSpeed = 0.58;
     let vertSpeed = 0.10;
     let animSpeed = 1.25;
-    let staminaCost = 14;
+    let staminaCost = 25;
 
     if (weight > 8) {
         // Heavy Armor Tier
         if (fwd > 0) {
             // Heavy Bull Charge forward (closes gap on light targets!)
-            horizSpeed = 0.65;
-            vertSpeed = 0.05;
+            horizSpeed = 0.72;
+            vertSpeed = 0.08;
             animSpeed = 1.0;
-            staminaCost = 30;
+            staminaCost = 45;
         } else {
             // Fat Roll backwards / sideways
             horizSpeed = 0.32;
-            vertSpeed = 0.04;
+            vertSpeed = 0.05;
             animSpeed = 0.75;
-            staminaCost = 35;
+            staminaCost = 45;
         }
     } else if (weight > 4) {
         // Medium Roll
         horizSpeed = 0.46;
         vertSpeed = 0.08;
         animSpeed = 1.05;
-        staminaCost = 24;
+        staminaCost = 35;
     }
 
     // 3. Client Stamina Gate (Zero-latency local check)
@@ -249,6 +247,7 @@ function performClientDodge(forwardInput, strafeInput) {
         } else if (typeof Vec3 !== 'undefined') {
             player.setDeltaMovement(new Vec3(vx, vy, vz));
         }
+        player.hasImpulse = true;
     } catch (eImp) {}
 
     // 4. Camera & Visual Feedback

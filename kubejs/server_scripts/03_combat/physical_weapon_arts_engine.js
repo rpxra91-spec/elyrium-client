@@ -495,10 +495,12 @@ function applyEntityMotion(entity, vx, vy, vz) {
     try {
         entity.setDeltaMovement(new Vec3(vx, vy, vz));
         entity.hasImpulse = true;
+        entity.hurtMarked = true;
     } catch (e) {
         try {
             entity.setDeltaMovement(vx, vy, vz);
             entity.hasImpulse = true;
+            entity.hurtMarked = true;
         } catch (e2) {}
     }
 }
