@@ -9,7 +9,7 @@
 	"isShowingWeaponTrails": true,
 	"isShowingArmsInFirstPerson": false,
 	"isShowingOtherHandFirstPerson": true,
-	"isSweepingParticleEnabled": true,
+	"isSweepingParticleEnabled": false,
 	"isTooltipAttackRangeEnabled": true,
 	"isTooltipAttackRangeReformat": true,
 	"weaponSwingSoundVolume": 100,

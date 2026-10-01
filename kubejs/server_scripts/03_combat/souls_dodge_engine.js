@@ -13,33 +13,33 @@
 // ==============================================================================
 
 const DODGE_CONFIG = {
-    iframeTicks: 7, // 7 ticks = 0.35s invulnerability window
-    cooldownTicks: 8, // Anti-spam delay between dodges
+    iframeTicks: 8, // 8 ticks = 0.40s invulnerability window for light
+    cooldownTicks: 12, // 12 ticks = 0.60s anti-spam delay between dodges
     tiers: {
         light: {
             maxWeight: 4,
-            stamina: 18,
-            horizSpeed: 0.85,
-            vertSpeed: 0.18,
+            stamina: 14,
+            horizSpeed: 0.58,
+            vertSpeed: 0.10,
             animSpeed: 1.25,
             sound: 'minecraft:entity.player.attack.sweep',
             soundPitch: 1.25
         },
         medium: {
             maxWeight: 8,
-            stamina: 25,
-            horizSpeed: 0.70,
-            vertSpeed: 0.15,
+            stamina: 24,
+            horizSpeed: 0.46,
+            vertSpeed: 0.08,
             animSpeed: 1.05,
             sound: 'minecraft:entity.player.attack.sweep',
             soundPitch: 1.0
         },
         heavy: {
             maxWeight: 12,
-            stamina: 35,
-            horizSpeed: 0.48,
-            vertSpeed: 0.08,
-            animSpeed: 0.80,
+            stamina: 30,
+            horizSpeed: 0.65,
+            vertSpeed: 0.05,
+            animSpeed: 1.00,
             sound: 'minecraft:entity.iron_golem.step',
             soundPitch: 0.8
         }

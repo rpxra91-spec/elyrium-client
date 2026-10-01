@@ -67,7 +67,7 @@ let keyPrevStates = {
 };
 
 let lastDodgeTimestamp = 0;
-const DODGE_CLIENT_COOLDOWN_MS = 380; // Minimum time between consecutive dodges
+const DODGE_CLIENT_COOLDOWN_MS = 600; // Anti-spam combat cooldown
 
 // Camera tilt state variables
 let cameraFxActive = false;
@@ -127,8 +127,12 @@ function playLocalThirdPersonDodge(player, speed) {
 
     if (J_PlayerAnimationRegistry && J_PlayerAnimationAccess && J_ResourceLocation) {
         try {
-            let resLoc = J_ResourceLocation.parse('spell_engine:dodge');
+            let resLoc = J_ResourceLocation.parse('elyrium:roll');
             let animationData = J_PlayerAnimationRegistry.getAnimation(resLoc);
+            if (!animationData) {
+                resLoc = J_ResourceLocation.parse('spell_engine:dodge');
+                animationData = J_PlayerAnimationRegistry.getAnimation(resLoc);
+            }
             if (animationData) {
                 let rawPlayer = player.minecraftPlayer || player.minecraftEntity || player;
                 let stack = J_PlayerAnimationAccess.getPlayerAnimLayer(rawPlayer);
@@ -180,9 +184,9 @@ function performClientDodge(forwardInput, strafeInput) {
     let rx = Math.cos(yawRad);
     let rz = Math.sin(yawRad);
 
-    // In Minecraft: strafe > 0 is left (-rx, -rz), strafe < 0 is right (+rx, +rz)
-    let dirX = fx * fwd - rx * str;
-    let dirZ = fz * fwd - rz * str;
+    // Correct strafe math: str > 0 is left (+rx, +rz), str < 0 is right (-rx, -rz)
+    let dirX = fx * fwd + rx * str;
+    let dirZ = fz * fwd + rz * str;
 
     let len = Math.sqrt(dirX * dirX + dirZ * dirZ);
     if (len > 0.001) {
@@ -195,23 +199,46 @@ function performClientDodge(forwardInput, strafeInput) {
 
     // 2. Armor Weight & Impulse Profile
     let weight = getClientArmorWeight(player);
-    let horizSpeed = 0.85;
-    let vertSpeed = 0.18;
+    let horizSpeed = 0.58;
+    let vertSpeed = 0.10;
     let animSpeed = 1.25;
+    let staminaCost = 14;
 
     if (weight > 8) {
-        // Heavy / Fat Roll
-        horizSpeed = 0.48;
-        vertSpeed = 0.08;
-        animSpeed = 0.80;
+        // Heavy Armor Tier
+        if (fwd > 0) {
+            // Heavy Bull Charge forward (closes gap on light targets!)
+            horizSpeed = 0.65;
+            vertSpeed = 0.05;
+            animSpeed = 1.0;
+            staminaCost = 30;
+        } else {
+            // Fat Roll backwards / sideways
+            horizSpeed = 0.32;
+            vertSpeed = 0.04;
+            animSpeed = 0.75;
+            staminaCost = 35;
+        }
     } else if (weight > 4) {
         // Medium Roll
-        horizSpeed = 0.70;
-        vertSpeed = 0.15;
+        horizSpeed = 0.46;
+        vertSpeed = 0.08;
         animSpeed = 1.05;
+        staminaCost = 24;
     }
 
-    // 3. Instant Client Physical Impulse
+    // 3. Client Stamina Gate (Zero-latency local check)
+    if (typeof ElyriumClientStamina !== 'undefined' && ElyriumClientStamina.current < staminaCost) {
+        try {
+            player.playSound('minecraft:entity.player.breath', 0.85, 1.1);
+        } catch (eBreath) {}
+        return; // Complete physical and network block!
+    }
+    if (typeof ElyriumClientStamina !== 'undefined') {
+        ElyriumClientStamina.consume(staminaCost);
+    }
+
+    // 4. Instant Client Physical Impulse
     let vx = dirX * horizSpeed;
     let vy = vertSpeed;
     let vz = dirZ * horizSpeed;

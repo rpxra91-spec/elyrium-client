@@ -415,15 +415,16 @@ const WEAPON_ARTS = {
 // ------------------------------------------------------------------------------
 
 function getPlayerMaxStamina(player) {
-    if (!player) return 100;
+    if (!player) return 80;
     let perks = player.persistentData ? player.persistentData.getCompound('simplestats_perks') : null;
     let agi = perks ? perks.getInt('agility') : 0;
+    let def = perks ? perks.getInt('defense') : 0;
     let vit = perks ? perks.getInt('vitality') : 0;
-    return 100 + (agi * 5) + (vit * 5);
+    return Math.min(250, 80 + Math.floor(def * 1.5) + Math.floor(agi * 1.5) + Math.floor(vit * 0.5));
 }
 
 function getPlayerStamina(player) {
-    if (!player) return 100;
+    if (!player) return 80;
     let pData = player.persistentData;
     if (!pData.contains('elyrium_stamina')) {
         let maxStam = getPlayerMaxStamina(player);
@@ -440,6 +441,7 @@ function consumePlayerStamina(player, amount) {
     let maxStam = getPlayerMaxStamina(player);
     let newStam = current - amount;
     player.persistentData.putInt('elyrium_stamina', newStam);
+    player.persistentData.putLong('elyrium_stamina_regen_delay_until', Date.now() + 1000); // 1.0s delay after consumption
     try {
         if (typeof player.causeFoodExhaustion === 'function') {
             player.causeFoodExhaustion(amount * 0.05);
@@ -450,85 +452,14 @@ function consumePlayerStamina(player, amount) {
 }
 
 // ------------------------------------------------------------------------------
-// STAMINA POP-UP SERVER BOSSBAR
+// STAMINA ZERO-LATENCY NETWORK SYNCHRONIZER (No BossBar)
 // ------------------------------------------------------------------------------
-
-let J_ServerBossEvent = null;
-let J_BossBarColor = null;
-let J_BossBarOverlay = null;
-let J_Component = null;
-let isBossBarApiInitialized = false;
-
-function initBossBarApi() {
-    if (isBossBarApiInitialized) return;
-    try {
-        J_ServerBossEvent = Java.loadClass('net.minecraft.server.level.ServerBossEvent');
-        J_BossBarColor = Java.loadClass('net.minecraft.world.BossEvent$BossBarColor');
-        J_BossBarOverlay = Java.loadClass('net.minecraft.world.BossEvent$BossBarOverlay');
-        J_Component = Java.loadClass('net.minecraft.network.chat.Component');
-    } catch (e) {}
-    isBossBarApiInitialized = true;
-}
-
-const PLAYER_STAMINA_BARS = new Map();
 
 function updateStaminaBossBar(player, curStam, maxStam) {
     if (!player) return;
     try {
         player.sendData('elyrium:sync_stamina', { stamina: curStam, maxStamina: maxStam });
     } catch (eSync) {}
-    initBossBarApi();
-    if (!J_ServerBossEvent) return;
-
-    let pUuid = String(player.uuid);
-    let bar = PLAYER_STAMINA_BARS.get(pUuid);
-
-    if (!bar) {
-        try {
-            let label = J_Component ? J_Component.literal(`⚡ Выносливость [${curStam} / ${maxStam}]`) : Text.of(`⚡ Выносливость [${curStam} / ${maxStam}]`);
-            bar = new J_ServerBossEvent(label, J_BossBarColor.YELLOW, J_BossBarOverlay.PROGRESS);
-            bar.setVisible(false);
-            let rawPlayer = player.minecraftEntity || player;
-            bar.addPlayer(rawPlayer);
-            PLAYER_STAMINA_BARS.set(pUuid, bar);
-        } catch (eInit) {
-            return;
-        }
-    }
-
-    let pData = player.persistentData;
-    let progress = Math.max(0.0, Math.min(1.0, curStam / maxStam));
-
-    if (curStam < maxStam) {
-        pData.remove('elyrium_stamina_full_timestamp');
-        let text = J_Component ? J_Component.literal(`⚡ Выносливость [${curStam} / ${maxStam}]`) : Text.of(`⚡ Выносливость [${curStam} / ${maxStam}]`);
-        bar.setName(text);
-        bar.setProgress(progress);
-        if (!bar.isVisible()) {
-            bar.setVisible(true);
-        }
-    } else {
-        // 100% full: disappears after 2.5 seconds (2500ms)
-        let fullTime = pData.getLong('elyrium_stamina_full_timestamp') || 0;
-        let now = Date.now();
-        if (fullTime === 0) {
-            fullTime = now;
-            pData.putLong('elyrium_stamina_full_timestamp', fullTime);
-        }
-
-        if (now - fullTime >= 2500) {
-            if (bar.isVisible()) {
-                bar.setVisible(false);
-            }
-        } else {
-            let text = J_Component ? J_Component.literal(`⚡ Выносливость [${maxStam} / ${maxStam}]`) : Text.of(`⚡ Выносливость [${maxStam} / ${maxStam}]`);
-            bar.setName(text);
-            bar.setProgress(1.0);
-            if (!bar.isVisible()) {
-                bar.setVisible(true);
-            }
-        }
-    }
 }
 
 // ------------------------------------------------------------------------------
@@ -2472,15 +2403,18 @@ PlayerEvents.tick(event => {
     let pAge = (typeof player.age === 'number') ? player.age : (typeof player.tickCount === 'number' ? player.tickCount : 0);
     if (pAge % 10 !== 0) return;
 
-    // 1. Stamina Regeneration (+5 to +8 every 10 ticks based on food & sprint, -70% if blocking)
+    // 1. Stamina Regeneration (+3 to +4 every 10 ticks based on food & sprint, with 1.0s delay after consumption)
     let curStam = getPlayerStamina(player);
     let maxStam = getPlayerMaxStamina(player);
-    if (curStam < maxStam) {
-        let regen = 5;
-        if (player.foodLevel > 14) regen += 3;
-        if (player.isSprinting()) regen = Math.max(1, regen - 3);
+    let regenDelayUntil = player.persistentData.getLong('elyrium_stamina_regen_delay_until') || 0;
+    let now = Date.now();
+
+    if (now >= regenDelayUntil && curStam < maxStam) {
+        let regen = 3; // +3 every 10 ticks = 6/s base
+        if (player.foodLevel > 14) regen += 1; // +4 every 10 ticks = 8/s well-fed
+        if (player.isSprinting()) regen = Math.max(1, regen - 2);
         if (player.isBlocking()) {
-            regen = Math.max(1, Math.round(regen * 0.3)); // 70% reduction when blocking
+            regen = Math.max(1, Math.round(regen * 0.25)); // 75% reduction when blocking
         }
         curStam = Math.min(maxStam, curStam + regen);
         player.persistentData.putInt('elyrium_stamina', curStam);

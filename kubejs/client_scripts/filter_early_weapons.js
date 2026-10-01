@@ -316,8 +316,22 @@ RecipeViewerEvents.removeEntries('item', event => {
         'simplyswords:stormyx_twinblade',
         'simplyswords:stormyx_warglaive',
         'simplyswords:toxic_longsword',
-        'simplyswords:watching_warglaive'
+        'simplyswords:watching_warglaive',
+
+        // Legacy Phase 17 Dungeon Prototypes (replaced by Canonical Mini-Forge Sets)
+        'kubejs:defiled_blade_t1', 'kubejs:defiled_blade_t2', 'kubejs:defiled_blade_t3', 'kubejs:defiled_blade_t4',
+        'kubejs:defiled_blade_t5', 'kubejs:defiled_blade_t6', 'kubejs:defiled_blade_t7', 'kubejs:defiled_blade_t8',
+        'kubejs:defiled_chestplate_t1', 'kubejs:defiled_chestplate_t2', 'kubejs:defiled_chestplate_t3', 'kubejs:defiled_chestplate_t4',
+        'kubejs:defiled_chestplate_t5', 'kubejs:defiled_chestplate_t6', 'kubejs:defiled_chestplate_t7', 'kubejs:defiled_chestplate_t8',
+        'kubejs:purified_blade_t1', 'kubejs:purified_blade_t2', 'kubejs:purified_blade_t3', 'kubejs:purified_blade_t4',
+        'kubejs:purified_blade_t5', 'kubejs:purified_blade_t6', 'kubejs:purified_blade_t7', 'kubejs:purified_blade_t8',
+        'kubejs:purified_chestplate_t1', 'kubejs:purified_chestplate_t2', 'kubejs:purified_chestplate_t3', 'kubejs:purified_chestplate_t4',
+        'kubejs:purified_chestplate_t5', 'kubejs:purified_chestplate_t6', 'kubejs:purified_chestplate_t7', 'kubejs:purified_chestplate_t8'
     ];
 
-    HIDDEN_WEAPONS.forEach(id => event.remove(id));
+    HIDDEN_WEAPONS.forEach(id => {
+        if (Item.exists(id)) {
+            event.remove(id);
+        }
+    });
 });

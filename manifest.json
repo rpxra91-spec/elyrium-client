@@ -1,8 +1,8 @@
 {
-  "version": "0.3.0",
+  "version": "0.4.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-01T14:40:23.441832+00:00",
+  "generated_at": "2026-10-01T18:54:42.582258+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -212,8 +212,8 @@
     },
     {
       "path": "config/bettercombat/client.json5",
-      "sha256": "247a5d2929f56560891524912ca9d639bb324b7343d685fbad184cf6290b6c63",
-      "size": 721
+      "sha256": "89636a40265a8cb240f4f9bf434fa8b24261a6d6245ca1b0bb5665aad6857eec",
+      "size": 722
     },
     {
       "path": "config/bettercombat/fallback_compatibility.json",
@@ -337,8 +337,8 @@
     },
     {
       "path": "config/chunky/tasks/minecraft/overworld.properties",
-      "sha256": "a1b32aad914655df78c9262797f59a2d9d7a5ad0d7150b23a260f7d212f1ed57",
-      "size": 130
+      "sha256": "7cf3e0463f5591a24398c793f0d86c6d546e5ed32d1818c6464d39a28e317282",
+      "size": 129
     },
     {
       "path": "config/citadel-common.toml",
@@ -1162,8 +1162,8 @@
     },
     {
       "path": "config/jei/world/server/§6SKD MineColonies §aServer (LAN connection)/lookupHistory.json",
-      "sha256": "d56ea96b7d8107f96f57684dfb9af3edaa25ff55481f540e4266c91a6d9b911a",
-      "size": 1010
+      "sha256": "32307eaa7c78025f40472ba890c843c17a2f45f088516325b35838483a2d52ee",
+      "size": 1111
     },
     {
       "path": "config/jeresources-common.toml",
@@ -1377,7 +1377,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "1dda1fcad02470a8f7e77176a8dbf5e2d40dec27a321d0ccad92342dd1ab6e55",
+      "sha256": "94f59203f1941462fe85c4dea3d0e5e9fb76ebb6c2d27f50c19120b7364cbd5a",
       "size": 275
     },
     {
@@ -1427,8 +1427,8 @@
     },
     {
       "path": "config/rpg_series/loot_fallback_report.json",
-      "sha256": "7cf5e831b0c5f3d7f39c5e3d35c9bc3fc09b5676e2d86279672ec565c53f978f",
-      "size": 176
+      "sha256": "39877d2913ce1eb840575fcad4200047341ada62cbe70d9de59c62a22f38be6c",
+      "size": 83024
     },
     {
       "path": "config/rpg_series/loot_scrolls_v2.json",
@@ -2219,6 +2219,11 @@
       "path": "kubejs/assets/elyrium/lang/ru_ru.json",
       "sha256": "001810388f7a0b9454c5b5d85b0bf1825f38319a88a108c779e3289b68e04fb3",
       "size": 2910
+    },
+    {
+      "path": "kubejs/assets/elyrium/player_animations/roll.json",
+      "sha256": "cb94dcf346bf86260e6a54b27d2b4de85d683a36ddff386800e022a231a8ab5c",
+      "size": 1846
     },
     {
       "path": "kubejs/assets/elyrium/textures/gui/celestial_constellation_bg.png",
@@ -8232,8 +8237,8 @@
     },
     {
       "path": "kubejs/client_scripts/dodge_camera_fx.js",
-      "sha256": "16c6bbbffcd200e160421ee5954d48bc479a37878a54d65f5749f4780a1a634b",
-      "size": 13416
+      "sha256": "bbe0e47443b592acfd02e53eaeaec583c8c6dd114f8a1b6289ff09d883d52942",
+      "size": 14430
     },
     {
       "path": "kubejs/client_scripts/equipment_reinforcement_tooltips.js",
@@ -8242,13 +8247,13 @@
     },
     {
       "path": "kubejs/client_scripts/filter_early_weapons.js",
-      "sha256": "7417d42bbef6ff0ee27442d4f0bb8703f63ed71a48d3d10d442711411ca8b04b",
-      "size": 13950
+      "sha256": "f1881815d467f470612538ea894304690460107012d938aab016ce4960e58705",
+      "size": 15137
     },
     {
       "path": "kubejs/client_scripts/filter_hazennstuff.js",
-      "sha256": "f97d02078c215acd80825c9198fe13b0aa582ec12f296ec3124bffdbfacd17f5",
-      "size": 17160
+      "sha256": "f918b05c9b38bcd06cbe0c13a999dbf2ad736f60d571a96e8393a3bb3b5c6a2e",
+      "size": 17231
     },
     {
       "path": "kubejs/client_scripts/filter_portal_clutter.js",
@@ -8292,8 +8297,8 @@
     },
     {
       "path": "kubejs/client_scripts/stamina_hud_overlay.js",
-      "sha256": "570f5f7edd3a7430cd98447f28a4827a95fe6408c25edce794142036452805ed",
-      "size": 13664
+      "sha256": "923cc87eb7e4d7ee6646fe954af541f67445abeb4e1af1afc785492215f28c2c",
+      "size": 17830
     },
     {
       "path": "kubejs/client_scripts/tier4_tooltips.js",
@@ -8307,8 +8312,8 @@
     },
     {
       "path": "kubejs/client_scripts/two_handed_offhand_client.js",
-      "sha256": "69c91a60c9e71499167e98b3e064cdf6bb024804c191084b8ac8a8857f22e0eb",
-      "size": 5849
+      "sha256": "a337a8279ed51c450a8483d84d9f427642f793900853bddbafc465f19914ee25",
+      "size": 8583
     },
     {
       "path": "kubejs/client_scripts/weapon_arts_keybinds.js",
@@ -9237,18 +9242,18 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "5bacf4d9c678f50c9a258ad410008a4e2c496867551050ee587dbb2db9d6cfef",
-      "size": 143932
+      "sha256": "f8bbf4bfbbebf10cc833ca4bce283bad76202db60c7da2071576d45d193876b4",
+      "size": 141662
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
-      "sha256": "9ed9a3180ced3b070181534df24498f597a7c8434d1a879dd64540ac48068b0c",
-      "size": 13918
+      "sha256": "c079b42b4b931673013ec830426281f835c40aec08df66d454f26ac663d38199",
+      "size": 17862
     },
     {
       "path": "kubejs/server_scripts/03_combat/souls_dodge_engine.js",
-      "sha256": "cfec84810c14b0433b206fa6451bc132f02a62d7fe6ecd7fd6d975a9d0c3401f",
-      "size": 10437
+      "sha256": "3399999cac049fbf81d86f32917cfa1c0e7626bfcafe3349815c372e50d01895",
+      "size": 10465
     },
     {
       "path": "kubejs/server_scripts/03_combat/spell_stamina_cost.js",
@@ -10957,8 +10962,8 @@
     },
     {
       "path": "mods/simplestats-1.0.4.jar",
-      "sha256": "2ba07016a86edb74b9bfd8e3dde15a1aad914b8884ee52e9c6a9fc033a9b6511",
-      "size": 93887
+      "sha256": "e96a0d387975b01f05b0e0742ef77ee2ac9ca6fea7e51138d5eab3dcf4664623",
+      "size": 93582
     },
     {
       "path": "mods/simplyswords-neoforge-1.63.0-1.21.1.jar",
@@ -16122,8 +16127,8 @@
     },
     {
       "path": "shaderpacks/superDuperVanilla.zip.txt",
-      "sha256": "1cb43661be36c8de2a1ffbc91ef098038f6992e2073dae4890d383834266179f",
-      "size": 387
+      "sha256": "9de363f0b20427ffd801727e408bce580175c06fb61174620bdd334380f47f14",
+      "size": 231
     }
   ]
 }

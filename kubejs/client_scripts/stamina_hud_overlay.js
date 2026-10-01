@@ -1,26 +1,29 @@
 // ==============================================================================
-// ⚡ ELYRIUM RPG: NATIVE STAMINA HUD OVERLAY (v1.0)
+// ⚔️ ELYRIUM RPG: UNIFIED CLASSIC RPG HUD (HEALTH, HUNGER, SATURATION, STAMINA)
 // Minecraft 1.21.1 NeoForge | KubeJS Client Script
 // ==============================================================================
-// 1. Subscribes to net.neoforged.neoforge.client.event.RenderGuiEvent$Post
-// 2. Positions above health hearts / armor icons:
-//    X = Math.floor(screenWidth / 2) - 91
-//    Y = screenHeight - (hasArmor ? 59 : 49)
-// 3. Styling & Dimensions:
-//    - Dimensions: 81 x 6 px
-//    - Outer Border (1px): Graphite #1F2937
-//    - Inner Background (79x4): Semi-transparent #111827 (80% opacity)
-//    - Bar: Amber gradient #F59E0B -> #D97706
-//    - Text: ⚡ [cur]/[max] centered inside bar (scaled 0.7x via PoseStack)
-// 4. Zero-Latency Network Sync: listens to 'elyrium:sync_stamina'
+// 1. Suppresses vanilla hearts and chicken drumsticks via RenderGuiLayerEvent$Pre:
+//    - VanillaGuiLayers.PLAYER_HEALTH
+//    - VanillaGuiLayers.FOOD_LEVEL
+// 2. Renders clean, modern, symmetrical RPG status bars in RenderGuiEvent$Post:
+//    - LEFT SIDE:
+//      * Health Bar (81x7 px, Ruby Red, Damage Lag-Trail, Absorption Shield)
+//      * Stamina Bar (81x6 px, Amber Gold, Permanent 100% visible, Shield Block Aura)
+//    - RIGHT SIDE:
+//      * Hunger & Saturation Bar (81x7 px, Caramel Orange with Golden Saturation Overlay)
+//      * (Mana Bar from Iron's Spells aligns directly above Hunger)
+// 3. Zero-Latency Network Sync: listens to 'elyrium:sync_stamina' and 'elyrium:sync_posture'
 // ==============================================================================
 
 let J_Minecraft = null;
 let J_RenderGuiEventPost = null;
+let J_RenderGuiLayerEventPre = null;
+let J_VanillaGuiLayers = null;
 let J_NeoForge = null;
 let J_Consumer = null;
 let isStaminaHudApiLoaded = false;
 let isRenderListenerRegistered = false;
+let isLayerListenerRegistered = false;
 
 function initStaminaHudApi() {
     if (isStaminaHudApiLoaded) return;
@@ -29,6 +32,12 @@ function initStaminaHudApi() {
     } catch (e) {}
     try {
         J_RenderGuiEventPost = Java.loadClass('net.neoforged.neoforge.client.event.RenderGuiEvent$Post');
+    } catch (e) {}
+    try {
+        J_RenderGuiLayerEventPre = Java.loadClass('net.neoforged.neoforge.client.event.RenderGuiLayerEvent$Pre');
+    } catch (e) {}
+    try {
+        J_VanillaGuiLayers = Java.loadClass('net.neoforged.neoforge.client.gui.VanillaGuiLayers');
     } catch (e) {}
     try {
         J_NeoForge = Java.loadClass('net.neoforged.neoforge.common.NeoForge');
@@ -43,12 +52,10 @@ let clientMaxStamina = 100;
 let displayedStamina = 100;
 let isInitialSync = true;
 
-// Client-side shield posture state
-let clientPosture = 100;
-let clientMaxPosture = 100;
-let displayedPosture = 100;
-let clientHasShield = false;
-let isInitialPostureSync = true;
+// Client-side health lag-trail state
+let displayedHealth = 20;
+let lagHealth = 20;
+let lastDamageTime = 0;
 
 // API export for other client scripts
 var ElyriumClientStamina = {
@@ -63,14 +70,8 @@ var ElyriumClientStamina = {
     }
 };
 
-var ElyriumClientPosture = {
-    get current() { return clientPosture; },
-    get max() { return clientMaxPosture; },
-    get hasShield() { return clientHasShield; }
-};
-
 // ------------------------------------------------------------------------------
-// 1. NETWORK RECEIVERS: 'elyrium:sync_stamina' & 'elyrium:sync_posture'
+// 1. NETWORK RECEIVER: 'elyrium:sync_stamina'
 // ------------------------------------------------------------------------------
 NetworkEvents.dataReceived('elyrium:sync_stamina', event => {
     try {
@@ -95,36 +96,32 @@ NetworkEvents.dataReceived('elyrium:sync_stamina', event => {
     } catch (eNet) {}
 });
 
-NetworkEvents.dataReceived('elyrium:sync_posture', event => {
+// ------------------------------------------------------------------------------
+// 2. LAYER SUPPRESSION: Suppress Vanilla Hearts and Drumsticks
+// ------------------------------------------------------------------------------
+function handleLayerPre(event) {
+    if (!event) return;
     try {
-        let data = event.data;
-        if (!data) return;
+        let name = event.getName ? event.getName() : null;
+        if (!name || !J_VanillaGuiLayers) return;
 
-        let post = (typeof data.posture === 'number') ? data.posture : 
-                   (data.getInt ? data.getInt('posture') : null);
-        let max = (typeof data.maxPosture === 'number') ? data.maxPosture : 
-                  (data.getInt ? data.getInt('maxPosture') : null);
-        let shield = (typeof data.hasShield === 'boolean') ? data.hasShield : 
-                     (data.getBoolean ? data.getBoolean('hasShield') : false);
-
-        if (post != null) {
-            clientPosture = post;
-            if (isInitialPostureSync) {
-                displayedPosture = post;
-            }
+        // Cancel vanilla player hearts
+        if (name.equals(J_VanillaGuiLayers.PLAYER_HEALTH)) {
+            event.setCanceled(true);
+            return;
         }
-        if (max != null && max > 0) {
-            clientMaxPosture = max;
+        // Cancel vanilla food / hunger drumsticks
+        if (name.equals(J_VanillaGuiLayers.FOOD_LEVEL)) {
+            event.setCanceled(true);
+            return;
         }
-        clientHasShield = shield;
-        isInitialPostureSync = false;
-    } catch (ePostNet) {}
-});
+    } catch (eLayer) {}
+}
 
 // ------------------------------------------------------------------------------
-// 2. HUD RENDER ROUTINE: STAMINA BAR & SHIELD POSTURE BAR
+// 3. MASTER HUD RENDER ROUTINE: UNIFIED RPG BARS
 // ------------------------------------------------------------------------------
-function renderStaminaBar(guiGraphics) {
+function renderMasterRpgHud(guiGraphics) {
     if (!guiGraphics) return;
     try {
         initStaminaHudApi();
@@ -135,156 +132,230 @@ function renderStaminaBar(guiGraphics) {
         if (mc.player.isCreative() || mc.player.isSpectator()) return;
         if (mc.screen != null) return;
 
-        // Screen dimensions
+        let player = mc.player;
         let screenWidth = guiGraphics.guiWidth ? guiGraphics.guiWidth() : mc.getWindow().getGuiScaledWidth();
         let screenHeight = guiGraphics.guiHeight ? guiGraphics.guiHeight() : mc.getWindow().getGuiScaledHeight();
 
-        // Armor check: checks if player has any armor points (which causes vanilla armor bar to render)
-        let hasArmor = false;
-        try {
-            if (typeof mc.player.getArmorValue === 'function') {
-                hasArmor = mc.player.getArmorValue() > 0;
-            } else if (typeof mc.player.armorValue === 'number') {
-                hasArmor = mc.player.armorValue > 0;
-            }
-        } catch (eArmor) {}
-
-        // Coordinates calculation
         const BAR_WIDTH = 81;
-        const BAR_HEIGHT = 6;
-        let x = Math.floor(screenWidth / 2) - 91;
-        let y = screenHeight - (hasArmor ? 59 : 49);
+        const HP_BAR_HEIGHT = 7;
+        const STAM_BAR_HEIGHT = 6;
+        const FOOD_BAR_HEIGHT = 7;
 
-        // Smooth animation interpolation towards actual stamina
-        displayedStamina += (clientStamina - displayedStamina) * 0.35;
-        if (Math.abs(clientStamina - displayedStamina) < 0.2) {
-            displayedStamina = clientStamina;
-        }
-
-        let progress = Math.max(0.0, Math.min(1.0, displayedStamina / Math.max(1, clientMaxStamina)));
-        let innerWidth = BAR_WIDTH - 2; // 79 px
-        let fillWidth = Math.round(innerWidth * progress);
-
-        // Colors (ARGB) - bitwise OR with 0 converts JS double into signed 32-bit int expected by Minecraft GUI
-        const COLOR_BORDER = (0xFF1F2937 | 0);     // Graphite #1F2937 (-14735049)
-        const COLOR_BG = (0xCC111827 | 0);         // Semi-transparent #111827 (-871294937)
-        const COLOR_AMBER_TOP = (0xFFF59E0B | 0);  // Amber Gradient Start #F59E0B (-680437)
-        const COLOR_AMBER_BOT = (0xFFD97706 | 0);  // Amber Gradient End #D97706 (-2525434)
-        const COLOR_CYAN_TOP = (0xFF38BDF8 | 0);   // Sky Blue Start #38BDF8
-        const COLOR_CYAN_BOT = (0xFF0284C7 | 0);   // Steel/Ocean Blue End #0284C7
-        const COLOR_TEXT = (0xFFFFFFFF | 0);       // Crisp White (-1)
-
-        // 1. Draw 1px Outer Border (81 x 6)
-        guiGraphics.fill(x | 0, y | 0, (x + BAR_WIDTH) | 0, (y + BAR_HEIGHT) | 0, COLOR_BORDER);
-
-        // 2. Draw Inner Background (79 x 4)
-        guiGraphics.fill((x + 1) | 0, (y + 1) | 0, (x + BAR_WIDTH - 1) | 0, (y + BAR_HEIGHT - 1) | 0, COLOR_BG);
-
-        // 3. Draw Amber Gradient Stamina Bar
-        if (fillWidth > 0) {
-            try {
-                guiGraphics.fillGradient((x + 1) | 0, (y + 1) | 0, (x + 1 + fillWidth) | 0, (y + BAR_HEIGHT - 1) | 0, 0, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
-            } catch (eGrad) {
-                guiGraphics.fill((x + 1) | 0, (y + 1) | 0, (x + 1 + fillWidth) | 0, (y + BAR_HEIGHT - 1) | 0, COLOR_AMBER_TOP);
-            }
-        }
-
-        // 4. Draw Centered Text: ⚡ [cur]/[max]
-        let curInt = Math.max(0, Math.round(displayedStamina));
-        let maxInt = Math.round(clientMaxStamina);
-        let text = `⚡ ${curInt}/${maxInt}`;
+        let midX = Math.floor(screenWidth / 2);
+        let leftX = midX - 91;
+        let rightX = midX + 10;
+        let bottomY = screenHeight - 39;
 
         let font = mc.font;
-        if (font) {
-            let textWidth = font.width(text);
-            let pose = guiGraphics.pose ? guiGraphics.pose() : null;
+        let pose = guiGraphics.pose ? guiGraphics.pose() : null;
 
-            if (pose) {
-                // Elegant 0.7x scale to nest smoothly inside the 6px bar
-                const SCALE = 0.7;
-                pose.pushPose();
-                pose.scale(SCALE, SCALE, 1.0);
+        // Colors (ARGB 32-bit signed ints)
+        const COLOR_BORDER = (0xFF1F2937 | 0);       // Dark Slate #1F2937
+        const COLOR_BG = (0xCC111827 | 0);           // Deep Graphite 80% opacity #111827
+        const COLOR_TEXT = (0xFFFFFFFF | 0);         // Crisp White
+        const COLOR_TEXT_SHADOW = (0xFF000000 | 0);
 
-                let scaledX = (x + (BAR_WIDTH - textWidth * SCALE) / 2) / SCALE;
-                let scaledY = (y + (BAR_HEIGHT - 7.5 * SCALE) / 2) / SCALE;
+        // ----------------------------------------------------------------------
+        // A. HEALTH BAR (Left Side, Bottom Row: y = bottomY)
+        // ----------------------------------------------------------------------
+        let curHealth = player.getHealth ? player.getHealth() : player.health;
+        let maxHealth = player.getMaxHealth ? player.getMaxHealth() : player.maxHealth;
+        let absorption = player.getAbsorptionAmount ? player.getAbsorptionAmount() : (player.absorptionAmount || 0);
 
-                guiGraphics.drawString(font, text, Math.round(scaledX), Math.round(scaledY), COLOR_TEXT, true);
-                pose.popPose();
-            } else {
-                // Fallback unscaled drawing
-                let textX = x + Math.round((BAR_WIDTH - textWidth) / 2);
-                let textY = y - 1;
-                guiGraphics.drawString(font, text, textX, textY, COLOR_TEXT, true);
+        // Track lag-trail for damage
+        if (curHealth < displayedHealth) {
+            lastDamageTime = Date.now();
+        }
+        displayedHealth += (curHealth - displayedHealth) * 0.30;
+        if (Math.abs(curHealth - displayedHealth) < 0.1) displayedHealth = curHealth;
+
+        if (Date.now() - lastDamageTime > 600) {
+            lagHealth += (curHealth - lagHealth) * 0.15;
+            if (Math.abs(curHealth - lagHealth) < 0.1) lagHealth = curHealth;
+        }
+
+        let hpProgress = Math.max(0.0, Math.min(1.0, displayedHealth / Math.max(1, maxHealth)));
+        let lagProgress = Math.max(0.0, Math.min(1.0, lagHealth / Math.max(1, maxHealth)));
+        let innerWidth = BAR_WIDTH - 2;
+        let hpFillWidth = Math.round(innerWidth * hpProgress);
+        let lagFillWidth = Math.round(innerWidth * lagProgress);
+
+        let hpY = bottomY;
+
+        // 1. Outer Border
+        guiGraphics.fill(leftX | 0, hpY | 0, (leftX + BAR_WIDTH) | 0, (hpY + HP_BAR_HEIGHT) | 0, COLOR_BORDER);
+        // 2. Background
+        guiGraphics.fill((leftX + 1) | 0, (hpY + 1) | 0, (leftX + BAR_WIDTH - 1) | 0, (hpY + HP_BAR_HEIGHT - 1) | 0, COLOR_BG);
+
+        // 3. Damage Lag-Trail (White / Light Red)
+        if (lagFillWidth > hpFillWidth) {
+            const COLOR_LAG = (0xFFFECACA | 0); // Light Red #FECACA
+            guiGraphics.fill((leftX + 1 + hpFillWidth) | 0, (hpY + 1) | 0, (leftX + 1 + lagFillWidth) | 0, (hpY + HP_BAR_HEIGHT - 1) | 0, COLOR_LAG);
+        }
+
+        // 4. Ruby Red Health Gradient
+        if (hpFillWidth > 0) {
+            const COLOR_HP_TOP = (0xFFEF4444 | 0); // Red #EF4444
+            const COLOR_HP_BOT = (0xFF991B1B | 0); // Crimson #991B1B
+            try {
+                guiGraphics.fillGradient((leftX + 1) | 0, (hpY + 1) | 0, (leftX + 1 + hpFillWidth) | 0, (hpY + HP_BAR_HEIGHT - 1) | 0, 0, COLOR_HP_TOP, COLOR_HP_BOT);
+            } catch (eHGrad) {
+                guiGraphics.fill((leftX + 1) | 0, (hpY + 1) | 0, (leftX + 1 + hpFillWidth) | 0, (hpY + HP_BAR_HEIGHT - 1) | 0, COLOR_HP_TOP);
             }
         }
 
-        // ----------------------------------------------------------------------
-        // 5. SHIELD GUARD POSTURE BAR (Above Stamina Bar: y - 8)
-        // ----------------------------------------------------------------------
-        let shouldRenderPosture = clientHasShield || (displayedPosture < (clientMaxPosture - 0.5));
-        if (shouldRenderPosture) {
-            let py = y - 8; // Exactly 8 px above Stamina bar
-
-            displayedPosture += (clientPosture - displayedPosture) * 0.35;
-            if (Math.abs(clientPosture - displayedPosture) < 0.2) {
-                displayedPosture = clientPosture;
-            }
-
-            let postProgress = Math.max(0.0, Math.min(1.0, displayedPosture / Math.max(1, clientMaxPosture)));
-            let postFillWidth = Math.round(innerWidth * postProgress);
-
-            // 5.1. Draw Posture 1px Outer Border
-            guiGraphics.fill(x | 0, py | 0, (x + BAR_WIDTH) | 0, (py + BAR_HEIGHT) | 0, COLOR_BORDER);
-
-            // 5.2. Draw Posture Inner Background
-            guiGraphics.fill((x + 1) | 0, (py + 1) | 0, (x + BAR_WIDTH - 1) | 0, (py + BAR_HEIGHT - 1) | 0, COLOR_BG);
-
-            // 5.3. Draw Cyan/Steel Blue Gradient Posture Bar
-            if (postFillWidth > 0) {
-                try {
-                    guiGraphics.fillGradient((x + 1) | 0, (py + 1) | 0, (x + 1 + postFillWidth) | 0, (py + BAR_HEIGHT - 1) | 0, 0, COLOR_CYAN_TOP, COLOR_CYAN_BOT);
-                } catch (eGradP) {
-                    guiGraphics.fill((x + 1) | 0, (py + 1) | 0, (x + 1 + postFillWidth) | 0, (py + BAR_HEIGHT - 1) | 0, COLOR_CYAN_TOP);
-                }
-            }
-
-            // 5.4. Draw Centered Text: 🛡 [cur]/[max]
-            let curPostInt = Math.max(0, Math.round(displayedPosture));
-            let maxPostInt = Math.round(clientMaxPosture);
-            let postText = `🛡 ${curPostInt}/${maxPostInt}`;
-
-            if (font) {
-                let postTextWidth = font.width(postText);
-                let pose = guiGraphics.pose ? guiGraphics.pose() : null;
-
-                if (pose) {
-                    const SCALE = 0.7;
-                    pose.pushPose();
-                    pose.scale(SCALE, SCALE, 1.0);
-
-                    let scaledPX = (x + (BAR_WIDTH - postTextWidth * SCALE) / 2) / SCALE;
-                    let scaledPY = (py + (BAR_HEIGHT - 7.5 * SCALE) / 2) / SCALE;
-
-                    guiGraphics.drawString(font, postText, Math.round(scaledPX), Math.round(scaledPY), COLOR_TEXT, true);
-                    pose.popPose();
-                } else {
-                    let textPX = x + Math.round((BAR_WIDTH - postTextWidth) / 2);
-                    let textPY = py - 1;
-                    guiGraphics.drawString(font, postText, textPX, textPY, COLOR_TEXT, true);
-                }
+        // 5. Golden Absorption Shield Overlay
+        if (absorption > 0) {
+            let absProgress = Math.max(0.0, Math.min(1.0, absorption / Math.max(1, maxHealth)));
+            let absFillWidth = Math.round(innerWidth * absProgress);
+            const COLOR_ABS_TOP = (0x99F59E0B | 0); // Amber/Gold semi-transparent
+            const COLOR_ABS_BOT = (0x99D97706 | 0);
+            try {
+                guiGraphics.fillGradient((leftX + 1) | 0, (hpY + 1) | 0, (leftX + 1 + absFillWidth) | 0, (hpY + HP_BAR_HEIGHT - 1) | 0, 0, COLOR_ABS_TOP, COLOR_ABS_BOT);
+            } catch (eAbs) {
+                guiGraphics.fill((leftX + 1) | 0, (hpY + 1) | 0, (leftX + 1 + absFillWidth) | 0, (hpY + HP_BAR_HEIGHT - 1) | 0, COLOR_ABS_TOP);
             }
         }
-    } catch (e) {
-        // Complete safety shield: rendering error must NEVER crash the game or disconnect player
-    }
+
+        // 6. Text: ♥ [cur]/[max]
+        let curHPInt = Math.max(0, Math.round(curHealth));
+        let maxHPInt = Math.round(maxHealth);
+        let hpText = `♥ ${curHPInt}/${maxHPInt}` + (absorption > 0 ? ` (+${Math.round(absorption)})` : '');
+
+        if (font && pose) {
+            const SCALE = 0.72;
+            let tw = font.width(hpText);
+            pose.pushPose();
+            pose.scale(SCALE, SCALE, 1.0);
+            let tx = (leftX + (BAR_WIDTH - tw * SCALE) / 2) / SCALE;
+            let ty = (hpY + (HP_BAR_HEIGHT - 7.5 * SCALE) / 2) / SCALE;
+            guiGraphics.drawString(font, hpText, Math.round(tx), Math.round(ty), COLOR_TEXT, true);
+            pose.popPose();
+        }
+
+        // ----------------------------------------------------------------------
+        // B. STAMINA BAR (Left Side, Above Health: y = hpY - 8)
+        // ----------------------------------------------------------------------
+        let stamY = hpY - 8;
+        displayedStamina += (clientStamina - displayedStamina) * 0.35;
+        if (Math.abs(clientStamina - displayedStamina) < 0.2) displayedStamina = clientStamina;
+
+        let stamProgress = Math.max(0.0, Math.min(1.0, displayedStamina / Math.max(1, clientMaxStamina)));
+        let stamFillWidth = Math.round(innerWidth * stamProgress);
+
+        let isBlocking = player.isBlocking ? player.isBlocking() : false;
+        const COLOR_STAM_BORDER = isBlocking ? (0xFF38BDF8 | 0) : COLOR_BORDER; // Cyan highlight if blocking!
+
+        guiGraphics.fill(leftX | 0, stamY | 0, (leftX + BAR_WIDTH) | 0, (stamY + STAM_BAR_HEIGHT) | 0, COLOR_STAM_BORDER);
+        guiGraphics.fill((leftX + 1) | 0, (stamY + 1) | 0, (leftX + BAR_WIDTH - 1) | 0, (stamY + STAM_BAR_HEIGHT - 1) | 0, COLOR_BG);
+
+        if (stamFillWidth > 0) {
+            const COLOR_AMBER_TOP = (0xFFF59E0B | 0);
+            const COLOR_AMBER_BOT = (0xFFD97706 | 0);
+            try {
+                guiGraphics.fillGradient((leftX + 1) | 0, (stamY + 1) | 0, (leftX + 1 + stamFillWidth) | 0, (stamY + STAM_BAR_HEIGHT - 1) | 0, 0, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
+            } catch (eSGrad) {
+                guiGraphics.fill((leftX + 1) | 0, (stamY + 1) | 0, (leftX + 1 + stamFillWidth) | 0, (stamY + STAM_BAR_HEIGHT - 1) | 0, COLOR_AMBER_TOP);
+            }
+        }
+
+        let curStamInt = Math.max(0, Math.round(displayedStamina));
+        let maxStamInt = Math.round(clientMaxStamina);
+        let stamText = (isBlocking ? `🛡 ` : `⚡ `) + `${curStamInt}/${maxStamInt}`;
+
+        if (font && pose) {
+            const SCALE = 0.70;
+            let tw = font.width(stamText);
+            pose.pushPose();
+            pose.scale(SCALE, SCALE, 1.0);
+            let tx = (leftX + (BAR_WIDTH - tw * SCALE) / 2) / SCALE;
+            let ty = (stamY + (STAM_BAR_HEIGHT - 7.5 * SCALE) / 2) / SCALE;
+            guiGraphics.drawString(font, stamText, Math.round(tx), Math.round(ty), COLOR_TEXT, true);
+            pose.popPose();
+        }
+
+        // ----------------------------------------------------------------------
+        // C. HUNGER & SATURATION BAR (Right Side, Bottom Row: x = rightX, y = bottomY)
+        // ----------------------------------------------------------------------
+        let foodData = player.getFoodData ? player.getFoodData() : null;
+        let foodLevel = foodData && typeof foodData.getFoodLevel === 'function' ? foodData.getFoodLevel() : 20;
+        let saturation = foodData && typeof foodData.getSaturationLevel === 'function' ? foodData.getSaturationLevel() : 0.0;
+
+        let foodProgress = Math.max(0.0, Math.min(1.0, foodLevel / 20.0));
+        let foodFillWidth = Math.round(innerWidth * foodProgress);
+
+        let foodY = bottomY;
+
+        // 1. Outer Border
+        guiGraphics.fill(rightX | 0, foodY | 0, (rightX + BAR_WIDTH) | 0, (foodY + FOOD_BAR_HEIGHT) | 0, COLOR_BORDER);
+        // 2. Background
+        guiGraphics.fill((rightX + 1) | 0, (foodY + 1) | 0, (rightX + BAR_WIDTH - 1) | 0, (foodY + FOOD_BAR_HEIGHT - 1) | 0, COLOR_BG);
+
+        // 3. Caramel Orange Food Bar
+        if (foodFillWidth > 0) {
+            const COLOR_FOOD_TOP = (0xFFEA580C | 0); // Orange #EA580C
+            const COLOR_FOOD_BOT = (0xFFC2410C | 0); // Rust #C2410C
+            try {
+                guiGraphics.fillGradient((rightX + 1) | 0, (foodY + 1) | 0, (rightX + 1 + foodFillWidth) | 0, (foodY + FOOD_BAR_HEIGHT - 1) | 0, 0, COLOR_FOOD_TOP, COLOR_FOOD_BOT);
+            } catch (eFGrad) {
+                guiGraphics.fill((rightX + 1) | 0, (foodY + 1) | 0, (rightX + 1 + foodFillWidth) | 0, (foodY + FOOD_BAR_HEIGHT - 1) | 0, COLOR_FOOD_TOP);
+            }
+        }
+
+        // 4. Glowing Golden Saturation Overlay (Saturation can go up to foodLevel)
+        if (saturation > 0.1) {
+            let satProgress = Math.max(0.0, Math.min(1.0, saturation / 20.0));
+            let satFillWidth = Math.round(innerWidth * satProgress);
+            const COLOR_SAT_TOP = (0xAAFACC15 | 0); // Gold Yellow with shimmer
+            const COLOR_SAT_BOT = (0xAAEAB308 | 0);
+            try {
+                guiGraphics.fillGradient((rightX + 1) | 0, (foodY + 1) | 0, (rightX + 1 + satFillWidth) | 0, (foodY + FOOD_BAR_HEIGHT - 1) | 0, 0, COLOR_SAT_TOP, COLOR_SAT_BOT);
+            } catch (eSat) {
+                guiGraphics.fill((rightX + 1) | 0, (foodY + 1) | 0, (rightX + 1 + satFillWidth) | 0, (foodY + FOOD_BAR_HEIGHT - 1) | 0, COLOR_SAT_TOP);
+            }
+        }
+
+        // 5. Text: 🍗 [food]/20 (+[sat])
+        let satFormatted = (saturation > 0.05) ? saturation.toFixed(1) : '0';
+        let foodText = `🍗 ${foodLevel}/20` + (saturation > 0.05 ? ` (+${satFormatted})` : '');
+
+        if (font && pose) {
+            const SCALE = 0.72;
+            let tw = font.width(foodText);
+            pose.pushPose();
+            pose.scale(SCALE, SCALE, 1.0);
+            let tx = (rightX + (BAR_WIDTH - tw * SCALE) / 2) / SCALE;
+            let ty = (foodY + (FOOD_BAR_HEIGHT - 7.5 * SCALE) / 2) / SCALE;
+            guiGraphics.drawString(font, foodText, Math.round(tx), Math.round(ty), COLOR_TEXT, true);
+            pose.popPose();
+        }
+
+    } catch (eHud) {}
 }
 
 // ------------------------------------------------------------------------------
-// 3. EVENT REGISTRATION (NativeEvents with NeoForge.EVENT_BUS Fallback)
+// 4. REGISTRATION: Layer Suppression & Master HUD Render
 // ------------------------------------------------------------------------------
 try {
     initStaminaHudApi();
 
+    // 1. Layer Pre Listener (Suppress Hearts and Drumsticks)
+    if (J_RenderGuiLayerEventPre && !isLayerListenerRegistered) {
+        if (typeof NativeEvents !== 'undefined') {
+            NativeEvents.onEvent(J_RenderGuiLayerEventPre, event => {
+                handleLayerPre(event);
+            });
+            isLayerListenerRegistered = true;
+        } else if (J_NeoForge && J_Consumer) {
+            let layerListener = new J_Consumer({
+                accept: function(ev) { handleLayerPre(ev); }
+            });
+            J_NeoForge.EVENT_BUS.addListener(layerListener);
+            isLayerListenerRegistered = true;
+        }
+    }
+
+    // 2. Render Gui Post Listener (Master RPG HUD)
     if (J_RenderGuiEventPost && !isRenderListenerRegistered) {
         if (typeof NativeEvents !== 'undefined') {
             NativeEvents.onEvent(J_RenderGuiEventPost, event => {
@@ -292,7 +363,7 @@ try {
                     if (event) {
                         let guiGraphics = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
                         if (guiGraphics) {
-                            renderStaminaBar(guiGraphics);
+                            renderMasterRpgHud(guiGraphics);
                         }
                     }
                 } catch (err) {}
@@ -300,21 +371,19 @@ try {
             isRenderListenerRegistered = true;
         } else if (J_NeoForge && J_Consumer) {
             let renderListener = new J_Consumer({
-                accept: function(event) {
+                accept: function(ev) {
                     try {
-                        if (event) {
-                            let guiGraphics = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
+                        if (ev) {
+                            let guiGraphics = ev.getGuiGraphics ? ev.getGuiGraphics() : ev.guiGraphics;
                             if (guiGraphics) {
-                                renderStaminaBar(guiGraphics);
+                                renderMasterRpgHud(guiGraphics);
                             }
                         }
                     } catch (err) {}
                 }
             });
-            J_NeoForge.EVENT_BUS['addListener(java.lang.Class,java.util.function.Consumer)'](J_RenderGuiEventPost, renderListener);
+            J_NeoForge.EVENT_BUS.addListener(renderListener);
             isRenderListenerRegistered = true;
         }
     }
-} catch (eReg) {
-    console.error('[Stamina HUD] Failed to register RenderGuiEvent listener: ' + eReg);
-}
+} catch (eInitAll) {}

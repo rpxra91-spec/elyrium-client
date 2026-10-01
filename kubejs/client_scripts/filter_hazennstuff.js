@@ -374,6 +374,11 @@ RecipeViewerEvents.removeEntries('item', event => {
         'hazennstuff:zenalite_ingot',
         'hazennstuff:zenalite_stone_ore',
         'hazennstuff:zenalite_voidstone_ore'
-    ]
-    HIDDEN_ITEMS.forEach(id => event.remove(id))
-})
+    ];
+
+    HIDDEN_ITEMS.forEach(id => {
+        if (Item.exists(id)) {
+            event.remove(id);
+        }
+    });
+});

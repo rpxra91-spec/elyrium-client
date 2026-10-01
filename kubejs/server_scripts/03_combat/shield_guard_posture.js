@@ -239,8 +239,28 @@ function syncPlayerPosture(player, curAbsorbed, maxPosture, hasShield) {
     } catch (e) {}
 }
 
+function getShieldClassification(item) {
+    if (!item) return { stability: 0.5, weight: 1, type: 'light', minStr: 0, minDef: 0 };
+    let id = item.id ? item.id.toLowerCase() : '';
+    let reinforce = getReinforceLevel(item);
+
+    if (id.includes('tower') || id.includes('heavy') || id.includes('great') || id.includes('bulwark') || id.includes('steel') || id.includes('netherite')) {
+        // Heavy Tower Shield
+        let baseStab = 0.80 + (reinforce * 0.012); // up to 92% at +10
+        return { stability: Math.min(0.92, baseStab), weight: 5, type: 'tower', minStr: 20, minDef: 18 };
+    } else if (id.includes('buckler') || id.includes('leather') || id.includes('wood') || id.includes('copper')) {
+        // Light Buckler
+        let baseStab = 0.45 + (reinforce * 0.02); // up to 65% at +10
+        return { stability: Math.min(0.65, baseStab), weight: 1, type: 'buckler', minStr: 4, minDef: 4 };
+    } else {
+        // Medium Shield
+        let baseStab = 0.65 + (reinforce * 0.015); // up to 80% at +10
+        return { stability: Math.min(0.80, baseStab), weight: 2, type: 'medium', minStr: 10, minDef: 10 };
+    }
+}
+
 // ------------------------------------------------------------------------------
-// 1. DAMAGE & GUARD POSTURE ABSORPTION EVENT
+// 1. DAMAGE & GUARD POSTURE / STAMINA ABSORPTION EVENT
 // ------------------------------------------------------------------------------
 EntityEvents.beforeHurt(event => {
     let victim = event.entity;
@@ -262,38 +282,59 @@ EntityEvents.beforeHurt(event => {
     let incomingDmg = event.damage;
     if (incomingDmg <= 0) return;
 
-    let reinforceLvl = getReinforceLevel(shieldItem);
-    // Max posture capacity = 100 + (skd_reinforce * 50)
-    let maxPosture = 100 + (reinforceLvl * 50);
-
-    let isElemental = isElementalOrMagic(source);
     let pData = player.persistentData;
-    let currentAbsorbed = pData.getFloat('skd_guard_absorbed') || 0;
+    let shieldClass = getShieldClassification(shieldItem);
 
-    let throughRate = 0.0;
-    let absorbedThisHit = incomingDmg;
-
-    if (isElemental) {
-        // Elemental through-block mitigation:
-        // +0 shield lets through 25% magic/fire damage.
-        // Each reinforcement level reduces through-damage by 2.5% (at +10: 0% through).
-        throughRate = Math.max(0.0, 0.25 - (reinforceLvl * 0.025));
-        let throughDmg = incomingDmg * throughRate;
-        absorbedThisHit = incomingDmg - throughDmg;
+    // 1. PERFECT PARRY (Light Buckler within 4 ticks / 0.20s of raising block)
+    let blockTicks = player.level.time - (pData.getLong('skd_block_raised_time') || 0);
+    if (shieldClass.type === 'buckler' && blockTicks <= 4 && blockTicks >= 0) {
+        event.server.runCommandSilent(`playsound minecraft:block.anvil.land player ${player.username} ~ ~ ~ 1.5 1.5`);
+        event.server.runCommandSilent(`particle minecraft:crit ${player.x} ${player.y + 1} ${player.z} 0.8 0.8 0.8 0.2 25`);
+        let attacker = source.actual || source.direct;
+        if (attacker && attacker.isLiving()) {
+            attacker.potionEffects.add('minecraft:slowness', 40, 4, false, false);
+        }
+        pData.putLong('elyrium_riposte_ready_until', player.level.time + 50); // +150% damage on next hit!
+        player.sendSystemMessage(Text.of('§e⚡ ИДЕАЛЬНОЕ ПАРИРОВАНИЕ! §6[Рипост готов: +150% урона!]'), true);
+        event.damage = 0;
+        event.cancel();
+        return;
     }
 
-    let newAbsorbed = currentAbsorbed + absorbedThisHit;
+    // 2. STAMINA DEDUCTION BASED ON SHIELD STABILITY
+    let stamCost = Math.max(1, Math.round(incomingDmg * (1.0 - shieldClass.stability)));
+    let currentStam = (typeof getPlayerStamina === 'function') ? getPlayerStamina(player) : (pData.getInt('elyrium_stamina') || 100);
+    let maxStam = (typeof getPlayerMaxStamina === 'function') ? getPlayerMaxStamina(player) : 100;
 
-    if (newAbsorbed >= maxPosture) {
+    if (currentStam < stamCost) {
         // GUARD BREAK!
+        pData.putInt('elyrium_stamina', 0);
+        if (typeof updateStaminaBossBar === 'function') {
+            updateStaminaBossBar(player, 0, maxStam);
+        }
         triggerGuardBreak(player, shieldItem, event.server);
-        // Guard is shattered, full damage passes through
-        event.damage = incomingDmg;
+        event.damage = incomingDmg; // Full damage bleeds through
     } else {
         // Guard holds!
-        pData.putFloat('skd_guard_absorbed', newAbsorbed);
+        let newStam = currentStam - stamCost;
+        pData.putInt('elyrium_stamina', newStam);
+        pData.putLong('elyrium_stamina_regen_delay_until', Date.now() + 1000); // 1.0s delay after block
+        if (typeof updateStaminaBossBar === 'function') {
+            updateStaminaBossBar(player, newStam, maxStam);
+        }
 
+        // Tower shield knockback immunity
+        if (shieldClass.type === 'tower') {
+            player.hurtMarked = false;
+        }
+
+        event.server.runCommandSilent(`playsound minecraft:item.shield.block player ${player.username} ~ ~ ~ 0.9 1.1`);
+        player.sendSystemMessage(Text.of(`§6🛡 Блок: §e-${stamCost}⚡ §7[Остаток: §f${newStam}⚡§7]`), true);
+        
+        // Physical attacks are fully absorbed by vanilla block
+        let isElemental = isElementalOrMagic(source);
         if (isElemental) {
+            let throughRate = Math.max(0.0, 0.25 - (getReinforceLevel(shieldItem) * 0.025));
             let throughDmg = incomingDmg * throughRate;
             if (throughDmg <= 0.001) {
                 event.damage = 0;
@@ -301,20 +342,7 @@ EntityEvents.beforeHurt(event => {
             } else {
                 event.damage = throughDmg;
             }
-            event.server.runCommandSilent(`playsound minecraft:item.shield.block player ${player.username} ~ ~ ~ 0.9 1.1`);
-            event.server.runCommandSilent(`particle minecraft:enchanted_hit ${player.x} ${player.y + 1} ${player.z} 0.3 0.3 0.3 0.1 12`);
         }
-        // Physical attacks are blocked 100% by vanilla shield handling
-
-        // Visual / Actionbar Posture Feedback
-        let remaining = Math.max(0, maxPosture - newAbsorbed);
-        let pct = Math.round((remaining / maxPosture) * 100);
-        let color = pct > 50 ? '§a' : (pct > 25 ? '§e' : '§c');
-        let blocksText = isElemental && throughRate > 0 ? ` §7(Пробито: §c${Math.round(throughRate * 100)}%§7)` : '';
-        player.sendSystemMessage(Text.of(`§6🛡 Блок: ${color}${Math.round(remaining)}§7/§f${maxPosture} §7(Стойка ${color}${pct}%§7)${blocksText}`), true);
-
-        // Zero-Latency Posture HUD Sync
-        syncPlayerPosture(player, newAbsorbed, maxPosture, true);
     }
 });
 
@@ -333,6 +361,28 @@ PlayerEvents.tick(event => {
     let shieldItem = getActiveShield(player);
     let hasShield = shieldItem != null;
     let maxPosture = hasShield ? (100 + (getReinforceLevel(shieldItem) * 50)) : 100;
+
+    let isBlocking = player.isBlocking();
+    let wasBlocking = pData.getBoolean('skd_is_blocking_state');
+    if (isBlocking && !wasBlocking) {
+        pData.putLong('skd_block_raised_time', player.level.time);
+        pData.putBoolean('skd_is_blocking_state', true);
+    } else if (!isBlocking && wasBlocking) {
+        pData.putBoolean('skd_is_blocking_state', false);
+    }
+
+    // Heavy Tower Shield stat gating
+    if (hasShield) {
+        let shieldClass = getShieldClassification(shieldItem);
+        if (shieldClass.type === 'tower') {
+            let perks = pData.getCompound('simplestats_perks');
+            let str = perks ? perks.getInt('strength') : 0;
+            let def = perks ? perks.getInt('defense') : 0;
+            if (str < shieldClass.minStr || def < shieldClass.minDef) {
+                player.potionEffects.add('minecraft:slowness', 10, 1, false, false);
+            }
+        }
+    }
 
     if (absorbed > 0) {
         // Posture does not recover while actively holding block
@@ -357,14 +407,34 @@ PlayerEvents.tick(event => {
 });
 
 // ------------------------------------------------------------------------------
-// 3. CLEANUP ON DEATH
+// 3. PARRY RIPOSTE DAMAGE MULTIPLIER (+150% damage)
+// ------------------------------------------------------------------------------
+EntityEvents.beforeHurt(event => {
+    let attacker = event.source ? (event.source.actual || event.source.direct) : null;
+    if (attacker && attacker.isPlayer()) {
+        let pData = attacker.persistentData;
+        let riposteUntil = pData.getLong('elyrium_riposte_ready_until') || 0;
+        if (attacker.level.time <= riposteUntil) {
+            pData.remove('elyrium_riposte_ready_until');
+            event.damage = event.damage * 2.5; // +150% riposte critical!
+            attacker.server.runCommandSilent(`playsound minecraft:entity.player.attack.crit player ${attacker.username} ~ ~ ~ 1.5 1.4`);
+            attacker.server.runCommandSilent(`particle minecraft:crit ${event.entity.x} ${event.entity.y + 1} ${event.entity.z} 0.8 0.8 0.8 0.25 35`);
+            attacker.sendSystemMessage(Text.of('§c💥 СОКРУШИТЕЛЬНЫЙ РИПОСТ! §e[+150% УРОНА]'), true);
+        }
+    }
+});
+
+// ------------------------------------------------------------------------------
+// 4. CLEANUP ON DEATH
 // ------------------------------------------------------------------------------
 EntityEvents.death(event => {
     let entity = event.entity;
     if (entity && entity.isPlayer()) {
         if (entity.persistentData) {
             entity.persistentData.remove('skd_guard_absorbed');
+            entity.persistentData.remove('elyrium_riposte_ready_until');
         }
         syncPlayerPosture(entity, 0, 100, false);
     }
 });
+
