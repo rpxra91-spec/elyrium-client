@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "kubejs:block/smithing_bench" },
+    "facing=east": { "model": "kubejs:block/smithing_bench", "y": 90 },
+    "facing=south": { "model": "kubejs:block/smithing_bench", "y": 180 },
+    "facing=west": { "model": "kubejs:block/smithing_bench", "y": 270 }
+  }
+}

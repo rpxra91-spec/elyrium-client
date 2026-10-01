@@ -1,8 +1,8 @@
 {
-  "version": "0.2.2",
+  "version": "0.3.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-01T12:44:49.307212+00:00",
+  "generated_at": "2026-10-01T14:29:09.508630+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -3731,6 +3731,11 @@
       "size": 578
     },
     {
+      "path": "kubejs/assets/kubejs/blockstates/forge_hearth.json",
+      "sha256": "69bbe99ac59102f03e656a13311e9b5b8822171c2babeb935753d8b8db0821ea",
+      "size": 298
+    },
+    {
       "path": "kubejs/assets/kubejs/blockstates/infernal_anvil.json",
       "sha256": "ef2309dad337d06c84e1ef1426a171b373a007049a28969e1f1a79bde6b0f82f",
       "size": 364
@@ -3881,6 +3886,11 @@
       "size": 109
     },
     {
+      "path": "kubejs/assets/kubejs/blockstates/smithing_bench.json",
+      "sha256": "6a5513bdab54f537a4980bb0659b49e35e34a34bd77c6b2c5b77e65a89212892",
+      "size": 306
+    },
+    {
       "path": "kubejs/assets/kubejs/blockstates/weapon_bench.json",
       "sha256": "9331fc5c9fe6b1f9cf2180059dd54df13e6eb509189cac25294f9346c266cd16",
       "size": 356
@@ -3894,6 +3904,11 @@
       "path": "kubejs/assets/kubejs/lang/ru_ru.json",
       "sha256": "a0e8653d8cc2da8f3894a3eb47ed112fa0b0759f98d8b605ae1cf2cc64b01cc8",
       "size": 6695
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/block/forge_hearth.json",
+      "sha256": "fe3f4f5b904ca4739733b13e55e507dfce1290f0a9c61dfd553eb757e7eba639",
+      "size": 420
     },
     {
       "path": "kubejs/assets/kubejs/models/block/infernal_anvil.json",
@@ -4046,6 +4061,11 @@
       "size": 1610
     },
     {
+      "path": "kubejs/assets/kubejs/models/block/smithing_bench.json",
+      "sha256": "4c80359346c779102365747c148a3b57d505f7d65dc3d29a459556599e2eda8a",
+      "size": 421
+    },
+    {
       "path": "kubejs/assets/kubejs/models/block/weapon_bench.json",
       "sha256": "6194e13dc03713eb2e580af9e13e06d16e6956c9dd885bdc8ac0f517c9fb5bd4",
       "size": 8592
@@ -4091,6 +4111,71 @@
       "size": 120
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/bastion_hunter_boots.json",
+      "sha256": "ff6e98ccaaddd695a0a1e4dd549acbb1dd5303ea7ee1a32d1a3a81145477f18a",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/bastion_hunter_chestplate.json",
+      "sha256": "bf077f5262ce87b7b5175a69f97353b9c3798d50e65e5ddff54fe39938fe356b",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/bastion_hunter_helmet.json",
+      "sha256": "54280539747a357019f9d8ece118ba0c4820c75a2822dd78a136b6456cb3dcbf",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/bastion_hunter_leggings.json",
+      "sha256": "c8a4378b2a9c569274067257fc573cff810860d7e220a5c1e5e18cd8a4c52d98",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_brigandine_boots.json",
+      "sha256": "7b41873c8bfaffc67a4304fa01579b302de441339c2e96171756cc2cb631b303",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_brigandine_chestplate.json",
+      "sha256": "bd0a70e52800b68def8cdcba218e4197ccf9fd61f02eb84bb87d19c6315d5379",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_brigandine_helmet.json",
+      "sha256": "a429913476077b5fdde2cd76493ffba57aedfd33ee7b35471d65a4377ae1c859",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_brigandine_leggings.json",
+      "sha256": "1e9d812f5d39eff344d92a9344161e38436bbf0ac5c7817571e753083ae45749",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_pyro_robe_boots.json",
+      "sha256": "7f9edadd9160f512edec730d48ecb1e64d27a396050c14ff03669a6c7d9ed6cb",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_pyro_robe_chestplate.json",
+      "sha256": "7f1282c73167b97647c9e3a33d9bc37f45a1da236d13e2b06c4c048f30c2b72b",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_pyro_robe_helmet.json",
+      "sha256": "53a03e40bd0c16a72503141f8be7da3c633051d8f8dedca8c1c10f2d36c8fb1e",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_pyro_robe_leggings.json",
+      "sha256": "7102a9ab8e20304d70d0373579061a5ac1812178642211ff03a49ecced51c230",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_staff.json",
+      "sha256": "0ebb4e8bb185931b295f6da509334a249e00c0d2d781d9158ad6780659b39d22",
+      "size": 109
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/elemental_stone_fire.json",
       "sha256": "9cf86419aa20077361c6c0643deb20abb662ef70cf3ecb52019bdfd00862c5bd",
       "size": 113
@@ -4121,6 +4206,31 @@
       "size": 120
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/forge_hearth.json",
+      "sha256": "c5873cec194b11f4653cc0f4426ab25c9c35248bd2576613340fe61bc3b0e56a",
+      "size": 44
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ignis_core_boots.json",
+      "sha256": "adea76b9ee3b82429bab235f954903d92d049d5db78eeafdfd91feb3c1c2c9fb",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ignis_core_chestplate.json",
+      "sha256": "c7594a1b5c82381c6e82ddbebbacea9ae87c178f4e2cfeb10399b28a4477ad25",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ignis_core_helmet.json",
+      "sha256": "63bdc03a4a275d1c73c92c09fc0362dd81c4a595b5c5efd34b0c79cf6d97f3f7",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ignis_core_leggings.json",
+      "sha256": "c019dcffeabc0682e7305067efedb2d0a22388d63df3792199db67b62e876126",
+      "size": 118
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/infernal_anvil.json",
       "sha256": "a764c2d200faf19a81c255f01d6d3a90ccbb44bbf400831457982a9fcdc9edf3",
       "size": 46
@@ -4129,6 +4239,26 @@
       "path": "kubejs/assets/kubejs/models/item/infernal_igniter.json",
       "sha256": "bafe1d7bc8c0b010be60523d7b98d65f642b06fd3a334f136338d609f3adad09",
       "size": 109
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/infernal_plate_boots.json",
+      "sha256": "adea76b9ee3b82429bab235f954903d92d049d5db78eeafdfd91feb3c1c2c9fb",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/infernal_plate_chestplate.json",
+      "sha256": "c7594a1b5c82381c6e82ddbebbacea9ae87c178f4e2cfeb10399b28a4477ad25",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/infernal_plate_helmet.json",
+      "sha256": "63bdc03a4a275d1c73c92c09fc0362dd81c4a595b5c5efd34b0c79cf6d97f3f7",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/infernal_plate_leggings.json",
+      "sha256": "c019dcffeabc0682e7305067efedb2d0a22388d63df3792199db67b62e876126",
+      "size": 118
     },
     {
       "path": "kubejs/assets/kubejs/models/item/infernal_portal_frame.json",
@@ -4149,6 +4279,26 @@
       "path": "kubejs/assets/kubejs/models/item/infernal_portal_frame_eye_right.json",
       "sha256": "07ea5952469f3f357353dfa588df40432408ac49a1ecf776b8415f661a78dfa7",
       "size": 64
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/iron_brigandine_boots.json",
+      "sha256": "7b41873c8bfaffc67a4304fa01579b302de441339c2e96171756cc2cb631b303",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/iron_brigandine_chestplate.json",
+      "sha256": "bd0a70e52800b68def8cdcba218e4197ccf9fd61f02eb84bb87d19c6315d5379",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/iron_brigandine_helmet.json",
+      "sha256": "a429913476077b5fdde2cd76493ffba57aedfd33ee7b35471d65a4377ae1c859",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/iron_brigandine_leggings.json",
+      "sha256": "1e9d812f5d39eff344d92a9344161e38436bbf0ac5c7817571e753083ae45749",
+      "size": 118
     },
     {
       "path": "kubejs/assets/kubejs/models/item/martial_tablet_arrow_barrage.json",
@@ -4311,6 +4461,51 @@
       "size": 121
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/rift_apprentice_robe_boots.json",
+      "sha256": "7f9edadd9160f512edec730d48ecb1e64d27a396050c14ff03669a6c7d9ed6cb",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/rift_apprentice_robe_chestplate.json",
+      "sha256": "7f1282c73167b97647c9e3a33d9bc37f45a1da236d13e2b06c4c048f30c2b72b",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/rift_apprentice_robe_helmet.json",
+      "sha256": "53a03e40bd0c16a72503141f8be7da3c633051d8f8dedca8c1c10f2d36c8fb1e",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/rift_apprentice_robe_leggings.json",
+      "sha256": "7102a9ab8e20304d70d0373579061a5ac1812178642211ff03a49ecced51c230",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/rift_apprentice_staff.json",
+      "sha256": "0ebb4e8bb185931b295f6da509334a249e00c0d2d781d9158ad6780659b39d22",
+      "size": 109
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/scout_leather_boots.json",
+      "sha256": "7f9edadd9160f512edec730d48ecb1e64d27a396050c14ff03669a6c7d9ed6cb",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/scout_leather_chestplate.json",
+      "sha256": "7f1282c73167b97647c9e3a33d9bc37f45a1da236d13e2b06c4c048f30c2b72b",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/scout_leather_helmet.json",
+      "sha256": "53a03e40bd0c16a72503141f8be7da3c633051d8f8dedca8c1c10f2d36c8fb1e",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/scout_leather_leggings.json",
+      "sha256": "7102a9ab8e20304d70d0373579061a5ac1812178642211ff03a49ecced51c230",
+      "size": 116
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/sigil_of_transmutation.json",
       "sha256": "b5a9e8ba7b1195a537e2384143c2cbe2b7888af0ebc07e354894d806ec6f3260",
       "size": 119
@@ -4319,6 +4514,11 @@
       "path": "kubejs/assets/kubejs/models/item/smithing_aegis.json",
       "sha256": "33c0cadaae6ede9e154dc932393d9e5f7f4a1dc35421a081c89513757660d2a7",
       "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/smithing_bench.json",
+      "sha256": "3524353daba17f96fcddf26448cd01c32b0c41541cfdc62922bf212d881490e8",
+      "size": 46
     },
     {
       "path": "kubejs/assets/kubejs/models/item/smithing_stone_1.json",
@@ -4349,6 +4549,26 @@
       "path": "kubejs/assets/kubejs/models/item/sphere_of_ascension.json",
       "sha256": "f2472b1f7842bb7af33bc8bbe7e2dadcb2f32ee7ce54bacf7cfde3235d571088",
       "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/steel_knight_boots.json",
+      "sha256": "ef0458e2abe66886a41e57099e09a05f265446e2fac8caf3ee2950163b51bcfe",
+      "size": 110
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/steel_knight_chestplate.json",
+      "sha256": "ead5c1ed80ee2292587108c8fa691684709b113e70af4e528f2bbda46585fa29",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/steel_knight_helmet.json",
+      "sha256": "b1afe34d8abfdf1bc1e55772d53dee3bb7bdf077e7549919b3c38bf823463538",
+      "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/steel_knight_leggings.json",
+      "sha256": "726b8e94461c2aa191627fcdd53e7db34a8762301bd70bb5ee65d34f5dc32f64",
+      "size": 113
     },
     {
       "path": "kubejs/assets/kubejs/models/item/tier_upgrade_template.json",
@@ -8081,6 +8301,11 @@
       "size": 3913
     },
     {
+      "path": "kubejs/client_scripts/tier_equipment_tooltips.js",
+      "sha256": "fa266c883391ff9c4bec9baa5e9c6fe1b266218fbe9c435859a27fec4eb2d302",
+      "size": 10760
+    },
+    {
       "path": "kubejs/client_scripts/two_handed_offhand_client.js",
       "sha256": "69c91a60c9e71499167e98b3e064cdf6bb024804c191084b8ac8a8857f22e0eb",
       "size": 5849
@@ -8917,8 +9142,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_magic/staff_spell_system.js",
-      "sha256": "270c46d8791248e1251a06ac8594dee9510f149db5d23fb5d56e8f319b03d385",
-      "size": 4521
+      "sha256": "d7157bfff1084c34ce14bab99b3e806bbe79aa4e6dec47365eac5b871c27617a",
+      "size": 4841
     },
     {
       "path": "kubejs/server_scripts/03_combat/anti_afk_damage_share.js",
@@ -8952,8 +9177,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/elyrium_forge_api.js",
-      "sha256": "e22a337678c77041ed2eacbe4d2ea197885a0d94e9beea7f4cbc9975550bd65e",
-      "size": 34865
+      "sha256": "32f1618dcaa9f711629ca58c40bd79d2e601b75c00c730f33f9503b44ab32400",
+      "size": 37193
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_engine.js",
@@ -8964,6 +9189,16 @@
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_recipes.js",
       "sha256": "c4b775801fef7d4547793a722f3e0980118396689ea9d37b2dd8123e86bbf52e",
       "size": 19528
+    },
+    {
+      "path": "kubejs/server_scripts/03_combat/forge_multiblock_recipes.js",
+      "sha256": "2fb5b327c743cf23e53b7d6647902b93d5883d621d9787dca80fa573434f6612",
+      "size": 2379
+    },
+    {
+      "path": "kubejs/server_scripts/03_combat/forge_workshop_gui.js",
+      "sha256": "d60131ae57ab2e526b13153864c26bcf98a59ea3838babac111bacb367d881e4",
+      "size": 52208
     },
     {
       "path": "kubejs/server_scripts/03_combat/gear_score_system.js",
@@ -9062,8 +9297,8 @@
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/rpg_unified_leveling.js",
-      "sha256": "9778dc2dc1e1b9f1b5e70a51e7172fa6bd4f1dcf70c137717c2e564d81ac8fec",
-      "size": 15550
+      "sha256": "3e018ad7b451afa057b900a003db9a206d827d885452f6b0fc718067f0e0030b",
+      "size": 18333
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/skill_abilities_engine.js",
@@ -9281,6 +9516,11 @@
       "size": 4576
     },
     {
+      "path": "kubejs/server_scripts/07_recipes_filters/migrate_equipment_to_forge.js",
+      "sha256": "faf608d4f1b32318dd29afa78ca10669a6d0e753a33babd6eb7ef0f4228efac4",
+      "size": 2296
+    },
+    {
       "path": "kubejs/server_scripts/07_recipes_filters/mod_compatibility_tags.js",
       "sha256": "f585971a68f7c2b4e48c99324e5242583b935e6a975f52a8ef0dc284a01b7733",
       "size": 2391
@@ -9321,6 +9561,11 @@
       "size": 6851
     },
     {
+      "path": "kubejs/startup_scripts/forge_multiblock_blocks.js",
+      "sha256": "2765400f8e8b46a697b3b7f80ca585bd88b7a9bdf2effc970a57b6994e60ca01",
+      "size": 2363
+    },
+    {
       "path": "kubejs/startup_scripts/infernal_anvil_block.js",
       "sha256": "6db8b876d2515740d3887cdc6e410faa970cb28725b8962fbfcfcbb86d4ef0c1",
       "size": 1013
@@ -9354,6 +9599,11 @@
       "path": "kubejs/startup_scripts/tier4_items.js",
       "sha256": "8cfef829ac21892806295832fd5e0736c372fc551d67a3de873823101cbbb886",
       "size": 3123
+    },
+    {
+      "path": "kubejs/startup_scripts/tier_equipment_items.js",
+      "sha256": "191ae876190eca50625030f7c08336b6e466affa0ef9c41ba2470a46667901cf",
+      "size": 13819
     },
     {
       "path": "kubejs/startup_scripts/weapon_bench_block.js",
@@ -15872,8 +16122,8 @@
     },
     {
       "path": "shaderpacks/superDuperVanilla.zip.txt",
-      "sha256": "f1ea70b72b50d946ee46cf7286e4b0f5c678e811a97a7b43e7531c4b1f9d6559",
-      "size": 182
+      "sha256": "1cb43661be36c8de2a1ffbc91ef098038f6992e2073dae4890d383834266179f",
+      "size": 387
     }
   ]
 }

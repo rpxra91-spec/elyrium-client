@@ -797,6 +797,68 @@ var ElyriumForgeAPI = {
             newLevel: curReinforce,
             message: `✦ ВОЗВЫШЕНИЕ ЭПОХИ! Артефакт достиг Тира ${targetTier}! (100% NBT сохранены)`
         };
+    },
+
+    setClassAspect: function(item, aspect) {
+        if (!item || item.isEmpty()) return;
+        let validAspects = ['mage', 'scout', 'medium', 'tank'];
+        if (!validAspects.includes(aspect)) aspect = 'medium';
+
+        try {
+            if (item.customData && typeof item.customData.putString === 'function') {
+                item.customData.putString('skd_class_aspect', aspect);
+            }
+        } catch (e1) {}
+
+        try {
+            let CompoundTag = Java.loadClass('net.minecraft.nbt.CompoundTag');
+            let CustomData = Java.loadClass('net.minecraft.world.item.component.CustomData');
+            let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
+            let tag = null;
+            try {
+                let cd = item.get(DataComponents.CUSTOM_DATA);
+                if (cd) tag = cd.copyTag();
+            } catch (e2) {}
+            if (!tag) tag = new CompoundTag();
+            tag.putString('skd_class_aspect', aspect);
+            item.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+        } catch (e3) {}
+    },
+
+    getClassAspect: function(item) {
+        if (!item || item.isEmpty()) return null;
+        try {
+            if (item.customData && item.customData.contains('skd_class_aspect')) {
+                return item.customData.getString('skd_class_aspect');
+            }
+        } catch (e1) {}
+        try {
+            let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
+            let cd = item.get(DataComponents.CUSTOM_DATA);
+            if (cd) {
+                let tag = cd.copyTag();
+                if (tag && tag.contains('skd_class_aspect')) {
+                    return tag.getString('skd_class_aspect');
+                }
+            }
+        } catch (e2) {}
+        return null;
+    },
+
+    synthesizeBossSetPiece: function(itemId, aspect) {
+        if (!itemId || !isValidItem(itemId)) return null;
+        let item = Item.of(itemId);
+        this.setClassAspect(item, aspect);
+
+        // Stamp tier
+        try {
+            if (item.customData && typeof item.customData.putInt === 'function') {
+                item.customData.putInt('skd_tier', 4);
+                item.customData.putBoolean('skd:tier_4', true);
+            }
+        } catch (e1) {}
+
+        return item;
     }
 };
 

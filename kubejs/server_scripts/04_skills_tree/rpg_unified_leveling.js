@@ -270,6 +270,67 @@ function checkRpgLevelUp(player) {
 
     // Continuously synchronize vanilla XP bar to match Hero Level
     syncVanillaXpBar(player, currentLvl);
+
+    // Synchronize Intellect scaling attributes (max mana, mana regen, cooldown reduction, cast reduction)
+    syncIntellectAttributes(player);
+}
+
+// ------------------------------------------------------------------------------
+// 🔮 SIMPLESTATS INTELLECT SCALING (VARIANT B - NO OVER-DAMAGE)
+// ------------------------------------------------------------------------------
+function syncIntellectAttributes(player) {
+    if (!player || !player.isAlive()) return;
+    let s = player.server;
+    if (!s) return;
+
+    let manaLvl = 0;
+    try {
+        let PerkManager = Java.loadClass('network.roto.simplestats.leveling.PerkManager');
+        if (PerkManager) {
+            let raw = player.minecraftPlayer || player;
+            let lvl = PerkManager.getPerkLevel(raw, 'mana');
+            if (lvl !== null && lvl !== undefined && !isNaN(lvl)) manaLvl = Number(lvl);
+        }
+    } catch (e) {}
+
+    if (manaLvl === 0 && player.persistentData) {
+        let perks = player.persistentData.getCompound('simplestats_perks');
+        if (perks && perks.contains('mana')) {
+            manaLvl = perks.getInt('mana') || 0;
+        }
+    }
+
+    let pData = player.persistentData;
+    let lastSynced = pData ? pData.getInt('elyrium_synced_intellect') : -1;
+    if (manaLvl === lastSynced) return;
+    if (pData) pData.putInt('elyrium_synced_intellect', manaLvl);
+
+    let u = player.username;
+
+    // 1. Max Mana: 100 + level * 4.0
+    let totalMaxMana = 100.0 + (manaLvl * 4.0);
+    s.runCommandSilent(`attribute ${u} irons_spellbooks:max_mana base set ${totalMaxMana}`);
+
+    // 2. Mana Regen: +0.0025 per level (+25% at 100)
+    let bonusRegen = (manaLvl * 0.0025).toFixed(4);
+    s.runCommandSilent(`attribute ${u} irons_spellbooks:mana_regen modifier remove elyrium:intellect_mana_regen`);
+    if (manaLvl > 0) {
+        s.runCommandSilent(`attribute ${u} irons_spellbooks:mana_regen modifier add elyrium:intellect_mana_regen ${bonusRegen} add_value`);
+    }
+
+    // 3. Cooldown Reduction: +0.0030 per level (+30% at 100)
+    let bonusCdr = (manaLvl * 0.0030).toFixed(4);
+    s.runCommandSilent(`attribute ${u} irons_spellbooks:cooldown_reduction modifier remove elyrium:intellect_cdr`);
+    if (manaLvl > 0) {
+        s.runCommandSilent(`attribute ${u} irons_spellbooks:cooldown_reduction modifier add elyrium:intellect_cdr ${bonusCdr} add_value`);
+    }
+
+    // 4. Cast Time Reduction: +0.0020 per level (+20% at 100)
+    let bonusCast = (manaLvl * 0.0020).toFixed(4);
+    s.runCommandSilent(`attribute ${u} irons_spellbooks:cast_time_reduction modifier remove elyrium:intellect_cast_reduction`);
+    if (manaLvl > 0) {
+        s.runCommandSilent(`attribute ${u} irons_spellbooks:cast_time_reduction modifier add elyrium:intellect_cast_reduction ${bonusCast} add_value`);
+    }
 }
 
 // Tick Hook: Check level every 5 ticks (0.25s) for snappy responsiveness

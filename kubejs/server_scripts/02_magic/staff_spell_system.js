@@ -46,6 +46,16 @@ const STAFF_CONFIG = {
         spell: 'irons_spellbooks:eldritch_blast',
         level: 5,
         maxSpells: 5 // 1 innate + 4 inscription slots
+    },
+    'kubejs:rift_apprentice_staff': {
+        spell: 'irons_spellbooks:magic_missile',
+        level: 1,
+        maxSpells: 3 // 1 innate + 2 inscription slots
+    },
+    'kubejs:cinder_staff': {
+        spell: 'irons_spellbooks:firebolt',
+        level: 2,
+        maxSpells: 4 // 1 innate + 3 inscription slots
     }
 };
 
