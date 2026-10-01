@@ -1,8 +1,8 @@
 {
-  "version": "0.4.4",
+  "version": "0.4.5",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-01T22:31:12.772353+00:00",
+  "generated_at": "2026-10-01T23:49:29.699593+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -337,8 +337,8 @@
     },
     {
       "path": "config/chunky/tasks/minecraft/overworld.properties",
-      "sha256": "7cf3e0463f5591a24398c793f0d86c6d546e5ed32d1818c6464d39a28e317282",
-      "size": 129
+      "sha256": "d22db97f289d5c1fa051c30b4e84658adf638499d2f41086404874fae69cf9b0",
+      "size": 130
     },
     {
       "path": "config/citadel-common.toml",
@@ -1377,7 +1377,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "d36f92576893399f3642797c0e03c98d9ba090abeef30a1f5b6c8b657c01b275",
+      "sha256": "df4edb3d5442319a3e9e7ca6af9a8c105f4191ab612f6cb91584a62f87741467",
       "size": 275
     },
     {
@@ -1427,8 +1427,8 @@
     },
     {
       "path": "config/rpg_series/loot_fallback_report.json",
-      "sha256": "39877d2913ce1eb840575fcad4200047341ada62cbe70d9de59c62a22f38be6c",
-      "size": 83024
+      "sha256": "7cf5e831b0c5f3d7f39c5e3d35c9bc3fc09b5676e2d86279672ec565c53f978f",
+      "size": 176
     },
     {
       "path": "config/rpg_series/loot_scrolls_v2.json",
@@ -8297,8 +8297,8 @@
     },
     {
       "path": "kubejs/client_scripts/stamina_hud_overlay.js",
-      "sha256": "57feb8fbaecd59704d57b10138e9ad9ba620aa769efb197ce0af30c8c3bc199a",
-      "size": 28526
+      "sha256": "e3f17ac66f51706814acfe66b02350db1e77713721210c99aadde9237a7c3088",
+      "size": 29635
     },
     {
       "path": "kubejs/client_scripts/tier4_tooltips.js",
@@ -14597,8 +14597,8 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/hud/hud_bars.png",
-      "sha256": "8994038816960ee45bf14db3b6e320c460e6268dbcbf863955188870ae097921",
-      "size": 1897
+      "sha256": "a011eea590aba32b507346eea2116618ed86eedfc0b2fb50ce82495adb8417d0",
+      "size": 3229
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/skills/alchemist_class.png",
@@ -16132,7 +16132,7 @@
     },
     {
       "path": "shaderpacks/superDuperVanilla.zip.txt",
-      "sha256": "736d40d0f3e20e6555118c8a6911b54759742b230c124167008aef6be92268e2",
+      "sha256": "f8f60e73604d665ff0db7d71941e0252e41bf6bfa80d492ef6f9cd3e84eb5d69",
       "size": 231
     }
   ]

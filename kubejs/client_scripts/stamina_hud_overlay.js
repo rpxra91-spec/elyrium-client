@@ -77,10 +77,11 @@ let lastDamageTime = 0;
 let lastRenderedTick = -1;
 let hasLayerRenderedThisFrame = false;
 let isSelectedItemPosePushed = false;
+let isOverlayMessagePosePushed = false;
 
-// HUD Geometry Constants (Unified 15px Compact RPG Frames: 98x15 px)
-var BAR_WIDTH = 98;
-var BAR_HEIGHT = 15;
+// HUD Geometry Constants (Narrow 82px Authentic RPG Frames: 82x21 px)
+var BAR_WIDTH = 82;
+var BAR_HEIGHT = 21;
 
 // HUD Color Palette (ARGB 32-bit signed integers fallback)
 var COLOR_BORDER = (0xFF1A1D22 | 0);       // Dark Matte Steel #1A1D22
@@ -290,11 +291,11 @@ function renderMasterRpgHud(guiGraphics) {
         let screenHeight = window ? window.getGuiScaledHeight() : (guiGraphics.guiHeight ? guiGraphics.guiHeight() : 300);
 
         let midX = Math.floor(screenWidth / 2);
-        // Symmetrical 2x2 layout matching 98x15 compact frames:
-        let leftX = midX - 99;           // Left wing: midX - 99 to midX - 1
-        let rightX = midX + 1;          // Right wing: midX + 1 to midX + 99
-        let bottomY = screenHeight - 44; // Bottom row: Health (left) & Mana (right)
-        let topY = bottomY - 13;         // Top row: Stamina (left) & Hunger (right)
+        // Symmetrical 2x2 layout matching 82x21 narrow authentic frames:
+        let leftX = midX - 84;           // Left wing: midX - 84 to midX - 2
+        let rightX = midX + 2;          // Right wing: midX + 2 to midX + 84
+        let bottomY = screenHeight - 48; // Bottom row: Health (left) & Mana (right)
+        let topY = bottomY - 24;         // Top row: Stamina (left) & Hunger (right)
 
         let font = mc.font;
         let hudTex = getHudBarsTex();
@@ -318,32 +319,32 @@ function renderMasterRpgHud(guiGraphics) {
         let stamBlitSuccess = false;
 
         if (hudTex) {
-            // 1. Frame: Neon cyan glow on block (v=105) or Dark Steel frame (v=0)
-            let frameV = isBlocking ? 105 : 0;
+            // 1. Frame: Neon cyan glow on block (v=147) or Authentic frame (v=0)
+            let frameV = isBlocking ? 147 : 0;
             stamBlitSuccess = safeBlit(guiGraphics, hudTex, leftX, stamY, 0, frameV, BAR_WIDTH, BAR_HEIGHT);
 
-            // 2. Amber Gold Stamina Crystal (v=45)
+            // 2. Amber Gold Stamina Crystal (v=63)
             if (stamFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, leftX, stamY, 0, 45, stamFillWidth, BAR_HEIGHT);
+                safeBlit(guiGraphics, hudTex, leftX, stamY, 0, 63, stamFillWidth, BAR_HEIGHT);
             }
         }
 
         if (!stamBlitSuccess) {
             let currentStamBorder = isBlocking ? COLOR_STAM_BLOCK : COLOR_BORDER;
-            safeFill(guiGraphics, leftX, stamY + 5, leftX + BAR_WIDTH, stamY + 12, currentStamBorder);
-            safeFill(guiGraphics, leftX + 1, stamY + 6, leftX + BAR_WIDTH - 1, stamY + 11, COLOR_BG);
+            safeFill(guiGraphics, leftX, stamY + 8, leftX + BAR_WIDTH, stamY + 15, currentStamBorder);
+            safeFill(guiGraphics, leftX + 1, stamY + 9, leftX + BAR_WIDTH - 1, stamY + 14, COLOR_BG);
             if (stamFillWidth > 0) {
-                safeFillGradient(guiGraphics, leftX + 1, stamY + 6, leftX + 1 + stamFillWidth, stamY + 11, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
+                safeFillGradient(guiGraphics, leftX + 1, stamY + 9, leftX + 1 + stamFillWidth, stamY + 14, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
             }
         }
 
-        // 3. Clean Font 1.0: [stam] / [max]
+        // 3. Clean Font 1.0 UNDER BAR: [stam] / [max]
         let stamText = `${Math.round(clientStamina)}/${Math.round(maxStam)}`;
         if (font) {
             let tw = font.width(stamText);
             let tx = leftX + Math.round((BAR_WIDTH - tw) / 2);
-            let ty = stamY + 3;
-            safeDrawString(guiGraphics, font, stamText, tx, ty, COLOR_TEXT);
+            let ty = stamY + 13;
+            safeDrawString(guiGraphics, font, stamText, tx, ty, COLOR_AMBER_TOP);
         }
 
         // ----------------------------------------------------------------------
@@ -362,40 +363,40 @@ function renderMasterRpgHud(guiGraphics) {
         let foodBlitSuccess = false;
 
         if (hudTex) {
-            // 1. Dark Steel Frame (v=0)
+            // 1. Authentic Metallic Frame (v=0)
             foodBlitSuccess = safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 0, BAR_WIDTH, BAR_HEIGHT);
 
-            // 2. Caramel Orange Food Crystal (v=60)
+            // 2. Caramel Orange Food Crystal (v=84)
             if (foodFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 60, foodFillWidth, BAR_HEIGHT);
+                safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 84, foodFillWidth, BAR_HEIGHT);
             }
 
-            // 3. Radiant Sun Gold Saturation Overlay (v=75)
+            // 3. Radiant Sun Gold Saturation Overlay (v=105)
             if (satFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 75, satFillWidth, BAR_HEIGHT);
+                safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 105, satFillWidth, BAR_HEIGHT);
             }
         }
 
         if (!foodBlitSuccess) {
-            safeFill(guiGraphics, rightX, foodY + 5, rightX + BAR_WIDTH, foodY + 12, COLOR_BORDER);
-            safeFill(guiGraphics, rightX + 1, foodY + 6, rightX + BAR_WIDTH - 1, foodY + 11, COLOR_BG);
+            safeFill(guiGraphics, rightX, foodY + 8, rightX + BAR_WIDTH, foodY + 15, COLOR_BORDER);
+            safeFill(guiGraphics, rightX + 1, foodY + 9, rightX + BAR_WIDTH - 1, foodY + 14, COLOR_BG);
             if (foodFillWidth > 0) {
-                safeFillGradient(guiGraphics, rightX + 1, foodY + 6, rightX + 1 + foodFillWidth, foodY + 11, COLOR_FOOD_TOP, COLOR_FOOD_BOT);
+                safeFillGradient(guiGraphics, rightX + 1, foodY + 9, rightX + 1 + foodFillWidth, foodY + 14, COLOR_FOOD_TOP, COLOR_FOOD_BOT);
             }
             if (satFillWidth > 0) {
-                safeFillGradient(guiGraphics, rightX + 1, foodY + 6, rightX + 1 + satFillWidth, foodY + 11, COLOR_SAT_TOP, COLOR_SAT_BOT);
+                safeFillGradient(guiGraphics, rightX + 1, foodY + 9, rightX + 1 + satFillWidth, foodY + 14, COLOR_SAT_TOP, COLOR_SAT_BOT);
             }
         }
 
-        // 4. Clean Font 1.0: [food]/20 (+[sat])
+        // 4. Clean Font 1.0 UNDER BAR: [food]/20 (+[sat])
         let satFormatted = (saturation > 0.05) ? saturation.toFixed(1) : '0';
         let foodText = `${foodLevel}/20` + (saturation > 0.05 ? ` (+${satFormatted})` : '');
 
         if (font) {
             let tw = font.width(foodText);
             let tx = rightX + Math.round((BAR_WIDTH - tw) / 2);
-            let ty = foodY + 3;
-            safeDrawString(guiGraphics, font, foodText, tx, ty, COLOR_TEXT);
+            let ty = foodY + 13;
+            safeDrawString(guiGraphics, font, foodText, tx, ty, COLOR_FOOD_TOP);
         }
 
         // ======================================================================
@@ -430,47 +431,47 @@ function renderMasterRpgHud(guiGraphics) {
 
         let hpBlitSuccess = false;
         if (hudTex) {
-            // 1. Outer Dark Steel Frame (v=0)
+            // 1. Outer Authentic Metallic Frame (v=0)
             hpBlitSuccess = safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 0, BAR_WIDTH, BAR_HEIGHT);
 
-            // 2. Damage Lag-Trail (v=90)
+            // 2. Damage Lag-Trail (v=126)
             if (lagFillWidth > hpFillWidth) {
-                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 90, lagFillWidth, BAR_HEIGHT);
+                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 126, lagFillWidth, BAR_HEIGHT);
             }
 
-            // 3. Ruby Red Health Crystal (v=30)
+            // 3. Ruby Red Health Crystal (v=42)
             if (hpFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 30, hpFillWidth, BAR_HEIGHT);
+                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 42, hpFillWidth, BAR_HEIGHT);
             }
 
-            // 4. Radiant Sun Gold Absorption Shield Overlay (v=75)
+            // 4. Radiant Sun Gold Absorption Shield Overlay (v=105)
             if (absFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 75, absFillWidth, BAR_HEIGHT);
+                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 105, absFillWidth, BAR_HEIGHT);
             }
         }
 
         // Fallback to safeFill if texture is unavailable
         if (!hpBlitSuccess) {
-            safeFill(guiGraphics, leftX, bottomY + 5, leftX + BAR_WIDTH, bottomY + 12, COLOR_BORDER);
-            safeFill(guiGraphics, leftX + 1, bottomY + 6, leftX + BAR_WIDTH - 1, bottomY + 11, COLOR_BG);
+            safeFill(guiGraphics, leftX, bottomY + 8, leftX + BAR_WIDTH, bottomY + 15, COLOR_BORDER);
+            safeFill(guiGraphics, leftX + 1, bottomY + 9, leftX + BAR_WIDTH - 1, bottomY + 14, COLOR_BG);
             if (lagFillWidth > hpFillWidth) {
-                safeFill(guiGraphics, leftX + 1, bottomY + 6, leftX + 1 + lagFillWidth, bottomY + 11, COLOR_LAG);
+                safeFill(guiGraphics, leftX + 1, bottomY + 9, leftX + 1 + lagFillWidth, bottomY + 14, COLOR_LAG);
             }
             if (hpFillWidth > 0) {
-                safeFillGradient(guiGraphics, leftX + 1, bottomY + 6, leftX + 1 + hpFillWidth, bottomY + 11, COLOR_HP_TOP, COLOR_HP_BOT);
+                safeFillGradient(guiGraphics, leftX + 1, bottomY + 9, leftX + 1 + hpFillWidth, bottomY + 14, COLOR_HP_TOP, COLOR_HP_BOT);
             }
             if (absFillWidth > 0) {
-                safeFillGradient(guiGraphics, leftX + 1, bottomY + 6, leftX + 1 + absFillWidth, bottomY + 11, COLOR_ABS_TOP, COLOR_ABS_BOT);
+                safeFillGradient(guiGraphics, leftX + 1, bottomY + 9, leftX + 1 + absFillWidth, bottomY + 14, COLOR_ABS_TOP, COLOR_ABS_BOT);
             }
         }
 
-        // 5. Clean Font 1.0: [cur] / [max] (and (+[abs]) if absorption > 0.1)
+        // 5. Clean Font 1.0 UNDER BAR: [cur] / [max] (and (+[abs]) if absorption > 0.1)
         let hpText = `${Math.ceil(curHealth)}/${Math.ceil(maxHealth)}` + (absorption > 0.1 ? ` (+${Math.ceil(absorption)})` : '');
         if (font) {
             let tw = font.width(hpText);
             let tx = leftX + Math.round((BAR_WIDTH - tw) / 2);
-            let ty = bottomY + 3;
-            safeDrawString(guiGraphics, font, hpText, tx, ty, COLOR_TEXT);
+            let ty = bottomY + 13;
+            safeDrawString(guiGraphics, font, hpText, tx, ty, COLOR_HP_TOP);
         }
 
         // ----------------------------------------------------------------------
@@ -500,29 +501,29 @@ function renderMasterRpgHud(guiGraphics) {
         let manaBlitSuccess = false;
 
         if (hudTex) {
-            // 1. Dark Steel Frame (v=0)
+            // 1. Authentic Metallic Frame (v=0)
             manaBlitSuccess = safeBlit(guiGraphics, hudTex, rightX, manaY, 0, 0, BAR_WIDTH, BAR_HEIGHT);
 
-            // 2. Cyan Mana Crystal (v=15)
+            // 2. Cyan Mana Crystal (v=21)
             if (manaFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, rightX, manaY, 0, 15, manaFillWidth, BAR_HEIGHT);
+                safeBlit(guiGraphics, hudTex, rightX, manaY, 0, 21, manaFillWidth, BAR_HEIGHT);
             }
         }
 
         if (!manaBlitSuccess) {
-            safeFill(guiGraphics, rightX, manaY + 5, rightX + BAR_WIDTH, manaY + 12, COLOR_BORDER);
-            safeFill(guiGraphics, rightX + 1, manaY + 6, rightX + BAR_WIDTH - 1, manaY + 11, COLOR_BG);
+            safeFill(guiGraphics, rightX, manaY + 8, rightX + BAR_WIDTH, manaY + 15, COLOR_BORDER);
+            safeFill(guiGraphics, rightX + 1, manaY + 9, rightX + BAR_WIDTH - 1, manaY + 14, COLOR_BG);
             if (manaFillWidth > 0) {
-                safeFillGradient(guiGraphics, rightX + 1, manaY + 6, rightX + 1 + manaFillWidth, manaY + 11, COLOR_MANA_TOP, COLOR_MANA_BOT);
+                safeFillGradient(guiGraphics, rightX + 1, manaY + 9, rightX + 1 + manaFillWidth, manaY + 14, COLOR_MANA_TOP, COLOR_MANA_BOT);
             }
         }
 
-        // 3. Clean Font 1.0: [curMana]/[maxMana] in ChatFormatting.AQUA
+        // 3. Clean Font 1.0 UNDER BAR: [curMana]/[maxMana] in ChatFormatting.AQUA
         let manaText = `${Math.round(curMana)}/${Math.round(maxMana)}`;
         if (font) {
             let tw = font.width(manaText);
             let tx = rightX + Math.round((BAR_WIDTH - tw) / 2);
-            let ty = manaY + 3;
+            let ty = manaY + 13;
             safeDrawString(guiGraphics, font, manaText, tx, ty, COLOR_TEXT_MANA);
         }
 
@@ -557,14 +558,25 @@ function handleLayerPre(event) {
             event.setCanceled(true);
             return;
         }
-        // Intercept SELECTED_ITEM_NAME to translate upwards (+Y is downwards, so -20 moves it up)
+        // Intercept SELECTED_ITEM_NAME to translate upwards (+Y is downwards, so -28 moves it up)
         if (name.equals(J_VanillaGuiLayers.SELECTED_ITEM_NAME)) {
             let gg = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
             let pose = gg && gg.pose ? gg.pose() : null;
             if (pose) {
                 pose.pushPose();
-                pose.translate(0, -20, 0);
+                pose.translate(0, -28, 0);
                 isSelectedItemPosePushed = true;
+            }
+            return;
+        }
+        // Intercept OVERLAY_MESSAGE (dungeon instance text) to translate upwards
+        if (name.equals(J_VanillaGuiLayers.OVERLAY_MESSAGE)) {
+            let gg = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
+            let pose = gg && gg.pose ? gg.pose() : null;
+            if (pose) {
+                pose.pushPose();
+                pose.translate(0, -18, 0);
+                isOverlayMessagePosePushed = true;
             }
             return;
         }
@@ -588,6 +600,18 @@ function handleLayerPost(event) {
                     pose.popPose();
                 }
                 isSelectedItemPosePushed = false;
+            }
+            return;
+        }
+        // Restore pose stack for OVERLAY_MESSAGE
+        if (name.equals(J_VanillaGuiLayers.OVERLAY_MESSAGE)) {
+            if (isOverlayMessagePosePushed) {
+                let gg = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
+                let pose = gg && gg.pose ? gg.pose() : null;
+                if (pose) {
+                    pose.popPose();
+                }
+                isOverlayMessagePosePushed = false;
             }
             return;
         }
