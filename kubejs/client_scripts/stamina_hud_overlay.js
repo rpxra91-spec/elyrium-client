@@ -64,6 +64,32 @@ let lastDamageTime = 0;
 // Render de-duplication per frame
 let lastRenderedTick = -1;
 
+// HUD Geometry Constants (top-level declaration prevents Rhino function-scope redeclaration errors)
+var BAR_WIDTH = 81;
+var HP_BAR_HEIGHT = 7;
+var STAM_BAR_HEIGHT = 6;
+var FOOD_BAR_HEIGHT = 7;
+var SCALE_HP = 0.72;
+var SCALE_STAM = 0.65;
+var SCALE_FOOD = 0.72;
+
+// HUD Color Palette (ARGB 32-bit signed integers)
+var COLOR_BORDER = (0xFF1F2937 | 0);       // Dark Slate #1F2937
+var COLOR_BG = (0xCC111827 | 0);           // Deep Graphite 80% opacity #111827
+var COLOR_TEXT = (0xFFFFFFFF | 0);         // Crisp White
+var COLOR_LAG = (0xFFFECACA | 0);          // Light Red Damage Lag-Trail
+var COLOR_HP_TOP = (0xFFEF4444 | 0);       // Red #EF4444
+var COLOR_HP_BOT = (0xFF991B1B | 0);       // Crimson #991B1B
+var COLOR_ABS_TOP = (0xCCFBBF24 | 0);      // Amber Gold Absorption Shield
+var COLOR_ABS_BOT = (0xCCD97706 | 0);
+var COLOR_AMBER_TOP = (0xFFF59E0B | 0);    // Amber #F59E0B
+var COLOR_AMBER_BOT = (0xFFB45309 | 0);    // Bronze Amber #B45309
+var COLOR_STAM_BLOCK = (0xFF06B6D4 | 0);   // Cyan glow on block
+var COLOR_FOOD_TOP = (0xFFFB923C | 0);     // Orange #FB923C
+var COLOR_FOOD_BOT = (0xFFC2410C | 0);     // Dark Orange #C2410C
+var COLOR_SAT_TOP = (0xAAFACC15 | 0);      // Golden Saturation Overlay
+var COLOR_SAT_BOT = (0xAAEAB308 | 0);
+
 // API export for other client scripts
 var ElyriumClientStamina = {
     get current() { return clientStamina; },
@@ -197,11 +223,6 @@ function renderMasterRpgHud(guiGraphics) {
         let screenWidth = window ? window.getGuiScaledWidth() : (guiGraphics.guiWidth ? guiGraphics.guiWidth() : 400);
         let screenHeight = window ? window.getGuiScaledHeight() : (guiGraphics.guiHeight ? guiGraphics.guiHeight() : 300);
 
-        const BAR_WIDTH = 81;
-        const HP_BAR_HEIGHT = 7;
-        const STAM_BAR_HEIGHT = 6;
-        const FOOD_BAR_HEIGHT = 7;
-
         let midX = Math.floor(screenWidth / 2);
         let leftX = midX - 91;
         let rightX = midX + 10;
@@ -209,11 +230,6 @@ function renderMasterRpgHud(guiGraphics) {
 
         let font = mc.font;
         let pose = guiGraphics.pose ? guiGraphics.pose() : null;
-
-        // Colors (ARGB 32-bit signed ints)
-        const COLOR_BORDER = (0xFF1F2937 | 0);       // Dark Slate #1F2937
-        const COLOR_BG = (0xCC111827 | 0);           // Deep Graphite 80% opacity #111827
-        const COLOR_TEXT = (0xFFFFFFFF | 0);         // Crisp White
 
         // ----------------------------------------------------------------------
         // A. HEALTH BAR (Left Side, Bottom Row: y = bottomY)
@@ -249,14 +265,11 @@ function renderMasterRpgHud(guiGraphics) {
 
         // 3. Damage Lag-Trail (Light Red)
         if (lagFillWidth > hpFillWidth) {
-            const COLOR_LAG = (0xFFFECACA | 0);
             safeFill(guiGraphics, leftX + 1 + hpFillWidth, hpY + 1, leftX + 1 + lagFillWidth, hpY + HP_BAR_HEIGHT - 1, COLOR_LAG);
         }
 
         // 4. Ruby Red Health Gradient
         if (hpFillWidth > 0) {
-            const COLOR_HP_TOP = (0xFFEF4444 | 0); // Red #EF4444
-            const COLOR_HP_BOT = (0xFF991B1B | 0); // Crimson #991B1B
             safeFillGradient(guiGraphics, leftX + 1, hpY + 1, leftX + 1 + hpFillWidth, hpY + HP_BAR_HEIGHT - 1, COLOR_HP_TOP, COLOR_HP_BOT);
         }
 
@@ -264,20 +277,17 @@ function renderMasterRpgHud(guiGraphics) {
         if (absorption > 0.1) {
             let absProgress = Math.max(0.0, Math.min(1.0, absorption / Math.max(1, maxHealth)));
             let absFillWidth = Math.round(innerWidth * absProgress);
-            const COLOR_ABS_TOP = (0xCCFBBF24 | 0); // Amber Gold
-            const COLOR_ABS_BOT = (0xCCD97706 | 0);
             safeFillGradient(guiGraphics, leftX + 1, hpY + 1, leftX + 1 + absFillWidth, hpY + HP_BAR_HEIGHT - 1, COLOR_ABS_TOP, COLOR_ABS_BOT);
         }
 
         // 6. Text: ♥ [cur] / [max]
         let hpText = `♥ ${Math.ceil(curHealth)}/${Math.ceil(maxHealth)}` + (absorption > 0.1 ? ` (+${Math.ceil(absorption)})` : '');
         if (font && pose) {
-            const SCALE = 0.72;
             let tw = font.width(hpText);
             pose.pushPose();
-            pose.scale(SCALE, SCALE, 1.0);
-            let tx = (leftX + (BAR_WIDTH - tw * SCALE) / 2) / SCALE;
-            let ty = (hpY + (HP_BAR_HEIGHT - 7.5 * SCALE) / 2) / SCALE;
+            pose.scale(SCALE_HP, SCALE_HP, 1.0);
+            let tx = (leftX + (BAR_WIDTH - tw * SCALE_HP) / 2) / SCALE_HP;
+            let ty = (hpY + (HP_BAR_HEIGHT - 7.5 * SCALE_HP) / 2) / SCALE_HP;
             safeDrawString(guiGraphics, font, hpText, tx, ty, COLOR_TEXT);
             pose.popPose();
         }
@@ -294,29 +304,26 @@ function renderMasterRpgHud(guiGraphics) {
         let stamFillWidth = Math.round(innerWidth * stamProgress);
 
         let isBlocking = player.isBlocking ? player.isBlocking() : false;
-        let COLOR_STAM_BORDER = isBlocking ? (0xFF06B6D4 | 0) : COLOR_BORDER; // Cyan glow on block
+        let currentStamBorder = isBlocking ? COLOR_STAM_BLOCK : COLOR_BORDER; // Cyan glow on block
 
         // 1. Outer Border
-        safeFill(guiGraphics, leftX, stamY, leftX + BAR_WIDTH, stamY + STAM_BAR_HEIGHT, COLOR_STAM_BORDER);
+        safeFill(guiGraphics, leftX, stamY, leftX + BAR_WIDTH, stamY + STAM_BAR_HEIGHT, currentStamBorder);
         // 2. Background
         safeFill(guiGraphics, leftX + 1, stamY + 1, leftX + BAR_WIDTH - 1, stamY + STAM_BAR_HEIGHT - 1, COLOR_BG);
 
         // 3. Stamina Gradient (Amber / Emerald Gold)
         if (stamFillWidth > 0) {
-            const COLOR_AMBER_TOP = (0xFFF59E0B | 0); // Amber #F59E0B
-            const COLOR_AMBER_BOT = (0xFFB45309 | 0); // Bronze Amber #B45309
             safeFillGradient(guiGraphics, leftX + 1, stamY + 1, leftX + 1 + stamFillWidth, stamY + STAM_BAR_HEIGHT - 1, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
         }
 
         // 4. Text: ⚡ [stam] / [max]
         let stamText = `⚡ ${Math.round(clientStamina)}/${Math.round(maxStam)}`;
         if (font && pose) {
-            const SCALE = 0.65;
             let tw = font.width(stamText);
             pose.pushPose();
-            pose.scale(SCALE, SCALE, 1.0);
-            let tx = (leftX + (BAR_WIDTH - tw * SCALE) / 2) / SCALE;
-            let ty = (stamY + (STAM_BAR_HEIGHT - 7.5 * SCALE) / 2) / SCALE;
+            pose.scale(SCALE_STAM, SCALE_STAM, 1.0);
+            let tx = (leftX + (BAR_WIDTH - tw * SCALE_STAM) / 2) / SCALE_STAM;
+            let ty = (stamY + (STAM_BAR_HEIGHT - 7.5 * SCALE_STAM) / 2) / SCALE_STAM;
             safeDrawString(guiGraphics, font, stamText, tx, ty, COLOR_TEXT);
             pose.popPose();
         }
@@ -340,8 +347,6 @@ function renderMasterRpgHud(guiGraphics) {
 
         // 3. Caramel Orange Food Bar
         if (foodFillWidth > 0) {
-            const COLOR_FOOD_TOP = (0xFFFB923C | 0); // Orange #FB923C
-            const COLOR_FOOD_BOT = (0xFFC2410C | 0); // Dark Orange #C2410C
             safeFillGradient(guiGraphics, rightX + 1, foodY + 1, rightX + 1 + foodFillWidth, foodY + FOOD_BAR_HEIGHT - 1, COLOR_FOOD_TOP, COLOR_FOOD_BOT);
         }
 
@@ -349,8 +354,6 @@ function renderMasterRpgHud(guiGraphics) {
         if (saturation > 0.1) {
             let satProgress = Math.max(0.0, Math.min(1.0, saturation / 20.0));
             let satFillWidth = Math.round(innerWidth * satProgress);
-            const COLOR_SAT_TOP = (0xAAFACC15 | 0);
-            const COLOR_SAT_BOT = (0xAAEAB308 | 0);
             safeFillGradient(guiGraphics, rightX + 1, foodY + 1, rightX + 1 + satFillWidth, foodY + FOOD_BAR_HEIGHT - 1, COLOR_SAT_TOP, COLOR_SAT_BOT);
         }
 
@@ -359,12 +362,11 @@ function renderMasterRpgHud(guiGraphics) {
         let foodText = `🍗 ${foodLevel}/20` + (saturation > 0.05 ? ` (+${satFormatted})` : '');
 
         if (font && pose) {
-            const SCALE = 0.72;
             let tw = font.width(foodText);
             pose.pushPose();
-            pose.scale(SCALE, SCALE, 1.0);
-            let tx = (rightX + (BAR_WIDTH - tw * SCALE) / 2) / SCALE;
-            let ty = (foodY + (FOOD_BAR_HEIGHT - 7.5 * SCALE) / 2) / SCALE;
+            pose.scale(SCALE_FOOD, SCALE_FOOD, 1.0);
+            let tx = (rightX + (BAR_WIDTH - tw * SCALE_FOOD) / 2) / SCALE_FOOD;
+            let ty = (foodY + (FOOD_BAR_HEIGHT - 7.5 * SCALE_FOOD) / 2) / SCALE_FOOD;
             safeDrawString(guiGraphics, font, foodText, tx, ty, COLOR_TEXT);
             pose.popPose();
         }

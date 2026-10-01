@@ -125,12 +125,8 @@ function playLocalThirdPersonDodge(player, speed) {
 
     if (J_PlayerAnimationRegistry && J_PlayerAnimationAccess && J_ResourceLocation) {
         try {
-            let resLoc = J_ResourceLocation.parse('elyrium:roll');
+            let resLoc = J_ResourceLocation.parse('spell_engine:dodge');
             let animationData = J_PlayerAnimationRegistry.getAnimation(resLoc);
-            if (!animationData) {
-                resLoc = J_ResourceLocation.parse('spell_engine:dodge');
-                animationData = J_PlayerAnimationRegistry.getAnimation(resLoc);
-            }
             if (animationData) {
                 let rawPlayer = player.minecraftPlayer || player.minecraftEntity || player;
                 let stack = J_PlayerAnimationAccess.getPlayerAnimLayer(rawPlayer);
@@ -171,10 +167,7 @@ function performClientDodge(forwardInput, strafeInput) {
     let fwd = forwardInput;
     let str = strafeInput;
 
-    if (fwd === 0 && str === 0) {
-        // Default dodge forward if no direction is held
-        fwd = 1;
-    }
+    if (fwd === 0 && str === 0) return;
 
     let yawRad = player.yRot * (Math.PI / 180.0);
     let fx = -Math.sin(yawRad);

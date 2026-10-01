@@ -1,8 +1,8 @@
 {
-  "version": "0.4.1",
+  "version": "0.4.2",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-01T20:18:48.238605+00:00",
+  "generated_at": "2026-10-01T20:52:23.960765+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -1377,7 +1377,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "f17e9e4521779f4034a6fbed1cfef7b22a2099d3a6d30b5e1fe5dadbb6a149bf",
+      "sha256": "e49f341b03b470d69d8adde38ec7198776f0a1890e0385821ed84ce8740e7e24",
       "size": 275
     },
     {
@@ -8237,8 +8237,8 @@
     },
     {
       "path": "kubejs/client_scripts/dodge_camera_fx.js",
-      "sha256": "c780c0efb2b760f77a7d7fa9ba01eee7119cbeb11d4edc6df00ad73ec80ada35",
-      "size": 14791
+      "sha256": "0452874ca07326d55eb06d791ce07ce13b9602775f705b9f4bdcfdc881ca7031",
+      "size": 14522
     },
     {
       "path": "kubejs/client_scripts/equipment_reinforcement_tooltips.js",
@@ -8297,8 +8297,8 @@
     },
     {
       "path": "kubejs/client_scripts/stamina_hud_overlay.js",
-      "sha256": "20dd112ec168d1b76be0e23dc9e9644b2d2aa740192cdb6d597c388e87a90394",
-      "size": 19000
+      "sha256": "ca5ecd1e0342b8d795dde6afd4d4e7feda1d3b74b825b3a2f7c1a614bf526df0",
+      "size": 19120
     },
     {
       "path": "kubejs/client_scripts/tier4_tooltips.js",
@@ -16127,7 +16127,7 @@
     },
     {
       "path": "shaderpacks/superDuperVanilla.zip.txt",
-      "sha256": "92d329669b021a9dece9ddff6194415a9db2fa28088e9b58b854f11cc66e6079",
+      "sha256": "3e60500e64973604f73db1419cb163b97cac4a3cb353466853332f27129b0186",
       "size": 231
     }
   ]
