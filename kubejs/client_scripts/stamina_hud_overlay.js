@@ -73,8 +73,10 @@ let displayedHealth = 20;
 let lagHealth = 20;
 let lastDamageTime = 0;
 
-// Render de-duplication per frame
+// Render de-duplication and layer state
 let lastRenderedTick = -1;
+let hasLayerRenderedThisFrame = false;
+let isSelectedItemPosePushed = false;
 
 // HUD Geometry Constants (Unified 15px Compact RPG Frames: 98x15 px)
 var BAR_WIDTH = 98;
@@ -297,8 +299,111 @@ function renderMasterRpgHud(guiGraphics) {
         let font = mc.font;
         let hudTex = getHudBarsTex();
 
+        // ======================================================================
+        // 1. TOP ROW: Stamina (Left: leftX, topY) & Hunger (Right: rightX, topY)
+        // ======================================================================
+
         // ----------------------------------------------------------------------
-        // A. HEALTH BAR (Left Side, Bottom Row: leftX, bottomY)
+        // A. PERMANENT STAMINA BAR (Left Side, Top Row: leftX, topY)
+        // ----------------------------------------------------------------------
+        let stamY = topY;
+        displayedStamina += (clientStamina - displayedStamina) * 0.35;
+        if (Math.abs(clientStamina - displayedStamina) < 0.1) displayedStamina = clientStamina;
+
+        let maxStam = Math.max(1, clientMaxStamina);
+        let stamProgress = Math.max(0.0, Math.min(1.0, displayedStamina / maxStam));
+        let stamFillWidth = Math.round(BAR_WIDTH * stamProgress);
+
+        let isBlocking = player.isBlocking ? player.isBlocking() : false;
+        let stamBlitSuccess = false;
+
+        if (hudTex) {
+            // 1. Frame: Neon cyan glow on block (v=105) or Dark Steel frame (v=0)
+            let frameV = isBlocking ? 105 : 0;
+            stamBlitSuccess = safeBlit(guiGraphics, hudTex, leftX, stamY, 0, frameV, BAR_WIDTH, BAR_HEIGHT);
+
+            // 2. Amber Gold Stamina Crystal (v=45)
+            if (stamFillWidth > 0) {
+                safeBlit(guiGraphics, hudTex, leftX, stamY, 0, 45, stamFillWidth, BAR_HEIGHT);
+            }
+        }
+
+        if (!stamBlitSuccess) {
+            let currentStamBorder = isBlocking ? COLOR_STAM_BLOCK : COLOR_BORDER;
+            safeFill(guiGraphics, leftX, stamY + 5, leftX + BAR_WIDTH, stamY + 12, currentStamBorder);
+            safeFill(guiGraphics, leftX + 1, stamY + 6, leftX + BAR_WIDTH - 1, stamY + 11, COLOR_BG);
+            if (stamFillWidth > 0) {
+                safeFillGradient(guiGraphics, leftX + 1, stamY + 6, leftX + 1 + stamFillWidth, stamY + 11, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
+            }
+        }
+
+        // 3. Clean Font 1.0: [stam] / [max]
+        let stamText = `${Math.round(clientStamina)}/${Math.round(maxStam)}`;
+        if (font) {
+            let tw = font.width(stamText);
+            let tx = leftX + Math.round((BAR_WIDTH - tw) / 2);
+            let ty = stamY + 3;
+            safeDrawString(guiGraphics, font, stamText, tx, ty, COLOR_TEXT);
+        }
+
+        // ----------------------------------------------------------------------
+        // B. HUNGER & SATURATION BAR (Right Side, Top Row: rightX, topY)
+        // ----------------------------------------------------------------------
+        let foodData = player.getFoodData ? player.getFoodData() : null;
+        let foodLevel = foodData ? (foodData.getFoodLevel ? foodData.getFoodLevel() : 20) : 20;
+        let saturation = foodData ? (foodData.getSaturationLevel ? foodData.getSaturationLevel() : 5) : 5;
+
+        let foodProgress = Math.max(0.0, Math.min(1.0, foodLevel / 20.0));
+        let foodFillWidth = Math.round(BAR_WIDTH * foodProgress);
+        let satProgress = Math.max(0.0, Math.min(1.0, saturation / 20.0));
+        let satFillWidth = Math.round(BAR_WIDTH * satProgress);
+
+        let foodY = topY;
+        let foodBlitSuccess = false;
+
+        if (hudTex) {
+            // 1. Dark Steel Frame (v=0)
+            foodBlitSuccess = safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 0, BAR_WIDTH, BAR_HEIGHT);
+
+            // 2. Caramel Orange Food Crystal (v=60)
+            if (foodFillWidth > 0) {
+                safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 60, foodFillWidth, BAR_HEIGHT);
+            }
+
+            // 3. Radiant Sun Gold Saturation Overlay (v=75)
+            if (satFillWidth > 0) {
+                safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 75, satFillWidth, BAR_HEIGHT);
+            }
+        }
+
+        if (!foodBlitSuccess) {
+            safeFill(guiGraphics, rightX, foodY + 5, rightX + BAR_WIDTH, foodY + 12, COLOR_BORDER);
+            safeFill(guiGraphics, rightX + 1, foodY + 6, rightX + BAR_WIDTH - 1, foodY + 11, COLOR_BG);
+            if (foodFillWidth > 0) {
+                safeFillGradient(guiGraphics, rightX + 1, foodY + 6, rightX + 1 + foodFillWidth, foodY + 11, COLOR_FOOD_TOP, COLOR_FOOD_BOT);
+            }
+            if (satFillWidth > 0) {
+                safeFillGradient(guiGraphics, rightX + 1, foodY + 6, rightX + 1 + satFillWidth, foodY + 11, COLOR_SAT_TOP, COLOR_SAT_BOT);
+            }
+        }
+
+        // 4. Clean Font 1.0: [food]/20 (+[sat])
+        let satFormatted = (saturation > 0.05) ? saturation.toFixed(1) : '0';
+        let foodText = `${foodLevel}/20` + (saturation > 0.05 ? ` (+${satFormatted})` : '');
+
+        if (font) {
+            let tw = font.width(foodText);
+            let tx = rightX + Math.round((BAR_WIDTH - tw) / 2);
+            let ty = foodY + 3;
+            safeDrawString(guiGraphics, font, foodText, tx, ty, COLOR_TEXT);
+        }
+
+        // ======================================================================
+        // 2. BOTTOM ROW: Health (Left: leftX, bottomY) & Mana (Right: rightX, bottomY)
+        // ======================================================================
+
+        // ----------------------------------------------------------------------
+        // C. HEALTH BAR (Left Side, Bottom Row: leftX, bottomY)
         // ----------------------------------------------------------------------
         let curHealth = player.getHealth ? player.getHealth() : (player.health || 20);
         let maxHealth = player.getMaxHealth ? player.getMaxHealth() : (player.maxHealth || 20);
@@ -366,101 +471,6 @@ function renderMasterRpgHud(guiGraphics) {
             let tx = leftX + Math.round((BAR_WIDTH - tw) / 2);
             let ty = bottomY + 3;
             safeDrawString(guiGraphics, font, hpText, tx, ty, COLOR_TEXT);
-        }
-
-        // ----------------------------------------------------------------------
-        // B. PERMANENT STAMINA BAR (Left Side, Top Row: leftX, topY)
-        // ----------------------------------------------------------------------
-        let stamY = topY;
-        displayedStamina += (clientStamina - displayedStamina) * 0.35;
-        if (Math.abs(clientStamina - displayedStamina) < 0.1) displayedStamina = clientStamina;
-
-        let maxStam = Math.max(1, clientMaxStamina);
-        let stamProgress = Math.max(0.0, Math.min(1.0, displayedStamina / maxStam));
-        let stamFillWidth = Math.round(BAR_WIDTH * stamProgress);
-
-        let isBlocking = player.isBlocking ? player.isBlocking() : false;
-        let stamBlitSuccess = false;
-
-        if (hudTex) {
-            // 1. Frame: Neon cyan glow on block (v=105) or Dark Steel frame (v=0)
-            let frameV = isBlocking ? 105 : 0;
-            stamBlitSuccess = safeBlit(guiGraphics, hudTex, leftX, stamY, 0, frameV, BAR_WIDTH, BAR_HEIGHT);
-
-            // 2. Amber Gold Stamina Crystal (v=45)
-            if (stamFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, leftX, stamY, 0, 45, stamFillWidth, BAR_HEIGHT);
-            }
-        }
-
-        if (!stamBlitSuccess) {
-            let currentStamBorder = isBlocking ? COLOR_STAM_BLOCK : COLOR_BORDER;
-            safeFill(guiGraphics, leftX, stamY + 5, leftX + BAR_WIDTH, stamY + 12, currentStamBorder);
-            safeFill(guiGraphics, leftX + 1, stamY + 6, leftX + BAR_WIDTH - 1, stamY + 11, COLOR_BG);
-            if (stamFillWidth > 0) {
-                safeFillGradient(guiGraphics, leftX + 1, stamY + 6, leftX + 1 + stamFillWidth, stamY + 11, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
-            }
-        }
-
-        // 3. Clean Font 1.0: [stam] / [max]
-        let stamText = `${Math.round(clientStamina)}/${Math.round(maxStam)}`;
-        if (font) {
-            let tw = font.width(stamText);
-            let tx = leftX + Math.round((BAR_WIDTH - tw) / 2);
-            let ty = stamY + 3;
-            safeDrawString(guiGraphics, font, stamText, tx, ty, COLOR_TEXT);
-        }
-
-        // ----------------------------------------------------------------------
-        // C. HUNGER & SATURATION BAR (Right Side, Top Row: rightX, topY)
-        // ----------------------------------------------------------------------
-        let foodData = player.getFoodData ? player.getFoodData() : null;
-        let foodLevel = foodData ? (foodData.getFoodLevel ? foodData.getFoodLevel() : 20) : 20;
-        let saturation = foodData ? (foodData.getSaturationLevel ? foodData.getSaturationLevel() : 5) : 5;
-
-        let foodProgress = Math.max(0.0, Math.min(1.0, foodLevel / 20.0));
-        let foodFillWidth = Math.round(BAR_WIDTH * foodProgress);
-        let satProgress = Math.max(0.0, Math.min(1.0, saturation / 20.0));
-        let satFillWidth = Math.round(BAR_WIDTH * satProgress);
-
-        let foodY = topY;
-        let foodBlitSuccess = false;
-
-        if (hudTex) {
-            // 1. Dark Steel Frame (v=0)
-            foodBlitSuccess = safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 0, BAR_WIDTH, BAR_HEIGHT);
-
-            // 2. Caramel Orange Food Crystal (v=60)
-            if (foodFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 60, foodFillWidth, BAR_HEIGHT);
-            }
-
-            // 3. Radiant Sun Gold Saturation Overlay (v=75)
-            if (satFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 75, satFillWidth, BAR_HEIGHT);
-            }
-        }
-
-        if (!foodBlitSuccess) {
-            safeFill(guiGraphics, rightX, foodY + 5, rightX + BAR_WIDTH, foodY + 12, COLOR_BORDER);
-            safeFill(guiGraphics, rightX + 1, foodY + 6, rightX + BAR_WIDTH - 1, foodY + 11, COLOR_BG);
-            if (foodFillWidth > 0) {
-                safeFillGradient(guiGraphics, rightX + 1, foodY + 6, rightX + 1 + foodFillWidth, foodY + 11, COLOR_FOOD_TOP, COLOR_FOOD_BOT);
-            }
-            if (satFillWidth > 0) {
-                safeFillGradient(guiGraphics, rightX + 1, foodY + 6, rightX + 1 + satFillWidth, foodY + 11, COLOR_SAT_TOP, COLOR_SAT_BOT);
-            }
-        }
-
-        // 4. Clean Font 1.0: [food]/20 (+[sat])
-        let satFormatted = (saturation > 0.05) ? saturation.toFixed(1) : '0';
-        let foodText = `${foodLevel}/20` + (saturation > 0.05 ? ` (+${satFormatted})` : '');
-
-        if (font) {
-            let tw = font.width(foodText);
-            let tx = rightX + Math.round((BAR_WIDTH - tw) / 2);
-            let ty = foodY + 3;
-            safeDrawString(guiGraphics, font, foodText, tx, ty, COLOR_TEXT);
         }
 
         // ----------------------------------------------------------------------
@@ -538,6 +548,7 @@ function handleLayerPre(event) {
             let gg = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
             if (gg) {
                 renderMasterRpgHud(gg);
+                hasLayerRenderedThisFrame = true;
             }
             return;
         }
@@ -553,6 +564,7 @@ function handleLayerPre(event) {
             if (pose) {
                 pose.pushPose();
                 pose.translate(0, -20, 0);
+                isSelectedItemPosePushed = true;
             }
             return;
         }
@@ -569,10 +581,13 @@ function handleLayerPost(event) {
 
         // Restore pose stack for SELECTED_ITEM_NAME
         if (name.equals(J_VanillaGuiLayers.SELECTED_ITEM_NAME)) {
-            let gg = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
-            let pose = gg && gg.pose ? gg.pose() : null;
-            if (pose) {
-                pose.popPose();
+            if (isSelectedItemPosePushed) {
+                let gg = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
+                let pose = gg && gg.pose ? gg.pose() : null;
+                if (pose) {
+                    pose.popPose();
+                }
+                isSelectedItemPosePushed = false;
             }
             return;
         }
@@ -593,7 +608,11 @@ try {
             let layerListener = new J_Consumer({
                 accept: function(ev) { handleLayerPre(ev); }
             });
-            J_NeoForge.EVENT_BUS.addListener(layerListener);
+            try {
+                J_NeoForge.EVENT_BUS.addListener(J_RenderGuiLayerEventPre, layerListener);
+            } catch (eBus1) {
+                J_NeoForge.EVENT_BUS.addListener(layerListener);
+            }
             isLayerListenerRegistered = true;
         }
     }
@@ -609,7 +628,11 @@ try {
             let layerPostListener = new J_Consumer({
                 accept: function(ev) { handleLayerPost(ev); }
             });
-            J_NeoForge.EVENT_BUS.addListener(layerPostListener);
+            try {
+                J_NeoForge.EVENT_BUS.addListener(J_RenderGuiLayerEventPost, layerPostListener);
+            } catch (eBus2) {
+                J_NeoForge.EVENT_BUS.addListener(layerPostListener);
+            }
             isLayerPostListenerRegistered = true;
         }
     }
@@ -619,6 +642,10 @@ try {
         if (typeof NativeEvents !== 'undefined') {
             NativeEvents.onEvent(J_RenderGuiEventPost, event => {
                 try {
+                    if (hasLayerRenderedThisFrame) {
+                        hasLayerRenderedThisFrame = false;
+                        return;
+                    }
                     if (event) {
                         let guiGraphics = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
                         if (guiGraphics) {
@@ -632,6 +659,10 @@ try {
             let renderListener = new J_Consumer({
                 accept: function(ev) {
                     try {
+                        if (hasLayerRenderedThisFrame) {
+                            hasLayerRenderedThisFrame = false;
+                            return;
+                        }
                         if (ev) {
                             let guiGraphics = ev.getGuiGraphics ? ev.getGuiGraphics() : ev.guiGraphics;
                             if (guiGraphics) {
@@ -641,7 +672,11 @@ try {
                     } catch (err) {}
                 }
             });
-            J_NeoForge.EVENT_BUS.addListener(renderListener);
+            try {
+                J_NeoForge.EVENT_BUS.addListener(J_RenderGuiEventPost, renderListener);
+            } catch (eBus3) {
+                J_NeoForge.EVENT_BUS.addListener(renderListener);
+            }
             isRenderListenerRegistered = true;
         }
     }
