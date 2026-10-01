@@ -53,7 +53,8 @@ function checkTwoHandedClient(item) {
         } catch (e) {}
     }
 
-    let id = String(item.id || '').toLowerCase();
+    // Bows & Crossbows (Two-Handed)
+    if (((id.includes('bow') && !id.includes('bowl')) || id.includes('crossbow'))) return true;
 
     // Heavy Melee Two-Handed Weapons
     if (id.includes('spear') || id.includes('lance') || id.includes('halberd') || id.includes('glaive') || id.includes('staff')) return true;

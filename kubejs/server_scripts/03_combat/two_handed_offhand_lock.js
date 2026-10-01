@@ -36,7 +36,14 @@ function isTwoHandedWeapon(item) {
 
     let id = String(item.id).toLowerCase();
 
-    // 2. Spears, Lances, Polearms, Staves, Glaives
+    // 2. Bows and Crossbows (Two-Handed)
+    if (((id.includes('bow') && !id.includes('bowl')) || id.includes('crossbow')) ||
+        item.hasTag('c:tools/bows') || item.hasTag('c:tools/crossbows') ||
+        item.hasTag('minecraft:enchantable/bow') || item.hasTag('minecraft:enchantable/crossbow')) {
+        return true;
+    }
+
+    // 3. Spears, Lances, Polearms, Staves, Glaives
     if (id.includes('spear') || id.includes('lance') || id.includes('glaive') ||
         id.includes('halberd') || id.includes('polearm') || id.includes('staff') ||
         id.includes('quarterstaff') || id.includes('pike') ||

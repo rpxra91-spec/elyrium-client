@@ -2,7 +2,7 @@
   "version": "0.4.1",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-01T19:51:31.453393+00:00",
+  "generated_at": "2026-10-01T20:18:48.238605+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8312,8 +8312,8 @@
     },
     {
       "path": "kubejs/client_scripts/two_handed_offhand_client.js",
-      "sha256": "d926c20e6b5b09e771d720e1bc403afb48794edae15702298580dcacd765e21c",
-      "size": 5355
+      "sha256": "8f8d474dc88decef3bd11743b22d5cfb33db3cdd28b6abbf551b922d2fbf38a5",
+      "size": 5438
     },
     {
       "path": "kubejs/client_scripts/weapon_arts_keybinds.js",
@@ -9272,8 +9272,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/two_handed_offhand_lock.js",
-      "sha256": "82396c656e1ac71f843c83d7b691ee3b62fcb7e0ab74d2709c74e4afb9e8a664",
-      "size": 8644
+      "sha256": "f63a8963a3d4ad1c7b0869e442bf4c51e031c98593042f1e9c12628d5d88eb1b",
+      "size": 8975
     },
     {
       "path": "kubejs/server_scripts/03_combat/wave_defense_arena.js",
