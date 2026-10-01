@@ -1,30 +1,36 @@
 // ==============================================================================
-// ⚔️ ELYRIUM RPG: UNIFIED CLASSIC RPG HUD (HEALTH, HUNGER, SATURATION, STAMINA)
-// Minecraft 1.21.1 NeoForge | KubeJS Client Script (v2.1)
+// ⚔️ ELYRIUM RPG: UNIFIED CLASSIC RPG HUD (HEALTH, STAMINA, HUNGER, MANA)
+// Minecraft 1.21.1 NeoForge | KubeJS Client Script (v2.3)
 // ==============================================================================
 // 1. Suppresses vanilla hearts and chicken drumsticks via RenderGuiLayerEvent$Pre:
 //    - VanillaGuiLayers.PLAYER_HEALTH
 //    - VanillaGuiLayers.FOOD_LEVEL
-// 2. Renders clean, modern, symmetrical RPG status bars:
-//    - LEFT SIDE:
-//      * Health Bar (81x7 px, Ruby Red, Damage Lag-Trail, Absorption Shield)
-//      * Stamina Bar (81x6 px, Amber Gold, Permanent 100% visible, Shield Block Aura)
-//    - RIGHT SIDE:
-//      * Hunger & Saturation Bar (81x7 px, Caramel Orange with Golden Saturation Overlay)
-// 3. NeoForge 1.21.1 Compatible: uses RenderType.gui(), 5-arg drawString, and safeFill fallbacks.
-// 4. Zero-Latency Network Sync: listens to 'elyrium:sync_stamina'
+// 2. Renders clean, modern, symmetrical 2x2 RPG status bars:
+//    - LEFT WING:
+//      * Stamina Bar (topY: Amber Gold crystal v=45, Shield Block Aura v=105)
+//      * Health Bar (bottomY: Ruby Red crystal v=30, Lag-Trail v=90, Absorption v=75)
+//    - RIGHT WING:
+//      * Hunger & Saturation Bar (topY: Caramel Orange v=60, Radiant Sun Gold v=75)
+//      * Native Mana Bar (bottomY: Cyan crystal v=15, ClientMagicData.getPlayerMana())
+// 3. Compact 15px bar height, dark matte steel / gunmetal frames (v=0).
+// 4. Clean unscaled 1.0 font rendering without emojis/icons, centered in channel.
+// 5. Intercepts VanillaGuiLayers.SELECTED_ITEM_NAME to translate up by 20px over bars.
+// 6. Synchronous pause hiding: all 4 bars hide cleanly when mc.screen != null (ESC).
 // ==============================================================================
 
 let J_Minecraft = null;
 let J_RenderGuiEventPost = null;
 let J_RenderGuiLayerEventPre = null;
+let J_RenderGuiLayerEventPost = null;
 let J_VanillaGuiLayers = null;
 let J_RenderType = null;
 let J_NeoForge = null;
 let J_Consumer = null;
+let J_ClientMagicData = null;
 let isStaminaHudApiLoaded = false;
 let isRenderListenerRegistered = false;
 let isLayerListenerRegistered = false;
+let isLayerPostListenerRegistered = false;
 
 function initStaminaHudApi() {
     if (isStaminaHudApiLoaded) return;
@@ -38,6 +44,9 @@ function initStaminaHudApi() {
         J_RenderGuiLayerEventPre = Java.loadClass('net.neoforged.neoforge.client.event.RenderGuiLayerEvent$Pre');
     } catch (e) {}
     try {
+        J_RenderGuiLayerEventPost = Java.loadClass('net.neoforged.neoforge.client.event.RenderGuiLayerEvent$Post');
+    } catch (e) {}
+    try {
         J_VanillaGuiLayers = Java.loadClass('net.neoforged.neoforge.client.gui.VanillaGuiLayers');
     } catch (e) {}
     try {
@@ -46,6 +55,9 @@ function initStaminaHudApi() {
     try {
         J_NeoForge = Java.loadClass('net.neoforged.neoforge.common.NeoForge');
         J_Consumer = Java.loadClass('java.util.function.Consumer');
+    } catch (e) {}
+    try {
+        J_ClientMagicData = Java.loadClass('io.redspace.ironsspellbooks.player.ClientMagicData');
     } catch (e) {}
     isStaminaHudApiLoaded = true;
 }
@@ -64,17 +76,15 @@ let lastDamageTime = 0;
 // Render de-duplication per frame
 let lastRenderedTick = -1;
 
-// HUD Geometry Constants (Fantasy Frame matching Iron's Spells Mana Bar: 98x21 px)
+// HUD Geometry Constants (Unified 15px Compact RPG Frames: 98x15 px)
 var BAR_WIDTH = 98;
-var BAR_HEIGHT = 21;
-var SCALE_HP = 0.72;
-var SCALE_STAM = 0.68;
-var SCALE_FOOD = 0.70;
+var BAR_HEIGHT = 15;
 
 // HUD Color Palette (ARGB 32-bit signed integers fallback)
-var COLOR_BORDER = (0xFF1F2937 | 0);       // Dark Slate #1F2937
+var COLOR_BORDER = (0xFF1A1D22 | 0);       // Dark Matte Steel #1A1D22
 var COLOR_BG = (0xCC111827 | 0);           // Deep Graphite 80% opacity #111827
 var COLOR_TEXT = (0xFFFFFFFF | 0);         // Crisp White
+var COLOR_TEXT_MANA = (0xFF55FFFF | 0);    // Aqua #55FFFF (ChatFormatting.AQUA)
 var COLOR_LAG = (0xFFFECACA | 0);          // Light Red Damage Lag-Trail
 var COLOR_HP_TOP = (0xFFEF4444 | 0);       // Red #EF4444
 var COLOR_HP_BOT = (0xFF991B1B | 0);       // Crimson #991B1B
@@ -87,6 +97,8 @@ var COLOR_FOOD_TOP = (0xFFFB923C | 0);     // Orange #FB923C
 var COLOR_FOOD_BOT = (0xFFC2410C | 0);     // Dark Orange #C2410C
 var COLOR_SAT_TOP = (0xAAFACC15 | 0);      // Golden Saturation Overlay
 var COLOR_SAT_BOT = (0xAAEAB308 | 0);
+var COLOR_MANA_TOP = (0xFF38BDF8 | 0);     // Sky Cyan #38BDF8
+var COLOR_MANA_BOT = (0xFF0284C7 | 0);     // Deep Cyan #0284C7
 
 // Texture loader for elyrium:textures/gui/hud/hud_bars.png
 var J_ResourceLocation = null;
@@ -276,14 +288,13 @@ function renderMasterRpgHud(guiGraphics) {
         let screenHeight = window ? window.getGuiScaledHeight() : (guiGraphics.guiHeight ? guiGraphics.guiHeight() : 300);
 
         let midX = Math.floor(screenWidth / 2);
-        // Symmetrical 2x2 layout matching Iron's Spells Mana Bar (width 98, height 21)
+        // Symmetrical 2x2 layout matching 98x15 compact frames:
         let leftX = midX - 99;           // Left wing: midX - 99 to midX - 1
-        let rightX = midX + 1;          // Right wing: midX + 1 to midX + 99 (exact match to Mana Bar)
-        let bottomY = screenHeight - 51; // Bottom row: Health (left) & Mana (right)
-        let topY = bottomY - 15;         // Top row: Stamina (left) & Hunger (right)
+        let rightX = midX + 1;          // Right wing: midX + 1 to midX + 99
+        let bottomY = screenHeight - 44; // Bottom row: Health (left) & Mana (right)
+        let topY = bottomY - 13;         // Top row: Stamina (left) & Hunger (right)
 
         let font = mc.font;
-        let pose = guiGraphics.pose ? guiGraphics.pose() : null;
         let hudTex = getHudBarsTex();
 
         // ----------------------------------------------------------------------
@@ -314,50 +325,47 @@ function renderMasterRpgHud(guiGraphics) {
 
         let hpBlitSuccess = false;
         if (hudTex) {
-            // 1. Outer Metallic Frame (v=0)
+            // 1. Outer Dark Steel Frame (v=0)
             hpBlitSuccess = safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 0, BAR_WIDTH, BAR_HEIGHT);
 
-            // 2. Damage Lag-Trail (v=126)
+            // 2. Damage Lag-Trail (v=90)
             if (lagFillWidth > hpFillWidth) {
-                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 126, lagFillWidth, BAR_HEIGHT);
+                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 90, lagFillWidth, BAR_HEIGHT);
             }
 
-            // 3. Ruby Red Health Crystal (v=42)
+            // 3. Ruby Red Health Crystal (v=30)
             if (hpFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 42, hpFillWidth, BAR_HEIGHT);
+                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 30, hpFillWidth, BAR_HEIGHT);
             }
 
-            // 4. Golden Absorption Shield Overlay (v=105)
+            // 4. Radiant Sun Gold Absorption Shield Overlay (v=75)
             if (absFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 105, absFillWidth, BAR_HEIGHT);
+                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 75, absFillWidth, BAR_HEIGHT);
             }
         }
 
         // Fallback to safeFill if texture is unavailable
         if (!hpBlitSuccess) {
-            safeFill(guiGraphics, leftX, bottomY + 8, leftX + BAR_WIDTH, bottomY + 15, COLOR_BORDER);
-            safeFill(guiGraphics, leftX + 1, bottomY + 9, leftX + BAR_WIDTH - 1, bottomY + 14, COLOR_BG);
+            safeFill(guiGraphics, leftX, bottomY + 5, leftX + BAR_WIDTH, bottomY + 12, COLOR_BORDER);
+            safeFill(guiGraphics, leftX + 1, bottomY + 6, leftX + BAR_WIDTH - 1, bottomY + 11, COLOR_BG);
             if (lagFillWidth > hpFillWidth) {
-                safeFill(guiGraphics, leftX + 1, bottomY + 9, leftX + 1 + lagFillWidth, bottomY + 14, COLOR_LAG);
+                safeFill(guiGraphics, leftX + 1, bottomY + 6, leftX + 1 + lagFillWidth, bottomY + 11, COLOR_LAG);
             }
             if (hpFillWidth > 0) {
-                safeFillGradient(guiGraphics, leftX + 1, bottomY + 9, leftX + 1 + hpFillWidth, bottomY + 14, COLOR_HP_TOP, COLOR_HP_BOT);
+                safeFillGradient(guiGraphics, leftX + 1, bottomY + 6, leftX + 1 + hpFillWidth, bottomY + 11, COLOR_HP_TOP, COLOR_HP_BOT);
             }
             if (absFillWidth > 0) {
-                safeFillGradient(guiGraphics, leftX + 1, bottomY + 9, leftX + 1 + absFillWidth, bottomY + 14, COLOR_ABS_TOP, COLOR_ABS_BOT);
+                safeFillGradient(guiGraphics, leftX + 1, bottomY + 6, leftX + 1 + absFillWidth, bottomY + 11, COLOR_ABS_TOP, COLOR_ABS_BOT);
             }
         }
 
-        // 5. Text: ♥ [cur] / [max]
-        let hpText = `♥ ${Math.ceil(curHealth)}/${Math.ceil(maxHealth)}` + (absorption > 0.1 ? ` (+${Math.ceil(absorption)})` : '');
-        if (font && pose) {
+        // 5. Clean Font 1.0: [cur] / [max] (and (+[abs]) if absorption > 0.1)
+        let hpText = `${Math.ceil(curHealth)}/${Math.ceil(maxHealth)}` + (absorption > 0.1 ? ` (+${Math.ceil(absorption)})` : '');
+        if (font) {
             let tw = font.width(hpText);
-            pose.pushPose();
-            pose.scale(SCALE_HP, SCALE_HP, 1.0);
-            let tx = (leftX + (BAR_WIDTH - tw * SCALE_HP) / 2) / SCALE_HP;
-            let ty = (bottomY + 11 - (9 * SCALE_HP) / 2) / SCALE_HP;
+            let tx = leftX + Math.round((BAR_WIDTH - tw) / 2);
+            let ty = bottomY + 3;
             safeDrawString(guiGraphics, font, hpText, tx, ty, COLOR_TEXT);
-            pose.popPose();
         }
 
         // ----------------------------------------------------------------------
@@ -375,35 +383,32 @@ function renderMasterRpgHud(guiGraphics) {
         let stamBlitSuccess = false;
 
         if (hudTex) {
-            // 1. Frame: Cyan glow on block (v=147) or standard metal frame (v=0)
-            let frameV = isBlocking ? 147 : 0;
+            // 1. Frame: Neon cyan glow on block (v=105) or Dark Steel frame (v=0)
+            let frameV = isBlocking ? 105 : 0;
             stamBlitSuccess = safeBlit(guiGraphics, hudTex, leftX, stamY, 0, frameV, BAR_WIDTH, BAR_HEIGHT);
 
-            // 2. Amber Gold Stamina Crystal (v=63)
+            // 2. Amber Gold Stamina Crystal (v=45)
             if (stamFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, leftX, stamY, 0, 63, stamFillWidth, BAR_HEIGHT);
+                safeBlit(guiGraphics, hudTex, leftX, stamY, 0, 45, stamFillWidth, BAR_HEIGHT);
             }
         }
 
         if (!stamBlitSuccess) {
             let currentStamBorder = isBlocking ? COLOR_STAM_BLOCK : COLOR_BORDER;
-            safeFill(guiGraphics, leftX, stamY + 8, leftX + BAR_WIDTH, stamY + 15, currentStamBorder);
-            safeFill(guiGraphics, leftX + 1, stamY + 9, leftX + BAR_WIDTH - 1, stamY + 14, COLOR_BG);
+            safeFill(guiGraphics, leftX, stamY + 5, leftX + BAR_WIDTH, stamY + 12, currentStamBorder);
+            safeFill(guiGraphics, leftX + 1, stamY + 6, leftX + BAR_WIDTH - 1, stamY + 11, COLOR_BG);
             if (stamFillWidth > 0) {
-                safeFillGradient(guiGraphics, leftX + 1, stamY + 9, leftX + 1 + stamFillWidth, stamY + 14, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
+                safeFillGradient(guiGraphics, leftX + 1, stamY + 6, leftX + 1 + stamFillWidth, stamY + 11, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
             }
         }
 
-        // 3. Text: ⚡ [stam] / [max]
-        let stamText = `⚡ ${Math.round(clientStamina)}/${Math.round(maxStam)}`;
-        if (font && pose) {
+        // 3. Clean Font 1.0: [stam] / [max]
+        let stamText = `${Math.round(clientStamina)}/${Math.round(maxStam)}`;
+        if (font) {
             let tw = font.width(stamText);
-            pose.pushPose();
-            pose.scale(SCALE_STAM, SCALE_STAM, 1.0);
-            let tx = (leftX + (BAR_WIDTH - tw * SCALE_STAM) / 2) / SCALE_STAM;
-            let ty = (stamY + 11 - (9 * SCALE_STAM) / 2) / SCALE_STAM;
+            let tx = leftX + Math.round((BAR_WIDTH - tw) / 2);
+            let ty = stamY + 3;
             safeDrawString(guiGraphics, font, stamText, tx, ty, COLOR_TEXT);
-            pose.popPose();
         }
 
         // ----------------------------------------------------------------------
@@ -422,43 +427,93 @@ function renderMasterRpgHud(guiGraphics) {
         let foodBlitSuccess = false;
 
         if (hudTex) {
-            // 1. Base Metallic Frame (v=0)
+            // 1. Dark Steel Frame (v=0)
             foodBlitSuccess = safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 0, BAR_WIDTH, BAR_HEIGHT);
 
-            // 2. Caramel Orange Food Crystal (v=84)
+            // 2. Caramel Orange Food Crystal (v=60)
             if (foodFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 84, foodFillWidth, BAR_HEIGHT);
+                safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 60, foodFillWidth, BAR_HEIGHT);
             }
 
-            // 3. Glowing Golden Saturation Overlay (v=105)
+            // 3. Radiant Sun Gold Saturation Overlay (v=75)
             if (satFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 105, satFillWidth, BAR_HEIGHT);
+                safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 75, satFillWidth, BAR_HEIGHT);
             }
         }
 
         if (!foodBlitSuccess) {
-            safeFill(guiGraphics, rightX, foodY + 8, rightX + BAR_WIDTH, foodY + 15, COLOR_BORDER);
-            safeFill(guiGraphics, rightX + 1, foodY + 9, rightX + BAR_WIDTH - 1, foodY + 14, COLOR_BG);
+            safeFill(guiGraphics, rightX, foodY + 5, rightX + BAR_WIDTH, foodY + 12, COLOR_BORDER);
+            safeFill(guiGraphics, rightX + 1, foodY + 6, rightX + BAR_WIDTH - 1, foodY + 11, COLOR_BG);
             if (foodFillWidth > 0) {
-                safeFillGradient(guiGraphics, rightX + 1, foodY + 9, rightX + 1 + foodFillWidth, foodY + 14, COLOR_FOOD_TOP, COLOR_FOOD_BOT);
+                safeFillGradient(guiGraphics, rightX + 1, foodY + 6, rightX + 1 + foodFillWidth, foodY + 11, COLOR_FOOD_TOP, COLOR_FOOD_BOT);
             }
             if (satFillWidth > 0) {
-                safeFillGradient(guiGraphics, rightX + 1, foodY + 9, rightX + 1 + satFillWidth, foodY + 14, COLOR_SAT_TOP, COLOR_SAT_BOT);
+                safeFillGradient(guiGraphics, rightX + 1, foodY + 6, rightX + 1 + satFillWidth, foodY + 11, COLOR_SAT_TOP, COLOR_SAT_BOT);
             }
         }
 
-        // 4. Text: 🍗 [food]/20 (+[sat])
+        // 4. Clean Font 1.0: [food]/20 (+[sat])
         let satFormatted = (saturation > 0.05) ? saturation.toFixed(1) : '0';
-        let foodText = `🍗 ${foodLevel}/20` + (saturation > 0.05 ? ` (+${satFormatted})` : '');
+        let foodText = `${foodLevel}/20` + (saturation > 0.05 ? ` (+${satFormatted})` : '');
 
-        if (font && pose) {
+        if (font) {
             let tw = font.width(foodText);
-            pose.pushPose();
-            pose.scale(SCALE_FOOD, SCALE_FOOD, 1.0);
-            let tx = (rightX + (BAR_WIDTH - tw * SCALE_FOOD) / 2) / SCALE_FOOD;
-            let ty = (foodY + 11 - (9 * SCALE_FOOD) / 2) / SCALE_FOOD;
+            let tx = rightX + Math.round((BAR_WIDTH - tw) / 2);
+            let ty = foodY + 3;
             safeDrawString(guiGraphics, font, foodText, tx, ty, COLOR_TEXT);
-            pose.popPose();
+        }
+
+        // ----------------------------------------------------------------------
+        // D. MANA BAR (Right Side, Bottom Row: rightX, bottomY)
+        // ----------------------------------------------------------------------
+        let curMana = 100;
+        let maxMana = 100;
+        if (player.getAttributeValue) {
+            try {
+                let attr = player.getAttributeValue('irons_spellbooks:max_mana');
+                if (typeof attr === 'number' && attr > 0) maxMana = attr;
+            } catch (eAttr) {}
+        }
+        if (J_ClientMagicData) {
+            try {
+                let m = J_ClientMagicData.getPlayerMana();
+                if (typeof m === 'number' && !isNaN(m)) curMana = m;
+            } catch (eM) {}
+        } else {
+            curMana = maxMana;
+        }
+
+        let manaProgress = Math.max(0.0, Math.min(1.0, curMana / Math.max(1, maxMana)));
+        let manaFillWidth = Math.round(BAR_WIDTH * manaProgress);
+
+        let manaY = bottomY;
+        let manaBlitSuccess = false;
+
+        if (hudTex) {
+            // 1. Dark Steel Frame (v=0)
+            manaBlitSuccess = safeBlit(guiGraphics, hudTex, rightX, manaY, 0, 0, BAR_WIDTH, BAR_HEIGHT);
+
+            // 2. Cyan Mana Crystal (v=15)
+            if (manaFillWidth > 0) {
+                safeBlit(guiGraphics, hudTex, rightX, manaY, 0, 15, manaFillWidth, BAR_HEIGHT);
+            }
+        }
+
+        if (!manaBlitSuccess) {
+            safeFill(guiGraphics, rightX, manaY + 5, rightX + BAR_WIDTH, manaY + 12, COLOR_BORDER);
+            safeFill(guiGraphics, rightX + 1, manaY + 6, rightX + BAR_WIDTH - 1, manaY + 11, COLOR_BG);
+            if (manaFillWidth > 0) {
+                safeFillGradient(guiGraphics, rightX + 1, manaY + 6, rightX + 1 + manaFillWidth, manaY + 11, COLOR_MANA_TOP, COLOR_MANA_BOT);
+            }
+        }
+
+        // 3. Clean Font 1.0: [curMana]/[maxMana] in ChatFormatting.AQUA
+        let manaText = `${Math.round(curMana)}/${Math.round(maxMana)}`;
+        if (font) {
+            let tw = font.width(manaText);
+            let tx = rightX + Math.round((BAR_WIDTH - tw) / 2);
+            let ty = manaY + 3;
+            safeDrawString(guiGraphics, font, manaText, tx, ty, COLOR_TEXT_MANA);
         }
 
     } catch (eHud) {
@@ -469,7 +524,7 @@ function renderMasterRpgHud(guiGraphics) {
 }
 
 // ------------------------------------------------------------------------------
-// 4. REGISTRATION: Layer Suppression & Master HUD Render
+// 4. REGISTRATION: Layer Suppression, Interception & Master HUD Render
 // ------------------------------------------------------------------------------
 function handleLayerPre(event) {
     if (!event) return;
@@ -491,15 +546,43 @@ function handleLayerPre(event) {
             event.setCanceled(true);
             return;
         }
+        // Intercept SELECTED_ITEM_NAME to translate upwards (+Y is downwards, so -20 moves it up)
+        if (name.equals(J_VanillaGuiLayers.SELECTED_ITEM_NAME)) {
+            let gg = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
+            let pose = gg && gg.pose ? gg.pose() : null;
+            if (pose) {
+                pose.pushPose();
+                pose.translate(0, -20, 0);
+            }
+            return;
+        }
     } catch (eLayer) {
         try { console.error('[Elyrium Layer Error]: ' + eLayer); } catch (eL) {}
     }
 }
 
+function handleLayerPost(event) {
+    if (!event) return;
+    try {
+        let name = event.getName ? event.getName() : null;
+        if (!name || !J_VanillaGuiLayers) return;
+
+        // Restore pose stack for SELECTED_ITEM_NAME
+        if (name.equals(J_VanillaGuiLayers.SELECTED_ITEM_NAME)) {
+            let gg = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
+            let pose = gg && gg.pose ? gg.pose() : null;
+            if (pose) {
+                pose.popPose();
+            }
+            return;
+        }
+    } catch (eLayerPost) {}
+}
+
 try {
     initStaminaHudApi();
 
-    // 1. Layer Pre Listener (Suppress Hearts and Drumsticks + render custom HUD)
+    // 1. Layer Pre Listener (Suppress Hearts and Drumsticks + render custom HUD + translate SELECTED_ITEM_NAME)
     if (J_RenderGuiLayerEventPre && !isLayerListenerRegistered) {
         if (typeof NativeEvents !== 'undefined') {
             NativeEvents.onEvent(J_RenderGuiLayerEventPre, event => {
@@ -515,7 +598,23 @@ try {
         }
     }
 
-    // 2. Render Gui Post Listener (Fallback Master RPG HUD)
+    // 2. Layer Post Listener (Pop pose stack for SELECTED_ITEM_NAME)
+    if (J_RenderGuiLayerEventPost && !isLayerPostListenerRegistered) {
+        if (typeof NativeEvents !== 'undefined') {
+            NativeEvents.onEvent(J_RenderGuiLayerEventPost, event => {
+                handleLayerPost(event);
+            });
+            isLayerPostListenerRegistered = true;
+        } else if (J_NeoForge && J_Consumer) {
+            let layerPostListener = new J_Consumer({
+                accept: function(ev) { handleLayerPost(ev); }
+            });
+            J_NeoForge.EVENT_BUS.addListener(layerPostListener);
+            isLayerPostListenerRegistered = true;
+        }
+    }
+
+    // 3. Render Gui Post Listener (Fallback Master RPG HUD)
     if (J_RenderGuiEventPost && !isRenderListenerRegistered) {
         if (typeof NativeEvents !== 'undefined') {
             NativeEvents.onEvent(J_RenderGuiEventPost, event => {
