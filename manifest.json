@@ -2,7 +2,7 @@
   "version": "0.3.0",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-01T14:29:09.508630+00:00",
+  "generated_at": "2026-10-01T14:40:23.441832+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -9177,8 +9177,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/elyrium_forge_api.js",
-      "sha256": "32f1618dcaa9f711629ca58c40bd79d2e601b75c00c730f33f9503b44ab32400",
-      "size": 37193
+      "sha256": "58cf341c69523b79ce21aea4b0b8ba6bdda40eeafee9b8ae51b76464283fa890",
+      "size": 38301
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_engine.js",
@@ -9197,8 +9197,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/forge_workshop_gui.js",
-      "sha256": "d60131ae57ab2e526b13153864c26bcf98a59ea3838babac111bacb367d881e4",
-      "size": 52208
+      "sha256": "f4f56475b02174adb55804836ad31d49703d4b45faba2e62b18b6bf9f007a5fa",
+      "size": 86515
     },
     {
       "path": "kubejs/server_scripts/03_combat/gear_score_system.js",

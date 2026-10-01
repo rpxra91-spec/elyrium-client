@@ -859,6 +859,38 @@ var ElyriumForgeAPI = {
         } catch (e1) {}
 
         return item;
+    },
+
+    setReinforceLevel: function(item, lvl) {
+        setReinforceTag(item, lvl);
+    },
+
+    updateBadge: function(item, lvl) {
+        updateBadge(item, lvl);
+    },
+
+    transferGearAttributes: function(sourceItem, targetItem) {
+        if (!sourceItem || !targetItem) return;
+        let rLvl = getReinforceTag(sourceItem);
+        if (rLvl > 0) {
+            setReinforceTag(targetItem, rLvl);
+            updateBadge(targetItem, rLvl);
+        }
+        try {
+            if (sourceItem.customData && targetItem.customData) {
+                let scd = sourceItem.customData;
+                let tcd = targetItem.customData;
+                let keys = ['skd_socket_count', 'skd_gem_1', 'skd_gem_2', 'skd_gem_3', 'skd_martial_art', 'skd_class_aspect'];
+                for (let k = 0; k < keys.length; k++) {
+                    let key = keys[k];
+                    if (scd.contains(key)) {
+                        try {
+                            tcd.put(key, scd.get(key));
+                        } catch (err) {}
+                    }
+                }
+            }
+        } catch (e) {}
     }
 };
 
