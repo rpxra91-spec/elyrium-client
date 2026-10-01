@@ -1,8 +1,8 @@
 {
-  "version": "0.2.1",
+  "version": "0.2.2",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-09-30T21:49:59.265109+00:00",
+  "generated_at": "2026-10-01T12:44:49.307212+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -2019,6 +2019,16 @@
       "path": "config/zeta-common.toml",
       "sha256": "d985bfc68899c91aa642736400472f6ab876dedaaef4b8c31f38b52d48de633d",
       "size": 1908
+    },
+    {
+      "path": "default_options.txt",
+      "sha256": "518bc708e845acd043961ddf15dd4ac26025d45073a028af674bd8c618240266",
+      "size": 16313
+    },
+    {
+      "path": "default_servers.dat",
+      "sha256": "7c26de317a9426e0c722f15035226b7d242bb21d2dbab315e74bfefeeb7ec481",
+      "size": 149
     },
     {
       "path": "defaultconfigs/biolith/general.json",
@@ -13201,11 +13211,6 @@
       "size": 138
     },
     {
-      "path": "resourcepacks/.index/pixlli.pw.toml",
-      "sha256": "75b991f9d1b4ac9f744c495843f581d1d568347dbe211ec559a039b5f6cc23a9",
-      "size": 2166
-    },
-    {
       "path": "resourcepacks/.index/primes-hd-textures.pw.toml",
       "sha256": "a76d352a75e168a29d830b1a9ba4723eefd82dfd3bff59f6d278f05e74d7072b",
       "size": 630
@@ -13994,6 +13999,11 @@
       "path": "resourcepacks/SKD_RPG_Weapons/pack.mcmeta",
       "sha256": "064dd31ab36d5632d1195a6aeed5cd6c67b2e8e940eb45e4993b48512fa1447e",
       "size": 177
+    },
+    {
+      "path": "resourcepacks/SKD_Russian_Pack.zip",
+      "sha256": "604cfe335df56b2647587bb65778e17ebf359fe25679fe4e5345902534dc5526",
+      "size": 212422
     },
     {
       "path": "resourcepacks/SKD_Russian_Pack/assets/ApothicEnchanting/lang/ru_ru.json",
@@ -15849,6 +15859,21 @@
       "path": "resourcepacks/elyrium_resources/pack.mcmeta",
       "sha256": "2ced02b1381b05e41ddf3b1da9dc2f48f1b932dfc1cf56c35de1964885f7f94a",
       "size": 94
+    },
+    {
+      "path": "shaderpacks/super-duper-vanilla.pw.toml",
+      "sha256": "1567011c61adeb223e3bc5dced9f4eecada2ef2bb57e123a8a861bc22b4fbc60",
+      "size": 892
+    },
+    {
+      "path": "shaderpacks/superDuperVanilla.zip",
+      "sha256": "c1cd481ac7ec81b6cb82f162b235509568f6f1ab9e416ccfedaee15e79e1a795",
+      "size": 2851664
+    },
+    {
+      "path": "shaderpacks/superDuperVanilla.zip.txt",
+      "sha256": "f1ea70b72b50d946ee46cf7286e4b0f5c678e811a97a7b43e7531c4b1f9d6559",
+      "size": 182
     }
   ]
 }
