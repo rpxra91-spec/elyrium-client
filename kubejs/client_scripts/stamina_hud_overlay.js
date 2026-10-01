@@ -64,16 +64,14 @@ let lastDamageTime = 0;
 // Render de-duplication per frame
 let lastRenderedTick = -1;
 
-// HUD Geometry Constants (top-level declaration prevents Rhino function-scope redeclaration errors)
-var BAR_WIDTH = 81;
-var HP_BAR_HEIGHT = 7;
-var STAM_BAR_HEIGHT = 6;
-var FOOD_BAR_HEIGHT = 7;
+// HUD Geometry Constants (Fantasy Frame matching Iron's Spells Mana Bar: 98x21 px)
+var BAR_WIDTH = 98;
+var BAR_HEIGHT = 21;
 var SCALE_HP = 0.72;
-var SCALE_STAM = 0.65;
-var SCALE_FOOD = 0.72;
+var SCALE_STAM = 0.68;
+var SCALE_FOOD = 0.70;
 
-// HUD Color Palette (ARGB 32-bit signed integers)
+// HUD Color Palette (ARGB 32-bit signed integers fallback)
 var COLOR_BORDER = (0xFF1F2937 | 0);       // Dark Slate #1F2937
 var COLOR_BG = (0xCC111827 | 0);           // Deep Graphite 80% opacity #111827
 var COLOR_TEXT = (0xFFFFFFFF | 0);         // Crisp White
@@ -89,6 +87,32 @@ var COLOR_FOOD_TOP = (0xFFFB923C | 0);     // Orange #FB923C
 var COLOR_FOOD_BOT = (0xFFC2410C | 0);     // Dark Orange #C2410C
 var COLOR_SAT_TOP = (0xAAFACC15 | 0);      // Golden Saturation Overlay
 var COLOR_SAT_BOT = (0xAAEAB308 | 0);
+
+// Texture loader for elyrium:textures/gui/hud/hud_bars.png
+var J_ResourceLocation = null;
+var HUD_BARS_TEX = null;
+
+function getHudBarsTex() {
+    if (HUD_BARS_TEX) return HUD_BARS_TEX;
+    try {
+        if (!J_ResourceLocation) {
+            J_ResourceLocation = Java.loadClass('net.minecraft.resources.ResourceLocation');
+        }
+        if (J_ResourceLocation) {
+            if (typeof J_ResourceLocation.fromNamespaceAndPath === 'function') {
+                HUD_BARS_TEX = J_ResourceLocation.fromNamespaceAndPath('elyrium', 'textures/gui/hud/hud_bars.png');
+            } else if (typeof J_ResourceLocation.parse === 'function') {
+                HUD_BARS_TEX = J_ResourceLocation.parse('elyrium:textures/gui/hud/hud_bars.png');
+            }
+        }
+    } catch (eRL) {}
+    if (!HUD_BARS_TEX && typeof ResourceLocation !== 'undefined') {
+        try {
+            HUD_BARS_TEX = ResourceLocation.parse('elyrium:textures/gui/hud/hud_bars.png');
+        } catch (e2) {}
+    }
+    return HUD_BARS_TEX;
+}
 
 // API export for other client scripts
 var ElyriumClientStamina = {
@@ -204,8 +228,32 @@ function safeDrawString(guiGraphics, font, text, x, y, color) {
     } catch (e2) {}
 }
 
+function safeBlit(guiGraphics, tex, x, y, u, v, w, h) {
+    if (!guiGraphics || !tex || w <= 0 || h <= 0) return false;
+    let ix = x | 0;
+    let iy = y | 0;
+    let iu = u | 0;
+    let iv = v | 0;
+    let iw = w | 0;
+    let ih = h | 0;
+
+    // 1. Try 6-arg blit(ResourceLocation, x, y, u, v, w, h)
+    try {
+        guiGraphics.blit(tex, ix, iy, iu, iv, iw, ih);
+        return true;
+    } catch (e1) {}
+
+    // 2. Try 8-arg blit(ResourceLocation, x, y, float u, float v, int w, int h, int texW, int texH)
+    try {
+        guiGraphics.blit(tex, ix, iy, iu, iv, iw, ih, 256, 256);
+        return true;
+    } catch (e2) {}
+
+    return false;
+}
+
 // ------------------------------------------------------------------------------
-// 3. MASTER HUD RENDER ROUTINE: UNIFIED RPG BARS
+// 3. MASTER HUD RENDER ROUTINE: UNIFIED 2x2 FANTASY RPG BARS
 // ------------------------------------------------------------------------------
 function renderMasterRpgHud(guiGraphics) {
     if (!guiGraphics) return;
@@ -218,21 +266,28 @@ function renderMasterRpgHud(guiGraphics) {
         if (mc.player.isCreative() || mc.player.isSpectator()) return;
         if (mc.screen != null) return;
 
+        let nowTime = Date.now();
+        if (nowTime - lastRenderedTick < 4) return;
+        lastRenderedTick = nowTime;
+
         let player = mc.player;
         let window = mc.getWindow();
         let screenWidth = window ? window.getGuiScaledWidth() : (guiGraphics.guiWidth ? guiGraphics.guiWidth() : 400);
         let screenHeight = window ? window.getGuiScaledHeight() : (guiGraphics.guiHeight ? guiGraphics.guiHeight() : 300);
 
         let midX = Math.floor(screenWidth / 2);
-        let leftX = midX - 91;
-        let rightX = midX + 10;
-        let bottomY = screenHeight - 39;
+        // Symmetrical 2x2 layout matching Iron's Spells Mana Bar (width 98, height 21)
+        let leftX = midX - 99;           // Left wing: midX - 99 to midX - 1
+        let rightX = midX + 1;          // Right wing: midX + 1 to midX + 99 (exact match to Mana Bar)
+        let bottomY = screenHeight - 51; // Bottom row: Health (left) & Mana (right)
+        let topY = bottomY - 15;         // Top row: Stamina (left) & Hunger (right)
 
         let font = mc.font;
         let pose = guiGraphics.pose ? guiGraphics.pose() : null;
+        let hudTex = getHudBarsTex();
 
         // ----------------------------------------------------------------------
-        // A. HEALTH BAR (Left Side, Bottom Row: y = bottomY)
+        // A. HEALTH BAR (Left Side, Bottom Row: leftX, bottomY)
         // ----------------------------------------------------------------------
         let curHealth = player.getHealth ? player.getHealth() : (player.health || 20);
         let maxHealth = player.getMaxHealth ? player.getMaxHealth() : (player.maxHealth || 20);
@@ -252,112 +307,147 @@ function renderMasterRpgHud(guiGraphics) {
 
         let hpProgress = Math.max(0.0, Math.min(1.0, displayedHealth / Math.max(1, maxHealth)));
         let lagProgress = Math.max(0.0, Math.min(1.0, lagHealth / Math.max(1, maxHealth)));
-        let innerWidth = BAR_WIDTH - 2;
-        let hpFillWidth = Math.round(innerWidth * hpProgress);
-        let lagFillWidth = Math.round(innerWidth * lagProgress);
+        let hpFillWidth = Math.round(BAR_WIDTH * hpProgress);
+        let lagFillWidth = Math.round(BAR_WIDTH * lagProgress);
+        let absProgress = Math.max(0.0, Math.min(1.0, absorption / Math.max(1, maxHealth)));
+        let absFillWidth = Math.round(BAR_WIDTH * absProgress);
 
-        let hpY = bottomY;
+        let hpBlitSuccess = false;
+        if (hudTex) {
+            // 1. Outer Metallic Frame (v=0)
+            hpBlitSuccess = safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 0, BAR_WIDTH, BAR_HEIGHT);
 
-        // 1. Outer Border
-        safeFill(guiGraphics, leftX, hpY, leftX + BAR_WIDTH, hpY + HP_BAR_HEIGHT, COLOR_BORDER);
-        // 2. Background
-        safeFill(guiGraphics, leftX + 1, hpY + 1, leftX + BAR_WIDTH - 1, hpY + HP_BAR_HEIGHT - 1, COLOR_BG);
+            // 2. Damage Lag-Trail (v=126)
+            if (lagFillWidth > hpFillWidth) {
+                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 126, lagFillWidth, BAR_HEIGHT);
+            }
 
-        // 3. Damage Lag-Trail (Light Red)
-        if (lagFillWidth > hpFillWidth) {
-            safeFill(guiGraphics, leftX + 1 + hpFillWidth, hpY + 1, leftX + 1 + lagFillWidth, hpY + HP_BAR_HEIGHT - 1, COLOR_LAG);
+            // 3. Ruby Red Health Crystal (v=42)
+            if (hpFillWidth > 0) {
+                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 42, hpFillWidth, BAR_HEIGHT);
+            }
+
+            // 4. Golden Absorption Shield Overlay (v=105)
+            if (absFillWidth > 0) {
+                safeBlit(guiGraphics, hudTex, leftX, bottomY, 0, 105, absFillWidth, BAR_HEIGHT);
+            }
         }
 
-        // 4. Ruby Red Health Gradient
-        if (hpFillWidth > 0) {
-            safeFillGradient(guiGraphics, leftX + 1, hpY + 1, leftX + 1 + hpFillWidth, hpY + HP_BAR_HEIGHT - 1, COLOR_HP_TOP, COLOR_HP_BOT);
+        // Fallback to safeFill if texture is unavailable
+        if (!hpBlitSuccess) {
+            safeFill(guiGraphics, leftX, bottomY + 8, leftX + BAR_WIDTH, bottomY + 15, COLOR_BORDER);
+            safeFill(guiGraphics, leftX + 1, bottomY + 9, leftX + BAR_WIDTH - 1, bottomY + 14, COLOR_BG);
+            if (lagFillWidth > hpFillWidth) {
+                safeFill(guiGraphics, leftX + 1, bottomY + 9, leftX + 1 + lagFillWidth, bottomY + 14, COLOR_LAG);
+            }
+            if (hpFillWidth > 0) {
+                safeFillGradient(guiGraphics, leftX + 1, bottomY + 9, leftX + 1 + hpFillWidth, bottomY + 14, COLOR_HP_TOP, COLOR_HP_BOT);
+            }
+            if (absFillWidth > 0) {
+                safeFillGradient(guiGraphics, leftX + 1, bottomY + 9, leftX + 1 + absFillWidth, bottomY + 14, COLOR_ABS_TOP, COLOR_ABS_BOT);
+            }
         }
 
-        // 5. Golden Absorption Shield Overlay
-        if (absorption > 0.1) {
-            let absProgress = Math.max(0.0, Math.min(1.0, absorption / Math.max(1, maxHealth)));
-            let absFillWidth = Math.round(innerWidth * absProgress);
-            safeFillGradient(guiGraphics, leftX + 1, hpY + 1, leftX + 1 + absFillWidth, hpY + HP_BAR_HEIGHT - 1, COLOR_ABS_TOP, COLOR_ABS_BOT);
-        }
-
-        // 6. Text: ♥ [cur] / [max]
+        // 5. Text: ♥ [cur] / [max]
         let hpText = `♥ ${Math.ceil(curHealth)}/${Math.ceil(maxHealth)}` + (absorption > 0.1 ? ` (+${Math.ceil(absorption)})` : '');
         if (font && pose) {
             let tw = font.width(hpText);
             pose.pushPose();
             pose.scale(SCALE_HP, SCALE_HP, 1.0);
             let tx = (leftX + (BAR_WIDTH - tw * SCALE_HP) / 2) / SCALE_HP;
-            let ty = (hpY + (HP_BAR_HEIGHT - 7.5 * SCALE_HP) / 2) / SCALE_HP;
+            let ty = (bottomY + 11 - (9 * SCALE_HP) / 2) / SCALE_HP;
             safeDrawString(guiGraphics, font, hpText, tx, ty, COLOR_TEXT);
             pose.popPose();
         }
 
         // ----------------------------------------------------------------------
-        // B. PERMANENT STAMINA BAR (Left Side, Top Row: y = bottomY - 9)
+        // B. PERMANENT STAMINA BAR (Left Side, Top Row: leftX, topY)
         // ----------------------------------------------------------------------
-        let stamY = bottomY - 9;
+        let stamY = topY;
         displayedStamina += (clientStamina - displayedStamina) * 0.35;
         if (Math.abs(clientStamina - displayedStamina) < 0.1) displayedStamina = clientStamina;
 
         let maxStam = Math.max(1, clientMaxStamina);
         let stamProgress = Math.max(0.0, Math.min(1.0, displayedStamina / maxStam));
-        let stamFillWidth = Math.round(innerWidth * stamProgress);
+        let stamFillWidth = Math.round(BAR_WIDTH * stamProgress);
 
         let isBlocking = player.isBlocking ? player.isBlocking() : false;
-        let currentStamBorder = isBlocking ? COLOR_STAM_BLOCK : COLOR_BORDER; // Cyan glow on block
+        let stamBlitSuccess = false;
 
-        // 1. Outer Border
-        safeFill(guiGraphics, leftX, stamY, leftX + BAR_WIDTH, stamY + STAM_BAR_HEIGHT, currentStamBorder);
-        // 2. Background
-        safeFill(guiGraphics, leftX + 1, stamY + 1, leftX + BAR_WIDTH - 1, stamY + STAM_BAR_HEIGHT - 1, COLOR_BG);
+        if (hudTex) {
+            // 1. Frame: Cyan glow on block (v=147) or standard metal frame (v=0)
+            let frameV = isBlocking ? 147 : 0;
+            stamBlitSuccess = safeBlit(guiGraphics, hudTex, leftX, stamY, 0, frameV, BAR_WIDTH, BAR_HEIGHT);
 
-        // 3. Stamina Gradient (Amber / Emerald Gold)
-        if (stamFillWidth > 0) {
-            safeFillGradient(guiGraphics, leftX + 1, stamY + 1, leftX + 1 + stamFillWidth, stamY + STAM_BAR_HEIGHT - 1, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
+            // 2. Amber Gold Stamina Crystal (v=63)
+            if (stamFillWidth > 0) {
+                safeBlit(guiGraphics, hudTex, leftX, stamY, 0, 63, stamFillWidth, BAR_HEIGHT);
+            }
         }
 
-        // 4. Text: ⚡ [stam] / [max]
+        if (!stamBlitSuccess) {
+            let currentStamBorder = isBlocking ? COLOR_STAM_BLOCK : COLOR_BORDER;
+            safeFill(guiGraphics, leftX, stamY + 8, leftX + BAR_WIDTH, stamY + 15, currentStamBorder);
+            safeFill(guiGraphics, leftX + 1, stamY + 9, leftX + BAR_WIDTH - 1, stamY + 14, COLOR_BG);
+            if (stamFillWidth > 0) {
+                safeFillGradient(guiGraphics, leftX + 1, stamY + 9, leftX + 1 + stamFillWidth, stamY + 14, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
+            }
+        }
+
+        // 3. Text: ⚡ [stam] / [max]
         let stamText = `⚡ ${Math.round(clientStamina)}/${Math.round(maxStam)}`;
         if (font && pose) {
             let tw = font.width(stamText);
             pose.pushPose();
             pose.scale(SCALE_STAM, SCALE_STAM, 1.0);
             let tx = (leftX + (BAR_WIDTH - tw * SCALE_STAM) / 2) / SCALE_STAM;
-            let ty = (stamY + (STAM_BAR_HEIGHT - 7.5 * SCALE_STAM) / 2) / SCALE_STAM;
+            let ty = (stamY + 11 - (9 * SCALE_STAM) / 2) / SCALE_STAM;
             safeDrawString(guiGraphics, font, stamText, tx, ty, COLOR_TEXT);
             pose.popPose();
         }
 
         // ----------------------------------------------------------------------
-        // C. HUNGER & SATURATION BAR (Right Side, Bottom Row: y = bottomY)
+        // C. HUNGER & SATURATION BAR (Right Side, Top Row: rightX, topY)
         // ----------------------------------------------------------------------
         let foodData = player.getFoodData ? player.getFoodData() : null;
         let foodLevel = foodData ? (foodData.getFoodLevel ? foodData.getFoodLevel() : 20) : 20;
         let saturation = foodData ? (foodData.getSaturationLevel ? foodData.getSaturationLevel() : 5) : 5;
 
         let foodProgress = Math.max(0.0, Math.min(1.0, foodLevel / 20.0));
-        let foodFillWidth = Math.round(innerWidth * foodProgress);
+        let foodFillWidth = Math.round(BAR_WIDTH * foodProgress);
+        let satProgress = Math.max(0.0, Math.min(1.0, saturation / 20.0));
+        let satFillWidth = Math.round(BAR_WIDTH * satProgress);
 
-        let foodY = bottomY;
+        let foodY = topY;
+        let foodBlitSuccess = false;
 
-        // 1. Outer Border
-        safeFill(guiGraphics, rightX, foodY, rightX + BAR_WIDTH, foodY + FOOD_BAR_HEIGHT, COLOR_BORDER);
-        // 2. Background
-        safeFill(guiGraphics, rightX + 1, foodY + 1, rightX + BAR_WIDTH - 1, foodY + FOOD_BAR_HEIGHT - 1, COLOR_BG);
+        if (hudTex) {
+            // 1. Base Metallic Frame (v=0)
+            foodBlitSuccess = safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 0, BAR_WIDTH, BAR_HEIGHT);
 
-        // 3. Caramel Orange Food Bar
-        if (foodFillWidth > 0) {
-            safeFillGradient(guiGraphics, rightX + 1, foodY + 1, rightX + 1 + foodFillWidth, foodY + FOOD_BAR_HEIGHT - 1, COLOR_FOOD_TOP, COLOR_FOOD_BOT);
+            // 2. Caramel Orange Food Crystal (v=84)
+            if (foodFillWidth > 0) {
+                safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 84, foodFillWidth, BAR_HEIGHT);
+            }
+
+            // 3. Glowing Golden Saturation Overlay (v=105)
+            if (satFillWidth > 0) {
+                safeBlit(guiGraphics, hudTex, rightX, foodY, 0, 105, satFillWidth, BAR_HEIGHT);
+            }
         }
 
-        // 4. Glowing Golden Saturation Overlay
-        if (saturation > 0.1) {
-            let satProgress = Math.max(0.0, Math.min(1.0, saturation / 20.0));
-            let satFillWidth = Math.round(innerWidth * satProgress);
-            safeFillGradient(guiGraphics, rightX + 1, foodY + 1, rightX + 1 + satFillWidth, foodY + FOOD_BAR_HEIGHT - 1, COLOR_SAT_TOP, COLOR_SAT_BOT);
+        if (!foodBlitSuccess) {
+            safeFill(guiGraphics, rightX, foodY + 8, rightX + BAR_WIDTH, foodY + 15, COLOR_BORDER);
+            safeFill(guiGraphics, rightX + 1, foodY + 9, rightX + BAR_WIDTH - 1, foodY + 14, COLOR_BG);
+            if (foodFillWidth > 0) {
+                safeFillGradient(guiGraphics, rightX + 1, foodY + 9, rightX + 1 + foodFillWidth, foodY + 14, COLOR_FOOD_TOP, COLOR_FOOD_BOT);
+            }
+            if (satFillWidth > 0) {
+                safeFillGradient(guiGraphics, rightX + 1, foodY + 9, rightX + 1 + satFillWidth, foodY + 14, COLOR_SAT_TOP, COLOR_SAT_BOT);
+            }
         }
 
-        // 5. Text: 🍗 [food]/20 (+[sat])
+        // 4. Text: 🍗 [food]/20 (+[sat])
         let satFormatted = (saturation > 0.05) ? saturation.toFixed(1) : '0';
         let foodText = `🍗 ${foodLevel}/20` + (saturation > 0.05 ? ` (+${satFormatted})` : '');
 
@@ -366,7 +456,7 @@ function renderMasterRpgHud(guiGraphics) {
             pose.pushPose();
             pose.scale(SCALE_FOOD, SCALE_FOOD, 1.0);
             let tx = (rightX + (BAR_WIDTH - tw * SCALE_FOOD) / 2) / SCALE_FOOD;
-            let ty = (foodY + (FOOD_BAR_HEIGHT - 7.5 * SCALE_FOOD) / 2) / SCALE_FOOD;
+            let ty = (foodY + 11 - (9 * SCALE_FOOD) / 2) / SCALE_FOOD;
             safeDrawString(guiGraphics, font, foodText, tx, ty, COLOR_TEXT);
             pose.popPose();
         }

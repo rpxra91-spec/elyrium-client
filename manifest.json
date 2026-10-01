@@ -1,8 +1,8 @@
 {
-  "version": "0.4.2",
+  "version": "0.4.3",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-01T20:52:23.960765+00:00",
+  "generated_at": "2026-10-01T21:31:54.727114+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -912,8 +912,8 @@
     },
     {
       "path": "config/irons_spellbooks-client.toml",
-      "sha256": "6beb668c942a607fd602e65ebec4281939eb0122c4fff02f01336bb47d257963",
-      "size": 3571
+      "sha256": "16a303dada2996ef2ab4a5da773d11015c6fb576201ecfda40d5da7777923566",
+      "size": 3567
     },
     {
       "path": "config/irons_spellbooks-server.toml",
@@ -1377,7 +1377,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "e49f341b03b470d69d8adde38ec7198776f0a1890e0385821ed84ce8740e7e24",
+      "sha256": "b675290f0648bff6d63a4ff6b37ca21075818c4725649b39f649f0a612566753",
       "size": 275
     },
     {
@@ -8297,8 +8297,8 @@
     },
     {
       "path": "kubejs/client_scripts/stamina_hud_overlay.js",
-      "sha256": "ca5ecd1e0342b8d795dde6afd4d4e7feda1d3b74b825b3a2f7c1a614bf526df0",
-      "size": 19120
+      "sha256": "9ca5eca6315c07e154f00351203bff666c9a0e97a12ab672911ca36a4c99b8de",
+      "size": 22725
     },
     {
       "path": "kubejs/client_scripts/tier4_tooltips.js",
@@ -14596,6 +14596,11 @@
       "size": 202236
     },
     {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/hud/hud_bars.png",
+      "sha256": "c7d9be89594aef444113c283e13c25ed2ccf8ecebff9ba605c547e6e436252b8",
+      "size": 3086
+    },
+    {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/skills/alchemist_class.png",
       "sha256": "b28e192bd4a146f7c8526e7deb7dc5a3d512afbcfdfa4af0088e14e2463db858",
       "size": 319
@@ -16127,7 +16132,7 @@
     },
     {
       "path": "shaderpacks/superDuperVanilla.zip.txt",
-      "sha256": "3e60500e64973604f73db1419cb163b97cac4a3cb353466853332f27129b0186",
+      "sha256": "f235dae91cac7516995fd1effaac9f1ba17cafbd48153a3c58a04e317b0d7407",
       "size": 231
     }
   ]
