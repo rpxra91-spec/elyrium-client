@@ -1,4 +1,0 @@
-[
-  {"version":2},
-  {"ingredient":{"id":"minecraft:iron_pickaxe","components":{"minecraft:enchantments":{"levels":{"minecraft:unbreaking":2}},"apotheosis:affixes":{"apotheosis:breaker/attribute/destructive":0.8937174},"apotheosis:rarity":"apotheosis:common","apotheosis:affix_name":{"translate":"misc.apotheosis.affix_name.two","with":[{"translate":"affix.apotheosis:breaker/attribute/destructive"},"",""],"italic":false,"color":"#808080"},"minecraft:damage":103}},"type":"item_stack","bookmarkType":"INGREDIENT"}
-]

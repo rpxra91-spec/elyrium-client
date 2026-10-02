@@ -1,4 +1,0 @@
-[
-  {"version":2},
-  {"ingredient":{"id":"minecraft:tipped_arrow","components":{"minecraft:potion_contents":{"potion":"minecraft:poison"}}},"type":"item_stack","bookmarkType":"INGREDIENT"}
-]

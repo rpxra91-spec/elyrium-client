@@ -1,7 +1,0 @@
-[
-  {"version":1},
-  {"ingredient":{"id":"minecraft:polished_andesite"},"type":"item_stack","bookmarkType":"INGREDIENT"},
-  {"ingredient":{"id":"minecraft:nether_bricks"},"type":"item_stack","bookmarkType":"INGREDIENT"},
-  {"ingredient":{"id":"minecraft:polished_andesite_stairs"},"type":"item_stack","bookmarkType":"INGREDIENT"},
-  {"ingredient":{"id":"minecraft:stone_pressure_plate"},"type":"item_stack","bookmarkType":"INGREDIENT"}
-]
