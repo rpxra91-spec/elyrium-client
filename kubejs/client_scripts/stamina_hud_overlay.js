@@ -1,20 +1,20 @@
 // ==============================================================================
 // ⚔️ ELYRIUM RPG: UNIFIED CLASSIC RPG HUD (HEALTH, STAMINA, HUNGER, MANA)
-// Minecraft 1.21.1 NeoForge | KubeJS Client Script (v2.3)
+// Minecraft 1.21.1 NeoForge | KubeJS Client Script (v2.5)
 // ==============================================================================
 // 1. Suppresses vanilla hearts and chicken drumsticks via RenderGuiLayerEvent$Pre:
 //    - VanillaGuiLayers.PLAYER_HEALTH
 //    - VanillaGuiLayers.FOOD_LEVEL
-// 2. Renders clean, modern, symmetrical 2x2 RPG status bars:
-//    - LEFT WING:
-//      * Stamina Bar (topY: Amber Gold crystal v=45, Shield Block Aura v=105)
-//      * Health Bar (bottomY: Ruby Red crystal v=30, Lag-Trail v=90, Absorption v=75)
-//    - RIGHT WING:
-//      * Hunger & Saturation Bar (topY: Caramel Orange v=60, Radiant Sun Gold v=75)
-//      * Native Mana Bar (bottomY: Cyan crystal v=15, ClientMagicData.getPlayerMana())
-// 3. Compact 15px bar height, dark matte steel / gunmetal frames (v=0).
-// 4. Clean unscaled 1.0 font rendering without emojis/icons, centered in channel.
-// 5. Intercepts VanillaGuiLayers.SELECTED_ITEM_NAME to translate up by 20px over bars.
+// 2. Renders clean, modern RPG status bars:
+//    - CENTERED ROW (screenHeight - 48):
+//      * Health Bar (left: Ruby Red crystal v=42, Lag-Trail v=126, Absorption v=105)
+//      * Native Mana Bar (right: Cyan crystal v=21, ClientMagicData.getPlayerMana())
+//    - RIGHT FLANK (midX + 98 adjacent to hotbar):
+//      * Stamina Bar (at Mana level: centerBarY = screenHeight - 48)
+//      * Hunger & Saturation Bar (below Stamina: centerBarY + 26 = screenHeight - 22)
+// 3. Compact 92x21 px authentic metallic frames (v=0), split current/max values.
+// 4. Clean font rendering without emojis/icons, centered in frame channels.
+// 5. Intercepts VanillaGuiLayers.SELECTED_ITEM_NAME to translate up by 28px over bars.
 // 6. Synchronous pause hiding: all 4 bars hide cleanly when mc.screen != null (ESC).
 // ==============================================================================
 
@@ -333,10 +333,10 @@ function renderMasterRpgHud(guiGraphics) {
         let manaX = midX + 2;            // midX + 2 to midX + 94
         let centerBarY = screenHeight - 48; // Leaves comfortable gap above hotbar
 
-        // Right flank: Stamina (top) & Hunger (bottom)
+        // Right flank: Stamina (level with Mana) & Hunger (below Stamina)
         let rightFlankX = midX + 98;     // Sits right adjacent to hotbar
-        let stamY = centerBarY - 26;     // Top bar on right flank
-        let foodY = centerBarY;          // Bottom bar on right flank
+        let stamY = centerBarY;          // On the same vertical level as Mana/Health
+        let foodY = centerBarY + 26;     // Lowered below Stamina
 
         let font = mc.font;
         let hudTex = getHudBarsTex();
@@ -449,7 +449,7 @@ function renderMasterRpgHud(guiGraphics) {
         drawBarSplitValues(guiGraphics, font, manaX, centerBarY, Math.round(curMana), Math.round(maxMana), COLOR_TEXT_MANA);
 
         // ======================================================================
-        // 3. STAMINA BAR (Right Flank, Upper: rightFlankX, stamY)
+        // 3. STAMINA BAR (Right Flank, Level with Mana: rightFlankX, stamY)
         // ======================================================================
         displayedStamina += (clientStamina - displayedStamina) * 0.35;
         if (Math.abs(clientStamina - displayedStamina) < 0.1) displayedStamina = clientStamina;
@@ -482,7 +482,7 @@ function renderMasterRpgHud(guiGraphics) {
         drawBarSplitValues(guiGraphics, font, rightFlankX, stamY, Math.round(clientStamina), Math.round(maxStam), COLOR_AMBER_TOP);
 
         // ======================================================================
-        // 4. HUNGER & SATURATION BAR (Right Flank, Lower: rightFlankX, foodY)
+        // 4. HUNGER & SATURATION BAR (Right Flank, Below Stamina: rightFlankX, foodY)
         // ======================================================================
         let foodData = player.getFoodData ? player.getFoodData() : null;
         let foodLevel = foodData ? (foodData.getFoodLevel ? foodData.getFoodLevel() : 20) : 20;

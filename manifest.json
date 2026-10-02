@@ -1,8 +1,8 @@
 {
-  "version": "0.4.8",
+  "version": "0.4.9",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-02T13:55:57.253737+00:00",
+  "generated_at": "2026-10-02T15:50:50.508278+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -987,8 +987,8 @@
     },
     {
       "path": "config/jei/ingredient-list-mod-sort-order.ini",
-      "sha256": "be31531392c40eef3e245def6aaa2a0db7bf83cd52a4f219556d650975db67e6",
-      "size": 784
+      "sha256": "2f2d5dd3094e0311d2232a07f66073cbcad8ade9433d387ad141634811256b94",
+      "size": 780
     },
     {
       "path": "config/jei/ingredient-list-type-sort-order.ini",
@@ -1232,7 +1232,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "47b2183efc2b33db3aee3f749cc7a2731ae3819b41044e5405bf456ea26afdce",
+      "sha256": "e0857a1a0881bead3d2459d8f428eb6cd58434079c2bbc9286c1d2aca561fd7b",
       "size": 276
     },
     {
@@ -8152,8 +8152,8 @@
     },
     {
       "path": "kubejs/client_scripts/stamina_hud_overlay.js",
-      "sha256": "247cf4fa0e0f2ca57ed5483044a101ff3b8af8388db715f5b5d1c63bf330d571",
-      "size": 29717
+      "sha256": "b41cdb866a681cb8afdeb15d23912c0829626c14dd8e90238fba0866d219993f",
+      "size": 29800
     },
     {
       "path": "kubejs/client_scripts/tier4_tooltips.js",
