@@ -165,52 +165,50 @@ function getGearTier(item) {
         }
     } catch (e) {}
 
-    // 2. Tag-based overrides: skd:tier_X or c:tools/tier_X
-    for (let t = 11; t >= 1; t--) {
+    // 2. Elyrium Tier tag check
+    if (item.hasTag('elyrium:tier_8')) return 8;
+    if (item.hasTag('elyrium:tier_7')) return 7;
+    if (item.hasTag('elyrium:tier_6')) return 6;
+    if (item.hasTag('elyrium:tier_5')) return 5;
+    if (item.hasTag('elyrium:tier_4')) return 4;
+    if (item.hasTag('elyrium:tier_3')) return 3;
+    if (item.hasTag('elyrium:tier_2')) return 2;
+    if (item.hasTag('elyrium:tier_1_5') || item.hasTag('elyrium:tier_undergarden')) return 1.5;
+    if (item.hasTag('elyrium:tier_1')) return 1;
+
+    // Tag-based overrides: skd:tier_X or c:tools/tier_X
+    for (let t = 8; t >= 1; t--) {
         if (item.hasTag(`skd:tier_${t}`) || item.hasTag(`c:tools/tier_${t}`)) return t;
     }
 
-    // 3. Name/ID canonical 11-tier mapping
+    // 3. Name/ID canonical 8-tier (+1.5 Undergarden) mapping
     let id = String(item.id).toLowerCase();
 
-    // Tier 11: DivineRPG Mortum & Apex Cataclysm
-    if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('the_incinerator') || id.includes('aquatooth') || id.includes('halite')) return 11;
+    // Tier 8: DivineRPG Mortum & Apalachia & Skythern, Halite, Apex Cataclysm
+    if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('apalachia') || id.includes('skythern') || id.includes('divinerpg:apalachia') || id.includes('divinerpg:skythern') || id.includes('the_incinerator') || id.includes('aquatooth') || id.includes('halite')) return 8;
 
-    // Tier 10: DivineRPG Apalachia & Skythern
-    if (id.includes('apalachia') || id.includes('skythern') || id.includes('divinerpg:apalachia') || id.includes('divinerpg:skythern')) return 10;
+    // Tier 7: DivineRPG Eden & Wildwood
+    if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) return 7;
 
-    // Tier 9: DivineRPG Eden & Wildwood
-    if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) return 9;
+    // Tier 6: Deeper Darker (Otherside) / Warden
+    if (id.includes('sculk') || id.includes('echo') || id.includes('warden') || id.startsWith('deeperdarker:')) return 6;
 
-    // Tier 8: Deeper Darker (Otherside) / Warden
-    if (id.includes('sculk') || id.includes('echo') || id.includes('warden') || id.startsWith('deeperdarker:')) return 8;
+    // Tier 5: Eternal Starlight
+    if (id.includes('starlight') || id.includes('luminite') || id.startsWith('eternal_starlight:') || id.includes('thermal_springstone')) return 5;
 
-    // Tier 7: Eternal Starlight
-    if (id.includes('starlight') || id.includes('luminite') || id.startsWith('eternal_starlight:') || id.includes('thermal_springstone')) return 7;
+    // Tier 4: The End / Void / Ender Guardian / Dragon
+    if (id.includes('dragon') || id.includes('void') || id.includes('ender_guardian') || id.includes('ender_golem') || id.includes('elytra') || id.includes('ascended')) return 4;
 
-    // Tier 6: The End / Void / Ender Guardian / Dragon
-    if (id.includes('dragon') || id.includes('void') || id.includes('ender_guardian') || id.includes('ender_golem') || id.includes('elytra') || id.includes('ascended')) return 6;
+    // Tier 3: The Aether & Deep Aether
+    if (id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie') || id.includes('skyjade') || id.startsWith('aether:') || id.startsWith('deep_aether:')) return 3;
 
-    // Tier 5: The Aether & Deep Aether
-    if (id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie') || id.includes('skyjade') || id.startsWith('aether:') || id.startsWith('deep_aether:')) return 5;
+    // Tier 2: The Nether (Cinder Alloy, Netherite, Ignitium, Cataclysm)
+    if (id.includes('cinder') || id.includes('netherite') || id.startsWith('cataclysm:') || id.includes('ignitium') || id.includes('witherite') || id.includes('monstrosity') || id.includes('wither')) return 2;
 
-    // Tier 4: The Nether (Cinder Alloy, Netherite, Ignitium, Cataclysm)
-    if (id.includes('cinder') || id.includes('netherite') || id.startsWith('cataclysm:') || id.includes('ignitium') || id.includes('witherite') || id.includes('monstrosity') || id.includes('wither')) return 4;
+    // Tier 1.5: The Undergarden
+    if (id.includes('cloggrum') || id.includes('froststeel') || id.includes('forgotten') || id.includes('undergarden')) return 1.5;
 
-    // Tier 3: Diamond, Cobalt, Rune / Runes, Iron standard
-    if (id.includes('diamond') || id.includes('cobalt') || id.includes('rune') || id.includes('runic') || id.startsWith('runes:') || id.includes('amethyst') ||
-        (id.includes('iron') && !id.includes('early_iron') && !id.includes('crude_iron') && !id.includes('rusted_iron'))) {
-        return 3;
-    }
-
-    // Tier 2: Copper, Chain, Iron early, Gold, Bronze, Brass, Silver, Flint
-    if (id.includes('copper') || id.includes('chain') || id.includes('early_iron') || 
-        id.includes('crude_iron') || id.includes('rusted_iron') || id.includes('gold') || 
-        id.includes('golden') || id.includes('bronze') || id.includes('brass') || id.includes('silver') || id.includes('flint')) {
-        return 2;
-    }
-
-    // Tier 1: Starter Wood / Leather / Stone
+    // Tier 1: Overworld standard (Diamond, Cobalt, Rune, Iron, Bronze, Copper, Starter Wood/Leather/Stone)
     return 1;
 }
 
@@ -225,7 +223,7 @@ function isValidItem(id) {
 }
 
 const DIRECT_ASCENSIONS = {
-    4: {
+    2: {
         'minecraft:diamond_sword': 'minecraft:netherite_sword',
         'minecraft:diamond_axe': 'minecraft:netherite_axe',
         'minecraft:diamond_pickaxe': 'minecraft:netherite_pickaxe',
@@ -236,7 +234,7 @@ const DIRECT_ASCENSIONS = {
         'minecraft:diamond_leggings': 'minecraft:netherite_leggings',
         'minecraft:diamond_boots': 'minecraft:netherite_boots'
     },
-    5: {
+    3: {
         'minecraft:netherite_sword': 'aether:gravitite_sword',
         'minecraft:netherite_axe': 'aether:gravitite_axe',
         'minecraft:netherite_pickaxe': 'aether:gravitite_pickaxe',
@@ -247,29 +245,22 @@ const DIRECT_ASCENSIONS = {
         'minecraft:netherite_leggings': 'aether:gravitite_leggings',
         'minecraft:netherite_boots': 'aether:gravitite_boots'
     },
-    6: {
+    4: {
         'aether:gravitite_sword': 'cataclysm:void_forge'
     },
-    9: {
+    7: {
         'deeperdarker:warden_sword': 'divinerpg:eden_blade',
         'deeperdarker:warden_helmet': 'divinerpg:eden_helmet',
         'deeperdarker:warden_chestplate': 'divinerpg:eden_chestplate',
         'deeperdarker:warden_leggings': 'divinerpg:eden_leggings',
         'deeperdarker:warden_boots': 'divinerpg:eden_boots'
     },
-    10: {
-        'divinerpg:eden_blade': 'divinerpg:apalachia_blade',
-        'divinerpg:eden_helmet': 'divinerpg:apalachia_helmet',
-        'divinerpg:eden_chestplate': 'divinerpg:apalachia_chestplate',
-        'divinerpg:eden_leggings': 'divinerpg:apalachia_leggings',
-        'divinerpg:eden_boots': 'divinerpg:apalachia_boots'
-    },
-    11: {
-        'divinerpg:apalachia_blade': 'divinerpg:mortum_blade',
-        'divinerpg:apalachia_helmet': 'divinerpg:mortum_helmet',
-        'divinerpg:apalachia_chestplate': 'divinerpg:mortum_chestplate',
-        'divinerpg:apalachia_leggings': 'divinerpg:mortum_leggings',
-        'divinerpg:apalachia_boots': 'divinerpg:mortum_boots'
+    8: {
+        'divinerpg:eden_blade': 'divinerpg:mortum_blade',
+        'divinerpg:eden_helmet': 'divinerpg:mortum_helmet',
+        'divinerpg:eden_chestplate': 'divinerpg:mortum_chestplate',
+        'divinerpg:eden_leggings': 'divinerpg:mortum_leggings',
+        'divinerpg:eden_boots': 'divinerpg:mortum_boots'
     }
 };
 
@@ -282,7 +273,7 @@ function findAscensionTargetItem(gear, targetTier) {
         if (isValidItem(mapped)) return mapped;
     }
 
-    if (targetTier === 4 && id.includes('diamond_')) {
+    if (targetTier === 2 && id.includes('diamond_')) {
         let netheriteCandidate = id.replace('diamond_', 'netherite_');
         if (isValidItem(netheriteCandidate)) return netheriteCandidate;
     }
@@ -398,10 +389,14 @@ var ElyriumForgeAPI = {
             };
         }
 
-        // 2. Ascension Catalysts (T4 - T11)
+        // 2. Ascension Catalysts (T2 - T8 canonical, plus legacy fallback)
         if (rId.startsWith('kubejs:ascension_catalyst_t')) {
             let targetTier = parseInt(rId.replace('kubejs:ascension_catalyst_t', ''));
-            if (isNaN(targetTier) || targetTier < 4 || targetTier > 11) {
+            // Map legacy T9..T11 to T7..T8 if encountered
+            if (targetTier === 9) targetTier = 7;
+            if (targetTier === 10 || targetTier === 11) targetTier = 8;
+
+            if (isNaN(targetTier) || targetTier < 2 || targetTier > 8) {
                 return {
                     canExecute: false,
                     actionType: 'ASCENSION',
@@ -852,9 +847,10 @@ var ElyriumForgeAPI = {
 
         // Stamp tier
         try {
+            let t = getGearTier(item);
             if (item.customData && typeof item.customData.putInt === 'function') {
-                item.customData.putInt('skd_tier', 4);
-                item.customData.putBoolean('skd:tier_4', true);
+                item.customData.putInt('skd_tier', t);
+                item.customData.putBoolean('skd:tier_' + t, true);
             }
         } catch (e1) {}
 

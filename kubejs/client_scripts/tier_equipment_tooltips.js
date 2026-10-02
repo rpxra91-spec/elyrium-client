@@ -20,13 +20,13 @@ ItemEvents.modifyTooltips(event => {
     }
 
     // ==========================================================================
-    // 🔹 TIER 0: OVERWORLD SETS & STAFF
+    // 🔹 TIER 1: OVERWORLD SETS & STAFF (ЕДИНЫЙ ВЕРХНИЙ МИР)
     // ==========================================================================
 
     // 1. Mage: Rift Apprentice Robe
     ['helmet', 'chestplate', 'leggings', 'boots'].forEach(slot => {
         event.modify(`kubejs:rift_apprentice_robe_${slot}`, tooltip => {
-            tooltip.add(Text.of('§d✦ [Тир 0 • Мантия Ученика Разлома] ✦'));
+            tooltip.add(Text.of('§d✦ [Тир 1 • Мантия Ученика Разлома] ✦'));
             tooltip.add(Text.of('§7Соткана из рунной нити и кристаллов аметиста.'));
             tooltip.add(Text.of('§b• Магия: §f+15% Сила Заклинаний, +40 Мана, +15% Реген'));
             tooltip.add(Text.of('§8Вес: 1 балл (Быстрый перекат Fast Roll)'));
@@ -36,7 +36,7 @@ ItemEvents.modifyTooltips(event => {
     // 2. Light: Scout Leather
     ['helmet', 'chestplate', 'leggings', 'boots'].forEach(slot => {
         event.modify(`kubejs:scout_leather_${slot}`, tooltip => {
-            tooltip.add(Text.of('§e✦ [Тир 0 • Доспех Разведчика] ✦'));
+            tooltip.add(Text.of('§e✦ [Тир 1 • Доспех Разведчика] ✦'));
             tooltip.add(Text.of('§7Закаленная медь и дубленая кожа диких рубежей.'));
             tooltip.add(Text.of('§a• Следопыт: §f+10% Скорость бега, +10% Крит, +25% Урон со спины'));
             tooltip.add(Text.of('§8Вес: 3 балла (Быстрый перекат Fast Roll)'));
@@ -46,7 +46,7 @@ ItemEvents.modifyTooltips(event => {
     // 3. Medium DD: Iron Brigandine
     ['helmet', 'chestplate', 'leggings', 'boots'].forEach(slot => {
         event.modify(`kubejs:iron_brigandine_${slot}`, tooltip => {
-            tooltip.add(Text.of('§f✦ [Тир 0 • Бригантина Мили ДД] ✦'));
+            tooltip.add(Text.of('§f✦ [Тир 1 • Бригантина Мили ДД] ✦'));
             tooltip.add(Text.of('§7Кованые железные пластины на кожаной основе.'));
             tooltip.add(Text.of('§c• Брузер: §f+15% Физ. урон, +10% Скорость атаки, -15% Расход стамины'));
             tooltip.add(Text.of('§8Вес: 6 баллов (Средний перекат Medium Roll)'));
@@ -56,16 +56,16 @@ ItemEvents.modifyTooltips(event => {
     // 4. Heavy Tank: Steel Knight
     ['helmet', 'chestplate', 'leggings', 'boots'].forEach(slot => {
         event.modify(`kubejs:steel_knight_${slot}`, tooltip => {
-            tooltip.add(Text.of('§9✦ [Тир 0 • Латы Рыцаря Границы] ✦'));
+            tooltip.add(Text.of('§9✦ [Тир 1 • Латы Рыцаря Границы] ✦'));
             tooltip.add(Text.of('§7Закаленная дамасская сталь с алмазной гранью.'));
             tooltip.add(Text.of('§9• Танк: §fБроня 20, Твердость 4, Стойка Щита +100, 100% Гипер-броня'));
             tooltip.add(Text.of('§8Вес: 10 баллов (Тяжелый перекат Fat Roll)'));
         });
     });
 
-    // 5. Staff T0: Rift Apprentice Staff
+    // 5. Staff T1: Rift Apprentice Staff
     event.modify('kubejs:rift_apprentice_staff', tooltip => {
-        tooltip.add(Text.of('§d✦ [Тир 0 • Посох Ученика Разлома] ✦'));
+        tooltip.add(Text.of('§d✦ [Тир 1 • Посох Ученика Разлома] ✦'));
         tooltip.add(Text.of('§7Древко из зачарованной древесины с аметистовым фокусом.'));
         tooltip.add(Text.of('§b• Емкость: §f12 очков заклинаний (3 ячейки)'));
         tooltip.add(Text.of('§e• Врожденное заклинание: §fМагическая Стрела I'));
@@ -74,13 +74,13 @@ ItemEvents.modifyTooltips(event => {
 
 
     // ==========================================================================
-    // 🔥 TIER 1: THE NETHER SETS & STAFF
+    // 🔥 TIER 2: THE NETHER SETS & STAFF (ПРЕИСПОДНЯЯ)
     // ==========================================================================
 
     // 1. Mage: Cinder Pyro Robe
     ['helmet', 'chestplate', 'leggings', 'boots'].forEach(slot => {
         event.modify(`kubejs:cinder_pyro_robe_${slot}`, tooltip => {
-            tooltip.add(Text.of('§c✦ [Тир 1 • Пепельная Мантия Пироманта] ✦'));
+            tooltip.add(Text.of('§c✦ [Тир 2 • Пепельная Мантия Пироманта] ✦'));
             tooltip.add(Text.of('§7Кварц Незера и пылающая инфернальная шерсть.'));
             tooltip.add(Text.of('§c• Пиромантия: §f+30% Урон Огнем, +70 Мана, +15 Вместимость спеллов'));
             tooltip.add(Text.of('§8Вес: 2 балла (Быстрый перекат Fast Roll)'));
@@ -90,7 +90,7 @@ ItemEvents.modifyTooltips(event => {
     // 2. Light: Bastion Hunter
     ['helmet', 'chestplate', 'leggings', 'boots'].forEach(slot => {
         event.modify(`kubejs:bastion_hunter_${slot}`, tooltip => {
-            tooltip.add(Text.of('§6✦ [Тир 1 • Доспех Охотника Бастионов] ✦'));
+            tooltip.add(Text.of('§6✦ [Тир 2 • Доспех Охотника Бастионов] ✦'));
             tooltip.add(Text.of('§7Золото разрушенных бастионов и толстая шкура хоглина.'));
             tooltip.add(Text.of('§6• Следопыт Незера: §f+15% Скорость бега, +20% Крит, Пиглины нейтральны'));
             tooltip.add(Text.of('§8Вес: 3 балла (Быстрый перекат Fast Roll)'));
@@ -100,7 +100,7 @@ ItemEvents.modifyTooltips(event => {
     // 3. Medium DD: Cinder Brigandine
     ['helmet', 'chestplate', 'leggings', 'boots'].forEach(slot => {
         event.modify(`kubejs:cinder_brigandine_${slot}`, tooltip => {
-            tooltip.add(Text.of('§c✦ [Тир 1 • Пепельная Бригантина ДД] ✦'));
+            tooltip.add(Text.of('§c✦ [Тир 2 • Пепельная Бригантина ДД] ✦'));
             tooltip.add(Text.of('§7Закаленный сплав базальта и адского пламени Cinder Alloy.'));
             tooltip.add(Text.of('§c• Брузер ДД: §f+20% Физ. урон, Пробой брони 25%, -25% Расход стамины'));
             tooltip.add(Text.of('§8Вес: 6 баллов (Средний перекат Medium Roll)'));
@@ -110,16 +110,16 @@ ItemEvents.modifyTooltips(event => {
     // 4. Heavy Tank: Infernal Plate
     ['helmet', 'chestplate', 'leggings', 'boots'].forEach(slot => {
         event.modify(`kubejs:infernal_plate_${slot}`, tooltip => {
-            tooltip.add(Text.of('§4✦ [Тир 1 • Инфернальные Латы Танка] ✦'));
+            tooltip.add(Text.of('§4✦ [Тир 2 • Инфернальные Латы Танка] ✦'));
             tooltip.add(Text.of('§7Монолитные плиты древнего незерита.'));
             tooltip.add(Text.of('§4• Страж Танк: §fБроня 28, Твердость 8, Стойка Щита +200, 100% Огнеупорность'));
             tooltip.add(Text.of('§8Вес: 11 баллов (Тяжелый перекат Fat Roll)'));
         });
     });
 
-    // 5. Staff T1: Cinder Staff
+    // 5. Staff T2: Cinder Staff
     event.modify('kubejs:cinder_staff', tooltip => {
-        tooltip.add(Text.of('§c✦ [Тир 1 • Инфернальный Посох Пепла] ✦'));
+        tooltip.add(Text.of('§c✦ [Тир 2 • Инфернальный Посох Пепла] ✦'));
         tooltip.add(Text.of('§7Стержень из пепельного сплава с пламенным кристаллом.'));
         tooltip.add(Text.of('§b• Емкость: §f20 очков заклинаний (4 ячейки)'));
         tooltip.add(Text.of('§e• Врожденное заклинание: §fОгненная Стрела II'));

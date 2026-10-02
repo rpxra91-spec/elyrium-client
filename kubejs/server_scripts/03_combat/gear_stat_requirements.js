@@ -84,71 +84,55 @@ function getEffectiveStats(player) {
     return { str: str, vit: vit, def: def, agi: agi, crit: crit, mana: mana };
 }
 
-// Determine weapon tier (11 Tiers Canon)
+// Determine weapon tier (8 Tiers Canon + 1.5 Undergarden)
 function getWeaponProgressionTier(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return 1;
 
-    for (let t = 11; t >= 1; t--) {
+    for (let t = 8; t >= 1; t--) {
         if (item.hasTag(`skd:tier_${t}`) || item.hasTag(`c:tools/tier_${t}`)) return t;
     }
 
     let id = item.id.toLowerCase();
 
-    // Tier 11: DivineRPG Mortum (Финал)
-    if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('aquatooth') || id.includes('halite')) return 11;
+    // Tier 8: DivineRPG Mortum, Apalachia & Skythern (Финал)
+    if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('aquatooth') || id.includes('halite') ||
+        id.includes('apalachia') || id.includes('skythern') || id.includes('divinerpg:apalachia') || id.includes('divinerpg:skythern')) return 8;
 
-    // Tier 10: DivineRPG Apalachia & Skythern
-    if (id.includes('apalachia') || id.includes('skythern') || id.includes('divinerpg:apalachia') || id.includes('divinerpg:skythern')) return 10;
+    // Tier 7: DivineRPG Eden & Wildwood
+    if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) return 7;
 
-    // Tier 9: DivineRPG Eden & Wildwood
-    if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) return 9;
+    // Tier 6: Deeper Darker (Otherside) / Warden
+    if (id.includes('sculk') || id.includes('echo') || id.includes('warden') || id.startsWith('deeperdarker:')) return 6;
 
-    // Tier 8: Deeper Darker (Otherside) / Warden
-    if (id.includes('sculk') || id.includes('echo') || id.includes('warden') || id.startsWith('deeperdarker:')) return 8;
+    // Tier 5: Eternal Starlight
+    if (id.includes('starlight') || id.includes('luminite') || id.includes('luminarite') || id.startsWith('eternal_starlight:') || id.includes('thermal_springstone')) return 5;
 
-    // Tier 7: Eternal Starlight
-    if (id.includes('starlight') || id.includes('luminite') || id.startsWith('eternal_starlight:') || id.includes('thermal_springstone')) return 7;
+    // Tier 4: The End / Void / Ender Guardian / Dragon
+    if (id.includes('dragon') || id.includes('void') || id.includes('ender_guardian') || id.includes('ender_golem') || id.includes('elytra') || id.includes('enderite')) return 4;
 
-    // Tier 6: The End / Void / Ender Guardian / Dragon
-    if (id.includes('dragon') || id.includes('void') || id.includes('ender_guardian') || id.includes('ender_golem') || id.includes('elytra') || id.includes('ascended')) return 6;
+    // Tier 3: The Aether & Deep Aether
+    if (id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie') || id.includes('skyjade') || id.startsWith('aether:') || id.startsWith('deep_aether:')) return 3;
 
-    // Tier 5: The Aether & Deep Aether
-    if (id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie') || id.includes('skyjade') || id.startsWith('aether:') || id.startsWith('deep_aether:')) return 5;
+    // Tier 2: The Nether (Cinder Alloy, Netherite, Ignitium, Cataclysm)
+    if (id.includes('cinder') || id.includes('netherite') || id.startsWith('cataclysm:') || id.includes('ignitium') || id.includes('witherite') || id.includes('monstrosity') || id.includes('wither') || id.includes('ignis')) return 2;
 
-    // Tier 4: The Nether (Cinder Alloy, Netherite, Ignitium, Cataclysm)
-    if (id.includes('cinder') || id.includes('netherite') || id.startsWith('cataclysm:') || id.includes('ignitium') || id.includes('witherite') || id.includes('monstrosity') || id.includes('wither')) return 4;
+    // Tier 1.5: The Undergarden
+    if (id.includes('cloggrum') || id.includes('froststeel') || id.startsWith('undergarden:')) return 1.5;
 
-    // Tier 3: Overworld Citadel / Diamond / Cobalt / Steel
-    if (id.includes('diamond') || id.includes('cobalt') || id.includes('rune') || id.includes('runic') || id.startsWith('runes:') || id.includes('amethyst') ||
-        (id.includes('iron') && !id.includes('early_iron') && !id.includes('crude_iron') && !id.includes('rusted_iron'))) {
-        return 3;
-    }
-
-    // Tier 2: Overworld Sector II / Bronze / Early Iron / Silver
-    if (id.includes('copper') || id.includes('chain') || id.includes('early_iron') || 
-        id.includes('crude_iron') || id.includes('rusted_iron') || id.includes('gold') || 
-        id.includes('golden') || id.includes('bronze') || id.includes('brass') || id.includes('silver') || id.includes('flint')) {
-        return 2;
-    }
-
-    // Tier 1: Starter Wood / Leather / Bone / Starter
+    // Tier 1: Overworld
     return 1;
 }
 
-// 11-Tier Soft Entry Requirements Table [Primary Stat, Secondary Stat]
-// Calibrated so weapons and armor act as minimum thresholds (~30-40% budget),
-// leaving 60-70+ stat points free for player build customization (HP, Defense, Crit, Hybrids).
+// 8-Tier Soft Entry Requirements Table [Primary Stat, Secondary Stat]
 const TIER_STAT_REQS = {
-    2:  { weapon: [4, 2],   armor: [1, 1] },
-    3:  { weapon: [8, 4],   armor: [2, 2] },
-    4:  { weapon: [12, 6],  armor: [3, 2] },
-    5:  { weapon: [16, 8],  armor: [4, 3] },
-    6:  { weapon: [20, 10], armor: [5, 4] },
-    7:  { weapon: [23, 11], armor: [6, 4] },
-    8:  { weapon: [25, 12], armor: [7, 5] },
-    9:  { weapon: [27, 13], armor: [7, 6] },
-    10: { weapon: [29, 14], armor: [8, 6] },
-    11: { weapon: [30, 14], armor: [8, 7] }
+    1.5: { weapon: [4, 2],   armor: [1, 1] },
+    2:   { weapon: [8, 4],   armor: [2, 2] },
+    3:   { weapon: [13, 6],  armor: [3, 2] },
+    4:   { weapon: [18, 9],  armor: [4, 3] },
+    5:   { weapon: [22, 11], armor: [5, 4] },
+    6:   { weapon: [25, 12], armor: [6, 5] },
+    7:   { weapon: [28, 13], armor: [7, 6] },
+    8:   { weapon: [30, 15], armor: [8, 7] }
 };
 
 // Get Hybrid Stat Requirements for an Item (11 Tiers)

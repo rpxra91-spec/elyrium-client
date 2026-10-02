@@ -1,0 +1,12 @@
+{
+  "itemGroup.stackisb": "Example Mod Tab",
+  "block.stackisb.example_block": "Example Блок",
+  "item.stackisb.example_item": "Example Item",
+  "stackisb.configuration.title": "stackISB Configs",
+  "stackisb.configuration.section.stackisb.common.toml": "stackISB Configs",
+  "stackisb.configuration.section.stackisb.common.toml.title": "stackISB Configs",
+  "stackisb.configuration.items": "Item List",
+  "stackisb.configuration.logDirtBlock": "Бревно Dirt Блок",
+  "stackisb.configuration.magicNumberIntroduction": "Magic Number Text",
+  "stackisb.configuration.magicNumber": "Magic Number"
+}

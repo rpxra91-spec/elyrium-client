@@ -32,9 +32,9 @@ ItemEvents.dynamicTooltips('elyrium_gear_score', event => {
 
     if (!isWeapon && !isArmor && !isShield && !isCurio) return;
 
-    // 1. Determine Tier (1 to 11)
+    // 1. Determine Tier (1 to 8 + 1.5 Undergarden)
     let tier = 1;
-    for (let t = 11; t >= 1; t--) {
+    for (let t = 8; t >= 1; t--) {
         if (item.hasTag(`skd:tier_${t}`) || item.hasTag(`c:tools/tier_${t}`)) {
             tier = t;
             break;
@@ -42,20 +42,30 @@ ItemEvents.dynamicTooltips('elyrium_gear_score', event => {
     }
 
     if (tier === 1) {
-        if (id.includes('mortum') || id.includes('divinerpg:mortum')) tier = 11;
-        else if (id.includes('apalachia') || id.includes('skythern')) tier = 10;
-        else if (id.includes('eden') || id.includes('wildwood')) tier = 9;
-        else if (id.includes('sculk') || id.includes('echo') || id.startsWith('deeperdarker:')) tier = 8;
-        else if (id.includes('starlight') || id.startsWith('eternal_starlight:')) tier = 7;
-        else if (id.includes('dragon') || id.includes('ender_guardian') || id.includes('elytra')) tier = 6;
-        else if (id.includes('gravitite') || id.includes('zanite') || id.startsWith('aether:')) tier = 5;
-        else if (id.includes('cinder') || id.includes('netherite') || id.startsWith('cataclysm:')) tier = 4;
-        else if (id.includes('diamond') || id.includes('cobalt') || id.includes('rune')) tier = 3;
-        else if (id.includes('copper') || id.includes('chain') || id.includes('gold') || id.includes('bronze')) tier = 2;
+        if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('halite') || id.includes('apalachia') || id.includes('skythern')) tier = 8;
+        else if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) tier = 7;
+        else if (id.includes('sculk') || id.includes('echo') || id.startsWith('deeperdarker:') || id.includes('warden')) tier = 6;
+        else if (id.includes('starlight') || id.startsWith('eternal_starlight:') || id.includes('luminite') || id.includes('luminarite')) tier = 5;
+        else if (id.includes('dragon') || id.includes('ender_guardian') || id.includes('elytra') || id.includes('void_alloy') || id.includes('enderite')) tier = 4;
+        else if (id.includes('gravitite') || id.includes('zanite') || id.startsWith('aether:') || id.startsWith('deep_aether:') || id.includes('skyjade') || id.includes('valkyrie')) tier = 3;
+        else if (id.includes('cinder') || id.includes('netherite') || id.startsWith('cataclysm:') || id.includes('ignis') || id.includes('ignitium') || id.includes('monstrosity')) tier = 2;
+        else if (id.includes('cloggrum') || id.includes('froststeel') || id.startsWith('undergarden:')) tier = 1.5;
+        else tier = 1;
     }
 
     // 2. Base Gear Score by Tier & Category
-    let tierBase = [0, 35, 85, 190, 360, 520, 700, 920, 1180, 1480, 1850, 2300][tier] || 35;
+    let tierBaseTable = {
+        1: 50,
+        1.5: 90,
+        2: 150,
+        3: 350,
+        4: 650,
+        5: 1050,
+        6: 1550,
+        7: 2150,
+        8: 2850
+    };
+    let tierBase = tierBaseTable[tier] || 50;
     let baseScore = tierBase;
 
     if (isArmor) {
@@ -105,8 +115,19 @@ ItemEvents.dynamicTooltips('elyrium_gear_score', event => {
     } catch (e) {}
 
     let total = Math.round(baseScore + reinforceBonus + enchantBonus + affixBonus);
-    let tierColors = ['', '§7', '§a', '§b', '§6', '§e', '§d', '§3', '§1', '§2', '§5', '§4'];
+    let tierColors = {
+        1: '§7',
+        1.5: '§2',
+        2: '§c',
+        3: '§b',
+        4: '§d',
+        5: '§9',
+        6: '§3',
+        7: '§a',
+        8: '§6'
+    };
     let tierColor = tierColors[tier] || '§f';
+    let displayTier = (tier === 1.5) ? 'T1.5' : `T${tier}`;
 
-    event.lines.add(Text.of(`§6⚡ Gear Score: ${tierColor}+${total} §8[${tierColor}T${tier}§8]`));
+    event.lines.add(Text.of(`§6⚡ Gear Score: ${tierColor}+${total} §8[${tierColor}${displayTier}§8]`));
 });

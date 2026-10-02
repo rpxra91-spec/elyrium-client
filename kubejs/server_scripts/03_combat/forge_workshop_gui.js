@@ -94,38 +94,38 @@ const FORGE_CATALOG = [
         {
             id: 'kubejs:cinder_pyro_robe_helmet',
             name: '§cПепельный Капюшон Пироманта',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Инфернальный Капюшон: +20% Огненный Урон, +15 Маны',
             ingot: 'minecraft:quartz', ingotName: 'Кварц Незера', ingotCount: 5,
             extra: 'minecraft:blaze_powder', extraName: 'Огненная Пыль', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'kubejs:cinder_pyro_robe_chestplate',
             name: '§cПепельная Мантия Пироманта',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Инфернальная Мантия: +30% Огненный Урон, +35 Маны',
             ingot: 'minecraft:quartz', ingotName: 'Кварц Незера', ingotCount: 8,
             extra: 'minecraft:blaze_powder', extraName: 'Огненная Пыль', extraCount: 2,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'kubejs:cinder_pyro_robe_leggings',
             name: '§cПепельные Штаны Пироманта',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Инфернальные Штаны: +20% Огненный Урон, +20 Маны',
             ingot: 'minecraft:quartz', ingotName: 'Кварц Незера', ingotCount: 7,
             extra: 'minecraft:blaze_powder', extraName: 'Огненная Пыль', extraCount: 2,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'kubejs:cinder_pyro_robe_boots',
             name: '§cПепельные Сапоги Пироманта',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Инфернальные Сапоги: +15% Огненный Урон, Иммунитет к Лаве 15%',
             ingot: 'minecraft:quartz', ingotName: 'Кварц Незера', ingotCount: 4,
             extra: 'minecraft:blaze_powder', extraName: 'Огненная Пыль', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         }
     ],
 
@@ -172,38 +172,38 @@ const FORGE_CATALOG = [
         {
             id: 'kubejs:bastion_hunter_helmet',
             name: '§6Маска Охотника Бастионов',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Следопыт Незера: +10% Крит, Нейтральность Пиглинов',
             ingot: 'minecraft:gold_ingot', ingotName: 'Золотой Слиток', ingotCount: 5,
             extra: 'minecraft:leather', extraName: 'Кожа Хоглина', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'kubejs:bastion_hunter_chestplate',
             name: '§6Доспех Охотника Бастионов',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Следопыт Незера: +15% Скорость бега, +20% Крит',
             ingot: 'minecraft:gold_ingot', ingotName: 'Золотой Слиток', ingotCount: 8,
             extra: 'minecraft:leather', extraName: 'Кожа Хоглина', extraCount: 2,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'kubejs:bastion_hunter_leggings',
             name: '§6Штаны Охотника Бастионов',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Следопыт Незера: +10% Скорость, +40% Урон со спины',
             ingot: 'minecraft:gold_ingot', ingotName: 'Золотой Слиток', ingotCount: 7,
             extra: 'minecraft:leather', extraName: 'Кожа Хоглина', extraCount: 2,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'kubejs:bastion_hunter_boots',
             name: '§6Сапоги Охотника Бастионов',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Следопыт Незера: Fast Roll, Сопротивление Лаве 20%',
             ingot: 'minecraft:gold_ingot', ingotName: 'Золотой Слиток', ingotCount: 4,
             extra: 'minecraft:leather', extraName: 'Кожа Хоглина', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         }
     ],
 
@@ -250,38 +250,38 @@ const FORGE_CATALOG = [
         {
             id: 'kubejs:cinder_brigandine_helmet',
             name: '§cПепельный Шлем ДД',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Брузер ДД: +10% Физ. Урон, Пробой Брони 10%',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 5,
             extra: 'minecraft:blaze_powder', extraName: 'Огненная Эссенция', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'kubejs:cinder_brigandine_chestplate',
             name: '§cПепельная Бригантина ДД',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Брузер ДД: +20% Физ. Урон, -25% Расход стамины, Жажда Битвы',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 8,
             extra: 'minecraft:blaze_powder', extraName: 'Огненная Эссенция', extraCount: 2,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'kubejs:cinder_brigandine_leggings',
             name: '§cПепельные Поножи ДД',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Брузер ДД: Пробой брони 25%, Скорость комбо +15%',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 7,
             extra: 'minecraft:blaze_powder', extraName: 'Огненная Эссенция', extraCount: 2,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'kubejs:cinder_brigandine_boots',
             name: '§cПепельные Сапоги ДД',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Брузер ДД: Medium Roll, Сопротивление лаве 25%',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 4,
             extra: 'minecraft:blaze_powder', extraName: 'Огненная Эссенция', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         }
     ],
 
@@ -328,38 +328,38 @@ const FORGE_CATALOG = [
         {
             id: 'kubejs:infernal_plate_helmet',
             name: '§4Инфернальный Шлем Танка',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Незеритовый Танк: Броня 6, Твердость 3, Стойка Щита +50',
             ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 5,
             extra: 'minecraft:crying_obsidian', extraName: 'Плачущий Обсидиан', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'kubejs:infernal_plate_chestplate',
             name: '§4Инфернальные Латы Танка',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Незеритовый Танк: Броня 12, Твердость 4, Стойка Щита +100, 100% Огнеупорность',
             ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 8,
             extra: 'minecraft:crying_obsidian', extraName: 'Плачущий Обсидиан', extraCount: 2,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'kubejs:infernal_plate_leggings',
             name: '§4Инфернальные Поножи Танка',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Незеритовый Танк: Броня 8, Твердость 3, Стойка Щита +50',
             ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 7,
             extra: 'minecraft:crying_obsidian', extraName: 'Плачущий Обсидиан', extraCount: 2,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'kubejs:infernal_plate_boots',
             name: '§4Инфернальные Сапоги Танка',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Незеритовый Танк: 100% Иммунитет к Отбрасыванию, Хождение по Лаве',
             ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 4,
             extra: 'minecraft:crying_obsidian', extraName: 'Плачущий Обсидиан', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         }
     ],
 
@@ -397,47 +397,47 @@ const FORGE_CATALOG = [
         {
             id: 'kubejs:cinder_staff',
             name: '§cИнфернальный Посох Пепла',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Посох Огня: 20 Емкости, Огненная Стрела II, +25% Огненный Урон',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 6,
             extra: 'minecraft:blaze_powder', extraName: 'Огненная Эссенция', extraCount: 4,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'skd:cinder_katana',
             name: '§cПепельная Катана',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Быстрый Клинок: Урон 8.0, Скорость 1.6, Фантомный Выпад (Иай)',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 4,
             extra: 'minecraft:blaze_rod', extraName: 'Огненный Стержень', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'skd:cinder_claymore',
             name: '§cПепельный Клеймор',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Двуручный Меч: Урон 11.0, Скорость 1.0, Вихревой Размах на 360°',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 6,
             extra: 'minecraft:blaze_rod', extraName: 'Огненный Стержень', extraCount: 2,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'skd:cinder_scythe',
             name: '§cПепельная Коса',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Боевая Коса: Урон 10.0, Скорость 1.1, Кровавая Жатва с вампиризмом',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 6,
             extra: 'minecraft:blaze_rod', extraName: 'Огненный Стержень', extraCount: 2,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         },
         {
             id: 'skd:cinder_bow',
             name: '§cПепельный Составной Лук',
-            tier: 'Tier 1 (Незер)',
+            tier: 'Tier 2 (Незер)',
             role: 'Составной Лук: Пробитие 25% брони, поджог стрел',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 6,
             extra: 'minecraft:blaze_rod', extraName: 'Огненный Стержень', extraCount: 2,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
         }
     ],
 
@@ -492,51 +492,51 @@ const FORGE_CATALOG = [
             isAscension: true,
             baseGear: 'kubejs:rift_apprentice_robe_helmet', baseGearName: 'Капюшон Ученика Разлома',
             id: 'kubejs:cinder_pyro_robe_helmet', name: '§cПепельный Капюшон Пироманта',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'minecraft:quartz', ingotName: 'Кварц Незера', ingotCount: 5,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
         {
             isAscension: true,
             baseGear: 'kubejs:rift_apprentice_robe_chestplate', baseGearName: 'Мантия Ученика Разлома',
             id: 'kubejs:cinder_pyro_robe_chestplate', name: '§cПепельная Мантия Пироманта',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'minecraft:quartz', ingotName: 'Кварц Незера', ingotCount: 8,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
         {
             isAscension: true,
             baseGear: 'kubejs:rift_apprentice_robe_leggings', baseGearName: 'Штаны Ученика Разлома',
             id: 'kubejs:cinder_pyro_robe_leggings', name: '§cПепельные Штаны Пироманта',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'minecraft:quartz', ingotName: 'Кварц Незера', ingotCount: 7,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
         {
             isAscension: true,
             baseGear: 'kubejs:rift_apprentice_robe_boots', baseGearName: 'Сапоги Ученика Разлома',
             id: 'kubejs:cinder_pyro_robe_boots', name: '§cПепельные Сапоги Пироманта',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'minecraft:quartz', ingotName: 'Кварц Незера', ingotCount: 4,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
         {
             isAscension: true,
             baseGear: 'kubejs:rift_apprentice_staff', baseGearName: 'Посох Ученика Разлома',
             id: 'kubejs:cinder_staff', name: '§cИнфернальный Посох Пепла',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
             role: 'Эволюция Посоха: 12 ➔ 20 Емкости, Магическая Стрела I ➔ Огненная Стрела II!',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 6,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
 
         // Scout Leather Ascension (T0 Copper -> T1 Gold)
@@ -544,41 +544,41 @@ const FORGE_CATALOG = [
             isAscension: true,
             baseGear: 'kubejs:scout_leather_helmet', baseGearName: 'Капюшон Разведчика',
             id: 'kubejs:bastion_hunter_helmet', name: '§6Маска Охотника Бастионов',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'minecraft:gold_ingot', ingotName: 'Золотой Слиток', ingotCount: 5,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
         {
             isAscension: true,
             baseGear: 'kubejs:scout_leather_chestplate', baseGearName: 'Кожаный Доспех Разведчика',
             id: 'kubejs:bastion_hunter_chestplate', name: '§6Доспех Охотника Бастионов',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'minecraft:gold_ingot', ingotName: 'Золотой Слиток', ingotCount: 8,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
         {
             isAscension: true,
             baseGear: 'kubejs:scout_leather_leggings', baseGearName: 'Штаны Разведчика',
             id: 'kubejs:bastion_hunter_leggings', name: '§6Штаны Охотника Бастионов',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'minecraft:gold_ingot', ingotName: 'Золотой Слиток', ingotCount: 7,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
         {
             isAscension: true,
             baseGear: 'kubejs:scout_leather_boots', baseGearName: 'Сапоги Разведчика',
             id: 'kubejs:bastion_hunter_boots', name: '§6Сапоги Охотника Бастионов',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'minecraft:gold_ingot', ingotName: 'Золотой Слиток', ingotCount: 4,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
 
         // Medium DD Ascension (T0 Iron -> T1 Cinder Alloy)
@@ -586,41 +586,41 @@ const FORGE_CATALOG = [
             isAscension: true,
             baseGear: 'kubejs:iron_brigandine_helmet', baseGearName: 'Шлем Бригантины ДД',
             id: 'kubejs:cinder_brigandine_helmet', name: '§cПепельный Шлем ДД',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 5,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
         {
             isAscension: true,
             baseGear: 'kubejs:iron_brigandine_chestplate', baseGearName: 'Железная Бригантина ДД',
             id: 'kubejs:cinder_brigandine_chestplate', name: '§cПепельная Бригантина ДД',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 8,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
         {
             isAscension: true,
             baseGear: 'kubejs:iron_brigandine_leggings', baseGearName: 'Поножи Бригантины ДД',
             id: 'kubejs:cinder_brigandine_leggings', name: '§cПепельные Поножи ДД',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 7,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
         {
             isAscension: true,
             baseGear: 'kubejs:iron_brigandine_boots', baseGearName: 'Сапоги Бригантины ДД',
             id: 'kubejs:cinder_brigandine_boots', name: '§cПепельные Сапоги ДД',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 4,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
 
         // Heavy Tank Ascension (T0 Steel -> T1 Netherite)
@@ -628,41 +628,41 @@ const FORGE_CATALOG = [
             isAscension: true,
             baseGear: 'kubejs:steel_knight_helmet', baseGearName: 'Шлем Рыцаря Границы',
             id: 'kubejs:infernal_plate_helmet', name: '§4Инфернальный Шлем Танка',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 5,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
         {
             isAscension: true,
             baseGear: 'kubejs:steel_knight_chestplate', baseGearName: 'Стальные Латы Рыцаря Границы',
             id: 'kubejs:infernal_plate_chestplate', name: '§4Инфернальные Латы Танка',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 8,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
         {
             isAscension: true,
             baseGear: 'kubejs:steel_knight_leggings', baseGearName: 'Поножи Рыцаря Границы',
             id: 'kubejs:infernal_plate_leggings', name: '§4Инфернальные Поножи Танка',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 7,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
         {
             isAscension: true,
             baseGear: 'kubejs:steel_knight_boots', baseGearName: 'Сапоги Рыцаря Границы',
             id: 'kubejs:infernal_plate_boots', name: '§4Инфернальные Сапоги Танка',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
-            role: 'Перенос в Тир 1 (Незер) с полным сохранением заточки +N и сокетов!',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
+            role: 'Перенос в Тир 2 (Незер) с полным сохранением заточки +N и сокетов!',
             ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 4,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
 
         // Weapons Ascension
@@ -670,21 +670,21 @@ const FORGE_CATALOG = [
             isAscension: true,
             baseGear: 'minecraft:iron_sword', baseGearName: 'Железный Меч',
             id: 'skd:cinder_katana', name: '§cПепельная Катана',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
             role: 'Эволюция Клинка: Урон 6.0 ➔ 8.0, Скорость 1.6, Фантомный Выпад!',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 4,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         },
         {
             isAscension: true,
             baseGear: 'minecraft:bow', baseGearName: 'Охотничий Лук',
             id: 'skd:cinder_bow', name: '§cПепельный Составной Лук',
-            tier: 'Возвышение: Тир 0 ➔ Тир 1',
+            tier: 'Возвышение: Тир 1 ➔ Тир 2',
             role: 'Эволюция Лука: Пробитие 25% брони, авто-поджог стрел пламенем!',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 6,
             extra: null, extraName: null, extraCount: 0,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 1
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 1
         }
     ],
 
@@ -1305,7 +1305,7 @@ function openForgeWorkshopGUI(player, hasAnvil, benchPos) {
             if (x === 4) {
                 gui.slot(4, 5, s => {
                     s.setItem(Item.of('minecraft:compass').withCustomName(Text.of('§e[ Руководство Кузнеца ]')).withLore([
-                        Text.of('§7Вся экипировка Элириума куется по 11 Тирам.'),
+                        Text.of('§7Вся экипировка Элириума куется по 8 Тирам (+1.5 Undergarden).'),
                         Text.of('§7Горн плавит металл. Наковальня открывает Заточку и Возвышение!'),
                         Text.of('§8────────────────────────────────'),
                         Text.of('§a✓ 100% сохранение предметов при закрытии.')

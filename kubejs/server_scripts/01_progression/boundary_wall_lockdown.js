@@ -104,7 +104,13 @@ const BOUNDARY_DATA = [
 // -----------------------------------------------------------------------------
 // HELPER FUNCTIONS: GEOMETRY & PERMISSIONS
 // -----------------------------------------------------------------------------
+// ⚡ CANON UPDATE (UNIFIED OVERWORLD):
+// By decree of the Lead Designer, the Overworld is a single unified realm (Tier 1).
+// Artificial wall lockdown is deactivated so players can freely build, explore, and run MineColonies.
+const OVERWORLD_BOUNDARY_WALLS_ENABLED = false;
+
 function isOverworld(level) {
+    if (!OVERWORLD_BOUNDARY_WALLS_ENABLED) return false;
     if (!level) return false;
     let dim = String(level.dimension || level.dimensionKey || '');
     return dim.includes('overworld');
@@ -499,50 +505,14 @@ PlayerEvents.chat(event => {
 
     if (msg === '.boundary' || msg === '!boundary' || msg === '.рубеж' || msg === '!рубеж' ||
         msg === '.sector1' || msg === '!sector1') {
-        let dist = Math.round(Math.hypot(player.x, player.z));
-        let level = player.level;
-        let dimName = isOverworld(level) ? 'Overworld' : String(level.dimension || 'Unknown');
-
-        // Find nearest boundary
-        let nearestIdx = 0;
-        let minDiff = 9999999;
-        for (let i = 0; i < SECTOR_RADII.length; i++) {
-            let diff = Math.abs(dist - SECTOR_RADII[i]);
-            if (diff < minDiff) {
-                minDiff = diff;
-                nearestIdx = i;
-            }
-        }
-
-        player.tell(Text.gold('══════════════ [🛡️ СТАТУС 8 РУБЕЖЕЙ ЭЛИРИУМА] ══════════════'));
-        player.tell(Text.yellow('📍 Текущая позиция: ')
-            .append(Text.white(`X: ${Math.round(player.x)}, Z: ${Math.round(player.z)} `))
-            .append(Text.gray(`(${dimName})`)));
-        player.tell(Text.yellow('📏 Дистанция от центра (R): ')
-            .append(Text.aqua(`${dist} блоков`)));
-        player.tell(Text.yellow('🎯 Ближайший рубеж: ')
-            .append(Text.gold(`Рубеж ${nearestIdx + 1} (R=${SECTOR_RADII[nearestIdx]})`))
-            .append(Text.gray(' — дельта: '))
-            .append(Text.white(`${Math.abs(dist - SECTOR_RADII[nearestIdx])} бл.`)));
-        player.tell(Text.gray('------------------------------------------------------------'));
-
-        for (let i = 0; i < BOUNDARY_DATA.length; i++) {
-            let data = BOUNDARY_DATA[i];
-            let unlocked = hasUnlockedBoundary(player, i);
-            let statusText = unlocked ? Text.green('✔ ОТКРЫТ') : Text.red('✖ ЗАБЛОКИРОВАН');
-            let isClosest = (i === nearestIdx) ? Text.yellow(' ◄ [ВЫ ЗДЕСЬ]') : Text.empty();
-
-            player.tell(Text.gold(` [${data.tier}] R=${data.radius} `)
-                .append(Text.white(`${data.name.split(' (')[0]}: `))
-                .append(statusText)
-                .append(isClosest));
-        }
-
-        player.tell(Text.gray('------------------------------------------------------------'));
-        player.tell(Text.gray('  Админ-команда управления: .unlocksector <1-8|all> [on/off]'));
-        player.tell(Text.gold('════════════════════════════════════════════════════════'));
+        player.tell(Text.gold('══════════════ [🌍 ЕДИНЫЙ ВЕРХНИЙ МИР: ТИР 1] ══════════════'));
+        player.tell(Text.green('✦ Верхний Мир является единым бесшовным пространством (Tier 1).'));
+        player.tell(Text.white('  Внутренние стены отключены для свободного выживания и MineColonies.'));
+        player.tell(Text.yellow('  Для проверки прогрессии по 8 тирам используйте: ').append(Text.aqua('.progression')));
+        player.tell(Text.gold('════════════════════════════════════════════════════════════════'));
         event.cancel();
         return;
+    }
     }
 
     if (msg.startsWith('.unlocksector') || msg.startsWith('!unlocksector')) {

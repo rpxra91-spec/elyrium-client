@@ -1,9 +1,9 @@
 // ==============================================================================
 // 🛠️ ELYRIUM RPG: MODULAR MULTITOOL CHASSIS & UPGRADE MODULES
-// Minecraft 1.21.1 NeoForge | KubeJS Startup Script (v1.1)
+// Minecraft 1.21.1 NeoForge | KubeJS Startup Script (v1.2)
 // ==============================================================================
-// - Registers Tier 4 (Nether) MK-I Omni-Chassis (Pickaxe, Axe, Shovel, Hoe in one).
-// - Registers Tier 7 MK-II and Tier 11 MK-III Chassis for progression evolution.
+// - Registers Tier 2 (Nether) MK-I Omni-Chassis (Pickaxe, Axe, Shovel, Hoe in one).
+// - Registers Tier 5 MK-II and Tier 8 MK-III Chassis for progression evolution.
 // - Registers 7 Specialized Upgrade Modules (Smelting, Silk, Magnet, Radar, Haste,
 //   Fortune, Silence).
 // ==============================================================================
@@ -14,7 +14,7 @@ StartupEvents.registry('item', event => {
     // 1. MODULAR OMNI-CHASSIS (3 TIER GENERATIONS)
     // --------------------------------------------------------------------------
 
-    // 1.1 MK-I: Инфернальное Шасси Мультитула (Tier 4 Nether) - 1 Слот Модулей
+    // 1.1 MK-I: Инфернальное Шасси Мультитула (Tier 2 Nether) - 1 Слот Модулей
     event.create('modular_omni_chassis_mk1', 'pickaxe')
         .displayName('§c🔥 Инфернальное Шасси Мультитула MK-I')
         .tier('netherite')
@@ -34,7 +34,7 @@ StartupEvents.registry('item', event => {
         .tag('c:tools')
         .tag('elyrium:modular_multitools');
 
-    // 1.2 MK-II: Астрально-Пустотное Шасси Мультитула (Tier 7) - 2 Слота Модулей
+    // 1.2 MK-II: Астрально-Пустотное Шасси Мультитула (Tier 5) - 2 Слота Модулей
     event.create('modular_omni_chassis_mk2', 'pickaxe')
         .displayName('§b⭐ Астрально-Пустотное Шасси MK-II')
         .tier('netherite')
@@ -55,7 +55,7 @@ StartupEvents.registry('item', event => {
         .tag('c:tools')
         .tag('elyrium:modular_multitools');
 
-    // 1.3 MK-III: Шасси Апогея Демиурга (Tier 11) - 4 Слота Модулей
+    // 1.3 MK-III: Шасси Апогея Демиурга (Tier 8) - 4 Слота Модулей
     event.create('modular_omni_chassis_mk3', 'pickaxe')
         .displayName('§d👑 Шасси Апогея Демиурга MK-III')
         .tier('netherite')

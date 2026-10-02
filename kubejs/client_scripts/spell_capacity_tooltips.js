@@ -81,10 +81,10 @@ function getClientSpellWeight(spellId, level) {
 }
 
 const CLIENT_CAPACITY_TABLE = {
-    weapon: [0, 3, 5, 8, 12, 16, 20, 24, 28, 32, 36, 42],
-    wand: [0, 6, 10, 15, 22, 30, 38, 46, 54, 62, 70, 80],
-    staff: [0, 8, 14, 20, 28, 38, 50, 62, 75, 90, 105, 120],
-    grimoire: [0, 12, 20, 30, 45, 60, 80, 100, 120, 145, 170, 200]
+    weapon: [0, 4, 8, 14, 20, 26, 32, 38, 45],
+    wand: [0, 8, 15, 25, 36, 48, 60, 72, 85],
+    staff: [0, 12, 22, 35, 52, 70, 88, 108, 130],
+    grimoire: [0, 16, 32, 55, 80, 110, 140, 175, 210]
 };
 
 function getClientItemProfile(item) {
@@ -103,16 +103,13 @@ function getClientItemProfile(item) {
     if (!isStaff && !isWand && !isBook && !isWeapon) return null;
 
     let tier = 1;
-    if (id.includes('mortum') || id.includes('divinerpg:mortum')) tier = 11;
-    else if (id.includes('apalachia') || id.includes('skythern')) tier = 10;
-    else if (id.includes('eden') || id.includes('wildwood')) tier = 9;
-    else if (id.includes('sculk') || id.includes('echo') || id.includes('warden')) tier = 8;
-    else if (id.includes('starlight') || id.includes('luminite') || id.includes('astral')) tier = 7;
-    else if (id.includes('ender') || id.includes('dragon') || id.includes('void')) tier = 6;
-    else if (id.includes('aether') || id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie')) tier = 5;
-    else if (id.includes('netherite') || id.includes('cinder') || id.includes('ignitium') || id.includes('crimson')) tier = 4;
-    else if (id.includes('diamond') || id.includes('cobalt') || id.includes('rune') || id.includes('amethyst')) tier = 3;
-    else if (id.includes('iron') || id.includes('bronze') || id.includes('copper') || id.includes('silver')) tier = 2;
+    if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('apalachia') || id.includes('skythern')) tier = 8;
+    else if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) tier = 7;
+    else if (id.includes('sculk') || id.includes('echo') || id.includes('warden') || id.startsWith('deeperdarker:')) tier = 6;
+    else if (id.includes('starlight') || id.includes('luminite') || id.includes('luminarite') || id.startsWith('eternal_starlight:')) tier = 5;
+    else if (id.includes('ender') || id.includes('dragon') || id.includes('void') || id.includes('elytra')) tier = 4;
+    else if (id.includes('aether') || id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie') || id.includes('skyjade')) tier = 3;
+    else if (id.includes('netherite') || id.includes('cinder') || id.includes('ignitium') || id.includes('crimson') || id.includes('ignis')) tier = 2;
     else tier = 1;
 
     if (isBook) {

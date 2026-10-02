@@ -283,6 +283,7 @@ function isTier4SocketMaterial(item) {
     let id = String(item.id).toLowerCase();
     return id === 'minecraft:netherite_ingot' ||
            id === 'skd:cinder_alloy_ingot' ||
+           id === 'kubejs:ascension_catalyst_t2' ||
            id === 'kubejs:ascension_catalyst_t4' ||
            id === 'minecraft:netherite_scrap';
 }
@@ -295,6 +296,7 @@ function isTier7SocketMaterial(item) {
            id === 'eternal_starlight:deepsilver_ingot' ||
            id === 'eternal_starlight:red_starlight_crystal_shard' ||
            id === 'eternal_starlight:blue_starlight_crystal_shard' ||
+           id === 'kubejs:ascension_catalyst_t5' ||
            id === 'kubejs:ascension_catalyst_t7' ||
            id.includes('luminite') ||
            id.includes('starlight');

@@ -116,7 +116,12 @@ function getOverworldSector(r) {
     return null; // Beyond 35,000 is The Endless Fringe
 }
 
+// ⚡ CANON UPDATE (UNIFIED OVERWORLD):
+// Overworld is a single unified realm (Tier 1). Miasma barriers are deactivated.
+const SECTOR_MIASMA_ENABLED = false;
+
 function hasSectorAccess(player, sector) {
+    if (!SECTOR_MIASMA_ENABLED) return true;
     if (!sector || !sector.sealKey) return true;
     if (player.isCreative && player.isCreative()) return true;
     if (player.isSpectator && player.isSpectator()) return true;

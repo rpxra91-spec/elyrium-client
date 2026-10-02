@@ -449,7 +449,7 @@ ServerEvents.commandRegistry(event => {
                         if (info.length === 0) {
                             ctx.source.sendSuccess(() => Text.yellow('[QoL] Колонии не найдены на сервере.'), false)
                         } else {
-                            ctx.source.sendSuccess(() => Text.of(`§6[SKD Университет] Закалка инструментов:§r\n` + info.join('\n')), false)
+                            ctx.source.sendSuccess(() => Text.of(`§6[Университет Элириума] Закалка инструментов:§r\n` + info.join('\n')), false)
                         }
                         return 1
                     } catch (err) {

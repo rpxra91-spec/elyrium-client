@@ -91,45 +91,48 @@ function getAscendedTier(item) {
 function getNativeWeaponTier(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return 1;
 
+    // 1. Elyrium Tier tag check
+    if (item.hasTag('elyrium:tier_8')) return 8;
+    if (item.hasTag('elyrium:tier_7')) return 7;
+    if (item.hasTag('elyrium:tier_6')) return 6;
+    if (item.hasTag('elyrium:tier_5')) return 5;
+    if (item.hasTag('elyrium:tier_4')) return 4;
+    if (item.hasTag('elyrium:tier_3')) return 3;
+    if (item.hasTag('elyrium:tier_2')) return 2;
+    if (item.hasTag('elyrium:tier_1_5') || item.hasTag('elyrium:tier_undergarden')) return 1.5;
+    if (item.hasTag('elyrium:tier_1')) return 1;
+
+    for (let t = 8; t >= 1; t--) {
+        if (item.hasTag(`skd:tier_${t}`) || item.hasTag(`c:tools/tier_${t}`)) return t;
+    }
+
     let id = String(item.id).toLowerCase();
 
-    // Tier 11: DivineRPG Mortum, Apex Void Cataclysm
-    if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('the_incinerator') || id.includes('aquatooth') || id.includes('halite')) return 11;
+    // Tier 8: DivineRPG Mortum, Apalachia & Skythern, Halite, Apex Void Cataclysm
+    if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('apalachia') || id.includes('skythern') || id.includes('divinerpg:apalachia') || id.includes('divinerpg:skythern') || id.includes('the_incinerator') || id.includes('aquatooth') || id.includes('halite')) return 8;
 
-    // Tier 10: DivineRPG Apalachia & Skythern
-    if (id.includes('apalachia') || id.includes('skythern') || id.includes('divinerpg:apalachia') || id.includes('divinerpg:skythern')) return 10;
+    // Tier 7: DivineRPG Eden & Wildwood
+    if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) return 7;
 
-    // Tier 9: DivineRPG Eden & Wildwood
-    if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) return 9;
+    // Tier 6: Deeper Darker (Otherside) / Warden
+    if (id.includes('sculk') || id.includes('echo') || id.includes('warden') || id.startsWith('deeperdarker:')) return 6;
 
-    // Tier 8: Deeper Darker (Otherside) / Warden
-    if (id.includes('sculk') || id.includes('echo') || id.includes('warden') || id.startsWith('deeperdarker:')) return 8;
+    // Tier 5: Eternal Starlight
+    if (id.includes('starlight') || id.includes('luminite') || id.startsWith('eternal_starlight:') || id.includes('thermal_springstone')) return 5;
 
-    // Tier 7: Eternal Starlight
-    if (id.includes('starlight') || id.includes('luminite') || id.startsWith('eternal_starlight:') || id.includes('thermal_springstone')) return 7;
+    // Tier 4: The End / Void / Ender Guardian / Dragon
+    if (id.includes('dragon') || id.includes('void') || id.includes('ender_guardian') || id.includes('ender_golem') || id.includes('elytra') || id.includes('ascended')) return 4;
 
-    // Tier 6: The End / Void / Ender Guardian
-    if (id.includes('dragon') || id.includes('void') || id.includes('ender_guardian') || id.includes('ender_golem') || id.includes('elytra') || id.includes('ascended')) return 6;
+    // Tier 3: The Aether & Deep Aether
+    if (id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie') || id.includes('skyjade') || id.startsWith('aether:') || id.startsWith('deep_aether:')) return 3;
 
-    // Tier 5: The Aether & Deep Aether
-    if (id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie') || id.includes('skyjade') || id.startsWith('aether:') || id.startsWith('deep_aether:')) return 5;
+    // Tier 2: The Nether (Cinder Alloy, Netherite, Ignitium, Cataclysm)
+    if (id.includes('cinder') || id.includes('netherite') || id.includes('ignitium') || id.startsWith('cataclysm:') || id.includes('monstrosity') || id.includes('witherite') || id.includes('wither')) return 2;
 
-    // Tier 4: The Nether (Cinder Alloy, Netherite, Ignitium, Cataclysm)
-    if (id.includes('cinder') || id.includes('netherite') || id.includes('ignitium') || id.startsWith('cataclysm:') || id.includes('monstrosity') || id.includes('witherite') || id.includes('wither')) return 4;
+    // Tier 1.5: The Undergarden
+    if (id.includes('cloggrum') || id.includes('froststeel') || id.includes('forgotten') || id.includes('undergarden')) return 1.5;
 
-    // Tier 3: Diamond, Cobalt, Rune / Runes, Iron standard
-    if (id.includes('diamond') || id.includes('cobalt') || id.includes('rune') || id.includes('runic') || id.startsWith('runes:') || id.includes('amethyst') ||
-        (id.includes('iron') && !id.includes('early_iron') && !id.includes('crude_iron') && !id.includes('rusted_iron'))) {
-        return 3;
-    }
-
-    // Tier 2: Copper, Chain, Iron early, Gold, Bronze, Brass, Silver, Flint
-    if (id.includes('copper') || id.includes('chain') || id.includes('early_iron') || 
-        id.includes('crude_iron') || id.includes('rusted_iron') || id.includes('gold') || 
-        id.includes('golden') || id.includes('bronze') || id.includes('brass') || id.includes('silver') || id.includes('flint')) {
-        return 2;
-    }
-
+    // Tier 1: Overworld standard (Diamond, Cobalt, Steel, Rune, Iron, Bronze, Copper, Flint, Starter)
     return 1;
 }
 

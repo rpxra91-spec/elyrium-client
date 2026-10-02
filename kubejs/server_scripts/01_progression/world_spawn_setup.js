@@ -232,24 +232,23 @@ PlayerEvents.loggedIn(event => {
     let player = event.player;
     let server = player.server;
 
-    // First login teleport to arena edge facing center
+    // First login teleport to arena edge facing center & welcome greeting
     if (!player.persistentData.getBoolean('skd_spawn_initialized')) {
         player.persistentData.putBoolean('skd_spawn_initialized', true);
         server.runCommandSilent('tp ' + player.username + ' 0 76 -5 0 0');
         server.runCommandSilent('effect give ' + player.username + ' minecraft:slow_falling 5 1 true');
         server.runCommandSilent('effect give ' + player.username + ' minecraft:resistance 5 4 true');
+
+        server.runCommandSilent('title ' + player.username + ' times 20 80 20');
+        server.runCommandSilent('title ' + player.username + ' title {"text":"§6🏛 БОЕВАЯ АРЕНА ЭЛИРИУМА 🏛"}');
+        server.runCommandSilent('title ' + player.username + ' subtitle {"text":"§aПлатформа 20х20 | Манекен Зомби-пиглина"}');
+        server.runCommandSilent('playsound minecraft:ui.toast.challenge_complete player ' + player.username + ' ~ ~ ~ 0.8 1.0');
+
+        player.tell('§6═══════════════════════════════════════════════════════');
+        player.tell('§6🏛 ДОБРО ПОЖАЛОВАТЬ НА БОЕВУЮ АРЕНУ ЭЛИРИУМА! 🏛');
+        player.tell('§aПлатформа 20х20 блоков со встроенной станцией вызова манекена.');
+        player.tell('§eЕстественный спавн монстров отключен в радиусе 100 блоков.');
+        player.tell('§b⚔ Нажмите кнопку на постаменте сзади (Z=7) для вызова Зомби-пиглина (500 HP).');
+        player.tell('§6═══════════════════════════════════════════════════════');
     }
-
-    server.runCommandSilent('title ' + player.username + ' times 20 80 20');
-    server.runCommandSilent('title ' + player.username + ' title {"text":"§6🏛 БОЕВАЯ АРЕНА ЭЛИРИУМА 🏛"}');
-    server.runCommandSilent('title ' + player.username + ' subtitle {"text":"§aПлатформа 20х20 | Манекен Зомби-пиглина"}');
-    server.runCommandSilent('playsound minecraft:ui.toast.challenge_complete player ' + player.username + ' ~ ~ ~ 0.8 1.0');
-
-    player.tell('§6═══════════════════════════════════════════════════════');
-    player.tell('§6🏛 ДОБРО ПОЖАЛОВАТЬ НА БОЕВУЮ АРЕНУ ЭЛИРИУМА! 🏛');
-    player.tell('§aПлатформа 20х20 блоков со встроенной станцией вызова манекена.');
-    player.tell('§eЕстественный спавн монстров отключен в радиусе 100 блоков.');
-    player.tell('§b⚔ Нажмите кнопку на постаменте сзади (Z=7) для вызова Зомби-пиглина (500 HP).');
-    player.tell('§d⭐ Прегенерация мира Chunky запущена на 500 блоков.');
-    player.tell('§6═══════════════════════════════════════════════════════');
 });

@@ -48,7 +48,7 @@ mouseSensitivity:0.5
 damageTiltStrength:1.0
 highContrast:false
 narratorHotkey:false
-resourcePacks:["vanilla","mod_resources","file/SKD_Russian_Pack","file/SKD_Russian_Pack.zip","file/SKD_Colony_Skins","file/SKD_RPG_Weapons","file/Elyrium_Portal_HD","file/elyrium_resources","moonlight:merged_pack","mod/towntalk:respack"]
+resourcePacks:["vanilla","mod_resources","file/Elyrium_Russian_Pack","file/Elyrium_Colony_Skins","file/Elyrium_RPG_Weapons","file/Elyrium_Portal_HD","file/elyrium_resources","moonlight:merged_pack","mod/towntalk:respack"]
 incompatibleResourcePacks:[]
 lastServer:
 lang:ru_ru

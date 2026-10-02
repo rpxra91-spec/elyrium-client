@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "mandatory_packs": [
+    "vanilla",
+    "mod_resources",
+    "file/Elyrium_Russian_Pack",
+    "file/Elyrium_Colony_Skins",
+    "file/Elyrium_RPG_Weapons",
+    "file/Elyrium_Portal_HD",
+    "file/elyrium_resources",
+    "moonlight:merged_pack",
+    "mod/towntalk:respack"
+  ],
+  "optional_packs": [
+    "file/Elyrium_PBR_128x.zip"
+  ],
+  "auto_detect_rule": {
+    "default_action_for_new_packs": "mandatory",
+    "optional_name_patterns": [
+      "128x",
+      "256x",
+      "512x",
+      "pbr",
+      "shader",
+      "optional"
+    ]
+  }
+}

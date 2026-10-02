@@ -1,5 +1,5 @@
 // =============================================================================
-// SKD RPG: ELYRIUM — PODFAZA 1.3: NATURAL DARKNESS SPAWN SUPPRESSOR
+// ELYRIUM RPG — NATURAL DARKNESS SPAWN SUPPRESSOR
 // =============================================================================
 // Назначение:
 // 1. Блокирует бесконечный спавн мобов из темноты (spawnReason == 'NATURAL')

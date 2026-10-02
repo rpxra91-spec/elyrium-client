@@ -305,29 +305,29 @@ EntityEvents.drops(event => {
     };
 
     // --------------------------------------------------------------------------
-    // A. БОССЫ TIER 4 - TIER 6 (Шанс на Закалочный Камень II и Небесный Камень III)
+    // A. БОССЫ TIER 2 - TIER 4 (Шанс на Закалочный Камень II и Небесный Камень III)
     // --------------------------------------------------------------------------
-    // Tier 4 Bosses: Netherite Monstrosity, Ignis, Harbinger, Wither, Maledictus
+    // Tier 2 Bosses (Nether): Netherite Monstrosity, Ignis, Harbinger, Wither, Maledictus
     let isT4Boss = (id === 'cataclysm:netherite_monstrosity' ||
                     id === 'cataclysm:ignis' ||
                     id === 'cataclysm:the_harbinger' ||
                     id === 'cataclysm:maledictus' ||
                     id === 'minecraft:wither');
 
-    // Tier 5 Bosses: Sun Spirit, Valkyrie Queen, Slider
+    // Tier 3 Bosses (Aether): Sun Spirit, Valkyrie Queen, Slider
     let isT5Boss = (id.includes('sun_spirit') ||
                     id.includes('valkyrie_queen') ||
                     id.includes('slider') ||
                     (id.startsWith('aether:') && id.includes('boss')));
 
-    // Tier 6 Bosses: Ender Dragon, Ender Guardian, Ender Golem, Leviathan
+    // Tier 4 Bosses (The End): Ender Dragon, Ender Guardian, Ender Golem, Leviathan
     let isT6Boss = (id === 'minecraft:ender_dragon' ||
                     id === 'cataclysm:ender_guardian' ||
                     id === 'cataclysm:ender_golem' ||
                     id === 'cataclysm:the_leviathan');
 
     if (isT4Boss) {
-        // T4 Boss: 100% шанс на 1-2 Камня II, 35% шанс на Камень III
+        // T2 Nether Boss: 100% шанс на 1-2 Камня II, 35% шанс на Камень III
         let count2 = 1 + Math.floor(Math.random() * 2);
         grantStone('kubejs:smithing_stone_2', count2, false);
 
@@ -338,7 +338,7 @@ EntityEvents.drops(event => {
     }
 
     if (isT5Boss) {
-        // T5 Boss: 50% шанс на Камень II, 100% шанс на 1-2 Камня III
+        // T3 Aether Boss: 50% шанс на Камень II, 100% шанс на 1-2 Камня III
         if (Math.random() < 0.50) {
             grantStone('kubejs:smithing_stone_2', 1, false);
         }
@@ -348,7 +348,7 @@ EntityEvents.drops(event => {
     }
 
     if (isT6Boss) {
-        // T6 Boss: 30% шанс на Камень II, 100% шанс на 2-3 Камня III
+        // T4 End Boss: 30% шанс на Камень II, 100% шанс на 2-3 Камня III
         if (Math.random() < 0.30) {
             grantStone('kubejs:smithing_stone_2', 1, false);
         }
@@ -358,9 +358,9 @@ EntityEvents.drops(event => {
     }
 
     // --------------------------------------------------------------------------
-    // B. БОССЫ TIER 7 - TIER 8 (Шанс на Астральный Камень IV)
+    // B. БОССЫ TIER 5 - TIER 6 (Шанс на Астральный Камень IV)
     // --------------------------------------------------------------------------
-    // Tier 7: Starlight Golem, Lunar Monstrosity, Tangled Hatred, Permafrost, Gatekeeper
+    // Tier 5 (Eternal Starlight): Starlight Golem, Lunar Monstrosity, Tangled Hatred, Permafrost, Gatekeeper
     let isT7Boss = (id.includes('starlight_golem') ||
                     id.includes('lunar_monstrosity') ||
                     id.includes('tangled_hatred') ||
@@ -368,49 +368,49 @@ EntityEvents.drops(event => {
                     id.includes('the_gatekeeper') ||
                     (id.startsWith('eternal_starlight:') && id.includes('boss')));
 
-    // Tier 8: Warden, Stalker, Sculk Snapper
+    // Tier 6 (Deeper Darker): Warden, Stalker, Sculk Snapper
     let isT8Boss = (id === 'minecraft:warden' ||
                     id.includes('stalker') ||
                     id.includes('sculk_snapper') ||
                     (id.startsWith('deeperdarker:') && (id.includes('boss') || id.includes('stalker'))));
 
     if (isT7Boss) {
-        // T7 Boss: 100% шанс на 1-2 Астральных Камня IV
+        // T5 Starlight Boss: 100% шанс на 1-2 Астральных Камня IV
         let count4 = 1 + Math.floor(Math.random() * 2);
         grantStone('kubejs:smithing_stone_4', count4, false);
         return;
     }
 
     if (isT8Boss) {
-        // T8 Boss: 100% шанс на 2-3 Астральных Камня IV
+        // T6 Sculk Boss: 100% шанс на 2-3 Астральных Камня IV
         let count4 = 2 + Math.floor(Math.random() * 2);
         grantStone('kubejs:smithing_stone_4', count4, false);
         return;
     }
 
     // --------------------------------------------------------------------------
-    // C. БОССЫ TIER 9 - TIER 11 (Шанс на Камень Мортума V и Печать Древнего Кузнеца)
+    // C. БОССЫ TIER 7 - TIER 8 (Шанс на Камень Мортума V и Печать Древнего Кузнеца)
     // --------------------------------------------------------------------------
-    // Tier 9 Bosses: Parasect, Wildwood Golem, Densos
+    // Tier 7 Bosses (Eden & Wildwood): Parasect, Wildwood Golem, Densos
     let isT9Boss = (id.includes('parasect') ||
                     id.includes('wildwood_golem') ||
                     id.includes('densos'));
 
-    // Tier 10 Bosses: Vamacheron, Karot, Soul Stealer, Soul Fiend, Twilight Demon
+    // Tier 8 Bosses (Apalachia & Skythern): Vamacheron, Karot, Soul Stealer, Soul Fiend, Twilight Demon
     let isT10Boss = (id.includes('vamacheron') ||
                      id.includes('karot') ||
                      id.includes('soul_stealer') ||
                      id.includes('soul_fiend') ||
                      id.includes('twilight_demon'));
 
-    // Tier 11 Bosses: Ancient Entity, Reyvor, The Eye
+    // Tier 8 Apex Finale Bosses (Mortum): Ancient Entity, Reyvor, The Eye
     let isT11Boss = (id.includes('ancient_entity') ||
                      id.includes('reyvor') ||
                      id.includes('the_eye') ||
                      (id.startsWith('divinerpg:') && id.includes('mortum') && id.includes('boss')));
 
     if (isT9Boss) {
-        // T9 Boss: 75% шанс на 1-2 Камня Мортума V, 8% шанс на Печать Кузнеца (Aegis)
+        // T7 Eden Boss: 75% шанс на 1-2 Камня Мортума V, 8% шанс на Печать Кузнеца (Aegis)
         if (Math.random() < 0.75) {
             let count5 = 1 + Math.floor(Math.random() * 2);
             grantStone('kubejs:smithing_stone_5', count5, false);
@@ -422,7 +422,7 @@ EntityEvents.drops(event => {
     }
 
     if (isT10Boss) {
-        // T10 Boss: 100% шанс на 1-3 Камня Мортума V, 15% шанс на Печать Кузнеца (Aegis)
+        // T8 Apalachia Boss: 100% шанс на 1-3 Камня Мортума V, 15% шанс на Печать Кузнеца (Aegis)
         let count5 = 1 + Math.floor(Math.random() * 3);
         grantStone('kubejs:smithing_stone_5', count5, false);
 
@@ -433,7 +433,7 @@ EntityEvents.drops(event => {
     }
 
     if (isT11Boss) {
-        // T11 Boss: 100% шанс на 2-4 Камня Мортума V, 35% шанс на Печать Кузнеца (Aegis)
+        // T8 Mortum Apex Boss: 100% шанс на 2-4 Камня Мортума V, 35% шанс на Печать Кузнеца (Aegis)
         let count5 = 2 + Math.floor(Math.random() * 3);
         grantStone('kubejs:smithing_stone_5', count5, false);
 

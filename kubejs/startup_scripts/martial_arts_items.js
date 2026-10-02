@@ -29,6 +29,16 @@ StartupEvents.registry('item', event => {
         .glow(true)
         .maxStackSize(16);
 
+    // 1.2b Сотрясение Земли (Seismic Slam)
+    event.create('martial_tablet_seismic_slam')
+        .displayName('§6Трактат: Сотрясение Земли§r')
+        .tooltip('§8[Трактат Боевых Искусств: Сейсмический Разлом]')
+        .tooltip('§eПодходящее оружие: §fБоевые молоты, булавы, палицы')
+        .tooltip('§6Боевой прием: §7Удар в землю с 5-метровой радиальной волной: 200% урона, подброс и Замедление IV.')
+        .tooltip('§aСтиль боя: §fСокрушает строй врагов мощным сейсмическим ударом.')
+        .glow(true)
+        .maxStackSize(16);
+
     // 1.3 Рассекающий Клив (Severing Cleave)
     event.create('martial_tablet_severing_cleave')
         .displayName('§6Трактат: Рассекающий Клив§r')

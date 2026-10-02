@@ -1,8 +1,8 @@
 {
-  "version": "0.4.6",
+  "version": "0.4.8",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-02T09:25:45.886223+00:00",
+  "generated_at": "2026-10-02T13:55:57.253737+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -337,8 +337,8 @@
     },
     {
       "path": "config/chunky/tasks/minecraft/overworld.properties",
-      "sha256": "d22db97f289d5c1fa051c30b4e84658adf638499d2f41086404874fae69cf9b0",
-      "size": 130
+      "sha256": "c36a98882185abbe1a5f6a3e99884d4fb5f37dde9f9058aa17ed0c0cd51126e9",
+      "size": 129
     },
     {
       "path": "config/citadel-common.toml",
@@ -731,6 +731,11 @@
       "size": 1875
     },
     {
+      "path": "config/elyrium_resourcepacks.json",
+      "sha256": "54a9fc575da2a71c863067e6d5fad0389c943aebdbb1fa4bb0e00fce6e489367",
+      "size": 564
+    },
+    {
       "path": "config/embeddium-fingerprint.json",
       "sha256": "540b59306480b6802d0d36052e352fe1b306b9cf8795c69193bc225c33e8c56e",
       "size": 427
@@ -982,8 +987,8 @@
     },
     {
       "path": "config/jei/ingredient-list-mod-sort-order.ini",
-      "sha256": "48fb800893abe3d2b60165e0cafdf61ee344fecfb8f018da7d2f93e696cbb735",
-      "size": 780
+      "sha256": "be31531392c40eef3e245def6aaa2a0db7bf83cd52a4f219556d650975db67e6",
+      "size": 784
     },
     {
       "path": "config/jei/ingredient-list-type-sort-order.ini",
@@ -1227,8 +1232,8 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "df4edb3d5442319a3e9e7ca6af9a8c105f4191ab612f6cb91584a62f87741467",
-      "size": 275
+      "sha256": "47b2183efc2b33db3aee3f749cc7a2731ae3819b41044e5405bf456ea26afdce",
+      "size": 276
     },
     {
       "path": "config/patchouli-client.toml",
@@ -1277,8 +1282,8 @@
     },
     {
       "path": "config/rpg_series/loot_fallback_report.json",
-      "sha256": "7cf5e831b0c5f3d7f39c5e3d35c9bc3fc09b5676e2d86279672ec565c53f978f",
-      "size": 176
+      "sha256": "39877d2913ce1eb840575fcad4200047341ada62cbe70d9de59c62a22f38be6c",
+      "size": 83024
     },
     {
       "path": "config/rpg_series/loot_scrolls_v2.json",
@@ -1872,8 +1877,8 @@
     },
     {
       "path": "default_options.txt",
-      "sha256": "518bc708e845acd043961ddf15dd4ac26025d45073a028af674bd8c618240266",
-      "size": 16313
+      "sha256": "f43a91757d0bd78e11366b567c8bf9a6978538c9d357aeac1fb8f5e2d4c56dc2",
+      "size": 16297
     },
     {
       "path": "default_servers.dat",
@@ -8092,8 +8097,8 @@
     },
     {
       "path": "kubejs/client_scripts/equipment_reinforcement_tooltips.js",
-      "sha256": "c8cd659bca66a9fc7330973d518a83aa1c71e8f4251797040ba7035d970d90a2",
-      "size": 14302
+      "sha256": "11e67dd1b6cfd4a56255b997b4b618100c751857ac699913485af16d0b85b54c",
+      "size": 13663
     },
     {
       "path": "kubejs/client_scripts/filter_early_weapons.js",
@@ -8112,8 +8117,8 @@
     },
     {
       "path": "kubejs/client_scripts/gear_score_tooltips.js",
-      "sha256": "ba90502cff9dfea4e0ff5d08404f69f95321ebce19d9d6f494397cd2cfb15bb7",
-      "size": 5140
+      "sha256": "0d6956f96b35ebf777059787ebd067930d0a2af9c161a9ea2286a42839d9e9ba",
+      "size": 5734
     },
     {
       "path": "kubejs/client_scripts/item_en_tooltip.js",
@@ -8122,13 +8127,13 @@
     },
     {
       "path": "kubejs/client_scripts/martial_arts_tooltips.js",
-      "sha256": "a1d581f8719c60c481f6756cafa2a8b96ec3727c130705033f9fe0977c9de88f",
-      "size": 37874
+      "sha256": "51393013c6cbb8d0bd4112531df921a2f87e96ccbff2a8e627e8d1f6e1208dda",
+      "size": 37235
     },
     {
       "path": "kubejs/client_scripts/modular_multitool_tooltips.js",
-      "sha256": "9a1c97954222c668206dc8194b9ce74b47224dee7ae28af34f99d4bb528a33eb",
-      "size": 7555
+      "sha256": "18a4d9b6f97ea0d29f20e3bd34d5b567fd8b67e754c1ab87fb73919e07cdfff3",
+      "size": 7554
     },
     {
       "path": "kubejs/client_scripts/physical_weapon_arts_animations.js",
@@ -8142,13 +8147,13 @@
     },
     {
       "path": "kubejs/client_scripts/spell_capacity_tooltips.js",
-      "sha256": "22e06b646a1f0992d5d32bf19e17af04a23bd481eee37c0ee85805b2de963e63",
-      "size": 9209
+      "sha256": "be36570933cd08240fbbe8c32df0448bf2435603a95517c8eb160c26ca06ae14",
+      "size": 9120
     },
     {
       "path": "kubejs/client_scripts/stamina_hud_overlay.js",
-      "sha256": "e3f17ac66f51706814acfe66b02350db1e77713721210c99aadde9237a7c3088",
-      "size": 29635
+      "sha256": "247cf4fa0e0f2ca57ed5483044a101ff3b8af8388db715f5b5d1c63bf330d571",
+      "size": 29717
     },
     {
       "path": "kubejs/client_scripts/tier4_tooltips.js",
@@ -8157,8 +8162,8 @@
     },
     {
       "path": "kubejs/client_scripts/tier_equipment_tooltips.js",
-      "sha256": "fa266c883391ff9c4bec9baa5e9c6fe1b266218fbe9c435859a27fec4eb2d302",
-      "size": 10760
+      "sha256": "d814615cec83f7b227ce8df693d5dc36372d1971746af20d697ae465dc55afe1",
+      "size": 10822
     },
     {
       "path": "kubejs/client_scripts/two_handed_offhand_client.js",
@@ -8947,13 +8952,13 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/boundary_wall_lockdown.js",
-      "sha256": "f994c8af2b982f19c60624a8ccd8006d2ab1302d3afc7eb178c2545ccf7faf50",
-      "size": 26362
+      "sha256": "324fd075e8f397de1d17b103261db8d23ead1d0c3f5822463d6b634099517a4b",
+      "size": 25091
     },
     {
       "path": "kubejs/server_scripts/01_progression/dimensional_progression_lock.js",
-      "sha256": "0935b3447566974f703ce2e628d5ee4f94cb273ce86f5d8ea7dc9e2a6f024e2b",
-      "size": 17927
+      "sha256": "ebc1dda308f14c65dd3ece5eafc89f96e897793eb8025e1e17534e8fd9e9537b",
+      "size": 16662
     },
     {
       "path": "kubejs/server_scripts/01_progression/elyrium_continent_tp.js",
@@ -8987,13 +8992,13 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/world_spawn_setup.js",
-      "sha256": "ba054d5c6c7b982833ac981ac216d58e83b18f62691b6367194821c1886f0c54",
-      "size": 13063
+      "sha256": "49d5202551de8efc6d1af96c5d0925730f4b77b90ed5043db4d5dcf01b2ce663",
+      "size": 13014
     },
     {
       "path": "kubejs/server_scripts/02_magic/spell_capacity_engine.js",
-      "sha256": "80b1e0a4c850eaa8289d12b9a4af774af91141e9844c907dc535c02b9f030523",
-      "size": 17199
+      "sha256": "a090d5f6ae54d3d6b60484142147f1bd8f511a2c076e2e64e20be909a303d9e6",
+      "size": 17074
     },
     {
       "path": "kubejs/server_scripts/02_magic/staff_spell_system.js",
@@ -9032,8 +9037,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/elyrium_forge_api.js",
-      "sha256": "58cf341c69523b79ce21aea4b0b8ba6bdda40eeafee9b8ae51b76464283fa890",
-      "size": 38301
+      "sha256": "0c940f287878d56c6a3094418923b0da35188f0afad2189d66039e4078799d96",
+      "size": 38137
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_engine.js",
@@ -9042,8 +9047,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_recipes.js",
-      "sha256": "c4b775801fef7d4547793a722f3e0980118396689ea9d37b2dd8123e86bbf52e",
-      "size": 19528
+      "sha256": "2796ef28839f49cfb4fe84bf71b1a0011a3da2d5c59af4b7126f474d27d0b7e5",
+      "size": 19710
     },
     {
       "path": "kubejs/server_scripts/03_combat/forge_multiblock_recipes.js",
@@ -9052,8 +9057,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/forge_workshop_gui.js",
-      "sha256": "f4f56475b02174adb55804836ad31d49703d4b45faba2e62b18b6bf9f007a5fa",
-      "size": 86515
+      "sha256": "191be5ad0baf970d4f54e5783885747a0ad549691a0dedc480c920459e654a02",
+      "size": 86533
     },
     {
       "path": "kubejs/server_scripts/03_combat/gear_score_system.js",
@@ -9062,8 +9067,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/gear_stat_requirements.js",
-      "sha256": "2fa5106cb709153e29282bed3e1617b0e1152e7b18e00316f4a70faa37ad4bde",
-      "size": 13294
+      "sha256": "c2157c5a5e9ee239d713df6d2dc1bd9f85ace29a4305e4804b8c937e700e0d1f",
+      "size": 12410
     },
     {
       "path": "kubejs/server_scripts/03_combat/healing_support.js",
@@ -9072,13 +9077,13 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/infernal_anvil_gui.js",
-      "sha256": "f1da498b7b8188f7a02e414ff7909f2a8f0c200a1b451f0b180f2dd6085e71ab",
-      "size": 61774
+      "sha256": "734f26689b1d1cdb8b44fd55eb43fa2ce14078d8546bedbfc4b27bc7e19b8aed",
+      "size": 61771
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_inscription.js",
-      "sha256": "ac9acd29e72ed8259992152046e742e23e22e694804e13d0561574dabd297fbc",
-      "size": 53772
+      "sha256": "5627fe2ea199346380858ae82e908dac3444cb9c7c337cbacd33b281bb45072f",
+      "size": 53731
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_loot.js",
@@ -9117,8 +9122,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/tier_combat_matrix.js",
-      "sha256": "77fa3784a71a8d1d9db3433c421afb7035e917633c687c1fe6a87a097b17c85f",
-      "size": 12141
+      "sha256": "093676ed2a2212e77737ad82ce8993103248c01754a04bd97f1795980802aca4",
+      "size": 9294
     },
     {
       "path": "kubejs/server_scripts/03_combat/two_handed_offhand_lock.js",
@@ -9132,8 +9137,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_gui.js",
-      "sha256": "3255c151dbf9c12c0e771744ac47a5db0f2afd069095bd3819647e407abfcc28",
-      "size": 119493
+      "sha256": "16910a7e606694d5d3aa98501e2f3b1748c401acfc57b7967eea8e9dba3f1540",
+      "size": 119597
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",
@@ -9142,8 +9147,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_reinforcement_scaling.js",
-      "sha256": "0e6d54771d0f5651d079d1f7c998e46f80af0c6d7d6894ccf7990afc1c408a51",
-      "size": 28403
+      "sha256": "5ede61c518566b3b441be927819042c82147b863b7a455847bc5953b5b54085d",
+      "size": 28516
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/dynamic_class_resolver.js",
@@ -9257,8 +9262,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/colony_qol.js",
-      "sha256": "d4fa148ed29c7b3068fb6e656546279fe2e657e5852822bb096214131b13810b",
-      "size": 22332
+      "sha256": "fe6101159e6bb72a309158fd4c93ad2f734aa1aa4d3c4b9ece960ed46472531a",
+      "size": 22345
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/colony_safe_zone.js",
@@ -9277,8 +9282,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/darkness_spawn_suppressor.js",
-      "sha256": "85fc98225ceee5e60be077e68ac300f347293af65a4f6c384e80e4b75d75b489",
-      "size": 2309
+      "sha256": "ff1fc3ea4cfda45e708f9d6b287e9722f25f15691fe028adeedac474e8531fde",
+      "size": 2291
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_crafting_recipes.js",
@@ -9337,13 +9342,13 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/sector_progression_engine.js",
-      "sha256": "be4cd02e335f446c844d0b5337316793b8223d1998b3b01ea51b5dc34efa9633",
-      "size": 14958
+      "sha256": "ef767e838fd07add27f4dbf960cd1b454ea97716135526ffd4bf7f336d1bbf29",
+      "size": 15164
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/server_idle_system.js",
-      "sha256": "5709c62dbdf1aca288b12aa6174f2c8543b3ef22fc4ffd21baa6bcd8015b4d2a",
-      "size": 2611
+      "sha256": "3bbcce601a2a55a9a7e88090bf7518d7e8173b9008406b38dcaa3b0dae44c0b1",
+      "size": 2106
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/tavern_peace_zones.js",
@@ -9402,8 +9407,8 @@
     },
     {
       "path": "kubejs/startup_scripts/ascension_catalysts.js",
-      "sha256": "9a9938638dffd620d682c29df5e7f106641315b28127c99973b85f3e32292ec2",
-      "size": 6216
+      "sha256": "53bdd82f7dc0bb027f11f8b08751ab808dc6662444c1f2197db0bb9a4ab6f7d8",
+      "size": 7027
     },
     {
       "path": "kubejs/startup_scripts/dodge_keybinds.js",
@@ -9427,13 +9432,13 @@
     },
     {
       "path": "kubejs/startup_scripts/martial_arts_items.js",
-      "sha256": "da69fb35ddc9d22926579d640c4e988b0241a4c4209d9d2d94844cba859e2b67",
-      "size": 21263
+      "sha256": "2f807ec03c6f54b5f872b1683dbf2876730978cdc11a9dfca4c1a4b64310946d",
+      "size": 22051
     },
     {
       "path": "kubejs/startup_scripts/modular_multitool_items.js",
-      "sha256": "c60950ff748bd9fbf633e6bd5f965bf0def0d6b784e8eef9495703499dbadd82",
-      "size": 7766
+      "sha256": "dca6a43086b17b56247d55fbcc8f1525c2a128f8218ae9eb883d117deff1f867",
+      "size": 7764
     },
     {
       "path": "kubejs/startup_scripts/portal_blocks.js",
@@ -13316,9 +13321,105 @@
       "size": 138
     },
     {
+      "path": "resourcepacks/.index/pixlli.pw.toml",
+      "sha256": "75b991f9d1b4ac9f744c495843f581d1d568347dbe211ec559a039b5f6cc23a9",
+      "size": 2166
+    },
+    {
       "path": "resourcepacks/.index/primes-hd-textures.pw.toml",
       "sha256": "a76d352a75e168a29d830b1a9ba4723eefd82dfd3bff59f6d278f05e74d7072b",
       "size": 630
+    },
+    {
+      "path": "resourcepacks/Elyrium_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightfemale1_a.png",
+      "sha256": "8304a7a26560eae9edd485bcb3b1f5b96a82e59d822c9f7aab9e6001cdf959db",
+      "size": 2414
+    },
+    {
+      "path": "resourcepacks/Elyrium_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightfemale1_b.png",
+      "sha256": "0d7099d9c849bb6e99cc9f010f7706a8f0232d15181f19652ca0e040d537adab",
+      "size": 3066
+    },
+    {
+      "path": "resourcepacks/Elyrium_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightfemale1_d.png",
+      "sha256": "2a64b1944f06ca242023bfb111d5254f3820c6880f9948282b009af8d72eb160",
+      "size": 3082
+    },
+    {
+      "path": "resourcepacks/Elyrium_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightfemale1_d_e.png",
+      "sha256": "3b23d6ebb96e9d5216c78afadca770003d08b5127a33cef452670867ffbc1dac",
+      "size": 986
+    },
+    {
+      "path": "resourcepacks/Elyrium_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightfemale1_w.png",
+      "sha256": "3768f066a91aefca968942f1a94ae46c726e5b13172a7cfef203dd6181087e42",
+      "size": 3345
+    },
+    {
+      "path": "resourcepacks/Elyrium_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightfemale1_w_e.png",
+      "sha256": "3b23d6ebb96e9d5216c78afadca770003d08b5127a33cef452670867ffbc1dac",
+      "size": 986
+    },
+    {
+      "path": "resourcepacks/Elyrium_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightmale1_a.png",
+      "sha256": "8304a7a26560eae9edd485bcb3b1f5b96a82e59d822c9f7aab9e6001cdf959db",
+      "size": 2414
+    },
+    {
+      "path": "resourcepacks/Elyrium_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightmale1_b.png",
+      "sha256": "0d7099d9c849bb6e99cc9f010f7706a8f0232d15181f19652ca0e040d537adab",
+      "size": 3066
+    },
+    {
+      "path": "resourcepacks/Elyrium_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightmale1_d.png",
+      "sha256": "2a64b1944f06ca242023bfb111d5254f3820c6880f9948282b009af8d72eb160",
+      "size": 3082
+    },
+    {
+      "path": "resourcepacks/Elyrium_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightmale1_d_e.png",
+      "sha256": "3b23d6ebb96e9d5216c78afadca770003d08b5127a33cef452670867ffbc1dac",
+      "size": 986
+    },
+    {
+      "path": "resourcepacks/Elyrium_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightmale1_w.png",
+      "sha256": "3768f066a91aefca968942f1a94ae46c726e5b13172a7cfef203dd6181087e42",
+      "size": 3345
+    },
+    {
+      "path": "resourcepacks/Elyrium_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightmale1_w_e.png",
+      "sha256": "3b23d6ebb96e9d5216c78afadca770003d08b5127a33cef452670867ffbc1dac",
+      "size": 986
+    },
+    {
+      "path": "resourcepacks/Elyrium_Colony_Skins/pack.mcmeta",
+      "sha256": "cb08db19b043edec8c6012e689623bc95155e0d8f86c66bec19f5ec5443d6b12",
+      "size": 145
+    },
+    {
+      "path": "resourcepacks/Elyrium_PBR_128x.zip",
+      "sha256": "7934bcd1bbc09ed925be44d3f052122c106d18f72952a6102492697e651a6524",
+      "size": 148357582,
+      "is_split": true,
+      "split_parts": [
+        {
+          "index": 0,
+          "path": "resourcepacks/.split_cache/elyrium_pbr_128x_zip/part_00.bin",
+          "size": 73400320,
+          "sha256": "f40c806fa13012f55fc475f5c63f35e8d59df038672cb9fe1e8b5351fb582499"
+        },
+        {
+          "index": 1,
+          "path": "resourcepacks/.split_cache/elyrium_pbr_128x_zip/part_01.bin",
+          "size": 73400320,
+          "sha256": "31737e0a2fe46ba8d243fb3040fff4945245c83c1ec124eb821a15de884fdc0d"
+        },
+        {
+          "index": 2,
+          "path": "resourcepacks/.split_cache/elyrium_pbr_128x_zip/part_02.bin",
+          "size": 1556942,
+          "sha256": "01fb51bf92913296ca9ee7feb430e02d6ff50b01d164d8922cb80dd330fceaaa"
+        }
+      ]
     },
     {
       "path": "resourcepacks/Elyrium_Portal_HD/assets/kubejs/textures/block/eye_2x2_bot_l.png",
@@ -13766,679 +13867,609 @@
       "size": 118
     },
     {
-      "path": "resourcepacks/SKD_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightfemale1_a.png",
-      "sha256": "8304a7a26560eae9edd485bcb3b1f5b96a82e59d822c9f7aab9e6001cdf959db",
-      "size": 2414
-    },
-    {
-      "path": "resourcepacks/SKD_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightfemale1_b.png",
-      "sha256": "0d7099d9c849bb6e99cc9f010f7706a8f0232d15181f19652ca0e040d537adab",
-      "size": 3066
-    },
-    {
-      "path": "resourcepacks/SKD_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightfemale1_d.png",
-      "sha256": "2a64b1944f06ca242023bfb111d5254f3820c6880f9948282b009af8d72eb160",
-      "size": 3082
-    },
-    {
-      "path": "resourcepacks/SKD_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightfemale1_d_e.png",
-      "sha256": "3b23d6ebb96e9d5216c78afadca770003d08b5127a33cef452670867ffbc1dac",
-      "size": 986
-    },
-    {
-      "path": "resourcepacks/SKD_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightfemale1_w.png",
-      "sha256": "3768f066a91aefca968942f1a94ae46c726e5b13172a7cfef203dd6181087e42",
-      "size": 3345
-    },
-    {
-      "path": "resourcepacks/SKD_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightfemale1_w_e.png",
-      "sha256": "3b23d6ebb96e9d5216c78afadca770003d08b5127a33cef452670867ffbc1dac",
-      "size": 986
-    },
-    {
-      "path": "resourcepacks/SKD_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightmale1_a.png",
-      "sha256": "8304a7a26560eae9edd485bcb3b1f5b96a82e59d822c9f7aab9e6001cdf959db",
-      "size": 2414
-    },
-    {
-      "path": "resourcepacks/SKD_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightmale1_b.png",
-      "sha256": "0d7099d9c849bb6e99cc9f010f7706a8f0232d15181f19652ca0e040d537adab",
-      "size": 3066
-    },
-    {
-      "path": "resourcepacks/SKD_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightmale1_d.png",
-      "sha256": "2a64b1944f06ca242023bfb111d5254f3820c6880f9948282b009af8d72eb160",
-      "size": 3082
-    },
-    {
-      "path": "resourcepacks/SKD_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightmale1_d_e.png",
-      "sha256": "3b23d6ebb96e9d5216c78afadca770003d08b5127a33cef452670867ffbc1dac",
-      "size": 986
-    },
-    {
-      "path": "resourcepacks/SKD_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightmale1_w.png",
-      "sha256": "3768f066a91aefca968942f1a94ae46c726e5b13172a7cfef203dd6181087e42",
-      "size": 3345
-    },
-    {
-      "path": "resourcepacks/SKD_Colony_Skins/assets/minecolonies/textures/entity/citizen/undead/knightmale1_w_e.png",
-      "sha256": "3b23d6ebb96e9d5216c78afadca770003d08b5127a33cef452670867ffbc1dac",
-      "size": 986
-    },
-    {
-      "path": "resourcepacks/SKD_Colony_Skins/pack.mcmeta",
-      "sha256": "b9b7da6e810ad6659bb491d7883b628396e9adc4998261fd90f4dc52717d204d",
-      "size": 166
-    },
-    {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/models/item/netherite_longbow.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/models/item/netherite_longbow.json",
       "sha256": "0ac1f5651dd21dac2419d570d43e70ac7dd113c2ce862aec6f0d64d88b8dee27",
       "size": 2212
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/models/item/netherite_longbow_pulling_0.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/models/item/netherite_longbow_pulling_0.json",
       "sha256": "98a077b89413c6e2d614cca935e42de96e2a01c545f6385cf92f95d06401badc",
       "size": 1786
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/models/item/netherite_longbow_pulling_1.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/models/item/netherite_longbow_pulling_1.json",
       "sha256": "a6b9e625a2b48f935d14e7063800b5e711739552bda321b76a6a83529e905e46",
       "size": 1786
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/models/item/netherite_longbow_pulling_2.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/models/item/netherite_longbow_pulling_2.json",
       "sha256": "45f9baa0c0293912a5ac10134e2f21cbd089dd8013463feac4db114ca9749816",
       "size": 1786
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/textures/item/netherite_longbow.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/textures/item/netherite_longbow.png",
       "sha256": "b4542c8368290303f4974ae2b593b3eaa6a8de2a8756c38cb25b549673f6bda7",
       "size": 20884
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/textures/item/netherite_longbow.png.mcmeta",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/textures/item/netherite_longbow.png.mcmeta",
       "sha256": "ded717f14aa8f096f3328261b1e6ff37631a4fcbbb0edaa25076ee89424b8c36",
       "size": 73
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/textures/item/netherite_longbow_3d.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/textures/item/netherite_longbow_3d.png",
       "sha256": "95b33c110d5c750800588316e915606c0022a0a79773e95cc2bc29b20a0c69cc",
       "size": 693
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/textures/item/netherite_longbow_3d_0.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/textures/item/netherite_longbow_3d_0.png",
       "sha256": "6cc4d2569055ce9ebbe7ba13651e59abf24ff2fd53d6199aba61edf62ee189db",
       "size": 1780
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/textures/item/netherite_longbow_3d_1.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/textures/item/netherite_longbow_3d_1.png",
       "sha256": "4f819787c0bd117d45c0510084c46b2cb700260f1a255473e419a265b7b2bc48",
       "size": 772
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/textures/item/netherite_longbow_3d_2.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/textures/item/netherite_longbow_3d_2.png",
       "sha256": "dbd8f0d1930a5849aa72adc0d588ab11a4028e66ff231639524ca59c398b5ab4",
       "size": 1823
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/textures/item/netherite_longbow_3d_3.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/textures/item/netherite_longbow_3d_3.png",
       "sha256": "4f819787c0bd117d45c0510084c46b2cb700260f1a255473e419a265b7b2bc48",
       "size": 772
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/textures/item/netherite_longbow_3d_arrow.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/textures/item/netherite_longbow_3d_arrow.png",
       "sha256": "86ad5ac4935fbdb94963555d30c32babca43dd4f5f05c2e537cc355a7c28eb5f",
       "size": 219
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/textures/item/netherite_longbow_pulling_0.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/textures/item/netherite_longbow_pulling_0.png",
       "sha256": "0f33116b22760aaa13afcc2270d565c30fc69380b551f8a0b1c19f96cae9d52f",
       "size": 22874
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/textures/item/netherite_longbow_pulling_0.png.mcmeta",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/textures/item/netherite_longbow_pulling_0.png.mcmeta",
       "sha256": "ded717f14aa8f096f3328261b1e6ff37631a4fcbbb0edaa25076ee89424b8c36",
       "size": 73
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/textures/item/netherite_longbow_pulling_1.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/textures/item/netherite_longbow_pulling_1.png",
       "sha256": "4bd225aa4fb59ee5b4348e5bef38d720321ff9c2d0509d1734ab9c9496298824",
       "size": 23199
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/textures/item/netherite_longbow_pulling_1.png.mcmeta",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/textures/item/netherite_longbow_pulling_1.png.mcmeta",
       "sha256": "ded717f14aa8f096f3328261b1e6ff37631a4fcbbb0edaa25076ee89424b8c36",
       "size": 73
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/textures/item/netherite_longbow_pulling_2.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/textures/item/netherite_longbow_pulling_2.png",
       "sha256": "eda836efdfeb84380fa018560fecb26a649ba8d3dfb1ac1314a889ecaef58ec0",
       "size": 20202
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/archers/textures/item/netherite_longbow_pulling_2.png.mcmeta",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/archers/textures/item/netherite_longbow_pulling_2.png.mcmeta",
       "sha256": "ded717f14aa8f096f3328261b1e6ff37631a4fcbbb0edaa25076ee89424b8c36",
       "size": 73
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/models/item/cinder_alloy_ingot.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/models/item/cinder_alloy_ingot.json",
       "sha256": "192e9f3674d306cd8c0cf0fc6190ef6abdceb1794cebf4f54f0b90ed6fdf2b67",
       "size": 112
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/models/item/cinder_bow.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/models/item/cinder_bow.json",
       "sha256": "3616266d6d02e371001dbaa882862287a86f74cdf83a696530405bf9673158a1",
       "size": 2168
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/models/item/cinder_bow_pulling_0.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/models/item/cinder_bow_pulling_0.json",
       "sha256": "913b24d0e36c9b875678ac1dc9131274454d54e8f3368fdadcb68b7ba620355f",
       "size": 1764
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/models/item/cinder_bow_pulling_1.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/models/item/cinder_bow_pulling_1.json",
       "sha256": "642bdf6eda64c4c8c675ed315aa881717050debed7f7999fb7902f6499371b8f",
       "size": 1764
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/models/item/cinder_bow_pulling_2.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/models/item/cinder_bow_pulling_2.json",
       "sha256": "4d78be957589ac760e47ae963b10ee02915d9bf1b5f306c681370ea7b6d86c1e",
       "size": 1764
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/models/item/cinder_breaker.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/models/item/cinder_breaker.json",
       "sha256": "3759b2060d5399eda854b8ea83b09ad25bca840475c207b81466761b3a9c375d",
       "size": 114
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/models/item/cinder_claymore.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/models/item/cinder_claymore.json",
       "sha256": "10107c3a7d522c1c48ad8ca090e1959fbeddd29d6152aab948fdbdbd56848bff",
       "size": 120
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/models/item/cinder_katana.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/models/item/cinder_katana.json",
       "sha256": "fa01df6c9cee988856eec512564040d1931db6e461c6b8e907a942b3162357c5",
       "size": 116
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/models/item/cinder_longsword.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/models/item/cinder_longsword.json",
       "sha256": "60656b8d0615b2e241dc21de1f5f59eabe3ae12d184ad19fc0a350a8ccd63a9b",
       "size": 122
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/models/item/cinder_scythe.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/models/item/cinder_scythe.json",
       "sha256": "d6e92d6fa51f241f2189739b0c010504706e2cdfd9004a1f4658f1d06d145bb8",
       "size": 113
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/models/item/ranged_core_t4.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/models/item/ranged_core_t4.json",
       "sha256": "4faf1b282c99f3d98a46c7972f99a787e3b815a94005d2667882f8637a83af51",
       "size": 108
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/models/item/tool_core_t4.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/models/item/tool_core_t4.json",
       "sha256": "aee8a111e9cfcfb3eb591c6e8b35401018886bf7bae06fb4cbf341f62f2c2dcd",
       "size": 106
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/models/item/weapon_core_t4.json",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/models/item/weapon_core_t4.json",
       "sha256": "14bd94f5053d6eafdd983a4aee84aebe78712065d290837880c9d44964841e6c",
       "size": 108
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_alloy_ingot.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_alloy_ingot.png",
       "sha256": "21c58db5b4a52d0e203ac51215715a4911b7d03b3f8985550c19b57f3d272a8c",
       "size": 534
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_bow.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_bow.png",
       "sha256": "b4542c8368290303f4974ae2b593b3eaa6a8de2a8756c38cb25b549673f6bda7",
       "size": 20884
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_bow.png.mcmeta",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_bow.png.mcmeta",
       "sha256": "ded717f14aa8f096f3328261b1e6ff37631a4fcbbb0edaa25076ee89424b8c36",
       "size": 73
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_bow_3d.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_bow_3d.png",
       "sha256": "95b33c110d5c750800588316e915606c0022a0a79773e95cc2bc29b20a0c69cc",
       "size": 693
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_bow_3d_0.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_bow_3d_0.png",
       "sha256": "6cc4d2569055ce9ebbe7ba13651e59abf24ff2fd53d6199aba61edf62ee189db",
       "size": 1780
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_bow_3d_1.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_bow_3d_1.png",
       "sha256": "4f819787c0bd117d45c0510084c46b2cb700260f1a255473e419a265b7b2bc48",
       "size": 772
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_bow_3d_2.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_bow_3d_2.png",
       "sha256": "dbd8f0d1930a5849aa72adc0d588ab11a4028e66ff231639524ca59c398b5ab4",
       "size": 1823
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_bow_3d_3.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_bow_3d_3.png",
       "sha256": "4f819787c0bd117d45c0510084c46b2cb700260f1a255473e419a265b7b2bc48",
       "size": 772
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_bow_3d_arrow.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_bow_3d_arrow.png",
       "sha256": "86ad5ac4935fbdb94963555d30c32babca43dd4f5f05c2e537cc355a7c28eb5f",
       "size": 219
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_bow_pulling_0.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_bow_pulling_0.png",
       "sha256": "0f33116b22760aaa13afcc2270d565c30fc69380b551f8a0b1c19f96cae9d52f",
       "size": 22874
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_bow_pulling_0.png.mcmeta",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_bow_pulling_0.png.mcmeta",
       "sha256": "ded717f14aa8f096f3328261b1e6ff37631a4fcbbb0edaa25076ee89424b8c36",
       "size": 73
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_bow_pulling_1.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_bow_pulling_1.png",
       "sha256": "4bd225aa4fb59ee5b4348e5bef38d720321ff9c2d0509d1734ab9c9496298824",
       "size": 23199
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_bow_pulling_1.png.mcmeta",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_bow_pulling_1.png.mcmeta",
       "sha256": "ded717f14aa8f096f3328261b1e6ff37631a4fcbbb0edaa25076ee89424b8c36",
       "size": 73
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_bow_pulling_2.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_bow_pulling_2.png",
       "sha256": "eda836efdfeb84380fa018560fecb26a649ba8d3dfb1ac1314a889ecaef58ec0",
       "size": 20202
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_bow_pulling_2.png.mcmeta",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_bow_pulling_2.png.mcmeta",
       "sha256": "ded717f14aa8f096f3328261b1e6ff37631a4fcbbb0edaa25076ee89424b8c36",
       "size": 73
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_breaker.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_breaker.png",
       "sha256": "025c20f108717aeba0bf8b8705a4f01cd5627ae95f175a93ee6a3e95766880aa",
       "size": 470
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_claymore.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_claymore.png",
       "sha256": "c9fd8d4805ab9a2affe12fe42c6e647d0cf8f4fc5ee6ccb087148b4d0b76cdb2",
       "size": 332
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_katana.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_katana.png",
       "sha256": "3c7673cff66cef737d4ce40071680038a118ec89d6291a60530ef9161adde926",
       "size": 613
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_longsword.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_longsword.png",
       "sha256": "2ae23aefceda76d6c16838926c8323e9b1804f0b5ae812fc150cbe468e990024",
       "size": 313
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/cinder_scythe.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/cinder_scythe.png",
       "sha256": "ffb70537e59c9fc68395f9d5ebbf67ee5e602496e27dea5aa7bde7aed98ae5a8",
       "size": 380
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/ranged_core_t4.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/ranged_core_t4.png",
       "sha256": "6039847fab31dbfd84fe38089dd8f23102f4e6542fbb74dbf79872d598c3578d",
       "size": 530
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/tool_core_t4.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/tool_core_t4.png",
       "sha256": "e7004ba8429e4c36e168ac4550257f56eaed143ec998da8a3524912164a63c87",
       "size": 534
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/assets/skd/textures/item/weapon_core_t4.png",
+      "path": "resourcepacks/Elyrium_RPG_Weapons/assets/skd/textures/item/weapon_core_t4.png",
       "sha256": "ecc5884823ba2fae17a680a76e28bccd517853189d28b00469ba73458d2c4fa9",
       "size": 530
     },
     {
-      "path": "resourcepacks/SKD_RPG_Weapons/pack.mcmeta",
-      "sha256": "064dd31ab36d5632d1195a6aeed5cd6c67b2e8e940eb45e4993b48512fa1447e",
-      "size": 177
+      "path": "resourcepacks/Elyrium_RPG_Weapons/pack.mcmeta",
+      "sha256": "f1fc0e773b2fe71df75883a67b52d6d1bfd10adda3f2f03f41c6cf321fb97c45",
+      "size": 142
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack.zip",
-      "sha256": "604cfe335df56b2647587bb65778e17ebf359fe25679fe4e5345902534dc5526",
-      "size": 212422
-    },
-    {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/ApothicEnchanting/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/ApothicEnchanting/lang/ru_ru.json",
       "sha256": "3e0703fa94c0bae47a7b95dc9d89d9830c566a698c5fa546eb13e195c2046453",
       "size": 268
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/Incendium_1.21.x_v5.4.4.jar/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/Incendium_1.21.x_v5.4.4.jar/lang/ru_ru.json",
       "sha256": "65fce18ca7ef416a4f46b4c9582e28c1fdd38f78fd618d824a7094993a406ebd",
       "size": 462
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/L_Ender's Cataclysm 1.21.1/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/L_Ender's Cataclysm 1.21.1/lang/ru_ru.json",
       "sha256": "dabd9eaa5541185c491ae0712fd8a82201f14a9670054848e25afdb0b5365503",
       "size": 1837
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/Quark/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/Quark/lang/ru_ru.json",
       "sha256": "0fbc9ee5fc5212f19cbe9394e2dc8ad45f269646c152b8ba3ed876049c002e15",
       "size": 89
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/YungsCaveBiomes/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/YungsCaveBiomes/lang/ru_ru.json",
       "sha256": "5f25ed9d0c06c9e5057bae4717472ad0fca00ae1d35119a1b56e586ba2fae3c8",
       "size": 284
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/aces_spell_utils/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/aces_spell_utils/lang/ru_ru.json",
       "sha256": "bafbb409a0c66656a35801c44881a753c13d1a1ad0b67ba2ef2293c9fbfd8f06",
       "size": 4590
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/aether/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/aether/lang/ru_ru.json",
       "sha256": "97eacc4b399c6b92b54e9a801b222b1408bf82c65fde710a4c552dd0c0c79739",
       "size": 23471
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/apotheosis/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/apotheosis/lang/ru_ru.json",
       "sha256": "df1fad932140912daa967cecdeb3fd2fe5e2a413d05c1cec97d473b2b79748b8",
       "size": 60664
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/apothic_attributes/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/apothic_attributes/lang/ru_ru.json",
       "sha256": "494bf2f2c96989b411ec4af23de468dbe886c633b56e1408765cbe5fa0ecca84",
       "size": 1199
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/apothic_enchanting/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/apothic_enchanting/lang/ru_ru.json",
       "sha256": "c44182b839194ffe12eefa33b01911d66231a3356edb7f334f709bacf40f0bee",
       "size": 272
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/armoroftheages/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/armoroftheages/lang/ru_ru.json",
       "sha256": "35229c82ead4162588ffc263895cff409d2495162f3112424f239ddd999ab4a8",
       "size": 16991
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/astral_dimension/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/astral_dimension/lang/ru_ru.json",
       "sha256": "d5cbe963af53b53d299ec6144581cbbcc10705153ad1ddc42e814051cc0d22d8",
       "size": 90783
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/balm/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/balm/lang/ru_ru.json",
       "sha256": "042a1dc6efe9016124b9f626671adb3b7a481c0368f613286b46a4e80ab4aa5f",
       "size": 1864
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/bookshelf/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/bookshelf/lang/ru_ru.json",
       "sha256": "f421715caebfac4e08cddaf47d01ee0674bdaf081bca69c12814ff7a8b54245a",
       "size": 14321
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/boss_ai_tweaks/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/boss_ai_tweaks/lang/ru_ru.json",
       "sha256": "264a963da9cb3ff71d90bf1d270364296a461b2ab6cb9ef4fe27d1e184248d08",
       "size": 480
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/cataclysm/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/cataclysm/lang/ru_ru.json",
       "sha256": "d10ad29dd6f69b7c885858b763954c0866e7519b4a2bf89a836492a063d58548",
       "size": 447
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/citadel/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/citadel/lang/ru_ru.json",
       "sha256": "d88d7045839bfcbb3e338dd2eafa750efb671f6398536f453001227141d4ad5e",
       "size": 1224
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/cristellib/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/cristellib/lang/ru_ru.json",
       "sha256": "19373cb3eedf40b8274087c3acd2af84423d8658f23fc2cee5c40437ef0cc8d7",
       "size": 362
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/curios/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/curios/lang/ru_ru.json",
       "sha256": "abbdfdc2c637e84ba8f3f2530544fe2c1c729752a522f2361f0fc76715866282",
       "size": 1722
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/decilib/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/decilib/lang/ru_ru.json",
       "sha256": "c0339230a750391f43f3c97154c3fbf02805377f06459eaa4d2634c64898e569",
       "size": 829
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/deep_aether/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/deep_aether/lang/ru_ru.json",
       "sha256": "af35c43f7b23c0ad466d0b0d7eb632f35e16595a7596748934f9fda691d20109",
       "size": 113270
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/deeperdarker/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/deeperdarker/lang/ru_ru.json",
       "sha256": "ad58c6c17e799a716ebdee50506f5be33db260dc634b0f067bc3f07d79206e07",
       "size": 40827
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/divinerpg/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/divinerpg/lang/ru_ru.json",
       "sha256": "31daa9ba1d807e775cccfc717e68c9cb1e8f734b5faefcdbde1027dc5ff46da1",
       "size": 643
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/domum_ornamentum/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/domum_ornamentum/lang/ru_ru.json",
       "sha256": "ded19d565cb74c396f005c561cd24b9b900a0964d3969aefc0da7bf0b9b66ce9",
       "size": 14120
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/embeddium/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/embeddium/lang/ru_ru.json",
       "sha256": "70a19ef01a712289c4dbb47bfb905a0378a7b2d0ca855c0a8e5823a7d27efa15",
       "size": 10883
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/enchdesc/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/enchdesc/lang/ru_ru.json",
       "sha256": "a5ced6583b9d66dc7a3aca4f2cfb9245d472b3e94e15e8a17c03576e7240ef1b",
       "size": 19605
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/eternal_starlight/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/eternal_starlight/lang/ru_ru.json",
       "sha256": "59dc8c476f7a30b67986f0cf343a7cd4389322b2eca5282fb185675fe5f598c1",
       "size": 15840
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/eternalstarlight/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/eternalstarlight/lang/ru_ru.json",
       "sha256": "15c5d7796af35a5016aa25cdcaef9327ab1e4f511a247c3af73c8c620c6d6080",
       "size": 5048
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/ftbquests/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/ftbquests/lang/ru_ru.json",
       "sha256": "de7ace1a408232a6d64e53c2265408b49e699540039ece64bffe80db15352381",
       "size": 53810
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/greenhousegardener/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/greenhousegardener/lang/ru_ru.json",
       "sha256": "a3d1a8daa7f1385737a5d237df086bc88a00bcbcb4d1eb993ed53c80f45efe6b",
       "size": 10375
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/hammers/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/hammers/lang/ru_ru.json",
       "sha256": "84e97690ba7f3cbed88fa2fdd8b546bf8c0113ec655827b85796fbf9aeffdc63",
       "size": 2208
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/hazennstuff/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/hazennstuff/lang/ru_ru.json",
       "sha256": "0db3f7cb91be036b4d468e3807cd628734d571456ae80480dc2038c201ae54da",
       "size": 89180
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/hazentouvelib/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/hazentouvelib/lang/ru_ru.json",
       "sha256": "795df98e26f3dcb1aa64cca0b23fa06b74a97974d79f7b6148dad7e0edc1eefd",
       "size": 4695
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/irons_lib/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/irons_lib/lang/ru_ru.json",
       "sha256": "502d88bafe31f6f11bdfefe27eb391fe2090de2ebe855162473e9de3e0f69180",
       "size": 4511
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/irons_patreon_lib/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/irons_patreon_lib/lang/ru_ru.json",
       "sha256": "26d82b58e1116078a32a726750b6e3702562fedfae97ac89e2db38048c718c93",
       "size": 136
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/irons_spellbooks/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/irons_spellbooks/lang/ru_ru.json",
       "sha256": "d1f855a14a81875619e9b4414c84778c2275a508aaed04a9059328ebc6141c48",
       "size": 8795
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/justzoom/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/justzoom/lang/ru_ru.json",
       "sha256": "89f7bacbb9ca4f4df81133522ed269ab88aec1665e1a348dfba872613cb61888",
       "size": 2898
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/kleeslabs/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/kleeslabs/lang/ru_ru.json",
       "sha256": "46fc07bb5d584b86ba854301a71418d0235a5e00a1d8678ab254029821530c6a",
       "size": 611
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/l2archery/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/l2archery/lang/ru_ru.json",
       "sha256": "2bf2cfd78ae0259bbed2239fa40aea098cbd0744557201a5d9a34c7c74cd858d",
       "size": 18321
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/l2complements/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/l2complements/lang/ru_ru.json",
       "sha256": "c8928f957045564567a7afc8244fc96027deb1f9a74ac21e0a4a76a939560fe4",
       "size": 1390
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/leans_extra_backpacks/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/leans_extra_backpacks/lang/ru_ru.json",
       "sha256": "32ef86fa9fbe7755343aa20dc1d9da8fa6a155835ffc7ccdd48c9cb84fc1be14",
       "size": 880
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/legendarytooltips/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/legendarytooltips/lang/ru_ru.json",
       "sha256": "707405ceb8675c1e4b41e1ab716c8be009d37a0283fd27cfa7eec3a55f74fc43",
       "size": 71
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/lionfishapi/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/lionfishapi/lang/ru_ru.json",
       "sha256": "4cd57807fc56f9bf71341946f52bdf0d7d46464909c3541fd17df4001f741f1a",
       "size": 319
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/mctradepost/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/mctradepost/lang/ru_ru.json",
       "sha256": "088d5681421bb7d306395606ab3acd808e5609600586515945612245e5a9b4f0",
       "size": 1685
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/minecolonies/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/minecolonies/lang/ru_ru.json",
       "sha256": "dcdcab7d9fc9d2e80f0faefa94ddbf51625a6450c47edb95bb48cb35abfab28c",
       "size": 2103
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/multipiston/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/multipiston/lang/ru_ru.json",
       "sha256": "392e3e5b1f6d8842d58b24c63470ea30457e8dd3d657d821230c5212e96c73ef",
       "size": 148
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/oracle_index/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/oracle_index/lang/ru_ru.json",
       "sha256": "8d49f7c6d473b5ce9a8857d5ac8ef7c44ac87b1e0717a6b2a7bb9195a1f78ae8",
       "size": 94
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/owo/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/owo/lang/ru_ru.json",
       "sha256": "577c95e55973bbfd86c59f9b07da1906c14c40910320d4837e1eec2673dac1f5",
       "size": 2640
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/questinstaller/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/questinstaller/lang/ru_ru.json",
       "sha256": "13b24b01191a5e3c1753fc094750a592dba82ce53fe19c215d710cba8267476f",
       "size": 157
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/rotten_flesh__leather/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/rotten_flesh__leather/lang/ru_ru.json",
       "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
       "size": 2
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/simplestats/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/simplestats/lang/ru_ru.json",
       "sha256": "102a69badd07b4407f50c9013adc34f8779a4a8c64b7dde28d541c70a7cc6494",
       "size": 2511
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/simplyswords/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/simplyswords/lang/ru_ru.json",
       "sha256": "da230c2ee4380a4f95d921d849b9e1a64e9359c87157288455fc9fc3b7381918",
       "size": 191386
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/simplytooltips/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/simplytooltips/lang/ru_ru.json",
       "sha256": "1d1ab2960b66b75f29495a07fcce922cbbc4970bc03af5a87ad5cb2e10781c32",
       "size": 172
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/sophisticatedbackpacks/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/sophisticatedbackpacks/lang/ru_ru.json",
       "sha256": "f934d72dccd5bb2604da22ca49265e2c7bc090aec7e90d2562eb2af71f9d5695",
       "size": 49632
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/spades/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/spades/lang/ru_ru.json",
       "sha256": "2f2288f267be4c30a1cddc9d2ba6e3678b83c0de76506ca06aa47c83036913ea",
       "size": 3113
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/stackisb/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/stackisb/lang/ru_ru.json",
       "sha256": "edae73413c0c5cbdbc53cfcda46b816f09e60c5a1b92ade46e34c6a8d007accb",
       "size": 619
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/structurize/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/structurize/lang/ru_ru.json",
       "sha256": "69cd7f6c136226b49c3ceee0daeb226adcdbe28ba805ee9663099fedec387a7c",
       "size": 21197
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/supermartijn642corelib/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/supermartijn642corelib/lang/ru_ru.json",
       "sha256": "abeec279c83049de878fbf37ee967b04a0ababa8527c121af5dec266bfa2ce5c",
       "size": 74
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/tombstone/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/tombstone/lang/ru_ru.json",
       "sha256": "607d16895f6a0031efee0a0cca81a4ad09544b84e7427564135211e887e3016b",
       "size": 112018
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/too_many_bows/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/too_many_bows/lang/ru_ru.json",
       "sha256": "e9feb150dd4f911e838225e4b98ce1472b0a9d3c0361f3bd98b2fd561b1244ce",
       "size": 21631
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/warehouseworkshop/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/warehouseworkshop/lang/ru_ru.json",
       "sha256": "3358718fc1ded6d185ec0e8a6e68720aafe2d3961bb56866f7eb17ad295eb6d9",
       "size": 4323
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/waystones/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/waystones/lang/ru_ru.json",
       "sha256": "c4ad92012d31dde2993d31d8fd9cd97efe89aa39b817d580d081f64030f1aaeb",
       "size": 28879
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/wda_questline/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/wda_questline/lang/ru_ru.json",
       "sha256": "13b24b01191a5e3c1753fc094750a592dba82ce53fe19c215d710cba8267476f",
       "size": 157
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/wetbackpacks.jar/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/wetbackpacks.jar/lang/ru_ru.json",
       "sha256": "56bff6335817d064299fe61984200eed32fbc8063202746d654c9f9441a450db",
       "size": 54
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/assets/xaeroworldmap/lang/ru_ru.json",
+      "path": "resourcepacks/Elyrium_Russian_Pack/assets/xaeroworldmap/lang/ru_ru.json",
       "sha256": "ec8e75bcb718c90dd6ab5efc76c4d649503038637bb2643f32ef20b419de7400",
       "size": 26894
     },
     {
-      "path": "resourcepacks/SKD_Russian_Pack/pack.mcmeta",
-      "sha256": "99917f9b623aeeb02892178ff48a6d70bf201d0051d59705f2847af18c43d985",
-      "size": 144
+      "path": "resourcepacks/Elyrium_Russian_Pack/pack.mcmeta",
+      "sha256": "a05c8a0b9b6eadf0042cea2d907ba688425cb244b69f1082013996113d5e9710",
+      "size": 139
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/celestial_constellation_bg.png",
@@ -14447,8 +14478,8 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/hud/hud_bars.png",
-      "sha256": "a011eea590aba32b507346eea2116618ed86eedfc0b2fb50ce82495adb8417d0",
-      "size": 3229
+      "sha256": "41611758476eca75b7baedd9f297deec7716f8e94814758c2547d6f9ae2e44b2",
+      "size": 3341
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/skills/alchemist_class.png",
@@ -15982,7 +16013,7 @@
     },
     {
       "path": "shaderpacks/superDuperVanilla.zip.txt",
-      "sha256": "f8f60e73604d665ff0db7d71941e0252e41bf6bfa80d492ef6f9cd3e84eb5d69",
+      "sha256": "a72f88f24a540d9c917348457e7feec80abe2ada546a86b94c5ab693d33286c7",
       "size": 231
     }
   ]

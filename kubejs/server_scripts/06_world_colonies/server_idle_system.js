@@ -21,11 +21,7 @@ PlayerEvents.loggedIn(event => {
     // Restore normal tick rate
     server.runCommandSilent('tick rate 20')
     setRaidsEnabled(server, true)
-
-    player.tell(Text.gold('═══════════════════════════════════════════════════════'))
-    player.tell(Text.yellow('🌅 Добро пожаловать! Колония просыпается!'))
-    player.tell(Text.green('   Нормальное течение времени (20 tps) и события активны.'))
-    player.tell(Text.gold('═══════════════════════════════════════════════════════'))
+    console.log('[Colony-Sleep]: Игрок ' + player.username + ' вошел. Сервер возвращен к 20 TPS.')
 })
 
 PlayerEvents.loggedOut(event => {

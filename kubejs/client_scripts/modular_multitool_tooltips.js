@@ -73,7 +73,7 @@ ItemEvents.modifyTooltips(event => {
             let isMk3 = chassisId.includes('mk3');
             let isMk2 = chassisId.includes('mk2');
             let maxSlots = isMk3 ? 4 : (isMk2 ? 2 : 1);
-            let tierName = isMk3 ? 'Tier 11 • Апогей Демиурга' : (isMk2 ? 'Tier 7 • Астрально-Пустотное' : 'Tier 4 • Инфернальное');
+            let tierName = isMk3 ? 'Tier 8 • Апогей Демиурга' : (isMk2 ? 'Tier 5 • Астрально-Пустотное' : 'Tier 2 • Инфернальное');
 
             tooltip.add(Text.of(`§6[Универсальный Мультитул • ${tierName}]`));
             tooltip.add(Text.of('§7Совмещает инструменты: §fКирка • Топор • Лопата • Мотыга'));

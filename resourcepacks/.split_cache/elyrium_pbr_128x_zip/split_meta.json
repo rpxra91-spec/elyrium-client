@@ -1,0 +1,26 @@
+{
+  "target_path": "resourcepacks/Elyrium_PBR_128x.zip",
+  "target_size": 148357582,
+  "target_sha256": "7934bcd1bbc09ed925be44d3f052122c106d18f72952a6102492697e651a6524",
+  "chunk_count": 3,
+  "parts": [
+    {
+      "index": 0,
+      "path": "resourcepacks/.split_cache/elyrium_pbr_128x_zip/part_00.bin",
+      "size": 73400320,
+      "sha256": "f40c806fa13012f55fc475f5c63f35e8d59df038672cb9fe1e8b5351fb582499"
+    },
+    {
+      "index": 1,
+      "path": "resourcepacks/.split_cache/elyrium_pbr_128x_zip/part_01.bin",
+      "size": 73400320,
+      "sha256": "31737e0a2fe46ba8d243fb3040fff4945245c83c1ec124eb821a15de884fdc0d"
+    },
+    {
+      "index": 2,
+      "path": "resourcepacks/.split_cache/elyrium_pbr_128x_zip/part_02.bin",
+      "size": 1556942,
+      "sha256": "01fb51bf92913296ca9ee7feb430e02d6ff50b01d164d8922cb80dd330fceaaa"
+    }
+  ]
+}
