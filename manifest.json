@@ -1,8 +1,8 @@
 {
-  "version": "0.4.9",
+  "version": "0.4.10",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-02T15:50:50.508278+00:00",
+  "generated_at": "2026-10-02T15:57:58.439600+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8152,8 +8152,8 @@
     },
     {
       "path": "kubejs/client_scripts/stamina_hud_overlay.js",
-      "sha256": "b41cdb866a681cb8afdeb15d23912c0829626c14dd8e90238fba0866d219993f",
-      "size": 29800
+      "sha256": "dcb9c231b301431040195272293058f223c00d0c83930eabcd5d1eef3f3f3c59",
+      "size": 29925
     },
     {
       "path": "kubejs/client_scripts/tier4_tooltips.js",
