@@ -281,7 +281,8 @@ function drawBarValues(guiGraphics, font, barX, barY, curVal, maxVal, color, act
 
     let textW = (typeof font.width === 'function') ? font.width(strText) : (strText.length * 6);
     let tx = Math.round(barX + (w - textW) / 2);
-    let ty = Math.round(barY + (h * (6 / 21)));
+    // Placed strictly UNDER the bar (metallic frame bottom is at h * 16/21)
+    let ty = Math.round(barY + (h * (17 / 21))) + 1;
 
     safeDrawString(guiGraphics, font, strText, tx, ty, color);
 }
@@ -361,25 +362,25 @@ function renderMasterRpgHud(guiGraphics) {
         let hpW = 110;
         let hpH = 25;
         let hpX = midX - Math.floor(hpW / 2);
-        let hpY = screenHeight - 63; // bottom at screenHeight - 38 (14px gap above XP bar)
+        let hpY = screenHeight - 70; // Bottom of frame at -52, text under bar at -49
 
         // Mana: -10% smaller -> 83 x 19 px, left of HP
         let manaW = 83;
         let manaH = 19;
         let manaX = hpX - 4 - manaW;
-        let manaY = screenHeight - 57; // bottom at screenHeight - 38
+        let manaY = screenHeight - 64; // Bottom of frame at -50, text under bar at -48
 
         // Stamina: -10% smaller -> 83 x 19 px, right of HP
         let stamW = 83;
         let stamH = 19;
         let stamX = hpX + hpW + 4;
-        let stamY = screenHeight - 57; // bottom at screenHeight - 38
+        let stamY = screenHeight - 64; // Bottom of frame at -50, text under bar at -48
 
         // Hunger & Saturation: 100% scale -> 92 x 21 px, on right flank next to hotbar
         let foodW = 92;
         let foodH = 21;
         let foodX = Math.min(midX + 98, screenWidth - foodW - 2);
-        let foodY = screenHeight - 26; // Aligned with bottom of hotbar
+        let foodY = screenHeight - 32; // Text under bar at -14, cleanly beside hotbar
 
         let font = mc.font;
         let hudTex = getHudBarsTex();
@@ -605,13 +606,13 @@ function handleLayerPre(event) {
             event.setCanceled(true);
             return;
         }
-        // Intercept SELECTED_ITEM_NAME to translate upwards (+Y is downwards, so -38 moves it comfortably above HP bar)
+        // Intercept SELECTED_ITEM_NAME to translate upwards (+Y is downwards, so -45 moves it comfortably above HP bar)
         if (name.equals(J_VanillaGuiLayers.SELECTED_ITEM_NAME)) {
             let gg = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
             let pose = gg && gg.pose ? gg.pose() : null;
             if (pose) {
                 pose.pushPose();
-                pose.translate(0, -38, 0);
+                pose.translate(0, -45, 0);
                 isSelectedItemPosePushed = true;
             }
             return;
