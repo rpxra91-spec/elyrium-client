@@ -1,19 +1,19 @@
 // ==============================================================================
 // ⚔️ ELYRIUM RPG: UNIFIED CLASSIC RPG HUD (HEALTH, STAMINA, HUNGER, MANA)
-// Minecraft 1.21.1 NeoForge | KubeJS Client Script (v2.6)
+// Minecraft 1.21.1 NeoForge | KubeJS Client Script (v2.7)
 // ==============================================================================
 // 1. Suppresses vanilla hearts and chicken drumsticks via RenderGuiLayerEvent$Pre:
 //    - VanillaGuiLayers.PLAYER_HEALTH
 //    - VanillaGuiLayers.FOOD_LEVEL
-// 2. Renders clean, modern RPG status bars:
-//    - CENTERED ROW (screenHeight - 52):
-//      * Health Bar (left: Ruby Red crystal v=42, Lag-Trail v=126, Absorption v=105)
-//      * Native Mana Bar (right: Cyan crystal v=21, ClientMagicData.getPlayerMana())
-//    - RIGHT FLANK (midX + 98 adjacent to hotbar with boundary clamp):
-//      * Stamina Bar (at Mana level: centerBarY = screenHeight - 52)
-//      * Hunger & Saturation Bar (below Stamina: centerBarY + 26 = screenHeight - 26)
-// 3. Compact 92x21 px authentic metallic frames (v=0), split current/max values.
-// 4. Clean font rendering without emojis/icons, centered in frame channels.
+// 2. Renders clean, modern RPG status bars (Option 3 Layout):
+//    - CENTERED ROW (Above hotbar, bottom at screenHeight - 29, 5px gap over hotbar):
+//      * Health Bar: Centered above hotbar, scaled +20% (110x25 px, hpX = midX - 55, hpY = screenHeight - 54)
+//      * Mana Bar: Left of HP, scaled -10% (83x19 px, manaX = hpX - 87, manaY = screenHeight - 48)
+//      * Stamina Bar: Right of HP, scaled -10% (83x19 px, stamX = hpX + 114, stamY = screenHeight - 48)
+//    - RIGHT FLANK (Adjacent to hotbar with boundary clamp, bottom at screenHeight - 29):
+//      * Hunger & Saturation Bar: Standard 100% scale (92x21 px, foodY = screenHeight - 50)
+// 3. Crisp PoseStack matrix scaling for bar frames, fill bars & crystal graphics.
+// 4. Clean, sharp Minecraft font rendering for split values without blur or emoji.
 // 5. Intercepts VanillaGuiLayers.SELECTED_ITEM_NAME to translate up by 28px over bars.
 // 6. Synchronous pause hiding: all 4 bars hide cleanly when mc.screen != null (ESC).
 // ==============================================================================
@@ -79,7 +79,7 @@ let hasLayerRenderedThisFrame = false;
 let isSelectedItemPosePushed = false;
 let isOverlayMessagePosePushed = false;
 
-// HUD Geometry Constants (Narrow 92px Authentic RPG Frames: 92x21 px)
+// HUD Geometry Constants (Base 92px Authentic RPG Frames: 92x21 px)
 var BAR_WIDTH = 92;
 var BAR_HEIGHT = 21;
 
@@ -270,27 +270,52 @@ function safeBlit(guiGraphics, tex, x, y, u, v, w, h) {
 /**
  * Renders split current and max values under an authentic HUD bar:
  * [Current] on left sub-wing, [Max] on right sub-wing, with bottom diamond gem in the center.
- * Eliminates the '/' slash and shifts text down to barY + 17 to prevent overlapping.
+ * Dynamically scales wing centers and vertical baseline to match bar width & height.
  */
-function drawBarSplitValues(guiGraphics, font, barX, barY, curVal, maxVal, color) {
+function drawBarSplitValues(guiGraphics, font, barX, barY, curVal, maxVal, color, actualW, actualH) {
     if (!guiGraphics || !font) return;
     let strCur = String(curVal);
     let strMax = String(maxVal);
-    let ty = Math.round(barY + 17);
+    let w = actualW || BAR_WIDTH;
+    let h = actualH || BAR_HEIGHT;
 
-    // Left sub-wing center: around barX + 22 (leaves 3-4px margin from outer left edge and center gem)
+    let leftCenter = Math.round(barX + (w * (22 / 92)));
+    let rightCenter = Math.round(barX + (w * (70 / 92)));
+    let ty = Math.round(barY + (h * (17 / 21)));
+
     let wCur = font.width(strCur);
-    let txCur = Math.round(barX + 22 - (wCur / 2));
+    let txCur = Math.round(leftCenter - (wCur / 2));
     safeDrawString(guiGraphics, font, strCur, txCur, ty, color);
 
-    // Right sub-wing center: around barX + 70
     let wMax = font.width(strMax);
-    let txMax = Math.round(barX + 70 - (wMax / 2));
+    let txMax = Math.round(rightCenter - (wMax / 2));
     safeDrawString(guiGraphics, font, strMax, txMax, ty, color);
 }
 
+/**
+ * Renders a HUD bar graphic using PoseStack matrix scaling (if scaled) or direct coordinates.
+ * Guarantees crisp rendering without UV clipping and balanced pushPose/popPose.
+ */
+function renderBarGraphic(guiGraphics, hudTex, x, y, actualW, actualH, renderFn) {
+    let pose = guiGraphics && guiGraphics.pose ? guiGraphics.pose() : null;
+    if (pose) {
+        let scaleX = actualW / BAR_WIDTH;
+        let scaleY = actualH / BAR_HEIGHT;
+        pose.pushPose();
+        pose.translate(x, y, 0);
+        pose.scale(scaleX, scaleY, 1.0);
+        try {
+            renderFn(0, 0);
+        } finally {
+            pose.popPose();
+        }
+    } else {
+        renderFn(x, y);
+    }
+}
+
 // ------------------------------------------------------------------------------
-// 3. MASTER HUD RENDER ROUTINE: UNIFIED 2x2 FANTASY RPG BARS
+// 3. MASTER HUD RENDER ROUTINE: OPTION 3 CLASSIC RPG BARS
 // ------------------------------------------------------------------------------
 function renderMasterRpgHud(guiGraphics) {
     if (!guiGraphics) return;
@@ -321,28 +346,45 @@ function renderMasterRpgHud(guiGraphics) {
         let midX = Math.floor(screenWidth / 2);
 
         // ======================================================================
-        // LAYOUT GEOMETRY: Option 1 (Curator Design)
-        // 1. HEALTH & MANA: Centered symmetrically above hotbar (lower row)
-        // 2. STAMINA & HUNGER: Stacked to the RIGHT of hotbar (slots 8-9 flank)
+        // LAYOUT GEOMETRY: Option 3 (Curator Request)
+        // 1. HEALTH (HP): Strictly centered above hotbar, scaled +20% (110x25 px)
+        // 2. MANA: Left of HP at same baseline, scaled -10% (83x19 px)
+        // 3. STAMINA: Right of HP at same baseline, scaled -10% (83x19 px)
+        // 4. HUNGER & SATURATION: Right flank at standard 100% scale (92x21 px)
+        // All 4 bars aligned with bottom at screenHeight - 29 (5px gap above hotbar).
         // ======================================================================
-        let barW = BAR_WIDTH; // 92px
-        let barH = BAR_HEIGHT; // 21px
+        let barW = BAR_WIDTH;   // Base frame width: 92px
+        let barH = BAR_HEIGHT;  // Base frame height: 21px
 
-        // Centered lower row: Health (left) & Mana (right)
-        let hpX = midX - barW - 2;       // midX - 94 to midX - 2
-        let manaX = midX + 2;            // midX + 2 to midX + 94
-        let centerBarY = screenHeight - 52; // Leaves comfortable 5px gap above hotbar
+        // HP: +20% larger -> 110 x 25 px
+        let hpW = 110;
+        let hpH = 25;
+        let hpX = midX - Math.floor(hpW / 2);
+        let hpY = screenHeight - 54; // bottom at screenHeight - 29
 
-        // Right flank: Stamina (level with Mana) & Hunger (below Stamina)
-        let rightFlankX = Math.min(midX + 98, screenWidth - barW - 2); // Sits right adjacent to hotbar with edge clamp
-        let stamY = centerBarY;          // On the same vertical level as Mana/Health
-        let foodY = centerBarY + 26;     // Lowered below Stamina (screenHeight - 26, clean 1px bottom air, no clipping)
+        // Mana: -10% smaller -> 83 x 19 px, left of HP
+        let manaW = 83;
+        let manaH = 19;
+        let manaX = hpX - 4 - manaW;
+        let manaY = screenHeight - 48; // bottom at screenHeight - 29
+
+        // Stamina: -10% smaller -> 83 x 19 px, right of HP
+        let stamW = 83;
+        let stamH = 19;
+        let stamX = hpX + hpW + 4;
+        let stamY = screenHeight - 48; // bottom at screenHeight - 29
+
+        // Hunger & Saturation: 100% scale -> 92 x 21 px, right flank
+        let foodW = 92;
+        let foodH = 21;
+        let foodX = Math.min(stamX + stamW + 6, screenWidth - foodW - 2);
+        let foodY = screenHeight - 50; // bottom at screenHeight - 29
 
         let font = mc.font;
         let hudTex = getHudBarsTex();
 
         // ======================================================================
-        // 1. HEALTH BAR (Left Wing, Centered: hpX, centerBarY)
+        // 1. HEALTH BAR (Centered above hotbar: hpX, hpY, scaled +20%: 110x25 px)
         // ======================================================================
         let curHealth = player.getHealth ? player.getHealth() : (player.health || 20);
         let maxHealth = player.getMaxHealth ? player.getMaxHealth() : (player.maxHealth || 20);
@@ -366,48 +408,50 @@ function renderMasterRpgHud(guiGraphics) {
         let absProgress = Math.max(0.0, Math.min(1.0, absorption / Math.max(1, maxHealth)));
         let absFillWidth = Math.round(barW * absProgress);
 
-        let hpBlitSuccess = false;
-        if (hudTex) {
-            // 1. Outer Authentic Metallic Frame (v=0)
-            hpBlitSuccess = safeBlit(guiGraphics, hudTex, hpX, centerBarY, 0, 0, barW, barH);
+        renderBarGraphic(guiGraphics, hudTex, hpX, hpY, hpW, hpH, function(ox, oy) {
+            let hpBlitSuccess = false;
+            if (hudTex) {
+                // 1. Outer Authentic Metallic Frame (v=0)
+                hpBlitSuccess = safeBlit(guiGraphics, hudTex, ox, oy, 0, 0, barW, barH);
 
-            // 2. Damage Lag-Trail (v=126)
-            if (lagFillWidth > hpFillWidth) {
-                safeBlit(guiGraphics, hudTex, hpX, centerBarY, 0, 126, lagFillWidth, barH);
+                // 2. Damage Lag-Trail (v=126)
+                if (lagFillWidth > hpFillWidth) {
+                    safeBlit(guiGraphics, hudTex, ox, oy, 0, 126, lagFillWidth, barH);
+                }
+
+                // 3. Ruby Red Health Crystal (v=42)
+                if (hpFillWidth > 0) {
+                    safeBlit(guiGraphics, hudTex, ox, oy, 0, 42, hpFillWidth, barH);
+                }
+
+                // 4. Radiant Sun Gold Absorption Shield Overlay (v=105)
+                if (absFillWidth > 0) {
+                    safeBlit(guiGraphics, hudTex, ox, oy, 0, 105, absFillWidth, barH);
+                }
             }
 
-            // 3. Ruby Red Health Crystal (v=42)
-            if (hpFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, hpX, centerBarY, 0, 42, hpFillWidth, barH);
+            if (!hpBlitSuccess) {
+                safeFill(guiGraphics, ox, oy + 8, ox + barW, oy + 15, COLOR_BORDER);
+                safeFill(guiGraphics, ox + 1, oy + 9, ox + barW - 1, oy + 14, COLOR_BG);
+                if (lagFillWidth > hpFillWidth) {
+                    safeFill(guiGraphics, ox + 1, oy + 9, ox + 1 + lagFillWidth, oy + 14, COLOR_LAG);
+                }
+                if (hpFillWidth > 0) {
+                    safeFillGradient(guiGraphics, ox + 1, oy + 9, ox + 1 + hpFillWidth, oy + 14, COLOR_HP_TOP, COLOR_HP_BOT);
+                }
+                if (absFillWidth > 0) {
+                    safeFillGradient(guiGraphics, ox + 1, oy + 9, ox + 1 + absFillWidth, oy + 14, COLOR_ABS_TOP, COLOR_ABS_BOT);
+                }
             }
-
-            // 4. Radiant Sun Gold Absorption Shield Overlay (v=105)
-            if (absFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, hpX, centerBarY, 0, 105, absFillWidth, barH);
-            }
-        }
-
-        if (!hpBlitSuccess) {
-            safeFill(guiGraphics, hpX, centerBarY + 8, hpX + barW, centerBarY + 15, COLOR_BORDER);
-            safeFill(guiGraphics, hpX + 1, centerBarY + 9, hpX + barW - 1, centerBarY + 14, COLOR_BG);
-            if (lagFillWidth > hpFillWidth) {
-                safeFill(guiGraphics, hpX + 1, centerBarY + 9, hpX + 1 + lagFillWidth, centerBarY + 14, COLOR_LAG);
-            }
-            if (hpFillWidth > 0) {
-                safeFillGradient(guiGraphics, hpX + 1, centerBarY + 9, hpX + 1 + hpFillWidth, centerBarY + 14, COLOR_HP_TOP, COLOR_HP_BOT);
-            }
-            if (absFillWidth > 0) {
-                safeFillGradient(guiGraphics, hpX + 1, centerBarY + 9, hpX + 1 + absFillWidth, centerBarY + 14, COLOR_ABS_TOP, COLOR_ABS_BOT);
-            }
-        }
+        });
 
         // Split text: [Current HP] on left, [Max HP] on right (with absorption if active)
         let curHpDisplay = Math.ceil(curHealth) + (absorption > 0.1 ? `+${Math.ceil(absorption)}` : '');
         let maxHpDisplay = Math.ceil(maxHealth);
-        drawBarSplitValues(guiGraphics, font, hpX, centerBarY, curHpDisplay, maxHpDisplay, COLOR_HP_TOP);
+        drawBarSplitValues(guiGraphics, font, hpX, hpY, curHpDisplay, maxHpDisplay, COLOR_HP_TOP, hpW, hpH);
 
         // ======================================================================
-        // 2. MANA BAR (Right Wing, Centered: manaX, centerBarY)
+        // 2. MANA BAR (Left of HP: manaX, manaY, scaled -10%: 83x19 px)
         // ======================================================================
         let curMana = 100;
         let maxMana = 100;
@@ -428,28 +472,30 @@ function renderMasterRpgHud(guiGraphics) {
 
         let manaProgress = Math.max(0.0, Math.min(1.0, curMana / Math.max(1, maxMana)));
         let manaFillWidth = Math.round(barW * manaProgress);
-        let manaBlitSuccess = false;
 
-        if (hudTex) {
-            manaBlitSuccess = safeBlit(guiGraphics, hudTex, manaX, centerBarY, 0, 0, barW, barH);
-            if (manaFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, manaX, centerBarY, 0, 21, manaFillWidth, barH);
+        renderBarGraphic(guiGraphics, hudTex, manaX, manaY, manaW, manaH, function(ox, oy) {
+            let manaBlitSuccess = false;
+            if (hudTex) {
+                manaBlitSuccess = safeBlit(guiGraphics, hudTex, ox, oy, 0, 0, barW, barH);
+                if (manaFillWidth > 0) {
+                    safeBlit(guiGraphics, hudTex, ox, oy, 0, 21, manaFillWidth, barH);
+                }
             }
-        }
 
-        if (!manaBlitSuccess) {
-            safeFill(guiGraphics, manaX, centerBarY + 8, manaX + barW, centerBarY + 15, COLOR_BORDER);
-            safeFill(guiGraphics, manaX + 1, centerBarY + 9, manaX + barW - 1, centerBarY + 14, COLOR_BG);
-            if (manaFillWidth > 0) {
-                safeFillGradient(guiGraphics, manaX + 1, centerBarY + 9, manaX + 1 + manaFillWidth, centerBarY + 14, COLOR_MANA_TOP, COLOR_MANA_BOT);
+            if (!manaBlitSuccess) {
+                safeFill(guiGraphics, ox, oy + 8, ox + barW, oy + 15, COLOR_BORDER);
+                safeFill(guiGraphics, ox + 1, oy + 9, ox + barW - 1, oy + 14, COLOR_BG);
+                if (manaFillWidth > 0) {
+                    safeFillGradient(guiGraphics, ox + 1, oy + 9, ox + 1 + manaFillWidth, oy + 14, COLOR_MANA_TOP, COLOR_MANA_BOT);
+                }
             }
-        }
+        });
 
         // Split text: [Current Mana] on left, [Max Mana] on right
-        drawBarSplitValues(guiGraphics, font, manaX, centerBarY, Math.round(curMana), Math.round(maxMana), COLOR_TEXT_MANA);
+        drawBarSplitValues(guiGraphics, font, manaX, manaY, Math.round(curMana), Math.round(maxMana), COLOR_TEXT_MANA, manaW, manaH);
 
         // ======================================================================
-        // 3. STAMINA BAR (Right Flank, Level with Mana: rightFlankX, stamY)
+        // 3. STAMINA BAR (Right of HP: stamX, stamY, scaled -10%: 83x19 px)
         // ======================================================================
         displayedStamina += (clientStamina - displayedStamina) * 0.35;
         if (Math.abs(clientStamina - displayedStamina) < 0.1) displayedStamina = clientStamina;
@@ -459,30 +505,32 @@ function renderMasterRpgHud(guiGraphics) {
         let stamFillWidth = Math.round(barW * stamProgress);
 
         let isBlocking = player.isBlocking ? player.isBlocking() : false;
-        let stamBlitSuccess = false;
 
-        if (hudTex) {
-            let frameV = isBlocking ? 147 : 0;
-            stamBlitSuccess = safeBlit(guiGraphics, hudTex, rightFlankX, stamY, 0, frameV, barW, barH);
-            if (stamFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, rightFlankX, stamY, 0, 63, stamFillWidth, barH);
+        renderBarGraphic(guiGraphics, hudTex, stamX, stamY, stamW, stamH, function(ox, oy) {
+            let stamBlitSuccess = false;
+            if (hudTex) {
+                let frameV = isBlocking ? 147 : 0;
+                stamBlitSuccess = safeBlit(guiGraphics, hudTex, ox, oy, 0, frameV, barW, barH);
+                if (stamFillWidth > 0) {
+                    safeBlit(guiGraphics, hudTex, ox, oy, 0, 63, stamFillWidth, barH);
+                }
             }
-        }
 
-        if (!stamBlitSuccess) {
-            let currentStamBorder = isBlocking ? COLOR_STAM_BLOCK : COLOR_BORDER;
-            safeFill(guiGraphics, rightFlankX, stamY + 8, rightFlankX + barW, stamY + 15, currentStamBorder);
-            safeFill(guiGraphics, rightFlankX + 1, stamY + 9, rightFlankX + barW - 1, stamY + 14, COLOR_BG);
-            if (stamFillWidth > 0) {
-                safeFillGradient(guiGraphics, rightFlankX + 1, stamY + 9, rightFlankX + 1 + stamFillWidth, stamY + 14, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
+            if (!stamBlitSuccess) {
+                let currentStamBorder = isBlocking ? COLOR_STAM_BLOCK : COLOR_BORDER;
+                safeFill(guiGraphics, ox, oy + 8, ox + barW, oy + 15, currentStamBorder);
+                safeFill(guiGraphics, ox + 1, oy + 9, ox + barW - 1, oy + 14, COLOR_BG);
+                if (stamFillWidth > 0) {
+                    safeFillGradient(guiGraphics, ox + 1, oy + 9, ox + 1 + stamFillWidth, oy + 14, COLOR_AMBER_TOP, COLOR_AMBER_BOT);
+                }
             }
-        }
+        });
 
         // Split text: [Current Stamina] on left, [Max Stamina] on right
-        drawBarSplitValues(guiGraphics, font, rightFlankX, stamY, Math.round(clientStamina), Math.round(maxStam), COLOR_AMBER_TOP);
+        drawBarSplitValues(guiGraphics, font, stamX, stamY, Math.round(clientStamina), Math.round(maxStam), COLOR_AMBER_TOP, stamW, stamH);
 
         // ======================================================================
-        // 4. HUNGER & SATURATION BAR (Right Flank, Below Stamina: rightFlankX, foodY)
+        // 4. HUNGER & SATURATION BAR (Right Flank: foodX, foodY, 100% scale: 92x21 px)
         // ======================================================================
         let foodData = player.getFoodData ? player.getFoodData() : null;
         let foodLevel = foodData ? (foodData.getFoodLevel ? foodData.getFoodLevel() : 20) : 20;
@@ -493,33 +541,34 @@ function renderMasterRpgHud(guiGraphics) {
         let satProgress = Math.max(0.0, Math.min(1.0, saturation / 20.0));
         let satFillWidth = Math.round(barW * satProgress);
 
-        let foodBlitSuccess = false;
+        renderBarGraphic(guiGraphics, hudTex, foodX, foodY, foodW, foodH, function(ox, oy) {
+            let foodBlitSuccess = false;
+            if (hudTex) {
+                foodBlitSuccess = safeBlit(guiGraphics, hudTex, ox, oy, 0, 0, barW, barH);
+                if (foodFillWidth > 0) {
+                    safeBlit(guiGraphics, hudTex, ox, oy, 0, 84, foodFillWidth, barH);
+                }
+                if (satFillWidth > 0) {
+                    safeBlit(guiGraphics, hudTex, ox, oy, 0, 105, satFillWidth, barH);
+                }
+            }
 
-        if (hudTex) {
-            foodBlitSuccess = safeBlit(guiGraphics, hudTex, rightFlankX, foodY, 0, 0, barW, barH);
-            if (foodFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, rightFlankX, foodY, 0, 84, foodFillWidth, barH);
+            if (!foodBlitSuccess) {
+                safeFill(guiGraphics, ox, oy + 8, ox + barW, oy + 15, COLOR_BORDER);
+                safeFill(guiGraphics, ox + 1, oy + 9, ox + barW - 1, oy + 14, COLOR_BG);
+                if (foodFillWidth > 0) {
+                    safeFillGradient(guiGraphics, ox + 1, oy + 9, ox + 1 + foodFillWidth, oy + 14, COLOR_FOOD_TOP, COLOR_FOOD_BOT);
+                }
+                if (satFillWidth > 0) {
+                    safeFillGradient(guiGraphics, ox + 1, oy + 9, ox + 1 + satFillWidth, oy + 14, COLOR_SAT_TOP, COLOR_SAT_BOT);
+                }
             }
-            if (satFillWidth > 0) {
-                safeBlit(guiGraphics, hudTex, rightFlankX, foodY, 0, 105, satFillWidth, barH);
-            }
-        }
-
-        if (!foodBlitSuccess) {
-            safeFill(guiGraphics, rightFlankX, foodY + 8, rightFlankX + barW, foodY + 15, COLOR_BORDER);
-            safeFill(guiGraphics, rightFlankX + 1, foodY + 9, rightFlankX + barW - 1, foodY + 14, COLOR_BG);
-            if (foodFillWidth > 0) {
-                safeFillGradient(guiGraphics, rightFlankX + 1, foodY + 9, rightFlankX + 1 + foodFillWidth, foodY + 14, COLOR_FOOD_TOP, COLOR_FOOD_BOT);
-            }
-            if (satFillWidth > 0) {
-                safeFillGradient(guiGraphics, rightFlankX + 1, foodY + 9, rightFlankX + 1 + satFillWidth, foodY + 14, COLOR_SAT_TOP, COLOR_SAT_BOT);
-            }
-        }
+        });
 
         // Curator rule: at high saturation, simply show total > 20 on left!
         // E.g. foodLevel 20 + saturation 4.0 = 24 on left, 20 on right.
         let curFoodDisplay = (saturation > 0.05) ? Math.round(foodLevel + saturation) : foodLevel;
-        drawBarSplitValues(guiGraphics, font, rightFlankX, foodY, curFoodDisplay, 20, COLOR_FOOD_TOP);
+        drawBarSplitValues(guiGraphics, font, foodX, foodY, curFoodDisplay, 20, COLOR_FOOD_TOP, foodW, foodH);
 
     } catch (eHud) {
         try {
