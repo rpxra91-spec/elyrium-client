@@ -1,8 +1,8 @@
 {
-  "version": "0.4.14",
+  "version": "0.4.15",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-03T17:27:19.892911+00:00",
+  "generated_at": "2026-10-03T19:41:20.896096+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -1232,8 +1232,8 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "a568ecfc759b5f7015d379386a8d487dc74900946378ae42accf5e9f8949f337",
-      "size": 276
+      "sha256": "3d886c5093e88e19754a3f140709bae1a09b25bbe2ac4f458c652a08464e6c4d",
+      "size": 275
     },
     {
       "path": "config/patchouli-client.toml",
@@ -8157,8 +8157,8 @@
     },
     {
       "path": "kubejs/client_scripts/stamina_hud_overlay.js",
-      "sha256": "d354a2c65857653059950f8a27487047b7f85b4666f83f31437fb35e2ff41cab",
-      "size": 32255
+      "sha256": "49a7a3b2c3aa3edd442496e128f2be35fc81de3afe7bb061c0224d06f37d4fcf",
+      "size": 32394
     },
     {
       "path": "kubejs/client_scripts/tier4_tooltips.js",
@@ -14488,8 +14488,8 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/hud/hud_bars.png",
-      "sha256": "83df8bb28a9d21285d580a6cedfb3075f5de741e5820ba9934590c026860b559",
-      "size": 2958
+      "sha256": "7bcb1fcd861d147d12d2cfbc5acf8dd3bf09db7ea0373b4838a10817f70cc696",
+      "size": 2873
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/skills/alchemist_class.png",
@@ -16023,7 +16023,7 @@
     },
     {
       "path": "shaderpacks/superDuperVanilla.zip.txt",
-      "sha256": "a72f88f24a540d9c917348457e7feec80abe2ada546a86b94c5ab693d33286c7",
+      "sha256": "6c698df184f9e67433c6c23d4f5962cd0119adf4bf3691b23e8804831c5d037a",
       "size": 231
     }
   ]

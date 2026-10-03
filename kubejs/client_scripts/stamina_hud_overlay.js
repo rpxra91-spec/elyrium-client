@@ -92,9 +92,11 @@ var COLOR_LAG = (0xFFFECACA | 0);          // Light Red Damage Lag-Trail
 var COLOR_HP_TOP = (0xFFEF4444 | 0);       // Red #EF4444
 var COLOR_HP_BOT = (0xFF991B1B | 0);       // Crimson #991B1B
 var COLOR_ABS_TOP = (0xCCFBBF24 | 0);      // Amber Gold Absorption Shield
-var COLOR_ABS_BOT = (0xCCD97706 | 0);
-var COLOR_AMBER_TOP = (0xFFF59E0B | 0);    // Amber #F59E0B
-var COLOR_AMBER_BOT = (0xFFB45309 | 0);    // Bronze Amber #B45309
+var COLOR_STAM_TOP = (0xFFA78BFA | 0);    // Violet #A78BFA (Option 2 Storm Amethyst)
+var COLOR_STAM_BOT = (0xFF7C3AED | 0);    // Deep Violet #7C3AED
+var COLOR_TEXT_STAM = (0xFFDDD6FE | 0);   // Pale Amethyst #DDD6FE
+var COLOR_AMBER_TOP = COLOR_STAM_TOP;
+var COLOR_AMBER_BOT = COLOR_STAM_BOT;
 var COLOR_STAM_BLOCK = (0xFF06B6D4 | 0);   // Cyan glow on block
 var COLOR_FOOD_TOP = (0xFFFB923C | 0);     // Orange #FB923C
 var COLOR_FOOD_BOT = (0xFFC2410C | 0);     // Dark Orange #C2410C
@@ -530,8 +532,8 @@ function renderMasterRpgHud(guiGraphics) {
             }
         });
 
-        // Unified text: [Current Stamina / Max Stamina]
-        drawBarValues(guiGraphics, font, stamX, stamY, Math.round(clientStamina), Math.round(maxStam), COLOR_AMBER_TOP, stamW, stamH);
+        // Unified text: [Current Stamina / Max Stamina] under bar
+        drawBarValues(guiGraphics, font, stamX, stamY, Math.round(clientStamina), Math.round(maxStam), COLOR_TEXT_STAM, stamW, stamH);
 
         // ======================================================================
         // 4. HUNGER & SATURATION BAR (Right Flank: foodX, foodY, 100% scale: 92x21 px)
