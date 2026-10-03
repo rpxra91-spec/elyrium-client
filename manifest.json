@@ -1,8 +1,8 @@
 {
-  "version": "0.4.12",
+  "version": "0.4.13",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-03T12:59:13.503253+00:00",
+  "generated_at": "2026-10-03T14:05:17.025774+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -337,7 +337,7 @@
     },
     {
       "path": "config/chunky/tasks/minecraft/overworld.properties",
-      "sha256": "c36a98882185abbe1a5f6a3e99884d4fb5f37dde9f9058aa17ed0c0cd51126e9",
+      "sha256": "d762b9f3f6613a00e626947b481f9518e3b6f25cb1adb63fd4428c143625fbea",
       "size": 129
     },
     {
@@ -1232,7 +1232,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "e0857a1a0881bead3d2459d8f428eb6cd58434079c2bbc9286c1d2aca561fd7b",
+      "sha256": "9aad09fec85dc610fdd7530a192b51d01ca9b5b9a6c43ba547a8ae83cec6d5de",
       "size": 276
     },
     {
@@ -1739,6 +1739,11 @@
       "path": "config/vanilla_structures/toggle_structure_config.json5",
       "sha256": "a50b4ca77d21ae105e68560c1af694125ea06360374c82e87f4da54b7ecfa51d",
       "size": 1584
+    },
+    {
+      "path": "config/vital.json",
+      "sha256": "49a8ffc14a8ba50c422fefca9f9d03fb771183b2cbc0d965f28853183e9b4804",
+      "size": 743
     },
     {
       "path": "config/watut-client.toml",
@@ -8122,8 +8127,8 @@
     },
     {
       "path": "kubejs/client_scripts/item_en_tooltip.js",
-      "sha256": "327d869ed59a6e2f5717cb134f7c35e92b627ca55e65c37f39d4c752e69a8824",
-      "size": 869
+      "sha256": "ec2667d1f3dbea346dbb4765b13bc32cad64560cf53e33818c97271d1405ed9c",
+      "size": 702
     },
     {
       "path": "kubejs/client_scripts/martial_arts_tooltips.js",
@@ -8152,8 +8157,8 @@
     },
     {
       "path": "kubejs/client_scripts/stamina_hud_overlay.js",
-      "sha256": "7fe7487fa96eb493b25cb922ae5812cb05bd984e4d3f3734bec5a2bb32f03aa8",
-      "size": 32442
+      "sha256": "bb66669b225b87ae0283e67ea1ae5f38dfa1434f57e574b6244b957c911cc0ba",
+      "size": 32128
     },
     {
       "path": "kubejs/client_scripts/tier4_tooltips.js",
@@ -14483,8 +14488,8 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/hud/hud_bars.png",
-      "sha256": "41611758476eca75b7baedd9f297deec7716f8e94814758c2547d6f9ae2e44b2",
-      "size": 3341
+      "sha256": "0405a494429e46a32af5c3cadf81b20afc898f4de360915c6c17ee8f8eb8f63b",
+      "size": 4029
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/skills/alchemist_class.png",

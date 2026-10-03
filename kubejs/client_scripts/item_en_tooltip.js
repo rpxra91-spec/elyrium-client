@@ -5,11 +5,7 @@ ItemEvents.modifyTooltips(event => {
         if (!item) return
         let id = String(item.id)
         if (id.startsWith('minecraft:')) return
-
-        // Keep player tooltips clean: only show technical ID/Original name when Shift is held
-        let isShift = (typeof tooltip.isShift === 'function') ? tooltip.isShift() : (tooltip.shift || false);
-        if (!isShift) return;
-
+        // Always show technical ID and original name per Curator request
         let parts = id.split(':')
         if (parts.length > 1) {
             let enName = parts[1].split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
