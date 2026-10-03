@@ -1761,48 +1761,10 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
     // 28. SPEAR FLURRY (Шквал Пяти Уколов: 5 rapid thrusts with 5.5b reach)
     // ==========================================================================
     } else if (resolvedId === 'spear_flurry') {
-        let singleStrikeDmg = (baseDmg * art.dmgMult) / 5.0; // 5 hits total
-        let hLen = Math.max(0.01, Math.sqrt(look.x * look.x + look.y * look.y + look.z * look.z));
-        let normX = look.x / hLen;
-        let normY = look.y / hLen;
-        let normZ = look.z / hLen;
-        let reach = 5.5;
-
-        for (let strike = 0; strike < 5; strike++) {
-            player.server.scheduleInTicks(strike * 2, () => {
-                if (!player || !player.isAlive()) return;
-                let curLook = player.getLookAngle();
-                let curHLen = Math.max(0.01, Math.sqrt(curLook.x * curLook.x + curLook.y * curLook.y + curLook.z * curLook.z));
-                let cnx = curLook.x / curHLen;
-                let cny = curLook.y / curHLen;
-                let cnz = curLook.z / curHLen;
-
-                let hitSet = new Set();
-                for (let d = 1.0; d <= reach; d += 0.8) {
-                    let px = player.x + cnx * d;
-                    let py = player.y + player.eyeHeight - 0.1 + cny * d;
-                    let pz = player.z + cnz * d;
-
-                    let b = AABB.of(px - 0.8, py - 0.8, pz - 0.8, px + 0.8, py + 0.8, pz + 0.8);
-                    let ents = level.getEntitiesWithin(b);
-                    ents.forEach(ent => {
-                        if (ent && ent.isLiving() && !ent.isPlayer() && ent.isAlive() && !hitSet.has(ent.id)) {
-                            hitSet.add(ent.id);
-                            dealArtDamage(player, ent, singleStrikeDmg, false);
-                            ent.knockback(0.4, -cnx, -cnz);
-                        }
-                    });
-                }
-
-                let fx = player.x + cnx * 2.5;
-                let fy = player.y + player.eyeHeight - 0.1 + cny * 2.5;
-                let fz = player.z + cnz * 2.5;
-                player.server.runCommandSilent(`playsound minecraft:item.trident.throw player ${u} ${fx} ${fy} ${fz} 1.1 ${1.2 + strike * 0.1}`);
-                player.server.runCommandSilent(`particle minecraft:sweep_attack ${fx} ${fy} ${fz} 0.3 0.3 0.3 0.05 5 normal`);
-                player.server.runCommandSilent(`particle minecraft:crit ${fx} ${fy} ${fz} 0.2 0.2 0.2 0.05 4 normal`);
-            });
+        if (typeof executeSpearFlurry === 'function') {
+            executeSpearFlurry(player);
+            return;
         }
-        player.sendSystemMessage(Text.of(`§b🔱 ШКВАЛ ПЯТИ УКОЛОВ! §fПулеметная серия уколов с 5.5 блоков ${stamTag}`), true);
 
     // ==========================================================================
     // 29. POLEARM VAULT (Шестовой Прыжок: 4.5b vault + ground dive impact)
@@ -2008,6 +1970,10 @@ EntityEvents.beforeHurt(event => {
     // B. OUTGOING DAMAGE FROM PLAYER: GUARD COUNTER, SPEAR GRIP, SHADOW CRIT
     // ==========================================================================
     if (attacker && attacker.isPlayer() && attacker.isAlive() && victim && victim.isAlive() && !victim.isPlayer()) {
+        if (attacker.persistentData.getBoolean('skd_is_art_strike')) {
+            return;
+        }
+
         let mainHand = attacker.mainHandItem;
         let offHand = attacker.offHandItem;
         let hasShield = (offHand && isShield(offHand)) || (mainHand && isShield(mainHand));
@@ -2022,6 +1988,10 @@ EntityEvents.beforeHurt(event => {
             }
             // B. Shift + Left-click with shield -> Main hand innate weapon art!
             if (attacker.isCrouching()) {
+                if (isSpear(mainHand)) {
+                    // Handled exclusively by spear_combat_engine.js
+                    return;
+                }
                 let innate = resolveInnateWeaponArt(attacker, false);
                 if (innate && WEAPON_ARTS[innate]) {
                     executeWeaponArt(attacker, innate, false, false);
@@ -2346,6 +2316,10 @@ NetworkEvents.dataReceived('elyrium:trigger_weapon_art', event => {
             player.sendSystemMessage(Text.of('§7Возьмите оружие в основную руку для боевого искусства.'), true);
             return;
         }
+        if (isSpear(mainHand)) {
+            // Handled exclusively by spear_combat_engine.js
+            return;
+        }
         let innateArt = resolveInnateWeaponArt(player, false);
         if (innateArt && WEAPON_ARTS[innateArt]) {
             executeWeaponArt(player, innateArt, false, false);
@@ -2441,7 +2415,7 @@ PlayerEvents.tick(event => {
     // 3. Spear Universal Grip Reach (+1.5m Entity Interaction Range when two-handed)
     let mainHand = player.mainHandItem;
     let offHand = player.offHandItem;
-    let isTwoHandedSpear = mainHand && !mainHand.isEmpty() && isSpear(mainHand) && (!offHand || offHand.isEmpty() || offHand.id === 'minecraft:air');
+    let isTwoHandedSpear = mainHand && !mainHand.isEmpty() && isSpear(mainHand) && (!offHand || offHand.isEmpty() || !isShield(offHand));
     let hadSpearReach = player.persistentData.getBoolean('skd_spear_reach_active');
 
     if (isTwoHandedSpear && !hadSpearReach) {

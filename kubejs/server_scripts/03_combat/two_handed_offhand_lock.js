@@ -116,19 +116,32 @@ function isOffhandRestricted(item) {
 function isSpearItem(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
     let id = String(item.id).toLowerCase();
-    return id.includes('spear') || id.includes('lance') || id.includes('glaive') ||
-           id.includes('halberd') || id.includes('polearm') || id.includes('pike') ||
-           item.hasTag('c:tools/spears') || item.hasTag('c:spears') || item.hasTag('forge:tools/spears');
+    if (id.startsWith('simplyswords:') && id.endsWith('_spear')) return true;
+    if (id.includes('spear') || id.includes('lance') || id.includes('glaive') ||
+        id.includes('halberd') || id.includes('polearm') || id.includes('pike') ||
+        id.includes('trident')) return true;
+    try {
+        if (item.hasTag && (
+            item.hasTag('c:tools/spears') || item.hasTag('c:spears') ||
+            item.hasTag('forge:tools/spears') || item.hasTag('forge:spears') ||
+            item.hasTag('c:tools/polearms') || item.hasTag('c:polearms')
+        )) return true;
+    } catch (eTag) {}
+    return false;
 }
 
 function isShieldItem(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
     let id = String(item.id).toLowerCase();
-    return id.includes('shield') ||
-           item.hasTag('c:tools/shields') ||
-           item.hasTag('c:shields') ||
-           item.hasTag('forge:shields') ||
-           item.hasTag('minecraft:shields');
+    if (id.includes('shield')) return true;
+    try {
+        if (item.hasTag && (
+            item.hasTag('c:tools/shields') || item.hasTag('c:shields') ||
+            item.hasTag('forge:tools/shields') || item.hasTag('forge:shields') ||
+            item.hasTag('minecraft:shields')
+        )) return true;
+    } catch (eTag) {}
+    return false;
 }
 
 function enforceTwoHandedRestriction(player) {

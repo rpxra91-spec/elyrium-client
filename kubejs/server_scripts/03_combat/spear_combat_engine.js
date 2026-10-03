@@ -167,14 +167,13 @@ function getSpearBaseDamage(player) {
 
 function dealSpearStrikeDamage(player, target, damage, bypassArmor) {
     if (!player || !target || !target.isAlive()) return;
+    player.persistentData.putBoolean('skd_is_art_strike', true);
     try {
         if (typeof dealArtDamage === 'function') {
             dealArtDamage(player, target, damage, bypassArmor);
             return;
         }
-    } catch (e) {}
 
-    try {
         if (bypassArmor) {
             target.attack(player.damageSources().magic(), damage);
         } else {
@@ -182,6 +181,8 @@ function dealSpearStrikeDamage(player, target, damage, bypassArmor) {
         }
     } catch (e1) {
         try { target.attack(player, damage); } catch (e2) {}
+    } finally {
+        player.persistentData.remove('skd_is_art_strike');
     }
 }
 
@@ -490,7 +491,10 @@ ItemEvents.firstRightClicked(event => {
     if (hasShieldInOffhand) {
         // Cancel spear action so offhand shield raises unhindered
         event.cancel();
-        try { player.stopUsingItem(); } catch (eStop) {}
+        let useItem = player.useItem;
+        if (useItem && isSpearWeaponItem(useItem)) {
+            try { player.stopUsingItem(); } catch (eStop) {}
+        }
         try {
             if (J_InteractionHand_Spear) {
                 player.startUsingItem(J_InteractionHand_Spear.OFF_HAND);
@@ -501,7 +505,10 @@ ItemEvents.firstRightClicked(event => {
 
     // MODE B: No Shield (Two-Handed Grip -> Spear Throw Skill)
     event.cancel();
-    try { player.stopUsingItem(); } catch (eStop) {}
+    let useItem = player.useItem;
+    if (useItem && isSpearWeaponItem(useItem)) {
+        try { player.stopUsingItem(); } catch (eStop) {}
+    }
     executeSpearThrow(player, item);
 });
 
@@ -520,13 +527,20 @@ ItemEvents.rightClicked(event => {
 
     if (hasShieldInOffhand) {
         event.cancel();
-        try { player.stopUsingItem(); } catch (eStop) {}
+        // Crucial fix: Only stop using item if player is charging spear, NEVER stop active shield!
+        let useItem = player.useItem;
+        if (useItem && isSpearWeaponItem(useItem)) {
+            try { player.stopUsingItem(); } catch (eStop) {}
+        }
         return;
     }
 
     // Suppress sustained right-click charging from vanilla/simplyswords
     event.cancel();
-    try { player.stopUsingItem(); } catch (eStop) {}
+    let useItem = player.useItem;
+    if (useItem && isSpearWeaponItem(useItem)) {
+        try { player.stopUsingItem(); } catch (eStop) {}
+    }
 });
 
 // ------------------------------------------------------------------------------
@@ -587,6 +601,9 @@ EntityEvents.beforeHurt(event => {
     let mainHand = attacker.mainHandItem;
     if (!isSpearWeaponItem(mainHand)) return;
 
+    // Ignore recursive art damage events from Spear Flurry / Spear Throw
+    if (attacker.persistentData.getBoolean('skd_is_art_strike')) return;
+
     // Shift + LMB attack triggers Spear Flurry
     if (attacker.isCrouching()) {
         let now = Date.now();
@@ -595,6 +612,9 @@ EntityEvents.beforeHurt(event => {
             executeSpearFlurry(attacker);
             event.cancel();
             return;
+        } else {
+            let remainSec = Math.ceil((cdEnd - now) / 1000);
+            attacker.sendSystemMessage(Text.of(`§7Боевое искусство «Шквал Уколов» восстанавливается (§e${remainSec}с§7)...`), true);
         }
     }
 
@@ -603,16 +623,18 @@ EntityEvents.beforeHurt(event => {
 
     // Mode A: Guard Thrust with Shield
     if (hasShield) {
-        // Re-raise shield immediately after Guard Thrust
-        try {
-            attacker.server.scheduleInTicks(1, () => {
-                if (attacker && attacker.isAlive() && J_InteractionHand_Spear) {
-                    if (isShieldWeaponItem(attacker.offHandItem)) {
-                        attacker.startUsingItem(J_InteractionHand_Spear.OFF_HAND);
+        // Only re-raise shield if player was actively blocking or using item (do not force idle attack into block)
+        if (attacker.isBlocking() || attacker.isUsingItem()) {
+            try {
+                attacker.server.scheduleInTicks(1, () => {
+                    if (attacker && attacker.isAlive() && J_InteractionHand_Spear) {
+                        if (isShieldWeaponItem(attacker.offHandItem)) {
+                            attacker.startUsingItem(J_InteractionHand_Spear.OFF_HAND);
+                        }
                     }
-                }
-            });
-        } catch (eGuard) {}
+                });
+            } catch (eGuard) {}
+        }
     }
 });
 
@@ -625,15 +647,30 @@ EntityEvents.spawned(event => {
     if (!entity) return;
     let type = String(entity.type).toLowerCase();
 
-    // Catch thrown spear or trident entities spawned by player
+    // Catch any thrown spear or trident entities spawned by player
     if (type.includes('spear') || type.includes('trident')) {
         let owner = entity.owner;
         if (owner && owner.isPlayer && owner.isPlayer()) {
-            let lastThrowTick = owner.persistentData.getInt('elyrium_last_spear_throw_tick') || 0;
-            let curTick = (typeof owner.tickCount === 'number') ? owner.tickCount : (owner.age || 0);
-            if (Math.abs(curTick - lastThrowTick) <= 5) {
-                // Prevent duplicate vanilla physical entity from dropping on ground
-                event.cancel();
+            // Cancel physical entity spawn so weapon is NEVER lost on ground
+            event.cancel();
+
+            // Safety recovery: If SimplySwords shrink(1) happened, restore the weapon stack!
+            let thrownStack = null;
+            try {
+                if (entity.pickupItemStackOrigin) thrownStack = entity.pickupItemStackOrigin;
+                else if (entity.item) thrownStack = entity.item;
+                else if (typeof entity.getItem === 'function') thrownStack = entity.getItem();
+            } catch (eStack) {}
+
+            if (thrownStack && !thrownStack.isEmpty()) {
+                let main = owner.mainHandItem;
+                if (!main || main.isEmpty() || main.id === 'minecraft:air') {
+                    owner.setMainHandItem(thrownStack);
+                } else if (main.id === thrownStack.id && main.count < thrownStack.maxStackSize) {
+                    main.count++;
+                } else {
+                    owner.give(thrownStack);
+                }
             }
         }
     }

@@ -14,6 +14,7 @@ let J_MC_BC = null;
 let J_PlayerAttackAnimatable = null;
 let J_Integer_ARTS = null;
 let J_Float_ARTS = null;
+let J_InteractionHand_ARTS = null;
 
 function initArtsClientApi() {
     if (!J_GLFW_ARTS) {
@@ -33,6 +34,9 @@ function initArtsClientApi() {
     }
     if (!J_Float_ARTS) {
         try { J_Float_ARTS = Java.loadClass('java.lang.Float'); } catch (e) {}
+    }
+    if (!J_InteractionHand_ARTS) {
+        try { J_InteractionHand_ARTS = Java.loadClass('net.minecraft.world.InteractionHand'); } catch (e) {}
     }
 }
 
@@ -138,6 +142,38 @@ ClientEvents.tick(event => {
     // 3. Shield Combat Combinations on Left-Click (LMB):
     //    - Shield Raised (RMB) + Left-Click (LMB) -> Shield Bash!
     //    - Shield in Offhand + Shift (Crouch) + Left-Click (LMB) -> Innate Weapon Art!
+    let offHand = mc.player.getOffhandItem ? mc.player.getOffhandItem() : mc.player.offHandItem;
+    let mainHand = mc.player.getMainHandItem ? mc.player.getMainHandItem() : mc.player.mainHandItem;
+
+    let checkShieldItem = function(stack) {
+        if (!stack || stack.isEmpty()) return false;
+        let id = String(stack.getItem ? stack.getItem().toString() : (stack.id || '')).toLowerCase();
+        if (id.includes('shield')) return true;
+        try {
+            if (stack.hasTag && (stack.hasTag('c:tools/shields') || stack.hasTag('minecraft:shields') || stack.hasTag('c:shields') || stack.hasTag('forge:tools/shields'))) return true;
+        } catch (eT) {}
+        return false;
+    };
+
+    let checkSpearItem = function(stack) {
+        if (!stack || stack.isEmpty()) return false;
+        let id = String(stack.getItem ? stack.getItem().toString() : (stack.id || '')).toLowerCase();
+        if (id.startsWith('simplyswords:') && id.endsWith('_spear')) return true;
+        if (id.includes('spear') || id.includes('halberd') || id.includes('lance') ||
+            id.includes('pike') || id.includes('polearm') || id.includes('glaive') || id.includes('trident')) return true;
+        try {
+            if (stack.hasTag && (stack.hasTag('c:tools/spears') || stack.hasTag('c:spears') || stack.hasTag('forge:tools/spears') || stack.hasTag('c:tools/polearms'))) return true;
+        } catch (eT) {}
+        return false;
+    };
+
+    let isShield = checkShieldItem(offHand) || checkShieldItem(mainHand);
+    let isSpear = checkSpearItem(mainHand);
+
+    // 3. Shield Combat Combinations on Left-Click (LMB):
+    //    - Shield Raised (RMB) + Left-Click (LMB) -> Shield Bash!
+    //    - Shield in Offhand + Shift (Crouch) + Left-Click (LMB) -> Innate Weapon Art!
+    //    - Spear + Shift (Crouch) + Left-Click (LMB) -> Spear Flurry!
     let isAttackDown = false;
     try {
         if (mc.options && mc.options.keyAttack && mc.options.keyAttack.isDown()) {
@@ -148,35 +184,6 @@ ClientEvents.tick(event => {
     } catch (eAtt) {}
 
     if (isAttackDown) {
-        let offHand = mc.player.getOffhandItem ? mc.player.getOffhandItem() : mc.player.offHandItem;
-        let mainHand = mc.player.getMainHandItem ? mc.player.getMainHandItem() : mc.player.mainHandItem;
-        let isShield = false;
-        let checkShieldItem = function(stack) {
-            if (!stack || stack.isEmpty()) return false;
-            let id = String(stack.getItem ? stack.getItem().toString() : (stack.id || '')).toLowerCase();
-            if (id.includes('shield')) return true;
-            try {
-                if (stack.hasTag && (stack.hasTag('c:tools/shields') || stack.hasTag('minecraft:shields') || stack.hasTag('c:shields'))) return true;
-            } catch (eT) {}
-            return false;
-        };
-        if (checkShieldItem(offHand) || checkShieldItem(mainHand)) {
-            isShield = true;
-        }
-
-        let checkSpearItem = function(stack) {
-            if (!stack || stack.isEmpty()) return false;
-            let id = String(stack.getItem ? stack.getItem().toString() : (stack.id || '')).toLowerCase();
-            if (id.startsWith('simplyswords:') && id.endsWith('_spear')) return true;
-            if (id.includes('spear') || id.includes('halberd') || id.includes('lance') ||
-                id.includes('pike') || id.includes('polearm') || id.includes('glaive') || id.includes('trident')) return true;
-            try {
-                if (stack.hasTag && (stack.hasTag('c:tools/spears') || stack.hasTag('c:spears') || stack.hasTag('forge:tools/spears') || stack.hasTag('c:tools/polearms'))) return true;
-            } catch (eT) {}
-            return false;
-        };
-        let isSpear = checkSpearItem(mainHand);
-
         let isCrouching = false;
         try {
             if (mc.player.isCrouching && mc.player.isCrouching()) {
@@ -245,4 +252,61 @@ ClientEvents.tick(event => {
         }
     }
     artsKeyPrev.attack = isAttackDown;
+
+    // 4. Spear Right-Click Handling (Native Shield Raising & Charge Prevention):
+    if (isSpear) {
+        let hasShieldInOffhand = checkShieldItem(offHand);
+        let isUseDown = false;
+        try {
+            if (mc.options && mc.options.keyUse && mc.options.keyUse.isDown()) {
+                isUseDown = true;
+            } else if (J_GLFW_ARTS.glfwGetMouseButton(windowHandle, 1) === 1) {
+                isUseDown = true;
+            }
+        } catch (eU) {}
+
+        if (isUseDown) {
+            if (hasShieldInOffhand) {
+                // Mode A: Hoplite Grip - Cancel spear charge and ensure offhand shield raises
+                let isUsingSpear = false;
+                try {
+                    if (mc.player.isUsingItem && mc.player.isUsingItem()) {
+                        let used = mc.player.getUseItem ? mc.player.getUseItem() : mc.player.useItem;
+                        if (checkSpearItem(used)) isUsingSpear = true;
+                    }
+                } catch (eSp) {}
+
+                if (isUsingSpear) {
+                    try { mc.player.stopUsingItem(); } catch (eStop) {}
+                }
+
+                let isAlreadyUsing = false;
+                try {
+                    if (mc.player.isUsingItem && mc.player.isUsingItem()) {
+                        isAlreadyUsing = true;
+                    }
+                } catch (eUsing) {}
+
+                if (!isAlreadyUsing && J_InteractionHand_ARTS) {
+                    try {
+                        if (mc.gameMode) {
+                            mc.gameMode.useItem(mc.player, J_InteractionHand_ARTS.OFF_HAND);
+                        } else {
+                            mc.player.startUsingItem(J_InteractionHand_ARTS.OFF_HAND);
+                        }
+                    } catch (eStartShield) {}
+                }
+            } else {
+                // Mode B: Two-Handed Grip - Suppress SimplySwords sustained charge so weapon is never lost
+                try {
+                    if (mc.player.isUsingItem && mc.player.isUsingItem()) {
+                        let used = mc.player.getUseItem ? mc.player.getUseItem() : mc.player.useItem;
+                        if (checkSpearItem(used)) {
+                            mc.player.stopUsingItem();
+                        }
+                    }
+                } catch (eStop2H) {}
+            }
+        }
+    }
 });
