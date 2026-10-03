@@ -113,6 +113,24 @@ function isOffhandRestricted(item) {
     return false;
 }
 
+function isSpearItem(item) {
+    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
+    let id = String(item.id).toLowerCase();
+    return id.includes('spear') || id.includes('lance') || id.includes('glaive') ||
+           id.includes('halberd') || id.includes('polearm') || id.includes('pike') ||
+           item.hasTag('c:tools/spears') || item.hasTag('c:spears') || item.hasTag('forge:tools/spears');
+}
+
+function isShieldItem(item) {
+    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
+    let id = String(item.id).toLowerCase();
+    return id.includes('shield') ||
+           item.hasTag('c:tools/shields') ||
+           item.hasTag('c:shields') ||
+           item.hasTag('forge:shields') ||
+           item.hasTag('minecraft:shields');
+}
+
 function enforceTwoHandedRestriction(player) {
     if (!player || !player.isAlive()) return;
     if (player.isCreative() || player.isSpectator()) return;
@@ -122,6 +140,12 @@ function enforceTwoHandedRestriction(player) {
 
     let is2H = isTwoHandedWeapon(mainHand);
     let isOffRestricted = isOffhandRestricted(offHand);
+
+    // Versatile Dual-Grip Exception: Spears allow shields in offhand (Hoplite / Legionnaire style)
+    if (isSpearItem(mainHand) && isShieldItem(offHand)) {
+        is2H = false;
+    }
+
     let shouldLock = is2H && isOffRestricted;
 
     let prevLocked = player.persistentData.getBoolean('skd_offhand_locked');

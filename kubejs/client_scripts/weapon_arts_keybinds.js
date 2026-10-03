@@ -164,7 +164,46 @@ ClientEvents.tick(event => {
             isShield = true;
         }
 
-        if (isShield) {
+        let checkSpearItem = function(stack) {
+            if (!stack || stack.isEmpty()) return false;
+            let id = String(stack.getItem ? stack.getItem().toString() : (stack.id || '')).toLowerCase();
+            if (id.startsWith('simplyswords:') && id.endsWith('_spear')) return true;
+            if (id.includes('spear') || id.includes('halberd') || id.includes('lance') ||
+                id.includes('pike') || id.includes('polearm') || id.includes('glaive') || id.includes('trident')) return true;
+            try {
+                if (stack.hasTag && (stack.hasTag('c:tools/spears') || stack.hasTag('c:spears') || stack.hasTag('forge:tools/spears') || stack.hasTag('c:tools/polearms'))) return true;
+            } catch (eT) {}
+            return false;
+        };
+        let isSpear = checkSpearItem(mainHand);
+
+        let isCrouching = false;
+        try {
+            if (mc.player.isCrouching && mc.player.isCrouching()) {
+                isCrouching = true;
+            } else if (mc.player.isShiftKeyDown && mc.player.isShiftKeyDown()) {
+                isCrouching = true;
+            } else if (mc.options && mc.options.keyShift && mc.options.keyShift.isDown()) {
+                isCrouching = true;
+            } else if (mc.options && mc.options.keySneak && mc.options.keySneak.isDown()) {
+                isCrouching = true;
+            } else if (J_GLFW_ARTS.glfwGetKey(windowHandle, 340) === 1 || J_GLFW_ARTS.glfwGetKey(windowHandle, 344) === 1) {
+                isCrouching = true;
+            }
+        } catch (eCrch) {}
+
+        // Special Spear Dual-Grip handling: Shift + LMB triggers Spear Flurry (with or without shield)
+        if (isSpear && isCrouching) {
+            suppressCombatAttack();
+            if (!artsKeyPrev.attack) {
+                if (now - lastArtKeySend >= 250) {
+                    lastArtKeySend = now;
+                    try {
+                        mc.player.sendData('elyrium:trigger_weapon_art', { action: 'spear_flurry' });
+                    } catch (eNet) {}
+                }
+            }
+        } else if (isShield) {
             let isBlocking = false;
             try {
                 if (mc.player.isBlocking && mc.player.isBlocking()) {
@@ -177,21 +216,6 @@ ClientEvents.tick(event => {
                     isBlocking = true;
                 }
             } catch (eBlk) {}
-
-            let isCrouching = false;
-            try {
-                if (mc.player.isCrouching && mc.player.isCrouching()) {
-                    isCrouching = true;
-                } else if (mc.player.isShiftKeyDown && mc.player.isShiftKeyDown()) {
-                    isCrouching = true;
-                } else if (mc.options && mc.options.keyShift && mc.options.keyShift.isDown()) {
-                    isCrouching = true;
-                } else if (mc.options && mc.options.keySneak && mc.options.keySneak.isDown()) {
-                    isCrouching = true;
-                } else if (J_GLFW_ARTS.glfwGetKey(windowHandle, 340) === 1 || J_GLFW_ARTS.glfwGetKey(windowHandle, 344) === 1) {
-                    isCrouching = true;
-                }
-            } catch (eCrch) {}
 
             // Unconditionally suppress Better Combat / Vanilla attack when blocking or crouching with shield
             if (isBlocking || isCrouching) {

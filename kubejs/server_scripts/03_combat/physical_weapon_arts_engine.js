@@ -685,9 +685,9 @@ function resolveInnateWeaponArt(player, isAirborne) {
         return 'severing_cleave';
     }
 
-    // 5. Polearms & Spears: Armor-Piercing Thrust (Бронебойный Прокол)
+    // 5. Polearms & Spears: Spear Flurry (Шквал Пяти Уколов)
     if (isSpear(mainItem)) {
-        return 'piercing_thrust';
+        return 'spear_flurry';
     }
 
     // 6. Daggers & Dual Blades: Scissor Cross-Slash (Ножницы) or Shadow Step
@@ -2057,8 +2057,8 @@ EntityEvents.beforeHurt(event => {
         if (mainHand && isSpear(mainHand)) {
             let hasShieldInOffhand = offHand && isShield(offHand);
             if (!hasShieldInOffhand) {
-                // Two-Handed Power Grip (+15% physical damage, +1.0m reach)
-                event.damage *= 1.15;
+                // Two-Handed Power Grip (+30% physical damage, +1.5m reach)
+                event.damage *= 1.30;
                 attacker.server.runCommandSilent(`particle minecraft:enchanted_hit ${victim.x} ${victim.y + 1} ${victim.z} 0.3 0.3 0.3 0.1 10 normal`);
             } else {
                 // Guard Thrust with Shield (-10% damage for impenetrable safety)
@@ -2240,7 +2240,8 @@ ItemEvents.rightClicked(event => {
             }
             return;
         } else {
-            // [ПКМ] without crouch: Handled natively by Spell Engine (Slot 1 Innate Art).
+            // [ПКМ] without crouch: Handled natively by spear_combat_engine.js for spears
+            if (isSpear(mainHand)) return;
             // Check weapon cooldown before consuming stamina or allowing action
             let rawItem = mainHand.getItem ? mainHand.getItem() : mainHand.item;
             let isOnCooldown = false;
@@ -2445,7 +2446,7 @@ PlayerEvents.tick(event => {
 
     if (isTwoHandedSpear && !hadSpearReach) {
         player.persistentData.putBoolean('skd_spear_reach_active', true);
-        player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier add elyrium:spear_reach 1.0 add_value`);
+        player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier add elyrium:spear_reach 1.5 add_value`);
     } else if (!isTwoHandedSpear && hadSpearReach) {
         player.persistentData.putBoolean('skd_spear_reach_active', false);
         player.server.runCommandSilent(`attribute ${player.username} minecraft:player.entity_interaction_range modifier remove elyrium:spear_reach`);

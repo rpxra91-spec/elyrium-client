@@ -1,8 +1,8 @@
 {
-  "version": "0.4.15",
+  "version": "0.4.16",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-03T19:41:20.896096+00:00",
+  "generated_at": "2026-10-03T23:31:20.423347+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8177,8 +8177,8 @@
     },
     {
       "path": "kubejs/client_scripts/weapon_arts_keybinds.js",
-      "sha256": "3be8ce3035ce97b00cc50e45bbcb30ff1a00d371881dd9e9aa1b75ce8679eb67",
-      "size": 8767
+      "sha256": "5e7e12c8ceb09baea3c8c78e16232511e6131727a5bc149863f12068ccbe053d",
+      "size": 10056
     },
     {
       "path": "kubejs/config/client.json",
@@ -9102,8 +9102,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "a858bdf6a52bf5f38ca121ba520400b6a45b31adfd548113f1795820a911f2f3",
-      "size": 141736
+      "sha256": "eceda0c0d27b46be548d15e7ff7c7d43568061e7300e918008f0410e018bfba3",
+      "size": 141765
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
@@ -9114,6 +9114,11 @@
       "path": "kubejs/server_scripts/03_combat/souls_dodge_engine.js",
       "sha256": "18ea4d16ca97e9a48289eddebbf99e7b8dc00f8b719ea7ab4f441a439dd9b8c8",
       "size": 10402
+    },
+    {
+      "path": "kubejs/server_scripts/03_combat/spear_combat_engine.js",
+      "sha256": "af7f930f70d67d58af1454ba860629f711c76325f34e74828f2a5b33091eeeb7",
+      "size": 28139
     },
     {
       "path": "kubejs/server_scripts/03_combat/spell_stamina_cost.js",
@@ -9132,8 +9137,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/two_handed_offhand_lock.js",
-      "sha256": "f63a8963a3d4ad1c7b0869e442bf4c51e031c98593042f1e9c12628d5d88eb1b",
-      "size": 8975
+      "sha256": "0820e2a8f03a849a2ec1b167f828dcc0848dd8428b2d6309acd9cc1b8c09633c",
+      "size": 9956
     },
     {
       "path": "kubejs/server_scripts/03_combat/wave_defense_arena.js",
