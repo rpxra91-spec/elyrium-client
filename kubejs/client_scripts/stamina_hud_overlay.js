@@ -283,11 +283,11 @@ function drawBarSplitValues(guiGraphics, font, barX, barY, curVal, maxVal, color
     let rightCenter = Math.round(barX + (w * (70 / 92)));
     let ty = Math.round(barY + (h * (17 / 21)));
 
-    let wCur = font.width(strCur);
+    let wCur = (typeof font.width === 'function') ? font.width(strCur) : (strCur.length * 6);
     let txCur = Math.round(leftCenter - (wCur / 2));
     safeDrawString(guiGraphics, font, strCur, txCur, ty, color);
 
-    let wMax = font.width(strMax);
+    let wMax = (typeof font.width === 'function') ? font.width(strMax) : (strMax.length * 6);
     let txMax = Math.round(rightCenter - (wMax / 2));
     safeDrawString(guiGraphics, font, strMax, txMax, ty, color);
 }
@@ -327,9 +327,13 @@ function renderMasterRpgHud(guiGraphics) {
         if (mc.options.hideGui) return;
         if (mc.player.isCreative() || mc.player.isSpectator()) return;
         if (mc.screen != null) {
-            let sName = mc.screen.getClass().getSimpleName();
-            // Show HUD during chat and inventory; hide in pause menu, options, etc.
-            if (sName !== 'ChatScreen' && sName !== 'InventoryScreen') {
+            let sStr = String(mc.screen);
+            let sClass = mc.screen['class'] || null;
+            let sName = (sClass && sClass.getSimpleName) ? String(sClass.getSimpleName()) : '';
+            // Show HUD during chat and inventory; hide in pause menu, options, death, etc.
+            let isAllowedScreen = sName.includes('ChatScreen') || sName.includes('InventoryScreen') ||
+                                 sStr.includes('ChatScreen') || sStr.includes('InventoryScreen');
+            if (!isAllowedScreen) {
                 return;
             }
         }
@@ -374,11 +378,14 @@ function renderMasterRpgHud(guiGraphics) {
         let stamX = hpX + hpW + 4;
         let stamY = screenHeight - 48; // bottom at screenHeight - 29
 
-        // Hunger & Saturation: 100% scale -> 92 x 21 px, right flank
+        // Hunger & Saturation: 100% scale -> 92 x 21 px
+        // Wide screens: sits on right flank aligned horizontally (screenHeight - 50, bottom screenHeight - 29)
+        // Narrow screens (< 480 px): gracefully drops to lower right flank (screenHeight - 26) to prevent Stamina overlap
         let foodW = 92;
         let foodH = 21;
-        let foodX = Math.min(stamX + stamW + 6, screenWidth - foodW - 2);
-        let foodY = screenHeight - 50; // bottom at screenHeight - 29
+        let canFitRightRow = (screenWidth - foodW - 2) >= (stamX + stamW + 4);
+        let foodX = canFitRightRow ? (stamX + stamW + 6) : Math.min(midX + 96, screenWidth - foodW - 2);
+        let foodY = canFitRightRow ? (screenHeight - 50) : (screenHeight - 26);
 
         let font = mc.font;
         let hudTex = getHudBarsTex();
