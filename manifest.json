@@ -1,8 +1,8 @@
 {
-  "version": "0.4.11",
+  "version": "0.4.12",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-03T09:03:18.783757+00:00",
+  "generated_at": "2026-10-03T12:02:56.669755+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -10914,6 +10914,11 @@
       "path": "mods/towntalk-1.2.0.jar",
       "sha256": "98139f54cc0f6f4be6d7fa8927cd170df8b14545ae04643436dbd48517589eb4",
       "size": 52301863
+    },
+    {
+      "path": "mods/vital-neoforge-1.1+mc1.21.jar",
+      "sha256": "76286f6a30028c1d08c386c19124929b93f8028586ed6756178b37a1200569c6",
+      "size": 72648
     },
     {
       "path": "mods/warehouseworkshop-01.00.007.jar",
