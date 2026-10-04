@@ -1,8 +1,8 @@
 {
-  "version": "0.4.17",
+  "version": "0.4.18",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-04T08:54:04.364725+00:00",
+  "generated_at": "2026-10-04T21:43:43.083196+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -731,6 +731,11 @@
       "size": 1875
     },
     {
+      "path": "config/echo_compass_hud.json",
+      "sha256": "759fe37fbd33669aacf682521a3888da0c36cc231d06b754b05d6995ccc2582c",
+      "size": 53
+    },
+    {
       "path": "config/elyrium_resourcepacks.json",
       "sha256": "54a9fc575da2a71c863067e6d5fad0389c943aebdbb1fa4bb0e00fce6e489367",
       "size": 564
@@ -1251,11 +1256,6 @@
       "size": 43
     },
     {
-      "path": "config/quark-common.toml",
-      "sha256": "60931049b224da4ed4c93a04ee9e802166a6ff453a89a3885748eb1ea29a838c",
-      "size": 84169
-    },
-    {
       "path": "config/regions_unexplored/client.json",
       "sha256": "219a24a03c06a9171e1b04e1bd361a9332905dd79d0b94a4c805b4358a41ee1d",
       "size": 309
@@ -1349,26 +1349,6 @@
       "path": "config/sodium-extra.properties",
       "sha256": "a2f1b47c1eaa119ab34727f1d43c2506cb3d7f17ba8fb4efb49e20c8e0b58e70",
       "size": 360
-    },
-    {
-      "path": "config/sophisticatedbackpacks-common.toml",
-      "sha256": "390cb983090cdc5ba9013c0551fcde8ecf579040f970e33de5ecfc500841cb7f",
-      "size": 118
-    },
-    {
-      "path": "config/sophisticatedbackpacks-server.toml",
-      "sha256": "74d7a0e2576ae5ed1077ec26a507509b5e97720fe8959a5cb55b18346e81156c",
-      "size": 24153
-    },
-    {
-      "path": "config/sophisticatedcore-client.toml",
-      "sha256": "12f65a872b73c931b0a192d7e95c7d89f7ef7f1fd33f3ee7ff6bbda12fb8845f",
-      "size": 478
-    },
-    {
-      "path": "config/sophisticatedcore-common.toml",
-      "sha256": "77cef08e6638241566ece2bb32efa56fc1f558b6942150aa01cc7864c2719bce",
-      "size": 3829
     },
     {
       "path": "config/sound_physics_remastered/occlusion.properties",
@@ -1771,96 +1751,6 @@
       "size": 6236
     },
     {
-      "path": "config/xaero/lib/client.cfg",
-      "sha256": "43ed9dbfa5b4d6f0f3d2e8c2ced17ad298164b22c68ff11d415257a39b074336",
-      "size": 26
-    },
-    {
-      "path": "config/xaero/lib/common.cfg",
-      "sha256": "98f698d96a6d21d830a455b4ad045b70516fa63c298021742d8499e7f0366cd2",
-      "size": 236
-    },
-    {
-      "path": "config/xaero/lib/profiles/default.cfg",
-      "sha256": "34ae854b17d896d7cb853bdc28c27231a3947e91cb9f0991f372846ee3c2a907",
-      "size": 121
-    },
-    {
-      "path": "config/xaero/lib/server_profiles/default.cfg",
-      "sha256": "d438aea41ca41e93697e059f523686935c0add482f6abe96b532bbf10c6ed80a",
-      "size": 75
-    },
-    {
-      "path": "config/xaero/minimap/client.cfg",
-      "sha256": "c0915eff5d1a7905cd1038d646eb9086fd1a29e2f637d53535e4da161de17b9f",
-      "size": 235
-    },
-    {
-      "path": "config/xaero/minimap/common.cfg",
-      "sha256": "2b49df024c03a369c62a303c72755e7fedeb4f4653ff53a12fd37bd83ccd4ed0",
-      "size": 147
-    },
-    {
-      "path": "config/xaero/minimap/default_radar_categories_client.json",
-      "sha256": "3c888b22cba252e8f0a974f8c1604bc05109affbf4354ad3b16e71778c4b9774",
-      "size": 5531
-    },
-    {
-      "path": "config/xaero/minimap/default_radar_categories_server.json",
-      "sha256": "a4c652cafa7dea324e5f5cf3b1df46a84e54b6d4f877195857bce55a559c1cfd",
-      "size": 4597
-    },
-    {
-      "path": "config/xaero/minimap/profiles/default.cfg",
-      "sha256": "8c6e6459ec729198799d9d1e49bce48eeffca7549e9b05c69c5b9c2e6d2d8dfc",
-      "size": 3747
-    },
-    {
-      "path": "config/xaero/minimap/profiles/entity_radar_categories/default.cfg.json",
-      "sha256": "76239797bf685ce3eca8189781511516c2b9676465aabb34e708cdfbe5a404a1",
-      "size": 5531
-    },
-    {
-      "path": "config/xaero/minimap/profiles/info_display_config/default.cfg.txt",
-      "sha256": "095b827da778cba902b3051470829c5eeb4fbef25777a64114acacba76b1bcd5",
-      "size": 683
-    },
-    {
-      "path": "config/xaero/minimap/server_profiles/default.cfg",
-      "sha256": "d438aea41ca41e93697e059f523686935c0add482f6abe96b532bbf10c6ed80a",
-      "size": 75
-    },
-    {
-      "path": "config/xaero/world-map/client.cfg",
-      "sha256": "bde8aa2b904df9be59cafb72453df8eaa34eac231b0a6b543260219dc8c07f90",
-      "size": 468
-    },
-    {
-      "path": "config/xaero/world-map/common.cfg",
-      "sha256": "0c229eb0daf85bd09af51f21eeeb99497a3bd50a825d5ab1ca695fb21bf6cf9d",
-      "size": 141
-    },
-    {
-      "path": "config/xaero/world-map/profiles/default.cfg",
-      "sha256": "7b24c882801bcc7f0a8aedc625d419f661fa490fa0e9d5ebe39599a1ce2dcbd5",
-      "size": 1379
-    },
-    {
-      "path": "config/xaero/world-map/server_profiles/default.cfg",
-      "sha256": "d438aea41ca41e93697e059f523686935c0add482f6abe96b532bbf10c6ed80a",
-      "size": 75
-    },
-    {
-      "path": "config/xaerohud.txt",
-      "sha256": "aa28ac5dd0c973057676236130e17e1dc6648724f9ba2da8bcbdd26d5f9b0aee",
-      "size": 123
-    },
-    {
-      "path": "config/xaeropatreon.txt",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "size": 0
-    },
-    {
       "path": "config/xmxw.json",
       "sha256": "73b89d83a0aaf712eab6be912008359631e1620f4b93d1a6b9c1c343fce612e9",
       "size": 504
@@ -1874,11 +1764,6 @@
       "path": "config/yungscavebiomes-neoforge-1_21_1.toml",
       "sha256": "022f771e899ae3a0953a172e36e2b4c6bea556a4a8e467b0849eac101b943dda",
       "size": 3260
-    },
-    {
-      "path": "config/zeta-common.toml",
-      "sha256": "d985bfc68899c91aa642736400472f6ab876dedaaef4b8c31f38b52d48de633d",
-      "size": 1908
     },
     {
       "path": "default_options.txt",
@@ -3596,6 +3481,16 @@
       "size": 578
     },
     {
+      "path": "kubejs/assets/kubejs/blockstates/blacksmith_hearth.json",
+      "sha256": "3286b97f0643cd6228f0636a4d659549e602d4acd3c6757bafaf646a7428cfba",
+      "size": 318
+    },
+    {
+      "path": "kubejs/assets/kubejs/blockstates/blacksmith_workbench.json",
+      "sha256": "ed0ee541ba694104ceac2ca262f6d11bc4386987106953d65a0b701256307939",
+      "size": 330
+    },
+    {
       "path": "kubejs/assets/kubejs/blockstates/forge_hearth.json",
       "sha256": "69bbe99ac59102f03e656a13311e9b5b8822171c2babeb935753d8b8db0821ea",
       "size": 298
@@ -3604,6 +3499,11 @@
       "path": "kubejs/assets/kubejs/blockstates/infernal_anvil.json",
       "sha256": "ef2309dad337d06c84e1ef1426a171b373a007049a28969e1f1a79bde6b0f82f",
       "size": 364
+    },
+    {
+      "path": "kubejs/assets/kubejs/blockstates/infernal_crucible.json",
+      "sha256": "8512fff7dfccc59b60a13c431583d0cfb2c9146ae1bec78af363740e5a8e96fd",
+      "size": 318
     },
     {
       "path": "kubejs/assets/kubejs/blockstates/infernal_portal_corner_active.json",
@@ -3756,6 +3656,11 @@
       "size": 306
     },
     {
+      "path": "kubejs/assets/kubejs/blockstates/void_anvil.json",
+      "sha256": "d91ebd196e30ce0623905232436553f90fd3308b19430f5f254a17d27b1c61b3",
+      "size": 290
+    },
+    {
       "path": "kubejs/assets/kubejs/blockstates/weapon_bench.json",
       "sha256": "9331fc5c9fe6b1f9cf2180059dd54df13e6eb509189cac25294f9346c266cd16",
       "size": 356
@@ -3771,6 +3676,16 @@
       "size": 6695
     },
     {
+      "path": "kubejs/assets/kubejs/models/block/blacksmith_hearth.json",
+      "sha256": "fe3f4f5b904ca4739733b13e55e507dfce1290f0a9c61dfd553eb757e7eba639",
+      "size": 420
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/block/blacksmith_workbench.json",
+      "sha256": "4c80359346c779102365747c148a3b57d505f7d65dc3d29a459556599e2eda8a",
+      "size": 421
+    },
+    {
       "path": "kubejs/assets/kubejs/models/block/forge_hearth.json",
       "sha256": "fe3f4f5b904ca4739733b13e55e507dfce1290f0a9c61dfd553eb757e7eba639",
       "size": 420
@@ -3779,6 +3694,11 @@
       "path": "kubejs/assets/kubejs/models/block/infernal_anvil.json",
       "sha256": "bcce0f0fab1983a1d7e35baa10959fc51181c89bb64de1726d3e0790b16c256a",
       "size": 3359
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/block/infernal_crucible.json",
+      "sha256": "2cc476e3c278015a0ac25710f50cd954cc9f7a696dca68fbd31f02af2505dad3",
+      "size": 417
     },
     {
       "path": "kubejs/assets/kubejs/models/block/infernal_portal_corner_active.json",
@@ -3931,6 +3851,11 @@
       "size": 421
     },
     {
+      "path": "kubejs/assets/kubejs/models/block/void_anvil.json",
+      "sha256": "74f331ef920a56fad51083422e4660ca7fbcae74dc2c10bc5dcafb05798b5b0c",
+      "size": 427
+    },
+    {
       "path": "kubejs/assets/kubejs/models/block/weapon_bench.json",
       "sha256": "6194e13dc03713eb2e580af9e13e06d16e6956c9dd885bdc8ac0f517c9fb5bd4",
       "size": 8592
@@ -3994,6 +3919,16 @@
       "path": "kubejs/assets/kubejs/models/item/bastion_hunter_leggings.json",
       "sha256": "c8a4378b2a9c569274067257fc573cff810860d7e220a5c1e5e18cd8a4c52d98",
       "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/blacksmith_hearth.json",
+      "sha256": "3d9ad28e27a5654ce19311aa673a2611db4fabaa0d1eb3e675d59bcbf45d4fad",
+      "size": 47
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/blacksmith_workbench.json",
+      "sha256": "59c14cc94a34f9af38327b76dd881f2fce45a08d912493edc4072e6406e89f26",
+      "size": 50
     },
     {
       "path": "kubejs/assets/kubejs/models/item/cinder_brigandine_boots.json",
@@ -4099,6 +4034,11 @@
       "path": "kubejs/assets/kubejs/models/item/infernal_anvil.json",
       "sha256": "a764c2d200faf19a81c255f01d6d3a90ccbb44bbf400831457982a9fcdc9edf3",
       "size": 46
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/infernal_crucible.json",
+      "sha256": "66df60621cb08dd1bfd5bae0bdd98bda3a919b0f77e7001a74023135b477f84f",
+      "size": 47
     },
     {
       "path": "kubejs/assets/kubejs/models/item/infernal_igniter.json",
@@ -4416,6 +4356,16 @@
       "size": 116
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/steel_charge.json",
+      "sha256": "d5d103e3ec2fc3397b0426db1fc86e12c7fcc85257dd4d446f3425e3d7c8fc31",
+      "size": 104
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/steel_ingot.json",
+      "sha256": "45b0419e238596fa8d034fd4df0a79134d85d9475120995bbff6dcdae4a6940e",
+      "size": 106
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/steel_knight_boots.json",
       "sha256": "ef0458e2abe66886a41e57099e09a05f265446e2fac8caf3ee2950163b51bcfe",
       "size": 110
@@ -4436,9 +4386,19 @@
       "size": 113
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/steel_pickaxe.json",
+      "sha256": "592e5674bde8b985ec6de0d23cff3cc52b5e641e3a0e14422430bd974d0b1249",
+      "size": 107
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/tier_upgrade_template.json",
       "sha256": "285a9809fa03d004f1da22fe26c8b635f0f00a4b399966f0b362a4207ff34466",
       "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_anvil.json",
+      "sha256": "c15a1fc0b4c0443b77a1e6f388980f3ff75469f7bea583aa44de19c6097703c6",
+      "size": 40
     },
     {
       "path": "kubejs/assets/kubejs/models/item/weapon_bench.json",
@@ -8961,6 +8921,11 @@
       "size": 25091
     },
     {
+      "path": "kubejs/server_scripts/01_progression/diamond_mining_barrier.js",
+      "sha256": "7593e28a12fe9b129a791087c7538b9477da0811301bb588ab2286f4ba52c769",
+      "size": 3785
+    },
+    {
       "path": "kubejs/server_scripts/01_progression/dimensional_progression_lock.js",
       "sha256": "ebc1dda308f14c65dd3ece5eafc89f96e897793eb8025e1e17534e8fd9e9537b",
       "size": 16662
@@ -8987,8 +8952,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/sector_wall_generator.js",
-      "sha256": "eecbad55c605e035af276936e2331a627594cb96d11db09183f9c8477729e82e",
-      "size": 32700
+      "sha256": "282648d8000526b1a36ac9b64fc400e299f2315374207c5bc8433068f0b87143",
+      "size": 32703
     },
     {
       "path": "kubejs/server_scripts/01_progression/world_progression_gossip.js",
@@ -8999,6 +8964,21 @@
       "path": "kubejs/server_scripts/01_progression/world_spawn_setup.js",
       "sha256": "49d5202551de8efc6d1af96c5d0925730f4b77b90ed5043db4d5dcf01b2ce663",
       "size": 13014
+    },
+    {
+      "path": "kubejs/server_scripts/02_crafting/blacksmith_crafting_gui.js",
+      "sha256": "4841c8285bf42d56bed88a1177bd0b8764412fd5a10e9b054cf3b38e3e9a806f",
+      "size": 45525
+    },
+    {
+      "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
+      "sha256": "904efaa37e080a316581bd3c9ad69a10ed3e932324471af63b262d36cef4c784",
+      "size": 12924
+    },
+    {
+      "path": "kubejs/server_scripts/02_crafting/steel_metallurgy_recipes.js",
+      "sha256": "9e3bd8949fda75faae960b66add8cc5a8a94a0db9e8445164be50c5f811deb22",
+      "size": 5939
     },
     {
       "path": "kubejs/server_scripts/02_magic/spell_capacity_engine.js",
@@ -9411,6 +9391,11 @@
       "size": 11191
     },
     {
+      "path": "kubejs/server_scripts/99_tests/blacksmith_workshop_test.js",
+      "sha256": "9d8bf8fcfd1d44364f7deab1f535224b878a241593b95fcbe4117886bf0abf1d",
+      "size": 7601
+    },
+    {
       "path": "kubejs/server_scripts/99_tests/elyrium_end_to_end_test.js",
       "sha256": "ccc1f2da488dfaa10166f6681bce14c36e2aa3a94d86a9c8e9d2ffb2c003a512",
       "size": 18911
@@ -9419,6 +9404,11 @@
       "path": "kubejs/startup_scripts/ascension_catalysts.js",
       "sha256": "53bdd82f7dc0bb027f11f8b08751ab808dc6662444c1f2197db0bb9a4ab6f7d8",
       "size": 7027
+    },
+    {
+      "path": "kubejs/startup_scripts/blacksmith_station_blocks.js",
+      "sha256": "3ac192443ce5d23634c6661d11f850009c3876d59143b0d32fb9e705245057a2",
+      "size": 5873
     },
     {
       "path": "kubejs/startup_scripts/custom_gear_registry.js",
@@ -9961,11 +9951,6 @@
       "size": 539
     },
     {
-      "path": "mods/.index/quark.pw.toml",
-      "sha256": "3d75f2f5cfb56cf09a2061828a05742515415cb1306bd80737bdf2469f669197",
-      "size": 490
-    },
-    {
       "path": "mods/.index/relics-mod.pw.toml",
       "sha256": "b7bb769e290ed766fc12ab98cdb330d5c65bfb6860247fefb91a77ef9fb1ba63",
       "size": 644
@@ -10141,11 +10126,6 @@
       "size": 556
     },
     {
-      "path": "mods/.index/zeta.pw.toml",
-      "sha256": "54863d6a9a3f0293a7f54c152f1de3b7b063c9336d139ea05f362829e23d67f9",
-      "size": 448
-    },
-    {
       "path": "mods/Apotheosis-1.21.1-8.5.4.jar",
       "sha256": "5270327a67ee411692566b140f9ec8e72246d961da1d7306e41120c695eb6ea4",
       "size": 6949410
@@ -10266,11 +10246,6 @@
       "size": 62031
     },
     {
-      "path": "mods/Quark-4.1-480.jar",
-      "sha256": "989c465df2e4cb9f602840c2eec143358bf11462cc19dc0b0c7c9f17449e75a5",
-      "size": 15542634
-    },
-    {
       "path": "mods/SimplyTooltips-neoforge-0.1.3.jar",
       "sha256": "ea21464cfd363efe2965cdf801b82b37ecda83e93051193f4830783ead723518",
       "size": 5320037
@@ -10336,11 +10311,6 @@
       "size": 198183
     },
     {
-      "path": "mods/Zeta-1.1-40.jar",
-      "sha256": "4f17d1a2b9fd6d18ddb7697aa451db7fb154053b8648f79de279ae0d7e68a2fa",
-      "size": 763725
-    },
-    {
       "path": "mods/[Neoforge]ctov-3.6.3.jar",
       "sha256": "4815b19b83541f09cba556e222612bc5ddcc31f7c4ba2198f4b4d6376cca8b2e",
       "size": 7139609
@@ -10394,6 +10364,11 @@
       "path": "mods/azurelib-neo-1.21.1-3.1.10.jar",
       "sha256": "fb251b15587de66cad6bd10a7753a43d1d4617856d656c1f899d2016c0b3a46f",
       "size": 877491
+    },
+    {
+      "path": "mods/backpacked-neoforge-1.21.1-3.0.5.jar",
+      "sha256": "203f673ec7ea9e805ef10aff2725d770e0d9fba7add801dec5e31b312b419c01",
+      "size": 1282359
     },
     {
       "path": "mods/balm-neoforge-1.21.1-21.0.59.jar",
@@ -10514,6 +10489,11 @@
       "path": "mods/durabilitytooltip-1.2.0-neoforge-mc1.21.jar",
       "sha256": "db7fe3561c81f36715306c16b9b79539c9f207482226f10f60210ef9d21a7e7e",
       "size": 20821
+    },
+    {
+      "path": "mods/echo_compass_hud-neoforge-1.21.1-2.0.0.jar",
+      "sha256": "4aa8ff65f714648e7c3f5d05268739c145566b7964ed24022815ca338fb98c24",
+      "size": 26594
     },
     {
       "path": "mods/embeddium-1.0.15+mc1.21.1.jar",
@@ -10711,6 +10691,11 @@
       "size": 976023
     },
     {
+      "path": "mods/map_atlases-1.21-7.0.1-neoforge.jar",
+      "sha256": "df61ef92809ce4627a5e4bd395d930997e0d3b4a0b9fa91d0beed5c23d127d6f",
+      "size": 679756
+    },
+    {
       "path": "mods/minecolonies-1.1.1331-1.21.1-snapshot.jar",
       "sha256": "ca292efdce3a96bffb1297c495691f414ff00e92d78752103afef09a5efc965e",
       "size": 77497526
@@ -10721,9 +10706,9 @@
       "size": 589839
     },
     {
-      "path": "mods/moonlight-neoforge-1.21.1-3.0.18.jar",
-      "sha256": "9a70e3e36de0ab25b7587424b3f97946288b6e8192fff7b5487f8e7ce02fddc7",
-      "size": 1593129
+      "path": "mods/moonlight-1.21.1-3.7.0-neoforge.jar",
+      "sha256": "932b8c8ea86dff39903862383e0ffde6ada9569254ed9b7ccb05ac1b2992c711",
+      "size": 2298394
     },
     {
       "path": "mods/moreoverlays-1.24.2-mc1.21.1-neoforge.jar",
@@ -10846,16 +10831,6 @@
       "size": 4290061
     },
     {
-      "path": "mods/sophisticatedbackpacks-1.21.1-3.26.3.2158.jar",
-      "sha256": "3690359cc3bb2aa43e40db6ca047ca7d5feda5141c8b9fd647c4355678e971e2",
-      "size": 1251706
-    },
-    {
-      "path": "mods/sophisticatedcore-1.21.1-1.5.1.2341.jar",
-      "sha256": "f627b497fc0a2b50da9f20b77e13073df9245718660259d8f559aa184c4418a1",
-      "size": 1785221
-    },
-    {
       "path": "mods/soul-fire-d-neoforge-1.21-6.1.0.jar",
       "sha256": "f4438290f1d21abfd0b7d6d7832543e176705c0624b73f8c9d441bba0efc9842",
       "size": 667319
@@ -10949,21 +10924,6 @@
       "path": "mods/wda_questline-1.21.1-1.0.0.jar",
       "sha256": "4e3a954def09701b06b0c7a5d0683f4382ca815d836f197f7ac2f95e88501f3b",
       "size": 274363
-    },
-    {
-      "path": "mods/xaerominimap-neoforge-1.21.1-26.1.0.jar",
-      "sha256": "6bd6cbab01ff57b9ba2fbfee18f9605593101f15d80e8d19dc59c385d2535ccc",
-      "size": 2138254
-    },
-    {
-      "path": "mods/xaeros_waystones_compatibility-NeoForge-1.21.1-2.1.0.jar",
-      "sha256": "fcd0a18f5f5940b31353ee70ddb0194cf1cd9565a8bfc9557c93804e34422b89",
-      "size": 7308
-    },
-    {
-      "path": "mods/xaeroworldmap-neoforge-1.21.1-1.41.0.jar",
-      "sha256": "b3e377b11d277cfbc0ccdd91a6fb6bc1ff4e93b354eb9c0277e1e4446c316ccb",
-      "size": 1386888
     },
     {
       "path": "mods/yet_another_config_lib_v3-3.8.2+1.21.1-neoforge.jar",

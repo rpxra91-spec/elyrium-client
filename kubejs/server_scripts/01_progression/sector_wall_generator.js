@@ -96,7 +96,7 @@ const SECTOR_PALETTES = {
         accent_detail: "minecraft:magma_block",
         gate_portcullis: "minecraft:nether_brick_fence",
         gate_arch: "minecraft:nether_brick_stairs",
-        lantern: "quark:blaze_lantern",
+        lantern: "minecraft:soul_lantern",
         lantern_post: "minecraft:nether_brick_wall"
     },
 
