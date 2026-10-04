@@ -2,7 +2,7 @@
   "version": "0.4.17",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-04T08:43:31.905728+00:00",
+  "generated_at": "2026-10-04T08:51:58.883420+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -9422,8 +9422,8 @@
     },
     {
       "path": "kubejs/startup_scripts/custom_gear_registry.js",
-      "sha256": "2b8722856b649c223485c64792323e5e00917aca2506978cbdf1770026d57e12",
-      "size": 23229
+      "sha256": "56402e30cbd96b18af269c2ec8396aeaad90fd5d81b6b0f8a53b843efccb9f8f",
+      "size": 24180
     },
     {
       "path": "kubejs/startup_scripts/dodge_keybinds.js",

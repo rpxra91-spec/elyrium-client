@@ -52,11 +52,11 @@ StartupEvents.registry('item', event => {
     ];
 
     const weaponTiers = [
-        { prefix: 'void_', tierName: 'Пустотный', tierColor: '§5', baseDmg: 10.5, tierTag: 'skd:tier_4', rarity: 'rare' },
-        { prefix: 'starlight_', tierName: 'Звездный', tierColor: '§b', baseDmg: 12.0, tierTag: 'skd:tier_5', rarity: 'rare' },
-        { prefix: 'sculk_', tierName: 'Скалк-', tierColor: '§3', baseDmg: 13.5, tierTag: 'skd:tier_6', rarity: 'epic' },
-        { prefix: 'eden_', tierName: 'Эдемский', tierColor: '§e', baseDmg: 15.5, tierTag: 'skd:tier_7', rarity: 'epic' },
-        { prefix: 'halite_', tierName: 'Халитовый', tierColor: '§d', baseDmg: 18.0, tierTag: 'skd:tier_8', rarity: 'epic' }
+        { prefix: 'void_', tierName: 'Пустотный', tierColor: '§5', baseDmg: 10.5, tierTag: 'skd:tier_4', rarity: 'rare', durability: 2500 },
+        { prefix: 'starlight_', tierName: 'Звездный', tierColor: '§b', baseDmg: 12.0, tierTag: 'skd:tier_5', rarity: 'rare', durability: 3200 },
+        { prefix: 'sculk_', tierName: 'Скалк-', tierColor: '§3', baseDmg: 13.5, tierTag: 'skd:tier_6', rarity: 'epic', durability: 4000 },
+        { prefix: 'eden_', tierName: 'Эдемский', tierColor: '§e', baseDmg: 15.5, tierTag: 'skd:tier_7', rarity: 'epic', durability: 5000 },
+        { prefix: 'halite_', tierName: 'Халитовый', tierColor: '§d', baseDmg: 18.0, tierTag: 'skd:tier_8', rarity: 'epic', durability: 6500 }
     ];
 
     weaponTiers.forEach(wt => {
@@ -67,8 +67,10 @@ StartupEvents.registry('item', event => {
 
             event.create(itemId, 'sword')
                 .displayName(fullTitle)
+                .tier('netherite')
                 .attackDamageBaseline(totalDmg)
                 .speedBaseline(wa.spd)
+                .maxDamage(wt.durability)
                 .rarity(wt.rarity)
                 .unstackable()
                 .tag('minecraft:swords')
@@ -174,13 +176,27 @@ StartupEvents.registry('item', event => {
         { slot: 'boots', tag: 'minecraft:foot_armor', label: 'Сапоги' }
     ];
 
+    const tierDurabilities = {
+        'skd:tier_1': 450,
+        'skd:tier_1_5': 600,
+        'skd:tier_2': 750,
+        'skd:tier_3': 900,
+        'skd:tier_4': 1200,
+        'skd:tier_5': 1500,
+        'skd:tier_6': 2000,
+        'skd:tier_7': 2500,
+        'skd:tier_8': 3500
+    };
+
     armorSets.forEach(set => {
+        const setDurability = tierDurabilities[set.tier] || 1200;
         armorSlots.forEach(s => {
             const pieceId = `${set.id}_${s.slot}`;
             const pieceTitle = `${set.color}${set.name} (${s.label})§r`;
 
             event.create(pieceId, s.slot)
                 .displayName(pieceTitle)
+                .maxDamage(setDurability)
                 .rarity(set.rarity)
                 .unstackable()
                 .tag('minecraft:armors')
@@ -195,32 +211,34 @@ StartupEvents.registry('item', event => {
     // ==========================================================================
     const bossWeapons = [
         // T1
-        { id: 'ancient_remnant_sword', name: '§6Меч Древнего Остана', type: 'sword', dmg: 8.5, spd: 1.3, rarity: 'rare', tier: 'skd:tier_1' },
+        { id: 'ancient_remnant_sword', name: '§6Меч Древнего Остана', type: 'sword', dmg: 8.5, spd: 1.3, rarity: 'rare', tier: 'skd:tier_1', durability: 1200 },
         // T1.5
-        { id: 'undergarden_spore_bow', name: '§2Грибной Лук Катакомб', type: 'item', rarity: 'rare', tier: 'skd:tier_1_5' },
+        { id: 'undergarden_spore_bow', name: '§2Грибной Лук Катакомб', type: 'item', rarity: 'rare', tier: 'skd:tier_1_5', durability: 1500 },
         // T6
-        { id: 'soul_crystal_greatsword', name: '§3Soul Crystal Greatsword', type: 'sword', dmg: 20.0, spd: 0.95, rarity: 'epic', tier: 'skd:tier_6' },
-        { id: 'echo_resonance_staff', name: '§bEcho Resonance Staff', type: 'item', rarity: 'epic', tier: 'skd:tier_6' },
-        { id: 'warden_tendril_blade', name: '§3Warden Tendril Blade', type: 'sword', dmg: 16.5, spd: 1.7, rarity: 'epic', tier: 'skd:tier_6' },
-        { id: 'sonic_pulverizer_bow', name: '§3Sonic Pulverizer Bow', type: 'item', rarity: 'epic', tier: 'skd:tier_6' },
-        { id: 'sculk_whisper_dagger', name: '§8Скалковый Кинжал Шепота', type: 'sword', dmg: 14.0, spd: 3.0, rarity: 'epic', tier: 'skd:tier_6' },
+        { id: 'soul_crystal_greatsword', name: '§3Soul Crystal Greatsword', type: 'sword', dmg: 20.0, spd: 0.95, rarity: 'epic', tier: 'skd:tier_6', durability: 4000 },
+        { id: 'echo_resonance_staff', name: '§bEcho Resonance Staff', type: 'item', rarity: 'epic', tier: 'skd:tier_6', durability: 4000 },
+        { id: 'warden_tendril_blade', name: '§3Warden Tendril Blade', type: 'sword', dmg: 16.5, spd: 1.7, rarity: 'epic', tier: 'skd:tier_6', durability: 4000 },
+        { id: 'sonic_pulverizer_bow', name: '§3Sonic Pulverizer Bow', type: 'item', rarity: 'epic', tier: 'skd:tier_6', durability: 4000 },
+        { id: 'sculk_whisper_dagger', name: '§8Скалковый Кинжал Шепота', type: 'sword', dmg: 14.0, spd: 3.0, rarity: 'epic', tier: 'skd:tier_6', durability: 3500 },
         // T7
-        { id: 'wildwood_elder_staff', name: '§2Staff of the Wildwood Elder', type: 'item', rarity: 'epic', tier: 'skd:tier_7' },
-        { id: 'eden_solar_glaive', name: '§eEden Solar Glaive', type: 'sword', dmg: 19.5, spd: 1.3, rarity: 'epic', tier: 'skd:tier_7' },
+        { id: 'wildwood_elder_staff', name: '§2Staff of the Wildwood Elder', type: 'item', rarity: 'epic', tier: 'skd:tier_7', durability: 5000 },
+        { id: 'eden_solar_glaive', name: '§eEden Solar Glaive', type: 'sword', dmg: 19.5, spd: 1.3, rarity: 'epic', tier: 'skd:tier_7', durability: 5000 },
         // T8
-        { id: 'halite_greatblade', name: '§dHalite Greatblade', type: 'sword', dmg: 26.5, spd: 0.95, rarity: 'epic', tier: 'skd:tier_8' },
-        { id: 'mortum_death_scythe', name: '§4Mortum Death Scythe', type: 'sword', dmg: 23.5, spd: 1.2, rarity: 'epic', tier: 'skd:tier_8' },
-        { id: 'skythern_storm_bow', name: '§9Skythern Storm Bow', type: 'item', rarity: 'epic', tier: 'skd:tier_8' },
-        { id: 'apalachia_crystal_staff', name: '§5Apalachia Crystal Staff', type: 'item', rarity: 'epic', tier: 'skd:tier_8' },
-        { id: 'halite_demigod_spear', name: '§dHalite Demigod Spear', type: 'sword', dmg: 22.0, spd: 1.4, rarity: 'epic', tier: 'skd:tier_8' }
+        { id: 'halite_greatblade', name: '§dHalite Greatblade', type: 'sword', dmg: 26.5, spd: 0.95, rarity: 'epic', tier: 'skd:tier_8', durability: 6500 },
+        { id: 'mortum_death_scythe', name: '§4Mortum Death Scythe', type: 'sword', dmg: 23.5, spd: 1.2, rarity: 'epic', tier: 'skd:tier_8', durability: 6500 },
+        { id: 'skythern_storm_bow', name: '§9Skythern Storm Bow', type: 'item', rarity: 'epic', tier: 'skd:tier_8', durability: 6500 },
+        { id: 'apalachia_crystal_staff', name: '§5Apalachia Crystal Staff', type: 'item', rarity: 'epic', tier: 'skd:tier_8', durability: 6500 },
+        { id: 'halite_demigod_spear', name: '§dHalite Demigod Spear', type: 'sword', dmg: 22.0, spd: 1.4, rarity: 'epic', tier: 'skd:tier_8', durability: 6500 }
     ];
 
     bossWeapons.forEach(w => {
         if (w.type === 'sword') {
             event.create(w.id, 'sword')
                 .displayName(w.name)
+                .tier('netherite')
                 .attackDamageBaseline(w.dmg)
                 .speedBaseline(w.spd)
+                .maxDamage(w.durability)
                 .rarity(w.rarity)
                 .glow(true)
                 .unstackable()
@@ -231,6 +249,7 @@ StartupEvents.registry('item', event => {
         } else {
             event.create(w.id)
                 .displayName(w.name)
+                .maxDamage(w.durability)
                 .rarity(w.rarity)
                 .glow(true)
                 .unstackable()
