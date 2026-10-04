@@ -22,18 +22,39 @@ function runBlacksmithTestSuite() {
     }
 
     // --------------------------------------------------------------------------
-    // 1. SPATIAL AUTO-ALIGNMENT ALGORITHM & CANONICAL RANKING
+    // 1. CANONICAL RANKING & SPATIAL AUTO-ALIGNMENT
     // --------------------------------------------------------------------------
     {
-        const RANK = {
-            'kubejs:infernal_crucible': 0,    // 3
-            'kubejs:blacksmith_workbench': 1, // 1
-            'kubejs:blacksmith_hearth': 2,    // 2
-            'kubejs:void_anvil': 3            // 4
-        };
+        assert(
+            "Ranking: Infernal Crucible is Rank 0 (Module 3)",
+            typeof BS_CANONICAL_RANK !== 'undefined' && BS_CANONICAL_RANK['kubejs:infernal_crucible'] === 0,
+            `Crucible rank: ${typeof BS_CANONICAL_RANK !== 'undefined' ? BS_CANONICAL_RANK['kubejs:infernal_crucible'] : 'undefined'}`
+        );
+
+        assert(
+            "Ranking: Blacksmith Workbench is Rank 1 (Module 1)",
+            typeof BS_CANONICAL_RANK !== 'undefined' && BS_CANONICAL_RANK['kubejs:blacksmith_workbench'] === 1,
+            `Workbench rank: ${typeof BS_CANONICAL_RANK !== 'undefined' ? BS_CANONICAL_RANK['kubejs:blacksmith_workbench'] : 'undefined'}`
+        );
+
+        assert(
+            "Ranking: Blacksmith Hearth is Rank 2 (Module 2)",
+            typeof BS_CANONICAL_RANK !== 'undefined' && BS_CANONICAL_RANK['kubejs:blacksmith_hearth'] === 2,
+            `Hearth rank: ${typeof BS_CANONICAL_RANK !== 'undefined' ? BS_CANONICAL_RANK['kubejs:blacksmith_hearth'] : 'undefined'}`
+        );
+
+        assert(
+            "Ranking: Void Anvil is Rank 3 (Module 4)",
+            typeof BS_CANONICAL_RANK !== 'undefined' && BS_CANONICAL_RANK['kubejs:void_anvil'] === 3,
+            `Anvil rank: ${typeof BS_CANONICAL_RANK !== 'undefined' ? BS_CANONICAL_RANK['kubejs:void_anvil'] : 'undefined'}`
+        );
 
         function sortBlocks(input) {
-            return [...input].sort((a, b) => RANK[a] - RANK[b]);
+            return [...input].sort((a, b) => {
+                let rA = (BS_CANONICAL_RANK[a] !== undefined) ? BS_CANONICAL_RANK[a] : 99;
+                let rB = (BS_CANONICAL_RANK[b] !== undefined) ? BS_CANONICAL_RANK[b] : 99;
+                return rA - rB;
+            });
         }
 
         // Test 1.1: Pair [2, 1] -> [1, 2]
@@ -86,37 +107,44 @@ function runBlacksmithTestSuite() {
     }
 
     // --------------------------------------------------------------------------
-    // 2. CRAFTING CATALOG PENALTY & INTEGRITY
+    // 2. REAL CRAFTING CATALOG & REPAIR MATERIALS (BS_CATALOG)
     // --------------------------------------------------------------------------
     {
-        // Test 2.1: Standalone Workbench Penalty (+1 Ingot)
-        function calcIngots(base, hasHearth) {
-            return base + (hasHearth ? 0 : 1);
-        }
-        assert(
-            "Penalty: Standalone Workbench (+1 Ingot)",
-            calcIngots(2, false) === 3 && calcIngots(2, true) === 2,
-            `Standalone: ${calcIngots(2, false)} (expected 3), Connected: ${calcIngots(2, true)} (expected 2)`
-        );
-
-        // Test 2.2: Standalone Hearth Repair Penalty (25% vs 50%)
-        function calcRepairPercent(hasHearth) {
-            return hasHearth ? 0.50 : 0.25;
-        }
-        assert(
-            "Penalty: Standalone Hearth (25% vs 50% durability)",
-            calcRepairPercent(false) === 0.25 && calcRepairPercent(true) === 0.50,
-            `Standalone: ${calcRepairPercent(false) * 100}%, Connected: ${calcRepairPercent(true) * 100}%`
-        );
-
-        // Test 2.3: 15 SimplySwords presence in BS_CATALOG
         if (typeof BS_CATALOG !== 'undefined') {
+            // Test 2.1: 15 SimplySwords Weapons Registered
             let weapons = BS_CATALOG[0] || [];
+            let allSimplySwords = weapons.every(w => w.id && w.id.startsWith('simplyswords:iron_'));
             assert(
                 "Catalog: 15 SimplySwords Weapons Registered",
-                weapons.length === 15,
-                `Found ${weapons.length} weapons (expected 15)`
+                weapons.length === 15 && allSimplySwords,
+                `Found ${weapons.length} items (expected 15, all simplyswords:iron_*)`
             );
+
+            // Test 2.2: Tier 1 Armor Sets Registered (16 pieces)
+            let armors = BS_CATALOG[1] || [];
+            assert(
+                "Catalog: 16 Tier 1 Armor Pieces Registered",
+                armors.length === 16,
+                `Found ${armors.length} armor pieces (expected 16)`
+            );
+
+            // Test 2.3: Steel Pickaxe present in Tools Tab with 3 ingots
+            let tools = BS_CATALOG[2] || [];
+            let steelPick = tools.find(t => t.id === 'kubejs:steel_pickaxe');
+            assert(
+                "Catalog: Steel Pickaxe present with 3 steel ingots",
+                steelPick !== undefined && steelPick.ingot === 'kubejs:steel_ingot' && steelPick.baseIngots === 3,
+                `Steel pickaxe: ${steelPick ? (steelPick.baseIngots + ' ingots') : 'missing'}`
+            );
+        }
+
+        // Test 2.4: Repair Material Resolution
+        if (typeof getRepairMaterial === 'function') {
+            assert("Repair: Steel Knight repairs with steel ingot", getRepairMaterial('kubejs:steel_knight_chestplate').id === 'kubejs:steel_ingot', "Steel ingot mapped");
+            assert("Repair: Iron Chestplate repairs with iron ingot", getRepairMaterial('minecraft:iron_chestplate').id === 'minecraft:iron_ingot', "Iron ingot mapped");
+            assert("Repair: Diamond Sword repairs with diamond", getRepairMaterial('minecraft:diamond_sword').id === 'minecraft:diamond', "Diamond mapped");
+            assert("Repair: Wooden Tool repairs with planks", getRepairMaterial('minecraft:wooden_pickaxe').id === '#minecraft:planks', "Planks mapped");
+            assert("Repair: Leather Boots repair with leather", getRepairMaterial('minecraft:leather_boots').id === 'minecraft:leather', "Leather mapped");
         }
     }
 
@@ -124,28 +152,29 @@ function runBlacksmithTestSuite() {
     // 3. DIAMOND MINING BARRIER LOGIC
     // --------------------------------------------------------------------------
     {
-        const DISALLOWED = ['wood', 'stone', 'gold', 'iron', 'copper', 'flint', 'bone'];
+        if (typeof isPermittedDiamondMiningTool === 'function') {
+            function mockTool(id, isPickaxeTag) {
+                return {
+                    id: id,
+                    isEmpty: () => false,
+                    hasTag: (tag) => {
+                        if (isPickaxeTag && (tag === 'minecraft:pickaxes' || tag === 'c:tools/pickaxes')) return true;
+                        return false;
+                    }
+                };
+            }
 
-        function canMineDiamonds(toolId) {
-            if (toolId === 'kubejs:steel_pickaxe') return true;
-            for (let sub of DISALLOWED) {
-                if (toolId.includes(sub) && !toolId.includes('steel')) {
-                    return false;
-                }
-            }
-            if (toolId.includes('diamond') || toolId.includes('netherite') || toolId.includes('cinder')) {
-                return true;
-            }
-            return false;
+            assert("Barrier: Blocks Wooden Pickaxe", !isPermittedDiamondMiningTool(mockTool('minecraft:wooden_pickaxe', true)), "Wood blocked");
+            assert("Barrier: Blocks Stone Pickaxe", !isPermittedDiamondMiningTool(mockTool('minecraft:stone_pickaxe', true)), "Stone blocked");
+            assert("Barrier: Blocks Iron Pickaxe", !isPermittedDiamondMiningTool(mockTool('minecraft:iron_pickaxe', true)), "Iron blocked");
+            assert("Barrier: Blocks Golden Pickaxe", !isPermittedDiamondMiningTool(mockTool('minecraft:golden_pickaxe', true)), "Gold blocked");
+            assert("Barrier: Blocks Sword / Non-Pickaxe", !isPermittedDiamondMiningTool(mockTool('minecraft:iron_sword', false)), "Sword blocked");
+            assert("Barrier: Allows Steel Pickaxe", isPermittedDiamondMiningTool(mockTool('kubejs:steel_pickaxe', true)), "Steel pickaxe permitted");
+            assert("Barrier: Allows Diamond Pickaxe", isPermittedDiamondMiningTool(mockTool('minecraft:diamond_pickaxe', true)), "Diamond pickaxe permitted");
+            assert("Barrier: Allows Netherite Pickaxe", isPermittedDiamondMiningTool(mockTool('minecraft:netherite_pickaxe', true)), "Netherite pickaxe permitted");
+            assert("Barrier: Allows Aether Zanite Pickaxe", isPermittedDiamondMiningTool(mockTool('aether:zanite_pickaxe', true)), "Aether Zanite permitted");
+            assert("Barrier: Allows Undergarden Froststeel Pickaxe", isPermittedDiamondMiningTool(mockTool('undergarden:froststeel_pickaxe', true)), "Froststeel permitted");
         }
-
-        assert("Barrier: Blocks Wooden Pickaxe", !canMineDiamonds('minecraft:wooden_pickaxe'), "Wood blocked");
-        assert("Barrier: Blocks Stone Pickaxe", !canMineDiamonds('minecraft:stone_pickaxe'), "Stone blocked");
-        assert("Barrier: Blocks Iron Pickaxe", !canMineDiamonds('minecraft:iron_pickaxe'), "Iron blocked");
-        assert("Barrier: Blocks Golden Pickaxe", !canMineDiamonds('minecraft:golden_pickaxe'), "Gold blocked");
-        assert("Barrier: Allows Steel Pickaxe", canMineDiamonds('kubejs:steel_pickaxe'), "Steel pickaxe permitted");
-        assert("Barrier: Allows Diamond Pickaxe", canMineDiamonds('minecraft:diamond_pickaxe'), "Diamond pickaxe permitted");
-        assert("Barrier: Allows Netherite Pickaxe", canMineDiamonds('minecraft:netherite_pickaxe'), "Netherite pickaxe permitted");
     }
 
     return { total: total, passed: passed, failed: failed, results: results };

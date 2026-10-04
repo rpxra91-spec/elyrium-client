@@ -4,9 +4,9 @@
 // ==============================================================================
 // Progression Rule:
 // - Diamond Ore & Deepslate Diamond Ore require Steel Pickaxe (kubejs:steel_pickaxe)
-//   or higher tier (Diamond, Netherite, Astral, Halite, etc.).
-// - Mining with wood, stone, gold, iron, copper yields NO drops and prevents break,
-//   displaying warning message:
+//   or higher tier (Diamond, Netherite, Undergarden, Aether, Starlight, DivineRPG, etc.).
+// - Mining with wood, stone, gold, iron, copper, flint, bone, or non-pickaxe yields NO drops
+//   and cancels break, displaying warning message:
 //   "Алмазная порода слишком крепка для железа! Требуется прочность Стальной кирки."
 // ==============================================================================
 
@@ -15,59 +15,73 @@ const DIAMOND_ORES = new Set([
     'minecraft:deepslate_diamond_ore'
 ]);
 
-const DISALLOWED_PICKAXE_SUBSTRINGS = [
+const LOW_TIER_PICKAXE_SUBSTRINGS = [
     'wood',
     'stone',
     'gold',
+    'golden',
     'iron',
     'copper',
     'flint',
-    'bone'
+    'bone',
+    'leather'
 ];
+
+function isDiamondOreBlock(block) {
+    if (!block) return false;
+    let bId = String(block.id);
+    if (DIAMOND_ORES.has(bId)) return true;
+    if (block.hasTag && (block.hasTag('c:ores/diamond') || block.hasTag('minecraft:diamond_ores'))) return true;
+    return false;
+}
+
+function isPermittedDiamondMiningTool(mainHand) {
+    if (!mainHand || mainHand.isEmpty()) return false;
+    let itemId = String(mainHand.id).toLowerCase();
+
+    // 1. Стальная Кирка Элириума — прямой канонический пропуск к алмазам
+    if (itemId === 'kubejs:steel_pickaxe') return true;
+
+    // 2. Инструмент обязан быть киркой
+    let isPickaxe = false;
+    if (mainHand.hasTag) {
+        if (mainHand.hasTag('minecraft:pickaxes') ||
+            mainHand.hasTag('c:tools/pickaxes') ||
+            mainHand.hasTag('c:pickaxes') ||
+            mainHand.hasTag('forge:tools/pickaxes')) {
+            isPickaxe = true;
+        }
+    }
+    if (!isPickaxe && itemId.includes('pickaxe')) {
+        isPickaxe = true;
+    }
+
+    if (!isPickaxe) return false;
+
+    // 3. Отсекаем низкотировые кирки (дерево, камень, золото, железо, медь и т.д.)
+    let isLowTier = false;
+    for (let sub of LOW_TIER_PICKAXE_SUBSTRINGS) {
+        if (itemId.includes(sub) && !itemId.includes('steel')) {
+            isLowTier = true;
+            break;
+        }
+    }
+
+    // Все кирки равного или более высокого тира (Diamond, Netherite, Cinder, Aether, Undergarden, DivineRPG...) разрешены
+    return !isLowTier;
+}
 
 BlockEvents.broken(event => {
     let block = event.block;
-    if (!block || !DIAMOND_ORES.has(String(block.id))) return;
+    if (!isDiamondOreBlock(block)) return;
 
     let player = event.player;
     if (!player || player.isCreative()) return;
 
     let mainHand = player.mainHandItem;
-    let isPermittedTool = false;
+    let isPermitted = isPermittedDiamondMiningTool(mainHand);
 
-    if (mainHand && !mainHand.isEmpty()) {
-        let itemId = String(mainHand.id);
-
-        // 1. Стальная кирка Элириума — прямой канонический ключ к алмазам
-        if (itemId === 'kubejs:steel_pickaxe') {
-            isPermittedTool = true;
-        } else if (mainHand.hasTag('minecraft:pickaxes') || mainHand.hasTag('c:tools/pickaxes')) {
-            // 2. Проверяем, не является ли кирка низкотировой (дерево, камень, золото, железо, медь)
-            let isLowTier = false;
-            for (let sub of DISALLOWED_PICKAXE_SUBSTRINGS) {
-                if (itemId.includes(sub) && !itemId.includes('steel')) {
-                    isLowTier = true;
-                    break;
-                }
-            }
-
-            if (!isLowTier) {
-                // Разрешаем алмазные, незеритовые, скалк, астральные и божественные кирки
-                if (itemId.includes('diamond') ||
-                    itemId.includes('netherite') ||
-                    itemId.includes('cinder') ||
-                    itemId.includes('modular_omni') ||
-                    itemId.includes('starlight') ||
-                    itemId.includes('warden') ||
-                    itemId.includes('eden') ||
-                    itemId.includes('halite')) {
-                    isPermittedTool = true;
-                }
-            }
-        }
-    }
-
-    if (!isPermittedTool) {
+    if (!isPermitted) {
         event.cancel();
 
         let bx = block.x;

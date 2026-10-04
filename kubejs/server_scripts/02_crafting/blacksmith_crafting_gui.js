@@ -39,20 +39,30 @@ function clearBlacksmithSession(player) {
 // ------------------------------------------------------------------------------
 // INVENTORY UTILITIES
 // ------------------------------------------------------------------------------
+function matchesBSItemOrTag(st, itemIdOrTag) {
+    if (!st || st.isEmpty()) return false;
+    let stId = String(st.id);
+    if (itemIdOrTag.startsWith('#')) {
+        let tag = itemIdOrTag.substring(1);
+        return st.hasTag(tag);
+    }
+    if (stId === itemIdOrTag) return true;
+    if (itemIdOrTag === 'minecraft:iron_ingot' && (st.hasTag('c:ingots/iron') || st.hasTag('forge:ingots/iron'))) return true;
+    if (itemIdOrTag === 'kubejs:steel_ingot' && (st.hasTag('c:ingots/steel') || st.hasTag('forge:ingots/steel'))) return true;
+    if (itemIdOrTag === 'minecraft:copper_ingot' && (st.hasTag('c:ingots/copper') || st.hasTag('forge:ingots/copper'))) return true;
+    return false;
+}
+
 function countPlayerItemsBS(player, itemIdOrTag) {
     if (!player || !itemIdOrTag) return 0;
     let inv = player.inventory;
     let count = 0;
-    let isTag = itemIdOrTag.startsWith('#');
-    let tagName = isTag ? itemIdOrTag.substring(1) : null;
 
     for (let i = 0; i < inv.size; i++) {
         let st = inv.getItem(i);
         if (!st || st.isEmpty()) continue;
-        if (isTag) {
-            if (st.hasTag(tagName)) count += st.count;
-        } else {
-            if (String(st.id) === itemIdOrTag) count += st.count;
+        if (matchesBSItemOrTag(st, itemIdOrTag)) {
+            count += st.count;
         }
     }
     return count;
@@ -62,17 +72,17 @@ function deductPlayerItemsBS(player, itemIdOrTag, needed) {
     if (!player || needed <= 0) return true;
     let inv = player.inventory;
     let remain = needed;
-    let isTag = itemIdOrTag.startsWith('#');
-    let tagName = isTag ? itemIdOrTag.substring(1) : null;
 
     for (let i = 0; i < inv.size && remain > 0; i++) {
         let st = inv.getItem(i);
         if (!st || st.isEmpty()) continue;
-        let match = isTag ? st.hasTag(tagName) : (String(st.id) === itemIdOrTag);
-        if (match) {
+        if (matchesBSItemOrTag(st, itemIdOrTag)) {
             let take = Math.min(st.count, remain);
             st.shrink(take);
             remain -= take;
+            if (st.isEmpty() || st.count <= 0) {
+                try { inv.setItem(i, Item.of('minecraft:air')); } catch (e) {}
+            }
         }
     }
     return remain === 0;
@@ -80,7 +90,7 @@ function deductPlayerItemsBS(player, itemIdOrTag, needed) {
 
 // Determine repair material for an item
 function getRepairMaterial(itemId) {
-    let id = String(itemId);
+    let id = String(itemId).toLowerCase();
     if (id.includes('steel') || id.includes('knight')) {
         return { id: 'kubejs:steel_ingot', name: 'Стальной Слиток' };
     }
@@ -95,6 +105,15 @@ function getRepairMaterial(itemId) {
     }
     if (id.includes('gold') || id.includes('golden')) {
         return { id: 'minecraft:gold_ingot', name: 'Золотой Слиток' };
+    }
+    if (id.includes('wood') || id.includes('bow')) {
+        return { id: '#minecraft:planks', name: 'Доски' };
+    }
+    if (id.includes('leather')) {
+        return { id: 'minecraft:leather', name: 'Кожа' };
+    }
+    if (id.includes('stone') || id.includes('cobble')) {
+        return { id: 'minecraft:cobblestone', name: 'Булыжник' };
     }
     return { id: 'minecraft:iron_ingot', name: 'Железный Слиток' };
 }
@@ -488,25 +507,23 @@ function openBlacksmithGUI(player, stationPos) {
             });
         }
 
-        // Slot 6: Вкладка Ремонта
-        gui.slot(6, 0, s => {
-            let isSel = (session.tab === 3);
-            let repairDurText = session.hasHearth ? '§a+50% прочности за 1 слиток' : '§e+25% прочности за 1 слиток (соло)';
-            gui.slot(6, 0, sR => {
-                sR.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'minecraft:anvil')
-                    .withCustomName(Text.of(isSel ? '§6▶ §a🔧 [ Ремонт Экипировки ] ◀' : '§a🔧 [ Ремонт Экипировки ]'))
-                    .withLore([
-                        Text.of('§7Восстановление прочности поврежденного снаряжения.'),
-                        Text.of(repairDurText),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода к ремонту')
-                    ]));
-                sR.leftClicked = () => {
-                    session.tab = 3;
-                    player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
-                    openBlacksmithGUI(player, stationPos);
-                };
-            });
+        // Slot 6: Вкладка Ремонта (исправлена одиночная регистрация слота)
+        let isRepairSel = (session.tab === 3);
+        let repairDurText = session.hasHearth ? '§a+50% прочности за 1 слиток' : '§e+25% прочности за 1 слиток (соло)';
+        gui.slot(6, 0, sR => {
+            sR.setItem(Item.of(isRepairSel ? 'minecraft:nether_star' : 'minecraft:anvil')
+                .withCustomName(Text.of(isRepairSel ? '§6▶ §a🔧 [ Ремонт Экипировки ] ◀' : '§a🔧 [ Ремонт Экипировки ]'))
+                .withLore([
+                    Text.of('§7Восстановление прочности поврежденного снаряжения.'),
+                    Text.of(repairDurText),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of(isRepairSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода к ремонту')
+                ]));
+            sR.leftClicked = () => {
+                session.tab = 3;
+                player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
+                openBlacksmithGUI(player, stationPos);
+            };
         });
 
         // Slot 8: Выход
@@ -581,9 +598,14 @@ function openBlacksmithGUI(player, stationPos) {
                     gui.slot(slotX, slotY, s => {
                         s.setItem(displayItem);
                         s.leftClicked = () => {
+                            // Dynamic re-check of station status to prevent exploit if Hearth was broken
+                            let currentStation = session.stationPos ? getBlacksmithStationInfo(player.level, session.stationPos) : null;
+                            let activeHasHearth = currentStation ? currentStation.hasHearth : session.hasHearth;
+                            let curPenalty = activeHasHearth ? 0 : 1;
+
                             let curIngots = countPlayerItemsBS(player, recipe.ingot);
                             let curExtra = recipe.extra ? countPlayerItemsBS(player, recipe.extra) : 999;
-                            let curTotal = recipe.baseIngots + (session.hasHearth ? 0 : 1);
+                            let curTotal = recipe.baseIngots + curPenalty;
 
                             if (curIngots < curTotal || curExtra < recipe.extraCount) {
                                 player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
@@ -591,7 +613,7 @@ function openBlacksmithGUI(player, stationPos) {
                                 return;
                             }
 
-                            // Списание ингредиентов
+                            // Списание ингредиентов с безопасной очисткой пустых слотов
                             deductPlayerItemsBS(player, recipe.ingot, curTotal);
                             if (recipe.extra && recipe.extraCount > 0) {
                                 deductPlayerItemsBS(player, recipe.extra, recipe.extraCount);
@@ -606,7 +628,7 @@ function openBlacksmithGUI(player, stationPos) {
                             player.server.runCommandSilent(`particle minecraft:flame ~ ~1 ~ 0.3 0.2 0.3 0.05 15`);
 
                             player.sendSystemMessage(Text.of(`§a⚒ [Ковка завершена] §fВы выковали: §6${recipe.name}§f!`));
-                            if (!session.hasHearth) {
+                            if (!activeHasHearth) {
                                 player.sendSystemMessage(Text.of('§e(Применен штраф +1 слиток из-за отсутствия Очага)'));
                             }
 
@@ -691,6 +713,13 @@ function openBlacksmithGUI(player, stationPos) {
                     gui.slot(slotX, slotY, s => {
                         s.setItem(entry.item.copy().withLore(lore));
                         s.leftClicked = () => {
+                            // Dynamic re-check of station status for repair percentage
+                            let currentStation = session.stationPos ? getBlacksmithStationInfo(player.level, session.stationPos) : null;
+                            let activeHasHearth = currentStation ? currentStation.hasHearth : session.hasHearth;
+                            let activePercent = activeHasHearth ? 0.50 : 0.25;
+                            let activePercentStr = activeHasHearth ? '50%' : '25%';
+                            let activeRestore = Math.max(1, Math.floor(entry.maxDmg * activePercent));
+
                             let curMatCount = countPlayerItemsBS(player, mat.id);
                             if (curMatCount < 1) {
                                 player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
@@ -698,19 +727,33 @@ function openBlacksmithGUI(player, stationPos) {
                                 return;
                             }
 
-                            // Списание слитка
+                            // Списание материала
                             deductPlayerItemsBS(player, mat.id, 1);
 
-                            // Восстановление прочности
+                            // Поиск и восстановление прочности предмета (с защитой от смещения слотов)
                             let realItem = player.inventory.getItem(entry.slotIndex);
-                            if (realItem && !realItem.isEmpty() && realItem.isDamageableItem()) {
-                                realItem.damageValue = Math.max(0, realItem.damageValue - restoreAmount);
+                            let targetStack = null;
+                            if (realItem && !realItem.isEmpty() && String(realItem.id) === entry.id && realItem.isDamageableItem()) {
+                                targetStack = realItem;
+                            } else {
+                                // Поиск в инвентаре по ID и износу
+                                for (let si = 0; si < player.inventory.size; si++) {
+                                    let testSt = player.inventory.getItem(si);
+                                    if (testSt && !testSt.isEmpty() && String(testSt.id) === entry.id && testSt.isDamageableItem() && testSt.damageValue > 0) {
+                                        targetStack = testSt;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (targetStack) {
+                                targetStack.damageValue = Math.max(0, targetStack.damageValue - activeRestore);
                             }
 
                             // Звук наковальни
                             player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.1`);
                             player.server.runCommandSilent(`particle minecraft:crit ~ ~1 ~ 0.4 0.3 0.4 0.1 20`);
-                            player.sendSystemMessage(Text.of(`§a🔧 [Ремонт] §fПредмет успешно отремонтирован на §e+${repairPercentStr}§f!`));
+                            player.sendSystemMessage(Text.of(`§a🔧 [Ремонт] §fПредмет успешно отремонтирован на §e+${activePercentStr}§f!`));
 
                             openBlacksmithGUI(player, stationPos);
                         };

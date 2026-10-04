@@ -2,7 +2,7 @@
   "version": "0.4.18",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-04T21:44:13.430020+00:00",
+  "generated_at": "2026-10-04T21:54:08.328171+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8922,8 +8922,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/diamond_mining_barrier.js",
-      "sha256": "7593e28a12fe9b129a791087c7538b9477da0811301bb588ab2286f4ba52c769",
-      "size": 3785
+      "sha256": "9aab978ac1e2a709fcf73c0b9b4efcd96226449fe8c5badaf84e0692baeb668e",
+      "size": 4014
     },
     {
       "path": "kubejs/server_scripts/01_progression/dimensional_progression_lock.js",
@@ -8967,13 +8967,13 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_crafting_gui.js",
-      "sha256": "4841c8285bf42d56bed88a1177bd0b8764412fd5a10e9b054cf3b38e3e9a806f",
-      "size": 45525
+      "sha256": "5d36bd9bc83f3e406327aeae1fe34770de22a40f521faac060d97209971f9ca2",
+      "size": 48421
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
-      "sha256": "904efaa37e080a316581bd3c9ad69a10ed3e932324471af63b262d36cef4c784",
-      "size": 12924
+      "sha256": "6bc2211524b9f02c3b47ba66ddef9dc7d5f7b79244cae7535756ff2732c0ca91",
+      "size": 19371
     },
     {
       "path": "kubejs/server_scripts/02_crafting/steel_metallurgy_recipes.js",
@@ -9392,8 +9392,8 @@
     },
     {
       "path": "kubejs/server_scripts/99_tests/blacksmith_workshop_test.js",
-      "sha256": "9d8bf8fcfd1d44364f7deab1f535224b878a241593b95fcbe4117886bf0abf1d",
-      "size": 7601
+      "sha256": "d2c2b5f9c4b88a9cbea8e7c101358c2930de07b33bf858863eea8ac74ba7500b",
+      "size": 10538
     },
     {
       "path": "kubejs/server_scripts/99_tests/elyrium_end_to_end_test.js",
