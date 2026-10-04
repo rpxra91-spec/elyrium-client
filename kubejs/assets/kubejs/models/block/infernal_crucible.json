@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "minecraft:block/crying_obsidian",
+    "north": "minecraft:block/respawn_anchor_top_off",
+    "south": "minecraft:block/respawn_anchor_side0",
+    "east": "minecraft:block/respawn_anchor_side0",
+    "west": "minecraft:block/respawn_anchor_side0",
+    "up": "minecraft:block/respawn_anchor_top",
+    "down": "minecraft:block/netherite_block"
+  }
+}
