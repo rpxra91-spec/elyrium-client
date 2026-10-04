@@ -1,8 +1,8 @@
 {
-  "version": "0.4.16",
+  "version": "0.4.17",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-03T23:39:26.510889+00:00",
+  "generated_at": "2026-10-04T08:43:31.905728+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -9419,6 +9419,11 @@
       "path": "kubejs/startup_scripts/ascension_catalysts.js",
       "sha256": "53bdd82f7dc0bb027f11f8b08751ab808dc6662444c1f2197db0bb9a4ab6f7d8",
       "size": 7027
+    },
+    {
+      "path": "kubejs/startup_scripts/custom_gear_registry.js",
+      "sha256": "2b8722856b649c223485c64792323e5e00917aca2506978cbdf1770026d57e12",
+      "size": 23229
     },
     {
       "path": "kubejs/startup_scripts/dodge_keybinds.js",
