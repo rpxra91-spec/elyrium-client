@@ -1,8 +1,8 @@
 {
-  "version": "0.4.18",
+  "version": "0.4.19",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-04T21:54:08.328171+00:00",
+  "generated_at": "2026-10-04T22:27:24.648725+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -16,9 +16,34 @@
       "size": 33511
     },
     {
+      "path": "config/Elenai-Dodge-2-Client.toml",
+      "sha256": "8013ec44478266fa7370eb778433517b394f8767fe9420ed7e2983cf5489ba90",
+      "size": 296
+    },
+    {
+      "path": "config/Elenai-Dodge-2-Common.toml",
+      "sha256": "55f9799748df76c6e44836bd4c7c5915feab4247a03545eba1d06051e0365874",
+      "size": 486
+    },
+    {
+      "path": "config/Feathers-Client.toml",
+      "sha256": "c58230f37ca23df606e9f84e09adb148caa41fb62bfde2f330953040e1d67746",
+      "size": 1108
+    },
+    {
+      "path": "config/Feathers-Common.toml",
+      "sha256": "e551a45c69d71e1afbdeeea40bd43bddd19faa586ca012ccdb235a69879a2241",
+      "size": 3379
+    },
+    {
       "path": "config/MouseTweaks.cfg",
       "sha256": "4069ce1a439d8c37453c1b1e9f2037e0942674c7e48723a39b37eab245792ad4",
       "size": 135
+    },
+    {
+      "path": "config/Obscuria/obscure-tooltips-client.toml",
+      "sha256": "484253f22dc05611301e393171c3327fd3890ec8c0217e020a692441d8fa6a5a",
+      "size": 72
     },
     {
       "path": "config/ProjectE/client.toml",
@@ -46,14 +71,39 @@
       "size": 4939
     },
     {
+      "path": "config/YungsCaveBiomes-forge-1_20_1.toml",
+      "sha256": "16316547df6cac6c68523673bc052b0f750a78ebcec15d2606fe46941f0691dd",
+      "size": 339
+    },
+    {
       "path": "config/accessories.json5",
-      "sha256": "8a2cd0b3d845ee27672d1a03d353e7d294d9abe36c473ce4ca49f3da716161dc",
-      "size": 922
+      "sha256": "ecef46f54ba1fa831068ffcd8574ce807c275679a1e4529120de2e22a0b50944",
+      "size": 926
     },
     {
       "path": "config/aces_spell_utils-common.toml",
       "sha256": "ebfaf174afce9599015f0cb0d4202cf052bb752271e59251a4745ca570ff43ec",
       "size": 660
+    },
+    {
+      "path": "config/adaptive-tooltips.json",
+      "sha256": "5d8afa267c39c888ac2cb7684b0e38aa3dfbffaa5101bb4467a60f3127845632",
+      "size": 493
+    },
+    {
+      "path": "config/addguimod-common.toml",
+      "sha256": "ec6110ef47873098e40d032b403418500c3f7f770c46aee785c3a9c6324550e5",
+      "size": 125
+    },
+    {
+      "path": "config/advancementplaques-common.toml",
+      "sha256": "b7812dd0a3535dea9871f2695b363727bb0abde965d365ca41e8c63b8bd67884",
+      "size": 3024
+    },
+    {
+      "path": "config/adventurez.json5",
+      "sha256": "150438f1c9f49ab6a27ff9afe00fa76de43c6b7624ff0337f59ca3ac97a559ad",
+      "size": 1562
     },
     {
       "path": "config/aeroblender-common.toml",
@@ -96,6 +146,536 @@
       "size": 617
     },
     {
+      "path": "config/aiimprovements-common.toml",
+      "sha256": "08a9f7c6f63bd35d49b15fa5bccd8cdf667f21af0c9a8cb2ab5998eb598ee7c3",
+      "size": 6211
+    },
+    {
+      "path": "config/alexscaves-client.toml",
+      "sha256": "46a57799310ebd5359a3973cc4f93d19fd88bf361ab4d75fe64ab561cdbfde7c",
+      "size": 1900
+    },
+    {
+      "path": "config/alexscaves-general.toml",
+      "sha256": "604d0d980ade42176d930a679d6f57d91935cf37711d06fa3208ec3281061279",
+      "size": 6084
+    },
+    {
+      "path": "config/alexscaves_biome_generation/abyssal_chasm.json",
+      "sha256": "d286a521c5fd852ef189e15f02952d3e6f529efbb67fe769d88d45183279c3b9",
+      "size": 272
+    },
+    {
+      "path": "config/alexscaves_biome_generation/forlorn_hollows.json",
+      "sha256": "5eea375f709ff5d7096b51fdc32b671952e1d2aed9f48c9bd9bc8e50ec2cb7f7",
+      "size": 226
+    },
+    {
+      "path": "config/alexscaves_biome_generation/magnetic_caves.json",
+      "sha256": "cf811ff0e46881d7993eb4910d9891ff6472554b613d3b3940deb0c6f1e0a779",
+      "size": 226
+    },
+    {
+      "path": "config/alexscaves_biome_generation/primordial_caves.json",
+      "sha256": "f0e2da7cf5d77abef1bd270cb7c288e3f57c001005fe41e11d545d948b06474d",
+      "size": 227
+    },
+    {
+      "path": "config/alexscaves_biome_generation/toxic_caves.json",
+      "sha256": "d6d7d5becfd20cca48dabcb838021694740bd874fba80a259b05d37bcc720a43",
+      "size": 226
+    },
+    {
+      "path": "config/alexsmobs.toml",
+      "sha256": "78bf232f4f25787cf518e3d9eebb6c608b8a25b1b13aef58cc68864aedb5d32d",
+      "size": 36193
+    },
+    {
+      "path": "config/alexsmobs/alligator_snapping_turtle_spawns.json",
+      "sha256": "df14afd6e1e96ace0dc8e4c71bc325e3baec8dbeaebf61f682561a70fc145f9d",
+      "size": 754
+    },
+    {
+      "path": "config/alexsmobs/anaconda_spawns.json",
+      "sha256": "ca961946a7b3c6e9abcb1bb82bbf36e1f9ce01d11769a06a7fbff6351293ff5d",
+      "size": 1036
+    },
+    {
+      "path": "config/alexsmobs/anteater_spawns.json",
+      "sha256": "f65e31155b2f2e033bed66dc5ec2ce7f6962be3389369ff800b69dfdecb5d990",
+      "size": 1166
+    },
+    {
+      "path": "config/alexsmobs/bald_eagle_spawns.json",
+      "sha256": "f8b51a798bfa4b51e0ee8fb78c860ca5b2677583db10584792a0e1548f17d396",
+      "size": 2723
+    },
+    {
+      "path": "config/alexsmobs/banana_slug_spawns.json",
+      "sha256": "1d5d0ce4ef42e94f0361c41b4b2402b64e87f0b1b987e1f1b2f6b2ac377211a7",
+      "size": 1697
+    },
+    {
+      "path": "config/alexsmobs/bison_spawns.json",
+      "sha256": "78e726ed002a31f5084a7b49fcce467c5623a046981d6c59d9ed7c4eb6cdbb1e",
+      "size": 1761
+    },
+    {
+      "path": "config/alexsmobs/blobfish_spawns.json",
+      "sha256": "7e7b175c33aed22c3d2cd31e215c6243e3790b07a3664b42d130a8f3b897489f",
+      "size": 146
+    },
+    {
+      "path": "config/alexsmobs/blue_jay_spawns.json",
+      "sha256": "7d1f784ab378e1e851e73dbb6f81866420c1328d25f754546d82c417bf304644",
+      "size": 4020
+    },
+    {
+      "path": "config/alexsmobs/bone_serpent_spawns.json",
+      "sha256": "47eef91378d3d6455a911d58cc3afdbfcdda7fd49968a7921b22620faa8ff672",
+      "size": 257
+    },
+    {
+      "path": "config/alexsmobs/bunfungus_spawns.json",
+      "sha256": "5d5a9d2039b6df546b788f62cb376cc29312a7115a5553541652aad7259436a6",
+      "size": 486
+    },
+    {
+      "path": "config/alexsmobs/cachalot_whale_beached_spawns.json",
+      "sha256": "73b8f83ddfa936642b38af1003e3c47eab6f089ad61612ee5181137409038f57",
+      "size": 642
+    },
+    {
+      "path": "config/alexsmobs/cachalot_whale_spawns.json",
+      "sha256": "fb901f1ea0bce7b9fb51dfaeb565539a3c1a9ee86bafb49caddac7ca1002e296",
+      "size": 893
+    },
+    {
+      "path": "config/alexsmobs/caiman_spawns.json",
+      "sha256": "542cca079ae671a6d928737b622b205deebfe2aed5864a01b5048f501aec2753",
+      "size": 291
+    },
+    {
+      "path": "config/alexsmobs/capuchin_monkey_spawns.json",
+      "sha256": "83b68d395236771ae9276f48b2988cfa9eb65e14dc41531b37a6b4e77c64859a",
+      "size": 1184
+    },
+    {
+      "path": "config/alexsmobs/catfish_spawns.json",
+      "sha256": "3c097d29c1f74807815d4c13e3586a76528ac3c104670ce95852bd3b62f9e16e",
+      "size": 1097
+    },
+    {
+      "path": "config/alexsmobs/cave_centipede_spawns.json",
+      "sha256": "973b8ebc19fa04e02b050f28359ee6bffbae93367f49ecac10892f4a2c1dad7d",
+      "size": 2200
+    },
+    {
+      "path": "config/alexsmobs/cockroach_spawns.json",
+      "sha256": "97a67afb52f1398f2c55e2a74001e5b893394e28d3f0eb00695f049bdd19f204",
+      "size": 2085
+    },
+    {
+      "path": "config/alexsmobs/comb_jelly_spawns.json",
+      "sha256": "cf9ba87b0d2001543fe09d8f6a4c602c03644643a9bd49d1e9ca0b041ab4dc02",
+      "size": 414
+    },
+    {
+      "path": "config/alexsmobs/cosmaw_spawns.json",
+      "sha256": "8e1d05a9b4ab8b923ff4951ef391665f3bdd218d943152f6f1f57509786bc0f7",
+      "size": 371
+    },
+    {
+      "path": "config/alexsmobs/cosmic_cod_spawns.json",
+      "sha256": "aed14e990ed38ee78214b1ea4a15e06bca1b8d098e1e440596be9ab14e4403b8",
+      "size": 139
+    },
+    {
+      "path": "config/alexsmobs/crimson_mosquito_spawns.json",
+      "sha256": "104fa9ce71421c5023abba88ce382957828b22341b44c2d03b3300b760482c9d",
+      "size": 785
+    },
+    {
+      "path": "config/alexsmobs/crocodile_spawns.json",
+      "sha256": "a73d36d1b5dd75eb20f6143193b991e942f4ef4cef725835b66ec01197d7074f",
+      "size": 1007
+    },
+    {
+      "path": "config/alexsmobs/crow_spawns.json",
+      "sha256": "cace87b5d504be10d1fff107ad14349066ae1c39d5200a7a29bdd5476167d9b8",
+      "size": 5146
+    },
+    {
+      "path": "config/alexsmobs/devils_hole_pupfish_spawns.json",
+      "sha256": "e7855fa7d73f4d3af77f47ddd70b4fcbab7862302d004b4ddae9dddc75c4e402",
+      "size": 145
+    },
+    {
+      "path": "config/alexsmobs/dropbear_spawns.json",
+      "sha256": "0fa8f72e4c73805727577a343758cfd39377cbdadebb88b6b2343183053e16cb",
+      "size": 403
+    },
+    {
+      "path": "config/alexsmobs/elephant_spawns.json",
+      "sha256": "cac271d780a6ed65db7b22e6944b6d456805d72b309865d6293ad6aa4f60c3e2",
+      "size": 1163
+    },
+    {
+      "path": "config/alexsmobs/emu_spawns.json",
+      "sha256": "70e30e058709266e665eb6642df126eeee744d05e63d77344501e78cb4a37851",
+      "size": 1661
+    },
+    {
+      "path": "config/alexsmobs/endergrade_spawns.json",
+      "sha256": "ca6e68bd3e74eb9cedcdbae4c82f594c4e85bdd54e1d0e35344a3febb9672980",
+      "size": 250
+    },
+    {
+      "path": "config/alexsmobs/enderiophage_spawns.json",
+      "sha256": "846748f4f352dead7fae39221d653713b7cbd775eaf10f80e0dea86f4e9ccb9a",
+      "size": 603
+    },
+    {
+      "path": "config/alexsmobs/farseer.json",
+      "sha256": "c245528d844458d8ac416572ee0df7575bb23d58beb07367d4cd55c66fec9000",
+      "size": 266
+    },
+    {
+      "path": "config/alexsmobs/flutter_spawns.json",
+      "sha256": "f729be2a0bc7bccc88cde40464f990d6074bfcf52a0d1d6719d8ebcd63c496ff",
+      "size": 147
+    },
+    {
+      "path": "config/alexsmobs/fly_spawns.json",
+      "sha256": "e7855fa7d73f4d3af77f47ddd70b4fcbab7862302d004b4ddae9dddc75c4e402",
+      "size": 145
+    },
+    {
+      "path": "config/alexsmobs/flying_fish_spawns.json",
+      "sha256": "69904b309696b6081cdec1ea87bdb62f84886cf6dac600a8bca231860c3a3f2f",
+      "size": 716
+    },
+    {
+      "path": "config/alexsmobs/frilled_shark_spawns.json",
+      "sha256": "7e7b175c33aed22c3d2cd31e215c6243e3790b07a3664b42d130a8f3b897489f",
+      "size": 146
+    },
+    {
+      "path": "config/alexsmobs/froststalker_spawns.json",
+      "sha256": "2cc43cdc9df3b20cc2eeb75a3c11736558f544571640607d08dec5c0a939c02d",
+      "size": 934
+    },
+    {
+      "path": "config/alexsmobs/gazelle_spawns.json",
+      "sha256": "17a5c3263942410596f91fb0aece138e5115bfabfa2a5913a63406fcb64b42d0",
+      "size": 1050
+    },
+    {
+      "path": "config/alexsmobs/gelada_monkey_spawns.json",
+      "sha256": "cdd0380bfa9b754856150966a042f807ac48d2f9409f4f2b543be19e87f4c41f",
+      "size": 1001
+    },
+    {
+      "path": "config/alexsmobs/giant_squid_spawns.json",
+      "sha256": "7e7b175c33aed22c3d2cd31e215c6243e3790b07a3664b42d130a8f3b897489f",
+      "size": 146
+    },
+    {
+      "path": "config/alexsmobs/gorilla_spawns.json",
+      "sha256": "8c90151f66a632b01e7b8f6998f72618720aae5362c1df0bdd7fefdb13cc20c8",
+      "size": 1053
+    },
+    {
+      "path": "config/alexsmobs/grizzly_bear_spawns.json",
+      "sha256": "7d1f784ab378e1e851e73dbb6f81866420c1328d25f754546d82c417bf304644",
+      "size": 4020
+    },
+    {
+      "path": "config/alexsmobs/guster_spawns.json",
+      "sha256": "263974f58a4b48df633648246820681745da9f9e16f30fefe6e07f576251dfb1",
+      "size": 1132
+    },
+    {
+      "path": "config/alexsmobs/hammerhead_shark_spawns.json",
+      "sha256": "a5eeb1a3843a12ef4fde1d8a3a5f13161034457c0901d3f938aa71a20e6712f3",
+      "size": 254
+    },
+    {
+      "path": "config/alexsmobs/hummingbird_spawns.json",
+      "sha256": "6aa305d47ca32364d445c04c8a20da36a7ccef97955c27e834d4114604d2785d",
+      "size": 3029
+    },
+    {
+      "path": "config/alexsmobs/jerboa_spawns.json",
+      "sha256": "c4b2ef89d9ad5c4dffcebb51209837da430b166c5767c1a38d90911c4445b124",
+      "size": 1252
+    },
+    {
+      "path": "config/alexsmobs/kangaroo_spawns.json",
+      "sha256": "70e30e058709266e665eb6642df126eeee744d05e63d77344501e78cb4a37851",
+      "size": 1661
+    },
+    {
+      "path": "config/alexsmobs/komodo_dragon_spawns.json",
+      "sha256": "695a3eb4d61a8208cc634871c237b0e6efc980ac668793f4686848e32cda0907",
+      "size": 775
+    },
+    {
+      "path": "config/alexsmobs/laviathan_spawns.json",
+      "sha256": "07d0215377f12f1299ec46b6277426c3cf957aa1d310c97fa943cdf5ace8d260",
+      "size": 142
+    },
+    {
+      "path": "config/alexsmobs/leafcutter_anthill_spawns.json",
+      "sha256": "f65e31155b2f2e033bed66dc5ec2ce7f6962be3389369ff800b69dfdecb5d990",
+      "size": 1166
+    },
+    {
+      "path": "config/alexsmobs/lobster_spawns.json",
+      "sha256": "bb0c918e8dbd4d003417a1bcabb38b8433d1f9be95fe6f8feef95d30616b49a7",
+      "size": 398
+    },
+    {
+      "path": "config/alexsmobs/maned_wolf_spawns.json",
+      "sha256": "8483d96341369b430ff2ebfebd7562b0c58c40b96be541cc88189fc696606a0d",
+      "size": 1037
+    },
+    {
+      "path": "config/alexsmobs/mantis_shrimp_spawns.json",
+      "sha256": "4f6099fe4d9f99530f9f0f9bae7e55c0713506efdc47da69d227ae62137647e4",
+      "size": 385
+    },
+    {
+      "path": "config/alexsmobs/mimic_octopus_spawns.json",
+      "sha256": "9c68a433ab6f75ff9e8d46868480158e4c1f46949779cb0b0d973f7759dbfc2d",
+      "size": 373
+    },
+    {
+      "path": "config/alexsmobs/mimicube_spawns.json",
+      "sha256": "fcace6e8c558df6eb13827f7a2b4a7f43c9fdfd3015331bd7e277329ca034c34",
+      "size": 365
+    },
+    {
+      "path": "config/alexsmobs/moose_spawns.json",
+      "sha256": "abac051da2458ec848604b66a6d7889f7c715060bb9706c1d1822155127d096c",
+      "size": 2291
+    },
+    {
+      "path": "config/alexsmobs/mudskipper_spawns.json",
+      "sha256": "542cca079ae671a6d928737b622b205deebfe2aed5864a01b5048f501aec2753",
+      "size": 291
+    },
+    {
+      "path": "config/alexsmobs/mungus_spawns.json",
+      "sha256": "5d5a9d2039b6df546b788f62cb376cc29312a7115a5553541652aad7259436a6",
+      "size": 486
+    },
+    {
+      "path": "config/alexsmobs/murmur.json",
+      "sha256": "973b8ebc19fa04e02b050f28359ee6bffbae93367f49ecac10892f4a2c1dad7d",
+      "size": 2200
+    },
+    {
+      "path": "config/alexsmobs/orca_spawns.json",
+      "sha256": "2e62ae273c3488a294068e5ed737dbf08791f4758cd3659308824d7bf4ece377",
+      "size": 255
+    },
+    {
+      "path": "config/alexsmobs/platypus_spawns.json",
+      "sha256": "b96f9e44f59f54b67460784fb1fdfa06d053f9ca9abb4fc3b04f222fd65ee958",
+      "size": 625
+    },
+    {
+      "path": "config/alexsmobs/potoo_spawns.json",
+      "sha256": "59c5832a40ef0e7212a4d499862f931a5dfcd3ff6d68598153f1274191b0939d",
+      "size": 148
+    },
+    {
+      "path": "config/alexsmobs/raccoon_spawns.json",
+      "sha256": "2f353aa8720d03fbdef9d9e4932ecc4435b7923bbc72191fab6f46acb66d3a12",
+      "size": 3712
+    },
+    {
+      "path": "config/alexsmobs/rain_frog_spawns.json",
+      "sha256": "c4b2ef89d9ad5c4dffcebb51209837da430b166c5767c1a38d90911c4445b124",
+      "size": 1252
+    },
+    {
+      "path": "config/alexsmobs/rattlesnake_spawns.json",
+      "sha256": "b8662bb3de9e2e5cc4af3773700fe6446c389980a80f6350f99d51f3fa2cef39",
+      "size": 1646
+    },
+    {
+      "path": "config/alexsmobs/rhinoceros_spawns.json",
+      "sha256": "17a5c3263942410596f91fb0aece138e5115bfabfa2a5913a63406fcb64b42d0",
+      "size": 1050
+    },
+    {
+      "path": "config/alexsmobs/roadrunner_spawns.json",
+      "sha256": "b8662bb3de9e2e5cc4af3773700fe6446c389980a80f6350f99d51f3fa2cef39",
+      "size": 1646
+    },
+    {
+      "path": "config/alexsmobs/rocky_roller_spawns.json",
+      "sha256": "98dc351abc061685560adc82bd3ffa6e4c87d4faab81e9bb6a9e2a6f07cdb177",
+      "size": 673
+    },
+    {
+      "path": "config/alexsmobs/seagull_spawns.json",
+      "sha256": "4dca182ebef46ea0076b8e8066add18f69527cf2f81da83e77e0409127c92dc4",
+      "size": 1296
+    },
+    {
+      "path": "config/alexsmobs/seal_spawns.json",
+      "sha256": "ef706c1e2ba0b9356523f8aeb3679303ab98d85c9b761d0e55962e930be4d8e6",
+      "size": 877
+    },
+    {
+      "path": "config/alexsmobs/shoebill_spawns.json",
+      "sha256": "0d8683c0a1b8176d4e89f88c4f3b1e6fbf6b269781497a190749904c7323eeec",
+      "size": 623
+    },
+    {
+      "path": "config/alexsmobs/skelewag_spawns.json",
+      "sha256": "86aad88d05c283679e85900cab1bf3977d496849005ac068a14e40b93db35aa2",
+      "size": 374
+    },
+    {
+      "path": "config/alexsmobs/skreecher.json",
+      "sha256": "f812e719afb24421c6853dacf4d1f66864305e335cfdf6193613d7c408ecab30",
+      "size": 276
+    },
+    {
+      "path": "config/alexsmobs/skunk_spawns.json",
+      "sha256": "01cc2eb4d92ba30b7301b9325a353cd96c5c7ff263c348795bfb34698cf8f11b",
+      "size": 2037
+    },
+    {
+      "path": "config/alexsmobs/snow_leopard_spawns.json",
+      "sha256": "fdf546af7c7ff2307d0862c0802450eef1e99554af3a340e7a6af69fa5785ea5",
+      "size": 1808
+    },
+    {
+      "path": "config/alexsmobs/soul_vulture_spawns.json",
+      "sha256": "45407796e49769550eef92fd3953daa191c85aaf032fb2be32fe591b0199a172",
+      "size": 523
+    },
+    {
+      "path": "config/alexsmobs/spectre_spawns.json",
+      "sha256": "ca6e68bd3e74eb9cedcdbae4c82f594c4e85bdd54e1d0e35344a3febb9672980",
+      "size": 250
+    },
+    {
+      "path": "config/alexsmobs/straddler_spawns.json",
+      "sha256": "5ee746cf50b358048a0243e4c45997285cf4a9b736758d388ad730d4ed493900",
+      "size": 664
+    },
+    {
+      "path": "config/alexsmobs/stradpole_spawns.json",
+      "sha256": "5ee746cf50b358048a0243e4c45997285cf4a9b736758d388ad730d4ed493900",
+      "size": 664
+    },
+    {
+      "path": "config/alexsmobs/sugar_glider_spawns.json",
+      "sha256": "cec5208e2e9f12aa8ce13d0f6d34a18500a77d143441c9b511df21c623fe368f",
+      "size": 418
+    },
+    {
+      "path": "config/alexsmobs/sunbird_spawns.json",
+      "sha256": "7b82ff39e191bd213cd8ecf06ff9a78c4658e6f6b9d8b48a4fcc4017e7268cb5",
+      "size": 3925
+    },
+    {
+      "path": "config/alexsmobs/tarantula_hawk_spawns.json",
+      "sha256": "c4b2ef89d9ad5c4dffcebb51209837da430b166c5767c1a38d90911c4445b124",
+      "size": 1252
+    },
+    {
+      "path": "config/alexsmobs/tasmanian_devil_spawns.json",
+      "sha256": "40c769365424d492a4c17700bb8cfac4c8ce7fac2bc16728f0c4287e3a043130",
+      "size": 1908
+    },
+    {
+      "path": "config/alexsmobs/terrapin_spawns.json",
+      "sha256": "b96f9e44f59f54b67460784fb1fdfa06d053f9ca9abb4fc3b04f222fd65ee958",
+      "size": 625
+    },
+    {
+      "path": "config/alexsmobs/tiger_spawns.json",
+      "sha256": "f88fc1b519759fe41347afca59030619365e173c577e8c1adfcb88777078d066",
+      "size": 1209
+    },
+    {
+      "path": "config/alexsmobs/toucan_spawns.json",
+      "sha256": "f65e31155b2f2e033bed66dc5ec2ce7f6962be3389369ff800b69dfdecb5d990",
+      "size": 1166
+    },
+    {
+      "path": "config/alexsmobs/triops_spawns.json",
+      "sha256": "c4b2ef89d9ad5c4dffcebb51209837da430b166c5767c1a38d90911c4445b124",
+      "size": 1252
+    },
+    {
+      "path": "config/alexsmobs/tusklin_spawns.json",
+      "sha256": "9ab4772704660c679ea30dff2db2c1272843e00675e2a7e610adcc6486120c3c",
+      "size": 882
+    },
+    {
+      "path": "config/alexsmobs/underminer.json",
+      "sha256": "97a67afb52f1398f2c55e2a74001e5b893394e28d3f0eb00695f049bdd19f204",
+      "size": 2085
+    },
+    {
+      "path": "config/alexsmobs/void_worm_spawns.json",
+      "sha256": "6712a2d6165ed52b7d251a8fc4cbfb6c1f834210a8bda82b55440402fd2d3273",
+      "size": 18
+    },
+    {
+      "path": "config/alexsmobs/warped_mosco_spawns.json",
+      "sha256": "6712a2d6165ed52b7d251a8fc4cbfb6c1f834210a8bda82b55440402fd2d3273",
+      "size": 18
+    },
+    {
+      "path": "config/alexsmobs/warped_toad_spawns.json",
+      "sha256": "72126b26d7f3ae03b80df97dd103e0cec87d10829e86ac8b08da23abc7b318d8",
+      "size": 661
+    },
+    {
+      "path": "config/allurement-client.toml",
+      "sha256": "41c4ca4a2dc0e88d4ac245f61e81b55b4811d2529aa482e452ee1d68aa68aceb",
+      "size": 217
+    },
+    {
+      "path": "config/allurement-common.toml",
+      "sha256": "7e172760e0b295705251d4bbeedc7c08bc691836f04bfd84a8ae53804ece0c82",
+      "size": 6074
+    },
+    {
+      "path": "config/almostunified/debug.json",
+      "sha256": "3e03a291b5310a6b94a45aff63e4731baa643701c42a968ed716483ccd1d5a37",
+      "size": 162
+    },
+    {
+      "path": "config/almostunified/duplicates.json",
+      "sha256": "40639e8cb9e9ea52b8557c50d29fc06e73e2ad1e7ca27ae5ce8fe2eca2e97188",
+      "size": 677
+    },
+    {
+      "path": "config/almostunified/startup.json",
+      "sha256": "ad711622f9b8c5cc8115f52396f5d82587b809fb20cbf9d94c7744aeebcaf4d5",
+      "size": 25
+    },
+    {
+      "path": "config/almostunified/unify.json",
+      "sha256": "96b3ae33dde3eb1ce50694d793772bf4e42231e6be6d50f317d36a6b9212d735",
+      "size": 1789
+    },
+    {
+      "path": "config/ambientsounds-client.json",
+      "sha256": "d002319f21f057d57ab1e6a018877d57e687b2e3cd6a5479164ec66d98cd0f78",
+      "size": 4083
+    },
+    {
       "path": "config/amendments-client.toml",
       "sha256": "0b760a4f9c8b23ea661171e5d96cd0361056bd94f41052bc1c1671986ba31ea4",
       "size": 4696
@@ -104,6 +684,21 @@
       "path": "config/amendments-common.toml",
       "sha256": "ddaee6344cb06dd4a0aa101836b050bb68564604274997fac14e52b0227b0e2e",
       "size": 5193
+    },
+    {
+      "path": "config/antiqueatlas.json5",
+      "sha256": "2d7a4b633ba98e67ba290cca1005e00ef4eab2ada94301a1c95d448dbc92b87c",
+      "size": 3389
+    },
+    {
+      "path": "config/apoli-client.toml",
+      "sha256": "9a260476f00ad4828eebaebe5eb85e556a3f248f0b811c32ff076c625db890bd",
+      "size": 147
+    },
+    {
+      "path": "config/apoli-common.toml",
+      "sha256": "b15934d497ae5837e88013c5ec03754904eea2d010a7e557734dd9f049510538",
+      "size": 92
     },
     {
       "path": "config/apotheosis/apotheosis.cfg",
@@ -127,13 +722,23 @@
     },
     {
       "path": "config/apotheosis/name_generation.cfg",
-      "sha256": "90c08791f89b17fce14a75f28a5a4818bd2aa23b7fc9f2aa2fb1f02e882fd498",
-      "size": 141169
+      "sha256": "043fa7e7713bee91e5cacd296eef8dfb656ec7766976dde2bbbe9910808b40fa",
+      "size": 167528
     },
     {
       "path": "config/apothic_spawners.cfg",
       "sha256": "bb24dbd4da6a01298d1133fbec0c6b35ad99ae7f0c2a3188f6e5386933c74d56",
       "size": 1143
+    },
+    {
+      "path": "config/appleskin-client.toml",
+      "sha256": "2de483a2c1b00aadd008f13471d90847feff358773dfd45fe9aab681b994823c",
+      "size": 1362
+    },
+    {
+      "path": "config/apugli-client.toml",
+      "sha256": "b6ea4713491e3ffb2b2b641c2d0676cddb6349069cac6d98070d5d9d7faaf6ed",
+      "size": 90
     },
     {
       "path": "config/archers/effects.json",
@@ -171,9 +776,89 @@
       "size": 1965
     },
     {
+      "path": "config/artifacts/client.json5",
+      "sha256": "dfae4a12bf924a5e12380032ff257ec535c6b003fef539a3893adb05c0a69c56",
+      "size": 551
+    },
+    {
+      "path": "config/artifacts/common.json5",
+      "sha256": "e3543775c5feff9ae7713dcabaa02227ce700b9194eea66ca7165bf520663704",
+      "size": 1582
+    },
+    {
+      "path": "config/artifacts/relics/anglers_hat.yaml",
+      "sha256": "9968d01308caaf19580d54b73d0da6f57df704a0c8cf2b31c5b97ef43b12494d",
+      "size": 2396
+    },
+    {
+      "path": "config/artifacts/relics/lucky_scarf.yaml",
+      "sha256": "db018c88dd5943eec0d100720db1759505939085b8270acad9344879d0d2887e",
+      "size": 2450
+    },
+    {
+      "path": "config/artifacts/relics/novelty_drinking_hat.yaml",
+      "sha256": "980f156be2c08ec9ecf6510d1b798883a3c8171cebd7e12db1038c7017c061f7",
+      "size": 4214
+    },
+    {
+      "path": "config/artifacts/relics/plastic_drinking_hat.yaml",
+      "sha256": "980f156be2c08ec9ecf6510d1b798883a3c8171cebd7e12db1038c7017c061f7",
+      "size": 4214
+    },
+    {
+      "path": "config/artifacts/relics/scarf_of_invisibility.yaml",
+      "sha256": "da1994d32ba38cd2f73fc2ba2c0c553f61bb97181d9931a853e9a174eb297b89",
+      "size": 3892
+    },
+    {
+      "path": "config/artifacts/relics/snorkel.yaml",
+      "sha256": "e288a73aaa1723525a8a2781d7ba77d944476b7455d597053a320cbfdc138491",
+      "size": 2399
+    },
+    {
+      "path": "config/artifacts/relics/superstitious_hat.yaml",
+      "sha256": "3e82ea426289aa81f15d28c3f7a4ff8c8598b3a3278e3c04d9a2e23b5f99bc5a",
+      "size": 2453
+    },
+    {
+      "path": "config/artifacts/relics/villager_hat.yaml",
+      "sha256": "017c57e6b74b77391103748bc0de002b414b108223c2ae9624045a81f6384169",
+      "size": 2326
+    },
+    {
+      "path": "config/atmospheric-common.toml",
+      "sha256": "44d5ffce2028de707c522ebcf39ff392810c73b91008e7b98d83ca3f2619aa0d",
+      "size": 234
+    },
+    {
+      "path": "config/attributefix.json",
+      "sha256": "917f068964cea00663153b72d3887357856368b0c1b6406469707a8d1b17c141",
+      "size": 27720
+    },
+    {
+      "path": "config/attributeslib.cfg",
+      "sha256": "7af387dd2ef193284fa8910e53c2237fecf1106f4f22874fb0c6a35dc7716110",
+      "size": 2504
+    },
+    {
+      "path": "config/autumnity-common.toml",
+      "sha256": "190b4f1cb084117df61fa76012f5c8405dddaf849aa0293728c16e36f9e8d8d4",
+      "size": 159
+    },
+    {
       "path": "config/azurelib.json",
       "sha256": "9f136b36f13fb0f7d0de277ecf6d933914c7dcc3f646136cd09a68e904659109",
       "size": 509
+    },
+    {
+      "path": "config/backpacked-client.toml",
+      "sha256": "e0a6468ece7a60a0e17a8eed720cd1bcf3b141eb72121126160cb02f4cd6f93a",
+      "size": 242
+    },
+    {
+      "path": "config/backpacked-common.toml",
+      "sha256": "0cf2e7b8871754107bd2e9d6d7cea123c4546029c74b55c40ece81de79702bef",
+      "size": 2370
     },
     {
       "path": "config/backpacked.augments.toml",
@@ -201,6 +886,21 @@
       "size": 1915
     },
     {
+      "path": "config/badoptimizations.txt",
+      "sha256": "9f56bd826fea6a8c6d68db34b09218e9c66154b82854150f954ddf56ec80f439",
+      "size": 3004
+    },
+    {
+      "path": "config/balm-common.toml",
+      "sha256": "2e83e8a8f8e120214aeb50f55eb08f26c53b90e841c1949a9b7ca400f6c34088",
+      "size": 553
+    },
+    {
+      "path": "config/bcc-common.toml",
+      "sha256": "d048f1f87fd8e006a5a77accb0416f7ef673197b29d65d0397dce7eb6b2b7d0f",
+      "size": 370
+    },
+    {
       "path": "config/bedfallback-server.toml",
       "sha256": "f530836684df5dafa95708c60b19390a163b1c56f9bba5b5c0fb748743cd85ab",
       "size": 273
@@ -209,6 +909,36 @@
       "path": "config/better-advanced-tooltips-client.toml",
       "sha256": "ec7c3fda5372c41fc23638a23079e9225d9779678e86492d95fb05c97c302e45",
       "size": 144
+    },
+    {
+      "path": "config/betteradvancements-client.toml",
+      "sha256": "2c5eba79cde20bd1658a43dc0527e5d45b2e462d2f065e228527eee8513446be",
+      "size": 924
+    },
+    {
+      "path": "config/betterarcheology-common.toml",
+      "sha256": "b2729a5916c5aac214f67337d1d38ee7767e1e14b7f2dcb7b7371a9509829a96",
+      "size": 4734
+    },
+    {
+      "path": "config/betterarcheology_structures/structure_settings.json5",
+      "sha256": "38d7ba223179d5c572ab2b545501505a75bfd32acd4d3b2f558f8d7d9134c269",
+      "size": 536
+    },
+    {
+      "path": "config/betterarcheology_structures/structure_toggle.json5",
+      "sha256": "2e50e09b1315e4a45ae949f4b515fd29ed4fa2f307849eafe8cd4c5b7706dea0",
+      "size": 1007
+    },
+    {
+      "path": "config/betterchunkloading.json",
+      "sha256": "371cbda2d9f5d0d8daf00faf2ee300611efd6fb854df1756d17131118ab933f5",
+      "size": 1601
+    },
+    {
+      "path": "config/betterclouds-v1.json",
+      "sha256": "28823685700c17f6b71f5c505ebe65aefb00823b6e8f86dc73958bba15a06636",
+      "size": 7238
     },
     {
       "path": "config/bettercombat/client.json5",
@@ -229,6 +959,11 @@
       "path": "config/bettercombat/weapon_trails.json",
       "sha256": "fd14cc025b6d6c54bc2ddff136f0298c0ba132dbe98c2c9c845b47b8286fc45c",
       "size": 7127
+    },
+    {
+      "path": "config/betterdeserttemples-forge-1_20.toml",
+      "sha256": "ee648242e301a55004cf2796dbf7d31ba1e46765ad07dd45c12053bbb4f4d387",
+      "size": 618
     },
     {
       "path": "config/betterdeserttemples-neoforge-1_21.toml",
@@ -256,9 +991,44 @@
       "size": 824
     },
     {
+      "path": "config/betterdungeons-forge-1_20.toml",
+      "sha256": "946ce267d09bcedf40defb277de8b64ee72b37118230d47b20eabf55aa32f91a",
+      "size": 3486
+    },
+    {
       "path": "config/betterdungeons-neoforge-1_21.toml",
       "sha256": "b03069c030f940550b4436d2f7c3dab582efa2fcc32b221ac30dbcb0617eab7f",
       "size": 3486
+    },
+    {
+      "path": "config/betterendisland-forge-1_20.toml",
+      "sha256": "705bd38f35f830cdee96cda5e3b3e31bc2992b6b5962bb08820dc24fef5d0846",
+      "size": 329
+    },
+    {
+      "path": "config/betterf3.toml",
+      "sha256": "eef710695011f05ff56e9f84a8aa0fbad113690d7e59eb878c20271ee2ad4211",
+      "size": 2145
+    },
+    {
+      "path": "config/betterfortresses-forge-1_20.toml",
+      "sha256": "d7ad821ff76f0abe305017abe4f3e4aaf7acc6870bc66983eb140cf283ed0b95",
+      "size": 468
+    },
+    {
+      "path": "config/betterfpsdist.json",
+      "sha256": "7410aa05bb28180a3d5389fe955affffa7e7842e330385d042eb78e7a73db017",
+      "size": 697
+    },
+    {
+      "path": "config/betterjungletemples-forge-1_20.toml",
+      "sha256": "1e558a006956669d6ab8dc9941eba2050365516c46f7008b3a9ee7b49764e273",
+      "size": 126
+    },
+    {
+      "path": "config/bettermineshafts-forge-1_20.toml",
+      "sha256": "016afc8af06af822bdaa07681699b3c068ec26274116b30b359d5ff03ef9ce11",
+      "size": 3773
     },
     {
       "path": "config/bettermineshafts-neoforge-1_21.toml",
@@ -269,6 +1039,11 @@
       "path": "config/betteroceanmonuments-neoforge-1_21.toml",
       "sha256": "6c09d2a75810e76c719b355c3480d1dc14b135f944f4a85d2118a395efc916c5",
       "size": 419
+    },
+    {
+      "path": "config/betterstrongholds-forge-1_20.toml",
+      "sha256": "2e9c9d71e1f2ebcc7065fa6bb09f9b3b97e4cf0bb78067182faf56d1fc14886d",
+      "size": 813
     },
     {
       "path": "config/betterstrongholds-neoforge-1_21.toml",
@@ -306,9 +1081,114 @@
       "size": 238
     },
     {
+      "path": "config/betterthirdperson-common.toml",
+      "sha256": "3843f47cb52faddf9bc4d8dd08a4d7e30061e671128d99412ca6a6c27bd1485b",
+      "size": 687
+    },
+    {
+      "path": "config/betterwitchhuts-forge-1_20.toml",
+      "sha256": "a053c7647937df86a050d1d2d5e2e42dae07b96af4a1e799c5c917e28456b15d",
+      "size": 440
+    },
+    {
+      "path": "config/biggerendcities-config.toml",
+      "sha256": "06c98e44747c689236d36082f8ba5abb0ab3cf40b95a1d56b7d97cedb441f044",
+      "size": 587
+    },
+    {
+      "path": "config/biomemusic.json",
+      "sha256": "153d19adab1437a85076b1c5648cf2d6ee0f41afda1765e0c0f49075a26cb7f2",
+      "size": 1079
+    },
+    {
+      "path": "config/biomeparticleweather/config.txt",
+      "sha256": "254903d2aa494724c5b7b255a0ae2bc11154fa31185660ed85d234ee824e3327",
+      "size": 554
+    },
+    {
+      "path": "config/biomesoplenty/biome_toggles.json",
+      "sha256": "9161c64fcae2852a0d647b643c89c963b2600e321b585e7f47868d24880668dd",
+      "size": 2233
+    },
+    {
+      "path": "config/biomesoplenty/generation.toml",
+      "sha256": "d5659e031c4f0be599fe673cbb727e884d7b2069288432a7941a21e8285f3e3d",
+      "size": 618
+    },
+    {
+      "path": "config/bluemap/core.conf",
+      "sha256": "04053d89a8427719e358aded75db352e3097f79d81128b10e7c8e7ae3064dcd0",
+      "size": 1086
+    },
+    {
+      "path": "config/bluemap/plugin.conf",
+      "sha256": "e07b02a4ece7a8cb2ec281998051077c743f3b025bbbe8862076f3f92a21a9a4",
+      "size": 1314
+    },
+    {
+      "path": "config/bluemap/webserver.conf",
+      "sha256": "845ceb77b0822b0910e9f8734b3a5c52c3356500a7413320ed864a431d0bfe2d",
+      "size": 498
+    },
+    {
+      "path": "config/blueprint-client.toml",
+      "sha256": "89ef9f568d793018db983b9f944e85876a4cebd408f8f4d2182b3c38fa44ef7e",
+      "size": 770
+    },
+    {
+      "path": "config/blueprint-common.toml",
+      "sha256": "468c5e98de57915c1fbc04f24934723184bfaff4d08f666ed8a8b4bdce894a25",
+      "size": 614
+    },
+    {
+      "path": "config/blur-client.toml",
+      "sha256": "5d1f67d3dabefcc6eed0b1ac4074e79e6d918f000691f2c727f4d8739f6f59e7",
+      "size": 801
+    },
+    {
       "path": "config/boss_ai_tweaks-common.toml",
       "sha256": "3e7e98fa66feafdd9e1a5ade84c40fe7355b5825dd85b9ed7ed45b1a18564853",
       "size": 792
+    },
+    {
+      "path": "config/bosses_rise_config.toml",
+      "sha256": "60c35e14861fbe762bbf59a3ac867671f58b8bb24891022e93bec0df49fd0bbb",
+      "size": 1230
+    },
+    {
+      "path": "config/buzzier_bees-common.toml",
+      "sha256": "d5ced1e70770f0b38f9ff0ba4d394ba5ef3ba9cb3e9701808abbc26858bd3a99",
+      "size": 241
+    },
+    {
+      "path": "config/c2me.toml",
+      "sha256": "5d5d1c0e2a9f2857fca753d1220fd5e589506ca4b74e3476eb514101213fca33",
+      "size": 6413
+    },
+    {
+      "path": "config/calio-common.toml",
+      "sha256": "2bd48dad7f48c14b11d2a092bcad062c22d802a0b4ed954907a673b93f3f3295",
+      "size": 176
+    },
+    {
+      "path": "config/cameraoverhaul.json",
+      "sha256": "1807fa718a651871842ebe59cb836c0f10b7fa8cfbed1e7ac169283d6f614859",
+      "size": 408
+    },
+    {
+      "path": "config/cameraoverhaul.toml",
+      "sha256": "03468af5900344291fd04da6f565440a7b1403e45f34d0ba029afa1d8f60ccac",
+      "size": 8546
+    },
+    {
+      "path": "config/canary.properties",
+      "sha256": "a37eb7f218ab61f3277a103a85c5bd14ff0abe0dff94e17883bcbb5ea28a3855",
+      "size": 422
+    },
+    {
+      "path": "config/cardinal-components-api.properties",
+      "sha256": "f7e7f346e0724cf9cfb77f44dec2e7d202ea2507729ec7b95ee6a8f089c82982",
+      "size": 273
     },
     {
       "path": "config/carryon-client.toml",
@@ -331,19 +1211,109 @@
       "size": 30664
     },
     {
+      "path": "config/cataclysm.toml",
+      "sha256": "fd0153bae1a0faaf927fdb3769f251bc2aeb9de7c2771d3e7b85741a8e9aa450",
+      "size": 20648
+    },
+    {
+      "path": "config/cataclysm/amethyst_crab_spawns.json",
+      "sha256": "f729be2a0bc7bccc88cde40464f990d6074bfcf52a0d1d6719d8ebcd63c496ff",
+      "size": 147
+    },
+    {
+      "path": "config/cataclysm/coral_golem_spawns.json",
+      "sha256": "e4802daebcc713c2e5991703ba9a142462a6023507bfa6fff155868a27bd30b7",
+      "size": 926
+    },
+    {
+      "path": "config/cataclysm/deepling_angler_spawns.json",
+      "sha256": "e4802daebcc713c2e5991703ba9a142462a6023507bfa6fff155868a27bd30b7",
+      "size": 926
+    },
+    {
+      "path": "config/cataclysm/deepling_brute_spawns.json",
+      "sha256": "e4802daebcc713c2e5991703ba9a142462a6023507bfa6fff155868a27bd30b7",
+      "size": 926
+    },
+    {
+      "path": "config/cataclysm/deepling_priest_spawns.json",
+      "sha256": "e4802daebcc713c2e5991703ba9a142462a6023507bfa6fff155868a27bd30b7",
+      "size": 926
+    },
+    {
+      "path": "config/cataclysm/deepling_spawns.json",
+      "sha256": "e4802daebcc713c2e5991703ba9a142462a6023507bfa6fff155868a27bd30b7",
+      "size": 926
+    },
+    {
+      "path": "config/cataclysm/deepling_warlock_spawns.json",
+      "sha256": "e4802daebcc713c2e5991703ba9a142462a6023507bfa6fff155868a27bd30b7",
+      "size": 926
+    },
+    {
+      "path": "config/cataclysm/koboleton_spawns.json",
+      "sha256": "5831a4da569ac4fb3d7d5396967281b8bdad765c25cf3cd5c6a5d708952c2b16",
+      "size": 474
+    },
+    {
+      "path": "config/caverns_and_chasms-client.toml",
+      "sha256": "ac4fad73b20151ee9f0de09dcc137310e5dcb44b68164c1d739eb562de848992",
+      "size": 677
+    },
+    {
+      "path": "config/caverns_and_chasms-common.toml",
+      "sha256": "2697f81d15401de3729b765a4f5e80095e70710cfa4236c1e280cfaa9d1471fd",
+      "size": 939
+    },
+    {
+      "path": "config/celestisynth/celestisynth-client.toml",
+      "sha256": "8242ac7444d684b2d7b906c136a5ea7c027bc30cae86f5863a6547ee5576b2c5",
+      "size": 410
+    },
+    {
+      "path": "config/chat_heads.json5",
+      "sha256": "744e6977b53f264ff47a1925451f7bd7083eb6bd7bff2505980cc3e9ca4ca0e2",
+      "size": 186
+    },
+    {
+      "path": "config/chloride-client.json",
+      "sha256": "e886893378bcb12a51e6fbb5471ea808cb7ea4d3758483bf2741134ba12c59cb",
+      "size": 1837
+    },
+    {
+      "path": "config/chunksending.json",
+      "sha256": "e589c5988aa0f23e08400df47ef156a61eea1978f2161ba014da278c28a60ac7",
+      "size": 301
+    },
+    {
       "path": "config/chunky/config.json",
       "sha256": "6c103db0800e63ba88c2296e42fb8f5e631f70ea17b8c5d77bef0166d0662d96",
       "size": 145
     },
     {
       "path": "config/chunky/tasks/minecraft/overworld.properties",
-      "sha256": "d762b9f3f6613a00e626947b481f9518e3b6f25cb1adb63fd4428c143625fbea",
-      "size": 129
+      "sha256": "51d5239c227ccf642f27647d959c5fa29e24734d7e53b4d6d06ed3ecfc16220f",
+      "size": 130
     },
     {
       "path": "config/citadel-common.toml",
       "sha256": "6cade6912a3873af0b297eb2da7ffa4bf5bac23f5ccfe9511aea9f5755745758",
       "size": 662
+    },
+    {
+      "path": "config/citresewn.json",
+      "sha256": "f40a21e858b346630f19d8b0724fe94473ae3db46f856fa8338da5e13364ad18",
+      "size": 139
+    },
+    {
+      "path": "config/clickadv.json",
+      "sha256": "fef2a56ec39082f313fc9f3b947a200b1499d510ff031b041b61ae227ba6b211",
+      "size": 433
+    },
+    {
+      "path": "config/cmdcam-client.json",
+      "sha256": "4cc716ae09fdccf228bb27be8bda41b892692a8835269788068c684e8d15f5c9",
+      "size": 24
     },
     {
       "path": "config/colony_warehouse_limits.json",
@@ -361,9 +1331,109 @@
       "size": 1852
     },
     {
+      "path": "config/companions.toml",
+      "sha256": "0ac391266a46c7c429b0631c9da0c4489eaeb162bff66993d30595adf80141f3",
+      "size": 19400
+    },
+    {
+      "path": "config/configured-client.toml",
+      "sha256": "0b2537ac36e57824caf66e589bb532f0801b99d02ac08545739af3709bf84e10",
+      "size": 93
+    },
+    {
+      "path": "config/connectivity.json",
+      "sha256": "d1f6a792a03e4b2ccec19ba00098db7d4c47fa3f3888b534cba2247a045cfd64",
+      "size": 1428
+    },
+    {
+      "path": "config/connector.json",
+      "sha256": "4a227238c269001ae57e16fa5f584e81c73b39e0e802704b3db9578c4bc52e42",
+      "size": 22
+    },
+    {
+      "path": "config/connector_global_mod_aliases.json",
+      "sha256": "ae536be4c722debb4252146b39a32135fe5ea2378520cf86fcc835d023ed9d30",
+      "size": 115
+    },
+    {
+      "path": "config/connectorextras_energy_bridge-common.toml",
+      "sha256": "4075f057d848f2a33f0bff9f44cce49f8d8340001d7b2afe3431ba1d999c4400",
+      "size": 345
+    },
+    {
+      "path": "config/copycats-client.toml",
+      "sha256": "9c4e1c84d2cd936b850b7d69ab97e4b617e464551cc3ce44aeb0aaed4eb6c6c5",
+      "size": 342
+    },
+    {
+      "path": "config/copycats-common.toml",
+      "sha256": "27a2c034e6a45bf0bfef0cd8678d943a8f32956ec9e05bd09da26400c083dbcd",
+      "size": 2167
+    },
+    {
+      "path": "config/crackerslib-client.toml",
+      "sha256": "58836a63ee557974d5cde292d06830ecf5a39f01c02dd97b55d05a53211cb415",
+      "size": 152
+    },
+    {
       "path": "config/craftingtweaks-common.toml",
       "sha256": "88a669f3aa6e8ffa05c4e1dbefc1f372ca26cea0fd493c16f33d94e37c513f8c",
       "size": 1212
+    },
+    {
+      "path": "config/crash_assistant/config.toml",
+      "sha256": "1c3bf7114313fbe199ff7a74aeb488fb868868bab4f63b79193fe249577a7cca",
+      "size": 8118
+    },
+    {
+      "path": "config/crash_assistant/lang/README.md",
+      "sha256": "92deb5c02f7625e07c4e477c1d8cf3b1fb920e27aea38b45ed0c06c4c0e420fc",
+      "size": 715
+    },
+    {
+      "path": "config/crash_assistant/lang/en_us.json",
+      "sha256": "59da1a25472485880a33644782ff04db3481fbfbb2ef1504df27fe2c5aef251c",
+      "size": 8344
+    },
+    {
+      "path": "config/crash_assistant/lang/es_es.json",
+      "sha256": "59da1a25472485880a33644782ff04db3481fbfbb2ef1504df27fe2c5aef251c",
+      "size": 8344
+    },
+    {
+      "path": "config/crash_assistant/lang/it_it.json",
+      "sha256": "59da1a25472485880a33644782ff04db3481fbfbb2ef1504df27fe2c5aef251c",
+      "size": 8344
+    },
+    {
+      "path": "config/crash_assistant/lang/ru_ru.json",
+      "sha256": "59da1a25472485880a33644782ff04db3481fbfbb2ef1504df27fe2c5aef251c",
+      "size": 8344
+    },
+    {
+      "path": "config/crash_assistant/lang/zh_cn.json",
+      "sha256": "59da1a25472485880a33644782ff04db3481fbfbb2ef1504df27fe2c5aef251c",
+      "size": 8344
+    },
+    {
+      "path": "config/crash_assistant/modlist.json",
+      "sha256": "f83e3a21e24a1ea10f7936702583d69a8c72de2a06b4ce1215ea5621976a4f99",
+      "size": 49864
+    },
+    {
+      "path": "config/crash_assistant/problematic_mods_config.json",
+      "sha256": "989fb8f797a5a894f0cbf8bf529ac20c88cceee72384bdbeedd6a22d455199a3",
+      "size": 225
+    },
+    {
+      "path": "config/create-client.toml",
+      "sha256": "81a89bd9759659213b1b8a6aa4828d796e531b9f6bee824324a40947e656a4e9",
+      "size": 4397
+    },
+    {
+      "path": "config/create-common.toml",
+      "sha256": "36a4d9f5da68f6801b83ce0c4a1a8805fbeffb0dd997f2d405465d7774522296",
+      "size": 157
     },
     {
       "path": "config/creativecore-client.json",
@@ -374,6 +1444,11 @@
       "path": "config/creativecore.json",
       "sha256": "5f08d0878d7f89c6b4c947a49dce368d7738255d44fecf9aad59ec6ae8a4fcef",
       "size": 274
+    },
+    {
+      "path": "config/creeperoverhaul.jsonc",
+      "sha256": "9d870b28f9a1479f952f258f7f01aebceb17fdc78c23014469c8ac055fad9bbb",
+      "size": 1850
     },
     {
       "path": "config/cristellib/aether/structure_placement_config.json5",
@@ -661,9 +1736,19 @@
       "size": 103
     },
     {
+      "path": "config/crittersandcompanions-common.toml",
+      "sha256": "c902ae9bda878b0bb9be20c0f6f27c89737ff3df2dc59248c19f06e91ac679b1",
+      "size": 201
+    },
+    {
       "path": "config/ctov-common.toml",
       "sha256": "83e175ed1b88c7cd35d0892e4fcef07efc99105c0c512cb7bdce7154e9f73d78",
       "size": 1263
+    },
+    {
+      "path": "config/cull-less-leaves.json",
+      "sha256": "f905b94a10cd01a281b422d7eda25a6850bd8e2d50997d640f223e43b5108262",
+      "size": 35
     },
     {
       "path": "config/cumulus_menus-client.toml",
@@ -691,6 +1776,11 @@
       "size": 483
     },
     {
+      "path": "config/custom_item_attributes/overrides.json5",
+      "sha256": "8ae8b1a82b21fcb0ec9fe844204411c41d608e2d16e31a9b8321b68a5a135551",
+      "size": 2852
+    },
+    {
       "path": "config/decilib.json",
       "sha256": "8b0fa3b0be7388bcfd856c92a58d19770db7bd8fbcdd946d22954ac7bcf20d1b",
       "size": 127
@@ -716,6 +1806,21 @@
       "size": 854
     },
     {
+      "path": "config/diet-client.toml",
+      "sha256": "aa0b175190d5197e6855c9470e2f24038dc3fc1334a46368647f7a7ec0ad2cef",
+      "size": 389
+    },
+    {
+      "path": "config/diet-server.toml",
+      "sha256": "0f68a5a19ceee4efb0bd57ff7c31f889602d56e1826893dc35f0aef79906f347",
+      "size": 1073
+    },
+    {
+      "path": "config/dimthread-common.toml",
+      "sha256": "2d358fe7194ecd19954568b4ba50c467cdb0f69602727c803ab0450ebd054a62",
+      "size": 834
+    },
+    {
       "path": "config/divinerpg/client.toml",
       "sha256": "5891cc4b0c6a412aef951e9c014714ceb1e6cf030c07574166712155d8c46196",
       "size": 370
@@ -726,9 +1831,94 @@
       "size": 375
     },
     {
+      "path": "config/doapi/recipebook.json5",
+      "sha256": "5a86f1976c3d950f4aa55347b3c577bf7cb5c60ab0c0be0afa538b1ed398ca14",
+      "size": 308
+    },
+    {
+      "path": "config/dogslie.toml",
+      "sha256": "0f06d01371565eb93452f927e1b08b4286e3f0b336b0d884fa3b2b41f62ec3c5",
+      "size": 833
+    },
+    {
+      "path": "config/domestication-innovation.toml",
+      "sha256": "8df5ed720b6f4e65dde564ca501ac9a4ba095684361ea90aff6110a905561d00",
+      "size": 5641
+    },
+    {
+      "path": "config/dragonfight.json",
+      "sha256": "37da51c2b6f7604c731929e8e72c2f077c2ffa9cbca1e802e85f5031e2e69926",
+      "size": 3350
+    },
+    {
+      "path": "config/drippyloadingscreen/config.cfg",
+      "sha256": "9048ef7ea3f91756e522d6976c02229fc8a797bb4d266f329160e994d0978388",
+      "size": 304
+    },
+    {
+      "path": "config/dummmmmmy-client.toml",
+      "sha256": "98f7d5ea2eb89fdf9dfa98b0d4fab03d7336876732152859cf015c3de6bd9598",
+      "size": 1570
+    },
+    {
+      "path": "config/dummmmmmy-common.toml",
+      "sha256": "951f25df08b8ba7c1f353d225f503ee103fff7df85eb8570dd68e877b217587a",
+      "size": 1277
+    },
+    {
+      "path": "config/dungeonsdelight-client-config.toml",
+      "sha256": "3a2377a7afbbc908c59c8ea5cdd3b2a08db100c71ec9598963a0a6d86ec67d14",
+      "size": 683
+    },
+    {
+      "path": "config/dungeonsdelight-config.toml",
+      "sha256": "6d8c2727b99d5c48ac6faeaadfe87f894178a3e90628a473b650b27e0accb3e0",
+      "size": 796
+    },
+    {
       "path": "config/durabilitytooltip-common.toml",
       "sha256": "7d38121136311ab3482d5696267255194c30d1afdae991c872e81aefaf1e41a1",
       "size": 1875
+    },
+    {
+      "path": "config/dynamic_fps.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "size": 3
+    },
+    {
+      "path": "config/dynamiccrosshair.json5",
+      "sha256": "39fa36f7f068dc389c4754f7a902855da3f4f2f95e6668cfe3946907eefe2fe1",
+      "size": 3700
+    },
+    {
+      "path": "config/dynamicview.json",
+      "sha256": "305841828cd7218dd650fc2f48f01039cbfb8a914143cd79ffe11f96f31888fd",
+      "size": 1416
+    },
+    {
+      "path": "config/dynview-common.toml",
+      "sha256": "9264d5d98bc08413dc4f8268a2373a443be5b6ef2c675ce693dcc4d197e77c2f",
+      "size": 1269
+    },
+    {
+      "path": "config/easyanvils-client.toml",
+      "sha256": "daecf2f4b4f0f6682cfabf68dcb963535f7f4284c671141dd7c7115b0c609ba7",
+      "size": 73
+    },
+    {
+      "path": "config/easyanvils-server.toml",
+      "sha256": "5bf38784a30090fbe2d5bc1a65aa5bd5744b5c9ed8a3abdce37341e5637cb570",
+      "size": 3484
+    },
+    {
+      "path": "config/easymagic-client.toml",
+      "sha256": "187085002566bc0ad0bd0262459f92716261ae66c3b96147096a5a4ef7a25abf",
+      "size": 977
+    },
+    {
+      "path": "config/easymagic-server.toml",
+      "sha256": "7dbf42819b121001c76e06c07994c363d316ce110f7b06dd032687f4099d5687",
+      "size": 1907
     },
     {
       "path": "config/echo_compass_hud.json",
@@ -736,9 +1926,134 @@
       "size": 53
     },
     {
+      "path": "config/ecologics-common.toml",
+      "sha256": "8c773d72ea3f17abfa1d80e1536758f2379e0a4eb66493d4b7dc983c2d412449",
+      "size": 612
+    },
+    {
+      "path": "config/effective.json",
+      "sha256": "76cc06e2714e80c5bd3c7d2f75acada1bab2a30af330bf64ee591463577ba2ed",
+      "size": 1067
+    },
+    {
+      "path": "config/eidolon-client.toml",
+      "sha256": "802d1db17dc65a2d9ce09d3177fcb9c74e2766b9304926f3e9072158e530c411",
+      "size": 395
+    },
+    {
+      "path": "config/eidolon-common.toml",
+      "sha256": "dd0f19c3b05388a8a445cae486453145d945c5527359319cc2a787422b639aef",
+      "size": 941
+    },
+    {
+      "path": "config/eidolon/basic_incense.toml",
+      "sha256": "7f86f423d48bd4645cbb4e098ea549bf5c7c27d7b62f6e41a92525fbbdf9b704",
+      "size": 412
+    },
+    {
+      "path": "config/eidolon/create_water.toml",
+      "sha256": "b43f8ba7d5aad6d7a894b1ca8cf6f672a6e9e1484d7764b565b60d028dcbe720",
+      "size": 130
+    },
+    {
+      "path": "config/eidolon/cure_zombie.toml",
+      "sha256": "32e6ec422a19dcca1730ae6f04709941998c87f9ccaa2f79dd28e7c83979d395",
+      "size": 413
+    },
+    {
+      "path": "config/eidolon/dark_animal_sacrifice.toml",
+      "sha256": "89c02349e6798f9fc540cedc91410cd2d06b8593bd6e611583b8c05c3f47651f",
+      "size": 411
+    },
+    {
+      "path": "config/eidolon/dark_prayer.toml",
+      "sha256": "7f86f423d48bd4645cbb4e098ea549bf5c7c27d7b62f6e41a92525fbbdf9b704",
+      "size": 412
+    },
+    {
+      "path": "config/eidolon/dark_touch.toml",
+      "sha256": "50902d7f3354eaef9f2cc4256c2b82f9c26856b5357bcd565fb447d96bfc330d",
+      "size": 130
+    },
+    {
+      "path": "config/eidolon/dark_villager_sacrifice.toml",
+      "sha256": "04d46e8183736e0f6170f9465a83ffd5d5e8ff1341b64dc70b2841c3595b54c7",
+      "size": 411
+    },
+    {
+      "path": "config/eidolon/darklight_chant.toml",
+      "sha256": "3ed66707f2caf3d957efcad16f6975c468a2dd8bf89ee599b58e11fc5561745d",
+      "size": 129
+    },
+    {
+      "path": "config/eidolon/enthrall_spell.toml",
+      "sha256": "644fcd815e84f04f5e9116aa2b6b8656842e0940105d25dd649e5ef762b025f7",
+      "size": 130
+    },
+    {
+      "path": "config/eidolon/fire_chant.toml",
+      "sha256": "08c429276462350db2928225504540799109792262a7c38d6553e3243dd47b93",
+      "size": 129
+    },
+    {
+      "path": "config/eidolon/frost_touch.toml",
+      "sha256": "50902d7f3354eaef9f2cc4256c2b82f9c26856b5357bcd565fb447d96bfc330d",
+      "size": 130
+    },
+    {
+      "path": "config/eidolon/holy_touch.toml",
+      "sha256": "50902d7f3354eaef9f2cc4256c2b82f9c26856b5357bcd565fb447d96bfc330d",
+      "size": 130
+    },
+    {
+      "path": "config/eidolon/lay_on_hands.toml",
+      "sha256": "940677ccd9300593d1930a91be8457202f1e2dbe6b4418e1959173bb8aae9fe1",
+      "size": 346
+    },
+    {
+      "path": "config/eidolon/light_chant.toml",
+      "sha256": "3ed66707f2caf3d957efcad16f6975c468a2dd8bf89ee599b58e11fc5561745d",
+      "size": 129
+    },
+    {
+      "path": "config/eidolon/light_prayer.toml",
+      "sha256": "7f86f423d48bd4645cbb4e098ea549bf5c7c27d7b62f6e41a92525fbbdf9b704",
+      "size": 412
+    },
+    {
+      "path": "config/eidolon/reinforce_armor.toml",
+      "sha256": "644fcd815e84f04f5e9116aa2b6b8656842e0940105d25dd649e5ef762b025f7",
+      "size": 130
+    },
+    {
+      "path": "config/eidolon/smite_chant.toml",
+      "sha256": "12b7149e26f77a02a6d30e7c227c9582c4733603c2c6a3ebf587c308e93c9064",
+      "size": 216
+    },
+    {
+      "path": "config/eidolon/sunder_armor.toml",
+      "sha256": "644fcd815e84f04f5e9116aa2b6b8656842e0940105d25dd649e5ef762b025f7",
+      "size": 130
+    },
+    {
+      "path": "config/eidolon/undead_lure.toml",
+      "sha256": "644fcd815e84f04f5e9116aa2b6b8656842e0940105d25dd649e5ef762b025f7",
+      "size": 130
+    },
+    {
+      "path": "config/eidolon/zombify_villager.toml",
+      "sha256": "32e6ec422a19dcca1730ae6f04709941998c87f9ccaa2f79dd28e7c83979d395",
+      "size": 413
+    },
+    {
       "path": "config/elyrium_resourcepacks.json",
       "sha256": "54a9fc575da2a71c863067e6d5fad0389c943aebdbb1fa4bb0e00fce6e489367",
       "size": 564
+    },
+    {
+      "path": "config/embeddium++.toml",
+      "sha256": "68c864c221e82e7314b0668f1644aba1a84f6e00063d5b8efff4b1533b973be6",
+      "size": 6755
     },
     {
       "path": "config/embeddium-fingerprint.json",
@@ -761,9 +2076,109 @@
       "size": 2059
     },
     {
+      "path": "config/endergetic-common.toml",
+      "sha256": "d4101832272fd0801cf9db7288774b8898a5257bbe833a7ece259d19ac6693ef",
+      "size": 114
+    },
+    {
+      "path": "config/endermanoverhaul-client.jsonc",
+      "sha256": "5d9315a8ce308b193ca880f5a782879c0f117861b08ccb38baed6d049e29b26a",
+      "size": 39
+    },
+    {
+      "path": "config/endermanoverhaul.jsonc",
+      "sha256": "9502aced0fb4379a4a5e72c484fb155ffcdf80aff96f8f88ed4a0111b42d9003",
+      "size": 930
+    },
+    {
+      "path": "config/endrem.toml",
+      "sha256": "a7e392980ae50a17ca0075b0c44095b525d245c3920616d7893066b3f8b84d1f",
+      "size": 723
+    },
+    {
+      "path": "config/enhanced_bes.properties",
+      "sha256": "bbcd97345fbff2b41cf947cc1964255ba2bb7c81053b1ff2d14b4616e0a31a92",
+      "size": 532
+    },
+    {
+      "path": "config/entity_model_features.json",
+      "sha256": "8e790673b3ca485043459486a5dd457c7c3bf4e009f015589b1a69409c7908fd",
+      "size": 981
+    },
+    {
+      "path": "config/entity_sound_features.json",
+      "sha256": "20c00e0c6271d6162c7a9ea668a04cf8bca538f40d0daf28638a7d0210020501",
+      "size": 126
+    },
+    {
+      "path": "config/entity_texture_features.json",
+      "sha256": "e0d887f6d35fe11adb84f41060d75fe3e8460cc6e78623b63c4931ef7991ea7f",
+      "size": 1363
+    },
+    {
+      "path": "config/entityculling.json",
+      "sha256": "81b6afd82e5ab2ca45b5fc0f025ef5638b3d2df534dbc05bb7e399042706c961",
+      "size": 929
+    },
+    {
+      "path": "config/entitytickrust-common.toml",
+      "sha256": "20567f678d911c15d8cd5d37e9250c57a6c90946d80a54df064f602b665d6340",
+      "size": 194
+    },
+    {
+      "path": "config/environmental-client.toml",
+      "sha256": "6951f0f734aadf747862e4c5bfab3715982eb10080fef98ebf78a3d8fcf222d9",
+      "size": 126
+    },
+    {
+      "path": "config/environmental-common.toml",
+      "sha256": "2c4f791edf2d1b226dcac0198a877d92a4cd46dde42f0d8daf548ed90b410de2",
+      "size": 2429
+    },
+    {
+      "path": "config/etched-client.toml",
+      "sha256": "f2ba2f9022471e4b945cf7ed31a3392dd2c62bbee46f4776c47dcc5a812a5915",
+      "size": 207
+    },
+    {
       "path": "config/eternal_starlight.json",
       "sha256": "7c25ded634aeb8f6b4e843b61dc0c349277570d60f073e8a17df5b703c205ce7",
       "size": 5248
+    },
+    {
+      "path": "config/etf_warnings.json",
+      "sha256": "a5ba22e63061c1fb67f0f895f17681351eaeccc225faef966c29ee630593275e",
+      "size": 28
+    },
+    {
+      "path": "config/euphoria_patcher.properties",
+      "sha256": "95c12747642f1b8481cb73f756cb14fc953f5fe34e3570e936e42c3e6f82d8f2",
+      "size": 651
+    },
+    {
+      "path": "config/everycomp-client.toml",
+      "sha256": "c868e4a51a63df55559537615761232bc26fdecbb5aa940eb328e30e077c4c63",
+      "size": 322
+    },
+    {
+      "path": "config/everycomp-common.toml",
+      "sha256": "d5db260bb1eba72e98961864f2726423eeeaf846d3d32fe1a4e30cf2f8e1db0e",
+      "size": 1234
+    },
+    {
+      "path": "config/everycomp-entries.toml",
+      "sha256": "8c3d51af412ba9ae823ab678380af04b2a916b125acc3d7dda50a867336d2daf",
+      "size": 5649
+    },
+    {
+      "path": "config/everycomp-hazardous.properties",
+      "sha256": "7e3b2bcd8a4c97ee6b59a585f04b4a8d2bde01aa04bd887a8288308d703fd662",
+      "size": 268
+    },
+    {
+      "path": "config/everycomp-hazardous.toml",
+      "sha256": "5bddc4082a2b6d75e72c1255597cb1657e1bbbbe37a9820901512401c6c052a0",
+      "size": 2331
     },
     {
       "path": "config/explorerscompass-client.toml",
@@ -774,6 +2189,21 @@
       "path": "config/explorerscompass-common.toml",
       "sha256": "4067e50c6833df6619e511f2bc09630f16fa22e61cf250a8abbf3354afbe14f0",
       "size": 2138
+    },
+    {
+      "path": "config/explosiveenhancement.json",
+      "sha256": "86f3699ca35c9e7450fb8b835de20cbde3d19ba77fcc7b47f0b9687fa11921e3",
+      "size": 725
+    },
+    {
+      "path": "config/exposure-client.toml",
+      "sha256": "1737559f8389071d956e58c397a94c07a488c0bccaf0dd24ee5217e5c5bc17c1",
+      "size": 3410
+    },
+    {
+      "path": "config/exposure-common.toml",
+      "sha256": "4dd0d924584100ab8cb677a178e8e09bcfe1721856eaec5d980bc74bafc5616b",
+      "size": 2369
     },
     {
       "path": "config/ezactions/anim-client.toml",
@@ -801,6 +2231,16 @@
       "size": 1426
     },
     {
+      "path": "config/fabric/indigo-renderer.properties",
+      "sha256": "12f3e87e392a84dfefef66e35903cda3a9b8c38f399ec886be86089a7c804d52",
+      "size": 290
+    },
+    {
+      "path": "config/fallingleaves-client.toml",
+      "sha256": "2cd017af6632239398b694fadf8191d6073cf39585549876cc682843f521ecb3",
+      "size": 796
+    },
+    {
       "path": "config/fallingtree.json",
       "sha256": "9704d03d869a866e68c5e783025c8720df6d35e3e76c56080e08e9bf6473a341",
       "size": 1313
@@ -816,14 +2256,499 @@
       "size": 1462
     },
     {
+      "path": "config/fancymenu/animations/stefjinvu/animation.properties",
+      "sha256": "17c140fcc5afdb5ccd426ab6c9c3317547367fcdb0003e3124072e15571014b0",
+      "size": 6749
+    },
+    {
+      "path": "config/fancymenu/assets/123123ghfghfj657567567567567.png",
+      "sha256": "34c13ac4d642645ddd2d1be12c164d04728d1f453a96dda3c0a0355eefb9de72",
+      "size": 1856
+    },
+    {
+      "path": "config/fancymenu/assets/12345fdg.png",
+      "sha256": "d3bff331562226d255785b74a0440eebf62d96bca97412a1192ed677127abc91",
+      "size": 474
+    },
+    {
+      "path": "config/fancymenu/assets/12345ght.png",
+      "sha256": "75308c3d8033259a54025678110d573b7bdde1abff014995c096a9b615a3e680",
+      "size": 2041
+    },
+    {
+      "path": "config/fancymenu/assets/32.png",
+      "sha256": "7f4384c227fdb01d8c5b75166c5f58be604b7a5ba7047e6d3076f6b43b3e7170",
+      "size": 95
+    },
+    {
+      "path": "config/fancymenu/assets/34534534.png",
+      "sha256": "bcd45c9891c987c1bd55b7cde6cd5a6319809b24378cd80614489b63d9f234f6",
+      "size": 1671
+    },
+    {
+      "path": "config/fancymenu/assets/active.png",
+      "sha256": "5ac5c8c6e9f9796a2a9dfbde8613b7b0bf329a2772d73459a2715da1ff3dd607",
+      "size": 548
+    },
+    {
+      "path": "config/fancymenu/assets/dostizhenia.png",
+      "sha256": "fb0fddcc5d99db8690a3aafd6d315bcae425b6e016e3957413dfab4d3341479f",
+      "size": 903
+    },
+    {
+      "path": "config/fancymenu/assets/dostizhenia_ob.png",
+      "sha256": "30cf0ef0a6d8630b41f5793579a0779e8f877837de38dcb48a3410a124b2b00a",
+      "size": 753
+    },
+    {
+      "path": "config/fancymenu/assets/icon.icns",
+      "sha256": "96c24b7b168a0e07602f3da98c5be54ade671fb4e9c2eb2dd2ab5376836fd5dd",
+      "size": 228009
+    },
+    {
+      "path": "config/fancymenu/assets/inactive.png",
+      "sha256": "e8eee5b5eb9c3eb2375d4bade7b79e722b20fba7f01cbdc7c44e812fc5700f41",
+      "size": 527
+    },
+    {
+      "path": "config/fancymenu/assets/load1123.png",
+      "sha256": "ce9b5652ecaaff1af9b864cf3f98a593fceeb5a645adb4d56280fe2b610e05c4",
+      "size": 8088217
+    },
+    {
+      "path": "config/fancymenu/assets/lol1.png",
+      "sha256": "7ca76b0931cbace3c7a2f7ad79acbc14348a89a02ee985420a6d2a290a44e959",
+      "size": 463
+    },
+    {
+      "path": "config/fancymenu/assets/lol2.png",
+      "sha256": "ce9eac13e6f4e3659a2d4e83d374a42c85452da6f50272308fdabba06ebd694b",
+      "size": 489
+    },
+    {
+      "path": "config/fancymenu/assets/ls.png",
+      "sha256": "0c1d10a3f86e393170dea6a714e5f907458d053fb54a1326305c1f8c56aef33b",
+      "size": 8401
+    },
+    {
+      "path": "config/fancymenu/assets/menu.png",
+      "sha256": "a7c9b2b518dd636c79b695307c8c430e7a226c6bcce7577dbca545a986eb8b51",
+      "size": 9690910
+    },
+    {
+      "path": "config/fancymenu/assets/min_real.png",
+      "sha256": "5c8509e41f6b13592b5708c70c83d64a2a6bb7568efdf8950d08b223f0b3f17a",
+      "size": 986
+    },
+    {
+      "path": "config/fancymenu/assets/min_real2.png",
+      "sha256": "59b6546eb24711c2cecf8e2d2a25bad21e964477a307665fa1c2b2e3d4142b4b",
+      "size": 864
+    },
+    {
+      "path": "config/fancymenu/assets/mo2d.png",
+      "sha256": "bc5e49ce27dfbfdee427556ce0f4b7bad2f6264ead45d08ed80996a8a91c107f",
+      "size": 692
+    },
+    {
+      "path": "config/fancymenu/assets/mod.png",
+      "sha256": "5fa98adcda19183288d5d1089b9677bbbed8fb619b993e3e9cd7520d1721ddc1",
+      "size": 776
+    },
+    {
+      "path": "config/fancymenu/assets/mody_3.png",
+      "sha256": "b6408af2cf4d03401134feb39905c7ccadd1d472f3b4d54e68f85585d86fc67a",
+      "size": 1033
+    },
+    {
+      "path": "config/fancymenu/assets/mody_32.png",
+      "sha256": "48942a5416a614c241ee4bbfadbcaf73f1c206de1415ead93ef186663cbd5ac3",
+      "size": 862
+    },
+    {
+      "path": "config/fancymenu/assets/nas3t.png",
+      "sha256": "4d36c7b6744e565885c6b02c01c5137212b67515f7d41b818d8c7a5664bf79b0",
+      "size": 760
+    },
+    {
+      "path": "config/fancymenu/assets/nast.png",
+      "sha256": "feaf7bdc036b99bb4d14fd3ff4d7ea6c6f43fe4033b3531c0222f4092e7e5e7d",
+      "size": 862
+    },
+    {
+      "path": "config/fancymenu/assets/nastrifghb.png",
+      "sha256": "c4a11babdbf42d6c8e39dfaeaa2d329fb31d826ae0e8df3b8afbb8d6e21d3fda",
+      "size": 1638
+    },
+    {
+      "path": "config/fancymenu/assets/nastroikikiki.png",
+      "sha256": "bab2a6703960281d07b4c5f3b8fd7cb55360adda3fca33785a86e0b233355dab",
+      "size": 2060
+    },
+    {
+      "path": "config/fancymenu/assets/nastroyki_3.png",
+      "sha256": "44d5d59813f1c64c442bef8a441efb28a27a984b330d3711ce2ffbde565cc2e5",
+      "size": 852
+    },
+    {
+      "path": "config/fancymenu/assets/nastroyki_ob.png",
+      "sha256": "f8e50428b1269027c28ca294980953804fc82cf61e4b0faaeded1f93be068f92",
+      "size": 689
+    },
+    {
+      "path": "config/fancymenu/assets/od_ig.png",
+      "sha256": "f0f3cbbe6f188836cf9fdd0ab618fdc45c833ddd34ab22f5b2b7674a1f00f66a",
+      "size": 1160
+    },
+    {
+      "path": "config/fancymenu/assets/od_ig1.png",
+      "sha256": "8877936d346d220960659b1cdfa60bbfb895747ceb2e316990071ab3b68fec97",
+      "size": 1069
+    },
+    {
+      "path": "config/fancymenu/assets/odinoch.png",
+      "sha256": "64063bb7a86e2087e3353f8c518bc89fa8fed8612815547ec31974c3aba22c9e",
+      "size": 2058
+    },
+    {
+      "path": "config/fancymenu/assets/odinochkaochkodyma.png",
+      "sha256": "54d8b56f13c3af84e1afa1f58563071d700fa160eb5b6ca705cb941550602585",
+      "size": 2161
+    },
+    {
+      "path": "config/fancymenu/assets/odinocsveth.png",
+      "sha256": "9dd6b2a2a2dbaa6d43d8c2d57275cd548bc71af9ce1bc882f3b53c875ee17c10",
+      "size": 1769
+    },
+    {
+      "path": "config/fancymenu/assets/otkryt_dlya_seti.png",
+      "sha256": "b63359d460dac893a18cf0357e33cf59ee3f1cff77dc8924d500f15460053861",
+      "size": 959
+    },
+    {
+      "path": "config/fancymenu/assets/otkryt_dlya_seti_ob.png",
+      "sha256": "b64cff57f5c3271545bb03554517c974542001cf6dbf615d9ad62ebe2c7c2444",
+      "size": 834
+    },
+    {
+      "path": "config/fancymenu/assets/s_igra.png",
+      "sha256": "1fb91c150343fb013a49201e883b86881819146d8f0455a4823cae48a153af08",
+      "size": 1111
+    },
+    {
+      "path": "config/fancymenu/assets/s_igra2.png",
+      "sha256": "30bfb47f612c0dfe69d2d82ac64d1cb80db9433d59dfed5af53e4fab3d3f7d1e",
+      "size": 1078
+    },
+    {
+      "path": "config/fancymenu/assets/screensh333ot_viewer.png",
+      "sha256": "8778211835924f6f39dcc287136d6e7b816fd610312170b6013d656b74b9479b",
+      "size": 448
+    },
+    {
+      "path": "config/fancymenu/assets/screenshot_viewer.png",
+      "sha256": "a9fe2b8fdca0944c8e8a2e58c03dccf518fa06e3e223c48f2abbb398447e430e",
+      "size": 414
+    },
+    {
+      "path": "config/fancymenu/assets/set.png",
+      "sha256": "05762dad15d9dc2463300eabfdb743098670c10a89173f9712cbf3f14eaf320f",
+      "size": 707
+    },
+    {
+      "path": "config/fancymenu/assets/set_ob.png",
+      "sha256": "f3a78b59da7e9ed98739bec6448a7305b9a49c0ec13d5236816b3d48ba705696",
+      "size": 578
+    },
+    {
+      "path": "config/fancymenu/assets/sokhranit_i_vyti.png",
+      "sha256": "79de40b10671368b7fbfc90ef00babefcd2af9cc673ac8fcb4c9c91eafcd6111",
+      "size": 1269
+    },
+    {
+      "path": "config/fancymenu/assets/sokhranit_i_vyti_ob.png",
+      "sha256": "508b064e5486a4c4bc544d7690658448afbbab6dd7ef06b02e8450734019de6b",
+      "size": 1008
+    },
+    {
+      "path": "config/fancymenu/assets/sokhranitsdas_i_vyti.png",
+      "sha256": "a0dd4bb2cd6d2aa5e1374a36a0307ba4feb04bfc79a7cb5f8a80762fae45e1c2",
+      "size": 1030
+    },
+    {
+      "path": "config/fancymenu/assets/statistika.png",
+      "sha256": "7f6af34679bd9124c95b02cd3ab60c9b14313e61066f98a5d6a6a9709c65b49a",
+      "size": 846
+    },
+    {
+      "path": "config/fancymenu/assets/statistika_ob.png",
+      "sha256": "53ad1ed190ddd7ae6fb06a9a0099d49ea788c837c70829732bd9e93f36bd95da",
+      "size": 667
+    },
+    {
+      "path": "config/fancymenu/assets/uyu.png",
+      "sha256": "879712a1d1926934b146397ec26b28816617dc56eac3333c37bf6b3227931263",
+      "size": 1347
+    },
+    {
+      "path": "config/fancymenu/assets/vernutsya_k_igre.png",
+      "sha256": "93d64eb182ca61707a13eca643d3caa743cb2cfda5560094915247dc665f6cae",
+      "size": 1265
+    },
+    {
+      "path": "config/fancymenu/assets/vernutsya_k_igre_o22222b.png",
+      "sha256": "6b7d5989930bae1d573b5eec9355f1b5db23d33609e549ff3de281ae2564d761",
+      "size": 1029
+    },
+    {
+      "path": "config/fancymenu/assets/vewf.png",
+      "sha256": "0789d3a6cbc0a22193f5af392c1b5dc9673646681f20bb6fd449cab45273f698",
+      "size": 789
+    },
+    {
+      "path": "config/fancymenu/assets/vic1os.png",
+      "sha256": "39474aa2e74aa5c5f6c8513d4be5d7fc56b6de1e1daf2830a3a513e2e0037fe8",
+      "size": 778
+    },
+    {
+      "path": "config/fancymenu/assets/viiiiiiiii22222xod.png",
+      "sha256": "cd8a92578da74de42dccc1fd0a8f2473fdf991c18572d98a0a1b1089deac6854",
+      "size": 1064
+    },
+    {
+      "path": "config/fancymenu/assets/viiiiiiiiixod.png",
+      "sha256": "4d3f45076b7cf04075e44dd6a3dcc386f804cd02f1834a22648abc56581f3a1d",
+      "size": 808
+    },
+    {
+      "path": "config/fancymenu/assets/vixo23s.png",
+      "sha256": "4203ea3beccf8de081bcc8439df5f33a2ebb6588edfcbd754be61cf8ff9a35ea",
+      "size": 1086
+    },
+    {
+      "path": "config/fancymenu/assets/vyt_i_ig.png",
+      "sha256": "8b35d5cf411b991a52890301cc25540bd690cba74b8bdb7fed240237470cf31c",
+      "size": 920
+    },
+    {
+      "path": "config/fancymenu/assets/zhaloba.png",
+      "sha256": "51a864c0db0a636307b4d1ea96dc0ebe4d888226adfd31e8a5563daf867b0548",
+      "size": 814
+    },
+    {
+      "path": "config/fancymenu/assets/zhaloby_ob.png",
+      "sha256": "8ef6d96ce656ac05bd79ea5f36b5bc795a04493963d81555e595a0ad12f24dd1",
+      "size": 665
+    },
+    {
+      "path": "config/fancymenu/config.txt",
+      "sha256": "d578d079c4588e39a8697a238cdb32150b38a15d284fa000094325c662d09e82",
+      "size": 1635
+    },
+    {
+      "path": "config/fancymenu/custom_gui_screens.txt",
+      "sha256": "ff492043eaf454c46e949d5eef32ece90cc5a19feb50a161dd29a43b5732c880",
+      "size": 51
+    },
+    {
+      "path": "config/fancymenu/customizablemenus.txt",
+      "sha256": "694481d638bff33bae31311d64095ec75f29e8ee9f45763824b2d42107c09805",
+      "size": 535
+    },
+    {
+      "path": "config/fancymenu/customization/1.txt",
+      "sha256": "9070598bb7d359b342231c381b88e09e1ded47e9c3511b533e9632f7447dc84c",
+      "size": 4098
+    },
+    {
+      "path": "config/fancymenu/customization/123456.txt",
+      "sha256": "09ee9f4cd9cf4df6978112f48cc1eebb6942cfa5720114df0f0f68d73f2e55f0",
+      "size": 15608
+    },
+    {
+      "path": "config/fancymenu/customization/buttton2a.txt",
+      "sha256": "0fb630d5f5e6d795780c9d27c6dd9ca6a2bea1466d1e1451ec883ee4ce8bf5a3",
+      "size": 23999
+    },
+    {
+      "path": "config/fancymenu/customization/controls_screen_layout.txt",
+      "sha256": "998d915cb68e17e575bc398547d98c3674541628cac71329738d4c307ba1f7b1",
+      "size": 11667
+    },
+    {
+      "path": "config/fancymenu/customization/creative_mode_inventory_screen_layout.txt",
+      "sha256": "bd277859b61deb00d68288c3144f4a08d8eb8c6a78e7eba674f216124427191e",
+      "size": 5133
+    },
+    {
+      "path": "config/fancymenu/customization/inventory_screen_layout.txt",
+      "sha256": "d31708d3b892ef45ba944e3032a0990d6ca488f61c9071fe2c57947b05f1ee8f",
+      "size": 6207
+    },
+    {
+      "path": "config/fancymenu/customization/pack_selection_screen_layout.txt",
+      "sha256": "8745721851ed68f49466c8042a5460b6a9febf1cc9c8fe89ae53f8022303c6c2",
+      "size": 4045
+    },
+    {
+      "path": "config/fancymenu/customization/pause_screen_layo22ut_1.txt",
+      "sha256": "6c4a92f4e84d278e9b9e97819ad6a189418dec6e282cf845092fa9541f19ea01",
+      "size": 27856
+    },
+    {
+      "path": "config/fancymenu/customization/pause_screen_layout2_1.txt",
+      "sha256": "c86d109050ceefb59625c1fa5b4279860facbd1bbf8868b25dc315390e9b5da3",
+      "size": 24649
+    },
+    {
+      "path": "config/fancymenu/customization/pause_screen_layout_1.txt",
+      "sha256": "7cf099b8ca921af60e7741e0822a15c4df511541d9013a26fe56c4e81066bdfa",
+      "size": 27869
+    },
+    {
+      "path": "config/fancymenu/customization/sasasa.txt",
+      "sha256": "ae118bb4d4e89db728f732141ced7bdaeb44acc80050aec4b3cb03475d23ff6f",
+      "size": 25612
+    },
+    {
+      "path": "config/fancymenu/customization/version2.txt",
+      "sha256": "ea8a3916a546e89f9c865b149103ee88f91a01815eca95f60dacf9397c8bda49",
+      "size": 22537
+    },
+    {
+      "path": "config/fancymenu/layout_editor/widgets/element_layer_control.lewidget",
+      "sha256": "d4e66bc22fcfa56158ca7100017623c71b1437fb4722229b6e064e0a48a5f5de",
+      "size": 198
+    },
+    {
+      "path": "config/fancymenu/legacy_checklist.txt",
+      "sha256": "9a25d3dc708e43eabafce5479a13c02dae15bc7f673afb2745b8b2ba48a97dc0",
+      "size": 42
+    },
+    {
+      "path": "config/fancymenu/locals/de_de.local",
+      "sha256": "13485f1d678322a328e798c34f1ff9f7f9c690464d1050e2e7c1ea02b0f49b61",
+      "size": 27376
+    },
+    {
+      "path": "config/fancymenu/locals/en_us.local",
+      "sha256": "cef0b6b4ed124cb2e5f0f19de2bd86cc59e6f7426a58d6d74bbd3554727553d4",
+      "size": 114417
+    },
+    {
+      "path": "config/fancymenu/locals/pl_pl.local",
+      "sha256": "66d4e9b270d4d92bffd85b13255def475d3ff6c865965deaa700be2ed1b08bc0",
+      "size": 13858
+    },
+    {
+      "path": "config/fancymenu/locals/pt_br.local",
+      "sha256": "0b19fc1d8bd8c86435eb39886116aceb3b4554fa749561fc87be2df0157a134c",
+      "size": 14283
+    },
+    {
+      "path": "config/fancymenu/locals/ru_ru.local",
+      "sha256": "2120cd2e1de7d8ec9ee8d18f24db70645e92042ba55ffbbc68403ecdc8a50fce",
+      "size": 155574
+    },
+    {
+      "path": "config/fancymenu/locals/uk_ua.local",
+      "sha256": "c9a592ff8445f3d8d6a87a59df27e72a67b71afcf0fc03dad27a5ded2f94a780",
+      "size": 147984
+    },
+    {
+      "path": "config/fancymenu/locals/zh_cn.local",
+      "sha256": "50cf30919fd2c7b11f6ce246425d657e3b93dfb919a0b6fe4730dc5d9fee0d2a",
+      "size": 52106
+    },
+    {
+      "path": "config/fancymenu/menu_identifiers.db",
+      "sha256": "003a1c89846741e0eb9475089d4ed653896fd08e0b994667fae452b4ad894a72",
+      "size": 10497
+    },
+    {
+      "path": "config/fancymenu/ui_themes/dark.json",
+      "sha256": "43ac9bee88f1a4c9b66fee0d4b6fcec14a52feab46bf803928aabed96f510cc9",
+      "size": 4133
+    },
+    {
+      "path": "config/fancymenu/ui_themes/light.json",
+      "sha256": "6954379d658fdf496f162792a3244f0f08635858ed4b0553a718a7ef63b8a620",
+      "size": 4135
+    },
+    {
+      "path": "config/fancymenu/user_variables.db",
+      "sha256": "3d7d4cda73d6bde134a568ccbe4e8d2e7fbe701570012b71fa45acdb2258c823",
+      "size": 23
+    },
+    {
+      "path": "config/fantasy_armor-armor_attributes.toml",
+      "sha256": "748706557dd55e485d096165f1a198e4be0b20143e5f42eca83431aa5240ada0",
+      "size": 47408
+    },
+    {
+      "path": "config/fantasy_armor-armor_effects.toml",
+      "sha256": "8be312cf4318a05719476f16cfa09d1aead0374824506f15209ce190ec5a8573",
+      "size": 2880
+    },
+    {
+      "path": "config/fantasy_armor-common.toml",
+      "sha256": "7f72070cd79b91ad4e2da2f0ab211247cb25e925fe60db1bcd728758a2250106",
+      "size": 592
+    },
+    {
+      "path": "config/fantasy_weapons.yml",
+      "sha256": "82ebe8c1ff9d3eb69860811850529a9ea663eb03d34149093fa4254262acfcb1",
+      "size": 4492
+    },
+    {
+      "path": "config/farmersdelight-client.toml",
+      "sha256": "e5f8f5743c23e6c1e569070d720f91e66495e8da03550a0d37d9a07c6d543014",
+      "size": 369
+    },
+    {
+      "path": "config/farmersdelight-common.toml",
+      "sha256": "23dac8e8964b311ec6361b30dfb33db572a4bf13657c545bb1b618ffe7f896f1",
+      "size": 4425
+    },
+    {
+      "path": "config/farsight.json",
+      "sha256": "98a9f53e1e21247108a90e80b9cf4141fd7b432e219a262672ffedd5730afbab",
+      "size": 120
+    },
+    {
       "path": "config/ferritecore-mixin.toml",
       "sha256": "1356f9d52b2dcb2afa5a593e53c286d9c1c3778a6f8b1cf761953b185b7dce78",
       "size": 1603
     },
     {
+      "path": "config/figura.json",
+      "sha256": "6447b9ca541e01bd5902f186a3a14402ca560162f47d5f7c158c35ec97cf031a",
+      "size": 146
+    },
+    {
+      "path": "config/flerovium.json",
+      "sha256": "4dafe93b4fc05d8bd626069d57f86f08e6571d8b3c601f5c514c3553ab697c87",
+      "size": 66
+    },
+    {
+      "path": "config/flywheel-client.toml",
+      "sha256": "a1f5418ea2735fe080ad97efa9718712496e309bf0e7e859c47b1dd56e751149",
+      "size": 623
+    },
+    {
       "path": "config/fml.toml",
       "sha256": "cc59fb1039726fda3ab1eb69b06d9b9aebb7496604ea579cfb735bc5377e7825",
       "size": 1550
+    },
+    {
+      "path": "config/forge-client.toml",
+      "sha256": "0b1b3c45343435184c9dde3149b38afcdb97953e287686ecda54385f53ebcddc",
+      "size": 1628
+    },
+    {
+      "path": "config/fsr2-client.toml",
+      "sha256": "929bb5e5490e922c75c8ab31d3fd45f79f96aa40ff9a87164531efe15102cc31",
+      "size": 412
     },
     {
       "path": "config/ftblibrary-client.snbt",
@@ -891,9 +2816,49 @@
       "size": 510
     },
     {
+      "path": "config/galena_hats.json",
+      "sha256": "c427871edf0f085393425997b7ffcd0c2e54278376dc9f7390619a21bc3264d7",
+      "size": 42
+    },
+    {
+      "path": "config/gamemenumodoption-client.toml",
+      "sha256": "fc8a2e57c27b338eb4d7bfa848e10cf73a1b7e947863fe3be8b1a39b71316993",
+      "size": 119
+    },
+    {
+      "path": "config/gml-script-mods.toml",
+      "sha256": "dc9b0f9c9c29949bcb91cebb2bcdc111a7d99bee1d2b2ea168f2edbc7b9a1ba6",
+      "size": 121
+    },
+    {
       "path": "config/greenhousegardener-server.toml",
       "sha256": "d7aeaf43c4ef27e42effc4f11c2bd14c1f35abe8c63aa0ad6819576c5cb59ccd",
       "size": 1006
+    },
+    {
+      "path": "config/grieflogger/grieflogger.toml",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/guarding.json",
+      "sha256": "b81260a1812a1ae57d81aec0a31928b0618adf8c7028cd1196e195e76fdb612b",
+      "size": 316
+    },
+    {
+      "path": "config/hammerlib/foil_colors.json",
+      "sha256": "b59479f89fc1e63b20a2dc8eee2c96b102d6e4c80612015539ea3a117dc3741b",
+      "size": 148
+    },
+    {
+      "path": "config/hammerlib/main.cfg",
+      "sha256": "9be1cc42957d04e66b81ae114d5baf01fc1e85bf93e8a1faeabe908ff579c7c2",
+      "size": 629
+    },
+    {
+      "path": "config/hammerlib/recipes/modded/hammerlib.json",
+      "sha256": "09558f531693a4ef0ca2d49789b79bbe06e6534cfb1260119ad0730260a1013b",
+      "size": 473
     },
     {
       "path": "config/hazennstuff-common.toml",
@@ -911,14 +2876,279 @@
       "size": 814
     },
     {
+      "path": "config/highlighter-common.toml",
+      "sha256": "22b7f87be30b7e3ce6fa3fe1cb588e8b3eae0bfc9ddc390ad346a1d1bbfebb4b",
+      "size": 720
+    },
+    {
+      "path": "config/iceandfire-client.toml",
+      "sha256": "a4dcf9cc2e7f541fe73ee2f9780694cb8e9c7738a0a06e2a456453c3a47a8b9d",
+      "size": 321
+    },
+    {
+      "path": "config/iceandfire-common.toml",
+      "sha256": "fac6d7eeb9c790b39b4ea801d3ff8582f2d837e90bdb7ffabed6c18346f889a5",
+      "size": 15042
+    },
+    {
+      "path": "config/iceandfire/amphithere_biomes.json",
+      "sha256": "8c44f2cf4903712ff88743373cd6893b31226af031f9822ec63ae337abdbb4b0",
+      "size": 767
+    },
+    {
+      "path": "config/iceandfire/cockatrice_biomes.json",
+      "sha256": "d01094612d9d8a48e99809522ff7e009bc1ec7e03a57e0f5f8c9cd51ef44b0bb",
+      "size": 907
+    },
+    {
+      "path": "config/iceandfire/cyclops_cave_biomes.json",
+      "sha256": "0ec4ed27179c0a74651de2fe91cc17024ca05bd598b7f8043ebb794ad6d16a3a",
+      "size": 610
+    },
+    {
+      "path": "config/iceandfire/deathworm_biomes.json",
+      "sha256": "119e3398276786acafe198ebf3fd62d62e0e62e544ec74980c32bf0356c6f0c9",
+      "size": 1369
+    },
+    {
+      "path": "config/iceandfire/desert_myrmex_biomes.json",
+      "sha256": "119e3398276786acafe198ebf3fd62d62e0e62e544ec74980c32bf0356c6f0c9",
+      "size": 1369
+    },
+    {
+      "path": "config/iceandfire/fire_dragon_biomes.json",
+      "sha256": "0366d55cbee86bf899cd68bee919b8b07f0925a44943a1fab08ffb89505fbeb7",
+      "size": 2113
+    },
+    {
+      "path": "config/iceandfire/fire_dragon_cave_biomes.json",
+      "sha256": "0366d55cbee86bf899cd68bee919b8b07f0925a44943a1fab08ffb89505fbeb7",
+      "size": 2113
+    },
+    {
+      "path": "config/iceandfire/fire_dragon_skeleton_biomes.json",
+      "sha256": "119e3398276786acafe198ebf3fd62d62e0e62e544ec74980c32bf0356c6f0c9",
+      "size": 1369
+    },
+    {
+      "path": "config/iceandfire/fire_lily_biomes.json",
+      "sha256": "0a1b2ea4da236463e214dd7eed0a7837df420c3957ad61434d65995111a67b9a",
+      "size": 277
+    },
+    {
+      "path": "config/iceandfire/forest_troll_biomes.json",
+      "sha256": "071e4cf9db64d5771b17d2487d8229562311c584ce56a824abb478f2cc00a911",
+      "size": 255
+    },
+    {
+      "path": "config/iceandfire/frost_lily_biomes.json",
+      "sha256": "91d500462895af7576de5eb64efd00faed857504f9eefe56cfa418a28ae34001",
+      "size": 624
+    },
+    {
+      "path": "config/iceandfire/gorgon_temple_biomes.json",
+      "sha256": "0ec4ed27179c0a74651de2fe91cc17024ca05bd598b7f8043ebb794ad6d16a3a",
+      "size": 610
+    },
+    {
+      "path": "config/iceandfire/graveyard_biomes.json",
+      "sha256": "44810e5361d38ad87b5028ffaf139832bcbce16c55898de796e79dd86b99d7ab",
+      "size": 467
+    },
+    {
+      "path": "config/iceandfire/hippocampus_biomes.json",
+      "sha256": "e33237977094c9d26012e2a1883c75ff7062ca16d43f2c9a66f4ceb5d92d2fc0",
+      "size": 254
+    },
+    {
+      "path": "config/iceandfire/hippogryph_biomes.json",
+      "sha256": "8a199a14a2abf91b76855781bd37ed146491e896fd05ba714a806bc47b2c1657",
+      "size": 855
+    },
+    {
+      "path": "config/iceandfire/hippogryph_black_biomes.json",
+      "sha256": "c482e650dee2fc71d0ba8726ebea20d78b9e345865449c57d5717ed55af05b37",
+      "size": 279
+    },
+    {
+      "path": "config/iceandfire/hippogryph_brown_biomes.json",
+      "sha256": "a05e7cbe7541bff74314da9b23976b072e727387185840645e60f5eb98e989be",
+      "size": 486
+    },
+    {
+      "path": "config/iceandfire/hippogryph_chestnut_biomes.json",
+      "sha256": "88466c293acef0b7725de96c7d21747948769d2e6b33e952d4c204472c898ecd",
+      "size": 601
+    },
+    {
+      "path": "config/iceandfire/hippogryph_creamy_biomes.json",
+      "sha256": "dd16c76d368fd696927c4d5b5cee80f682c0e7fe057af1a93e6cc9059b5abaab",
+      "size": 286
+    },
+    {
+      "path": "config/iceandfire/hippogryph_dark_brown_biomes.json",
+      "sha256": "a77dad8b397928fb3b1d9b249b586b8103f866790d215b9bed549add0fa6f3db",
+      "size": 1050
+    },
+    {
+      "path": "config/iceandfire/hippogryph_gray_biomes.json",
+      "sha256": "dbb0b4d04fe34c05a26f26df87d21967a4f6090670cfd6194e6de9badf254a1b",
+      "size": 418
+    },
+    {
+      "path": "config/iceandfire/hippogryph_white_biomes.json",
+      "sha256": "172c79ed677b97663434c8bd90311802556489bcb8afb5fe246f5c8cac840ea4",
+      "size": 1249
+    },
+    {
+      "path": "config/iceandfire/hydra_cave_biomes.json",
+      "sha256": "ae56c23cf566a2fd020dfa6dd2acbbc4ca7770ee98223fd293b0bd0290fd816a",
+      "size": 747
+    },
+    {
+      "path": "config/iceandfire/ice_dragon_biomes.json",
+      "sha256": "31c08e6b056b55ed9afc91ab57f11c8e0806f9d5859886445de0acf5fd35035b",
+      "size": 534
+    },
+    {
+      "path": "config/iceandfire/ice_dragon_cave_biomes.json",
+      "sha256": "31c08e6b056b55ed9afc91ab57f11c8e0806f9d5859886445de0acf5fd35035b",
+      "size": 534
+    },
+    {
+      "path": "config/iceandfire/ice_dragon_skeleton_biomes.json",
+      "sha256": "91d500462895af7576de5eb64efd00faed857504f9eefe56cfa418a28ae34001",
+      "size": 624
+    },
+    {
+      "path": "config/iceandfire/jungle_myrmex_biomes.json",
+      "sha256": "8c44f2cf4903712ff88743373cd6893b31226af031f9822ec63ae337abdbb4b0",
+      "size": 767
+    },
+    {
+      "path": "config/iceandfire/lightning_dragon_biomes.json",
+      "sha256": "65ba1662b1a2c9b6f97c6a0f108ee1d1d0e928226d7fc1a05634e0a55329bbbf",
+      "size": 1748
+    },
+    {
+      "path": "config/iceandfire/lightning_dragon_cave_biomes.json",
+      "sha256": "65ba1662b1a2c9b6f97c6a0f108ee1d1d0e928226d7fc1a05634e0a55329bbbf",
+      "size": 1748
+    },
+    {
+      "path": "config/iceandfire/lightning_dragon_skeleton_biomes.json",
+      "sha256": "d01094612d9d8a48e99809522ff7e009bc1ec7e03a57e0f5f8c9cd51ef44b0bb",
+      "size": 907
+    },
+    {
+      "path": "config/iceandfire/lightning_lily_biomes.json",
+      "sha256": "d01094612d9d8a48e99809522ff7e009bc1ec7e03a57e0f5f8c9cd51ef44b0bb",
+      "size": 907
+    },
+    {
+      "path": "config/iceandfire/mausoleum_biomes.json",
+      "sha256": "183480a63bca5a487b31b28b0ec742fb21f3115a6a1de2f38f0f6daf81d46e3e",
+      "size": 728
+    },
+    {
+      "path": "config/iceandfire/mountain_troll_biomes.json",
+      "sha256": "a05e7cbe7541bff74314da9b23976b072e727387185840645e60f5eb98e989be",
+      "size": 486
+    },
+    {
+      "path": "config/iceandfire/ore_gen_biomes.json",
+      "sha256": "e7855fa7d73f4d3af77f47ddd70b4fcbab7862302d004b4ddae9dddc75c4e402",
+      "size": 145
+    },
+    {
+      "path": "config/iceandfire/pixie_village_biomes.json",
+      "sha256": "f363deb6b29d728bacaaf301fa456a393f8ce0498bde963884368956eb42ffdb",
+      "size": 2194
+    },
+    {
+      "path": "config/iceandfire/sapphire_gen_biomes.json",
+      "sha256": "91d500462895af7576de5eb64efd00faed857504f9eefe56cfa418a28ae34001",
+      "size": 624
+    },
+    {
+      "path": "config/iceandfire/sea_serpent_biomes.json",
+      "sha256": "e33237977094c9d26012e2a1883c75ff7062ca16d43f2c9a66f4ceb5d92d2fc0",
+      "size": 254
+    },
+    {
+      "path": "config/iceandfire/siren_biomes.json",
+      "sha256": "e33237977094c9d26012e2a1883c75ff7062ca16d43f2c9a66f4ceb5d92d2fc0",
+      "size": 254
+    },
+    {
+      "path": "config/iceandfire/snowy_troll_biomes.json",
+      "sha256": "7b0d7d7459b06d0f5a01e0d3cb803d534f9b654ad3b4d9e336f0f50fbe06f4d7",
+      "size": 250
+    },
+    {
+      "path": "config/iceandfire/stymphalian_bird_biomes.json",
+      "sha256": "ae56c23cf566a2fd020dfa6dd2acbbc4ca7770ee98223fd293b0bd0290fd816a",
+      "size": 747
+    },
+    {
+      "path": "config/iceandfire/wandering_cyclops_biomes.json",
+      "sha256": "46fb4b80eb9d9667223509ea17aa4b5aa65851f3cb09c09886d6b9dde1a63601",
+      "size": 632
+    },
+    {
+      "path": "config/icterine.yml",
+      "sha256": "c5f80c76ddfd2fe281b3d077f91ede0d985f27f4fd592217b97fb950835e3dcd",
+      "size": 2380
+    },
+    {
+      "path": "config/idas.toml",
+      "sha256": "a400922a6319c987ec25bdbed289f9107054906fcca982981302ab38022b3c6d",
+      "size": 703
+    },
+    {
       "path": "config/immediatelyfast.json",
       "sha256": "a6c9d147a51c9e432c5c74c00285cfc5ba8b6fa4a0c6686051a7168b158d0d7a",
       "size": 1114
     },
     {
+      "path": "config/immersive_optimization.json",
+      "sha256": "eb9877ca65a0f08665927d7b3d87ec1c54056d9f895434c23a47c167e3f063b5",
+      "size": 923
+    },
+    {
       "path": "config/immersive_portals.json",
       "sha256": "db489047a06cfd72c2d969a654859cd0c3e4f93c4cc132ee7279b1a13a0bb34a",
       "size": 1870
+    },
+    {
+      "path": "config/immersive_weathering-client.toml",
+      "sha256": "f36bb759ebb4493cd78a3f06dd47368d82effc78cbf3113b5dfe4d9093243cd9",
+      "size": 298
+    },
+    {
+      "path": "config/immersive_weathering-common.toml",
+      "sha256": "5efd250ad49911bc2960d5b0a4d4345c1d3d9fd463bc7456131a65345f60cd62",
+      "size": 2449
+    },
+    {
+      "path": "config/immersiveui.yaml",
+      "sha256": "349603ff9637c36fd8fa13f551614cff09c23b298f6c5782a9daa46a3d2dcadd",
+      "size": 993
+    },
+    {
+      "path": "config/impactfulweather-client.toml",
+      "sha256": "a58de242fa3054628ee35ed1294f5bff1ece6070edeb42a60294b2f5008923cb",
+      "size": 1651
+    },
+    {
+      "path": "config/indium-renderer.properties",
+      "sha256": "9715dcf46d31112bf20339bab3dc0f7179d96de77fc693576342f1ec17a1843c",
+      "size": 115
+    },
+    {
+      "path": "config/infinite-music-options.json",
+      "sha256": "cc8094b21cd8fc92bffe4175b85611cab4b17192e42f936d0994ad13a26adcc0",
+      "size": 491
     },
     {
       "path": "config/irons_spellbooks-client.toml",
@@ -941,9 +3171,29 @@
       "size": 683
     },
     {
+      "path": "config/item_obliterator.json",
+      "sha256": "e12f5ed37b69ff859d51cd4a82bf7a91b4982a3d5e846bf483e659d84881c77d",
+      "size": 464
+    },
+    {
+      "path": "config/item_obliterator.json5",
+      "sha256": "ef5ec4f739c7d781631b2669af53ad7de33e80b2e12993a8bc5ab4d4037144c7",
+      "size": 5236
+    },
+    {
+      "path": "config/itemborders-common.toml",
+      "sha256": "892ede9976b284638218d5ebbfad7ae5fddfcc537e9edfacafb7b5a331c9872f",
+      "size": 4243
+    },
+    {
       "path": "config/itemphysiclite-client.json",
       "sha256": "e0ab9dbd2ac5ae54053431f22cfd56c0a49f438a3a313e2e40641351477d65ce",
       "size": 308
+    },
+    {
+      "path": "config/itlt-client.toml",
+      "sha256": "35de5b6924066e804e2165af8179702ac54017acb3210c918f4ee80e120e360e",
+      "size": 19614
     },
     {
       "path": "config/jade/hide-blocks.json",
@@ -992,8 +3242,8 @@
     },
     {
       "path": "config/jei/ingredient-list-mod-sort-order.ini",
-      "sha256": "2f2d5dd3094e0311d2232a07f66073cbcad8ade9433d387ad141634811256b94",
-      "size": 780
+      "sha256": "efa556165b1fb3eb0b9670a432a2207e12eaeb5541a158e734c71c2c898f8fca",
+      "size": 753
     },
     {
       "path": "config/jei/ingredient-list-type-sort-order.ini",
@@ -1031,6 +3281,21 @@
       "size": 264
     },
     {
+      "path": "config/jeresources.toml",
+      "sha256": "b101c668c6c658e2db126b7f6d3b9eb913537ff8903fbfce0128534299b2aea5",
+      "size": 236
+    },
+    {
+      "path": "config/jewelry/items_v4.json",
+      "sha256": "ffbc48d7edba6962638027b5d3a97a65ccef63c74c42ea92f23332ec6c18203c",
+      "size": 17
+    },
+    {
+      "path": "config/jewelry/villages.json",
+      "sha256": "3a0ad1c6bf844e60952867bbb67ebac157ce720a9904362b4a26d6048096a5f8",
+      "size": 1074
+    },
+    {
       "path": "config/justzoom/config.txt",
       "sha256": "d0dcbc7c9c28a398ad2b81c1f6779f34beffbf45560c8c02c063077ab32ded45",
       "size": 474
@@ -1039,6 +3304,11 @@
       "path": "config/kleeslabs-common.toml",
       "sha256": "5bb9e052441aca3b72d7f49adc40f40d222bb3404e0f7114c48e998195c73c3a",
       "size": 386
+    },
+    {
+      "path": "config/knightlib.toml",
+      "sha256": "be84c6ab344e0f0c0cbac1b2bed9d1204e4fca1206797bfc9032624f47f08740",
+      "size": 298
     },
     {
       "path": "config/konkrete/locals/de_de.local",
@@ -1059,6 +3329,16 @@
       "path": "config/konkrete/locals/pt_br.local",
       "sha256": "dca55a2792451b31424cd5c24037141ec57cdca51955d062dd908fa9ca6a3e9c",
       "size": 322
+    },
+    {
+      "path": "config/l2_configs/l2library-client.toml",
+      "sha256": "bee1c76cbc66e917babe40a1fc94132bc9c227aa69e17d27417cd77dab532e74",
+      "size": 502
+    },
+    {
+      "path": "config/l2_configs/l2library-common.toml",
+      "sha256": "1200e86c053c1bc905bfe01a6b69bc09c0ad21feae8ee25c23c48d345672a4f8",
+      "size": 70
     },
     {
       "path": "config/l2configs/l2archery-client.toml",
@@ -1121,14 +3401,124 @@
       "size": 749
     },
     {
+      "path": "config/leaky.json",
+      "sha256": "ee5d331e53643f4fe05a9bd42f30da19efe4b1e9cac68aae76da30635bf4004e",
+      "size": 946
+    },
+    {
+      "path": "config/legendarycreatures/json/bullfrog-spawn.json",
+      "sha256": "d49c42731e3424866f3c38160482b881aae81fe9dc17c54f8a7faa98fdf1b804",
+      "size": 210
+    },
+    {
+      "path": "config/legendarycreatures/json/corpse_eater-spawn.json",
+      "sha256": "494687fdef8b581f468d7d64f8438960a6aaeba18800ec81fcbaacbbed7b9e92",
+      "size": 1063
+    },
+    {
+      "path": "config/legendarycreatures/json/desert_mojo-spawn.json",
+      "sha256": "84537443089666f5478fddd61654db0ec716295c1c481ad1317ab2329176bf48",
+      "size": 323
+    },
+    {
+      "path": "config/legendarycreatures/json/ender_wisp-spawn.json",
+      "sha256": "d49c42731e3424866f3c38160482b881aae81fe9dc17c54f8a7faa98fdf1b804",
+      "size": 210
+    },
+    {
+      "path": "config/legendarycreatures/json/forest_mojo-spawn.json",
+      "sha256": "587fcd59411e68906c6123728f7f5c313413748da5245b01a34a7c896d986f0f",
+      "size": 388
+    },
+    {
+      "path": "config/legendarycreatures/json/hound-spawn.json",
+      "sha256": "d49c42731e3424866f3c38160482b881aae81fe9dc17c54f8a7faa98fdf1b804",
+      "size": 210
+    },
+    {
+      "path": "config/legendarycreatures/json/nether_wisp-spawn.json",
+      "sha256": "d49c42731e3424866f3c38160482b881aae81fe9dc17c54f8a7faa98fdf1b804",
+      "size": 210
+    },
+    {
+      "path": "config/legendarycreatures/json/peacock_spider-spawn.json",
+      "sha256": "d49c42731e3424866f3c38160482b881aae81fe9dc17c54f8a7faa98fdf1b804",
+      "size": 210
+    },
+    {
+      "path": "config/legendarycreatures/json/scarecrow-spawn.json",
+      "sha256": "87265e42b48830841b96b229e2c08b9900437d8e6a577d903faaa54dca360c3e",
+      "size": 265
+    },
+    {
+      "path": "config/legendarycreatures/json/scorpion-spawn.json",
+      "sha256": "d49c42731e3424866f3c38160482b881aae81fe9dc17c54f8a7faa98fdf1b804",
+      "size": 210
+    },
+    {
+      "path": "config/legendarycreatures/json/scorpion_baby-spawn.json",
+      "sha256": "d49c42731e3424866f3c38160482b881aae81fe9dc17c54f8a7faa98fdf1b804",
+      "size": 210
+    },
+    {
+      "path": "config/legendarycreatures/json/wisp-spawn.json",
+      "sha256": "d49c42731e3424866f3c38160482b881aae81fe9dc17c54f8a7faa98fdf1b804",
+      "size": 210
+    },
+    {
+      "path": "config/legendarycreatures/legendarycreatures-common.toml",
+      "sha256": "997758e807f24ad9647bd8413adce1b6296be627e969d56e2336b2d943a007f3",
+      "size": 2358
+    },
+    {
+      "path": "config/legendarytooltips-common.toml",
+      "sha256": "c51c5a927c1f59d9373c038aea225dc618647ac076a9142d25111c86feaab64e",
+      "size": 8283
+    },
+    {
       "path": "config/legendarytooltips.toml",
       "sha256": "3ee86b7d3db0c11d9e4288110804777e598f49a8445fa63d7fbec00f74a0f92f",
       "size": 9333
     },
     {
+      "path": "config/letmedespawn.json",
+      "sha256": "2e955c9e7a7f537d2ba4fa57565e15b150ac5ca1257fd92db2a3fe5035f2a2a5",
+      "size": 49
+    },
+    {
+      "path": "config/lithium.properties",
+      "sha256": "b87ee52fdc722ce1497e7ff55fdbd0660fc9df40c8f2f8167465cab55a388f0d",
+      "size": 349
+    },
+    {
       "path": "config/lithostitched.json",
       "sha256": "d8a63933ec4757186a594debea59dd35724a0a895fe601b324f96217c28312df",
       "size": 284
+    },
+    {
+      "path": "config/lmft.json",
+      "sha256": "2a2ee19297afe3fc512f5cbe639349847f3e7a74616f282d24a179a17f4559ed",
+      "size": 32
+    },
+    {
+      "path": "config/loadmyresources/config.cfg",
+      "sha256": "549a26b9b8ab9e2df0a427732a737c5dbcdb0b6790ad7ea9a387dea789abcad5",
+      "size": 79
+    },
+    {
+      "path": "config/lodestone-client.toml",
+      "sha256": "0d5d3f6d9c15663c62c18b27d7ff826bc5edf776ccb0d6279fb3b6bc9aa5553e",
+      "size": 880
+    },
+    {
+      "path": "config/lodestone.json",
+      "sha256": "f82e293031a762b8bd6cdc2ae179ce6b6ebf81347814c67c663625bb7810705c",
+      "size": 98
+    },
+    {
+      "path": "config/longnbtkiller-common.toml",
+      "sha256": "3b7dcdc342243d3f11af372446e8ebca1b87487cd68fe1a6c41f554a0121352e",
+      "size": 171
     },
     {
       "path": "config/lootintegrations.json",
@@ -1146,14 +3536,74 @@
       "size": 8199
     },
     {
+      "path": "config/lsarrowtickdamage-common.toml",
+      "sha256": "26c8628d8a51e9460bc63aeb6711a4d0e91211ac81cd984c062ecb7e652a8899",
+      "size": 169
+    },
+    {
+      "path": "config/lsentityclear-common.toml",
+      "sha256": "06f88f4140a9ef9491f25cbde0cd6058563d019eec893e227a6f5e04e0e4e8c4",
+      "size": 4485
+    },
+    {
+      "path": "config/lslvlscale-common.toml",
+      "sha256": "590b8af5776691713af577b6f775dbd65ec60a18ef95e1de522fbe68255d573a",
+      "size": 969
+    },
+    {
+      "path": "config/lsrenderparticl-client.toml",
+      "sha256": "3e33e9ddf2c28fae49cffe8b409e44d515f2e036c3d292c15ffbe7acfbe12c97",
+      "size": 956
+    },
+    {
+      "path": "config/lsrezistarrow-common.toml",
+      "sha256": "eabd7edef6cc074959627701a780c0882a2c44d0e2018d0fe2a9f5d651537754",
+      "size": 1261
+    },
+    {
+      "path": "config/luckys_armory_configuration.toml",
+      "sha256": "ec9b847c2b80e474ae1ffb3c8cd57ae49e06158ab7928dddd7b626292c8f06e9",
+      "size": 41
+    },
+    {
+      "path": "config/make_bubbles_pop.json",
+      "sha256": "2266b2e507e4dcea55fb1a53be33690efc8c1fe4ce7a559a98a29fecac2069c4",
+      "size": 383
+    },
+    {
       "path": "config/many_bows.json",
       "sha256": "85cfd877d36c777f494f5b51036500ba342c07310e08f232e9aa4242c1442669",
       "size": 392
     },
     {
+      "path": "config/map_atlases-client.toml",
+      "sha256": "004c438bc21986b89bb9bb69222588f9c9c2426e0db8ab9f55b728c775439229",
+      "size": 6053
+    },
+    {
+      "path": "config/map_atlases-common.toml",
+      "sha256": "2ccc4ffff084385d216f87f8a2f15566acc662a3e79811819029199a14bad82c",
+      "size": 2238
+    },
+    {
       "path": "config/mctradepost-common.toml",
       "sha256": "5042e2c6fbfc4fd9c7132b70dda8ef9ddfd446947993b344b3b44ba26f97602a",
       "size": 2516
+    },
+    {
+      "path": "config/midnightlib.json",
+      "sha256": "b14c45c6447f9ee5474d70784a2ef96731abbeca1e92485b7599e76e9dce1444",
+      "size": 37
+    },
+    {
+      "path": "config/minecells-client.json5",
+      "sha256": "cf4592e3ec27530ad99f291f89eb0feb69fc9cd6e9afb47f4ef7598f984571eb",
+      "size": 1461
+    },
+    {
+      "path": "config/minecells-common.json5",
+      "sha256": "123a9ce9fa8b0a7a2b503b2f9e050f04a39db70ef2e34914fbd2383340f20e37",
+      "size": 1602
     },
     {
       "path": "config/minecolonies-client.toml",
@@ -1176,6 +3626,11 @@
       "size": 577
     },
     {
+      "path": "config/modelfix-client.toml",
+      "sha256": "762378a61d5807c35e6e34171948affe068a478a8922057c98d391d3e6dcad03",
+      "size": 1292
+    },
+    {
       "path": "config/modernfix-common.toml",
       "sha256": "72ca2bcea2a9946a3a54842f14eff6f7b47d8fc96ef497c1b56406643b153fd7",
       "size": 105
@@ -1187,8 +3642,8 @@
     },
     {
       "path": "config/moonlight-client.toml",
-      "sha256": "3f252fefef0345f9aa8a8d3b7eff02f045b8bf565329eeba9ec50c7989a63457",
-      "size": 1283
+      "sha256": "70bf06a1baa99b6c6edbe9a324ccfe5f92536ba4eebee90523dfddd22554d07a",
+      "size": 2320
     },
     {
       "path": "config/moonlight-common.toml",
@@ -1201,6 +3656,36 @@
       "size": 3458
     },
     {
+      "path": "config/morevillagers-common.toml",
+      "sha256": "8c01f6e1d4a19cdb19d6e21eee4430b984b988bcfe4ac21b5e9d31fbf1737002",
+      "size": 964
+    },
+    {
+      "path": "config/mowziesmobs-client.toml",
+      "sha256": "debf5fc779f539a97af190b000733abcf40b3cf099d6ae59a8e5f1879fea2da8",
+      "size": 985
+    },
+    {
+      "path": "config/mowziesmobs-common.toml",
+      "sha256": "f335d665d0f837665cb1c8242737134829800a0fec43bffcef968fa0b8a23c52",
+      "size": 32703
+    },
+    {
+      "path": "config/namepain-client.toml",
+      "sha256": "1bbd644b6a196c222eb8cfecc88ffe747954d72b0d2a298b0160a0473c240777",
+      "size": 899
+    },
+    {
+      "path": "config/naturalist.json",
+      "sha256": "022aeb6c92073255d6ad01f0f47eecf574bcb19aa9bc9d8d11eeae1479079226",
+      "size": 3703
+    },
+    {
+      "path": "config/naturalist.toml",
+      "sha256": "23bc4ee1ffc914458276f11af6ee9b1c4765672353c01fffa1b50890061d1385",
+      "size": 2248
+    },
+    {
       "path": "config/naturescompass-client.toml",
       "sha256": "a5d664ed8aeecd77bd09611cba93d5f8e3194da8140666d3e97a0c4973dd0981",
       "size": 444
@@ -1209,6 +3694,16 @@
       "path": "config/naturescompass-common.toml",
       "sha256": "e769b3fba5d717bc42a38043aee9b08070af87e22700d07a5f6e69c3efca4a31",
       "size": 2227
+    },
+    {
+      "path": "config/neapolitan-common.toml",
+      "sha256": "8e738f9a4fde0ab0397878b6156c8e8585584401dd0b793dae0b0a16f6993a82",
+      "size": 1883
+    },
+    {
+      "path": "config/necronomicon.json5",
+      "sha256": "f97fc5ae7dd7d312e86ecddf2e4491fee3e3a16b7a26cbb3aa078fdd3255c4df",
+      "size": 266
     },
     {
       "path": "config/neoforge-client.toml",
@@ -1226,6 +3721,16 @@
       "size": 1177
     },
     {
+      "path": "config/netherexp-common.toml",
+      "sha256": "0eec6fc13c641ea2b433eb3ca96850af4722375afa62a117e4853d1decdf08b6",
+      "size": 6567
+    },
+    {
+      "path": "config/notenoughanimations.json",
+      "sha256": "53cf52d4c21c53282a65d5ab44e483309ad578ac1acee8b13d6ceba2c5fa4f04",
+      "size": 1387
+    },
+    {
       "path": "config/nyfsquiver-client.toml",
       "sha256": "8827fa4976c8b1bf8fabd97a390a15feb346f733d1b003977895c9b68f5bc5ac",
       "size": 606
@@ -1237,8 +3742,678 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "3d886c5093e88e19754a3f140709bae1a09b25bbe2ac4f458c652a08464e6c4d",
-      "size": 275
+      "sha256": "1fa612f60f3112466ae6a2d957014b0675e9e80c56e8a0921b208ab56d946c11",
+      "size": 276
+    },
+    {
+      "path": "config/openloader/advanced_options.json",
+      "sha256": "2ee7700b88371d21265000c50ef149c42863fd22e0ecbb5dc6af78fd7493fee8",
+      "size": 177
+    },
+    {
+      "path": "config/openloader/data/Disable_TF_Skybox_1.20.1.zip",
+      "sha256": "0c4532cae555f91a83998a628057228d8bee89d7e9e58dd00ab5056b5b45c836",
+      "size": 965
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/alexsmobs/recipes/tarantula_hawk_elytra.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/alexsmobs/recipes/transmutation_table.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/cataclysm/loot_tables/entities/ancient_remnant.json",
+      "sha256": "6c68d19a64cf249ae3f2763938f4a86c73af4e74719730b15385a870a91c0d8d",
+      "size": 693
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/cataclysm/loot_tables/entities/ignis.json",
+      "sha256": "4c1eeaa13b96005642e856d99ccd95c2884d7fbd36998bfb803f867290eea7b0",
+      "size": 1368
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/cataclysm/loot_tables/entities/netherite_monstrosity.json",
+      "sha256": "d129c884bfe2ef55fa66481527b6ce59a906091e32de613442a285a796dcd25c",
+      "size": 942
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/cataclysm/loot_tables/entities/the_harbinger.json",
+      "sha256": "24ce4b6c2831c4c4a19b7c7440609e269ef9d7c0f9d255c7d1c96b535c62f506",
+      "size": 811
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/cataclysm/loot_tables/entities/the_leviathan.json",
+      "sha256": "8d95ddf4f6a086f7d920f8481f6b5766ef41629dea18703670db33e8cc179895",
+      "size": 682
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/cataclysm/recipes/weapon_infusion/ignitium_elytra_chestplate.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/celestisynth/recipes/aquaflora.json",
+      "sha256": "da299c12a69831ac87632428c128b714ccaa3fa89068f6962559c2a49ada359b",
+      "size": 446
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/celestisynth/recipes/breezebreaker.json",
+      "sha256": "1d9bc5ea782a64e950d8558357f1615027f8aa990e04ee3aa7f0eb029a6cfd1a",
+      "size": 370
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/celestisynth/recipes/crescentia.json",
+      "sha256": "8d03b48c43b6951091e5a19a202f649d514817be5b07ec7c19d0be0addcfa979",
+      "size": 459
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/celestisynth/recipes/frostbound.json",
+      "sha256": "a8341b4ca55f6c9a344dbc2fdf8d08b42f5c05f1295b90bdecd3e07795ac8087",
+      "size": 438
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/celestisynth/recipes/keres.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/celestisynth/recipes/poltergeist.json",
+      "sha256": "ac825b36ec2eaf4ff7920778f73b1a8cc27d269239e73da4b8fd3aca670e5793",
+      "size": 513
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/celestisynth/recipes/rainfall_serenity.json",
+      "sha256": "e3a9867c64e6ee1e87c25a238a096366381f1008c055f92034354706843c0d50",
+      "size": 362
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/celestisynth/recipes/solaris.json",
+      "sha256": "a6ac9ca91aa19a82bc405770f80af894ac7a06dd0afbaea276136196e4cca7dd",
+      "size": 441
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/loot_tables/minecraft/chests/abandoned_mineshaft.json",
+      "sha256": "157ddbc07f6e78b0e499f4ebf90b3a2bccffa461aad6013a19092da270b6b445",
+      "size": 398
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/loot_tables/minecraft/chests/buried_treasure.json",
+      "sha256": "22242257c3272b6fa531c2c262d50cc9f70d20f9685ec3eed932f3b603105c53",
+      "size": 399
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/loot_tables/minecraft/chests/desert_pyramid.json",
+      "sha256": "53edeff4e2f6481103c34b7c0dbe83fc3dd3e64429495896c7883b8e37a535b9",
+      "size": 397
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/loot_tables/minecraft/chests/igloo_chest.json",
+      "sha256": "e87304afca50938d49e6e224e52662964e8dab6656f3520e0aa2658243e5648a",
+      "size": 398
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/loot_tables/minecraft/chests/jungle_temple.json",
+      "sha256": "5e216293ac9806a6d38e9974953e6150929c093ab4645ac5456adfe8ba01c6ba",
+      "size": 399
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/loot_tables/minecraft/chests/nether_bridge.json",
+      "sha256": "d55edd99d6fc0072311a8aa6f66ed41a3ad5f521aeeb48b8b9451d56f0b200bd",
+      "size": 400
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/loot_tables/minecraft/chests/shipwreck_treasure.json",
+      "sha256": "5acc3ce1fd7bb4f4124c09a386770199873928057d9af96600473156f82fe050",
+      "size": 307
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/loot_tables/minecraft/chests/simple_dungeon.json",
+      "sha256": "b17ac3e3d173c1f1a7d24e44337a9b9500f8a4e31ae753903a67c07aeb2e8c16",
+      "size": 468
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/loot_tables/minecraft/chests/woodland_mansion.json",
+      "sha256": "8bc90e8e09d7229c32d95767fcfff4ad1864355e81298937bb2150d27cce6eb3",
+      "size": 309
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/loot_tables/minecraft/entities/elder_guardian.json",
+      "sha256": "c4fe7609eaba33cf2b71034389ec56597b6bea485e02989bb4cb57776db83ac0",
+      "size": 312
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/loot_tables/minecraft/entities/evoker.json",
+      "sha256": "ea6c771446e3c386de20feddd2bfad1e933902350b7af2787e71e52d72d853e1",
+      "size": 310
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/loot_tables/minecraft/entities/skeleton_horse.json",
+      "sha256": "b69de29225515aa4625586be802ead2c94c57a3bba41ebd625bd92557e55c20c",
+      "size": 311
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/loot_tables/minecraft/entities/witch.json",
+      "sha256": "e5ea35d89bbff4fad3e5c5bde1c124688fc616305ee4d9259c3e42a36810aa28",
+      "size": 311
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/loot_tables/minecraft/entities/wither.json",
+      "sha256": "8eb6489c7fe0d48c6b14d31b7a3aafc039b828ccc3e698067c93e7b03fcf2159",
+      "size": 310
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/endrem/recipes/exotic_eye.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/chess_board_knight_boots.json",
+      "sha256": "adcdfe7a40278ed9294e51ae294c766e0ca0c1e74ccc4449b89f49ce034d3d21",
+      "size": 381
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/chess_board_knight_chestplate.json",
+      "sha256": "c60faff9c257a84cbf4eab875d83bcdad0cd89ebe7f95b82dc310a454ac56750",
+      "size": 391
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/chess_board_knight_helmet.json",
+      "sha256": "3ae36437bb7eb44c908cbbadd5efcc61266238d6e684a25549314286d9e761d7",
+      "size": 383
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/chess_board_knight_leggings.json",
+      "sha256": "68763c32f8c4d8f54c7c0062cd5f12884b65b2aeac03c2e1c3623edf334f4527",
+      "size": 387
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/dark_lord_boots.json",
+      "sha256": "4c9c69c9d4fc569cc7ed71beef17d81d1ebbe3a0d6d9d06cff08f909a3fdb004",
+      "size": 362
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/dark_lord_chestplate.json",
+      "sha256": "9d8e8a1eeaf2444eee22718c31df5c52a40c26f21ff883a02cee908d4502b0a8",
+      "size": 372
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/dark_lord_helmet.json",
+      "sha256": "953611172d1f34ab60d9ee7430b7012145563d479cf4463c706ab76f19d03622",
+      "size": 364
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/dark_lord_leggings.json",
+      "sha256": "29e47a964b2db46e37c2e1b2600944236b36d6556e05d8bb731083caccbfa053",
+      "size": 368
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/dragonslayer_boots.json",
+      "sha256": "46ca9aef2a87589fb91fbb1518badbe6b877f9a4582fb2cf26e3dc974f58d4be",
+      "size": 371
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/dragonslayer_chestplate.json",
+      "sha256": "e98a46c288bae70b95b4994675acfce8aa42a364812bd209f6073e340464b088",
+      "size": 381
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/dragonslayer_helmet.json",
+      "sha256": "5c01c2c47f56d6b6bc438f5f02c7f2ecdc167d3f9c568cf12ab7e43d134f7ce8",
+      "size": 373
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/dragonslayer_leggings.json",
+      "sha256": "67bc12e9de7e3dbb74791620dc23083446c45883a642d048cb82302919b4a4f8",
+      "size": 377
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/eclipse_soldier_boots.json",
+      "sha256": "ee235c7dcbcf4a4e6a1cb8c9caabc823a1a2ce374ef54d2844c738f91a5338a5",
+      "size": 375
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/eclipse_soldier_chestplate.json",
+      "sha256": "75d5892b601f16452a8e3f1eecd2b8ea95fc0b7d2de874cfb44f3b9ac3a042a6",
+      "size": 385
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/eclipse_soldier_helmet.json",
+      "sha256": "f9fe7c5628bc0019045b9400fee69231b608522f5077231c4e7b894965ff6ac6",
+      "size": 377
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/eclipse_soldier_leggings.json",
+      "sha256": "8c33c0396e96070526f9de23108e909e77def9295ac3ab0bd918d9e531f80d38",
+      "size": 381
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/golden_horns_boots.json",
+      "sha256": "dba032d1942a518155e81b7a1f038aab83a631137978115345636d598c905c65",
+      "size": 370
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/golden_horns_chestplate.json",
+      "sha256": "be1414548d509bb4949a4f0f2c78406ba427187effbf084b027475189ba16122",
+      "size": 376
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/golden_horns_helmet.json",
+      "sha256": "c175ad1a4ce52f44553d04b0f5f9337b7944f16e0d4d593d2d7729826f255a71",
+      "size": 371
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/golden_horns_leggings.json",
+      "sha256": "008fd57fb0d332186ed75a79ea7c0ccc19f7e67ebde96a5e1835ecc3ac1b7ae1",
+      "size": 373
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/hero_boots.json",
+      "sha256": "d80095e3586b71d8d636d812ca2f7ae014fe0bbea4f7cf5783ffbffd3396e65f",
+      "size": 366
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/hero_chestplate.json",
+      "sha256": "f7063a6283bbd4059521f28bbabc8d6b57ebe8cea75c0f3ca73a878f1a120ff5",
+      "size": 376
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/hero_helmet.json",
+      "sha256": "2b6526e596f8b596cced0a744bb88e107a2d7d3ab23259e58c397e276c984747",
+      "size": 368
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/hero_leggings.json",
+      "sha256": "8ddf6dc450a52a71617c5f8b24f02c787a8beed96cec1e06c58acb33d122b44a",
+      "size": 372
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/moon_crystal.json",
+      "sha256": "419d55f773c71703df889c3408d1e5be18640afd5a7332457cbe8d0bc28acd60",
+      "size": 292
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/sunset_wings_boots.json",
+      "sha256": "4a206f54deccb57f90ba6faed08044a40e353f14b50caa95c8cdde80c07a6a0e",
+      "size": 372
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/sunset_wings_chestplate.json",
+      "sha256": "b82bb3644b6fbab17d032e7d71b11d1c8340ff5fe17f4bd03879811d18027bb0",
+      "size": 382
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/sunset_wings_helmet.json",
+      "sha256": "ae6d5b4fc9d580ec966d828dc2732fcc83cfa66ec46463a07779c5b63b3e2e9b",
+      "size": 374
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/sunset_wings_leggings.json",
+      "sha256": "9c131ce6c2c69fa0e23f23afefe681b6aeab84e4a1f6bf0a2dee12a03db3b16c",
+      "size": 378
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/thief_boots.json",
+      "sha256": "b3b1585c5fcdcf93ff52d04e53924318d4c6753ff0aa9bd8e9bb5106a987dba0",
+      "size": 371
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/thief_chestplate.json",
+      "sha256": "106a18c8f8ca59f5305c88de538fe6817ba5791c94d71348de94402f8f4ececc",
+      "size": 377
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/thief_helmet.json",
+      "sha256": "6b1065fdc8b78047e1c79340d5f15e5942f3a756c6f8bc791e5b50bfa6b53715",
+      "size": 372
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/thief_leggings.json",
+      "sha256": "34100b9d567563086c80bb28a9cf1f603af5a665fe498e8e3476445395d0fad3",
+      "size": 374
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/wandering_wizard_boots.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/wandering_wizard_chestplate.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/wandering_wizard_helmet.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/fantasy_armor/recipes/wandering_wizard_leggings.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/farmersdelight/tags/cabbage_roll_ingredients.json",
+      "sha256": "dea10bbb3113b2a6f6c8dd0fe4520489d65c866a49384cdad1061d00b643452a",
+      "size": 259
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/forge/tags/items/eggs.json",
+      "sha256": "36a072d4d8c2dd16b71fb918726a8b7b458f83f6833acc41999d6a215dc4b7b9",
+      "size": 68
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/iceandfire/advancements/iceandfire/root.json",
+      "sha256": "85950b0602e2b9b529ed1f4474439cf85ebe3d73913a222ec0e7724b96e40c3e",
+      "size": 495
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/idas/advancements/idas_root.json",
+      "sha256": "cbd17e6c4044d5c65c336c10b0cb70f67bd7315241121941cf90e313ceb2a641",
+      "size": 484
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/incubation/recipes/fried_egg.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/incubation/recipes/fried_egg_from_campfire_cooking.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/incubation/recipes/fried_egg_from_smoking.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/luckys_armory/recipes/bone_boots.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/luckys_armory/recipes/bone_chestplate.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/luckys_armory/recipes/bone_helmet.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/luckys_armory/recipes/bone_leggings.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/luckys_armory/recipes/heavy_netherite_boots.json",
+      "sha256": "b5d2e38fe3289268a4a6b1e6b5233064f7d52a8acd8a67a0e1efcc8fd74ff7dc",
+      "size": 318
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/luckys_armory/recipes/heavy_netherite_chestplate.json",
+      "sha256": "d1ff7c6643199f93b1e511743685e0855df360ba6ec165d08084c499fd5eeb63",
+      "size": 328
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/luckys_armory/recipes/heavy_netherite_helmet.json",
+      "sha256": "dda96327af04d93ab9f858a6236606386806522b6a15da8c63de3f428568ed8f",
+      "size": 320
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/luckys_armory/recipes/heavy_netherite_leggings.json",
+      "sha256": "bd06459c9add1f0f98358631d238378689531f5cef68c69727f9d3e1aff230f1",
+      "size": 324
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/minecraft/loot_tables/entities/reference/extra/warden.json",
+      "sha256": "ff5c06eccfeda9609d0191484a60bbfb0bac64ab08af84f5591bb4592dac524a",
+      "size": 381
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/minecraft/loot_tables/entities/warden.json",
+      "sha256": "4d7fc51d301709f25b17f2dadf0665eeb6473fbe1b2e77df1ebd3654685b34c6",
+      "size": 512
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/mowziesmobs/loot_tables/entities/frostmaw.json",
+      "sha256": "a1f73178b7b9592bbc788005716af6268dcc9b76f1620f0398d17dd653fbcf89",
+      "size": 748
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/naturalist/recipes/cooked_egg.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/naturalist/recipes/cooked_egg_from_campfire_cooking.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/naturalist/recipes/cooked_egg_from_smoking.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/patchouli/advancements/grant_book_on_first_join.json",
+      "sha256": "190b1b79dba412805bb75d264af1d9555b4e9518d4065584d0b11891b83f7e09",
+      "size": 171
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/patchouli/loot_tables/grant_book_on_first_join.json",
+      "sha256": "df2049e5bb49d9c9912ad1b596a63112557c03572343c03f41b9afe8090ad0d0",
+      "size": 387
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/patchouli/recipes/my_book_recipe_shapeless.json",
+      "sha256": "48e535e9d340a593c7fd272f7e9c3ecd52bf831274e8a49e18734397a721cd2e",
+      "size": 207
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/twilightforest/loot_tables/entities/naga.json",
+      "sha256": "6acb76e0b72f6f5e8262319d9c6a51e4c6547e45421623ec9658f1fab557e458",
+      "size": 754
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/data/twilightforest/recipes/uncrafting_table.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/born_in_chaos_v1/worldgen/structure_set/clown_caravan_plains.json",
+      "sha256": "6456f43a870f5c0890805615b46f53cdee2388a3ef534bc21b0ac0e3fd8441de",
+      "size": 238
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/born_in_chaos_v1/worldgen/structure_set/clown_caravan_savanna.json",
+      "sha256": "602e1dafaedfd61be158defb5c1f4cad1d43566a9548f4c6b58360f173842bb2",
+      "size": 239
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/born_in_chaos_v1/worldgen/structure_set/clown_caravan_taiga.json",
+      "sha256": "d87b9a0d1fe12c463a104bdbe034db9177b4865b0cdc9148b612b793a8e627a1",
+      "size": 238
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/born_in_chaos_v1/worldgen/structure_set/firewell.json",
+      "sha256": "1e2af0fc18a6be67b4dc047721fb123409b5125647ea80d4b88180703df6bfac",
+      "size": 227
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/born_in_chaos_v1/worldgen/structure_set/grave_darktitan.json",
+      "sha256": "beb751c3f886500fd1738fb99ce8e6916e5f43ba59e0d4898923284a4ff1e220",
+      "size": 234
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/born_in_chaos_v1/worldgen/structure_set/grave_petasi.json",
+      "sha256": "759689f0d25ff2d126e2cee017b1a0cb3ad482bbe7ef9c868ba60cf03779ba39",
+      "size": 230
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/create/recipes/crafting/curiosities/brown_toolbox.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/create/recipes/crafting/kinetics/cart_assembler.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/create/recipes/crafting/kinetics/mechanical_drill.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/create/recipes/crafting/kinetics/mechanical_harvester.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/create/recipes/crafting/kinetics/mechanical_plough.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/create/recipes/crafting/kinetics/mechanical_roller.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/create/recipes/crafting/kinetics/mechanical_saw.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/savage_and_ravage/forge/biome_modifier/add_spawn/iceologer.json",
+      "sha256": "1c957e16571b77fdf11f59627b04fe4d3ac6e39d2b26121b15afc8b4117c77c1",
+      "size": 206
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/deleted/savage_and_ravage/loot_tables/entities/iceologer.json",
+      "sha256": "eb176dbfd2e530756454d8b2b7060161c20ba76a7eadd13ae542659cf15c2931",
+      "size": 605
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/pack.mcmeta",
+      "sha256": "bc135ebdd1aef7aff71f24d8ec11225ada910aadcda89ef1938367fddcbeefb1",
+      "size": 90
+    },
+    {
+      "path": "config/openloader/data/LostSoulsDatapack/pack.png",
+      "sha256": "d75f6ebf62e073d22292bc3bdeb969fb8e841d227c5f3e660e03b08a16f69b02",
+      "size": 384
+    },
+    {
+      "path": "config/openloader/data/QuestBookGive.zip",
+      "sha256": "355c959143e791fa2997d7e9e20f07a7eda5e8798dfce636599c94bd190d0a9b",
+      "size": 1470
+    },
+    {
+      "path": "config/openloader/resources/Lost GUi.zip",
+      "sha256": "b9eedf5579a172cb8d5b303e41ff81d789f6bd6e88742103f43f57ae9f3f2d12",
+      "size": 32052195
+    },
+    {
+      "path": "config/openloader/resources/Lost Souls.zip",
+      "sha256": "80610d62df0748ba08a10e7eeb8b489820a4cae3e0b3fe5614d4e67c49cd0c89",
+      "size": 14473393
+    },
+    {
+      "path": "config/openloader/resources/Lost Translator.zip",
+      "sha256": "aab3e61c34eaa4efd411641df6b3161b3627ce94f43a1b5cd53d4155c6a5812c",
+      "size": 1758698
+    },
+    {
+      "path": "config/optileaves.json",
+      "sha256": "03bb2600571f5b53043becdec8d58552fde2b95243ffae2d05ac013c1fd066b8",
+      "size": 53
+    },
+    {
+      "path": "config/oreganized-client.toml",
+      "sha256": "566c9b6e127b148b06b09d0c9d0d2c4f34ff79ea2198f107c12c9629a427b9c2",
+      "size": 127
+    },
+    {
+      "path": "config/oreganized-common.toml",
+      "sha256": "5f67817bc7f5904b7b87126a534b27889b131bd9582c769efa368c47533e6e24",
+      "size": 606
+    },
+    {
+      "path": "config/origins-common.toml",
+      "sha256": "b64851f192e3d66dc781857e86c62670dd90f7780b8a66495f3500f1d8559362",
+      "size": 9954
+    },
+    {
+      "path": "config/packetfixer.properties",
+      "sha256": "2d6df0c1efd9918288c623835cc15c9075333a2d1ed2d2957685635725a1bec3",
+      "size": 488
+    },
+    {
+      "path": "config/paladins/items_v5.json",
+      "sha256": "e531fee092cec45c19a41c153aba86894626184f5c8ab46892ad4e55f72791d3",
+      "size": 3563
+    },
+    {
+      "path": "config/paladins/shields.json",
+      "sha256": "090dfa083da5d9cdc340c45695791a3feec716c2aab86f1d33effd34eef3c047",
+      "size": 1157
+    },
+    {
+      "path": "config/paladins/tweaks.json",
+      "sha256": "f000fb79ee42fbe168c39d14436debf8759067cdcabe9cdc40e51475c840a02c",
+      "size": 257
+    },
+    {
+      "path": "config/palladium_config.toadcfg",
+      "sha256": "2c078f64b496ed1d3d6154bc366d0fd9b39af76c163f45137024bfaf9ee3e34a",
+      "size": 432
+    },
+    {
+      "path": "config/panorama_screens/settings.json",
+      "sha256": "7688da256aa45808262ca17851a80e862511625009d6310e6f72e340c0f03564",
+      "size": 2012
+    },
+    {
+      "path": "config/particle_core_config.toml",
+      "sha256": "b241a76a0aa325bbbf79c634afa28a2faab3a154323ffc78e5a21fe0831cf0c4",
+      "size": 201
+    },
+    {
+      "path": "config/particle_core_disabled_optimizations.json",
+      "sha256": "2bcb7aea228925ebab95b854ac359bc26993af0a6f4b49b33e6cb734d284c35b",
+      "size": 897
+    },
+    {
+      "path": "config/particlerain.json",
+      "sha256": "f3174f89df74dd44ec8d7e49a6b43ae3917046d0cf4f96d6e1e4657f2235fb66",
+      "size": 8587
+    },
+    {
+      "path": "config/particlerain.json5",
+      "sha256": "76fe09b449ef0480bef81677e0da63f4e28850023225568affd8e9df788c3424",
+      "size": 817
+    },
+    {
+      "path": "config/particular-common.toml",
+      "sha256": "0eeec5e9bdfaee0dc353908131e3421c6cc79ff8930e6d69b99f17d8abb13445",
+      "size": 3083
+    },
+    {
+      "path": "config/particular.json5",
+      "sha256": "ce582ffc8022ca8e7d1fc5b6b6945b66bb3b083f1e66ddb0b9c9412d1907731a",
+      "size": 445
+    },
+    {
+      "path": "config/particull-client.toml",
+      "sha256": "6d6d32cfbc2b889fbeaa16bc2fea994c3c0b5ad45adf15f88b7eb9ab006681fd",
+      "size": 531
     },
     {
       "path": "config/patchouli-client.toml",
@@ -1246,14 +4421,174 @@
       "size": 1089
     },
     {
+      "path": "config/pehkui-client.toml",
+      "sha256": "18741b2cf056e7609eac3dabe966569a12a819ab03e083c873c85c27a52929a7",
+      "size": 138
+    },
+    {
+      "path": "config/pehkui-common.toml",
+      "sha256": "8a4afcf7a631191fbe6a1416b4d16f55584deb22dd90ec7ec337fdf444a92ba7",
+      "size": 407
+    },
+    {
+      "path": "config/performant-common.toml",
+      "sha256": "81e659fcaf468a79cff946a7c63e29aee0930b62a9db8f66cd50fbe362af1168",
+      "size": 5808
+    },
+    {
+      "path": "config/personality-client.toml",
+      "sha256": "59bd8d3e7cd8209388518538bdc70f098e9360451157f6111dbdc89ed1d2780b",
+      "size": 1143
+    },
+    {
+      "path": "config/personality-common.toml",
+      "sha256": "d5861d025473ddd0a9b5326698b044546072e95028ef7f4ad8f438fad1bb7e09",
+      "size": 171
+    },
+    {
+      "path": "config/pickupnotifier/pickupnotifier-client.toml",
+      "sha256": "242a0f58407ecc71ff5e2c6cd2910001c089ee4e6130454c377115e8a8f3c83a",
+      "size": 3355
+    },
+    {
+      "path": "config/pickupnotifier/pickupnotifier-server.toml",
+      "sha256": "6e18bfa2ec02629937474e436f3f44fb67d54fd6e6b47a7c9b4c5b3a3bd83916",
+      "size": 485
+    },
+    {
       "path": "config/placebo.cfg",
       "sha256": "eb7e9906d126543f03c2257ca98efa4b845d1e7479dc8b069a12b194c86debcf",
       "size": 495
     },
     {
+      "path": "config/playerrevive-client.json",
+      "sha256": "66afd32595b00de5d2837780a5866d600e296d9200a4e4fb1b6a2ef94693c909",
+      "size": 131
+    },
+    {
+      "path": "config/playerrevive.json",
+      "sha256": "598286f6b48c635ebaf4c649f6ebcd5a0dcfb9e9e7bb7a49a29ba71d59ed3de1",
+      "size": 1606
+    },
+    {
+      "path": "config/polymorph-integrations.toml",
+      "sha256": "43a7425a314be7d78c2e31d44ab8f46c5ee824ab10906ab8909923d23646b6ad",
+      "size": 333
+    },
+    {
+      "path": "config/ponder-client.toml",
+      "sha256": "56291af4bc3506692c79f5c0155c47cce8577d0aae6ed5930c9074d5cb9bc5c8",
+      "size": 619
+    },
+    {
+      "path": "config/presencefootsteps/updater.json",
+      "sha256": "1e7c61df09c105e1eeca8cf3dcbdfeb976700e9904bcb3983fc7791adb7fad2e",
+      "size": 68
+    },
+    {
+      "path": "config/presencefootsteps/userconfig.json",
+      "sha256": "8cf6192eda81b3a27737440cfdedc05c40a8c1b552583114c1aa6fb2673ca907",
+      "size": 427
+    },
+    {
+      "path": "config/projectile_damage.json",
+      "sha256": "8c3eb2a4150a8575e522c02acbdd88f7d6a387e9caf07da4683d6df4b4abac29",
+      "size": 234
+    },
+    {
+      "path": "config/propertymodifier-common.toml",
+      "sha256": "9eb17bde2725b1afcd92eec176d6d8726fd4027ad5cb756793238e7e832ed002",
+      "size": 12798
+    },
+    {
+      "path": "config/propertymodifier_generated.toml",
+      "sha256": "cb6f36066738793ffdab0f2c5ab6583fdc9de70a12b3f7fe892a59eea3c92acf",
+      "size": 218
+    },
+    {
       "path": "config/puffish_skills/config.json",
       "sha256": "b014f35bcd6c563e0a802a8e34d04bff601b6370aef1d2566f64db17b9dda42e",
       "size": 43
+    },
+    {
+      "path": "config/raccompat/acid_walker.json",
+      "sha256": "5dbfd416bb2ec96eb6a55a86fe64d6010b705aae0ff86b294da6858d937e3806",
+      "size": 653
+    },
+    {
+      "path": "config/raccompat/desolate_pendant.json",
+      "sha256": "f481cf375689841c5c5bdf8685c2f57dee9a57aaf125b202367eddbe0ffc5c18",
+      "size": 1665
+    },
+    {
+      "path": "config/raccompat/polar_boot.json",
+      "sha256": "7efefe60f641e33bf5b2e5cf55887b43542e5dc3342ddee45b79807156c827a1",
+      "size": 656
+    },
+    {
+      "path": "config/raccompat/vine_ring.json",
+      "sha256": "8251a075c334b57b81ec66919f4dca37bd87116bd6882bf8c4171fcfb177be75",
+      "size": 1000
+    },
+    {
+      "path": "config/raised.json",
+      "sha256": "ca726aa9e8087be1fa35fa5fa617409c939c6c3d146fb511065d58d27065eace",
+      "size": 106
+    },
+    {
+      "path": "config/ramchunks-server.toml",
+      "sha256": "cefb2937fcc0ddd839487ef1e3dc03890c818f0b296a28cb72d8dca57d8c0092",
+      "size": 1040
+    },
+    {
+      "path": "config/ramcompat/frost_robe.json",
+      "sha256": "fe426e840b462138ef0bfe4b5641c8f6dbb2db723234e168f116c0ef1bebc8f0",
+      "size": 2234
+    },
+    {
+      "path": "config/ramcompat/relics/frost_robe.yaml",
+      "sha256": "4f58661a0c2fcd5b0b409edda911574305eeef325447bf09ca6887d8b74fbc72",
+      "size": 8859
+    },
+    {
+      "path": "config/ramcompat/relics/stink_gland.yaml",
+      "sha256": "043b0e43ea08bfde1f8e70fb814b936cb5b3fb5a06f13a92d4a75b00a5f5683b",
+      "size": 8387
+    },
+    {
+      "path": "config/ramcompat/relics/tendon_lump.yaml",
+      "sha256": "941f8f6e787f983cf2b1a5a38c677a05bb9f3509e3d423e173870b44391120ec",
+      "size": 5322
+    },
+    {
+      "path": "config/ramcompat/stink_gland.json",
+      "sha256": "b71c7782255d2837bfcffc887d0ea238476c209c5095f33b692727cf60e9f9e3",
+      "size": 1977
+    },
+    {
+      "path": "config/ramcompat/tendon_lump.json",
+      "sha256": "a648f2e97336034f809f67cb5da2d29ddf0b84be44b428ded4963d0f436337a7",
+      "size": 1385
+    },
+    {
+      "path": "config/realmrpg/quests/angler.json",
+      "sha256": "574b3bfbfb290dac68201d69a526f442f019ac42c7ebad6574ce321ea9a419e3",
+      "size": 13319
+    },
+    {
+      "path": "config/realmrpg/quests/cook.json",
+      "sha256": "d64ad05f29f1e4108f41ac83794aeb69fcd26cf13fb62f7a51ae2508427379c5",
+      "size": 7032
+    },
+    {
+      "path": "config/realmrpg/quests/monster_hunter.json",
+      "sha256": "224d1eed93cfa1748c9d9e5f95ffadbd6eb2f2bbc8b71e05b7fe0e179d2e4250",
+      "size": 5243
+    },
+    {
+      "path": "config/reflex.json",
+      "sha256": "86ca03ad4be7ec363ee143c603cf180dcc0deb975000c17ef33f70be9b616a65",
+      "size": 42
     },
     {
       "path": "config/regions_unexplored/client.json",
@@ -1271,9 +4606,334 @@
       "size": 1487
     },
     {
+      "path": "config/relics/amphibian_boot.json",
+      "sha256": "2068ec65b21f8b98cc423141f37c9caeb77a2ecc164c61461e6e4e48f1838a50",
+      "size": 2188
+    },
+    {
+      "path": "config/relics/aqua_walker.json",
+      "sha256": "b13eee7988f211a4adfe0495f0527c1fb6c2172ad8b9571d5cfd5fd43cc71160",
+      "size": 733
+    },
+    {
+      "path": "config/relics/arrow_quiver.json",
+      "sha256": "6a572c9b4a00f9a467f499b70972016a210d139535651f0396317d1a0d2b1434",
+      "size": 3102
+    },
+    {
+      "path": "config/relics/bastion_ring.json",
+      "sha256": "f1c661a1d491c99cfdf07b4c953d56c4d3ac70f6632f511f3441e8bba34c63ba",
+      "size": 778
+    },
+    {
+      "path": "config/relics/blazing_flask.json",
+      "sha256": "d38da0ce41018dea2af7c34dcb6dc320c252c3cb388126376c5170ee1ca335d4",
+      "size": 1377
+    },
+    {
+      "path": "config/relics/chorus_inhibitor.json",
+      "sha256": "7f5d9dddf0ea93ce0407ec3d0710d29f4c65af1b94b22500bcc6c941c6d7bf49",
+      "size": 944
+    },
+    {
+      "path": "config/relics/drowned_belt.json",
+      "sha256": "5b5ab3ecbe32d27f14841381f7f201c7562bb91757fa7418b9b01dee27ea4970",
+      "size": 2277
+    },
+    {
+      "path": "config/relics/elytra_booster.json",
+      "sha256": "d709f3168c6f322d7aac29f6a7b3bce9009882b2b1807d2ff79192cb4fc6a8f8",
+      "size": 951
+    },
+    {
+      "path": "config/relics/enders_hand.json",
+      "sha256": "bf1a5e4ada9f8c3b9695f4d47f48132eb771e1ac7a1c1eee4a81a0fc2a25d921",
+      "size": 790
+    },
+    {
+      "path": "config/relics/frost_robe.json",
+      "sha256": "fe426e840b462138ef0bfe4b5641c8f6dbb2db723234e168f116c0ef1bebc8f0",
+      "size": 2234
+    },
+    {
+      "path": "config/relics/holy_locket.json",
+      "sha256": "721e43b5f285d1c9d290d9df89a4bdd864a697da1b8778fb7378a31f8c347d17",
+      "size": 2691
+    },
+    {
+      "path": "config/relics/horse_flute.json",
+      "sha256": "df58263d08a777e109ab09f6ae6ea297198979088a1526fdb3a007b971aa1cd4",
+      "size": 979
+    },
+    {
+      "path": "config/relics/hunter_belt.json",
+      "sha256": "6cac8ce4ffa017ccbeecce2e8e61516db80da1ef189182ae1dd57583a63ff777",
+      "size": 1072
+    },
+    {
+      "path": "config/relics/ice_breaker.json",
+      "sha256": "2d132320456d930807038d94fcd7330304d554774c4bbf5165b7e76c9d6331b2",
+      "size": 1505
+    },
+    {
+      "path": "config/relics/ice_skates.json",
+      "sha256": "c8880bdce9f626633f8324d4a447a57cb83696283295e6b55fe2df7cae678641",
+      "size": 1516
+    },
+    {
+      "path": "config/relics/infinity_ham.json",
+      "sha256": "f8f1ecf7fed5aa578280d43e8907ecfd71b2fe08770b51c0a14a9e05e7afde11",
+      "size": 1085
+    },
+    {
+      "path": "config/relics/jellyfish_necklace.json",
+      "sha256": "3f629267043cee041b3106670f283cbea2f84c28013fd4861710786a0d0dfe85",
+      "size": 1294
+    },
+    {
+      "path": "config/relics/leather_belt.json",
+      "sha256": "d4cf10ec66da8eeb895d4075296c2bacfffdc686da010c82e78638e791a14d24",
+      "size": 641
+    },
+    {
+      "path": "config/relics/magic_mirror.json",
+      "sha256": "6e70faf06fdc0be3255cf4e7dd8bdebee808f5f3fcd247f1e6e53d2dac605407",
+      "size": 1099
+    },
+    {
+      "path": "config/relics/magma_walker.json",
+      "sha256": "e368f63772ed66b56a77f1322e99e238ad663739a7bd221e575ab928aad08086",
+      "size": 939
+    },
+    {
+      "path": "config/relics/midnight_robe.json",
+      "sha256": "383fafdc8c270df8f0a98265826fd4ac60c46b9be4759bd2cb152abb0f777890",
+      "size": 1790
+    },
+    {
+      "path": "config/relics/rage_glove.json",
+      "sha256": "552926621dc292b8996c0e156687d583c1a93f89ab5ac14120817e7e85510069",
+      "size": 3465
+    },
+    {
+      "path": "config/relics/reflection_necklace.json",
+      "sha256": "821fdb3fdfaddeeecd7907c88910cbe93664fa6be2d8748318dae384f091bbb9",
+      "size": 1395
+    },
+    {
+      "path": "config/relics/relics/amphibian_boot.yaml",
+      "sha256": "39b8a55d06987657fc8ef15c6c85ba048544c1b05396312b5f2753d583f3738e",
+      "size": 8786
+    },
+    {
+      "path": "config/relics/relics/aqua_walker.yaml",
+      "sha256": "68e3e439dcb721259e3985ce4515ef5260a166212ba63b569f6b648363090dc2",
+      "size": 2397
+    },
+    {
+      "path": "config/relics/relics/arrow_quiver.yaml",
+      "sha256": "524af2f5d9f1a57983936ab75d2042e53d49b657e40114d91b946f3ca78f2bf9",
+      "size": 13309
+    },
+    {
+      "path": "config/relics/relics/bastion_ring.yaml",
+      "sha256": "78cc299a4c492321823721997f8b90ca5672de63976d267885e084ba5f761ac2",
+      "size": 2660
+    },
+    {
+      "path": "config/relics/relics/blazing_flask.yaml",
+      "sha256": "8af42f810a66263852c16f8749376346080a5fecef9488bb3bc12912c08cc1a4",
+      "size": 5314
+    },
+    {
+      "path": "config/relics/relics/chorus_inhibitor.yaml",
+      "sha256": "8d0e4663ac5e07ed77f0d5c68d06dc8710d4981b2e0a9dd4e224f7217e341153",
+      "size": 3748
+    },
+    {
+      "path": "config/relics/relics/drowned_belt.yaml",
+      "sha256": "b84c6b0e5f89432ac73cd9c294ea44f58927f5f80bc96f71348f5cc824e7f03d",
+      "size": 9064
+    },
+    {
+      "path": "config/relics/relics/elytra_booster.yaml",
+      "sha256": "21de4aa1b35eb1f6845f78ba0352dc4fd388b79e9ea1279f5c7524fd14282f01",
+      "size": 3755
+    },
+    {
+      "path": "config/relics/relics/enders_hand.yaml",
+      "sha256": "0e64ec0885a1286814d49af57c791a9b4369382c53a33350828ec8057de2ff1c",
+      "size": 2672
+    },
+    {
+      "path": "config/relics/relics/holy_locket.yaml",
+      "sha256": "3a5b2a427b9e0de593688b952ad1d0856c1c0fe2076997b65c515badacd9050f",
+      "size": 11568
+    },
+    {
+      "path": "config/relics/relics/horse_flute.yaml",
+      "sha256": "03f0644ebcfbe433139f9aaaf004357c87c249eea7bbd38451984a4f5a59e961",
+      "size": 2850
+    },
+    {
+      "path": "config/relics/relics/hunter_belt.yaml",
+      "sha256": "bc79e132db585506ba69baf0849a6a5aec9e8bd86951f5f5a2fcab28c9ca761e",
+      "size": 4065
+    },
+    {
+      "path": "config/relics/relics/ice_breaker.yaml",
+      "sha256": "ff60615f0d0f7208f04f9b7f2fc07fe350b2a383eb71b3798df722d6105cb1cf",
+      "size": 5641
+    },
+    {
+      "path": "config/relics/relics/ice_skates.yaml",
+      "sha256": "92400db4163b2cddd59104b0dca35865b9dd9ac30c1b7973aa9e2adce67342ea",
+      "size": 5646
+    },
+    {
+      "path": "config/relics/relics/infinity_ham.yaml",
+      "sha256": "d8d96d73fa32983adefd3d4d5cf73585237f7fd458108c347689692840a7d186",
+      "size": 4079
+    },
+    {
+      "path": "config/relics/relics/jellyfish_necklace.yaml",
+      "sha256": "f7d63686df01246598f33725ed7a347a6387653b21cee29882b4424465994744",
+      "size": 4503
+    },
+    {
+      "path": "config/relics/relics/leather_belt.yaml",
+      "sha256": "ff08f2a3ffed4ac5b4e3282d4087055a15d58e722a004e9efa6919fc560bb01d",
+      "size": 2306
+    },
+    {
+      "path": "config/relics/relics/magic_mirror.yaml",
+      "sha256": "b2f48329c46e363dcf406824d3819de86a4abc9d30e50b8f647738cc2416f06c",
+      "size": 3897
+    },
+    {
+      "path": "config/relics/relics/magma_walker.yaml",
+      "sha256": "91495c617e65d40cb38610f300374d6ddce426a4cb32f7731280a493fb1fd105",
+      "size": 2815
+    },
+    {
+      "path": "config/relics/relics/midnight_robe.yaml",
+      "sha256": "2dc72fd64caeb846661359085664b578908658104f5674f21ca6c727659eae65",
+      "size": 7055
+    },
+    {
+      "path": "config/relics/relics/rage_glove.yaml",
+      "sha256": "a882a417d0654ec75f7ad6d69022a0b39de0d1214f58a3e7cf3a479d388e68aa",
+      "size": 14617
+    },
+    {
+      "path": "config/relics/relics/reflection_necklace.yaml",
+      "sha256": "831de8669d3a87ac0c674a564e854ed76d2159831a083942ae5bbd894f372108",
+      "size": 5332
+    },
+    {
+      "path": "config/relics/relics/roller_skates.yaml",
+      "sha256": "cf23559b6acead1187cb717a5c6baec8282022e04593cce0dcbf7b048e43f442",
+      "size": 3945
+    },
+    {
+      "path": "config/relics/relics/shadow_glaive.yaml",
+      "sha256": "b2c7ded48d76878f5bf7ea69acca460dd46e7460c942e64facafe2128d171de1",
+      "size": 9949
+    },
+    {
+      "path": "config/relics/relics/space_dissector.yaml",
+      "sha256": "95b5c8774dc1effb0aed7feca6f02f6a9212c6a405b8d6d7fdf3a9dbd9125417",
+      "size": 3902
+    },
+    {
+      "path": "config/relics/relics/spatial_sign.yaml",
+      "sha256": "79e5e1a2d63e4677142d3254c578bb473f1f5b04bf9c13becfbfb56813f44f8e",
+      "size": 2448
+    },
+    {
+      "path": "config/relics/relics/spore_sack.yaml",
+      "sha256": "1a31566828ba46d2019b9316f29a440da72eb3ce084c3013398ad734d24b926f",
+      "size": 16198
+    },
+    {
+      "path": "config/relics/relics/wool_mitten.yaml",
+      "sha256": "2dc50e02a423d5c2b7b926bc03346abd1cba2bba63875b3f51747d88c3e5fd90",
+      "size": 6746
+    },
+    {
+      "path": "config/relics/roller_skates.json",
+      "sha256": "4ad6fd4244006a7df392608b30bb7328d1e4b60833abc4fc1b0faf955b87db58",
+      "size": 1152
+    },
+    {
+      "path": "config/relics/shadow_glaive.json",
+      "sha256": "fd6138557f28f6e255f61b926f53fd33f45065a557dd75b5e42359ae5753f0c0",
+      "size": 2406
+    },
+    {
+      "path": "config/relics/space_dissector.json",
+      "sha256": "0e8a2d65f023bbb3cf62f076d0d9fbb8f41dddcabcf76cd1518e96e4e3fe74d0",
+      "size": 1098
+    },
+    {
+      "path": "config/relics/spatial_sign.json",
+      "sha256": "c06385c61c6fb203006c4a4868b29d70c1ffd98afa946307e0c116e0b0742c1c",
+      "size": 789
+    },
+    {
+      "path": "config/relics/spore_sack.json",
+      "sha256": "b7ad022413a9ad1fdf0872b200f38de0744c9f05ee3cb5b92f3598ab44b2d66d",
+      "size": 3713
+    },
+    {
+      "path": "config/relics/stink_gland.json",
+      "sha256": "bc4f2628790e8e0b6664a14268d01a95abeb2b65ce1d2435e64702f5ae441d89",
+      "size": 1975
+    },
+    {
+      "path": "config/relics/tendon_lump.json",
+      "sha256": "a648f2e97336034f809f67cb5da2d29ddf0b84be44b428ded4963d0f436337a7",
+      "size": 1385
+    },
+    {
+      "path": "config/relics/wool_mitten.json",
+      "sha256": "39c25e47b761f81fb82d7e900679b00a3edbcf8729044ceae6b7468616ab9016",
+      "size": 1666
+    },
+    {
+      "path": "config/resourceful-config-web.json",
+      "sha256": "d40cd4ea2b038cb5aae2aec4b824af5e15ba7f662200de93b9ebc05d667ff25d",
+      "size": 196
+    },
+    {
+      "path": "config/ribbits-forge-1_20_1.toml",
+      "sha256": "a3a347104c669a4847fbcea06cabe3a5fb79c474164137b01074fde0c1e649be",
+      "size": 420
+    },
+    {
+      "path": "config/ribbits-options.json",
+      "sha256": "671ee75b5333f98d3a9b92fcfcc79c7df7a6b4c0e5cda025a7b449ab79562b2b",
+      "size": 33
+    },
+    {
       "path": "config/rightclickharvest.json5",
       "sha256": "6eb5169563472ae96184c94e9f42ff7d76fdba403ed3190ffb308e817ea0a21e",
       "size": 609
+    },
+    {
+      "path": "config/rightclickharvest.toml",
+      "sha256": "5c4c186994cfda2bcf0f983251f3a09f33ade756e4f6894de638d39a5b5f6a6d",
+      "size": 111
+    },
+    {
+      "path": "config/rogues/items_v2.json",
+      "sha256": "8500f19a9f4294f20854545054fd699af514e2034304b75878f1723b520a3e6a",
+      "size": 8356
+    },
+    {
+      "path": "config/rogues/tweaks.json",
+      "sha256": "59948decbed04677319d3dbb9db1e7affb3255e68b2719914bbddccb4c66df2d",
+      "size": 723
     },
     {
       "path": "config/rpg_series/loot_equipment_v2.json",
@@ -1294,6 +4954,91 @@
       "path": "config/rpg_series/tag_cache.json",
       "sha256": "a650dba126ee9d5cb75a2ff9d43b10d79d1888def81178e1048cf3055c3fe91b",
       "size": 5719
+    },
+    {
+      "path": "config/rrp.properties",
+      "sha256": "65980f3a2a0a445ebcfe783aedf4c04495ac2fe7076f5887ed4535a0ec147789",
+      "size": 148
+    },
+    {
+      "path": "config/sanguine_arsenal-common.toml",
+      "sha256": "5b458940b54541cdb7295dd24ddd24ff7c71a977e89f0d5a5619b10fb4b00cc2",
+      "size": 3410
+    },
+    {
+      "path": "config/satisfying_buttons-client.toml",
+      "sha256": "08ee8297a4d3064c6d3eab8f82e55e5bc22506d7acf32f69c81668b7cf1ea258",
+      "size": 1107
+    },
+    {
+      "path": "config/saturn-optimizations.toml",
+      "sha256": "47019e25dcb00d2d1da22d725095dc39bcbbf10cdfb8429d8d5a97b231a272b3",
+      "size": 445
+    },
+    {
+      "path": "config/savage_and_ravage-client.toml",
+      "sha256": "e441a4d0d6f8ca65617c56691c044351fd49da819a39b251e8389d1a9be7e990",
+      "size": 81
+    },
+    {
+      "path": "config/savage_and_ravage-common.toml",
+      "sha256": "8e552063996f1b638eeabf9a3d9e43a151fc87114769eaa18dae71fe8f04590b",
+      "size": 1193
+    },
+    {
+      "path": "config/scholar-client.toml",
+      "sha256": "73f2e3177b10d790709eac49a3a0eab877c3d42435c54c772f02606215e37047",
+      "size": 1121
+    },
+    {
+      "path": "config/scholar-common.toml",
+      "sha256": "60c2814a5145aeb6de0884f1c017756884e960fa8a9533b8cf5b1989c409f4ed",
+      "size": 1090
+    },
+    {
+      "path": "config/screenshot_viewer-client.toml",
+      "sha256": "28ece68c52c833fdb1ae9a5462a486aeda0b7d723ee3a687e98989c2a310a2e4",
+      "size": 2193
+    },
+    {
+      "path": "config/scribe.client.json",
+      "sha256": "c1125e1d6ffc8f089f0070fe9518795679f4a8d8fd0bfc214117c66e0cebc5f5",
+      "size": 41
+    },
+    {
+      "path": "config/shouldersurfing-client.toml",
+      "sha256": "c0905d514b4f351286f2bd45202838e77a27dab324c61d222e1b57b895ee05db",
+      "size": 16245
+    },
+    {
+      "path": "config/shouldersurfing.toml",
+      "sha256": "ccbacfcc9dfad79346f1394569c9bcee1f8112a9ec284080d187df03e147b1b8",
+      "size": 6130
+    },
+    {
+      "path": "config/sidebar_buttons.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "size": 2
+    },
+    {
+      "path": "config/simple-rpc.toml",
+      "sha256": "2473025fe0e62386c7fecea8fd71724d613e8c24b21a9e7e5ce653651fc6dd6f",
+      "size": 9879
+    },
+    {
+      "path": "config/simple-rpc/server-entries.toml",
+      "sha256": "17b07ca5f6758448c4c2effbe9cb9f7b2b534c83b1287b5b751c3bbe4f74f2d0",
+      "size": 150
+    },
+    {
+      "path": "config/simple-rpc/simple-rpc.toml",
+      "sha256": "e55d91109c76a2f912fd12f0ce0e652427ad947180614d61076c1847e536ec6b",
+      "size": 9880
+    },
+    {
+      "path": "config/simplebackups-common.toml",
+      "sha256": "c6625975183acb64612f23030b28ded1332799fcd23a85208477a6862b48b2f4",
+      "size": 1822
     },
     {
       "path": "config/simplestats-common.toml",
@@ -1341,6 +5086,41 @@
       "size": 342
     },
     {
+      "path": "config/skilltree-client.toml",
+      "sha256": "bef82420b1520f90d7a12791624b1a151066e262d16a7ff981edf3ea5121142f",
+      "size": 79
+    },
+    {
+      "path": "config/skilltree-common.toml",
+      "sha256": "c20487687bdf8e2284c5b9d32b50c91252cb61e47677f43c50fd5a905f93fa0a",
+      "size": 2502
+    },
+    {
+      "path": "config/sleep_tight-client.toml",
+      "sha256": "0a91290f99cbb5e250b8d6bf7c4bb6e82f4d246fcfca1807496cc18be5e709d1",
+      "size": 1439
+    },
+    {
+      "path": "config/sleep_tight-common.toml",
+      "sha256": "624e6376dfaeca766fe799470019d45585c0a9d9ffdee1f12170e476f8eb0f2c",
+      "size": 6017
+    },
+    {
+      "path": "config/smoothboot.json",
+      "sha256": "0dc746fb3afca8b1f21e6fead005760d25e2c73dc006c9cb932364dd2b5d86ea",
+      "size": 198
+    },
+    {
+      "path": "config/smoothchunk.json",
+      "sha256": "d0b988aa519ffd031e5421091eec1054464f2e29e48781f6274efd977535f574",
+      "size": 275
+    },
+    {
+      "path": "config/smoothswapping.json",
+      "sha256": "ebb23f7077026c9d78728692fc531cfe27439f49b485d9c03452330133961489",
+      "size": 72
+    },
+    {
       "path": "config/sodium-extra-options.json",
       "sha256": "070c7c26260c27ce9d4360876a21d179d0fc5a22a13889cdc9bad603ccb26414",
       "size": 1535
@@ -1349,6 +5129,11 @@
       "path": "config/sodium-extra.properties",
       "sha256": "a2f1b47c1eaa119ab34727f1d43c2506cb3d7f17ba8fb4efb49e20c8e0b58e70",
       "size": 360
+    },
+    {
+      "path": "config/sodiumdynamiclights-client.toml",
+      "sha256": "64d2ce1b1675f17e0807180b9680ef9c97e4b92ac86962b7cbf27f0db4926eb6",
+      "size": 659
     },
     {
       "path": "config/sound_physics_remastered/occlusion.properties",
@@ -1362,13 +5147,643 @@
     },
     {
       "path": "config/sound_physics_remastered/sound_rates.properties",
-      "sha256": "9dae95038f7e70e391d5a15a0e40cc479ccfeadb7ad1b8d561c6cfab924ad62d",
-      "size": 478151
+      "sha256": "20b528b529a23e5d9749f69671e461cbe572ce50c0b8af7545dc87927b30a5e5",
+      "size": 478337
     },
     {
       "path": "config/sound_physics_remastered/soundphysics.properties",
       "sha256": "d29dede3f214ee4b1aa03314f92c3f973c21ee6e26d173eba3d01a2083237b6d",
       "size": 5104
+    },
+    {
+      "path": "config/sounds/chat.json",
+      "sha256": "d75914930f78ee1d4d2cdcfbf3f45dbd308dc38a3ed4c3bbf648d5daa17aca0f",
+      "size": 590
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/README.txt",
+      "sha256": "d25bc7cde99bb68622d976dc55309489a178e2fd39d0423e5060dae47ed97a89",
+      "size": 149
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/acacia_leaves.json",
+      "sha256": "f5f0297b6d536f4509373a15bcc0b168dfafed8bac4cb2103d611ad659264001",
+      "size": 521
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/acacia_log.json",
+      "sha256": "151dfbda5b4a0c0f8ed4a67919eb21e37617592b46a63b3262fcf1f182ae6fde",
+      "size": 500
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/acacia_object.json",
+      "sha256": "212aa7863a70fd4389235ac7c982d8056e59a5121591108806c278bafb2ac00a",
+      "size": 684
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/acacia_planks.json",
+      "sha256": "748319ccf00222d1591f14a0269a7a84c7a33a85644cb9a9af191f0b48e892af",
+      "size": 624
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/barrel.json",
+      "sha256": "14e9216825fe1e308d45b263c8b82cbbac1674ebda9da4b7f2c26695b7d62eab",
+      "size": 449
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/beehive.json",
+      "sha256": "f99e5e1ce871d7be22d04bb813afa046911cf8a0127a474462fc27ef8032d129",
+      "size": 455
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/birch_leaves.json",
+      "sha256": "fb23932c8c7dd69df3ad1c8ad7f4bffccb3bc7478901eb458ac2022a7b3096e1",
+      "size": 514
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/birch_log.json",
+      "sha256": "1397a7a568089e3700a9b8ad6836462dc90bc8a18c3463d3cdafd2ba6afe0165",
+      "size": 553
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/birch_object.json",
+      "sha256": "fab294106f0f77a2e76174388aa4629c4763fc08bb516821779ea112246fc1c0",
+      "size": 640
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/birch_planks.json",
+      "sha256": "5e59e43469da8405b9877273262a6ed4daab877cfc03baf4169909a4c5711542",
+      "size": 586
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/bookshelf.json",
+      "sha256": "af051600962b855a30b2ac4be0cabde47552e494934431976ccc460a06d29ee5",
+      "size": 463
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/chest.json",
+      "sha256": "6d7026dc6ad7309ae84d6c9faec3493559b616458ebea86c7eebc3b304fb147d",
+      "size": 446
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/clay.json",
+      "sha256": "ffc136d2b6b6abe02feb1477a184c0d962299bc9ddcf5e176bd727346444b6f4",
+      "size": 437
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/clay_bricks.json",
+      "sha256": "7bec82a476c4e40dd0984e6583b2843680d11f0f73d26ba33cc99fc4246a083f",
+      "size": 583
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/cobblestone.json",
+      "sha256": "0e8f3d446fa980d237283bdc8bdbb353740c419d509fd124174ad849ab32526e",
+      "size": 776
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/copper_ore.json",
+      "sha256": "8f9f2537aeaa6137a369e930588380d6556eefc1ffcb8d9b36c645fb4c0ec330",
+      "size": 471
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/dark_prismarine.json",
+      "sha256": "1d6afe6a0d8a289ae919a992b44923cbcd175de263d00cf1aefbe4b3a4156ab0",
+      "size": 594
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/deepslate_copper_ore.json",
+      "sha256": "4c4bcde4fcbe40dea3a7a350ebeddd8337b824b4f25c23c4e0c3427adfedef35",
+      "size": 521
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/deepslate_gold_ore.json",
+      "sha256": "d2e30eab7115639256ea228ff34ee2d170e09a60d2c196673eb700136e397277",
+      "size": 519
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/deepslate_iron_ore.json",
+      "sha256": "c13a19c0376d223458f81c4691d44464f67f0cb7f809058a50e7fc4030fd5b6f",
+      "size": 519
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/emerald_block.json",
+      "sha256": "5ade3a0d22d40c5f1e7bec8fb31e22fcfd692d374aa72b75c8a6f8b4b4c00a79",
+      "size": 482
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/end_stone.json",
+      "sha256": "ef7faaf653d6e4cce667fd0586a557c484632adede1e3a05d827cb71f24153f4",
+      "size": 454
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/end_stone_bricks.json",
+      "sha256": "98cd885051a1d4e1bbb2e2e9bf7b232d85db944211e9ba871350c982fcbc25ad",
+      "size": 625
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/glass.json",
+      "sha256": "62c1b66cffb4c463b193ff88d39a3eb9b68c765f847f2d29936e6a85417d7a76",
+      "size": 580
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/gold.json",
+      "sha256": "4f09ffccd04e6197dba4afd0e1ab749cfd1dd9890b117bbc6fafaf75f520e188",
+      "size": 550
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/gold_ore.json",
+      "sha256": "a42f56780fe09d29fbd2115577d59073db16d1fb21ae34109c4479ef8c103916",
+      "size": 459
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/gravel.json",
+      "sha256": "130375a58064691cdc622d16842228b98f8e3891c07c1c0033699a63044f73d7",
+      "size": 450
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/hay_block.json",
+      "sha256": "213b59d0c31a467bc1e45a234394d54e43aa61e9a4ce7685a85356d99be75699",
+      "size": 463
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/ice.json",
+      "sha256": "b22a04b6b7fb88d56ae8516f943f74decabd48dfb871b8f21eb64c58d42369eb",
+      "size": 458
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/iron.json",
+      "sha256": "46b3b7885dfb62e3c99760cffab541402e8f8f93e6f89d96b2f1001675cd7a32",
+      "size": 577
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/iron_ore.json",
+      "sha256": "e872b92f024665176e447de4fe99e150a820474187efe6ac05a15cd914fb93b3",
+      "size": 469
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/jungle_leaves.json",
+      "sha256": "4b259d768517b4f2f5f05f5aec4f2743ed03ca212dd09d569399d003f32499ba",
+      "size": 521
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/jungle_object.json",
+      "sha256": "ffda1d64f7fc9cc0c6d18d89d482520ce2910f9a21dea30fdd95d653c5bb7d80",
+      "size": 684
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/jungle_planks.json",
+      "sha256": "4f0b71009d7181127720a726589c8033d604290ea9e5eba7aa60b9eb4f21f52e",
+      "size": 681
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/lapis_block.json",
+      "sha256": "eeec2953edaa53c90874fa00fe48ca4cfe1d7caf3342dcb851e47d56fae0a603",
+      "size": 1151
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/loom.json",
+      "sha256": "e5f6ccb68b1ec29435fd07faf005404988374479d9ea67dfde1882eb5ad9b206",
+      "size": 438
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/magma_block.json",
+      "sha256": "2a1bf06b4d26da71c2d3f281311599783446a99611fd2f57d148485ae6b906d0",
+      "size": 477
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/mangrove_leaves.json",
+      "sha256": "afc1a92b1d0eb5c8c3d1b19dcec6c54f336b110b82be82d3625e65e2dd342e76",
+      "size": 501
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/mangrove_log.json",
+      "sha256": "6818cb38fd6c7fe235d420c0fbcca238a9a3ffcb70a9aa642a7088b666826deb",
+      "size": 514
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/mangrove_object.json",
+      "sha256": "cf730520c8492905ef1ad7cd036132b956b55baf7f9a169329c5fe3a14652b25",
+      "size": 708
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/mangrove_planks.json",
+      "sha256": "f50a17b15127b5f5aa7ee8e0ee6a93f8bea2e01018e0ab4bad06db6684aa0f71",
+      "size": 501
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/mossy_cobblestone.json",
+      "sha256": "53f63c073d96419fae693bdf95a0eabfe34d6da9519afc0e06e9a89545988544",
+      "size": 623
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/mossy_stone_bricks.json",
+      "sha256": "ff29828434078bb3afb80dfe223692d29dc437f52ad3f88e3ca0bbebbc163ec7",
+      "size": 686
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/oak_log.json",
+      "sha256": "8ea30619fd64dd5530cc97d4c63a3b659a83ec3e5e0cbe5e5cde3b091f15cac8",
+      "size": 540
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/obsidian.json",
+      "sha256": "c65164d9c47c9d2d8ab4a4c0905238e244c6cc32556abc504e0f84552f259a6b",
+      "size": 548
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/packed_ice.json",
+      "sha256": "da86dcb3e82b80bc7d554ff91437ae9a5b0851a8361bc1ec1749f551cd967931",
+      "size": 526
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/prismarine.json",
+      "sha256": "f661951222695e369adc488bc3e61875888ad053f8aa1a770fa69a7839f769a1",
+      "size": 609
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/quartz.json",
+      "sha256": "43aabb16461dd87b552b5fec99816015cd5ee8fc7b34064c33bbaecd78ffff97",
+      "size": 855
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/raw_gold_block.json",
+      "sha256": "e5ca407738185697e362d1594735ef338934a0691528118331ab9053418cb9e5",
+      "size": 495
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/sandstone.json",
+      "sha256": "0150fdada07a1c50e8ca2d014657323d267dfedcab120218f78e575d629df254",
+      "size": 1154
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/sheet_metal.json",
+      "sha256": "b0296c1305cdf6fde3e278560798797abd632fe83cf02eef90fba2639dd24ff2",
+      "size": 579
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/spruce_leaves.json",
+      "sha256": "e9a121ac436dc4f1fb5817dc541c696830855701c785d1bd50843bdebfecee04",
+      "size": 521
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/spruce_log.json",
+      "sha256": "2b64c8818101683797bb664bbcba4ac45a27c76f9ff0b2b68af4532e490f9354",
+      "size": 500
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/spruce_object.json",
+      "sha256": "859c0ab0403296910d6ab6efeff1a8b5edb84686ea8e488543f34e689afe8ec9",
+      "size": 684
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/spruce_planks.json",
+      "sha256": "948b6a85f79cc6665a326b112fc4c175689a7e97a03304255ed2a3c448993444",
+      "size": 624
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/stone_bricks.json",
+      "sha256": "2418f8ed09e18d01aaf1d701ac652a8beb7adafe32070d4ea9de7cf6326912ac",
+      "size": 804
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/blocks/terracotta.json",
+      "sha256": "f1141d5d1d7ce3fb09b5c6a0fd4ca8a9361b8907ebd35f99773a551cdd5f4ea0",
+      "size": 1048
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/acacia_boat.json",
+      "sha256": "80c188fe12a77c0e4f52a9ec3af688124d6ffefce26630611b695f314b7d5ddb",
+      "size": 167
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/anvils.json",
+      "sha256": "337f53e47be170197a86132926d9b14800417aa66d72d22175248b289a02a7e4",
+      "size": 149
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/arrows.json",
+      "sha256": "03478ac0c7c8a489779facb67d9f7605f4d6f36cd96c1fc31d7bf4abeebc872f",
+      "size": 122
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/bamboo_raft.json",
+      "sha256": "cc5b04040237bb27604a7b606aac15c86b2d46b8dbc09b6890cc5a4456b641e9",
+      "size": 168
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/banner_templates.json",
+      "sha256": "b817744438099a6fd17676a370fdbb17048069cfcb8bc61114ff9da6356000ae",
+      "size": 295
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/birch_boat.json",
+      "sha256": "3dee3599a27c642042f881794f6472e24d1129df06b9c4679eb15cbb87c28c1f",
+      "size": 164
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/bones.json",
+      "sha256": "708769edf84d9135f9b8e6ddf88e24f1fa29f62d3ac902af1b93ab840965e978",
+      "size": 120
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/bowl.json",
+      "sha256": "be0fb2bcc1fc89adc33f0a6d51400819a81b6c576b670fd6ed6aeed2fd7634e2",
+      "size": 129
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/bowl_food.json",
+      "sha256": "2373e1ebb903cf8cd5e6605001ea279e3f44bf93307db3447290aa91c4636ae0",
+      "size": 136
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/bows.json",
+      "sha256": "75c5430bcf04519b8f4a6642840fa265f5e0d407d506ba6132e18227fe00add4",
+      "size": 113
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/brewing_items.json",
+      "sha256": "b256fd054d9fab2567f7cdedf4f8d51d0c2c5c8de7b578e442f255e06c73777b",
+      "size": 246
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/chainmail_equipment.json",
+      "sha256": "3eabf872b546b24355cd8396e2e3a8b370a286a0a242f7988a39996df898ffda",
+      "size": 211
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/cherry_boat.json",
+      "sha256": "71b48080a531c0cd56fb30302b033e448da6699ac02a3001c0e9643209f70dba",
+      "size": 161
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/crop_food.json",
+      "sha256": "e5cdbe4c64b882a8a2b86b0d02ff691bab4ba14be76e4b3d40eb3987928ed66e",
+      "size": 195
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/dark_oak_boat.json",
+      "sha256": "012803bbda45f7508803eef7ff592ff610dd93f226f07f0d93ea766bc869704b",
+      "size": 165
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/diamond_equipment.json",
+      "sha256": "248b78c3a941b28b7115fe686ceb216e8387713292e958c7f09efaec7579f22a",
+      "size": 396
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/dirty_metals.json",
+      "sha256": "23da526ee4431cfa08ac0468167c276bf4fb70b9e72d9df06334a78e7c0f902b",
+      "size": 242
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/dyes.json",
+      "sha256": "ab8931e578398df18e61c8d7cd4253fb94f4983b78cdeb3e370eafa988f990aa",
+      "size": 75
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/elytra.json",
+      "sha256": "83e680bdb038af0d61f3fab4f7be018e75136c6549d47771c6cf005b640eaf58",
+      "size": 95
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/enchanting_books.json",
+      "sha256": "ea4bfa8a423ba99b288e7314a59488d12232eea0ad5414f74d5a64846a14051b",
+      "size": 176
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/exoskeletal.json",
+      "sha256": "e0d078b3cf83ae941ce447ecffd20132afbf91a0d4298bd1bb303344fb1c05bf",
+      "size": 195
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/filled_buckets.json",
+      "sha256": "ad11a83e373d2872a91deee4c0633269193ea540f6eff75265b3402f7f7a067d",
+      "size": 119
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/fireworks.json",
+      "sha256": "cbb916fe2c2ecfd64ba6a8b5cf300c61a655f620089ca4c6cfcce671329b5aa9",
+      "size": 105
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/fishing_rods.json",
+      "sha256": "4a1fe69feaf2c6f6d28281be5343263b349265e7538b33d0e9b3f654e5bb912c",
+      "size": 125
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/flint_and_steel.json",
+      "sha256": "fba2277ca1b882972af59c667d319f8d71850d1340466f9a7b9735ca880b25e0",
+      "size": 103
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/golden_equipment.json",
+      "sha256": "9ec125cde13bdd966205075da243adf56ccf2dacfd54ccf51a6150aa4ecf7b48",
+      "size": 406
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/ingot_metals.json",
+      "sha256": "f8faf1c1d6e1d3e01256f934d305ca7ea35bd1ac8e47c4b56078cb0351dc21f8",
+      "size": 355
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/iron_equipment.json",
+      "sha256": "3ad1895ec95c27be8967b5e75fd767d4dcf707afd29d3d308c03ebcdb99fd93a",
+      "size": 411
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/jungle_boat.json",
+      "sha256": "c93ea0a5e2c9b1b182c4efb99f5972e5f764198a5988a68d3e45c2db3ac74c80",
+      "size": 167
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/leather_equipment.json",
+      "sha256": "9dad6d794888c1e13d7afa09980ffa547ee1b57d352c97b0fca9507aa5896ce5",
+      "size": 371
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/mangrove_boat.json",
+      "sha256": "3892757799e306d384d625661135305ae0962d5b5c2c0687339134ec06110b8a",
+      "size": 173
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/meat_and_fish.json",
+      "sha256": "b5fb76d6249ef9bdb2ec4f03f7c41dc8051b50686055e5d023a40f6226340c74",
+      "size": 216
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/minecarts.json",
+      "sha256": "1e540775e1836d86efac8502d23e8482e879500810e4a9b1e3ec6b0d61c8d1e5",
+      "size": 313
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/moo.json",
+      "sha256": "8159dbb660012ebc099c3720dff0c93aaac60963cfc01ba61c44c6f3f6c6ff4e",
+      "size": 95
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/netherite_equipment.json",
+      "sha256": "ab668354d862b1a56d142f32d4fe2841909859f1b645a29b854c5334da03f394",
+      "size": 401
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/oak_boat.json",
+      "sha256": "6a14f9f2a655d6d19d8b8bbbeb4f53d8378999e9eeff5e2a2aec1c9c2a8ce9fe",
+      "size": 155
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/sculk.json",
+      "sha256": "5d7975409a45a6a3b1316a1b23a38add86163647f2043a538bb38d0b233c09d1",
+      "size": 97
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/shards.json",
+      "sha256": "da34e5bbd1ea20da7b414240860c00e6a3bfdf7803750325547c5fc1f9edeb90",
+      "size": 144
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/shiny_metals.json",
+      "sha256": "676b3968f069dfd027799307d3c2789c5de73826c08898646cab7bf3316cbb8d",
+      "size": 210
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/smithing_templates.json",
+      "sha256": "b3ecb9e0ef3dfa12c60fa3767b4e971f650ec129825a1b0e5f3cdd40857dceec",
+      "size": 156
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/spawn_eggs.json",
+      "sha256": "54b8b650a366bfba31236eae376e8b32c00619e79280dab0cb801d8f08b21c5d",
+      "size": 2917
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/spruce_boat.json",
+      "sha256": "858dba6ae105709376b8dd7cc649850ea9b10919f863821ba2df61a89d0a4fd1",
+      "size": 167
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/stone_equipment.json",
+      "sha256": "98201201904b9c46cf29796f7435e13f5240eb233132ff3efa442057232af733",
+      "size": 216
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/trial_keys.json",
+      "sha256": "fbeb3f536a449b5ffd1b84b58e2ca51557fe624a7bcbfc4f0c620f76b35b3efd",
+      "size": 179
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/trident.json",
+      "sha256": "1d2b36b3e94799f770c7f50cb265188612f9e687d8bc5ebf8bdf3b5f528575f8",
+      "size": 89
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/wet_mob_drops.json",
+      "sha256": "105890e94e0d2bd5cb2f4c859cedf27a51de07bc22eeeaed97a95c45028f69e6",
+      "size": 406
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/wind_charge.json",
+      "sha256": "d7cc0c1d66baeefd11f5b2e6466f33e5ffc01cb6ba989591367c7da9d3b22bb3",
+      "size": 134
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/items/wooden_equipment.json",
+      "sha256": "dee8b8631b1cf96d4c9796441793bce1adbf4fa157f92bc2f99eb2234f4bc38f",
+      "size": 340
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/screens/anvil.json",
+      "sha256": "0311d47b1efc9a7f86322fb7c5db9e2e21197b71d2a4a86f9a06a5667efe2e84",
+      "size": 88
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/screens/beacon.json",
+      "sha256": "ff86cd6b6558725ff17a6a8f7796c895ef45a33ec388c3452a4526257aa3dbc8",
+      "size": 101
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/screens/brewing_stand.json",
+      "sha256": "e758d6b8c20bcf1d5ccd18d61090e2615e7dd07b6ec26a1c625c1c393a808686",
+      "size": 96
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/screens/cartography_table.json",
+      "sha256": "b67c39ed5ab43d7ca50d4f18b7e3b04009817322b2db4d16259883accde65bc3",
+      "size": 116
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/screens/crafting.json",
+      "sha256": "d65cd2c9c40fa41a5a4e056ef1acd3d878834ad3049d98ed86ec0289efb1d83c",
+      "size": 88
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/screens/enchantment_table.json",
+      "sha256": "4bea097a7b0954a59a99d32d766fea32482f3d904922aa16771a2ddceb0fab1c",
+      "size": 104
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/screens/furnace.json",
+      "sha256": "4929ef04d7df64363d05d7187f0f620a386ae810e3710af6f820309825dc4353",
+      "size": 122
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/screens/grindstone.json",
+      "sha256": "3f8f4e34935f2435eda09b5c519039ab60dc9bd0dab87066931efc1762f79613",
+      "size": 93
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/screens/lectern.json",
+      "sha256": "0ecd0628311372164ebc758ef4cc87a8d399f81a1c3f77c6f0a6928a524f247e",
+      "size": 103
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/screens/loom.json",
+      "sha256": "45da173fccf9505aa3f20147f24740136adc5802b0f5e04cfa2343e0fd374c47",
+      "size": 91
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/screens/redstone_item_movement.json",
+      "sha256": "bf68abc8b07a8536f17dba065e0f2d185ae095583bf21f1da811168ea4cb2791",
+      "size": 116
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/screens/smithing.json",
+      "sha256": "a44c31b65272c1afcb48729cb5fbfcadf7787c753ec31829e22c2df1decab66b",
+      "size": 96
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/screens/smoker.json",
+      "sha256": "d7d156dfb4c01c9602aacc205f06f872eec034ec61e2e9e70acf5be406d975a8",
+      "size": 94
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/assets/minecraft/sounds/screens/stonecutter.json",
+      "sha256": "8d95d7abb9af2600c73f943e463a96fd8af5ffe0e1e4686ebf3fa36e2c3eca4e",
+      "size": 103
+    },
+    {
+      "path": "config/sounds/dynamic_sounds/pack.mcmeta",
+      "sha256": "654f81ad0e9016106e6a3d4a79ca79c6850db28cbba75a86c84ea5b042131619",
+      "size": 217
+    },
+    {
+      "path": "config/sounds/event.json",
+      "sha256": "6245d6fd01be9aac33c2c7967fb795b8542a21526623ffc19a85596b3a6e1d1f",
+      "size": 797
+    },
+    {
+      "path": "config/sounds/mod_utils.json",
+      "sha256": "ad4c5fe9811db5595602b39957453cf553ca0ccf0c084db6393caa2f2fa05132",
+      "size": 41
+    },
+    {
+      "path": "config/sounds/ui.json",
+      "sha256": "ad2d93625c17340af17d4f8160853cb2a8db338ebc5e8989c574798039379f56",
+      "size": 2108
+    },
+    {
+      "path": "config/sounds/world.json",
+      "sha256": "370cb0d795cd5143f878dbaa489ba2ec7cbd14228cafa07d4a86a27a2e08f923",
+      "size": 1576
     },
     {
       "path": "config/spark/config.json",
@@ -1421,6 +5836,11 @@
       "size": 644
     },
     {
+      "path": "config/spyglass_improvements-client.toml",
+      "sha256": "5a734ef5c18f827eddeb3fb9c731ab3b6c790f9d767eac173554effa6ceed22c",
+      "size": 314
+    },
+    {
       "path": "config/stackisb-common.toml",
       "sha256": "4502bef407cdfb04f45ac1da3516bdc52014420e80fbc44b195ff061332cd953",
       "size": 330
@@ -1436,6 +5856,21 @@
       "size": 14393
     },
     {
+      "path": "config/structure_gel-client.toml",
+      "sha256": "8058ecb1b7e59f183db54b31fe49e2040bc222294a46ba5c7c82a172a7277354",
+      "size": 271
+    },
+    {
+      "path": "config/structure_gel-common.toml",
+      "sha256": "888d2904bd7dd577f72d901603912a440540eba21212b004cf6abe41f1cde23b",
+      "size": 885
+    },
+    {
+      "path": "config/structureessentials.json",
+      "sha256": "34e14e20cd7ffa970d0bcdea197741519357ae7162f1f458d598da244ac19bea",
+      "size": 915
+    },
+    {
       "path": "config/structurize-client.toml",
       "sha256": "50dcdbbc76fbc29d7c8346fb9066e9a042ef452a015d1e4d38503876c94daab4",
       "size": 1331
@@ -1446,6 +5881,41 @@
       "size": 1982
     },
     {
+      "path": "config/super_resolution.toml",
+      "sha256": "920ffeda7107129948e4aeeda613bbddd89086c0cc37115110d4a9e1131107c3",
+      "size": 1551
+    },
+    {
+      "path": "config/supplementaries-client.toml",
+      "sha256": "71391533510111a0f25d082bfa5f86828326440b5711c7f628f484bb5fd4b19e",
+      "size": 9370
+    },
+    {
+      "path": "config/supplementaries-common.toml",
+      "sha256": "76f132771936191a7737d4873e56819bba11221882ebcdc1451bfb7842916e1b",
+      "size": 24850
+    },
+    {
+      "path": "config/suppressopengl1280.json",
+      "sha256": "9fbbdce6bbb6f3046692c260bf47941e7501c9f986d33e213d29a9a2555b58d5",
+      "size": 95
+    },
+    {
+      "path": "config/suppsquared-common.toml",
+      "sha256": "2c20ac633c33b24a105115888730e73444ea6d11a291318de3cf5fa157f83685",
+      "size": 88
+    },
+    {
+      "path": "config/tact-common.toml",
+      "sha256": "b5b2b74f841394aa6a9c1963fbbb5283da18c9f0230769ef25d8101310558f68",
+      "size": 7107
+    },
+    {
+      "path": "config/tectonic.json",
+      "sha256": "8cc0e09d587ca52bbff30ffa48d8583ad1eb3f3a81bfc58fa6837235bc3115d0",
+      "size": 1289
+    },
+    {
       "path": "config/terrablender.toml",
       "sha256": "cff6a9a0d415b19b9852844c0ad5bb2b1cfdb9fce12e729e7228a6521fc95927",
       "size": 988
@@ -1454,6 +5924,16 @@
       "path": "config/terralith.json",
       "sha256": "eadc7fad5ce55fbcec25df521820d36c222d5b12f17006ed9fea34ebeb6fd01d",
       "size": 212
+    },
+    {
+      "path": "config/titlebar_settings.json",
+      "sha256": "72aa79caa4cc376b190e16bee9d91f54655f38f0aeb1486f3967832844c37704",
+      "size": 279
+    },
+    {
+      "path": "config/toadlib_config.toadcfg",
+      "sha256": "58bf90d0d1dfa6bdba54eddd6b76273872a472b26066ee2aa7009222af0f32cc",
+      "size": 82
     },
     {
       "path": "config/tombstone-client.toml",
@@ -1696,9 +6176,49 @@
       "size": 822
     },
     {
+      "path": "config/towns_and_towers/structure_enable_or_disable_new.json5",
+      "sha256": "3aaa6ac8835dbbce97928c4d0d03f9957749a7a57a3f1668597310e9227900da",
+      "size": 3088
+    },
+    {
+      "path": "config/towns_and_towers/structure_rarity_new.json5",
+      "sha256": "1f6cddbcb2d89fbcc774d7bdae9987ccb031ba8fe024307357076ca617b17eeb",
+      "size": 1581
+    },
+    {
       "path": "config/trashcans-common.toml",
       "sha256": "fb6c4d845cbd973d89a35b4291eb7135b69c2ab9640605828b2bdd3bcea8c2d4",
       "size": 300
+    },
+    {
+      "path": "config/travelerstitles-forge-1_20.toml",
+      "sha256": "ab28eacbabe6a1b77bce352525f469df90a14f2670ae957598e746910757fd14",
+      "size": 10709
+    },
+    {
+      "path": "config/treechop-client.toml",
+      "sha256": "ae1995c3bac2a03f767a2c8da6af75364f8a0fc8de6bd82334d05191d97bdc79",
+      "size": 1625
+    },
+    {
+      "path": "config/treechop-common.toml",
+      "sha256": "d6aad2a49d28ff249844440578e9be32b849d4752fa365b485fa27764dcb551f",
+      "size": 8702
+    },
+    {
+      "path": "config/tumbleweed-common.toml",
+      "sha256": "8da919d5ec927450c66497e2dba34aaa2e1993d017ee7654f3bdde26d09686f2",
+      "size": 738
+    },
+    {
+      "path": "config/twilightforest-client.toml",
+      "sha256": "7df74722394aa6f9b662317ad4840fc9b0a2e11c394ef6da2b3d9eabb62808d3",
+      "size": 1565
+    },
+    {
+      "path": "config/twilightforest-common.toml",
+      "sha256": "2d8051f2d41dd6ee7b9e6570e84cd18a3e2d013c0890c95c0b66e7ecce0346b8",
+      "size": 7758
     },
     {
       "path": "config/undergarden-client.toml",
@@ -1711,6 +6231,36 @@
       "size": 343
     },
     {
+      "path": "config/upgrade_aquatic-client.toml",
+      "sha256": "815f751451060fcf358b949699d9fb4a171d7f85a75fffa8390fb693002d6aca",
+      "size": 436
+    },
+    {
+      "path": "config/upgrade_aquatic-common.toml",
+      "sha256": "2a9c2108676ba1222066f1032d23a7da35ee5215e6b73ac2e058ef76f8cb426a",
+      "size": 1583
+    },
+    {
+      "path": "config/usefulspyglass-client.toml",
+      "sha256": "a410a996d9078d560606de5fdc53e604edfff3dbd3d5a1abcf5cda02f232ff5d",
+      "size": 397
+    },
+    {
+      "path": "config/usefulspyglass-common.toml",
+      "sha256": "51196638809a116c966d4bceb0c865e75e7f55cb0a4999d7af9c84ad193f4785",
+      "size": 441
+    },
+    {
+      "path": "config/valhelsia_structures-client.toml",
+      "sha256": "8ab414b34601e3023481f85777bc831a1b3cc78478103b71645b503792c7e6e7",
+      "size": 108
+    },
+    {
+      "path": "config/valhelsia_structures-common.toml",
+      "sha256": "b867176a5df54ccc38411903baf8a5ad4129f66ffad4594fc292601cc3cb9eeb",
+      "size": 720
+    },
+    {
       "path": "config/vanilla_structures/placement_structure_config.json5",
       "sha256": "10fad560389f96ec7cb04966a0948b7fe5ba126559194fc81d7e53b8fd73c7ad",
       "size": 1938
@@ -1721,9 +6271,144 @@
       "size": 1584
     },
     {
+      "path": "config/vanillin-client.toml",
+      "sha256": "235fcb1f04cfe08d6d3dda371670968eed2e3166ef6734990b024fe3980d21a4",
+      "size": 1546
+    },
+    {
+      "path": "config/vinery.toml",
+      "sha256": "fe8acd27cd79406ce57b35ef6c41fe2641faab6ce230e94e17554ca188b77e5f",
+      "size": 2933
+    },
+    {
+      "path": "config/vinery/config.json5",
+      "sha256": "ceb93af7edd4d129eb5be429950aabbd9862b0966becc1fb90e135430a1f9f07",
+      "size": 836
+    },
+    {
+      "path": "config/visual_workbench.json",
+      "sha256": "7885b862b10bf4b14d3103909971114a736d14a52e4a7994ace0d66a2474c14c",
+      "size": 11520
+    },
+    {
+      "path": "config/visuality/config.toml",
+      "sha256": "4127fd1edf4e15159bb8365cb8816c5ae0b6108a02d34aa1d964f4e16b7e3275",
+      "size": 267
+    },
+    {
+      "path": "config/visuality/particle_emitters/block_ambient.json",
+      "sha256": "734a10c828571b65d71d2f27ff2d3350603d097e96c5d0dd5f49319fe21b803b",
+      "size": 1293
+    },
+    {
+      "path": "config/visuality/particle_emitters/block_step.json",
+      "sha256": "54d4448f6c45ba1ad311f6c35b55b9b800ad4ae664f075707e05cd798b6eab7b",
+      "size": 219
+    },
+    {
+      "path": "config/visuality/particle_emitters/entity_armor.json",
+      "sha256": "4fea5a33cd09a91423bf58e9404ded2edd4ba3faff2d41543c5366adab92a73a",
+      "size": 737
+    },
+    {
+      "path": "config/visuality/particle_emitters/entity_hit.json",
+      "sha256": "db1fe2d772c0ed136c2d1da0c315bc50ba9760032a60253be6f37ce1d7e38ead",
+      "size": 683
+    },
+    {
+      "path": "config/visualworkbench-client.toml",
+      "sha256": "a48b352862f74f6fe3ab071e7e43e631618e9c5f68b5f992b591d4dc87992954",
+      "size": 315
+    },
+    {
       "path": "config/vital.json",
       "sha256": "49a8ffc14a8ba50c422fefca9f9d03fb771183b2cbc0d965f28853183e9b4804",
       "size": 743
+    },
+    {
+      "path": "config/voicechat-client.toml",
+      "sha256": "24a7b91377e08d0d8bc2805793c8150d473241aa816cbaa6fca9d254aa537ca5",
+      "size": 94
+    },
+    {
+      "path": "config/voicechat/translations.properties",
+      "sha256": "b8215b84232be41438ffb7c7304b57b0677c9cad49b717db59900872080adf20",
+      "size": 1133
+    },
+    {
+      "path": "config/voicechat/username-cache.json",
+      "sha256": "f3f869b47764a1c39fdad02e84ba302c0fa7f2381b50d6103af080195bf0dabc",
+      "size": 1256
+    },
+    {
+      "path": "config/voicechat/voicechat-client.properties",
+      "sha256": "80f51de91fcec4a6903d9ee8afcb8ce4935305d1bbebe73788404521a7f03b35",
+      "size": 3908
+    },
+    {
+      "path": "config/voicechat/voicechat-server.properties",
+      "sha256": "a96c34cd581877f9436ec27dab016a196424349a69464b001e4ed1a3a2f49d2a",
+      "size": 1861
+    },
+    {
+      "path": "config/voicechat/voicechat-volumes.properties",
+      "sha256": "58242ef3075b166845e0081281b01113a55b9d095104a68b167e7b4bc08b87c5",
+      "size": 37
+    },
+    {
+      "path": "config/waila/blacklist.json5",
+      "sha256": "582f7e30fd40975d418c3a5ae553b753712a2bbbbd3d76d4534262430e0d131e",
+      "size": 1526
+    },
+    {
+      "path": "config/waila/debug.json5",
+      "sha256": "e54d2423726125dd300297ea935fbfd82cf7c374fbd4ee2d85b7ba140e3ba97a",
+      "size": 123
+    },
+    {
+      "path": "config/waila/extra/energy_blacklist.json5",
+      "sha256": "e8243ffac9e64e2b025195ebfc4b1acafb98e5e89c0167e673470d65d4c31810",
+      "size": 1167
+    },
+    {
+      "path": "config/waila/extra/fluid_blacklist.json5",
+      "sha256": "278e964061848df94ac89d7610987afe3d008f1ca5fe6119410dc2e07a2aca10",
+      "size": 1163
+    },
+    {
+      "path": "config/waila/extra/item_blacklist.json5",
+      "sha256": "9ef0b7479c81e1a941eaa44fcdc571bdf9cb3ddb3d234a64f3dff0a8ccbda41e",
+      "size": 1159
+    },
+    {
+      "path": "config/waila/extra/progress_blacklist.json5",
+      "sha256": "b8f09c52b1a975dc1f0ba65c7f4b6757dfc1bc784b87e0530046adaacbadcec4",
+      "size": 1175
+    },
+    {
+      "path": "config/waila/plugin_toggle.json5",
+      "sha256": "5f72feaea8bdab3304037c4fdd7efcf5cb65248af2424620f07a4606e8768a68",
+      "size": 181
+    },
+    {
+      "path": "config/waila/waila.json5",
+      "sha256": "390615fd230a7b1415b41515d22a1e4f5551603134ce8b37db53c3a3c00e804a",
+      "size": 4486
+    },
+    {
+      "path": "config/waila/waila_plugins.json5",
+      "sha256": "b627dc27eef0e2da600b1be6c94dca569753445ee57a8ffee36d6f8b49749464",
+      "size": 14295
+    },
+    {
+      "path": "config/wakes.json",
+      "sha256": "5d3f956754a42abde28ca8ebfb962e561e2772f6ee8d79649406f44c1d08f098",
+      "size": 1510
+    },
+    {
+      "path": "config/waterdripsound-client.toml",
+      "sha256": "09d637baa226275f201f2adbade0498545de0d1a44a6077ad2e633d95a4a296c",
+      "size": 508
     },
     {
       "path": "config/watut-client.toml",
@@ -1749,6 +6434,31 @@
       "path": "config/waystones-common.toml",
       "sha256": "70bb3d8676061c2a29ae97d746e4c45c2bb2604ffbcc43364d1860c22ed1e72b",
       "size": 6236
+    },
+    {
+      "path": "config/windswept-client.toml",
+      "sha256": "aa74fdd5103d5177ace919b94a87cb9b0ba499893d40a37a6ccd157bed8ded0a",
+      "size": 200
+    },
+    {
+      "path": "config/windswept-common.toml",
+      "sha256": "052e31939cfd5cd2d0a7a1295e74e4fd55b00d385918a42c0a24f08238995f0e",
+      "size": 1113
+    },
+    {
+      "path": "config/wintertale-client.toml",
+      "sha256": "aa74fdd5103d5177ace919b94a87cb9b0ba499893d40a37a6ccd157bed8ded0a",
+      "size": 200
+    },
+    {
+      "path": "config/wintertale-common.toml",
+      "sha256": "f0740440cfdf52db622212239b4b4747db639c2ac0342ae6cbc5da9459b6c339",
+      "size": 1391
+    },
+    {
+      "path": "config/woodworks-common.toml",
+      "sha256": "cf9d7c1916b5cb88ce6002a331d5bf7a22942b7d35e2f83589bd56c975dd0d71",
+      "size": 475
     },
     {
       "path": "config/xmxw.json",
@@ -8117,7 +12827,7 @@
     },
     {
       "path": "kubejs/client_scripts/stamina_hud_overlay.js",
-      "sha256": "49a7a3b2c3aa3edd442496e128f2be35fc81de3afe7bb061c0224d06f37d4fcf",
+      "sha256": "69b965210c164b547e421118e7ecf642e3fe44620569730dfd18e807e7c459cb",
       "size": 32394
     },
     {
@@ -10386,6 +15096,11 @@
       "size": 468147
     },
     {
+      "path": "mods/bluemap-5.7-neoforge.jar",
+      "sha256": "827ac3921986d0d5e9c24ef2280f47c110d22dc14d284efb65330010d2e9517d",
+      "size": 5414670
+    },
+    {
       "path": "mods/bookshelf-neoforge-1.21.1-21.1.81.jar",
       "sha256": "19e88d40da2b6a114c2b808f7fb469d96e66a5379df0a8a43fcb7834498b3e76",
       "size": 328813
@@ -10489,11 +15204,6 @@
       "path": "mods/durabilitytooltip-1.2.0-neoforge-mc1.21.jar",
       "sha256": "db7fe3561c81f36715306c16b9b79539c9f207482226f10f60210ef9d21a7e7e",
       "size": 20821
-    },
-    {
-      "path": "mods/echo_compass_hud-neoforge-1.21.1-2.0.0.jar",
-      "sha256": "4aa8ff65f714648e7c3f5d05268739c145566b7964ed24022815ca338fb98c24",
-      "size": 26594
     },
     {
       "path": "mods/embeddium-1.0.15+mc1.21.1.jar",
@@ -14458,8 +19168,8 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/hud/hud_bars.png",
-      "sha256": "7bcb1fcd861d147d12d2cfbc5acf8dd3bf09db7ea0373b4838a10817f70cc696",
-      "size": 2873
+      "sha256": "7f644642b657f06b1f55ed7c4145bd14bbd899c3b5a7fbc20462d486818c3785",
+      "size": 3008
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/skills/alchemist_class.png",

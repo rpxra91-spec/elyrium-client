@@ -364,19 +364,19 @@ function renderMasterRpgHud(guiGraphics) {
         let hpW = 110;
         let hpH = 25;
         let hpX = midX - Math.floor(hpW / 2);
-        let hpY = screenHeight - 70; // Bottom of frame at -52, text under bar at -49
+        let hpY = screenHeight - 78; // Bottom of frame at -58, text under bar at -57
 
         // Mana: -10% smaller -> 83 x 19 px, left of HP
         let manaW = 83;
         let manaH = 19;
         let manaX = hpX - 4 - manaW;
-        let manaY = screenHeight - 64; // Bottom of frame at -50, text under bar at -48
+        let manaY = screenHeight - 72; // Bottom of frame at -57, text under bar at -56
 
         // Stamina: -10% smaller -> 83 x 19 px, right of HP
         let stamW = 83;
         let stamH = 19;
         let stamX = hpX + hpW + 4;
-        let stamY = screenHeight - 64; // Bottom of frame at -50, text under bar at -48
+        let stamY = screenHeight - 72; // Bottom of frame at -57, text under bar at -56
 
         // Hunger & Saturation: 100% scale -> 92 x 21 px, on right flank next to hotbar
         let foodW = 92;
@@ -608,13 +608,13 @@ function handleLayerPre(event) {
             event.setCanceled(true);
             return;
         }
-        // Intercept SELECTED_ITEM_NAME to translate upwards (+Y is downwards, so -45 moves it comfortably above HP bar)
+        // Intercept SELECTED_ITEM_NAME to translate upwards (+Y is downwards, so -52 moves it comfortably above HP bar)
         if (name.equals(J_VanillaGuiLayers.SELECTED_ITEM_NAME)) {
             let gg = event.getGuiGraphics ? event.getGuiGraphics() : event.guiGraphics;
             let pose = gg && gg.pose ? gg.pose() : null;
             if (pose) {
                 pose.pushPose();
-                pose.translate(0, -45, 0);
+                pose.translate(0, -52, 0);
                 isSelectedItemPosePushed = true;
             }
             return;
