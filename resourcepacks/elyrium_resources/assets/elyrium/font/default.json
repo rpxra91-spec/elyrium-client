@@ -1,0 +1,19 @@
+{
+  "providers": [
+    {
+      "type": "bitmap",
+      "file": "elyrium:gui/forge_workshop_overlay.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": [
+        "\uE001"
+      ]
+    },
+    {
+      "type": "space",
+      "advances": {
+        "\uF808": -8
+      }
+    }
+  ]
+}

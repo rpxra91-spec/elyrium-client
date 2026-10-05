@@ -28,6 +28,8 @@
 //   • Ambient tick loop: atmospheric chimney smoke, ember sparks, bubbling lava, void vortex.
 // ==============================================================================
 
+const BlockPos = Java.loadClass('net.minecraft.core.BlockPos');
+
 const BS_BLOCK_IDS = [
     'kubejs:infernal_crucible',    // Rank 0 (Module 3)
     'kubejs:blacksmith_workbench', // Rank 1 (Module 1)
@@ -57,6 +59,7 @@ let bsIsAligning = false;
 // ------------------------------------------------------------------------------
 function findBlacksmithLine(level, startPos, facingHint) {
     if (!level || !startPos) return [];
+    if (typeof level.getBlock !== 'function') return [startPos];
     let startBlock = level.getBlock(startPos);
     if (!startBlock || !BS_BLOCK_IDS.includes(String(startBlock.id))) return [];
 
@@ -265,45 +268,46 @@ function getBlacksmithStationInfo(level, pos) {
 }
 
 // ------------------------------------------------------------------------------
-// SPATIAL AUTO-ALIGNMENT & 3D MODEL SYNCHRONIZATION ON PLACEMENT
 // ------------------------------------------------------------------------------
-BlockEvents.placed(event => {
-    let block = event.block;
-    let level = event.level;
-    if (!level || level.isClientSide() || bsIsAligning) return;
+// SPATIAL AUTO-ALIGNMENT & 3D MODEL SYNCHRONIZATION FUNCTION
+// ------------------------------------------------------------------------------
+function alignBlacksmithStation(level, originPos, player, facingHint) {
+    if (!level || level.isClientSide() || bsIsAligning) return null;
+    let block = level.getBlock(originPos);
+    if (!block) return null;
 
     let placedId = String(block.id);
-    if (!BS_BLOCK_IDS.includes(placedId)) return;
+    if (!BS_BLOCK_IDS.includes(placedId)) return null;
 
-    // Determine facing direction from the placed block
-    let facing = 'north';
+    // Determine facing direction from the block
+    let facing = facingHint || 'north';
     try {
         if (block.properties && block.properties.facing) {
             facing = String(block.properties.facing).toLowerCase();
         }
     } catch (e) {}
 
-    let line = findBlacksmithLine(level, block.pos, facing);
+    let line = findBlacksmithLine(level, originPos, facing);
     if (line.length < 2) {
         // Standalone block: ensure part is 'single'
         try {
             block.set(placedId, { facing: facing, part: 'single' });
         } catch (e) {}
-        return;
+        return line;
     }
 
     // We only form stations up to 4 blocks
     if (line.length > 4) {
-        if (event.player) {
-            event.player.sendSystemMessage(Text.of('§c⚠ [Кузнечный Комплекс] §7Максимальная длина кузнечной станции — 4 блока!'));
+        if (player) {
+            player.sendSystemMessage(Text.of('§c⚠ [Кузнечный Комплекс] §7Максимальная длина кузнечной станции — 4 блока!'));
         }
-        return;
+        return line;
     }
 
     let currentIds = line.map(p => String(level.getBlock(p).id));
 
     // Desired canonical sorting based on canonical rank [3 -> 1 -> 2 -> 4]
-    let sortedIds = [...currentIds].sort((a, b) => {
+    let sortedIds = currentIds.slice().sort((a, b) => {
         let rA = (BS_CANONICAL_RANK[a] !== undefined) ? BS_CANONICAL_RANK[a] : 99;
         let rB = (BS_CANONICAL_RANK[b] !== undefined) ? BS_CANONICAL_RANK[b] : 99;
         return rA - rB;
@@ -380,12 +384,53 @@ BlockEvents.placed(event => {
         level.server.runCommandSilent(`particle minecraft:end_rod ${gcx} ${gcy + 0.8} ${gcz} 0.5 0.5 0.5 0.04 25`);
         level.server.runCommandSilent(`particle minecraft:soul_fire_flame ${gcx} ${gcy + 0.2} ${gcz} 0.8 0.2 0.8 0.03 30`);
 
-        if (event.player) {
-            event.player.sendSystemMessage(Text.of('§6👑 [ВЕЛИКАЯ КУЗНИЦА ЭЛИРИУМА] §dПустотно-Инфернальный Горн пробужден! (Канонический строй: [3-1-2-4])'));
-            event.player.sendSystemMessage(Text.of('§a✓ Монолитная структура активирована: 0 штрафов, 50% ремонт, ковка арсенала и алтарь заточки!'));
+        if (player) {
+            player.sendSystemMessage(Text.of('§6👑 [ВЕЛИКАЯ КУЗНИЦА ЭЛИРИУМА] §dПустотно-Инфернальный Горн пробужден! (Канонический строй: [3-1-2-4])'));
+            player.sendSystemMessage(Text.of('§a✓ Монолитная структура активирована: 0 штрафов, 50% ремонт, ковка арсенала и алтарь заточки!'));
         }
-    } else if (event.player) {
-        event.player.sendSystemMessage(Text.of(`§6⚒ [Кузнечный Комплекс] §aМодули объединены в строй (${line.length} бл.). 3D-модели трансформированы!`));
+    } else if (player) {
+        player.sendSystemMessage(Text.of(`§6⚒ [Кузнечный Комплекс] §aМодули объединены в строй (${line.length} бл.). 3D-модели трансформированы!`));
+    }
+    return line;
+}
+
+// 1. Generic Block Placement Handler
+BlockEvents.placed(event => {
+    let block = event.block;
+    let level = event.level;
+    if (!level || level.isClientSide() || bsIsAligning || !block) return;
+    if (BS_BLOCK_IDS.includes(String(block.id))) {
+        alignBlacksmithStation(level, block.pos, event.player);
+    }
+});
+
+// 2. Targeted Placement Handlers for all 4 workstation blocks
+BS_BLOCK_IDS.forEach(targetId => {
+    BlockEvents.placed(targetId, event => {
+        let block = event.block;
+        let level = event.level;
+        if (!level || level.isClientSide() || bsIsAligning || !block) return;
+        alignBlacksmithStation(level, block.pos, event.player);
+    });
+});
+
+// 3. Sneak + Right-Click with empty hand on ANY workstation block triggers manual calibration!
+BlockEvents.rightClicked(event => {
+    let player = event.player;
+    if (!player || player.level.isClientSide() || !player.isCrouching()) return;
+    let block = event.block;
+    if (!block || !BS_BLOCK_IDS.includes(String(block.id))) return;
+    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
+    if (!handStr.includes('MAIN')) return;
+
+    if (player.mainHandItem.isEmpty()) {
+        event.cancel();
+        let res = alignBlacksmithStation(player.level, block.pos, player);
+        if (res && res.length >= 2) {
+            player.sendSystemMessage(Text.of(`§6⚒ [Кузница] §aКалибровка выполнена! Модули (${res.length} шт.) состыкованы в канонический строй!`));
+        } else {
+            player.sendSystemMessage(Text.of('§6⚒ [Кузница] §7Одиночный модуль. Установите рядом другие блоки кузницы [3-1-2-4]!'));
+        }
     }
 });
 

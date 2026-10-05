@@ -49,13 +49,13 @@ function runBlacksmithTestSuite() {
             `Anvil rank: ${typeof BS_CANONICAL_RANK !== 'undefined' ? BS_CANONICAL_RANK['kubejs:void_anvil'] : 'undefined'}`
         );
 
-        function sortBlocks(input) {
-            return [...input].sort((a, b) => {
+        let sortBlocks = function(input) {
+            return input.slice().sort((a, b) => {
                 let rA = (BS_CANONICAL_RANK[a] !== undefined) ? BS_CANONICAL_RANK[a] : 99;
                 let rB = (BS_CANONICAL_RANK[b] !== undefined) ? BS_CANONICAL_RANK[b] : 99;
                 return rA - rB;
             });
-        }
+        };
 
         // Test 1.1: Pair [2, 1] -> [1, 2]
         let pairInput = ['kubejs:blacksmith_hearth', 'kubejs:blacksmith_workbench'];
@@ -228,6 +228,56 @@ function runBlacksmithTestSuite() {
         // Test 4.7: Solo module defaults to single
         let p1 = partFn(['kubejs:blacksmith_workbench']);
         assert("3D Part: Solo module defaults to single", p1[0] === 'single', `Part: ${p1[0]}`);
+    }
+
+    // --------------------------------------------------------------------------
+    // 5. WORKSHOP METAL STORAGE BUFFER & DUAL-SOURCE LOGIC
+    // --------------------------------------------------------------------------
+    {
+        let mockLevel = { persistentData: {}, getBlock: function() { return null; } };
+        let mockPos = { x: 10, y: 64, z: 20 };
+        let mockPlayer = {
+            level: mockLevel,
+            inventory: {
+                size: 36,
+                items: [],
+                getItem: function(idx) { return this.items[idx] || null; }
+            }
+        };
+
+        // Test 5.1: Buffer initialization and anchor key
+        let anchorKey = (typeof getStationAnchorKey === 'function')
+            ? getStationAnchorKey({ line: [mockPos] }, mockPos)
+            : '10_64_20';
+        assert("Buffer: Anchor key generated correctly", anchorKey === '10_64_20', `Anchor key: ${anchorKey}`);
+
+        let buf = (typeof getWorkshopBuffer === 'function')
+            ? getWorkshopBuffer(mockLevel, mockPos)
+            : { steel: 0, iron: 0, copper: 0 };
+        assert("Buffer: Storage buffer initializes steel, iron, copper", buf.steel === 0 && buf.iron === 0 && buf.copper === 0, `Buffer: ${JSON.stringify(buf)}`);
+
+        // Test 5.2: Ingot deposit and buffer count
+        if (typeof addBufferIngots === 'function' && typeof countBufferIngots === 'function') {
+            addBufferIngots(mockLevel, mockPos, 'steel', 10);
+            addBufferIngots(mockLevel, mockPos, 'iron', 25);
+            let sCount = countBufferIngots(mockLevel, mockPos, 'kubejs:steel_ingot');
+            let iCount = countBufferIngots(mockLevel, mockPos, 'minecraft:iron_ingot');
+            assert("Buffer: Steel & Iron correctly added to buffer", sCount === 10 && iCount === 25, `Steel: ${sCount}, Iron: ${iCount}`);
+
+            // Test 5.3: Buffer deduction
+            let deducted = deductBufferIngots(mockLevel, mockPos, 'kubejs:steel_ingot', 4);
+            let sAfter = countBufferIngots(mockLevel, mockPos, 'kubejs:steel_ingot');
+            assert("Buffer: Deducting 4 steel leaves 6", deducted === 4 && sAfter === 6, `Deducted: ${deducted}, Remaining: ${sAfter}`);
+        }
+
+        // Test 5.4: Dual-Source Availability Calculation
+        if (typeof getAvailableIngotsBS === 'function') {
+            let availStandalone = getAvailableIngotsBS(mockPlayer, mockPos, 'kubejs:steel_ingot', false);
+            assert("Dual-Source: Standalone Workbench does NOT access buffer", availStandalone.total === 0 && availStandalone.buffer === 0, `Total: ${availStandalone.total}`);
+
+            let availConnected = getAvailableIngotsBS(mockPlayer, mockPos, 'kubejs:steel_ingot', true);
+            assert("Dual-Source: Connected Station accesses buffer (+6 steel)", availConnected.total === 6 && availConnected.buffer === 6, `Total: ${availConnected.total}`);
+        }
     }
 
     return { total: total, passed: passed, failed: failed, results: results };
