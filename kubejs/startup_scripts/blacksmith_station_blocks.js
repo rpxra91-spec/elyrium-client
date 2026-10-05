@@ -8,11 +8,23 @@
 // 3. kubejs:infernal_crucible («Адский Горн», Tier 3 Nether) - высокотемпературное возвышение.
 // 4. kubejs:void_anvil («Пустотная Наковальня», Tier 5 The End) - алтарь глубокой заточки +1..+10.
 //
+// Block Properties:
+// - BlockProperties.HORIZONTAL_FACING (north, south, east, west)
+// - StringProperty('part', ['single', 'pair_left', 'pair_right', 'trio_left', 'trio_mid', 'trio_right', 'quad_0', 'quad_1', 'quad_2', 'quad_3'])
+//
 // Registers Steel Metallurgy items:
 // - kubejs:steel_charge («Шихта Сырой Стали»)
 // - kubejs:steel_ingot («Стальной Слиток»)
 // - kubejs:steel_pickaxe («Стальная Кирка», Tier Diamond / Level 3, 650 durability)
 // ==============================================================================
+
+const StringProperty = (name, values) => Java.loadClass('com.elyrium.properties.StringProperty').create(name, values);
+const BS_PART_PROPERTY = StringProperty('part', [
+    'single',
+    'pair_left', 'pair_right',
+    'trio_left', 'trio_mid', 'trio_right',
+    'quad_0', 'quad_1', 'quad_2', 'quad_3'
+]);
 
 StartupEvents.registry('block', event => {
 
@@ -29,8 +41,15 @@ StartupEvents.registry('block', event => {
         .notSolid()
         .box(0, 0, 0, 16, 16, 16)
         .property(BlockProperties.HORIZONTAL_FACING)
-        .defaultState(state => state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH))
-        .placementState(state => state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite));
+        .property(BS_PART_PROPERTY)
+        .defaultState(state => {
+            state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH);
+            state.setValue(BS_PART_PROPERTY, 'single');
+        })
+        .placementState(state => {
+            state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite);
+            state.setValue(BS_PART_PROPERTY, 'single');
+        });
 
     // 2. КУЗНЕЧНЫЙ ОЧАГ / МЕХА (Tier 1 Overworld)
     event.create('blacksmith_hearth')
@@ -43,10 +62,17 @@ StartupEvents.registry('block', event => {
         .lightLevel(0.8) // Свет 12/15
         .fullBlock(false)
         .notSolid()
-        .box(0, 0, 0, 16, 14, 16)
+        .box(0, 0, 0, 16, 16, 16)
         .property(BlockProperties.HORIZONTAL_FACING)
-        .defaultState(state => state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH))
-        .placementState(state => state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite));
+        .property(BS_PART_PROPERTY)
+        .defaultState(state => {
+            state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH);
+            state.setValue(BS_PART_PROPERTY, 'single');
+        })
+        .placementState(state => {
+            state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite);
+            state.setValue(BS_PART_PROPERTY, 'single');
+        });
 
     // 3. АДСКИЙ ГОРН (Tier 3 Nether)
     event.create('infernal_crucible')
@@ -59,10 +85,17 @@ StartupEvents.registry('block', event => {
         .lightLevel(0.9) // Свет 13.5/15
         .fullBlock(false)
         .notSolid()
-        .box(1, 0, 1, 15, 16, 15)
+        .box(0, 0, 0, 16, 16, 16)
         .property(BlockProperties.HORIZONTAL_FACING)
-        .defaultState(state => state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH))
-        .placementState(state => state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite));
+        .property(BS_PART_PROPERTY)
+        .defaultState(state => {
+            state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH);
+            state.setValue(BS_PART_PROPERTY, 'single');
+        })
+        .placementState(state => {
+            state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite);
+            state.setValue(BS_PART_PROPERTY, 'single');
+        });
 
     // 4. ПУСТОТНАЯ НАКОВАЛЬНЯ (Tier 5 The End)
     event.create('void_anvil')
@@ -75,10 +108,17 @@ StartupEvents.registry('block', event => {
         .lightLevel(0.4) // Свет 6/15
         .fullBlock(false)
         .notSolid()
-        .box(2, 0, 2, 14, 16, 14)
+        .box(0, 0, 0, 16, 19, 16)
         .property(BlockProperties.HORIZONTAL_FACING)
-        .defaultState(state => state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH))
-        .placementState(state => state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite));
+        .property(BS_PART_PROPERTY)
+        .defaultState(state => {
+            state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH);
+            state.setValue(BS_PART_PROPERTY, 'single');
+        })
+        .placementState(state => {
+            state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite);
+            state.setValue(BS_PART_PROPERTY, 'single');
+        });
 });
 
 StartupEvents.registry('item', event => {

@@ -622,10 +622,13 @@ function openBlacksmithGUI(player, stationPos) {
                             // Выдача предмета
                             player.give(Item.of(recipe.id));
 
-                            // Звук и частицы
-                            player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
+                            // Звук и частицы: 3 последовательных звона молота и снопы искр
+                            player.server.runCommandSilent(`playsound minecraft:block.anvil.place player ${player.username} ~ ~ ~ 0.9 1.1`);
+                            player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.25`);
+                            player.server.runCommandSilent(`playsound minecraft:block.anvil.land player ${player.username} ~ ~ ~ 0.9 1.4`);
                             player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.8 1.2`);
-                            player.server.runCommandSilent(`particle minecraft:flame ~ ~1 ~ 0.3 0.2 0.3 0.05 15`);
+                            player.server.runCommandSilent(`particle minecraft:crit ~ ~1.2 ~ 0.5 0.3 0.5 0.15 35`);
+                            player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.3 0.2 0.3 0.05 12`);
 
                             player.sendSystemMessage(Text.of(`§a⚒ [Ковка завершена] §fВы выковали: §6${recipe.name}§f!`));
                             if (!activeHasHearth) {
@@ -750,9 +753,11 @@ function openBlacksmithGUI(player, stationPos) {
                                 targetStack.damageValue = Math.max(0, targetStack.damageValue - activeRestore);
                             }
 
-                            // Звук наковальни
-                            player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.1`);
-                            player.server.runCommandSilent(`particle minecraft:crit ~ ~1 ~ 0.4 0.3 0.4 0.1 20`);
+                            // Звук и частицы ремонта: шипение масла при закалке и сноп пара
+                            player.server.runCommandSilent(`playsound minecraft:block.lava.extinguish player ${player.username} ~ ~ ~ 1.0 1.1`);
+                            player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.8 1.2`);
+                            player.server.runCommandSilent(`particle minecraft:cloud ~ ~1.2 ~ 0.3 0.4 0.3 0.05 30`);
+                            player.server.runCommandSilent(`particle minecraft:smoke ~ ~1.2 ~ 0.3 0.3 0.3 0.04 15`);
                             player.sendSystemMessage(Text.of(`§a🔧 [Ремонт] §fПредмет успешно отремонтирован на §e+${activePercentStr}§f!`));
 
                             openBlacksmithGUI(player, stationPos);

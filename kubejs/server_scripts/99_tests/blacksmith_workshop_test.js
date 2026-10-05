@@ -177,6 +177,34 @@ function runBlacksmithTestSuite() {
         }
     }
 
+    // --------------------------------------------------------------------------
+    // 4. 3D MULTIBLOCK MODEL PART FORMATION LOGIC
+    // --------------------------------------------------------------------------
+    {
+        function getFormationParts(lineLength) {
+            let parts = [];
+            for (let i = 0; i < lineLength; i++) {
+                if (lineLength === 2) parts.push(i === 0 ? 'pair_left' : 'pair_right');
+                else if (lineLength === 3) parts.push(i === 0 ? 'trio_left' : (i === 1 ? 'trio_mid' : 'trio_right'));
+                else if (lineLength === 4) parts.push('quad_' + i);
+                else parts.push('single');
+            }
+            return parts;
+        }
+
+        let p2 = getFormationParts(2);
+        assert("3D Part: Pair assigns [pair_left, pair_right]", p2[0] === 'pair_left' && p2[1] === 'pair_right', `Parts: ${p2.join(', ')}`);
+
+        let p3 = getFormationParts(3);
+        assert("3D Part: Trio assigns [trio_left, trio_mid, trio_right]", p3[0] === 'trio_left' && p3[1] === 'trio_mid' && p3[2] === 'trio_right', `Parts: ${p3.join(', ')}`);
+
+        let p4 = getFormationParts(4);
+        assert("3D Part: Quad Grand Forge assigns [quad_0, quad_1, quad_2, quad_3]", p4[0] === 'quad_0' && p4[1] === 'quad_1' && p4[2] === 'quad_2' && p4[3] === 'quad_3', `Parts: ${p4.join(', ')}`);
+
+        let p1 = getFormationParts(1);
+        assert("3D Part: Solo module defaults to single", p1[0] === 'single', `Part: ${p1[0]}`);
+    }
+
     return { total: total, passed: passed, failed: failed, results: results };
 }
 

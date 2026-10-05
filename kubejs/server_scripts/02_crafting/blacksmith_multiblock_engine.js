@@ -16,12 +16,16 @@
 //   • Canonical sequence is ALWAYS: [ 3 - 1 - 2 - 4 ].
 //   • Spatial Auto-Sorting: When blocks are placed in a row in any order (e.g. 2-1 or 4-2-1-3),
 //     upon placement they physically and visually re-align into the canonical order.
+//   • Dynamic 3D Model Transformation:
+//     - 2 blocks: pair_left, pair_right
+//     - 3 blocks: trio_left, trio_mid, trio_right
+//     - 4 blocks: quad_0, quad_1, quad_2, quad_3
 //   • Exact drop on break: breaking pos 0 drops Crucible (3), pos 1 drops Workbench (1),
 //     pos 2 drops Hearth (2), pos 3 drops Anvil (4).
 //   • Graceful reversion: breaking one block gracefully reverts the remaining blocks
-//     to their corresponding station status with instant feedback and audio-visual cues.
-//   • 4x1 Grand Forge (3-1-2-4) triggers portal-like awakening effects across all 4 modules:
-//     lava trough, forging sparks, blast heat, void runes and hovering crystal flash.
+//     to their corresponding station status and 3D models with instant feedback.
+//   • 4x1 Grand Forge (3-1-2-4) triggers portal-like awakening effects across all 4 modules.
+//   • Ambient tick loop: atmospheric chimney smoke, ember sparks, bubbling lava, void vortex.
 // ==============================================================================
 
 const BS_BLOCK_IDS = [
@@ -203,7 +207,7 @@ function getBlacksmithStationInfo(level, pos) {
 }
 
 // ------------------------------------------------------------------------------
-// SPATIAL AUTO-ALIGNMENT ON PLACEMENT
+// SPATIAL AUTO-ALIGNMENT & 3D MODEL SYNCHRONIZATION ON PLACEMENT
 // ------------------------------------------------------------------------------
 BlockEvents.placed(event => {
     let block = event.block;
@@ -222,7 +226,13 @@ BlockEvents.placed(event => {
     } catch (e) {}
 
     let line = findBlacksmithLine(level, block.pos, facing);
-    if (line.length < 2) return; // Standalone block, no sorting needed
+    if (line.length < 2) {
+        // Standalone block: ensure part is 'single'
+        try {
+            block.set(placedId, { facing: facing, part: 'single' });
+        } catch (e) {}
+        return;
+    }
 
     // We only form stations up to 4 blocks
     if (line.length > 4) {
@@ -241,51 +251,45 @@ BlockEvents.placed(event => {
         return rA - rB;
     });
 
-    // Check if re-alignment is needed
-    let needsRearrange = false;
-    for (let i = 0; i < line.length; i++) {
-        if (currentIds[i] !== sortedIds[i]) {
-            needsRearrange = true;
-            break;
-        }
-    }
-
     let isGrand = (line.length === 4 &&
         sortedIds.includes('kubejs:infernal_crucible') &&
         sortedIds.includes('kubejs:blacksmith_workbench') &&
         sortedIds.includes('kubejs:blacksmith_hearth') &&
         sortedIds.includes('kubejs:void_anvil'));
 
-    if (needsRearrange) {
-        bsIsAligning = true;
-        try {
-            for (let i = 0; i < line.length; i++) {
-                let p = line[i];
-                let targetId = sortedIds[i];
-                let cur = level.getBlock(p);
-                if (String(cur.id) !== targetId) {
-                    cur.set(targetId, { facing: facing });
-                }
+    // Synchronize blocks and their 3D part properties
+    bsIsAligning = true;
+    try {
+        for (let i = 0; i < line.length; i++) {
+            let p = line[i];
+            let targetId = sortedIds[i];
+            let partName = 'single';
+            if (line.length === 2) {
+                partName = (i === 0) ? 'pair_left' : 'pair_right';
+            } else if (line.length === 3) {
+                partName = (i === 0) ? 'trio_left' : ((i === 1) ? 'trio_mid' : 'trio_right');
+            } else if (line.length === 4) {
+                partName = 'quad_' + i;
             }
-        } finally {
-            bsIsAligning = false;
+
+            let cur = level.getBlock(p);
+            cur.set(targetId, { facing: facing, part: partName });
         }
-
-        // Particle & sound feedback for auto-alignment
-        let centerPos = line[Math.floor(line.length / 2)];
-        let cx = centerPos.x + 0.5;
-        let cy = centerPos.y + 0.5;
-        let cz = centerPos.z + 0.5;
-
-        level.server.runCommandSilent(`playsound minecraft:block.anvil.use block @a ${cx} ${cy} ${cz} 0.8 1.2`);
-        level.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle block @a ${cx} ${cy} ${cz} 0.9 1.0`);
-        level.server.runCommandSilent(`particle minecraft:flame ${cx} ${cy + 0.5} ${cz} 0.6 0.2 0.6 0.04 25`);
-        level.server.runCommandSilent(`particle minecraft:crit ${cx} ${cy + 0.5} ${cz} 0.5 0.3 0.5 0.1 20`);
-
-        if (event.player) {
-            event.player.sendSystemMessage(Text.of('§6⚒ [Кузнечный Комплекс] §aМодули пространственно упорядочены в канонический строй [3-1-2-4]!'));
-        }
+    } finally {
+        bsIsAligning = false;
     }
+
+    // Assembly feedback: Heavy anvil hammer strike + burst of sparks
+    let centerPos = line[Math.floor(line.length / 2)];
+    let cx = centerPos.x + 0.5;
+    let cy = centerPos.y + 0.5;
+    let cz = centerPos.z + 0.5;
+
+    level.server.runCommandSilent(`playsound minecraft:block.anvil.use block @a ${cx} ${cy} ${cz} 0.9 0.85`);
+    level.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle block @a ${cx} ${cy} ${cz} 1.0 1.1`);
+    level.server.runCommandSilent(`particle minecraft:lava ${cx} ${cy + 0.7} ${cz} 0.5 0.3 0.5 0.08 15`);
+    level.server.runCommandSilent(`particle minecraft:crit ${cx} ${cy + 0.7} ${cz} 0.6 0.3 0.6 0.12 30`);
+    level.server.runCommandSilent(`particle minecraft:campfire_cosy_smoke ${cx} ${cy + 0.8} ${cz} 0.3 0.4 0.3 0.03 10`);
 
     // GRAND FORGE (4x1: [3 - 1 - 2 - 4]) AWAKENING
     if (isGrand) {
@@ -294,52 +298,46 @@ BlockEvents.placed(event => {
         let pHearth = line[2];
         let pAnvil = line[3];
 
-        let cx = pWorkbench.x + 0.5;
-        let cy = pWorkbench.y + 1.0;
-        let cz = pWorkbench.z + 0.5;
+        let gcx = pWorkbench.x + 0.5;
+        let gcy = pWorkbench.y + 1.0;
+        let gcz = pWorkbench.z + 0.5;
 
         // Sounds: Portal spawn, beacon resonant hum, anvil resonance
-        level.server.runCommandSilent(`playsound minecraft:block.end_portal.spawn block @a ${cx} ${cy} ${cz} 1.0 1.0`);
-        level.server.runCommandSilent(`playsound minecraft:block.beacon.activate block @a ${cx} ${cy} ${cz} 1.0 1.2`);
-        level.server.runCommandSilent(`playsound minecraft:block.portal.trigger block @a ${cx} ${cy} ${cz} 0.8 1.5`);
+        level.server.runCommandSilent(`playsound minecraft:block.end_portal.spawn block @a ${gcx} ${gcy} ${gcz} 1.0 1.0`);
+        level.server.runCommandSilent(`playsound minecraft:block.beacon.activate block @a ${gcx} ${gcy} ${gcz} 1.0 1.2`);
+        level.server.runCommandSilent(`playsound minecraft:block.portal.trigger block @a ${gcx} ${gcy} ${gcz} 0.8 1.5`);
 
         // 1. Lava Trough at Crucible (pos 0)
-        level.server.runCommandSilent(`particle minecraft:lava ${pCrucible.x + 0.5} ${pCrucible.y + 1.0} ${pCrucible.z + 0.5} 0.3 0.2 0.3 0.05 12`);
-        level.server.runCommandSilent(`particle minecraft:flame ${pCrucible.x + 0.5} ${pCrucible.y + 1.0} ${pCrucible.z + 0.5} 0.2 0.1 0.2 0.02 15`);
+        level.server.runCommandSilent(`particle minecraft:lava ${pCrucible.x + 0.5} ${pCrucible.y + 1.0} ${pCrucible.z + 0.5} 0.3 0.2 0.3 0.05 16`);
+        level.server.runCommandSilent(`particle minecraft:flame ${pCrucible.x + 0.5} ${pCrucible.y + 1.0} ${pCrucible.z + 0.5} 0.2 0.1 0.2 0.02 20`);
 
         // 2. Forging Sparks at Workbench (pos 1)
-        level.server.runCommandSilent(`particle minecraft:crit ${pWorkbench.x + 0.5} ${pWorkbench.y + 1.0} ${pWorkbench.z + 0.5} 0.4 0.2 0.4 0.1 25`);
-        level.server.runCommandSilent(`particle minecraft:enchant ${pWorkbench.x + 0.5} ${pWorkbench.y + 1.2} ${pWorkbench.z + 0.5} 0.8 0.4 0.8 0.6 30`);
+        level.server.runCommandSilent(`particle minecraft:crit ${pWorkbench.x + 0.5} ${pWorkbench.y + 1.0} ${pWorkbench.z + 0.5} 0.4 0.2 0.4 0.1 35`);
+        level.server.runCommandSilent(`particle minecraft:enchant ${pWorkbench.x + 0.5} ${pWorkbench.y + 1.2} ${pWorkbench.z + 0.5} 0.8 0.4 0.8 0.6 40`);
 
-        // 3. Blast Furnace Flames at Hearth (pos 2)
-        level.server.runCommandSilent(`particle minecraft:flame ${pHearth.x + 0.5} ${pHearth.y + 1.0} ${pHearth.z + 0.5} 0.3 0.2 0.3 0.03 20`);
-        level.server.runCommandSilent(`particle minecraft:smoke ${pHearth.x + 0.5} ${pHearth.y + 1.2} ${pHearth.z + 0.5} 0.2 0.3 0.2 0.04 15`);
+        // 3. Blast Furnace Flames & Chimney Smoke at Hearth (pos 2)
+        level.server.runCommandSilent(`particle minecraft:flame ${pHearth.x + 0.5} ${pHearth.y + 1.0} ${pHearth.z + 0.5} 0.3 0.2 0.3 0.03 25`);
+        level.server.runCommandSilent(`particle minecraft:campfire_cosy_smoke ${pHearth.x + 0.5} ${pHearth.y + 1.3} ${pHearth.z + 0.5} 0.2 0.5 0.2 0.04 20`);
 
         // 4. Void Runes & Portal Vortex at Void Anvil (pos 3)
-        level.server.runCommandSilent(`particle minecraft:portal ${pAnvil.x + 0.5} ${pAnvil.y + 1.0} ${pAnvil.z + 0.5} 0.8 0.5 0.8 0.4 40`);
-        level.server.runCommandSilent(`particle minecraft:witch ${pAnvil.x + 0.5} ${pAnvil.y + 1.0} ${pAnvil.z + 0.5} 0.3 0.3 0.3 0.05 15`);
+        level.server.runCommandSilent(`particle minecraft:portal ${pAnvil.x + 0.5} ${pAnvil.y + 1.0} ${pAnvil.z + 0.5} 0.8 0.5 0.8 0.4 50`);
+        level.server.runCommandSilent(`particle minecraft:witch ${pAnvil.x + 0.5} ${pAnvil.y + 1.0} ${pAnvil.z + 0.5} 0.3 0.3 0.3 0.05 20`);
 
         // 5. Hovering Crystal Apex Flash above workbench/anvil
-        level.server.runCommandSilent(`particle minecraft:end_rod ${cx} ${cy + 0.8} ${cz} 0.5 0.5 0.5 0.04 20`);
-        level.server.runCommandSilent(`particle minecraft:soul_fire_flame ${cx} ${cy + 0.2} ${cz} 0.8 0.2 0.8 0.03 25`);
+        level.server.runCommandSilent(`particle minecraft:end_rod ${gcx} ${gcy + 0.8} ${gcz} 0.5 0.5 0.5 0.04 25`);
+        level.server.runCommandSilent(`particle minecraft:soul_fire_flame ${gcx} ${gcy + 0.2} ${gcz} 0.8 0.2 0.8 0.03 30`);
 
         if (event.player) {
             event.player.sendSystemMessage(Text.of('§6👑 [ВЕЛИКАЯ КУЗНИЦА ЭЛИРИУМА] §dПустотно-Инфернальный Горн пробужден! (Канонический строй: [3-1-2-4])'));
-            event.player.sendSystemMessage(Text.of('§a✓ Максимальная эффективность: 0 штрафов, 50% ремонт, ковка всех клинков и алтарь заточки!'));
+            event.player.sendSystemMessage(Text.of('§a✓ Монолитная структура активирована: 0 штрафов, 50% ремонт, ковка арсенала и алтарь заточки!'));
         }
-    } else if (!needsRearrange && event.player && line.length >= 2) {
-        // Normal pair or trio placed already in order
-        let cx = block.x + 0.5;
-        let cy = block.y + 0.5;
-        let cz = block.z + 0.5;
-        level.server.runCommandSilent(`playsound minecraft:block.anvil.use block @a ${cx} ${cy} ${cz} 0.7 1.1`);
-        level.server.runCommandSilent(`particle minecraft:flame ${cx} ${cy + 0.5} ${cz} 0.4 0.2 0.4 0.03 15`);
-        event.player.sendSystemMessage(Text.of(`§6⚒ [Кузнечный Комплекс] §aМодуль подключен к станции (${line.length} блока).`));
+    } else if (event.player) {
+        event.player.sendSystemMessage(Text.of(`§6⚒ [Кузнечный Комплекс] §aМодули объединены в строй (${line.length} бл.). 3D-модели трансформированы!`));
     }
 });
 
 // ------------------------------------------------------------------------------
-// EXACT DROP ON BREAK & GRACEFUL REVERSION
+// EXACT DROP ON BREAK & GRACEFUL REVERSION WITH MODEL DOWNGRADE
 // ------------------------------------------------------------------------------
 BlockEvents.broken(event => {
     let block = event.block;
@@ -357,12 +355,12 @@ BlockEvents.broken(event => {
     // 1. EXACT DROP GUARANTEE
     // Breaking pos 0 drops Crucible (3), pos 1 drops Workbench (1),
     // pos 2 drops Hearth (2), pos 3 drops Anvil (4).
-    // Because modules are physically auto-sorted in the world, block.id matches the exact position!
     if (!player || !player.isCreative()) {
         block.popItem(Item.of(brokenId, 1));
     }
 
     // 2. Audio-visual dismantling feedback
+    level.server.runCommandSilent(`playsound minecraft:block.chain.break block @a ${bx + 0.5} ${by + 0.5} ${bz + 0.5} 0.8 1.0`);
     level.server.runCommandSilent(`playsound minecraft:block.fire.extinguish block @a ${bx + 0.5} ${by + 0.5} ${bz + 0.5} 0.7 1.2`);
     level.server.runCommandSilent(`particle minecraft:smoke ${bx + 0.5} ${by + 0.5} ${bz + 0.5} 0.4 0.3 0.4 0.05 20`);
 
@@ -393,6 +391,16 @@ BlockEvents.broken(event => {
             // Reverted to single standalone module
             let soloBlock = level.getBlock(np);
             let soloId = soloBlock ? String(soloBlock.id) : '';
+            let soloFacing = 'north';
+            try {
+                if (soloBlock && soloBlock.properties && soloBlock.properties.facing) {
+                    soloFacing = String(soloBlock.properties.facing).toLowerCase();
+                }
+            } catch (e) {}
+
+            if (soloBlock) {
+                soloBlock.set(soloId, { facing: soloFacing, part: 'single' });
+            }
 
             if (soloId === 'kubejs:blacksmith_workbench') {
                 if (player) {
@@ -412,7 +420,28 @@ BlockEvents.broken(event => {
                 }
             }
         } else if (remInfo.count >= 2) {
-            // Reverted to smaller multi-block station
+            // Reverted to smaller multi-block station: update 3D models of remaining blocks!
+            let remFacing = 'north';
+            try {
+                let fb = level.getBlock(remLine[0]);
+                if (fb && fb.properties && fb.properties.facing) {
+                    remFacing = String(fb.properties.facing).toLowerCase();
+                }
+            } catch (e) {}
+
+            for (let ri = 0; ri < remLine.length; ri++) {
+                let rp = remLine[ri];
+                let rBlock = level.getBlock(rp);
+                let rId = String(rBlock.id);
+                let rPart = 'single';
+                if (remLine.length === 2) {
+                    rPart = (ri === 0) ? 'pair_left' : 'pair_right';
+                } else if (remLine.length === 3) {
+                    rPart = (ri === 0) ? 'trio_left' : ((ri === 1) ? 'trio_mid' : 'trio_right');
+                }
+                rBlock.set(rId, { facing: remFacing, part: rPart });
+            }
+
             let desc = '';
             if (remInfo.hasWorkbench && remInfo.hasHearth && remInfo.hasCrucible) {
                 desc = 'Горновой Комплекс [3-1-2] (0 штрафов, 50% ремонт, тигель)';
@@ -432,4 +461,52 @@ BlockEvents.broken(event => {
             }
         }
     });
+});
+
+// ------------------------------------------------------------------------------
+// AMBIENT PARTICLES & AUDIO TICK LOOP
+// ------------------------------------------------------------------------------
+ServerEvents.tick(event => {
+    // Run once every 20 ticks (1 second)
+    if (event.server.tickCount % 20 !== 0) return;
+
+    let players = event.server.players;
+    if (!players || players.isEmpty()) return;
+
+    for (let player of players) {
+        let level = player.level;
+        let px = Math.floor(player.x);
+        let py = Math.floor(player.y);
+        let pz = Math.floor(player.z);
+
+        // Check a 10x6x10 radius around player for active blacksmith blocks
+        for (let dx = -8; dx <= 8; dx += 2) {
+            for (let dz = -8; dz <= 8; dz += 2) {
+                for (let dy = -2; dy <= 3; dy++) {
+                    let b = level.getBlock(px + dx, py + dy, pz + dz);
+                    if (!b) continue;
+                    let id = String(b.id);
+                    if (!BS_BLOCK_IDS.includes(id)) continue;
+
+                    let bx = b.x + 0.5;
+                    let by = b.y;
+                    let bz = b.z + 0.5;
+
+                    if (id === 'kubejs:blacksmith_hearth') {
+                        // Hearth: Curling chimney smoke and glowing ember sparks
+                        level.server.runCommandSilent(`particle minecraft:campfire_cosy_smoke ${bx} ${by + 1.1} ${bz} 0.15 0.3 0.15 0.02 2`);
+                        level.server.runCommandSilent(`particle minecraft:flame ${bx} ${by + 0.7} ${bz} 0.2 0.1 0.2 0.01 2`);
+                    } else if (id === 'kubejs:infernal_crucible') {
+                        // Crucible: Bubbling Nether lava and magma sparks
+                        level.server.runCommandSilent(`particle minecraft:lava ${bx} ${by + 0.9} ${bz} 0.25 0.1 0.25 0.02 1`);
+                        level.server.runCommandSilent(`particle minecraft:smoke ${bx} ${by + 1.0} ${bz} 0.15 0.2 0.15 0.02 2`);
+                    } else if (id === 'kubejs:void_anvil') {
+                        // Void Anvil: Swirling violet void runes and amethyst crystal glimmer
+                        level.server.runCommandSilent(`particle minecraft:portal ${bx} ${by + 1.4} ${bz} 0.3 0.3 0.3 0.1 3`);
+                        level.server.runCommandSilent(`particle minecraft:witch ${bx} ${by + 1.2} ${bz} 0.2 0.2 0.2 0.02 1`);
+                    }
+                }
+            }
+        }
+    }
 });

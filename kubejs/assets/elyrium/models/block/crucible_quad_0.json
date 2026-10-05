@@ -1,0 +1,237 @@
+{
+  "textures": {
+    "particle": "elyrium:block/dark_oak_forge_frame",
+    "frame": "elyrium:block/dark_oak_forge_frame",
+    "steel": "elyrium:block/forged_steel_trim",
+    "coals": "elyrium:block/hearth_coals_animated",
+    "lava": "elyrium:block/crucible_lava_animated",
+    "runes": "elyrium:block/void_alloy_runes",
+    "crystal": "elyrium:block/amethyst_crystal_core"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        3,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#steel"
+        },
+        "up": {
+          "texture": "#steel"
+        },
+        "north": {
+          "texture": "#steel"
+        },
+        "south": {
+          "texture": "#steel"
+        },
+        "west": {
+          "texture": "#steel"
+        },
+        "east": {
+          "texture": "#steel"
+        }
+      }
+    },
+    {
+      "from": [
+        1,
+        3,
+        1
+      ],
+      "to": [
+        15,
+        13,
+        15
+      ],
+      "faces": {
+        "down": {
+          "texture": "#frame"
+        },
+        "up": {
+          "texture": "#frame"
+        },
+        "north": {
+          "texture": "#frame"
+        },
+        "south": {
+          "texture": "#frame"
+        },
+        "west": {
+          "texture": "#frame"
+        },
+        "east": {
+          "texture": "#frame"
+        }
+      }
+    },
+    {
+      "from": [
+        0.5,
+        11,
+        0.5
+      ],
+      "to": [
+        15.5,
+        14,
+        15.5
+      ],
+      "faces": {
+        "down": {
+          "texture": "#steel"
+        },
+        "up": {
+          "texture": "#steel"
+        },
+        "north": {
+          "texture": "#steel"
+        },
+        "south": {
+          "texture": "#steel"
+        },
+        "west": {
+          "texture": "#steel"
+        },
+        "east": {
+          "texture": "#steel"
+        }
+      }
+    },
+    {
+      "from": [
+        2.5,
+        11.5,
+        2.5
+      ],
+      "to": [
+        13.5,
+        12.5,
+        13.5
+      ],
+      "faces": {
+        "down": {
+          "texture": "#lava"
+        },
+        "up": {
+          "texture": "#lava"
+        },
+        "north": {
+          "texture": "#lava"
+        },
+        "south": {
+          "texture": "#lava"
+        },
+        "west": {
+          "texture": "#lava"
+        },
+        "east": {
+          "texture": "#lava"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        14,
+        2
+      ],
+      "to": [
+        14,
+        16,
+        14
+      ],
+      "faces": {
+        "down": {
+          "texture": "#steel"
+        },
+        "up": {
+          "texture": "#steel"
+        },
+        "north": {
+          "texture": "#steel"
+        },
+        "south": {
+          "texture": "#steel"
+        },
+        "west": {
+          "texture": "#steel"
+        },
+        "east": {
+          "texture": "#steel"
+        }
+      }
+    },
+    {
+      "from": [
+        12,
+        11.5,
+        6
+      ],
+      "to": [
+        16,
+        13.5,
+        10
+      ],
+      "faces": {
+        "down": {
+          "texture": "#steel"
+        },
+        "up": {
+          "texture": "#steel"
+        },
+        "north": {
+          "texture": "#steel"
+        },
+        "south": {
+          "texture": "#steel"
+        },
+        "west": {
+          "texture": "#steel"
+        },
+        "east": {
+          "texture": "#steel"
+        }
+      }
+    },
+    {
+      "from": [
+        12,
+        12.5,
+        7
+      ],
+      "to": [
+        16,
+        13.2,
+        9
+      ],
+      "faces": {
+        "down": {
+          "texture": "#lava"
+        },
+        "up": {
+          "texture": "#lava"
+        },
+        "north": {
+          "texture": "#lava"
+        },
+        "south": {
+          "texture": "#lava"
+        },
+        "west": {
+          "texture": "#lava"
+        },
+        "east": {
+          "texture": "#lava"
+        }
+      }
+    }
+  ]
+}
