@@ -1,8 +1,8 @@
 {
-  "version": "0.4.21",
+  "version": "0.4.22",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-05T08:51:51.662925+00:00",
+  "generated_at": "2026-10-05T10:12:36.272500+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -77,8 +77,8 @@
     },
     {
       "path": "config/accessories.json5",
-      "sha256": "ecef46f54ba1fa831068ffcd8574ce807c275679a1e4529120de2e22a0b50944",
-      "size": 926
+      "sha256": "8a2cd0b3d845ee27672d1a03d353e7d294d9abe36c473ce4ca49f3da716161dc",
+      "size": 922
     },
     {
       "path": "config/aces_spell_utils-common.toml",
@@ -722,7 +722,7 @@
     },
     {
       "path": "config/apotheosis/name_generation.cfg",
-      "sha256": "043fa7e7713bee91e5cacd296eef8dfb656ec7766976dde2bbbe9910808b40fa",
+      "sha256": "719d4fdf07a87a490a7580e8cc98182acdc9ec2177f3ac02d5ffdc61ae7655ab",
       "size": 167528
     },
     {
@@ -1121,9 +1121,139 @@
       "size": 1086
     },
     {
+      "path": "config/bluemap/maps/world.conf",
+      "sha256": "d8f88460934e498f1dfc3e9c33d8300d8fdb0db94b9b32f4f77acb233dbc3516",
+      "size": 6574
+    },
+    {
+      "path": "config/bluemap/maps/world_aether_the_aether.conf",
+      "sha256": "5ecb43bab8ce62926e8e223c928a39d5c40eedd3627347a29a87433e35ec7a42",
+      "size": 6580
+    },
+    {
+      "path": "config/bluemap/maps/world_deeperdarker_otherside.conf",
+      "sha256": "36cab5a4e0873d4615194c37683349d15d200c52831a34bf46955d9407d46d2b",
+      "size": 6590
+    },
+    {
+      "path": "config/bluemap/maps/world_divinerpg_apalachia.conf",
+      "sha256": "3961f82c9f20ef6a4aa9c53ce0affdb6a5979b8579e6562d0c39e19c3f5b5d87",
+      "size": 6584
+    },
+    {
+      "path": "config/bluemap/maps/world_divinerpg_arcana.conf",
+      "sha256": "a004f79c8407bbe4add88d6a8ecfb6e78644ba89e34fa35a2b20722a0d994c0b",
+      "size": 6578
+    },
+    {
+      "path": "config/bluemap/maps/world_divinerpg_eden.conf",
+      "sha256": "d1305cb19e0c745098d8737f9e47cbc98dc56ed72a74b5f0567ea20c8ca1073b",
+      "size": 6574
+    },
+    {
+      "path": "config/bluemap/maps/world_divinerpg_iceika.conf",
+      "sha256": "2f0e934785d3bd5fc324bba988c5537329b0522200f3fd6806f5c5d1ec022cad",
+      "size": 6578
+    },
+    {
+      "path": "config/bluemap/maps/world_divinerpg_mortum.conf",
+      "sha256": "6f441a4e1fc5a390a12fd4dcb4f64ee22e700f8298d297e1083cd2c131491054",
+      "size": 6578
+    },
+    {
+      "path": "config/bluemap/maps/world_divinerpg_skythern.conf",
+      "sha256": "fc79e88e7774b1488b16a20474bed18050f7040f369b46b8cee7c97d60b36e8b",
+      "size": 6582
+    },
+    {
+      "path": "config/bluemap/maps/world_divinerpg_vethea.conf",
+      "sha256": "ce86089ecbbe3bd81098d79b31a0b929a55ee09789302b2e713eed95fe738706",
+      "size": 6578
+    },
+    {
+      "path": "config/bluemap/maps/world_divinerpg_wildwood.conf",
+      "sha256": "495ef4ed1d17f5c545bd6ec79fc16fdf82f5491d072fc942f601a8e8d1956358",
+      "size": 6582
+    },
+    {
+      "path": "config/bluemap/maps/world_elyrium_continent_01.conf",
+      "sha256": "cc2095b452ac4993d841f7840ae7f155a1337a9a41349e0367d24511db7dd9ca",
+      "size": 6586
+    },
+    {
+      "path": "config/bluemap/maps/world_elyrium_dungeons.conf",
+      "sha256": "0be11dcb46a9779cab082919f262bcf4a5199a933cd57e032a8dc63116df5d9c",
+      "size": 6578
+    },
+    {
+      "path": "config/bluemap/maps/world_elyrium_inst_end.conf",
+      "sha256": "2973f1692e8c00f12dca2c9726dd3bceea709bfe26789a79f8a267eb06e1f159",
+      "size": 6578
+    },
+    {
+      "path": "config/bluemap/maps/world_elyrium_inst_nether.conf",
+      "sha256": "5e1b6a38101aaa8d642852840c157b60aba997abe9a4282b7eb5ad73206d602d",
+      "size": 6584
+    },
+    {
+      "path": "config/bluemap/maps/world_elyrium_inst_overworld.conf",
+      "sha256": "0b899499fb97fe5a8986ef92b7565efb663e55a446fc7ee607c490b242789ecc",
+      "size": 6590
+    },
+    {
+      "path": "config/bluemap/maps/world_elyrium_pocket_realm.conf",
+      "sha256": "ab3c837fe142f842fd88365d8e4263c5b638b0b3418dd61acd8985c166bf9172",
+      "size": 6586
+    },
+    {
+      "path": "config/bluemap/maps/world_eternal_starlight_starlight.conf",
+      "sha256": "77ca8e53517ee5bfeeefd717f3fffc7ffb38a28b637dc8797cb06fdb8dd39bab",
+      "size": 6600
+    },
+    {
+      "path": "config/bluemap/maps/world_irons_spellbooks_pocket_dimension.conf",
+      "sha256": "1b018a852754259152fab0d4a3d0c7307a973ad1c3716eceb7403eea80e52791",
+      "size": 6612
+    },
+    {
+      "path": "config/bluemap/maps/world_skd_abyss_layer_01.conf",
+      "sha256": "47ab27724267a6fd05160cfa65edada524845b62fc54514a41fab82421bf0a11",
+      "size": 6582
+    },
+    {
+      "path": "config/bluemap/maps/world_the_end.conf",
+      "sha256": "42e4759debb32acd56ab19b27be7375d46267cca0e1e107b09d6f99f12daf1d9",
+      "size": 6576
+    },
+    {
+      "path": "config/bluemap/maps/world_the_nether.conf",
+      "sha256": "113e16c12912c6445737154550534c4260962d5d0533000435fa68faa57d8c71",
+      "size": 6580
+    },
+    {
+      "path": "config/bluemap/maps/world_undergarden_undergarden.conf",
+      "sha256": "529d0984ee46ab31a3ffe15edc1bca652e2524b0484e7a0a13eeb7a985d96541",
+      "size": 6592
+    },
+    {
       "path": "config/bluemap/plugin.conf",
       "sha256": "e07b02a4ece7a8cb2ec281998051077c743f3b025bbbe8862076f3f92a21a9a4",
       "size": 1314
+    },
+    {
+      "path": "config/bluemap/storages/file.conf",
+      "sha256": "ce1f7419cb657755fcb3266817251951701119b95c8e34fb8fa0a1f6be8c7b17",
+      "size": 725
+    },
+    {
+      "path": "config/bluemap/storages/sql.conf",
+      "sha256": "dbf122b4932a67e8b602ebe24d3278616522c24d2e9481f6c31c9949e75ed9f6",
+      "size": 2014
+    },
+    {
+      "path": "config/bluemap/webapp.conf",
+      "sha256": "01f06e0eff76f950e4152dedd36687b599777cb24a1ce4699137b1025c6288dc",
+      "size": 3003
     },
     {
       "path": "config/bluemap/webserver.conf",
@@ -1292,8 +1422,8 @@
     },
     {
       "path": "config/chunky/tasks/minecraft/overworld.properties",
-      "sha256": "51d5239c227ccf642f27647d959c5fa29e24734d7e53b4d6d06ed3ecfc16220f",
-      "size": 130
+      "sha256": "9302adbdf5a746bce8b5755c496f52919e45cc37d54f3f00f69099547e6bf0cd",
+      "size": 129
     },
     {
       "path": "config/citadel-common.toml",
@@ -3242,8 +3372,8 @@
     },
     {
       "path": "config/jei/ingredient-list-mod-sort-order.ini",
-      "sha256": "efa556165b1fb3eb0b9670a432a2207e12eaeb5541a158e734c71c2c898f8fca",
-      "size": 753
+      "sha256": "be31531392c40eef3e245def6aaa2a0db7bf83cd52a4f219556d650975db67e6",
+      "size": 784
     },
     {
       "path": "config/jei/ingredient-list-type-sort-order.ini",
@@ -3272,8 +3402,8 @@
     },
     {
       "path": "config/jei/recipe-category-sort-order.ini",
-      "sha256": "130e80f84d9c3d183c1b0836dd21fcfc900431d09f93b1ef4458d691a75caaaa",
-      "size": 2156
+      "sha256": "a15dbdf3cd26d05504d1161785b5e5be64f2c06a202159d245a0e111fb4b9825",
+      "size": 2206
     },
     {
       "path": "config/jeresources-common.toml",
@@ -3742,7 +3872,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "1fa612f60f3112466ae6a2d957014b0675e9e80c56e8a0921b208ab56d946c11",
+      "sha256": "b1ee4dbd63736e5bd30b032d6f8c89f787642b32493a5819b383a587a1c04be2",
       "size": 276
     },
     {
@@ -15332,8 +15462,8 @@
     },
     {
       "path": "mods/elyrium_properties-1.0.0.jar",
-      "sha256": "1ab20a7ca566641b41fdfa7929b252e4b07c6621b1cf437579240ce42dd2b131",
-      "size": 2212
+      "sha256": "2f41871a68aa1064ae5144144faa8a2ab550ee8d7a88ed9cc4b85e07e25b2679",
+      "size": 2234
     },
     {
       "path": "mods/embeddium-1.0.15+mc1.21.1.jar",
