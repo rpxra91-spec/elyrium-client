@@ -144,6 +144,64 @@ function findBlacksmithLine(level, startPos, facingHint) {
 }
 
 // ------------------------------------------------------------------------------
+// DETERMINE 3D FORMATION PART ROLES FOR SORTED SEQUENCE OF BLOCKS
+// ------------------------------------------------------------------------------
+function determineFormationParts(sortedIds) {
+    if (!sortedIds || sortedIds.length <= 1) {
+        return sortedIds ? sortedIds.map(() => 'single') : [];
+    }
+
+    let len = sortedIds.length;
+
+    // 1. Grand Forge (4 blocks: [3-1-2-4] -> Crucible, Workbench, Hearth, Anvil)
+    if (len === 4) {
+        let isGrand = (
+            sortedIds[0] === 'kubejs:infernal_crucible' &&
+            sortedIds[1] === 'kubejs:blacksmith_workbench' &&
+            sortedIds[2] === 'kubejs:blacksmith_hearth' &&
+            sortedIds[3] === 'kubejs:void_anvil'
+        );
+        if (isGrand) {
+            return ['quad_0', 'quad_1', 'quad_2', 'quad_3'];
+        }
+        return ['single', 'single', 'single', 'single'];
+    }
+
+    // 2. Trio (3 blocks: [3-1-2] -> Crucible, Workbench, Hearth)
+    if (len === 3) {
+        let isCanonicalTrio = (
+            sortedIds[0] === 'kubejs:infernal_crucible' &&
+            sortedIds[1] === 'kubejs:blacksmith_workbench' &&
+            sortedIds[2] === 'kubejs:blacksmith_hearth'
+        );
+        if (isCanonicalTrio) {
+            return ['trio_left', 'trio_mid', 'trio_right'];
+        }
+        // If Workbench + Hearth + Anvil: Workbench & Hearth connect as pair, Anvil is single
+        if (sortedIds[0] === 'kubejs:blacksmith_workbench' &&
+            sortedIds[1] === 'kubejs:blacksmith_hearth' &&
+            sortedIds[2] === 'kubejs:void_anvil') {
+            return ['pair_left', 'pair_right', 'single'];
+        }
+        return ['single', 'single', 'single'];
+    }
+
+    // 3. Pair (2 blocks: [1-2] -> Workbench, Hearth)
+    if (len === 2) {
+        let isCanonicalPair = (
+            sortedIds[0] === 'kubejs:blacksmith_workbench' &&
+            sortedIds[1] === 'kubejs:blacksmith_hearth'
+        );
+        if (isCanonicalPair) {
+            return ['pair_left', 'pair_right'];
+        }
+        return ['single', 'single'];
+    }
+
+    return sortedIds.map(() => 'single');
+}
+
+// ------------------------------------------------------------------------------
 // GET STATION INFO HELPER (EXPORTED GLOBALLY)
 // ------------------------------------------------------------------------------
 function getBlacksmithStationInfo(level, pos) {
@@ -252,10 +310,12 @@ BlockEvents.placed(event => {
     });
 
     let isGrand = (line.length === 4 &&
-        sortedIds.includes('kubejs:infernal_crucible') &&
-        sortedIds.includes('kubejs:blacksmith_workbench') &&
-        sortedIds.includes('kubejs:blacksmith_hearth') &&
-        sortedIds.includes('kubejs:void_anvil'));
+        sortedIds[0] === 'kubejs:infernal_crucible' &&
+        sortedIds[1] === 'kubejs:blacksmith_workbench' &&
+        sortedIds[2] === 'kubejs:blacksmith_hearth' &&
+        sortedIds[3] === 'kubejs:void_anvil');
+
+    let parts = determineFormationParts(sortedIds);
 
     // Synchronize blocks and their 3D part properties
     bsIsAligning = true;
@@ -263,14 +323,7 @@ BlockEvents.placed(event => {
         for (let i = 0; i < line.length; i++) {
             let p = line[i];
             let targetId = sortedIds[i];
-            let partName = 'single';
-            if (line.length === 2) {
-                partName = (i === 0) ? 'pair_left' : 'pair_right';
-            } else if (line.length === 3) {
-                partName = (i === 0) ? 'trio_left' : ((i === 1) ? 'trio_mid' : 'trio_right');
-            } else if (line.length === 4) {
-                partName = 'quad_' + i;
-            }
+            let partName = parts[i] || 'single';
 
             let cur = level.getBlock(p);
             cur.set(targetId, { facing: facing, part: partName });
@@ -352,19 +405,12 @@ BlockEvents.broken(event => {
     let bz = block.z;
     let player = event.player;
 
-    // 1. EXACT DROP GUARANTEE
-    // Breaking pos 0 drops Crucible (3), pos 1 drops Workbench (1),
-    // pos 2 drops Hearth (2), pos 3 drops Anvil (4).
-    if (!player || !player.isCreative()) {
-        block.popItem(Item.of(brokenId, 1));
-    }
-
-    // 2. Audio-visual dismantling feedback
+    // 1. Audio-visual dismantling feedback
     level.server.runCommandSilent(`playsound minecraft:block.chain.break block @a ${bx + 0.5} ${by + 0.5} ${bz + 0.5} 0.8 1.0`);
     level.server.runCommandSilent(`playsound minecraft:block.fire.extinguish block @a ${bx + 0.5} ${by + 0.5} ${bz + 0.5} 0.7 1.2`);
     level.server.runCommandSilent(`particle minecraft:smoke ${bx + 0.5} ${by + 0.5} ${bz + 0.5} 0.4 0.3 0.4 0.05 20`);
 
-    // 3. GRACEFUL REVERSION OF REMAINING CONNECTED SEGMENTS
+    // 2. GRACEFUL REVERSION OF REMAINING CONNECTED SEGMENTS
     let neighborPositions = [
         new BlockPos(bx - 1, by, bz),
         new BlockPos(bx + 1, by, bz),
@@ -429,16 +475,14 @@ BlockEvents.broken(event => {
                 }
             } catch (e) {}
 
+            let remIds = remLine.map(p => String(level.getBlock(p).id));
+            let remParts = determineFormationParts(remIds);
+
             for (let ri = 0; ri < remLine.length; ri++) {
                 let rp = remLine[ri];
                 let rBlock = level.getBlock(rp);
-                let rId = String(rBlock.id);
-                let rPart = 'single';
-                if (remLine.length === 2) {
-                    rPart = (ri === 0) ? 'pair_left' : 'pair_right';
-                } else if (remLine.length === 3) {
-                    rPart = (ri === 0) ? 'trio_left' : ((ri === 1) ? 'trio_mid' : 'trio_right');
-                }
+                let rId = remIds[ri];
+                let rPart = remParts[ri] || 'single';
                 rBlock.set(rId, { facing: remFacing, part: rPart });
             }
 
@@ -473,24 +517,34 @@ ServerEvents.tick(event => {
     let players = event.server.players;
     if (!players || players.isEmpty()) return;
 
+    let processedBlocks = new Set();
+
     for (let player of players) {
         let level = player.level;
         let px = Math.floor(player.x);
         let py = Math.floor(player.y);
         let pz = Math.floor(player.z);
 
-        // Check a 10x6x10 radius around player for active blacksmith blocks
-        for (let dx = -8; dx <= 8; dx += 2) {
-            for (let dz = -8; dz <= 8; dz += 2) {
+        // Check a 13x6x13 radius around player without skipping any coordinates
+        for (let dx = -6; dx <= 6; dx++) {
+            for (let dz = -6; dz <= 6; dz++) {
                 for (let dy = -2; dy <= 3; dy++) {
-                    let b = level.getBlock(px + dx, py + dy, pz + dz);
+                    let bxPos = px + dx;
+                    let byPos = py + dy;
+                    let bzPos = pz + dz;
+                    let posKey = `${bxPos},${byPos},${bzPos}`;
+                    if (processedBlocks.has(posKey)) continue;
+
+                    let b = level.getBlock(bxPos, byPos, bzPos);
                     if (!b) continue;
                     let id = String(b.id);
                     if (!BS_BLOCK_IDS.includes(id)) continue;
 
-                    let bx = b.x + 0.5;
-                    let by = b.y;
-                    let bz = b.z + 0.5;
+                    processedBlocks.add(posKey);
+
+                    let bx = bxPos + 0.5;
+                    let by = byPos;
+                    let bz = bzPos + 0.5;
 
                     if (id === 'kubejs:blacksmith_hearth') {
                         // Hearth: Curling chimney smoke and glowing ember sparks
@@ -504,6 +558,7 @@ ServerEvents.tick(event => {
                         // Void Anvil: Swirling violet void runes and amethyst crystal glimmer
                         level.server.runCommandSilent(`particle minecraft:portal ${bx} ${by + 1.4} ${bz} 0.3 0.3 0.3 0.1 3`);
                         level.server.runCommandSilent(`particle minecraft:witch ${bx} ${by + 1.2} ${bz} 0.2 0.2 0.2 0.02 1`);
+                        level.server.runCommandSilent(`particle minecraft:enchant ${bx} ${by + 1.5} ${bz} 0.2 0.2 0.2 0.5 3`);
                     }
                 }
             }

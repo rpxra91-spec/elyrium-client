@@ -13,22 +13,22 @@
       "model": "elyrium:block/crucible_trio_left"
     },
     "facing=north,part=trio_mid": {
-      "model": "elyrium:block/crucible_trio_left"
+      "model": "elyrium:block/infernal_crucible_single"
     },
     "facing=north,part=trio_right": {
-      "model": "elyrium:block/crucible_trio_left"
+      "model": "elyrium:block/infernal_crucible_single"
     },
     "facing=north,part=quad_0": {
       "model": "elyrium:block/crucible_quad_0"
     },
     "facing=north,part=quad_1": {
-      "model": "elyrium:block/crucible_quad_0"
+      "model": "elyrium:block/infernal_crucible_single"
     },
     "facing=north,part=quad_2": {
-      "model": "elyrium:block/crucible_quad_0"
+      "model": "elyrium:block/infernal_crucible_single"
     },
     "facing=north,part=quad_3": {
-      "model": "elyrium:block/crucible_quad_0"
+      "model": "elyrium:block/infernal_crucible_single"
     },
     "facing=east,part=single": {
       "model": "elyrium:block/infernal_crucible_single",
@@ -47,11 +47,11 @@
       "y": 90
     },
     "facing=east,part=trio_mid": {
-      "model": "elyrium:block/crucible_trio_left",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 90
     },
     "facing=east,part=trio_right": {
-      "model": "elyrium:block/crucible_trio_left",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 90
     },
     "facing=east,part=quad_0": {
@@ -59,15 +59,15 @@
       "y": 90
     },
     "facing=east,part=quad_1": {
-      "model": "elyrium:block/crucible_quad_0",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 90
     },
     "facing=east,part=quad_2": {
-      "model": "elyrium:block/crucible_quad_0",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 90
     },
     "facing=east,part=quad_3": {
-      "model": "elyrium:block/crucible_quad_0",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 90
     },
     "facing=south,part=single": {
@@ -87,11 +87,11 @@
       "y": 180
     },
     "facing=south,part=trio_mid": {
-      "model": "elyrium:block/crucible_trio_left",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 180
     },
     "facing=south,part=trio_right": {
-      "model": "elyrium:block/crucible_trio_left",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 180
     },
     "facing=south,part=quad_0": {
@@ -99,15 +99,15 @@
       "y": 180
     },
     "facing=south,part=quad_1": {
-      "model": "elyrium:block/crucible_quad_0",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 180
     },
     "facing=south,part=quad_2": {
-      "model": "elyrium:block/crucible_quad_0",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 180
     },
     "facing=south,part=quad_3": {
-      "model": "elyrium:block/crucible_quad_0",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 180
     },
     "facing=west,part=single": {
@@ -127,11 +127,11 @@
       "y": 270
     },
     "facing=west,part=trio_mid": {
-      "model": "elyrium:block/crucible_trio_left",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 270
     },
     "facing=west,part=trio_right": {
-      "model": "elyrium:block/crucible_trio_left",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 270
     },
     "facing=west,part=quad_0": {
@@ -139,15 +139,15 @@
       "y": 270
     },
     "facing=west,part=quad_1": {
-      "model": "elyrium:block/crucible_quad_0",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 270
     },
     "facing=west,part=quad_2": {
-      "model": "elyrium:block/crucible_quad_0",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 270
     },
     "facing=west,part=quad_3": {
-      "model": "elyrium:block/crucible_quad_0",
+      "model": "elyrium:block/infernal_crucible_single",
       "y": 270
     }
   }

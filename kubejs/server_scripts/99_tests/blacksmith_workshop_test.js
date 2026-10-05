@@ -178,30 +178,55 @@ function runBlacksmithTestSuite() {
     }
 
     // --------------------------------------------------------------------------
-    // 4. 3D MULTIBLOCK MODEL PART FORMATION LOGIC
+    // 4. 3D MULTIBLOCK MODEL PART FORMATION LOGIC (determineFormationParts)
     // --------------------------------------------------------------------------
     {
-        function getFormationParts(lineLength) {
-            let parts = [];
-            for (let i = 0; i < lineLength; i++) {
-                if (lineLength === 2) parts.push(i === 0 ? 'pair_left' : 'pair_right');
-                else if (lineLength === 3) parts.push(i === 0 ? 'trio_left' : (i === 1 ? 'trio_mid' : 'trio_right'));
-                else if (lineLength === 4) parts.push('quad_' + i);
-                else parts.push('single');
+        let partFn = (typeof determineFormationParts === 'function') ? determineFormationParts : function(sortedIds) {
+            if (!sortedIds || sortedIds.length <= 1) return sortedIds ? sortedIds.map(() => 'single') : [];
+            let len = sortedIds.length;
+            if (len === 4) {
+                let isGrand = (sortedIds[0] === 'kubejs:infernal_crucible' && sortedIds[1] === 'kubejs:blacksmith_workbench' && sortedIds[2] === 'kubejs:blacksmith_hearth' && sortedIds[3] === 'kubejs:void_anvil');
+                return isGrand ? ['quad_0', 'quad_1', 'quad_2', 'quad_3'] : ['single', 'single', 'single', 'single'];
             }
-            return parts;
-        }
+            if (len === 3) {
+                let isCanonicalTrio = (sortedIds[0] === 'kubejs:infernal_crucible' && sortedIds[1] === 'kubejs:blacksmith_workbench' && sortedIds[2] === 'kubejs:blacksmith_hearth');
+                if (isCanonicalTrio) return ['trio_left', 'trio_mid', 'trio_right'];
+                if (sortedIds[0] === 'kubejs:blacksmith_workbench' && sortedIds[1] === 'kubejs:blacksmith_hearth' && sortedIds[2] === 'kubejs:void_anvil') return ['pair_left', 'pair_right', 'single'];
+                return ['single', 'single', 'single'];
+            }
+            if (len === 2) {
+                let isCanonicalPair = (sortedIds[0] === 'kubejs:blacksmith_workbench' && sortedIds[1] === 'kubejs:blacksmith_hearth');
+                return isCanonicalPair ? ['pair_left', 'pair_right'] : ['single', 'single'];
+            }
+            return sortedIds.map(() => 'single');
+        };
 
-        let p2 = getFormationParts(2);
-        assert("3D Part: Pair assigns [pair_left, pair_right]", p2[0] === 'pair_left' && p2[1] === 'pair_right', `Parts: ${p2.join(', ')}`);
+        // Test 4.1: Canonical Pair [workbench, hearth]
+        let p2 = partFn(['kubejs:blacksmith_workbench', 'kubejs:blacksmith_hearth']);
+        assert("3D Part: Canonical Pair assigns [pair_left, pair_right]", p2[0] === 'pair_left' && p2[1] === 'pair_right', `Parts: ${p2.join(', ')}`);
 
-        let p3 = getFormationParts(3);
-        assert("3D Part: Trio assigns [trio_left, trio_mid, trio_right]", p3[0] === 'trio_left' && p3[1] === 'trio_mid' && p3[2] === 'trio_right', `Parts: ${p3.join(', ')}`);
+        // Test 4.2: Invalid Pair [workbench, workbench] -> [single, single]
+        let p2_inv = partFn(['kubejs:blacksmith_workbench', 'kubejs:blacksmith_workbench']);
+        assert("3D Part: Duplicate Pair assigns [single, single]", p2_inv[0] === 'single' && p2_inv[1] === 'single', `Parts: ${p2_inv.join(', ')}`);
 
-        let p4 = getFormationParts(4);
-        assert("3D Part: Quad Grand Forge assigns [quad_0, quad_1, quad_2, quad_3]", p4[0] === 'quad_0' && p4[1] === 'quad_1' && p4[2] === 'quad_2' && p4[3] === 'quad_3', `Parts: ${p4.join(', ')}`);
+        // Test 4.3: Canonical Trio [crucible, workbench, hearth]
+        let p3 = partFn(['kubejs:infernal_crucible', 'kubejs:blacksmith_workbench', 'kubejs:blacksmith_hearth']);
+        assert("3D Part: Canonical Trio assigns [trio_left, trio_mid, trio_right]", p3[0] === 'trio_left' && p3[1] === 'trio_mid' && p3[2] === 'trio_right', `Parts: ${p3.join(', ')}`);
 
-        let p1 = getFormationParts(1);
+        // Test 4.4: Sub-canonical End Trio [workbench, hearth, anvil]
+        let p3_end = partFn(['kubejs:blacksmith_workbench', 'kubejs:blacksmith_hearth', 'kubejs:void_anvil']);
+        assert("3D Part: End Trio assigns [pair_left, pair_right, single]", p3_end[0] === 'pair_left' && p3_end[1] === 'pair_right' && p3_end[2] === 'single', `Parts: ${p3_end.join(', ')}`);
+
+        // Test 4.5: Canonical Grand Forge [crucible, workbench, hearth, anvil]
+        let p4 = partFn(['kubejs:infernal_crucible', 'kubejs:blacksmith_workbench', 'kubejs:blacksmith_hearth', 'kubejs:void_anvil']);
+        assert("3D Part: Canonical Grand Forge assigns [quad_0, quad_1, quad_2, quad_3]", p4[0] === 'quad_0' && p4[1] === 'quad_1' && p4[2] === 'quad_2' && p4[3] === 'quad_3', `Parts: ${p4.join(', ')}`);
+
+        // Test 4.6: Invalid Quad [workbench, workbench, workbench, workbench] -> all single
+        let p4_inv = partFn(['kubejs:blacksmith_workbench', 'kubejs:blacksmith_workbench', 'kubejs:blacksmith_workbench', 'kubejs:blacksmith_workbench']);
+        assert("3D Part: Non-Grand Quad defaults to all single", p4_inv.every(p => p === 'single'), `Parts: ${p4_inv.join(', ')}`);
+
+        // Test 4.7: Solo module defaults to single
+        let p1 = partFn(['kubejs:blacksmith_workbench']);
         assert("3D Part: Solo module defaults to single", p1[0] === 'single', `Part: ${p1[0]}`);
     }
 

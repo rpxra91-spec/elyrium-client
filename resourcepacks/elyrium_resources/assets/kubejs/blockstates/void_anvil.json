@@ -19,13 +19,13 @@
       "model": "elyrium:block/void_anvil_single"
     },
     "facing=north,part=quad_0": {
-      "model": "elyrium:block/anvil_quad_3"
+      "model": "elyrium:block/void_anvil_single"
     },
     "facing=north,part=quad_1": {
-      "model": "elyrium:block/anvil_quad_3"
+      "model": "elyrium:block/void_anvil_single"
     },
     "facing=north,part=quad_2": {
-      "model": "elyrium:block/anvil_quad_3"
+      "model": "elyrium:block/void_anvil_single"
     },
     "facing=north,part=quad_3": {
       "model": "elyrium:block/anvil_quad_3"
@@ -55,15 +55,15 @@
       "y": 90
     },
     "facing=east,part=quad_0": {
-      "model": "elyrium:block/anvil_quad_3",
+      "model": "elyrium:block/void_anvil_single",
       "y": 90
     },
     "facing=east,part=quad_1": {
-      "model": "elyrium:block/anvil_quad_3",
+      "model": "elyrium:block/void_anvil_single",
       "y": 90
     },
     "facing=east,part=quad_2": {
-      "model": "elyrium:block/anvil_quad_3",
+      "model": "elyrium:block/void_anvil_single",
       "y": 90
     },
     "facing=east,part=quad_3": {
@@ -95,15 +95,15 @@
       "y": 180
     },
     "facing=south,part=quad_0": {
-      "model": "elyrium:block/anvil_quad_3",
+      "model": "elyrium:block/void_anvil_single",
       "y": 180
     },
     "facing=south,part=quad_1": {
-      "model": "elyrium:block/anvil_quad_3",
+      "model": "elyrium:block/void_anvil_single",
       "y": 180
     },
     "facing=south,part=quad_2": {
-      "model": "elyrium:block/anvil_quad_3",
+      "model": "elyrium:block/void_anvil_single",
       "y": 180
     },
     "facing=south,part=quad_3": {
@@ -135,15 +135,15 @@
       "y": 270
     },
     "facing=west,part=quad_0": {
-      "model": "elyrium:block/anvil_quad_3",
+      "model": "elyrium:block/void_anvil_single",
       "y": 270
     },
     "facing=west,part=quad_1": {
-      "model": "elyrium:block/anvil_quad_3",
+      "model": "elyrium:block/void_anvil_single",
       "y": 270
     },
     "facing=west,part=quad_2": {
-      "model": "elyrium:block/anvil_quad_3",
+      "model": "elyrium:block/void_anvil_single",
       "y": 270
     },
     "facing=west,part=quad_3": {
