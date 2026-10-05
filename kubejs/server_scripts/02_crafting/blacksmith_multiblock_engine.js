@@ -28,7 +28,8 @@
 //   • Ambient tick loop: atmospheric chimney smoke, ember sparks, bubbling lava, void vortex.
 // ==============================================================================
 
-const BlockPos = Java.loadClass('net.minecraft.core.BlockPos');
+// BlockPos is available globally or via explicit Java class; use safe local alias
+const BS_BlockPos = Java.loadClass('net.minecraft.core.BlockPos');
 
 const BS_BLOCK_IDS = [
     'kubejs:infernal_crucible',    // Rank 0 (Module 3)
@@ -119,12 +120,12 @@ function findBlacksmithLine(level, startPos, facingHint) {
         // Facing South: player looks +Z, left is East (+X), right is West (-X)
         if (facing === 'south') {
             for (let x = xMax; x >= xMin; x--) {
-                line.push(new BlockPos(x, sy, startPos.z));
+                line.push(new BS_BlockPos(x, sy, startPos.z));
             }
         } else {
             // Facing North / East / West default: West (-X) to East (+X)
             for (let x = xMin; x <= xMax; x++) {
-                line.push(new BlockPos(x, sy, startPos.z));
+                line.push(new BS_BlockPos(x, sy, startPos.z));
             }
         }
         return line;
@@ -133,12 +134,12 @@ function findBlacksmithLine(level, startPos, facingHint) {
         // Facing West: player looks -X, left is South (+Z), right is North (-Z)
         if (facing === 'west') {
             for (let z = zMax; z >= zMin; z--) {
-                line.push(new BlockPos(startPos.x, sy, z));
+                line.push(new BS_BlockPos(startPos.x, sy, z));
             }
         } else {
             // Facing East / North / South default: North (-Z) to South (+Z)
             for (let z = zMin; z <= zMax; z++) {
-                line.push(new BlockPos(startPos.x, sy, z));
+                line.push(new BS_BlockPos(startPos.x, sy, z));
             }
         }
         return line;
@@ -457,10 +458,10 @@ BlockEvents.broken(event => {
 
     // 2. GRACEFUL REVERSION OF REMAINING CONNECTED SEGMENTS
     let neighborPositions = [
-        new BlockPos(bx - 1, by, bz),
-        new BlockPos(bx + 1, by, bz),
-        new BlockPos(bx, by, bz - 1),
-        new BlockPos(bx, by, bz + 1)
+        new BS_BlockPos(bx - 1, by, bz),
+        new BS_BlockPos(bx + 1, by, bz),
+        new BS_BlockPos(bx, by, bz - 1),
+        new BS_BlockPos(bx, by, bz + 1)
     ];
 
     let checkedPositions = new Set();
