@@ -117,13 +117,13 @@ function findBlacksmithLine(level, startPos, facingHint) {
     // Choose the dominant line
     if (xLen >= zLen && xLen > 1) {
         let line = [];
-        // Facing South: player looks +Z, left is East (+X), right is West (-X)
-        if (facing === 'south') {
+        // When facing North (player stands at North looking South +Z): Left is East (+X, xMax), Right is West (-X, xMin)
+        if (facing === 'north') {
             for (let x = xMax; x >= xMin; x--) {
                 line.push(new BS_BlockPos(x, sy, startPos.z));
             }
         } else {
-            // Facing North / East / West default: West (-X) to East (+X)
+            // When facing South (player stands at South looking North -Z, default): Left is West (-X, xMin), Right is East (+X, xMax)
             for (let x = xMin; x <= xMax; x++) {
                 line.push(new BS_BlockPos(x, sy, startPos.z));
             }
@@ -131,13 +131,13 @@ function findBlacksmithLine(level, startPos, facingHint) {
         return line;
     } else if (zLen > 1) {
         let line = [];
-        // Facing West: player looks -X, left is South (+Z), right is North (-Z)
-        if (facing === 'west') {
+        // When facing East (player stands at East looking West -X): Left is South (+Z, zMax), Right is North (-Z, zMin)
+        if (facing === 'east') {
             for (let z = zMax; z >= zMin; z--) {
                 line.push(new BS_BlockPos(startPos.x, sy, z));
             }
         } else {
-            // Facing East / North / South default: North (-Z) to South (+Z)
+            // When facing West (player stands at West looking East +X, default): Left is North (-Z, zMin), Right is South (+Z, zMax)
             for (let z = zMin; z <= zMax; z++) {
                 line.push(new BS_BlockPos(startPos.x, sy, z));
             }
@@ -299,9 +299,6 @@ function alignBlacksmithStation(level, originPos, player, facingHint) {
 
     // We only form stations up to 4 blocks
     if (line.length > 4) {
-        if (player) {
-            player.sendSystemMessage(Text.of('§c⚠ [Кузнечный Комплекс] §7Максимальная длина кузнечной станции — 4 блока!'));
-        }
         return line;
     }
 
@@ -337,7 +334,7 @@ function alignBlacksmithStation(level, originPos, player, facingHint) {
         bsIsAligning = false;
     }
 
-    // Assembly feedback: Heavy anvil hammer strike + burst of sparks
+    // Assembly feedback: Heavy anvil hammer strike + burst of sparks (no intrusive smoke)
     let centerPos = line[Math.floor(line.length / 2)];
     let cx = centerPos.x + 0.5;
     let cy = centerPos.y + 0.5;
@@ -345,9 +342,8 @@ function alignBlacksmithStation(level, originPos, player, facingHint) {
 
     level.server.runCommandSilent(`playsound minecraft:block.anvil.use block @a ${cx} ${cy} ${cz} 0.9 0.85`);
     level.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle block @a ${cx} ${cy} ${cz} 1.0 1.1`);
-    level.server.runCommandSilent(`particle minecraft:lava ${cx} ${cy + 0.7} ${cz} 0.5 0.3 0.5 0.08 15`);
-    level.server.runCommandSilent(`particle minecraft:crit ${cx} ${cy + 0.7} ${cz} 0.6 0.3 0.6 0.12 30`);
-    level.server.runCommandSilent(`particle minecraft:campfire_cosy_smoke ${cx} ${cy + 0.8} ${cz} 0.3 0.4 0.3 0.03 10`);
+    level.server.runCommandSilent(`particle minecraft:lava ${cx} ${cy + 0.7} ${cz} 0.5 0.3 0.5 0.08 10`);
+    level.server.runCommandSilent(`particle minecraft:crit ${cx} ${cy + 0.7} ${cz} 0.6 0.3 0.6 0.12 20`);
 
     // GRAND FORGE (4x1: [3 - 1 - 2 - 4]) AWAKENING
     if (isGrand) {
@@ -365,32 +361,23 @@ function alignBlacksmithStation(level, originPos, player, facingHint) {
         level.server.runCommandSilent(`playsound minecraft:block.beacon.activate block @a ${gcx} ${gcy} ${gcz} 1.0 1.2`);
         level.server.runCommandSilent(`playsound minecraft:block.portal.trigger block @a ${gcx} ${gcy} ${gcz} 0.8 1.5`);
 
-        // 1. Lava Trough at Crucible (pos 0)
-        level.server.runCommandSilent(`particle minecraft:lava ${pCrucible.x + 0.5} ${pCrucible.y + 1.0} ${pCrucible.z + 0.5} 0.3 0.2 0.3 0.05 16`);
-        level.server.runCommandSilent(`particle minecraft:flame ${pCrucible.x + 0.5} ${pCrucible.y + 1.0} ${pCrucible.z + 0.5} 0.2 0.1 0.2 0.02 20`);
+        // 1. Molten Lava at Crucible (pos 0)
+        level.server.runCommandSilent(`particle minecraft:lava ${pCrucible.x + 0.5} ${pCrucible.y + 1.0} ${pCrucible.z + 0.5} 0.3 0.2 0.3 0.05 12`);
+        level.server.runCommandSilent(`particle minecraft:flame ${pCrucible.x + 0.5} ${pCrucible.y + 1.0} ${pCrucible.z + 0.5} 0.2 0.1 0.2 0.02 15`);
 
         // 2. Forging Sparks at Workbench (pos 1)
-        level.server.runCommandSilent(`particle minecraft:crit ${pWorkbench.x + 0.5} ${pWorkbench.y + 1.0} ${pWorkbench.z + 0.5} 0.4 0.2 0.4 0.1 35`);
-        level.server.runCommandSilent(`particle minecraft:enchant ${pWorkbench.x + 0.5} ${pWorkbench.y + 1.2} ${pWorkbench.z + 0.5} 0.8 0.4 0.8 0.6 40`);
+        level.server.runCommandSilent(`particle minecraft:crit ${pWorkbench.x + 0.5} ${pWorkbench.y + 1.0} ${pWorkbench.z + 0.5} 0.4 0.2 0.4 0.1 25`);
+        level.server.runCommandSilent(`particle minecraft:enchant ${pWorkbench.x + 0.5} ${pWorkbench.y + 1.2} ${pWorkbench.z + 0.5} 0.6 0.3 0.6 0.4 30`);
 
-        // 3. Blast Furnace Flames & Chimney Smoke at Hearth (pos 2)
-        level.server.runCommandSilent(`particle minecraft:flame ${pHearth.x + 0.5} ${pHearth.y + 1.0} ${pHearth.z + 0.5} 0.3 0.2 0.3 0.03 25`);
-        level.server.runCommandSilent(`particle minecraft:campfire_cosy_smoke ${pHearth.x + 0.5} ${pHearth.y + 1.3} ${pHearth.z + 0.5} 0.2 0.5 0.2 0.04 20`);
+        // 3. Blast Furnace Flames at Hearth (pos 2)
+        level.server.runCommandSilent(`particle minecraft:flame ${pHearth.x + 0.5} ${pHearth.y + 1.0} ${pHearth.z + 0.5} 0.3 0.2 0.3 0.03 20`);
 
-        // 4. Void Runes & Portal Vortex at Void Anvil (pos 3)
-        level.server.runCommandSilent(`particle minecraft:portal ${pAnvil.x + 0.5} ${pAnvil.y + 1.0} ${pAnvil.z + 0.5} 0.8 0.5 0.8 0.4 50`);
-        level.server.runCommandSilent(`particle minecraft:witch ${pAnvil.x + 0.5} ${pAnvil.y + 1.0} ${pAnvil.z + 0.5} 0.3 0.3 0.3 0.05 20`);
+        // 4. End Crystal Flash at Void Anvil (pos 3)
+        level.server.runCommandSilent(`particle minecraft:enchant ${pAnvil.x + 0.5} ${pAnvil.y + 1.2} ${pAnvil.z + 0.5} 0.5 0.3 0.5 0.4 30`);
 
         // 5. Hovering Crystal Apex Flash above workbench/anvil
-        level.server.runCommandSilent(`particle minecraft:end_rod ${gcx} ${gcy + 0.8} ${gcz} 0.5 0.5 0.5 0.04 25`);
-        level.server.runCommandSilent(`particle minecraft:soul_fire_flame ${gcx} ${gcy + 0.2} ${gcz} 0.8 0.2 0.8 0.03 30`);
-
-        if (player) {
-            player.sendSystemMessage(Text.of('§6👑 [ВЕЛИКАЯ КУЗНИЦА ЭЛИРИУМА] §dПустотно-Инфернальный Горн пробужден! (Канонический строй: [3-1-2-4])'));
-            player.sendSystemMessage(Text.of('§a✓ Монолитная структура активирована: 0 штрафов, 50% ремонт, ковка арсенала и алтарь заточки!'));
-        }
-    } else if (player) {
-        player.sendSystemMessage(Text.of(`§6⚒ [Кузнечный Комплекс] §aМодули объединены в строй (${line.length} бл.). 3D-модели трансформированы!`));
+        level.server.runCommandSilent(`particle minecraft:end_rod ${gcx} ${gcy + 0.8} ${gcz} 0.5 0.5 0.5 0.04 20`);
+        level.server.runCommandSilent(`particle minecraft:soul_fire_flame ${gcx} ${gcy + 0.2} ${gcz} 0.6 0.2 0.6 0.03 20`);
     }
     return line;
 }
@@ -416,10 +403,7 @@ BlockEvents.rightClicked(event => {
 
     if (player.mainHandItem.isEmpty()) {
         event.cancel();
-        let res = alignBlacksmithStation(player.level, block.pos, player);
-        if (!res || res.length < 2) {
-            player.sendSystemMessage(Text.of('§6⚒ [Кузница] §7Одиночный модуль. Установите рядом другие блоки кузницы [3-1-2-4]!'));
-        }
+        alignBlacksmithStation(player.level, block.pos, player);
     }
 });
 
@@ -439,10 +423,9 @@ BlockEvents.broken(event => {
     let bz = block.z;
     let player = event.player;
 
-    // 1. Audio-visual dismantling feedback
+    // 1. Audio-visual dismantling feedback (clean sounds, no smoke cloud)
     level.server.runCommandSilent(`playsound minecraft:block.chain.break block @a ${bx + 0.5} ${by + 0.5} ${bz + 0.5} 0.8 1.0`);
     level.server.runCommandSilent(`playsound minecraft:block.fire.extinguish block @a ${bx + 0.5} ${by + 0.5} ${bz + 0.5} 0.7 1.2`);
-    level.server.runCommandSilent(`particle minecraft:smoke ${bx + 0.5} ${by + 0.5} ${bz + 0.5} 0.4 0.3 0.4 0.05 20`);
 
     // 2. GRACEFUL REVERSION OF REMAINING CONNECTED SEGMENTS
     let neighborPositions = [
@@ -483,24 +466,6 @@ BlockEvents.broken(event => {
                 if (soloBlock) {
                     soloBlock.set(soloId, { facing: soloFacing, part: 'single' });
                 }
-
-                if (soloId === 'kubejs:blacksmith_workbench') {
-                    if (player) {
-                        player.sendSystemMessage(Text.of('§e⚒ [Кузнечный Комплекс] §7Очаг демонтирован. Верстак перешел в автономный режим (§c+1 слиток штрафа к ковке§7).'));
-                    }
-                } else if (soloId === 'kubejs:blacksmith_hearth') {
-                    if (player) {
-                        player.sendSystemMessage(Text.of('§e🔥 [Кузнечный Комплекс] §7Верстак демонтирован. Очаг перешел в автономный режим (§eремонт снижен до 25%§7).'));
-                    }
-                } else if (soloId === 'kubejs:infernal_crucible') {
-                    if (player) {
-                        player.sendSystemMessage(Text.of('§4🌋 [Кузнечный Комплекс] §7Адский Горн отключен от верстака.'));
-                    }
-                } else if (soloId === 'kubejs:void_anvil') {
-                    if (player) {
-                        player.sendSystemMessage(Text.of('§5🌌 [Кузнечный Комплекс] §7Пустотная Наковальня отключена от мастерской.'));
-                    }
-                }
             } else if (remInfo.count >= 2) {
                 // Reverted to smaller multi-block station: update 3D models of remaining blocks!
                 let remFacing = 'north';
@@ -522,23 +487,7 @@ BlockEvents.broken(event => {
                     rBlock.set(rId, { facing: remFacing, part: rPart });
                 }
 
-                let desc = '';
-                if (remInfo.hasWorkbench && remInfo.hasHearth && remInfo.hasCrucible) {
-                    desc = 'Горновой Комплекс [3-1-2] (0 штрафов, 50% ремонт, тигель)';
-                } else if (remInfo.hasWorkbench && remInfo.hasHearth && remInfo.hasAnvil) {
-                    desc = 'Тройной Комплекс [1-2-4] (0 штрафов, 50% ремонт, наковальня)';
-                } else if (remInfo.hasWorkbench && remInfo.hasHearth) {
-                    desc = 'Мастерская Оружейника [1-2] (0 штрафов, 50% ремонт)';
-                } else if (remInfo.hasWorkbench) {
-                    desc = `Станция с Верстаком (${remInfo.count} бл., нет Очага: +1 слиток штрафа)`;
-                } else {
-                    desc = `Вспомогательная станция (${remInfo.count} бл., верстак отсутствует)`;
-                }
-
                 level.server.runCommandSilent(`playsound minecraft:block.anvil.hit block @a ${np.x + 0.5} ${np.y + 0.5} ${np.z + 0.5} 0.6 1.0`);
-                if (player) {
-                    player.sendSystemMessage(Text.of(`§e⚒ [Кузнечный Комплекс] §7Станция перенастроена: активен §a${desc}§7.`));
-                }
             }
         });
     } finally {
@@ -547,7 +496,7 @@ BlockEvents.broken(event => {
 });
 
 // ------------------------------------------------------------------------------
-// AMBIENT PARTICLES & AUDIO TICK LOOP
+// AMBIENT PARTICLES & AUDIO TICK LOOP (CLEAN, NO INTRUSIVE SMOKE/ASH/WITCH/PORTAL)
 // ------------------------------------------------------------------------------
 ServerEvents.tick(event => {
     // Run once every 20 ticks (1 second)
@@ -586,18 +535,14 @@ ServerEvents.tick(event => {
                     let bz = bzPos + 0.5;
 
                     if (id === 'kubejs:blacksmith_hearth') {
-                        // Hearth: Curling chimney smoke and glowing ember sparks
-                        level.server.runCommandSilent(`particle minecraft:campfire_cosy_smoke ${bx} ${by + 1.1} ${bz} 0.15 0.3 0.15 0.02 2`);
-                        level.server.runCommandSilent(`particle minecraft:flame ${bx} ${by + 0.7} ${bz} 0.2 0.1 0.2 0.01 2`);
+                        // Hearth: subtle glowing flame sparks (no heavy chimney smoke cloud)
+                        level.server.runCommandSilent(`particle minecraft:flame ${bx} ${by + 0.7} ${bz} 0.15 0.05 0.15 0.01 1`);
                     } else if (id === 'kubejs:infernal_crucible') {
-                        // Crucible: Bubbling Nether lava and magma sparks
-                        level.server.runCommandSilent(`particle minecraft:lava ${bx} ${by + 0.9} ${bz} 0.25 0.1 0.25 0.02 1`);
-                        level.server.runCommandSilent(`particle minecraft:smoke ${bx} ${by + 1.0} ${bz} 0.15 0.2 0.15 0.02 2`);
+                        // Crucible: subtle magma spark (no ash/smoke flakes)
+                        level.server.runCommandSilent(`particle minecraft:lava ${bx} ${by + 0.8} ${bz} 0.15 0.05 0.15 0.02 1`);
                     } else if (id === 'kubejs:void_anvil') {
-                        // Void Anvil: Swirling violet void runes and amethyst crystal glimmer
-                        level.server.runCommandSilent(`particle minecraft:portal ${bx} ${by + 1.4} ${bz} 0.3 0.3 0.3 0.1 3`);
-                        level.server.runCommandSilent(`particle minecraft:witch ${bx} ${by + 1.2} ${bz} 0.2 0.2 0.2 0.02 1`);
-                        level.server.runCommandSilent(`particle minecraft:enchant ${bx} ${by + 1.5} ${bz} 0.2 0.2 0.2 0.5 3`);
+                        // Void Anvil: subtle amethyst enchant sparkle
+                        level.server.runCommandSilent(`particle minecraft:enchant ${bx} ${by + 1.2} ${bz} 0.15 0.15 0.15 0.2 1`);
                     }
                 }
             }

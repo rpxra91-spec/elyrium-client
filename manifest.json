@@ -1,8 +1,8 @@
 {
-  "version": "0.4.25",
+  "version": "0.4.26",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-05T20:56:37.076964+00:00",
+  "generated_at": "2026-10-05T21:43:38.279406+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -3872,7 +3872,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "9e04be95ec459f03b2ff9186add4b4b2746050e4e38b83206c3457a19795d957",
+      "sha256": "2cea164d44f460101434dc8d8de76b41880f25fa26048036c2b6b17b4889ae42",
       "size": 275
     },
     {
@@ -6832,8 +6832,8 @@
     },
     {
       "path": "kubejs/assets/elyrium/models/block/blacksmith_hearth_single.json",
-      "sha256": "0e25bd4f3f9c7f1686c581e71d24dde18f22bd50569e847b3af4377f72778e87",
-      "size": 20799
+      "sha256": "5237eae65b64f0bd743a4caf847eda06b430174af923a0e9a88424514535528e",
+      "size": 38572
     },
     {
       "path": "kubejs/assets/elyrium/models/block/blacksmith_workbench_single.json",
@@ -6842,33 +6842,33 @@
     },
     {
       "path": "kubejs/assets/elyrium/models/block/crucible_quad_0.json",
-      "sha256": "229eb5eea796128720b46fe5cf7965d05a8e4703d8939c8f036f0bea440d8145",
-      "size": 10398
+      "sha256": "53f98900144d1c87fc21833b7fe419afe02ea91acb8e0a0a4c8743c8df7b434a",
+      "size": 44276
     },
     {
       "path": "kubejs/assets/elyrium/models/block/crucible_trio_left.json",
-      "sha256": "229eb5eea796128720b46fe5cf7965d05a8e4703d8939c8f036f0bea440d8145",
-      "size": 10398
+      "sha256": "53f98900144d1c87fc21833b7fe419afe02ea91acb8e0a0a4c8743c8df7b434a",
+      "size": 44276
     },
     {
       "path": "kubejs/assets/elyrium/models/block/hearth_pair_right.json",
-      "sha256": "efaebc47e23a5d74e9a0c82faf74f364b08df7d1577eb0f9ec553802b15d411d",
-      "size": 21874
+      "sha256": "f76ac000b1dab4b27f0b9a4ad2695262d1b6f49207597a21b2befd99dad13396",
+      "size": 41919
     },
     {
       "path": "kubejs/assets/elyrium/models/block/hearth_quad_2.json",
-      "sha256": "87da1230c097fda57bcbde0232cc939aaf3b210bb0e876429dd299e68efa09cc",
-      "size": 22412
+      "sha256": "f76ac000b1dab4b27f0b9a4ad2695262d1b6f49207597a21b2befd99dad13396",
+      "size": 41919
     },
     {
       "path": "kubejs/assets/elyrium/models/block/hearth_trio_right.json",
-      "sha256": "efaebc47e23a5d74e9a0c82faf74f364b08df7d1577eb0f9ec553802b15d411d",
-      "size": 21874
+      "sha256": "f76ac000b1dab4b27f0b9a4ad2695262d1b6f49207597a21b2befd99dad13396",
+      "size": 41919
     },
     {
       "path": "kubejs/assets/elyrium/models/block/infernal_crucible_single.json",
-      "sha256": "32cb599c3165aa2c30aa80b2a9c22239ebd7f55d7d01474d7111ee3cc4fb3836",
-      "size": 8783
+      "sha256": "7ebed8c5185e2aad9903b2c6c2583808a1ef99384930e4c0c599e23be7ead6a0",
+      "size": 40836
     },
     {
       "path": "kubejs/assets/elyrium/models/block/void_anvil_single.json",
@@ -13947,8 +13947,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
-      "sha256": "fcfb79ba84c9a5b33038b98304e8f9cb9a1be89c801fa4fd135a4ab1101762f9",
-      "size": 27049
+      "sha256": "bd9390043d12e923ba08d1f703fdebe64158b6964cf02115ed1b887926a5b8db",
+      "size": 22424
     },
     {
       "path": "kubejs/server_scripts/02_crafting/steel_metallurgy_recipes.js",
@@ -19602,8 +19602,8 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/models/block/blacksmith_hearth_single.json",
-      "sha256": "0e25bd4f3f9c7f1686c581e71d24dde18f22bd50569e847b3af4377f72778e87",
-      "size": 20799
+      "sha256": "5237eae65b64f0bd743a4caf847eda06b430174af923a0e9a88424514535528e",
+      "size": 38572
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/models/block/blacksmith_workbench_single.json",
@@ -19612,33 +19612,33 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/models/block/crucible_quad_0.json",
-      "sha256": "229eb5eea796128720b46fe5cf7965d05a8e4703d8939c8f036f0bea440d8145",
-      "size": 10398
+      "sha256": "53f98900144d1c87fc21833b7fe419afe02ea91acb8e0a0a4c8743c8df7b434a",
+      "size": 44276
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/models/block/crucible_trio_left.json",
-      "sha256": "229eb5eea796128720b46fe5cf7965d05a8e4703d8939c8f036f0bea440d8145",
-      "size": 10398
+      "sha256": "53f98900144d1c87fc21833b7fe419afe02ea91acb8e0a0a4c8743c8df7b434a",
+      "size": 44276
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/models/block/hearth_pair_right.json",
-      "sha256": "efaebc47e23a5d74e9a0c82faf74f364b08df7d1577eb0f9ec553802b15d411d",
-      "size": 21874
+      "sha256": "f76ac000b1dab4b27f0b9a4ad2695262d1b6f49207597a21b2befd99dad13396",
+      "size": 41919
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/models/block/hearth_quad_2.json",
-      "sha256": "87da1230c097fda57bcbde0232cc939aaf3b210bb0e876429dd299e68efa09cc",
-      "size": 22412
+      "sha256": "f76ac000b1dab4b27f0b9a4ad2695262d1b6f49207597a21b2befd99dad13396",
+      "size": 41919
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/models/block/hearth_trio_right.json",
-      "sha256": "efaebc47e23a5d74e9a0c82faf74f364b08df7d1577eb0f9ec553802b15d411d",
-      "size": 21874
+      "sha256": "f76ac000b1dab4b27f0b9a4ad2695262d1b6f49207597a21b2befd99dad13396",
+      "size": 41919
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/models/block/infernal_crucible_single.json",
-      "sha256": "32cb599c3165aa2c30aa80b2a9c22239ebd7f55d7d01474d7111ee3cc4fb3836",
-      "size": 8783
+      "sha256": "7ebed8c5185e2aad9903b2c6c2583808a1ef99384930e4c0c599e23be7ead6a0",
+      "size": 40836
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/models/block/void_anvil_single.json",
@@ -21402,7 +21402,7 @@
     },
     {
       "path": "shaderpacks/superDuperVanilla.zip.txt",
-      "sha256": "e3e4ef37b097744296e44a45cc8b17c0c8c28742c2a59fcd631ab6e9bc36900a",
+      "sha256": "62aa225cf889a414404a775a411fd1373c37788ad291aad03200fdaa2b9a7b82",
       "size": 231
     }
   ]
