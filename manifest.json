@@ -2,7 +2,7 @@
   "version": "0.4.23",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-05T11:35:59.785896+00:00",
+  "generated_at": "2026-10-05T13:32:38.891869+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -15361,11 +15361,6 @@
       "size": 468147
     },
     {
-      "path": "mods/bluemap-5.7-neoforge.jar",
-      "sha256": "827ac3921986d0d5e9c24ef2280f47c110d22dc14d284efb65330010d2e9517d",
-      "size": 5414670
-    },
-    {
       "path": "mods/bookshelf-neoforge-1.21.1-21.1.81.jar",
       "sha256": "19e88d40da2b6a114c2b808f7fb469d96e66a5379df0a8a43fcb7834498b3e76",
       "size": 328813
@@ -15469,6 +15464,11 @@
       "path": "mods/durabilitytooltip-1.2.0-neoforge-mc1.21.jar",
       "sha256": "db7fe3561c81f36715306c16b9b79539c9f207482226f10f60210ef9d21a7e7e",
       "size": 20821
+    },
+    {
+      "path": "mods/echo_compass_hud-neoforge-1.21.1-2.0.0.jar",
+      "sha256": "4aa8ff65f714648e7c3f5d05268739c145566b7964ed24022815ca338fb98c24",
+      "size": 26594
     },
     {
       "path": "mods/elyrium_properties-1.0.0.jar",
