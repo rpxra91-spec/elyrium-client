@@ -395,7 +395,7 @@ function alignBlacksmithStation(level, originPos, player, facingHint) {
     return line;
 }
 
-// 1. Generic Block Placement Handler
+// 1. Block Placement Handler (Unified for all 4 workstation blocks)
 BlockEvents.placed(event => {
     let block = event.block;
     let level = event.level;
@@ -405,17 +405,7 @@ BlockEvents.placed(event => {
     }
 });
 
-// 2. Targeted Placement Handlers for all 4 workstation blocks
-BS_BLOCK_IDS.forEach(targetId => {
-    BlockEvents.placed(targetId, event => {
-        let block = event.block;
-        let level = event.level;
-        if (!level || level.isClientSide() || bsIsAligning || !block) return;
-        alignBlacksmithStation(level, block.pos, event.player);
-    });
-});
-
-// 3. Sneak + Right-Click with empty hand on ANY workstation block triggers manual calibration!
+// 2. Sneak + Right-Click with empty hand on ANY workstation block triggers manual calibration!
 BlockEvents.rightClicked(event => {
     let player = event.player;
     if (!player || player.level.isClientSide() || !player.isCrouching()) return;
@@ -427,9 +417,7 @@ BlockEvents.rightClicked(event => {
     if (player.mainHandItem.isEmpty()) {
         event.cancel();
         let res = alignBlacksmithStation(player.level, block.pos, player);
-        if (res && res.length >= 2) {
-            player.sendSystemMessage(Text.of(`§6⚒ [Кузница] §aКалибровка выполнена! Модули (${res.length} шт.) состыкованы в канонический строй!`));
-        } else {
+        if (!res || res.length < 2) {
             player.sendSystemMessage(Text.of('§6⚒ [Кузница] §7Одиночный модуль. Установите рядом другие блоки кузницы [3-1-2-4]!'));
         }
     }
@@ -466,91 +454,96 @@ BlockEvents.broken(event => {
 
     let checkedPositions = new Set();
 
-    neighborPositions.forEach(np => {
-        let key = `${np.x},${np.y},${np.z}`;
-        if (checkedPositions.has(key)) return;
+    bsIsAligning = true;
+    try {
+        neighborPositions.forEach(np => {
+            let key = `${np.x},${np.y},${np.z}`;
+            if (checkedPositions.has(key)) return;
 
-        let nb = level.getBlock(np);
-        if (!nb || !BS_BLOCK_IDS.includes(String(nb.id))) return;
+            let nb = level.getBlock(np);
+            if (!nb || !BS_BLOCK_IDS.includes(String(nb.id))) return;
 
-        // Scan the remaining contiguous line attached to this neighbor
-        let remLine = findBlacksmithLine(level, np);
-        remLine.forEach(p => checkedPositions.add(`${p.x},${p.y},${p.z}`));
+            // Scan the remaining contiguous line attached to this neighbor
+            let remLine = findBlacksmithLine(level, np);
+            remLine.forEach(p => checkedPositions.add(`${p.x},${p.y},${p.z}`));
 
-        let remInfo = getBlacksmithStationInfo(level, np);
+            let remInfo = getBlacksmithStationInfo(level, np);
 
-        if (remInfo.count === 1) {
-            // Reverted to single standalone module
-            let soloBlock = level.getBlock(np);
-            let soloId = soloBlock ? String(soloBlock.id) : '';
-            let soloFacing = 'north';
-            try {
-                if (soloBlock && soloBlock.properties && soloBlock.properties.facing) {
-                    soloFacing = String(soloBlock.properties.facing).toLowerCase();
+            if (remInfo.count === 1) {
+                // Reverted to single standalone module
+                let soloBlock = level.getBlock(np);
+                let soloId = soloBlock ? String(soloBlock.id) : '';
+                let soloFacing = 'north';
+                try {
+                    if (soloBlock && soloBlock.properties && soloBlock.properties.facing) {
+                        soloFacing = String(soloBlock.properties.facing).toLowerCase();
+                    }
+                } catch (e) {}
+
+                if (soloBlock) {
+                    soloBlock.set(soloId, { facing: soloFacing, part: 'single' });
                 }
-            } catch (e) {}
 
-            if (soloBlock) {
-                soloBlock.set(soloId, { facing: soloFacing, part: 'single' });
-            }
+                if (soloId === 'kubejs:blacksmith_workbench') {
+                    if (player) {
+                        player.sendSystemMessage(Text.of('§e⚒ [Кузнечный Комплекс] §7Очаг демонтирован. Верстак перешел в автономный режим (§c+1 слиток штрафа к ковке§7).'));
+                    }
+                } else if (soloId === 'kubejs:blacksmith_hearth') {
+                    if (player) {
+                        player.sendSystemMessage(Text.of('§e🔥 [Кузнечный Комплекс] §7Верстак демонтирован. Очаг перешел в автономный режим (§eремонт снижен до 25%§7).'));
+                    }
+                } else if (soloId === 'kubejs:infernal_crucible') {
+                    if (player) {
+                        player.sendSystemMessage(Text.of('§4🌋 [Кузнечный Комплекс] §7Адский Горн отключен от верстака.'));
+                    }
+                } else if (soloId === 'kubejs:void_anvil') {
+                    if (player) {
+                        player.sendSystemMessage(Text.of('§5🌌 [Кузнечный Комплекс] §7Пустотная Наковальня отключена от мастерской.'));
+                    }
+                }
+            } else if (remInfo.count >= 2) {
+                // Reverted to smaller multi-block station: update 3D models of remaining blocks!
+                let remFacing = 'north';
+                try {
+                    let fb = level.getBlock(remLine[0]);
+                    if (fb && fb.properties && fb.properties.facing) {
+                        remFacing = String(fb.properties.facing).toLowerCase();
+                    }
+                } catch (e) {}
 
-            if (soloId === 'kubejs:blacksmith_workbench') {
+                let remIds = remLine.map(p => String(level.getBlock(p).id));
+                let remParts = determineFormationParts(remIds);
+
+                for (let ri = 0; ri < remLine.length; ri++) {
+                    let rp = remLine[ri];
+                    let rBlock = level.getBlock(rp);
+                    let rId = remIds[ri];
+                    let rPart = remParts[ri] || 'single';
+                    rBlock.set(rId, { facing: remFacing, part: rPart });
+                }
+
+                let desc = '';
+                if (remInfo.hasWorkbench && remInfo.hasHearth && remInfo.hasCrucible) {
+                    desc = 'Горновой Комплекс [3-1-2] (0 штрафов, 50% ремонт, тигель)';
+                } else if (remInfo.hasWorkbench && remInfo.hasHearth && remInfo.hasAnvil) {
+                    desc = 'Тройной Комплекс [1-2-4] (0 штрафов, 50% ремонт, наковальня)';
+                } else if (remInfo.hasWorkbench && remInfo.hasHearth) {
+                    desc = 'Мастерская Оружейника [1-2] (0 штрафов, 50% ремонт)';
+                } else if (remInfo.hasWorkbench) {
+                    desc = `Станция с Верстаком (${remInfo.count} бл., нет Очага: +1 слиток штрафа)`;
+                } else {
+                    desc = `Вспомогательная станция (${remInfo.count} бл., верстак отсутствует)`;
+                }
+
+                level.server.runCommandSilent(`playsound minecraft:block.anvil.hit block @a ${np.x + 0.5} ${np.y + 0.5} ${np.z + 0.5} 0.6 1.0`);
                 if (player) {
-                    player.sendSystemMessage(Text.of('§e⚒ [Кузнечный Комплекс] §7Очаг демонтирован. Верстак перешел в автономный режим (§c+1 слиток штрафа к ковке§7).'));
-                }
-            } else if (soloId === 'kubejs:blacksmith_hearth') {
-                if (player) {
-                    player.sendSystemMessage(Text.of('§e🔥 [Кузнечный Комплекс] §7Верстак демонтирован. Очаг перешел в автономный режим (§eремонт снижен до 25%§7).'));
-                }
-            } else if (soloId === 'kubejs:infernal_crucible') {
-                if (player) {
-                    player.sendSystemMessage(Text.of('§4🌋 [Кузнечный Комплекс] §7Адский Горн отключен от верстака.'));
-                }
-            } else if (soloId === 'kubejs:void_anvil') {
-                if (player) {
-                    player.sendSystemMessage(Text.of('§5🌌 [Кузнечный Комплекс] §7Пустотная Наковальня отключена от мастерской.'));
+                    player.sendSystemMessage(Text.of(`§e⚒ [Кузнечный Комплекс] §7Станция перенастроена: активен §a${desc}§7.`));
                 }
             }
-        } else if (remInfo.count >= 2) {
-            // Reverted to smaller multi-block station: update 3D models of remaining blocks!
-            let remFacing = 'north';
-            try {
-                let fb = level.getBlock(remLine[0]);
-                if (fb && fb.properties && fb.properties.facing) {
-                    remFacing = String(fb.properties.facing).toLowerCase();
-                }
-            } catch (e) {}
-
-            let remIds = remLine.map(p => String(level.getBlock(p).id));
-            let remParts = determineFormationParts(remIds);
-
-            for (let ri = 0; ri < remLine.length; ri++) {
-                let rp = remLine[ri];
-                let rBlock = level.getBlock(rp);
-                let rId = remIds[ri];
-                let rPart = remParts[ri] || 'single';
-                rBlock.set(rId, { facing: remFacing, part: rPart });
-            }
-
-            let desc = '';
-            if (remInfo.hasWorkbench && remInfo.hasHearth && remInfo.hasCrucible) {
-                desc = 'Горновой Комплекс [3-1-2] (0 штрафов, 50% ремонт, тигель)';
-            } else if (remInfo.hasWorkbench && remInfo.hasHearth && remInfo.hasAnvil) {
-                desc = 'Тройной Комплекс [1-2-4] (0 штрафов, 50% ремонт, наковальня)';
-            } else if (remInfo.hasWorkbench && remInfo.hasHearth) {
-                desc = 'Мастерская Оружейника [1-2] (0 штрафов, 50% ремонт)';
-            } else if (remInfo.hasWorkbench) {
-                desc = `Станция с Верстаком (${remInfo.count} бл., нет Очага: +1 слиток штрафа)`;
-            } else {
-                desc = `Вспомогательная станция (${remInfo.count} бл., верстак отсутствует)`;
-            }
-
-            level.server.runCommandSilent(`playsound minecraft:block.anvil.hit block @a ${np.x + 0.5} ${np.y + 0.5} ${np.z + 0.5} 0.6 1.0`);
-            if (player) {
-                player.sendSystemMessage(Text.of(`§e⚒ [Кузнечный Комплекс] §7Станция перенастроена: активен §a${desc}§7.`));
-            }
-        }
-    });
+        });
+    } finally {
+        bsIsAligning = false;
+    }
 });
 
 // ------------------------------------------------------------------------------

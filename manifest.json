@@ -2,7 +2,7 @@
   "version": "0.4.25",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-05T20:47:44.391685+00:00",
+  "generated_at": "2026-10-05T20:56:37.076964+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -13947,8 +13947,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
-      "sha256": "970c4d6a8d19abc53f7ea4f107b58f4953090161ab199eefbbc2a918b7c47ec5",
-      "size": 27227
+      "sha256": "fcfb79ba84c9a5b33038b98304e8f9cb9a1be89c801fa4fd135a4ab1101762f9",
+      "size": 27049
     },
     {
       "path": "kubejs/server_scripts/02_crafting/steel_metallurgy_recipes.js",
