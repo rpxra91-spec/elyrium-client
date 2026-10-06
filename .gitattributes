@@ -1,0 +1,35 @@
+# Set default behavior to automatically handle line endings
+* text=auto eol=lf
+
+# Force specific text files to always use LF
+*.json text eol=lf
+*.json5 text eol=lf
+*.jsonc text eol=lf
+*.toml text eol=lf
+*.js text eol=lf
+*.mcmeta text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.txt text eol=lf
+*.conf text eol=lf
+*.properties text eol=lf
+*.cfg text eol=lf
+*.local text eol=lf
+*.snbt text eol=lf
+*.ini text eol=lf
+*.toadcfg text eol=lf
+*.mcfunction text eol=lf
+*.md text eol=lf
+*.info text eol=lf
+
+# Explicitly mark binaries so git NEVER alters their bytes
+*.jar binary
+*.png binary
+*.ogg binary
+*.zip binary
+*.bin binary
+*.ico binary
+*.nbt binary
+*.dat binary
+*.db binary
+*.icns binary
