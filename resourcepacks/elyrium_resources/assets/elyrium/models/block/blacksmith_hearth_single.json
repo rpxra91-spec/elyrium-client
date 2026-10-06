@@ -1657,7 +1657,7 @@
       ],
       "faces": {
         "down": {
-          "texture": "#frame",
+          "texture": "#steel",
           "uv": [
             2,
             2,
@@ -1666,7 +1666,7 @@
           ]
         },
         "up": {
-          "texture": "#frame",
+          "texture": "#steel",
           "uv": [
             2,
             2,
@@ -1675,7 +1675,7 @@
           ]
         },
         "north": {
-          "texture": "#frame",
+          "texture": "#steel",
           "uv": [
             2,
             2,
@@ -1684,7 +1684,7 @@
           ]
         },
         "south": {
-          "texture": "#frame",
+          "texture": "#steel",
           "uv": [
             2,
             2,
@@ -1693,7 +1693,7 @@
           ]
         },
         "west": {
-          "texture": "#frame",
+          "texture": "#steel",
           "uv": [
             2,
             2,
@@ -1702,7 +1702,7 @@
           ]
         },
         "east": {
-          "texture": "#frame",
+          "texture": "#steel",
           "uv": [
             2,
             2,
@@ -1725,7 +1725,7 @@
       ],
       "faces": {
         "down": {
-          "texture": "#frame",
+          "texture": "#steel",
           "uv": [
             2,
             2,
@@ -1734,7 +1734,7 @@
           ]
         },
         "up": {
-          "texture": "#frame",
+          "texture": "#steel",
           "uv": [
             2,
             2,
@@ -1743,7 +1743,7 @@
           ]
         },
         "north": {
-          "texture": "#frame",
+          "texture": "#steel",
           "uv": [
             2,
             2,
@@ -1752,7 +1752,7 @@
           ]
         },
         "south": {
-          "texture": "#frame",
+          "texture": "#steel",
           "uv": [
             2,
             2,
@@ -1761,7 +1761,7 @@
           ]
         },
         "west": {
-          "texture": "#frame",
+          "texture": "#steel",
           "uv": [
             2,
             2,
@@ -1770,7 +1770,7 @@
           ]
         },
         "east": {
-          "texture": "#frame",
+          "texture": "#steel",
           "uv": [
             2,
             2,

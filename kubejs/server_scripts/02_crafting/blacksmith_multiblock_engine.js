@@ -25,6 +25,9 @@
 //   • Graceful reversion: breaking one block gracefully reverts the remaining blocks
 //     to their corresponding station status and 3D models with instant feedback.
 //   • 4x1 Grand Forge (3-1-2-4) triggers portal-like awakening effects across all 4 modules.
+//   • Grand Forge Locking: Fully assembled 4-block stations are locked against dissection.
+//   • Perpendicular Facing: Workstations face perpendicular to their formation axis.
+//   • Canonical Combination Validation: Prevents duplicate and junk block swapping.
 //   • Ambient tick loop: atmospheric chimney smoke, ember sparks, bubbling lava, void vortex.
 // ==============================================================================
 
@@ -56,21 +59,180 @@ const BS_DISPLAY_NAMES = {
 let bsIsAligning = false;
 
 // ------------------------------------------------------------------------------
-// SCAN CONTIGUOUS LINE OF BLACKSMITH BLOCKS (ALONG X OR Z)
+// HELPER: SAFELY EXTRACT PLAYER LOOK VECTOR
 // ------------------------------------------------------------------------------
-function findBlacksmithLine(level, startPos, facingHint) {
+function getPlayerLookVector(player) {
+    if (!player) return null;
+    try {
+        if (typeof player.getLookAngle === 'function') {
+            return player.getLookAngle();
+        }
+        if (player.lookAngle) {
+            return player.lookAngle;
+        }
+    } catch (e) {}
+    return null;
+}
+
+// ------------------------------------------------------------------------------
+// CHECK IF A BLOCK IS PART OF AN ASSEMBLED GRAND FORGE (4-BLOCK COMPLETE STATION)
+// ------------------------------------------------------------------------------
+function isBlockInAssembledGrandForge(level, pos) {
+    if (!level || !pos) return false;
+    let block = level.getBlock(pos);
+    if (!block || !BS_BLOCK_IDS.includes(String(block.id))) return false;
+    if (!block.properties || !block.properties.part) return false;
+    let part = String(block.properties.part);
+    if (part !== 'quad_0' && part !== 'quad_1' && part !== 'quad_2' && part !== 'quad_3') return false;
+
+    let sy = pos.y;
+    let myIdx = parseInt(part.replace('quad_', ''), 10);
+    if (isNaN(myIdx) || myIdx < 0 || myIdx > 3) return false;
+
+    // Helper to check if block at (x, y, z) matches expected canonical quad role
+    function matchesQuadRole(x, y, z, expectedQuad) {
+        let b = level.getBlock(x, y, z);
+        if (!b || !BS_BLOCK_IDS.includes(String(b.id))) return false;
+        if (!b.properties || !b.properties.part) return false;
+        let p = String(b.properties.part);
+        let id = String(b.id);
+        if (p !== expectedQuad) return false;
+        if (p === 'quad_0' && id !== 'kubejs:infernal_crucible') return false;
+        if (p === 'quad_1' && id !== 'kubejs:blacksmith_workbench') return false;
+        if (p === 'quad_2' && id !== 'kubejs:blacksmith_hearth') return false;
+        if (p === 'quad_3' && id !== 'kubejs:void_anvil') return false;
+        return true;
+    }
+
+    const QUAD_ROLES = ['quad_0', 'quad_1', 'quad_2', 'quad_3'];
+    const QUAD_ROLES_REV = ['quad_3', 'quad_2', 'quad_1', 'quad_0'];
+
+    // 1. Check along X-axis
+    // Span A: forward (quad_0 at xMin)
+    let xMinA = pos.x - myIdx;
+    let matchXA = true;
+    for (let i = 0; i < 4; i++) {
+        if (!matchesQuadRole(xMinA + i, sy, pos.z, QUAD_ROLES[i])) {
+            matchXA = false;
+            break;
+        }
+    }
+    if (matchXA) return true;
+
+    // Span B: reverse (quad_3 at xMin)
+    let xMinB = pos.x - (3 - myIdx);
+    let matchXB = true;
+    for (let i = 0; i < 4; i++) {
+        if (!matchesQuadRole(xMinB + i, sy, pos.z, QUAD_ROLES_REV[i])) {
+            matchXB = false;
+            break;
+        }
+    }
+    if (matchXB) return true;
+
+    // 2. Check along Z-axis
+    // Span A: forward (quad_0 at zMin)
+    let zMinA = pos.z - myIdx;
+    let matchZA = true;
+    for (let i = 0; i < 4; i++) {
+        if (!matchesQuadRole(pos.x, sy, zMinA + i, QUAD_ROLES[i])) {
+            matchZA = false;
+            break;
+        }
+    }
+    if (matchZA) return true;
+
+    // Span B: reverse (quad_3 at zMin)
+    let zMinB = pos.z - (3 - myIdx);
+    let matchZB = true;
+    for (let i = 0; i < 4; i++) {
+        if (!matchesQuadRole(pos.x, sy, zMinB + i, QUAD_ROLES_REV[i])) {
+            matchZB = false;
+            break;
+        }
+    }
+    if (matchZB) return true;
+
+    return false;
+}
+
+// ------------------------------------------------------------------------------
+// VALIDATE CANONICAL BLOCK COMBINATIONS (ANTI-DUPLICATE & ANTI-JUNK CHECK)
+// ------------------------------------------------------------------------------
+function isValidBlacksmithCombo(currentIds) {
+    if (!currentIds || !Array.isArray(currentIds)) return false;
+    let len = currentIds.length;
+    if (len < 2 || len > 4) return false;
+
+    let counts = {
+        'kubejs:infernal_crucible': 0,
+        'kubejs:blacksmith_workbench': 0,
+        'kubejs:blacksmith_hearth': 0,
+        'kubejs:void_anvil': 0
+    };
+
+    for (let id of currentIds) {
+        if (counts[id] === undefined) return false;
+        counts[id]++;
+    }
+
+    // 4 blocks: exactly one [Crucible, Workbench, Hearth, Anvil]
+    if (len === 4) {
+        return counts['kubejs:infernal_crucible'] === 1 &&
+               counts['kubejs:blacksmith_workbench'] === 1 &&
+               counts['kubejs:blacksmith_hearth'] === 1 &&
+               counts['kubejs:void_anvil'] === 1;
+    }
+
+    // 3 blocks: exactly one [Crucible, Workbench, Hearth] OR [Workbench, Hearth, Anvil]
+    if (len === 3) {
+        let isTrio1 = (counts['kubejs:infernal_crucible'] === 1 &&
+                       counts['kubejs:blacksmith_workbench'] === 1 &&
+                       counts['kubejs:blacksmith_hearth'] === 1 &&
+                       counts['kubejs:void_anvil'] === 0);
+        let isTrio2 = (counts['kubejs:infernal_crucible'] === 0 &&
+                       counts['kubejs:blacksmith_workbench'] === 1 &&
+                       counts['kubejs:blacksmith_hearth'] === 1 &&
+                       counts['kubejs:void_anvil'] === 1);
+        return isTrio1 || isTrio2;
+    }
+
+    // 2 blocks: exactly [Workbench, Hearth]
+    if (len === 2) {
+        return counts['kubejs:blacksmith_workbench'] === 1 &&
+               counts['kubejs:blacksmith_hearth'] === 1 &&
+               counts['kubejs:infernal_crucible'] === 0 &&
+               counts['kubejs:void_anvil'] === 0;
+    }
+
+    return false;
+}
+
+// ------------------------------------------------------------------------------
+// SCAN CONTIGUOUS LINE OF BLACKSMITH BLOCKS (ALONG X OR Z) WITH STRICT ISOLATION & PERPENDICULAR FACING
+// ------------------------------------------------------------------------------
+function findBlacksmithLine(level, startPos, facingHint, player) {
     if (!level || !startPos) return [];
     if (typeof level.getBlock !== 'function') return [startPos];
     let startBlock = level.getBlock(startPos);
     if (!startBlock || !BS_BLOCK_IDS.includes(String(startBlock.id))) return [];
 
     let sy = startPos.y;
+    let startIsGrand = isBlockInAssembledGrandForge(level, startPos);
 
     // 1. Scan along X-axis
     let xMin = startPos.x;
     while (true) {
-        let b = level.getBlock(xMin - 1, sy, startPos.z);
+        let testPos = new BS_BlockPos(xMin - 1, sy, startPos.z);
+        let b = level.getBlock(testPos);
         if (b && BS_BLOCK_IDS.includes(String(b.id))) {
+            let neighborIsGrand = isBlockInAssembledGrandForge(level, testPos);
+            if (!startIsGrand && neighborIsGrand) {
+                break; // Ignore blocks that already belong to an assembled Grand Forge
+            }
+            if (startIsGrand && !neighborIsGrand) {
+                break; // An assembled Grand Forge only includes its own blocks
+            }
             xMin--;
         } else {
             break;
@@ -78,8 +240,16 @@ function findBlacksmithLine(level, startPos, facingHint) {
     }
     let xMax = startPos.x;
     while (true) {
-        let b = level.getBlock(xMax + 1, sy, startPos.z);
+        let testPos = new BS_BlockPos(xMax + 1, sy, startPos.z);
+        let b = level.getBlock(testPos);
         if (b && BS_BLOCK_IDS.includes(String(b.id))) {
+            let neighborIsGrand = isBlockInAssembledGrandForge(level, testPos);
+            if (!startIsGrand && neighborIsGrand) {
+                break;
+            }
+            if (startIsGrand && !neighborIsGrand) {
+                break;
+            }
             xMax++;
         } else {
             break;
@@ -89,8 +259,16 @@ function findBlacksmithLine(level, startPos, facingHint) {
     // 2. Scan along Z-axis
     let zMin = startPos.z;
     while (true) {
-        let b = level.getBlock(startPos.x, sy, zMin - 1);
+        let testPos = new BS_BlockPos(startPos.x, sy, zMin - 1);
+        let b = level.getBlock(testPos);
         if (b && BS_BLOCK_IDS.includes(String(b.id))) {
+            let neighborIsGrand = isBlockInAssembledGrandForge(level, testPos);
+            if (!startIsGrand && neighborIsGrand) {
+                break;
+            }
+            if (startIsGrand && !neighborIsGrand) {
+                break;
+            }
             zMin--;
         } else {
             break;
@@ -98,8 +276,16 @@ function findBlacksmithLine(level, startPos, facingHint) {
     }
     let zMax = startPos.z;
     while (true) {
-        let b = level.getBlock(startPos.x, sy, zMax + 1);
+        let testPos = new BS_BlockPos(startPos.x, sy, zMax + 1);
+        let b = level.getBlock(testPos);
         if (b && BS_BLOCK_IDS.includes(String(b.id))) {
+            let neighborIsGrand = isBlockInAssembledGrandForge(level, testPos);
+            if (!startIsGrand && neighborIsGrand) {
+                break;
+            }
+            if (startIsGrand && !neighborIsGrand) {
+                break;
+            }
             zMax++;
         } else {
             break;
@@ -109,42 +295,65 @@ function findBlacksmithLine(level, startPos, facingHint) {
     let xLen = xMax - xMin + 1;
     let zLen = zMax - zMin + 1;
 
-    let facing = facingHint || 'north';
+    let initialFacing = facingHint || 'north';
     if (!facingHint && startBlock.properties && startBlock.properties.facing) {
-        facing = String(startBlock.properties.facing).toLowerCase();
+        initialFacing = String(startBlock.properties.facing).toLowerCase();
     }
 
-    // Choose the dominant line
+    let pLook = getPlayerLookVector(player);
+
+    // Dominant line along X
     if (xLen >= zLen && xLen > 1) {
+        let facing = initialFacing;
+        if (pLook && typeof pLook.z === 'number') {
+            facing = (pLook.z < 0) ? 'north' : 'south';
+        } else if (facing !== 'north' && facing !== 'south') {
+            facing = 'south';
+        }
+
         let line = [];
-        // When facing North (player stands at North looking South +Z): Left is East (+X, xMax), Right is West (-X, xMin)
+        // When facing North (player stands at North looking South): Left is East (+X, xMax), Right is West (-X, xMin)
         if (facing === 'north') {
             for (let x = xMax; x >= xMin; x--) {
                 line.push(new BS_BlockPos(x, sy, startPos.z));
             }
         } else {
-            // When facing South (player stands at South looking North -Z, default): Left is West (-X, xMin), Right is East (+X, xMax)
+            // When facing South (player stands at South looking North): Left is West (-X, xMin), Right is East (+X, xMax)
             for (let x = xMin; x <= xMax; x++) {
                 line.push(new BS_BlockPos(x, sy, startPos.z));
             }
         }
+        line.facing = facing;
         return line;
-    } else if (zLen > 1) {
+    }
+    // Dominant line along Z
+    else if (zLen > 1) {
+        let facing = initialFacing;
+        if (pLook && typeof pLook.x === 'number') {
+            facing = (pLook.x < 0) ? 'west' : 'east';
+        } else if (facing !== 'east' && facing !== 'west') {
+            facing = 'east';
+        }
+
         let line = [];
-        // When facing East (player stands at East looking West -X): Left is South (+Z, zMax), Right is North (-Z, zMin)
+        // When facing East (player looks East): Left is North (-Z, zMin), Right is South (+Z, zMax) -> from zMin to zMax
         if (facing === 'east') {
-            for (let z = zMax; z >= zMin; z--) {
-                line.push(new BS_BlockPos(startPos.x, sy, z));
-            }
-        } else {
-            // When facing West (player stands at West looking East +X, default): Left is North (-Z, zMin), Right is South (+Z, zMax)
             for (let z = zMin; z <= zMax; z++) {
                 line.push(new BS_BlockPos(startPos.x, sy, z));
             }
+        } else {
+            // When facing West (player looks West): Left is South (+Z, zMax), Right is North (-Z, zMin) -> from zMax to zMin
+            for (let z = zMax; z >= zMin; z--) {
+                line.push(new BS_BlockPos(startPos.x, sy, z));
+            }
         }
+        line.facing = facing;
         return line;
     }
-    return [startPos];
+
+    let singleLine = [startPos];
+    singleLine.facing = initialFacing;
+    return singleLine;
 }
 
 // ------------------------------------------------------------------------------
@@ -269,7 +478,6 @@ function getBlacksmithStationInfo(level, pos) {
 }
 
 // ------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------
 // SPATIAL AUTO-ALIGNMENT & 3D MODEL SYNCHRONIZATION FUNCTION
 // ------------------------------------------------------------------------------
 function alignBlacksmithStation(level, originPos, player, facingHint) {
@@ -280,15 +488,15 @@ function alignBlacksmithStation(level, originPos, player, facingHint) {
     let placedId = String(block.id);
     if (!BS_BLOCK_IDS.includes(placedId)) return null;
 
-    // Determine facing direction from the block
-    let facing = facingHint || 'north';
-    try {
-        if (block.properties && block.properties.facing) {
-            facing = String(block.properties.facing).toLowerCase();
-        }
-    } catch (e) {}
+    // 1. Grand Forge Locking: If this block is already part of an intact, fully assembled Grand Forge,
+    // and all 4 blocks are in place in the correct roles — DO NOT rearrange or reassemble!
+    if (isBlockInAssembledGrandForge(level, originPos)) {
+        return findBlacksmithLine(level, originPos, facingHint, player);
+    }
 
-    let line = findBlacksmithLine(level, originPos, facing);
+    let line = findBlacksmithLine(level, originPos, facingHint, player);
+    let facing = line.facing || facingHint || 'north';
+
     if (line.length < 2) {
         // Standalone block: ensure part is 'single'
         try {
@@ -303,6 +511,29 @@ function alignBlacksmithStation(level, originPos, player, facingHint) {
     }
 
     let currentIds = line.map(p => String(level.getBlock(p).id));
+
+    // 2. Anti-Duplicate & Canonical Validation Check
+    if (!isValidBlacksmithCombo(currentIds)) {
+        // Not a valid canonical combination (e.g. duplicate workbenches):
+        // DO NOT change block IDs! Set part to 'single' (or leave unchanged).
+        bsIsAligning = true;
+        try {
+            for (let i = 0; i < line.length; i++) {
+                let p = line[i];
+                let cur = level.getBlock(p);
+                if (cur && BS_BLOCK_IDS.includes(String(cur.id))) {
+                    let curPart = cur.properties ? String(cur.properties.part) : '';
+                    let curFacing = cur.properties ? String(cur.properties.facing) : facing;
+                    if (curPart !== 'single') {
+                        cur.set(cur.id, { facing: curFacing, part: 'single' });
+                    }
+                }
+            }
+        } finally {
+            bsIsAligning = false;
+        }
+        return line;
+    }
 
     // Desired canonical sorting based on canonical rank [3 -> 1 -> 2 -> 4]
     let sortedIds = currentIds.slice().sort((a, b) => {
@@ -421,7 +652,6 @@ BlockEvents.broken(event => {
     let bx = block.x;
     let by = block.y;
     let bz = block.z;
-    let player = event.player;
 
     // 1. Audio-visual dismantling feedback (clean sounds, no smoke cloud)
     level.server.runCommandSilent(`playsound minecraft:block.chain.break block @a ${bx + 0.5} ${by + 0.5} ${bz + 0.5} 0.8 1.0`);
@@ -468,11 +698,14 @@ BlockEvents.broken(event => {
                 }
             } else if (remInfo.count >= 2) {
                 // Reverted to smaller multi-block station: update 3D models of remaining blocks!
-                let remFacing = 'north';
+                let remFacing = remLine.facing || 'north';
                 try {
                     let fb = level.getBlock(remLine[0]);
                     if (fb && fb.properties && fb.properties.facing) {
-                        remFacing = String(fb.properties.facing).toLowerCase();
+                        let existingFacing = String(fb.properties.facing).toLowerCase();
+                        if (existingFacing === 'north' || existingFacing === 'south' || existingFacing === 'east' || existingFacing === 'west') {
+                            remFacing = existingFacing;
+                        }
                     }
                 } catch (e) {}
 
