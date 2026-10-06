@@ -1,0 +1,122 @@
+{
+  // -----------------------------------------------------------
+  //              Item Obliterator by ElocinDev
+  // -----------------------------------------------------------
+  //  
+  // How to add items?
+  //   - They are json strings, so you need to separate each
+  //     entry with a comma, except the last
+  //   - If you start an entry with !, it will be treated as a regular expression
+  //     Example: "!minecraft:.*_sword" to disable all swords
+  //  
+  // -----------------------------------------------------------
+  // Do not touch this
+  "configVersion": 2,
+  // -----------------------------------------------------------
+  // Items here will be unusable completely
+  //    Example: minecraft:diamond
+  "blacklisted_items": [
+    "relics:rage_glove",
+    "artifacts:vampiric_glove",
+    "relics:infinity_ham",
+    "artifacts:eternal_steak",
+    "artifacts:everlasting_beef",
+    "iceandfire:dragonbone_arrow",
+    "relics:holy_locket",
+    "iceandfire:dragonbone_bow",
+    "create:creative_motor",
+    "eidolon:raven_cloak",
+    "eidolon:soul_enchanter",
+    "artifacts:helium_flamingo",
+    "fantasy_armor:wandering_wizard_helmet",
+    "fantasy_armor:wandering_wizard_chestplate",
+    "fantasy_armor:wandering_wizard_leggins",
+    "fantasy_armor:wandering_wizard_boot",
+    "dungeonnowloading:life_stealer",
+    "fantasy_weapons:weapon_marai_executioner_sword",
+    "fantasy_weapons:weapon_thief_dagger",
+    "fantasy_weapons:weapon_old_blade",
+    "fantasy_weapons:weapon_infected_sharp_sword",
+    "fantasy_weapons:weapon_nagakiba",
+    "fantasy_weapons:weapon_golden_halberd",
+    "fantasy_weapons:weapon_wakizashi",
+    "fantasy_weapons:weapon_kingslayer",
+    "fantasy_weapons:weapon_hero_claymore",
+    "fantasy_weapons:weapon_infected_sharp_curved_sword",
+    "fantasy_weapons:weapon_old_broadsword",
+    "fantasy_weapons:weapon_crimson_reaper",
+    "fantasy_weapons:weapon_sharp_spear",
+    "fantasy_weapons:weapon_dragons_doom",
+    "fantasy_weapons:weapon_black_katana",
+    "fantasy_weapons:weapon_sharp_curved_sword",
+    "fantasy_weapons:weapon_infected_sharp_spear",
+    "fantasy_weapons:weapon_old_dagger",
+    "fantasy_weapons:weapon_fury_of_the_storm",
+    "fantasy_weapons:weapon_wandering_wizard_sword",
+    "fantasy_weapons:weapon_hand_of_malenia",
+    "fantasy_weapons:weapon_hefty_club",
+    "fantasy_weapons:weapon_fates_beacon",
+    "fantasy_weapons:weapon_savage_dagger",
+    "fantasy_weapons:weapon_savage_sword",
+    "fantasy_weapons:weapon_savage_spear",
+    "fantasy_weapons:weapon_savage_hammer",
+    "fantasy_weapons:weapon_fog_guard_sword",
+    "fantasy_weapons:weapon_dark_cover_sword",
+    "fantasy_weapons:weapon_golden_execution_battleaxe",
+    "fantasy_weapons:weapon_forgotten_trace_spear",
+    "fantasy_weapons:weapon_marika_hammer",
+    "fantasy_weapons:weapon_desert_wind",
+    "fantasy_weapons:weapon_phantom_needle",
+    "fantasy_weapons:weapon_estoc",
+    "fantasy_weapons:weapon_fog_guard_dagger",
+    "fantasy_weapons:weapon_great_katana",
+    "fantasy_weapons:weapon_soldier_greatspear",
+    "fantasy_weapons:weapon_misericorde",
+    "fantasy_weapons:weapon_knight_greatsword",
+    "fantasy_weapons:weapon_banished_knight_greatsword",
+    "fantasy_weapons:weapon_watchdog_greatsword",
+    "fantasy_weapons:weapon_royal_greatsword",
+    "fantasy_weapons:weapon_crucible_greatsword",
+    "fantasy_weapons:weapon_generic_rapier",
+    "fantasy_weapons:weapon_knight_halberd",
+    "create:wand_of_symmentry",
+    "rogues:rogue_spell_book",
+    "paladins:priest_spell_book"
+  ],
+  // -----------------------------------------------------------
+  // Removes an item if it contains certain nbt tag. If the whole entry (or expression) is present, the item gets removed.
+  // Use with caution! This is a very expensive operation and can cause lag if you have a lot of items blacklisted.
+  // 	
+  // 	 Example to disable a regeneration potion: Potion:"minecraft:regeneration"
+  // 	
+  // 	 You can also use regular expressions by starting the value with !
+  "blacklisted_nbt": [
+
+],
+  // -----------------------------------------------------------
+  // Items here will not be able to be right-clicked (Interact)
+  //    Example: minecraft:apple
+  "only_disable_interactions": [
+    "examplemod:example_item"
+  ],
+  // -----------------------------------------------------------
+  // Items here will not be able to be used to attack
+  //    Example: minecraft:diamond_sword
+  "only_disable_attacks": [
+    "examplemod:example_item"
+  ],
+  // -----------------------------------------------------------
+  // Items here will get their recipes disabled
+  // Keep in mind this already is applied to blacklisted items
+  "only_disable_recipes": [
+    "examplemod:example_item"
+  ],
+  // -----------------------------------------------------------
+  // If true, the mod will use a hashset to handle the blacklisted items
+  // This is a more optimized approach only if you have a lot of items blacklisted (20 or more is recommended)
+  // If you just have a small amount of items blacklisted, keep this false
+  //  
+  // [!] Enabling this will disable all regular expressions
+  // [!] Does not apply to NBT, only item blacklist / interaction / attack
+  "use_hashmap_optimizations": false
+}

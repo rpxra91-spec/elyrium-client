@@ -2525,7 +2525,7 @@ PlayerEvents.loggedOut(event => {
     let player = event.player;
     if (player) {
         let pUuid = String(player.uuid);
-        if (PLAYER_STAMINA_BARS.has(pUuid)) {
+        if (typeof PLAYER_STAMINA_BARS !== 'undefined' && PLAYER_STAMINA_BARS && PLAYER_STAMINA_BARS.has(pUuid)) {
             try {
                 let bar = PLAYER_STAMINA_BARS.get(pUuid);
                 bar.removeAllPlayers();

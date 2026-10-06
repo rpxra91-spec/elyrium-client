@@ -513,7 +513,6 @@ PlayerEvents.chat(event => {
         event.cancel();
         return;
     }
-    }
 
     if (msg.startsWith('.unlocksector') || msg.startsWith('!unlocksector')) {
         let parts = msg.split(/\s+/);

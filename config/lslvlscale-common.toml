@@ -1,0 +1,21 @@
+#Enable scaling for hostile mobs on spawn
+scaleHostileMobs = true
+#Radius (blocks) to search for players around the spawning mob
+#Range: 1 ~ 512
+playerRadius = 100
+#Divisor for distance-from-center term. distance/divisor is capped by maxDistanceFactor then multiplied by 0.01
+#Range: 1.0 ~ 10000.0
+distanceDivisor = 300.0
+#Cap for the (distance/divisor) term before multiplying by 0.01. Vanilla formula caps at 50
+#Range: 0.0 ~ 1000.0
+maxDistanceFactor = 50.0
+#Maximum skill level in Passive Skill Tree (used to normalize average level)
+#Range: 1 ~ 10000
+maxSkillLevel = 115
+#Enable debug logging for scaling calculations
+debugLogging = false
+#Entity type ids to treat as hostile for scaling, in addition to Enemy. Example: ['irons_spellbooks:boss','modid:entity']
+extraHostileEntityTypes = ["irons_spellbooks:dead_king"]
+#If true, use the level's world spawn (/setworldspawn) as distance center; if false, use (0,0)
+useWorldSpawnAsCenter = false
+

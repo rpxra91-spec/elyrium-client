@@ -1,0 +1,6 @@
+#Maximum number of arrows per tick that can damage a single entity.
+#Range: 0 ~ 64
+maxArrowsPerTick = 3
+#Enable debug logging for lsarrowtickdamage.
+debug = true
+

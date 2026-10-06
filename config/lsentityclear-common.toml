@@ -1,0 +1,35 @@
+
+[general]
+	#Enable debug logging
+	debug = false
+
+[defaults]
+	#Default half-extent along X and Z (blocks) around each player for counting entities
+	#Range: 1 ~ 512
+	xzHalfExtent = 48
+	#Default half-extent along Y (blocks) around each player for counting entities
+	#Range: 1 ~ 512
+	yHalfExtent = 24
+	#Default despawn delay (seconds) for entities that moved outside the area. 0 disables despawn.
+	#Range: 0 ~ 86400
+	despawnOutOfAreaSeconds = 0
+
+[enemyFilter]
+	#If true, apply default per-type limit to all hostile mobs (monster category)
+	enabled = false
+	#Per-type limit within default area when enemy filter is enabled (e.g., 3 -> 3 zombies, 3 skeletons, etc.)
+	#Range: 0 ~ 10000
+	perTypeLimit = 3
+
+[entities]
+	#Per-entity rules. One entry per line in the following format:
+	#id=<namespace:path>; limit=<int>; xz=<int>; y=<int>; radius=<int>(Not exactly); despawn=<seconds>
+	#Fields:
+	# - id: required, entity type id (e.g., minecraft:zombie)
+	# - limit: required, max number of this entity type in the player's area
+	# - xz: optional, overrides default X/Z half-extent for this entity
+	# - y: optional, overrides default Y half-extent for this entity
+	# - radius: optional, uniform half-extent for all axes (Not exactly) (deprecated, kept for compatibility)
+	# - despawn: optional, seconds outside the area before despawn; 0 disables despawn
+	rules = ["id=realmrpg_demons:chort; limit=1; xz=200; y=40; despawn=1", "id=minecraft:stray; limit=9; xz=120; y=50; despawn=4", "id=minecraft:zombie; limit=10; xz=120; y=50; despawn=4", "id=naturalist:bass; limit=15; xz=120; y=50; despawn=4", "id=minecraft:creeper; limit=7; xz=120; y=50; despawn=4", "id=minecraft:enderman; limit=10; xz=120; y=50; despawn=4", "id=minecraft:endermite; limit=5; xz=120; y=50; despawn=4", "id=minecraft:skeleton; limit=4; xz=120; y=50; despawn=4", "id=minecraft:spider; limit=4; xz=120; y=50; despawn=4", "id=minecraft:cave_spider; limit=2; xz=120; y=50; despawn=4", "id=minecraft:witch; limit=3; xz=120; y=50; despawn=4", "id=minecraft:slime; limit=5; xz=120; y=50; despawn=4", "id=minecraft:magma_cube; limit=5; xz=120; y=50; despawn=4", "id=minecraft:ghast; limit=3; xz=120; y=50; despawn=4", "id=minecraft:blaze; limit=5; xz=120; y=50; despawn=4", "id=minecraft:wither_skeleton; limit=8; xz=120; y=50; despawn=4", "id=minecraft:zombie_villager; limit=3; xz=120; y=50; despawn=4", "id=minecraft:drowned; limit=4; xz=120; y=50; despawn=4", "id=minecraft:husk; limit=4; xz=120; y=50; despawn=4", "id=minecraft:phantom; limit=2; xz=120; y=50; despawn=4", "id=minecraft:pillager; limit=15; xz=120; y=50; despawn=4", "id=minecraft:vindicator; limit=15; xz=120; y=50; despawn=4", "id=minecraft:ravager; limit=4; xz=120; y=50; despawn=4", "id=minecraft:warden; limit=2; xz=120; y=50; despawn=4", "id=iceandfire:dragon_multipart; limit=1; xz=120; y=50; despawn=4", "id=minecraft:bat; limit=4; xz=120; y=50; despawn=4", "id=minecraft:squid; limit=10; xz=120; y=50; despawn=4", "id=alexsmobs:cockroach; limit=3; xz=120; y=50; despawn=4", "id=minecraft:glow_squid; limit=5; xz=120; y=50; despawn=4", "id=eidolon:wraith; limit=5; xz=120; y=50; despawn=4", "id=naturalist:robin; limit=3; xz=120; y=50; despawn=4", "id=ecologics:penguin; limit=6; xz=120; y=50; despawn=4", "id=iceandfire:troll; limit=3; xz=120; y=50; despawn=4", "id=creeperoverhaul:snowy_creeper; limit=5; xz=120; y=50; despawn=4", "id=windswept:chilled; limit=5; xz=120; y=50; despawn=4", "id=alexsmobs:fly; limit=5; xz=120; y=50; despawn=4", "id=endermanoverhaul:snowy_enderman; limit=10; xz=120; y=50; despawn=4", "id=eidolon:zombie_brute; limit=5; xz=120; y=50; despawn=4", "id=irons_spellbooks:necromancer; limit=3; xz=120; y=50; despawn=4", "id=minecraft:tropical_fish; limit=10; xz=120; y=50; despawn=4", "id=creeperoverhaul:cave_creeper; limit=10; xz=120; y=50; despawn=4", "id=caverns_and_chasms:mime; limit=5; xz=120; y=50; despawn=4", "id=caverns_and_chasms:glare; limit=5; xz=120; y=50; despawn=4", "id=alexsmobs:centipede_body; limit=5; xz=120; y=50; despawn=4", "id=windswept:frostbiter; limit=4; xz=120; y=50; despawn=4", "id=alexsmobs:centipede_tail; limit=5; xz=120; y=50; despawn=4", "id=alexsmobs:blue_jay; limit=6; xz=120; y=50; despawn=4", "id=naturalist:finch; limit=6; xz=120; y=50; despawn=4", "id=endermanoverhaul:flower_fields_enderman; limit=6; xz=120; y=50; despawn=4", "id=alexsmobs:raccoon; limit=4; xz=120; y=50; despawn=4", "id=minecraft:silverfish; limit=3; xz=120; y=50; despawn=4"]
+

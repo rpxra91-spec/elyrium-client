@@ -411,7 +411,7 @@ PlayerEvents.tick(event => {
 // ------------------------------------------------------------------------------
 EntityEvents.beforeHurt(event => {
     let attacker = event.source ? (event.source.actual || event.source.direct) : null;
-    if (attacker && attacker.isPlayer()) {
+    if (attacker && typeof attacker === 'object' && attacker.isPlayer && attacker.isPlayer()) {
         let pData = attacker.persistentData;
         let riposteUntil = pData.getLong('elyrium_riposte_ready_until') || 0;
         if (attacker.level.time <= riposteUntil) {

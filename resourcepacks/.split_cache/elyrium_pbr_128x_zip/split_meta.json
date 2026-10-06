@@ -1,7 +1,7 @@
 {
   "target_path": "resourcepacks/Elyrium_PBR_128x.zip",
-  "target_size": 148357582,
-  "target_sha256": "7934bcd1bbc09ed925be44d3f052122c106d18f72952a6102492697e651a6524",
+  "target_size": 149021458,
+  "target_sha256": "8db8549333987eaff6eb41ac622d0f9f5e23bc41e068aa41ed23c5f1cef1f889",
   "chunk_count": 3,
   "parts": [
     {
@@ -19,8 +19,8 @@
     {
       "index": 2,
       "path": "resourcepacks/.split_cache/elyrium_pbr_128x_zip/part_02.bin",
-      "size": 1556942,
-      "sha256": "01fb51bf92913296ca9ee7feb430e02d6ff50b01d164d8922cb80dd330fceaaa"
+      "size": 2220818,
+      "sha256": "350cc199bf1b234a3a583b51eb2906f1498205c82a49e0113d40749d02af6e57"
     }
   ]
 }

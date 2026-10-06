@@ -39,7 +39,11 @@ StartupEvents.registry('block', event => {
         .tagBlock('minecraft:mineable/pickaxe')
         .fullBlock(false)
         .notSolid()
-        .box(0, 0, 0, 16, 16, 16)
+        .box(0, 12, 0, 16, 16, 16)
+        .box(1, 0, 1, 4, 12, 4)
+        .box(12, 0, 1, 15, 12, 4)
+        .box(1, 0, 12, 4, 12, 15)
+        .box(12, 0, 12, 15, 12, 15)
         .property(BlockProperties.HORIZONTAL_FACING)
         .property(BS_PART_PROPERTY)
         .defaultState(state => {
@@ -62,7 +66,8 @@ StartupEvents.registry('block', event => {
         .lightLevel(0.8) // Свет 12/15
         .fullBlock(false)
         .notSolid()
-        .box(0, 0, 0, 16, 16, 16)
+        .box(0, 0, 0, 16, 11, 16)
+        .box(0, 11, 11, 16, 16, 16)
         .property(BlockProperties.HORIZONTAL_FACING)
         .property(BS_PART_PROPERTY)
         .defaultState(state => {
@@ -85,7 +90,7 @@ StartupEvents.registry('block', event => {
         .lightLevel(0.9) // Свет 13.5/15
         .fullBlock(false)
         .notSolid()
-        .box(0, 0, 0, 16, 16, 16)
+        .box(1, 0, 1, 15, 15, 15)
         .property(BlockProperties.HORIZONTAL_FACING)
         .property(BS_PART_PROPERTY)
         .defaultState(state => {
@@ -108,7 +113,9 @@ StartupEvents.registry('block', event => {
         .lightLevel(0.4) // Свет 6/15
         .fullBlock(false)
         .notSolid()
-        .box(0, 0, 0, 16, 19, 16)
+        .box(2, 0, 2, 14, 4, 14)
+        .box(4, 4, 3, 12, 10, 13)
+        .box(0, 10, 3, 16, 16, 13)
         .property(BlockProperties.HORIZONTAL_FACING)
         .property(BS_PART_PROPERTY)
         .defaultState(state => {
