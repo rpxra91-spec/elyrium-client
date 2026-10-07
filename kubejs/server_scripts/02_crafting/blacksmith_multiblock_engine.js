@@ -312,14 +312,18 @@ function findBlacksmithLine(level, startPos, facingHint, player) {
         }
 
         let line = [];
-        // When facing North (player stands looking North towards -Z): Left is West (-X, xMin), Right is East (+X, xMax)
+        // Canonical Left-to-Right layout on player screen: [Crucible(0), Workbench(1), Hearth(2), Anvil(3)]
+        // When facing North (player standing South looking North towards -Z):
+        // World West (-X, xMin) is on the player's Left. World East (+X, xMax) is on player's Right.
+        // Because previously xMin->xMax rendered Anvil on player Left and Crucible on player Right,
+        // traversing xMax down to xMin assigns index 0 (Crucible) to screen Left, and index 3 (Anvil) to screen Right!
         if (facing === 'north') {
-            for (let x = xMin; x <= xMax; x++) {
+            for (let x = xMax; x >= xMin; x--) {
                 line.push(new BS_BlockPos(x, sy, startPos.z));
             }
         } else {
-            // When facing South (player stands looking South towards +Z): Left is East (+X, xMax), Right is West (-X, xMin)
-            for (let x = xMax; x >= xMin; x--) {
+            // When facing South (player standing North looking South towards +Z):
+            for (let x = xMin; x <= xMax; x++) {
                 line.push(new BS_BlockPos(x, sy, startPos.z));
             }
         }
@@ -336,14 +340,14 @@ function findBlacksmithLine(level, startPos, facingHint, player) {
         }
 
         let line = [];
-        // When facing East (player looks East): Left is North (-Z, zMin), Right is South (+Z, zMax) -> from zMin to zMax
+        // When facing East (player looks East towards +X):
         if (facing === 'east') {
-            for (let z = zMin; z <= zMax; z++) {
+            for (let z = zMax; z >= zMin; z--) {
                 line.push(new BS_BlockPos(startPos.x, sy, z));
             }
         } else {
-            // When facing West (player looks West): Left is South (+Z, zMax), Right is North (-Z, zMin) -> from zMax to zMin
-            for (let z = zMax; z >= zMin; z--) {
+            // When facing West (player looks West towards -X):
+            for (let z = zMin; z <= zMax; z++) {
                 line.push(new BS_BlockPos(startPos.x, sy, z));
             }
         }
