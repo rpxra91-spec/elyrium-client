@@ -312,14 +312,14 @@ function findBlacksmithLine(level, startPos, facingHint, player) {
         }
 
         let line = [];
-        // When facing North (player stands at North looking South): Left is East (+X, xMax), Right is West (-X, xMin)
+        // When facing North (player stands looking North towards -Z): Left is West (-X, xMin), Right is East (+X, xMax)
         if (facing === 'north') {
-            for (let x = xMax; x >= xMin; x--) {
+            for (let x = xMin; x <= xMax; x++) {
                 line.push(new BS_BlockPos(x, sy, startPos.z));
             }
         } else {
-            // When facing South (player stands at South looking North): Left is West (-X, xMin), Right is East (+X, xMax)
-            for (let x = xMin; x <= xMax; x++) {
+            // When facing South (player stands looking South towards +Z): Left is East (+X, xMax), Right is West (-X, xMin)
+            for (let x = xMax; x >= xMin; x--) {
                 line.push(new BS_BlockPos(x, sy, startPos.z));
             }
         }
@@ -770,9 +770,6 @@ ServerEvents.tick(event => {
                     if (id === 'kubejs:blacksmith_hearth') {
                         // Hearth: subtle glowing flame sparks (no heavy chimney smoke cloud)
                         level.server.runCommandSilent(`particle minecraft:flame ${bx} ${by + 0.7} ${bz} 0.15 0.05 0.15 0.01 1`);
-                    } else if (id === 'kubejs:infernal_crucible') {
-                        // Crucible: subtle magma spark (no ash/smoke flakes)
-                        level.server.runCommandSilent(`particle minecraft:lava ${bx} ${by + 0.8} ${bz} 0.15 0.05 0.15 0.02 1`);
                     } else if (id === 'kubejs:void_anvil') {
                         // Void Anvil: subtle amethyst enchant sparkle
                         level.server.runCommandSilent(`particle minecraft:enchant ${bx} ${by + 1.2} ${bz} 0.15 0.15 0.15 0.2 1`);

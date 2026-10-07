@@ -238,43 +238,34 @@
     },
     {
       "from": [
-        6,
-        16,
+        5,
+        14.95,
         6
       ],
       "to": [
-        10,
-        20.5,
+        9,
+        15.05,
         10
       ],
       "faces": {
         "down": {
-          "texture": "#crystal"
+          "texture": "#runes"
         },
         "up": {
-          "texture": "#crystal"
+          "texture": "#runes"
         },
         "north": {
-          "texture": "#crystal"
+          "texture": "#runes"
         },
         "south": {
-          "texture": "#crystal"
+          "texture": "#runes"
         },
         "west": {
-          "texture": "#crystal"
+          "texture": "#runes"
         },
         "east": {
-          "texture": "#crystal"
+          "texture": "#runes"
         }
-      },
-      "rotation": {
-        "origin": [
-          8,
-          18,
-          8
-        ],
-        "axis": "y",
-        "angle": 45
       }
     }
   ]

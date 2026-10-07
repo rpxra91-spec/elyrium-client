@@ -104,6 +104,45 @@ function runBlacksmithTestSuite() {
             endSorted[2] === 'kubejs:void_anvil',
             `Result: ${endSorted.join(' -> ')}`
         );
+
+        // Test 1.5: Cardinal Orientation (North/South/East/West left-to-right order)
+        let simLine = function(facing, len) {
+            let res = [];
+            if (facing === 'north') {
+                for (let x = 0; x < len; x++) res.push(x);
+            } else if (facing === 'south') {
+                for (let x = len - 1; x >= 0; x--) res.push(x);
+            } else if (facing === 'east') {
+                for (let z = 0; z < len; z++) res.push(z);
+            } else if (facing === 'west') {
+                for (let z = len - 1; z >= 0; z--) res.push(z);
+            }
+            return res;
+        };
+        let lNorth = simLine('north', 4);
+        let lSouth = simLine('south', 4);
+        let lEast = simLine('east', 4);
+        let lWest = simLine('west', 4);
+        assert(
+            "Orientation: North faces left-to-right (xMin -> xMax)",
+            lNorth[0] === 0 && lNorth[3] === 3,
+            `North: ${lNorth.join(' -> ')}`
+        );
+        assert(
+            "Orientation: South faces left-to-right (xMax -> xMin)",
+            lSouth[0] === 3 && lSouth[3] === 0,
+            `South: ${lSouth.join(' -> ')}`
+        );
+        assert(
+            "Orientation: East faces left-to-right (zMin -> zMax)",
+            lEast[0] === 0 && lEast[3] === 3,
+            `East: ${lEast.join(' -> ')}`
+        );
+        assert(
+            "Orientation: West faces left-to-right (zMax -> zMin)",
+            lWest[0] === 3 && lWest[3] === 0,
+            `West: ${lWest.join(' -> ')}`
+        );
     }
 
     // --------------------------------------------------------------------------
