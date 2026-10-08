@@ -4,7 +4,7 @@
       "model": "elyrium:block/blacksmith_workbench_single"
     },
     "facing=north,part=pair_left": {
-      "model": "elyrium:block/workbench_pair_left"
+      "model": "elyrium:block/blacksmith_workbench_single"
     },
     "facing=north,part=pair_right": {
       "model": "elyrium:block/blacksmith_workbench_single"
@@ -13,7 +13,7 @@
       "model": "elyrium:block/blacksmith_workbench_single"
     },
     "facing=north,part=trio_mid": {
-      "model": "elyrium:block/workbench_trio_mid"
+      "model": "elyrium:block/blacksmith_workbench_single"
     },
     "facing=north,part=trio_right": {
       "model": "elyrium:block/blacksmith_workbench_single"
@@ -22,7 +22,7 @@
       "model": "elyrium:block/blacksmith_workbench_single"
     },
     "facing=north,part=quad_1": {
-      "model": "elyrium:block/workbench_quad_1"
+      "model": "elyrium:block/blacksmith_workbench_single"
     },
     "facing=north,part=quad_2": {
       "model": "elyrium:block/blacksmith_workbench_single"
@@ -30,12 +30,15 @@
     "facing=north,part=quad_3": {
       "model": "elyrium:block/blacksmith_workbench_single"
     },
+    "facing=north": {
+      "model": "elyrium:block/blacksmith_workbench_single"
+    },
     "facing=east,part=single": {
       "model": "elyrium:block/blacksmith_workbench_single",
       "y": 90
     },
     "facing=east,part=pair_left": {
-      "model": "elyrium:block/workbench_pair_left",
+      "model": "elyrium:block/blacksmith_workbench_single",
       "y": 90
     },
     "facing=east,part=pair_right": {
@@ -47,7 +50,7 @@
       "y": 90
     },
     "facing=east,part=trio_mid": {
-      "model": "elyrium:block/workbench_trio_mid",
+      "model": "elyrium:block/blacksmith_workbench_single",
       "y": 90
     },
     "facing=east,part=trio_right": {
@@ -59,7 +62,7 @@
       "y": 90
     },
     "facing=east,part=quad_1": {
-      "model": "elyrium:block/workbench_quad_1",
+      "model": "elyrium:block/blacksmith_workbench_single",
       "y": 90
     },
     "facing=east,part=quad_2": {
@@ -70,12 +73,16 @@
       "model": "elyrium:block/blacksmith_workbench_single",
       "y": 90
     },
+    "facing=east": {
+      "model": "elyrium:block/blacksmith_workbench_single",
+      "y": 90
+    },
     "facing=south,part=single": {
       "model": "elyrium:block/blacksmith_workbench_single",
       "y": 180
     },
     "facing=south,part=pair_left": {
-      "model": "elyrium:block/workbench_pair_left",
+      "model": "elyrium:block/blacksmith_workbench_single",
       "y": 180
     },
     "facing=south,part=pair_right": {
@@ -87,7 +94,7 @@
       "y": 180
     },
     "facing=south,part=trio_mid": {
-      "model": "elyrium:block/workbench_trio_mid",
+      "model": "elyrium:block/blacksmith_workbench_single",
       "y": 180
     },
     "facing=south,part=trio_right": {
@@ -99,7 +106,7 @@
       "y": 180
     },
     "facing=south,part=quad_1": {
-      "model": "elyrium:block/workbench_quad_1",
+      "model": "elyrium:block/blacksmith_workbench_single",
       "y": 180
     },
     "facing=south,part=quad_2": {
@@ -110,12 +117,16 @@
       "model": "elyrium:block/blacksmith_workbench_single",
       "y": 180
     },
+    "facing=south": {
+      "model": "elyrium:block/blacksmith_workbench_single",
+      "y": 180
+    },
     "facing=west,part=single": {
       "model": "elyrium:block/blacksmith_workbench_single",
       "y": 270
     },
     "facing=west,part=pair_left": {
-      "model": "elyrium:block/workbench_pair_left",
+      "model": "elyrium:block/blacksmith_workbench_single",
       "y": 270
     },
     "facing=west,part=pair_right": {
@@ -127,7 +138,7 @@
       "y": 270
     },
     "facing=west,part=trio_mid": {
-      "model": "elyrium:block/workbench_trio_mid",
+      "model": "elyrium:block/blacksmith_workbench_single",
       "y": 270
     },
     "facing=west,part=trio_right": {
@@ -139,7 +150,7 @@
       "y": 270
     },
     "facing=west,part=quad_1": {
-      "model": "elyrium:block/workbench_quad_1",
+      "model": "elyrium:block/blacksmith_workbench_single",
       "y": 270
     },
     "facing=west,part=quad_2": {
@@ -147,6 +158,10 @@
       "y": 270
     },
     "facing=west,part=quad_3": {
+      "model": "elyrium:block/blacksmith_workbench_single",
+      "y": 270
+    },
+    "facing=west": {
       "model": "elyrium:block/blacksmith_workbench_single",
       "y": 270
     }

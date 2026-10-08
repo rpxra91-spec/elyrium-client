@@ -1,44 +1,35 @@
 // ==============================================================================
-// ⚒️ ELYRIUM RPG: MODULAR BLACKSMITH MULTIBLOCK ENGINE
+// ⚒️ ELYRIUM RPG: FREE BLACKSMITH WORKSHOP & RADIUS ENGINE
 // Minecraft 1.21.1 NeoForge | KubeJS Server Script
+// File: server_scripts/02_crafting/blacksmith_multiblock_engine.js
 // ==============================================================================
-// Manages the 3-level modular blacksmith workshop consisting of up to 4 blocks:
-//   1 = kubejs:blacksmith_workbench (Верстак Оружейника, Т1)
-//   2 = kubejs:blacksmith_hearth    (Кузнечный Очаг / Меха, Т1)
-//   3 = kubejs:infernal_crucible    (Адский Горн, Т3 Nether)
-//   4 = kubejs:void_anvil           (Пустотная Наковальня, Т5 The End)
+// Manages the Free Blacksmith Workshop components:
+//   1 = kubejs:blacksmith_workbench («Верстак Оружейника», Т1)
+//   2 = kubejs:blacksmith_hearth    («Кузнечный Очаг / Меха», Т1)
+//   3 = kubejs:infernal_crucible    («Адский Горн / Тигель», Т3 Nether)
+//   4 = kubejs:void_anvil           («Пустотная Наковальня», Т5 The End)
 //
 // Rules & Architecture:
-// - Standalone blocks incur penalties:
-//   • Workbench alone: +1 ingot penalty to crafts.
-//   • Hearth alone: repairs 25% durability instead of 50%.
-// - Connected blocks form unified stations:
-//   • Canonical sequence is ALWAYS: [ 3 - 1 - 2 - 4 ].
-//   • Spatial Auto-Sorting: When blocks are placed in a row in any order (e.g. 2-1 or 4-2-1-3),
-//     upon placement they physically and visually re-align into the canonical order.
-//   • Dynamic 3D Model Transformation:
-//     - 2 blocks: pair_left, pair_right
-//     - 3 blocks: trio_left, trio_mid, trio_right
-//     - 4 blocks: quad_0, quad_1, quad_2, quad_3
-//   • Exact drop on break: breaking pos 0 drops Crucible (3), pos 1 drops Workbench (1),
-//     pos 2 drops Hearth (2), pos 3 drops Anvil (4).
-//   • Graceful reversion: breaking one block gracefully reverts the remaining blocks
-//     to their corresponding station status and 3D models with instant feedback.
-//   • 4x1 Grand Forge (3-1-2-4) triggers portal-like awakening effects across all 4 modules.
-//   • Grand Forge Locking: Fully assembled 4-block stations are locked against dissection.
-//   • Perpendicular Facing: Workstations face perpendicular to their formation axis.
-//   • Canonical Combination Validation: Prevents duplicate and junk block swapping.
-//   • Ambient tick loop: atmospheric chimney smoke, ember sparks, bubbling lava, void vortex.
+// - Free Workshop Architecture:
+//   • No forced linear rearrangement of blocks!
+//   • No dynamic morphing into partial multi-blocks (pair/trio/quad).
+//   • Each block maintains its monolithic individual 3D model and rotation.
+//   • Radius Scanning (R = 4): Workstations detect each other freely within
+//     a 4-block spherical/cubic radius of the accessed block.
+//   • Standalone penalties apply only if corresponding modules are absent within R=4:
+//     - Workbench alone: +1 ingot penalty to crafts (absent Hearth).
+//     - Hearth alone: repairs 25% durability instead of 50%.
+//   • Grand Forge is formed whenever all 4 modules are present within radius 4!
+//   • Ambient tick loop: atmospheric glowing embers and enchant sparkles.
 // ==============================================================================
 
-// BlockPos is available globally or via explicit Java class; use safe local alias
 const BS_BlockPos = Java.loadClass('net.minecraft.core.BlockPos');
 
 const BS_BLOCK_IDS = [
-    'kubejs:infernal_crucible',    // Rank 0 (Module 3)
-    'kubejs:blacksmith_workbench', // Rank 1 (Module 1)
-    'kubejs:blacksmith_hearth',    // Rank 2 (Module 2)
-    'kubejs:void_anvil'            // Rank 3 (Module 4)
+    'kubejs:infernal_crucible',
+    'kubejs:blacksmith_workbench',
+    'kubejs:blacksmith_hearth',
+    'kubejs:void_anvil'
 ];
 
 const BS_CANONICAL_RANK = {
@@ -49,384 +40,100 @@ const BS_CANONICAL_RANK = {
 };
 
 const BS_DISPLAY_NAMES = {
-    'kubejs:infernal_crucible': '§4🌋 Адский Горн (Т3)',
+    'kubejs:infernal_crucible': '§4🌋 Адский Тигель (Т3)',
     'kubejs:blacksmith_workbench': '§6⚒ Верстак Оружейника (Т1)',
     'kubejs:blacksmith_hearth': '§c🔥 Кузнечный Очаг (Т1)',
-    'kubejs:void_anvil': '§5🌌 Пустотная Наковальня (Т5)'
+    'kubejs:void_anvil': '§5🌌 Наковальня Бездны (Т5)'
 };
 
-// Reentrancy guard to prevent recursive block updates
-let bsIsAligning = false;
-
 // ------------------------------------------------------------------------------
-// HELPER: SAFELY EXTRACT PLAYER LOOK VECTOR
+// SCAN WORKSHOP RADIUS (R = 4)
 // ------------------------------------------------------------------------------
-function getPlayerLookVector(player) {
-    if (!player) return null;
-    try {
-        if (typeof player.getLookAngle === 'function') {
-            return player.getLookAngle();
-        }
-        if (player.lookAngle) {
-            return player.lookAngle;
-        }
-    } catch (e) {}
-    return null;
-}
-
-// ------------------------------------------------------------------------------
-// CHECK IF A BLOCK IS PART OF AN ASSEMBLED GRAND FORGE (4-BLOCK COMPLETE STATION)
-// ------------------------------------------------------------------------------
-function isBlockInAssembledGrandForge(level, pos) {
-    if (!level || !pos) return false;
-    let block = level.getBlock(pos);
-    if (!block || !BS_BLOCK_IDS.includes(String(block.id))) return false;
-    if (!block.properties || !block.properties.part) return false;
-    let part = String(block.properties.part);
-    if (part !== 'quad_0' && part !== 'quad_1' && part !== 'quad_2' && part !== 'quad_3') return false;
-
-    let sy = pos.y;
-    let myIdx = parseInt(part.replace('quad_', ''), 10);
-    if (isNaN(myIdx) || myIdx < 0 || myIdx > 3) return false;
-
-    // Helper to check if block at (x, y, z) matches expected canonical quad role
-    function matchesQuadRole(x, y, z, expectedQuad) {
-        let b = level.getBlock(x, y, z);
-        if (!b || !BS_BLOCK_IDS.includes(String(b.id))) return false;
-        if (!b.properties || !b.properties.part) return false;
-        let p = String(b.properties.part);
-        let id = String(b.id);
-        if (p !== expectedQuad) return false;
-        if (p === 'quad_0' && id !== 'kubejs:infernal_crucible') return false;
-        if (p === 'quad_1' && id !== 'kubejs:blacksmith_workbench') return false;
-        if (p === 'quad_2' && id !== 'kubejs:blacksmith_hearth') return false;
-        if (p === 'quad_3' && id !== 'kubejs:void_anvil') return false;
-        return true;
-    }
-
-    const QUAD_ROLES = ['quad_0', 'quad_1', 'quad_2', 'quad_3'];
-    const QUAD_ROLES_REV = ['quad_3', 'quad_2', 'quad_1', 'quad_0'];
-
-    // 1. Check along X-axis
-    // Span A: forward (quad_0 at xMin)
-    let xMinA = pos.x - myIdx;
-    let matchXA = true;
-    for (let i = 0; i < 4; i++) {
-        if (!matchesQuadRole(xMinA + i, sy, pos.z, QUAD_ROLES[i])) {
-            matchXA = false;
-            break;
-        }
-    }
-    if (matchXA) return true;
-
-    // Span B: reverse (quad_3 at xMin)
-    let xMinB = pos.x - (3 - myIdx);
-    let matchXB = true;
-    for (let i = 0; i < 4; i++) {
-        if (!matchesQuadRole(xMinB + i, sy, pos.z, QUAD_ROLES_REV[i])) {
-            matchXB = false;
-            break;
-        }
-    }
-    if (matchXB) return true;
-
-    // 2. Check along Z-axis
-    // Span A: forward (quad_0 at zMin)
-    let zMinA = pos.z - myIdx;
-    let matchZA = true;
-    for (let i = 0; i < 4; i++) {
-        if (!matchesQuadRole(pos.x, sy, zMinA + i, QUAD_ROLES[i])) {
-            matchZA = false;
-            break;
-        }
-    }
-    if (matchZA) return true;
-
-    // Span B: reverse (quad_3 at zMin)
-    let zMinB = pos.z - (3 - myIdx);
-    let matchZB = true;
-    for (let i = 0; i < 4; i++) {
-        if (!matchesQuadRole(pos.x, sy, zMinB + i, QUAD_ROLES_REV[i])) {
-            matchZB = false;
-            break;
-        }
-    }
-    if (matchZB) return true;
-
-    return false;
-}
-
-// ------------------------------------------------------------------------------
-// VALIDATE CANONICAL BLOCK COMBINATIONS (ANTI-DUPLICATE & ANTI-JUNK CHECK)
-// ------------------------------------------------------------------------------
-function isValidBlacksmithCombo(currentIds) {
-    if (!currentIds || !Array.isArray(currentIds)) return false;
-    let len = currentIds.length;
-    if (len < 2 || len > 4) return false;
-
-    let counts = {
-        'kubejs:infernal_crucible': 0,
-        'kubejs:blacksmith_workbench': 0,
-        'kubejs:blacksmith_hearth': 0,
-        'kubejs:void_anvil': 0
+/**
+ * Scans around centerPos up to specified radius for Blacksmith Workshop components.
+ * Returns information about discovered components and their positions.
+ */
+function scanWorkshopRadius(level, centerPos, radius) {
+    let r = (typeof radius === 'number' && radius > 0) ? radius : 4;
+    let res = {
+        hasWorkbench: false,
+        workbenchPos: null,
+        hasHearth: false,
+        hearthPos: null,
+        hasCrucible: false,
+        cruciblePos: null,
+        hasAnvil: false,
+        anvilPos: null,
+        count: 0,
+        blocks: [],
+        line: []
     };
 
-    for (let id of currentIds) {
-        if (counts[id] === undefined) return false;
-        counts[id]++;
+    if (!level || !centerPos) return res;
+
+    let cx = centerPos.x;
+    let cy = centerPos.y;
+    let cz = centerPos.z;
+
+    for (let dx = -r; dx <= r; dx++) {
+        for (let dy = -r; dy <= r; dy++) {
+            for (let dz = -r; dz <= r; dz++) {
+                let p = new BS_BlockPos(cx + dx, cy + dy, cz + dz);
+                let b = level.getBlock(p);
+                if (!b) continue;
+                let id = String(b.id);
+
+                if (id === 'kubejs:blacksmith_workbench') {
+                    if (!res.hasWorkbench) {
+                        res.hasWorkbench = true;
+                        res.workbenchPos = p;
+                        res.count++;
+                    }
+                    res.blocks.push({ id: id, pos: p });
+                } else if (id === 'kubejs:blacksmith_hearth') {
+                    if (!res.hasHearth) {
+                        res.hasHearth = true;
+                        res.hearthPos = p;
+                        res.count++;
+                    }
+                    res.blocks.push({ id: id, pos: p });
+                } else if (id === 'kubejs:infernal_crucible') {
+                    if (!res.hasCrucible) {
+                        res.hasCrucible = true;
+                        res.cruciblePos = p;
+                        res.count++;
+                    }
+                    res.blocks.push({ id: id, pos: p });
+                } else if (id === 'kubejs:void_anvil') {
+                    if (!res.hasAnvil) {
+                        res.hasAnvil = true;
+                        res.anvilPos = p;
+                        res.count++;
+                    }
+                    res.blocks.push({ id: id, pos: p });
+                }
+            }
+        }
     }
 
-    // 4 blocks: exactly one [Crucible, Workbench, Hearth, Anvil]
-    if (len === 4) {
-        return counts['kubejs:infernal_crucible'] === 1 &&
-               counts['kubejs:blacksmith_workbench'] === 1 &&
-               counts['kubejs:blacksmith_hearth'] === 1 &&
-               counts['kubejs:void_anvil'] === 1;
-    }
+    res.isGrandForge = (res.hasWorkbench && res.hasHearth && res.hasCrucible && res.hasAnvil);
+    res.isStation = (res.count >= 2);
+    // Compatibility: populate line with unique positions found
+    res.line = res.blocks.map(entry => entry.pos);
 
-    // 3 blocks: exactly one [Crucible, Workbench, Hearth] OR [Workbench, Hearth, Anvil]
-    if (len === 3) {
-        let isTrio1 = (counts['kubejs:infernal_crucible'] === 1 &&
-                       counts['kubejs:blacksmith_workbench'] === 1 &&
-                       counts['kubejs:blacksmith_hearth'] === 1 &&
-                       counts['kubejs:void_anvil'] === 0);
-        let isTrio2 = (counts['kubejs:infernal_crucible'] === 0 &&
-                       counts['kubejs:blacksmith_workbench'] === 1 &&
-                       counts['kubejs:blacksmith_hearth'] === 1 &&
-                       counts['kubejs:void_anvil'] === 1);
-        return isTrio1 || isTrio2;
-    }
-
-    // 2 blocks: exactly [Workbench, Hearth]
-    if (len === 2) {
-        return counts['kubejs:blacksmith_workbench'] === 1 &&
-               counts['kubejs:blacksmith_hearth'] === 1 &&
-               counts['kubejs:infernal_crucible'] === 0 &&
-               counts['kubejs:void_anvil'] === 0;
-    }
-
-    return false;
+    return res;
 }
 
 // ------------------------------------------------------------------------------
-// SCAN CONTIGUOUS LINE OF BLACKSMITH BLOCKS (ALONG X OR Z) WITH STRICT ISOLATION & PERPENDICULAR FACING
+// GET STATION INFO HELPER (EXPORTED GLOBALLY FOR GUI & SCRIPTS)
 // ------------------------------------------------------------------------------
-function findBlacksmithLine(level, startPos, facingHint, player) {
-    if (!level || !startPos) return [];
-    if (typeof level.getBlock !== 'function') return [startPos];
-    let startBlock = level.getBlock(startPos);
-    if (!startBlock || !BS_BLOCK_IDS.includes(String(startBlock.id))) return [];
-
-    let sy = startPos.y;
-    let startIsGrand = isBlockInAssembledGrandForge(level, startPos);
-
-    // 1. Scan along X-axis
-    let xMin = startPos.x;
-    while (true) {
-        let testPos = new BS_BlockPos(xMin - 1, sy, startPos.z);
-        let b = level.getBlock(testPos);
-        if (b && BS_BLOCK_IDS.includes(String(b.id))) {
-            let neighborIsGrand = isBlockInAssembledGrandForge(level, testPos);
-            if (!startIsGrand && neighborIsGrand) {
-                break; // Ignore blocks that already belong to an assembled Grand Forge
-            }
-            if (startIsGrand && !neighborIsGrand) {
-                break; // An assembled Grand Forge only includes its own blocks
-            }
-            xMin--;
-        } else {
-            break;
-        }
-    }
-    let xMax = startPos.x;
-    while (true) {
-        let testPos = new BS_BlockPos(xMax + 1, sy, startPos.z);
-        let b = level.getBlock(testPos);
-        if (b && BS_BLOCK_IDS.includes(String(b.id))) {
-            let neighborIsGrand = isBlockInAssembledGrandForge(level, testPos);
-            if (!startIsGrand && neighborIsGrand) {
-                break;
-            }
-            if (startIsGrand && !neighborIsGrand) {
-                break;
-            }
-            xMax++;
-        } else {
-            break;
-        }
-    }
-
-    // 2. Scan along Z-axis
-    let zMin = startPos.z;
-    while (true) {
-        let testPos = new BS_BlockPos(startPos.x, sy, zMin - 1);
-        let b = level.getBlock(testPos);
-        if (b && BS_BLOCK_IDS.includes(String(b.id))) {
-            let neighborIsGrand = isBlockInAssembledGrandForge(level, testPos);
-            if (!startIsGrand && neighborIsGrand) {
-                break;
-            }
-            if (startIsGrand && !neighborIsGrand) {
-                break;
-            }
-            zMin--;
-        } else {
-            break;
-        }
-    }
-    let zMax = startPos.z;
-    while (true) {
-        let testPos = new BS_BlockPos(startPos.x, sy, zMax + 1);
-        let b = level.getBlock(testPos);
-        if (b && BS_BLOCK_IDS.includes(String(b.id))) {
-            let neighborIsGrand = isBlockInAssembledGrandForge(level, testPos);
-            if (!startIsGrand && neighborIsGrand) {
-                break;
-            }
-            if (startIsGrand && !neighborIsGrand) {
-                break;
-            }
-            zMax++;
-        } else {
-            break;
-        }
-    }
-
-    let xLen = xMax - xMin + 1;
-    let zLen = zMax - zMin + 1;
-
-    let initialFacing = facingHint || 'north';
-    if (!facingHint && startBlock.properties && startBlock.properties.facing) {
-        initialFacing = String(startBlock.properties.facing).toLowerCase();
-    }
-
-    let pLook = getPlayerLookVector(player);
-
-    // Dominant line along X
-    if (xLen >= zLen && xLen > 1) {
-        let facing = initialFacing;
-        if (pLook && typeof pLook.z === 'number') {
-            facing = (pLook.z < 0) ? 'north' : 'south';
-        } else if (facing !== 'north' && facing !== 'south') {
-            facing = 'south';
-        }
-
-        let line = [];
-        // Canonical Left-to-Right layout on player screen: [Crucible(0), Workbench(1), Hearth(2), Anvil(3)]
-        // When facing North (player standing South looking North towards -Z):
-        // World West (-X, xMin) is on the player's Left. World East (+X, xMax) is on player's Right.
-        // Because previously xMin->xMax rendered Anvil on player Left and Crucible on player Right,
-        // traversing xMax down to xMin assigns index 0 (Crucible) to screen Left, and index 3 (Anvil) to screen Right!
-        if (facing === 'north') {
-            for (let x = xMax; x >= xMin; x--) {
-                line.push(new BS_BlockPos(x, sy, startPos.z));
-            }
-        } else {
-            // When facing South (player standing North looking South towards +Z):
-            for (let x = xMin; x <= xMax; x++) {
-                line.push(new BS_BlockPos(x, sy, startPos.z));
-            }
-        }
-        line.facing = facing;
-        return line;
-    }
-    // Dominant line along Z
-    else if (zLen > 1) {
-        let facing = initialFacing;
-        if (pLook && typeof pLook.x === 'number') {
-            facing = (pLook.x < 0) ? 'west' : 'east';
-        } else if (facing !== 'east' && facing !== 'west') {
-            facing = 'east';
-        }
-
-        let line = [];
-        // When facing East (player looks East towards +X):
-        if (facing === 'east') {
-            for (let z = zMax; z >= zMin; z--) {
-                line.push(new BS_BlockPos(startPos.x, sy, z));
-            }
-        } else {
-            // When facing West (player looks West towards -X):
-            for (let z = zMin; z <= zMax; z++) {
-                line.push(new BS_BlockPos(startPos.x, sy, z));
-            }
-        }
-        line.facing = facing;
-        return line;
-    }
-
-    let singleLine = [startPos];
-    singleLine.facing = initialFacing;
-    return singleLine;
-}
-
-// ------------------------------------------------------------------------------
-// DETERMINE 3D FORMATION PART ROLES FOR SORTED SEQUENCE OF BLOCKS
-// ------------------------------------------------------------------------------
-function determineFormationParts(sortedIds) {
-    if (!sortedIds || sortedIds.length <= 1) {
-        return sortedIds ? sortedIds.map(() => 'single') : [];
-    }
-
-    let len = sortedIds.length;
-
-    // 1. Grand Forge (4 blocks: [3-1-2-4] -> Crucible, Workbench, Hearth, Anvil)
-    if (len === 4) {
-        let isGrand = (
-            sortedIds[0] === 'kubejs:infernal_crucible' &&
-            sortedIds[1] === 'kubejs:blacksmith_workbench' &&
-            sortedIds[2] === 'kubejs:blacksmith_hearth' &&
-            sortedIds[3] === 'kubejs:void_anvil'
-        );
-        if (isGrand) {
-            return ['quad_0', 'quad_1', 'quad_2', 'quad_3'];
-        }
-        return ['single', 'single', 'single', 'single'];
-    }
-
-    // 2. Trio (3 blocks: [3-1-2] -> Crucible, Workbench, Hearth)
-    if (len === 3) {
-        let isCanonicalTrio = (
-            sortedIds[0] === 'kubejs:infernal_crucible' &&
-            sortedIds[1] === 'kubejs:blacksmith_workbench' &&
-            sortedIds[2] === 'kubejs:blacksmith_hearth'
-        );
-        if (isCanonicalTrio) {
-            return ['trio_left', 'trio_mid', 'trio_right'];
-        }
-        // If Workbench + Hearth + Anvil: Workbench & Hearth connect as pair, Anvil is single
-        if (sortedIds[0] === 'kubejs:blacksmith_workbench' &&
-            sortedIds[1] === 'kubejs:blacksmith_hearth' &&
-            sortedIds[2] === 'kubejs:void_anvil') {
-            return ['pair_left', 'pair_right', 'single'];
-        }
-        return ['single', 'single', 'single'];
-    }
-
-    // 3. Pair (2 blocks: [1-2] -> Workbench, Hearth)
-    if (len === 2) {
-        let isCanonicalPair = (
-            sortedIds[0] === 'kubejs:blacksmith_workbench' &&
-            sortedIds[1] === 'kubejs:blacksmith_hearth'
-        );
-        if (isCanonicalPair) {
-            return ['pair_left', 'pair_right'];
-        }
-        return ['single', 'single'];
-    }
-
-    return sortedIds.map(() => 'single');
-}
-
-// ------------------------------------------------------------------------------
-// GET STATION INFO HELPER (EXPORTED GLOBALLY)
-// ------------------------------------------------------------------------------
-function getBlacksmithStationInfo(level, pos) {
+function getBlacksmithStationInfo(level, pos, radius) {
     if (!level || !pos) {
         return {
             isStation: false,
             count: 0,
             line: [],
+            blocks: [],
             hasWorkbench: false,
             hasHearth: false,
             hasCrucible: false,
@@ -439,304 +146,56 @@ function getBlacksmithStationInfo(level, pos) {
         };
     }
 
-    let line = findBlacksmithLine(level, pos);
-    let count = line.length;
-
-    let hasWorkbench = false;
-    let hasHearth = false;
-    let hasCrucible = false;
-    let hasAnvil = false;
-
-    let workbenchPos = null;
-    let hearthPos = null;
-    let cruciblePos = null;
-    let anvilPos = null;
-
-    line.forEach(p => {
-        let b = level.getBlock(p);
-        if (!b) return;
-        let id = String(b.id);
-        if (id === 'kubejs:blacksmith_workbench') { hasWorkbench = true; workbenchPos = p; }
-        if (id === 'kubejs:blacksmith_hearth')    { hasHearth = true; hearthPos = p; }
-        if (id === 'kubejs:infernal_crucible')    { hasCrucible = true; cruciblePos = p; }
-        if (id === 'kubejs:void_anvil')           { hasAnvil = true; anvilPos = p; }
-    });
-
-    let isGrandForge = (count === 4 && hasWorkbench && hasHearth && hasCrucible && hasAnvil);
-    let isConnected = (count >= 2);
-
-    return {
-        isStation: isConnected,
-        count: count,
-        line: line,
-        hasWorkbench: hasWorkbench,
-        hasHearth: hasHearth,
-        hasCrucible: hasCrucible,
-        hasAnvil: hasAnvil,
-        isGrandForge: isGrandForge,
-        workbenchPos: workbenchPos,
-        hearthPos: hearthPos,
-        cruciblePos: cruciblePos,
-        anvilPos: anvilPos
-    };
+    return scanWorkshopRadius(level, pos, radius || 4);
 }
 
 // ------------------------------------------------------------------------------
-// SPATIAL AUTO-ALIGNMENT & 3D MODEL SYNCHRONIZATION FUNCTION
+// BLOCK PLACEMENT & BREAK SOUND FEEDBACK (NO FORCED REARRANGEMENT)
 // ------------------------------------------------------------------------------
-function alignBlacksmithStation(level, originPos, player, facingHint) {
-    if (!level || level.isClientSide() || bsIsAligning) return null;
-    let block = level.getBlock(originPos);
-    if (!block) return null;
-
-    let placedId = String(block.id);
-    if (!BS_BLOCK_IDS.includes(placedId)) return null;
-
-    // 1. Grand Forge Locking: If this block is already part of an intact, fully assembled Grand Forge,
-    // and all 4 blocks are in place in the correct roles — DO NOT rearrange or reassemble!
-    if (isBlockInAssembledGrandForge(level, originPos)) {
-        return findBlacksmithLine(level, originPos, facingHint, player);
-    }
-
-    let line = findBlacksmithLine(level, originPos, facingHint, player);
-    let facing = line.facing || facingHint || 'north';
-
-    if (line.length < 2) {
-        // Standalone block: ensure part is 'single'
-        try {
-            block.set(placedId, { facing: facing, part: 'single' });
-        } catch (e) {}
-        return line;
-    }
-
-    // We only form stations up to 4 blocks
-    if (line.length > 4) {
-        return line;
-    }
-
-    let currentIds = line.map(p => String(level.getBlock(p).id));
-
-    // 2. Anti-Duplicate & Canonical Validation Check
-    if (!isValidBlacksmithCombo(currentIds)) {
-        // Not a valid canonical combination (e.g. duplicate workbenches):
-        // DO NOT change block IDs! Set part to 'single' (or leave unchanged).
-        bsIsAligning = true;
-        try {
-            for (let i = 0; i < line.length; i++) {
-                let p = line[i];
-                let cur = level.getBlock(p);
-                if (cur && BS_BLOCK_IDS.includes(String(cur.id))) {
-                    let curPart = cur.properties ? String(cur.properties.part) : '';
-                    let curFacing = cur.properties ? String(cur.properties.facing) : facing;
-                    if (curPart !== 'single') {
-                        cur.set(cur.id, { facing: curFacing, part: 'single' });
-                    }
-                }
-            }
-        } finally {
-            bsIsAligning = false;
-        }
-        return line;
-    }
-
-    // Desired canonical sorting based on canonical rank [3 -> 1 -> 2 -> 4]
-    let sortedIds = currentIds.slice().sort((a, b) => {
-        let rA = (BS_CANONICAL_RANK[a] !== undefined) ? BS_CANONICAL_RANK[a] : 99;
-        let rB = (BS_CANONICAL_RANK[b] !== undefined) ? BS_CANONICAL_RANK[b] : 99;
-        return rA - rB;
-    });
-
-    let isGrand = (line.length === 4 &&
-        sortedIds[0] === 'kubejs:infernal_crucible' &&
-        sortedIds[1] === 'kubejs:blacksmith_workbench' &&
-        sortedIds[2] === 'kubejs:blacksmith_hearth' &&
-        sortedIds[3] === 'kubejs:void_anvil');
-
-    let parts = determineFormationParts(sortedIds);
-
-    // Synchronize blocks and their 3D part properties
-    bsIsAligning = true;
-    try {
-        for (let i = 0; i < line.length; i++) {
-            let p = line[i];
-            let targetId = sortedIds[i];
-            let partName = parts[i] || 'single';
-
-            let cur = level.getBlock(p);
-            cur.set(targetId, { facing: facing, part: partName });
-        }
-    } finally {
-        bsIsAligning = false;
-    }
-
-    // Assembly feedback: Heavy anvil hammer strike + burst of sparks (no intrusive smoke)
-    let centerPos = line[Math.floor(line.length / 2)];
-    let cx = centerPos.x + 0.5;
-    let cy = centerPos.y + 0.5;
-    let cz = centerPos.z + 0.5;
-
-    level.server.runCommandSilent(`playsound minecraft:block.anvil.use block @a ${cx} ${cy} ${cz} 0.9 0.85`);
-    level.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle block @a ${cx} ${cy} ${cz} 1.0 1.1`);
-    level.server.runCommandSilent(`particle minecraft:lava ${cx} ${cy + 0.7} ${cz} 0.5 0.3 0.5 0.08 10`);
-    level.server.runCommandSilent(`particle minecraft:crit ${cx} ${cy + 0.7} ${cz} 0.6 0.3 0.6 0.12 20`);
-
-    // GRAND FORGE (4x1: [3 - 1 - 2 - 4]) AWAKENING
-    if (isGrand) {
-        let pCrucible = line[0];
-        let pWorkbench = line[1];
-        let pHearth = line[2];
-        let pAnvil = line[3];
-
-        let gcx = pWorkbench.x + 0.5;
-        let gcy = pWorkbench.y + 1.0;
-        let gcz = pWorkbench.z + 0.5;
-
-        // Sounds: Portal spawn, beacon resonant hum, anvil resonance
-        level.server.runCommandSilent(`playsound minecraft:block.end_portal.spawn block @a ${gcx} ${gcy} ${gcz} 1.0 1.0`);
-        level.server.runCommandSilent(`playsound minecraft:block.beacon.activate block @a ${gcx} ${gcy} ${gcz} 1.0 1.2`);
-        level.server.runCommandSilent(`playsound minecraft:block.portal.trigger block @a ${gcx} ${gcy} ${gcz} 0.8 1.5`);
-
-        // 1. Molten Lava at Crucible (pos 0)
-        level.server.runCommandSilent(`particle minecraft:lava ${pCrucible.x + 0.5} ${pCrucible.y + 1.0} ${pCrucible.z + 0.5} 0.3 0.2 0.3 0.05 12`);
-        level.server.runCommandSilent(`particle minecraft:flame ${pCrucible.x + 0.5} ${pCrucible.y + 1.0} ${pCrucible.z + 0.5} 0.2 0.1 0.2 0.02 15`);
-
-        // 2. Forging Sparks at Workbench (pos 1)
-        level.server.runCommandSilent(`particle minecraft:crit ${pWorkbench.x + 0.5} ${pWorkbench.y + 1.0} ${pWorkbench.z + 0.5} 0.4 0.2 0.4 0.1 25`);
-        level.server.runCommandSilent(`particle minecraft:enchant ${pWorkbench.x + 0.5} ${pWorkbench.y + 1.2} ${pWorkbench.z + 0.5} 0.6 0.3 0.6 0.4 30`);
-
-        // 3. Blast Furnace Flames at Hearth (pos 2)
-        level.server.runCommandSilent(`particle minecraft:flame ${pHearth.x + 0.5} ${pHearth.y + 1.0} ${pHearth.z + 0.5} 0.3 0.2 0.3 0.03 20`);
-
-        // 4. End Crystal Flash at Void Anvil (pos 3)
-        level.server.runCommandSilent(`particle minecraft:enchant ${pAnvil.x + 0.5} ${pAnvil.y + 1.2} ${pAnvil.z + 0.5} 0.5 0.3 0.5 0.4 30`);
-
-        // 5. Hovering Crystal Apex Flash above workbench/anvil
-        level.server.runCommandSilent(`particle minecraft:end_rod ${gcx} ${gcy + 0.8} ${gcz} 0.5 0.5 0.5 0.04 20`);
-        level.server.runCommandSilent(`particle minecraft:soul_fire_flame ${gcx} ${gcy + 0.2} ${gcz} 0.6 0.2 0.6 0.03 20`);
-    }
-    return line;
-}
-
-// 1. Block Placement Handler (Unified for all 4 workstation blocks)
 BlockEvents.placed(event => {
     let block = event.block;
     let level = event.level;
-    if (!level || level.isClientSide() || bsIsAligning || !block) return;
-    if (BS_BLOCK_IDS.includes(String(block.id))) {
-        alignBlacksmithStation(level, block.pos, event.player);
+    if (!level || level.isClientSide() || !block) return;
+
+    let id = String(block.id);
+    if (!BS_BLOCK_IDS.includes(id)) return;
+
+    // Subtle audio feedback upon placing a workshop component
+    let bx = block.x + 0.5;
+    let by = block.y + 0.5;
+    let bz = block.z + 0.5;
+
+    level.server.runCommandSilent(`playsound minecraft:block.stone.place block @a ${bx} ${by} ${bz} 0.8 1.0`);
+
+    // Check if placing this block completed the Grand Forge in radius 4
+    let info = scanWorkshopRadius(level, block.pos, 4);
+    if (info.isGrandForge) {
+        level.server.runCommandSilent(`playsound minecraft:block.beacon.activate block @a ${bx} ${by} ${bz} 1.0 1.2`);
+        level.server.runCommandSilent(`particle minecraft:end_rod ${bx} ${by + 1.0} ${bz} 0.5 0.5 0.5 0.04 20`);
+        level.server.runCommandSilent(`particle minecraft:enchant ${bx} ${by + 1.2} ${bz} 0.6 0.3 0.6 0.4 30`);
     }
 });
 
-// 2. Sneak + Right-Click with empty hand on ANY workstation block triggers manual calibration!
-BlockEvents.rightClicked(event => {
-    let player = event.player;
-    if (!player || player.level.isClientSide() || !player.isCrouching()) return;
-    let block = event.block;
-    if (!block || !BS_BLOCK_IDS.includes(String(block.id))) return;
-    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
-    if (!handStr.includes('MAIN')) return;
-
-    if (player.mainHandItem.isEmpty()) {
-        event.cancel();
-        alignBlacksmithStation(player.level, block.pos, player);
-    }
-});
-
-// ------------------------------------------------------------------------------
-// EXACT DROP ON BREAK & GRACEFUL REVERSION WITH MODEL DOWNGRADE
-// ------------------------------------------------------------------------------
 BlockEvents.broken(event => {
     let block = event.block;
     let level = event.level;
-    if (!level || level.isClientSide()) return;
+    if (!level || level.isClientSide() || !block) return;
 
     let brokenId = String(block.id);
     if (!BS_BLOCK_IDS.includes(brokenId)) return;
 
-    let bx = block.x;
-    let by = block.y;
-    let bz = block.z;
+    let bx = block.x + 0.5;
+    let by = block.y + 0.5;
+    let bz = block.z + 0.5;
 
-    // 1. Audio-visual dismantling feedback (clean sounds, no smoke cloud)
-    level.server.runCommandSilent(`playsound minecraft:block.chain.break block @a ${bx + 0.5} ${by + 0.5} ${bz + 0.5} 0.8 1.0`);
-    level.server.runCommandSilent(`playsound minecraft:block.fire.extinguish block @a ${bx + 0.5} ${by + 0.5} ${bz + 0.5} 0.7 1.2`);
-
-    // 2. GRACEFUL REVERSION OF REMAINING CONNECTED SEGMENTS
-    let neighborPositions = [
-        new BS_BlockPos(bx - 1, by, bz),
-        new BS_BlockPos(bx + 1, by, bz),
-        new BS_BlockPos(bx, by, bz - 1),
-        new BS_BlockPos(bx, by, bz + 1)
-    ];
-
-    let checkedPositions = new Set();
-
-    bsIsAligning = true;
-    try {
-        neighborPositions.forEach(np => {
-            let key = `${np.x},${np.y},${np.z}`;
-            if (checkedPositions.has(key)) return;
-
-            let nb = level.getBlock(np);
-            if (!nb || !BS_BLOCK_IDS.includes(String(nb.id))) return;
-
-            // Scan the remaining contiguous line attached to this neighbor
-            let remLine = findBlacksmithLine(level, np);
-            remLine.forEach(p => checkedPositions.add(`${p.x},${p.y},${p.z}`));
-
-            let remInfo = getBlacksmithStationInfo(level, np);
-
-            if (remInfo.count === 1) {
-                // Reverted to single standalone module
-                let soloBlock = level.getBlock(np);
-                let soloId = soloBlock ? String(soloBlock.id) : '';
-                let soloFacing = 'north';
-                try {
-                    if (soloBlock && soloBlock.properties && soloBlock.properties.facing) {
-                        soloFacing = String(soloBlock.properties.facing).toLowerCase();
-                    }
-                } catch (e) {}
-
-                if (soloBlock) {
-                    soloBlock.set(soloId, { facing: soloFacing, part: 'single' });
-                }
-            } else if (remInfo.count >= 2) {
-                // Reverted to smaller multi-block station: update 3D models of remaining blocks!
-                let remFacing = remLine.facing || 'north';
-                try {
-                    let fb = level.getBlock(remLine[0]);
-                    if (fb && fb.properties && fb.properties.facing) {
-                        let existingFacing = String(fb.properties.facing).toLowerCase();
-                        if (existingFacing === 'north' || existingFacing === 'south' || existingFacing === 'east' || existingFacing === 'west') {
-                            remFacing = existingFacing;
-                        }
-                    }
-                } catch (e) {}
-
-                let remIds = remLine.map(p => String(level.getBlock(p).id));
-                let remParts = determineFormationParts(remIds);
-
-                for (let ri = 0; ri < remLine.length; ri++) {
-                    let rp = remLine[ri];
-                    let rBlock = level.getBlock(rp);
-                    let rId = remIds[ri];
-                    let rPart = remParts[ri] || 'single';
-                    rBlock.set(rId, { facing: remFacing, part: rPart });
-                }
-
-                level.server.runCommandSilent(`playsound minecraft:block.anvil.hit block @a ${np.x + 0.5} ${np.y + 0.5} ${np.z + 0.5} 0.6 1.0`);
-            }
-        });
-    } finally {
-        bsIsAligning = false;
-    }
+    level.server.runCommandSilent(`playsound minecraft:block.chain.break block @a ${bx} ${by} ${bz} 0.8 1.0`);
+    level.server.runCommandSilent(`playsound minecraft:block.fire.extinguish block @a ${bx} ${by} ${bz} 0.7 1.2`);
 });
 
 // ------------------------------------------------------------------------------
-// AMBIENT PARTICLES & AUDIO TICK LOOP (CLEAN, NO INTRUSIVE SMOKE/ASH/WITCH/PORTAL)
+// AMBIENT PARTICLES TICK LOOP (ATMOSPHERIC, CLEAN)
 // ------------------------------------------------------------------------------
 ServerEvents.tick(event => {
-    // Run once every 20 ticks (1 second)
     if (event.server.tickCount % 20 !== 0) return;
 
     let players = event.server.players;
@@ -750,7 +209,6 @@ ServerEvents.tick(event => {
         let py = Math.floor(player.y);
         let pz = Math.floor(player.z);
 
-        // Check a 13x6x13 radius around player without skipping any coordinates
         for (let dx = -6; dx <= 6; dx++) {
             for (let dz = -6; dz <= 6; dz++) {
                 for (let dy = -2; dy <= 3; dy++) {
@@ -772,11 +230,11 @@ ServerEvents.tick(event => {
                     let bz = bzPos + 0.5;
 
                     if (id === 'kubejs:blacksmith_hearth') {
-                        // Hearth: subtle glowing flame sparks (no heavy chimney smoke cloud)
                         level.server.runCommandSilent(`particle minecraft:flame ${bx} ${by + 0.7} ${bz} 0.15 0.05 0.15 0.01 1`);
                     } else if (id === 'kubejs:void_anvil') {
-                        // Void Anvil: subtle amethyst enchant sparkle
                         level.server.runCommandSilent(`particle minecraft:enchant ${bx} ${by + 1.2} ${bz} 0.15 0.15 0.15 0.2 1`);
+                    } else if (id === 'kubejs:infernal_crucible') {
+                        level.server.runCommandSilent(`particle minecraft:lava ${bx} ${by + 0.9} ${bz} 0.15 0.05 0.15 0.01 1`);
                     }
                 }
             }

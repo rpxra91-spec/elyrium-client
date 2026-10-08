@@ -598,7 +598,8 @@ const BS_CATALOG = [
 ];
 
 // ------------------------------------------------------------------------------
-// OPEN BLACKSMITH WORKBENCH GUI (CHEST MENU 6 ROWS)
+// ------------------------------------------------------------------------------
+// OPEN BLACKSMITH WORKBENCH & MASTER WORKSHOP GUI (CHEST MENU 6 ROWS)
 // ------------------------------------------------------------------------------
 function openBlacksmithGUI(player, stationPos) {
     let level = player.level;
@@ -614,19 +615,17 @@ function openBlacksmithGUI(player, stationPos) {
     session.isGrandForge = station.isGrandForge;
     session.stationPos = stationPos;
 
+    // Tab accessibility fallback: if current tab is locked, fallback to Tab 0
+    if (session.tab === 4 && !session.hasHearth) session.tab = 0;
+    if (session.tab === 5 && !session.hasCrucible) session.tab = 0;
+    if (session.tab === 6 && !session.hasAnvil) session.tab = 0;
+
     let ingotPenalty = session.hasHearth ? 0 : 1;
 
-    let tabTitles = [
-        '§c⚔ [ Клинки ]',
-        '§b🛡 [ Доспехи ]',
-        '§e⛏ [ Инструменты ]',
-        '§a🔧 [ Ремонт ]'
-    ];
-
     let guiTitle = session.isGrandForge
-        ? '👑 §6§lВЕЛИКАЯ КУЗНИЦА §c✦ §dЭЛИРИУМ [3-1-2-4]'
+        ? '👑 §6§lВЕЛИКАЯ КУЗНИЦА §c✦ §dЭЛИРИУМ'
         : (session.hasHearth
-            ? '⚒ §6§lКУЗНЕЧНЫЙ КОМПЛЕКС §a✦ §fЭЛИРИУМ'
+            ? '⚒ §6§lМАСТЕРСКАЯ КУЗНЕЦА §a✦ §fЭЛИРИУМ'
             : '⚒ §7Верстак Оружейника §c(Очаг не найден)');
 
     let fullTitle = '\uE001§r' + guiTitle;
@@ -637,123 +636,184 @@ function openBlacksmithGUI(player, stationPos) {
             clearBlacksmithSession(player);
         };
 
-        // ======================================================================
-        // ROW 0: ВЕРХНИЙ КАРНИЗ И НАВИГАЦИЯ ВКЛАДОК
-        // ======================================================================
-
-        // Slot 0: Монитор статуса станции & накопителя металлов
-        gui.slot(0, 0, s => {
-            let hearthText = session.hasHearth
-                ? '§a✓ Кузнечный Очаг: Подключен (0 штрафа)'
-                : '§c⚠ Кузнечный Очаг: Не найден (+1 слиток штрафа!)';
-            let crucibleText = session.hasCrucible
-                ? '§a✓ Адский Горн: Подключен (Т3 Возвышение)'
-                : '§7🔒 Адский Горн: Не установлен (Т3 Незер)';
-            let anvilText = session.hasAnvil
-                ? '§a✓ Пустотная Наковальня: Подключена (+1..+10)'
-                : '§7🔒 Пустотная Наковальня: Не установлена (Т5)';
-            let stationStatus = session.isGrandForge
-                ? '§6👑 ВЕЛИКАЯ КУЗНИЦА (4-в-1 Полный резонанс)'
-                : (session.hasHearth ? '§a✓ Унифицированная Станция' : '§e⚠ Одиночный Верстак (Металл холоден)');
-
-            let lore = [
-                Text.of(stationStatus),
-                Text.of('§8────────────────────────────────'),
-                Text.of('§a✓ Верстак Оружейника: Активен'),
-                Text.of(hearthText),
-                Text.of(crucibleText),
-                Text.of(anvilText),
-                Text.of('§8────────────────────────────────')
-            ];
-
-            if (session.hasHearth) {
-                let buf = getWorkshopBuffer(level, stationPos);
-                lore.push(Text.of('§6📦 Металлический Буфер Мастерской:'));
-                lore.push(Text.of(`  §9• Сталь: §f${buf.steel || 0} §7шт.`));
-                lore.push(Text.of(`  §f• Железо: §f${buf.iron || 0} §7шт.`));
-                lore.push(Text.of(`  §6• Медь: §f${buf.copper || 0} §7шт.`));
-                lore.push(Text.of('§8────────────────────────────────'));
-                lore.push(Text.of('§7Крафт и ремонт расходуют металл из буфера!'));
-            } else {
-                lore.push(Text.of('§cУстановите рядом Кузнечный Очаг для доступа к буферу!'));
-            }
-
-            s.setItem(Item.of(session.hasHearth ? 'minecraft:blast_furnace' : 'minecraft:campfire')
-                .withCustomName(Text.of('§6⚒ [ СТАТУС МАСТЕРСКОЙ ]'))
-                .withLore(lore));
-            s.leftClicked = () => {};
-        });
-
-        // Slot 1: Переход в Кузнечный Очаг (Выплавка металлов)
-        gui.slot(1, 0, s => {
-            if (session.hasHearth) {
-                s.setItem(Item.of('minecraft:lava_bucket')
-                    .withCustomName(Text.of('§c🔥 [ Выплавка Металлов ]'))
-                    .withLore([
-                        Text.of('§7Перейти к Кузнечному Очагу:'),
-                        Text.of('§e• Выплавка шихты стали и руд'),
-                        Text.of('§e• Загрузка и выгрузка слитков из буфера'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§a▶ Нажмите ЛКМ для перехода в Очаг')
-                    ]));
-                s.leftClicked = () => {
-                    player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
-                    openHearthSmelterGUI(player, stationPos);
-                };
-            } else {
-                s.setItem(Item.of('minecraft:gray_stained_glass_pane').withCustomName(Text.of('§8 ')));
-                s.leftClicked = () => {};
-            }
-        });
-
-        // Slots 2, 3, 4: Вкладки ковки (Клинки, Доспехи, Инструменты)
-        let tabIcons = ['minecraft:iron_sword', 'minecraft:iron_chestplate', 'kubejs:steel_pickaxe'];
-        for (let t = 0; t < 3; t++) {
-            let tabIdx = t;
-            let isSel = (session.tab === tabIdx);
-            let icon = isSel ? 'minecraft:nether_star' : tabIcons[tabIdx];
-
-            gui.slot(2 + t, 0, s => {
-                s.setItem(Item.of(icon)
-                    .withCustomName(Text.of(isSel ? `§6▶ ${tabTitles[tabIdx]} ◀` : tabTitles[tabIdx]))
-                    .withLore([
-                        Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода в каталог')
-                    ]));
-                s.leftClicked = () => {
-                    session.tab = tabIdx;
-                    player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
-                    openBlacksmithGUI(player, stationPos);
-                };
-            });
-        }
-
-        // Slot 5: Разделитель
         let decoPane = Item.of('minecraft:gray_stained_glass_pane').withCustomName(Text.of('§8 '));
-        gui.slot(5, 0, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
+        let buf = getWorkshopBuffer(level, stationPos);
+        let fuelCount = countPlayerFuelBS(player);
 
-        // Slot 6: Вкладка Ремонта
-        let isRepairSel = (session.tab === 3);
-        let repairDurText = session.hasHearth ? '§a+50% прочности за 1 слиток' : '§e+25% прочности за 1 слиток (соло)';
-        gui.slot(6, 0, sR => {
-            sR.setItem(Item.of(isRepairSel ? 'minecraft:nether_star' : 'minecraft:anvil')
-                .withCustomName(Text.of(isRepairSel ? '§6▶ §a🔧 [ Ремонт Экипировки ] ◀' : '§a🔧 [ Ремонт Экипировки ]'))
+        // ======================================================================
+        // ROW 0: ВЕРХНИЙ КАРНИЗ И ЕДИНАЯ НАВИГАЦИЯ ВКЛАДОК (TABS 0..6 + CLOSE)
+        // ======================================================================
+
+        // Tab 0: ⚔ [ Оружие ]
+        gui.slot(0, 0, s => {
+            let isSel = (session.tab === 0);
+            s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'minecraft:iron_sword')
+                .withCustomName(Text.of(isSel ? '§6▶ §c⚔ [ Оружие ] ◀' : '§c⚔ [ Оружие ]'))
+                .withLore([
+                    Text.of('§7Ковка клинков и древкового оружия SimplySwords.'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода в каталог оружия')
+                ]));
+            s.leftClicked = () => {
+                session.tab = 0;
+                player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
+                openBlacksmithGUI(player, stationPos);
+            };
+        });
+
+        // Tab 1: 🛡 [ Доспехи ]
+        gui.slot(1, 0, s => {
+            let isSel = (session.tab === 1);
+            s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'minecraft:iron_chestplate')
+                .withCustomName(Text.of(isSel ? '§6▶ §b🛡 [ Доспехи ] ◀' : '§b🛡 [ Доспехи ]'))
+                .withLore([
+                    Text.of('§7Ковка комплектов брони Рыцаря, Разведчика и Железа.'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода в каталог брони')
+                ]));
+            s.leftClicked = () => {
+                session.tab = 1;
+                player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
+                openBlacksmithGUI(player, stationPos);
+            };
+        });
+
+        // Tab 2: ⛏ [ Инструменты ]
+        gui.slot(2, 0, s => {
+            let isSel = (session.tab === 2);
+            s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'kubejs:steel_pickaxe')
+                .withCustomName(Text.of(isSel ? '§6▶ §e⛏ [ Инструменты ] ◀' : '§e⛏ [ Инструменты ]'))
+                .withLore([
+                    Text.of('§7Ковка Стальной Кирки (Т-алмаз), топоров, лопат и щита.'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода к инструментам')
+                ]));
+            s.leftClicked = () => {
+                session.tab = 2;
+                player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
+                openBlacksmithGUI(player, stationPos);
+            };
+        });
+
+        // Tab 3: 🔧 [ Ремонт ] (+25% соло, +50% если рядом Очаг)
+        gui.slot(3, 0, s => {
+            let isSel = (session.tab === 3);
+            let repairDurText = session.hasHearth ? '§a+50% прочности за 1 слиток (Очаг)' : '§e+25% прочности за 1 слиток (соло)';
+            s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'minecraft:anvil')
+                .withCustomName(Text.of(isSel ? '§6▶ §a🔧 [ Ремонт ] ◀' : '§a🔧 [ Ремонт ]'))
                 .withLore([
                     Text.of('§7Восстановление прочности поврежденного снаряжения.'),
                     Text.of(repairDurText),
                     Text.of('§8────────────────────────────────'),
-                    Text.of(isRepairSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода к ремонту')
+                    Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода к ремонту')
                 ]));
-            sR.leftClicked = () => {
+            s.leftClicked = () => {
                 session.tab = 3;
                 player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
                 openBlacksmithGUI(player, stationPos);
             };
         });
 
+        // Tab 4: 🔥 [ Очаг ] (активна только если рядом есть Очаг)
+        gui.slot(4, 0, s => {
+            let isSel = (session.tab === 4);
+            if (session.hasHearth) {
+                s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'minecraft:blast_furnace')
+                    .withCustomName(Text.of(isSel ? '§6▶ §c🔥 [ Очаг ] ◀' : '§c🔥 [ Очаг ]'))
+                    .withLore([
+                        Text.of('§7Высокотемпературная металлургия и буфер слитков.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§a✓ Кузнечный Очаг подключен в радиусе 4 блоков'),
+                        Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода в Очаг')
+                    ]));
+                s.leftClicked = () => {
+                    session.tab = 4;
+                    player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    openBlacksmithGUI(player, stationPos);
+                };
+            } else {
+                s.setItem(Item.of('minecraft:campfire')
+                    .withCustomName(Text.of('§8🔒 [ Очаг: Недоступен ]'))
+                    .withLore([
+                        Text.of('§cТребуется Кузнечный Очаг поблизости (в пределах 4 блоков)!'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§7Установите Кузнечный Очаг в мастерской для выплавки стали.')
+                    ]));
+                s.leftClicked = () => {
+                    player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    player.sendSystemMessage(Text.of('§c[Мастерская] §7Требуется Кузнечный Очаг поблизости!'));
+                };
+            }
+        });
+
+        // Tab 5: 🌋 [ Тигель ] (активна только если рядом есть Адский Тигель)
+        gui.slot(5, 0, s => {
+            let isSel = (session.tab === 5);
+            if (session.hasCrucible) {
+                s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'minecraft:lava_bucket')
+                    .withCustomName(Text.of(isSel ? '§6▶ §4🌋 [ Тигель ] ◀' : '§4🌋 [ Тигель ]'))
+                    .withLore([
+                        Text.of('§7Инфернальный Тигель Незера (Т2/Т3).'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§a✓ Адский Тигель подключен в радиусе 4 блоков'),
+                        Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода к сплавам Незера')
+                    ]));
+                s.leftClicked = () => {
+                    session.tab = 5;
+                    player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    openBlacksmithGUI(player, stationPos);
+                };
+            } else {
+                s.setItem(Item.of('minecraft:magma_block')
+                    .withCustomName(Text.of('§8🔒 [ Тигель: Недоступен ]'))
+                    .withLore([
+                        Text.of('§cТребуется Адский Тигель поблизости (в пределах 4 блоков)!'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§7Установите Адский Тигель для выплавки пепельных сплавов и незерита.')
+                    ]));
+                s.leftClicked = () => {
+                    player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    player.sendSystemMessage(Text.of('§c[Мастерская] §7Требуется Адский Тигель поблизости!'));
+                };
+            }
+        });
+
+        // Tab 6: 🌌 [ Наковальня ] (активна только если рядом есть Наковальня Бездны)
+        gui.slot(6, 0, s => {
+            let isSel = (session.tab === 6);
+            if (session.hasAnvil) {
+                s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'minecraft:crying_obsidian')
+                    .withCustomName(Text.of(isSel ? '§6▶ §5🌌 [ Наковальня ] ◀' : '§5🌌 [ Наковальня ]'))
+                    .withLore([
+                        Text.of('§7Пустотная Наковальня Бездны (Т5).'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§a✓ Наковальня Бездны подключена в радиусе 4 блоков'),
+                        Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода к рунической закалке')
+                    ]));
+                s.leftClicked = () => {
+                    session.tab = 6;
+                    player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    openBlacksmithGUI(player, stationPos);
+                };
+            } else {
+                s.setItem(Item.of('minecraft:obsidian')
+                    .withCustomName(Text.of('§8🔒 [ Наковальня: Недоступна ]'))
+                    .withLore([
+                        Text.of('§cТребуется Наковальня Бездны поблизости (в пределах 4 блоков)!'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§7Установите Пустотную Наковальню для алтаря глубокой заточки +1..+10.')
+                    ]));
+                s.leftClicked = () => {
+                    player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    player.sendSystemMessage(Text.of('§c[Мастерская] §7Требуется Наковальня Бездны поблизости!'));
+                };
+            }
+        });
+
         // Slot 7: Разделитель
         gui.slot(7, 0, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
 
-        // Slot 8: Выход
+        // Slot 8: ✖ [ Закрыть ]
         gui.slot(8, 0, s => {
             s.setItem(Item.of('minecraft:barrier').withCustomName(Text.of('§c✖ [ Закрыть ]')));
             s.leftClicked = () => {
@@ -762,10 +822,9 @@ function openBlacksmithGUI(player, stationPos) {
         });
 
         // ======================================================================
-        // ROWS 1..4: ОСНОВНАЯ РАБОЧАЯ ЗОНА
+        // ROWS 1..4: ОСНОВНАЯ РАБОЧАЯ ЗОНА В СООТВЕТСТВИИ С АКТИВНОЙ ВКЛАДКОЙ
         // ======================================================================
-
-        if (session.tab >= 0 && session.tab <= 2) {
+if (session.tab >= 0 && session.tab <= 2) {
             // ------------------------------------------------------------------
             // КАТАЛОГ КОВКИ (TABS 0, 1, 2)
             // ------------------------------------------------------------------
@@ -1033,6 +1092,577 @@ function openBlacksmithGUI(player, stationPos) {
                 gui.slot(0, y, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
                 gui.slot(8, y, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
             }
+        } else if (session.tab === 4) {
+            // ------------------------------------------------------------------
+            // TAB 4: 🔥 [ ОЧАГ ] (МЕТАЛЛУРГИЯ И ВЫПЛАВКА В ЕДИНОМ МАСТЕР-GUI)
+            // ------------------------------------------------------------------
+            let steelChargeCount = countPlayerItemsBS(player, 'kubejs:steel_charge');
+            let rawIronCount = countPlayerItemsBS(player, 'minecraft:raw_iron') 
+                + countPlayerItemsBS(player, 'minecraft:iron_ore') 
+                + countPlayerItemsBS(player, 'minecraft:deepslate_iron_ore');
+            let rawCopperCount = countPlayerItemsBS(player, 'minecraft:raw_copper') 
+                + countPlayerItemsBS(player, 'minecraft:copper_ore') 
+                + countPlayerItemsBS(player, 'minecraft:deepslate_copper_ore');
+
+            // Заполнение рабочей зоны декорацией
+            for (let y = 1; y <= 4; y++) {
+                for (let x = 0; x < 9; x++) {
+                    gui.slot(x, y, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
+                }
+            }
+
+            // Ряд 1: Индикаторы накопителя металлов (Буфер мастерской)
+            // [2, 1] Буфер Стали
+            gui.slot(2, 1, s => {
+                let stCount = buf.steel || 0;
+                s.setItem(Item.of('kubejs:steel_ingot')
+                    .withCustomName(Text.of(`§9[ Буфер Стали: ${stCount} шт. ]`))
+                    .withLore([
+                        Text.of(`§7Текущий запас в мастерской: §f${stCount} §7шт.`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§a▶ ЛКМ: Забрать 1 слиток в инвентарь')
+                    ]));
+                s.leftClicked = () => {
+                    if (buf.steel > 0) {
+                        buf.steel -= 1;
+                        player.give(Item.of('kubejs:steel_ingot', 1));
+                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                        openBlacksmithGUI(player, stationPos);
+                    }
+                };
+            });
+
+            // [4, 1] Буфер Железа
+            gui.slot(4, 1, s => {
+                let irCount = buf.iron || 0;
+                s.setItem(Item.of('minecraft:iron_ingot')
+                    .withCustomName(Text.of(`§f[ Буфер Железа: ${irCount} шт. ]`))
+                    .withLore([
+                        Text.of(`§7Текущий запас в мастерской: §f${irCount} §7шт.`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§a▶ ЛКМ: Забрать 1 слиток в инвентарь')
+                    ]));
+                s.leftClicked = () => {
+                    if (buf.iron > 0) {
+                        buf.iron -= 1;
+                        player.give(Item.of('minecraft:iron_ingot', 1));
+                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                        openBlacksmithGUI(player, stationPos);
+                    }
+                };
+            });
+
+            // [6, 1] Буфер Меди
+            gui.slot(6, 1, s => {
+                let cuCount = buf.copper || 0;
+                s.setItem(Item.of('minecraft:copper_ingot')
+                    .withCustomName(Text.of(`§6[ Буфер Меди: ${cuCount} шт. ]`))
+                    .withLore([
+                        Text.of(`§7Текущий запас в мастерской: §f${cuCount} §7шт.`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§a▶ ЛКМ: Забрать 1 слиток в инвентарь')
+                    ]));
+                s.leftClicked = () => {
+                    if (buf.copper > 0) {
+                        buf.copper -= 1;
+                        player.give(Item.of('minecraft:copper_ingot', 1));
+                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                        openBlacksmithGUI(player, stationPos);
+                    }
+                };
+            });
+
+            // Ряд 2: Операции выплавки (Сталь, Железо, Медь)
+            // [2, 2] Выплавка Стали
+            gui.slot(2, 2, s => {
+                let canSmelt = (steelChargeCount >= 1 && fuelCount >= 1);
+                s.setItem(Item.of('kubejs:steel_charge')
+                    .withCustomName(Text.of('§b⚡ [ Выплавить Сталь ]'))
+                    .withLore([
+                        Text.of('§7Высокотемпературный обжиг шихты в сталь.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§eРецепт: 1x Шихта стали + 1x Уголь -> +1 Сталь в буфер'),
+                        Text.of(steelChargeCount >= 1 ? `§a✓ Шихты в инвентаре: ${steelChargeCount} шт.` : '§c✗ Нет шихты стали в инвентаре'),
+                        Text.of(fuelCount >= 1 ? `§a✓ Топлива в инвентаре: ${fuelCount} ед.` : '§c✗ Нет топлива (уголь/древесный уголь)'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(canSmelt ? '§a▶ ЛКМ: Выплавить 1 слиток' : '§c🔒 Недостаточно шихты или топлива')
+                    ]));
+                s.leftClicked = () => {
+                    let curCharges = countPlayerItemsBS(player, 'kubejs:steel_charge');
+                    let curFuel = countPlayerFuelBS(player);
+                    if (curCharges >= 1 && curFuel >= 1) {
+                        deductPlayerItemsBS(player, 'kubejs:steel_charge', 1);
+                        deductPlayerFuelBS(player, 1);
+                        addBufferIngots(level, stationPos, 'steel', 1);
+
+                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.9 1.1`);
+                        player.server.runCommandSilent(`playsound minecraft:block.lava.extinguish player ${player.username} ~ ~ ~ 0.8 1.4`);
+                        player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.3 0.3 0.3 0.05 15`);
+                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.2 0.2 0.2 0.05 8`);
+                        player.sendSystemMessage(Text.of('§a⚡ [Очаг] §fВыплавлен §9+1 Стальной Слиток§f в буфер мастерской!'));
+                        openBlacksmithGUI(player, stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    }
+                };
+            });
+
+            // [4, 2] Переплавка Железа
+            gui.slot(4, 2, s => {
+                let canSmelt = (rawIronCount >= 1 && fuelCount >= 1);
+                s.setItem(Item.of('minecraft:raw_iron')
+                    .withCustomName(Text.of('§f⚡ [ Переплавить Железо ]'))
+                    .withLore([
+                        Text.of('§7Переплавка сырого железа или руды в слитки.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§eРецепт: 1x Сырое железо/руда + 1x Уголь -> +1 Железо в буфер'),
+                        Text.of(rawIronCount >= 1 ? `§a✓ Сырого железа/руды: ${rawIronCount} шт.` : '§c✗ Нет железной руды/сырца'),
+                        Text.of(fuelCount >= 1 ? `§a✓ Топлива в инвентаре: ${fuelCount} ед.` : '§c✗ Нет топлива'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(canSmelt ? '§a▶ ЛКМ: Выплавить 1 слиток' : '§c🔒 Недостаточно руды или топлива')
+                    ]));
+                s.leftClicked = () => {
+                    let curFuel = countPlayerFuelBS(player);
+                    if (curFuel < 1) {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                        return;
+                    }
+                    let taken = false;
+                    ['minecraft:raw_iron', 'minecraft:iron_ore', 'minecraft:deepslate_iron_ore'].forEach(oreId => {
+                        if (!taken && countPlayerItemsBS(player, oreId) >= 1) {
+                            deductPlayerItemsBS(player, oreId, 1);
+                            taken = true;
+                        }
+                    });
+                    if (taken) {
+                        deductPlayerFuelBS(player, 1);
+                        addBufferIngots(level, stationPos, 'iron', 1);
+
+                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.9 1.1`);
+                        player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.3 0.3 0.3 0.05 15`);
+                        player.sendSystemMessage(Text.of('§a⚡ [Очаг] §fВыплавлен §f+1 Железный Слиток§f в буфер мастерской!'));
+                        openBlacksmithGUI(player, stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    }
+                };
+            });
+
+            // [6, 2] Переплавка Меди
+            gui.slot(6, 2, s => {
+                let canSmelt = (rawCopperCount >= 1 && fuelCount >= 1);
+                s.setItem(Item.of('minecraft:raw_copper')
+                    .withCustomName(Text.of('§6⚡ [ Переплавить Медь ]'))
+                    .withLore([
+                        Text.of('§7Переплавка сырой меди или руды в слитки.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§eРецепт: 1x Сырая медь/руда + 1x Уголь -> +1 Медь в буфер'),
+                        Text.of(rawCopperCount >= 1 ? `§a✓ Сырой меди/руды: ${rawCopperCount} шт.` : '§c✗ Нет медной руды/сырца'),
+                        Text.of(fuelCount >= 1 ? `§a✓ Топлива в инвентаре: ${fuelCount} ед.` : '§c✗ Нет топлива'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(canSmelt ? '§a▶ ЛКМ: Выплавить 1 слиток' : '§c🔒 Недостаточно руды или топлива')
+                    ]));
+                s.leftClicked = () => {
+                    let curFuel = countPlayerFuelBS(player);
+                    if (curFuel < 1) {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                        return;
+                    }
+                    let taken = false;
+                    ['minecraft:raw_copper', 'minecraft:copper_ore', 'minecraft:deepslate_copper_ore'].forEach(oreId => {
+                        if (!taken && countPlayerItemsBS(player, oreId) >= 1) {
+                            deductPlayerItemsBS(player, oreId, 1);
+                            taken = true;
+                        }
+                    });
+                    if (taken) {
+                        deductPlayerFuelBS(player, 1);
+                        addBufferIngots(level, stationPos, 'copper', 1);
+
+                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.9 1.1`);
+                        player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.3 0.3 0.3 0.05 15`);
+                        player.sendSystemMessage(Text.of('§a⚡ [Очаг] §fВыплавлен §6+1 Медный Слиток§f в буфер мастерской!'));
+                        openBlacksmithGUI(player, stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    }
+                };
+            });
+
+            // Ряд 3: Загрузка слитков, Пакетная выплавка, Запас топлива
+            // [2, 3] Загрузка слитков в буфер
+            gui.slot(2, 3, s => {
+                let invSteel = countPlayerItemsBS(player, 'kubejs:steel_ingot');
+                let invIron = countPlayerItemsBS(player, 'minecraft:iron_ingot');
+                let invCopper = countPlayerItemsBS(player, 'minecraft:copper_ingot');
+                let totalIngots = invSteel + invIron + invCopper;
+
+                s.setItem(Item.of('minecraft:hopper')
+                    .withCustomName(Text.of('§e📥 [ Загрузить Слитки в Буфер ]'))
+                    .withLore([
+                        Text.of('§7Сложить слитки из инвентаря в общий буфер мастерской.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(`§7В инвентаре: Сталь: ${invSteel}, Железо: ${invIron}, Медь: ${invCopper}`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(totalIngots > 0 ? '§a▶ Нажмите ЛКМ для загрузки всех слитков' : '§c🔒 Нет слитков в инвентаре для загрузки')
+                    ]));
+                s.leftClicked = () => {
+                    let curSteel = countPlayerItemsBS(player, 'kubejs:steel_ingot');
+                    let curIron = countPlayerItemsBS(player, 'minecraft:iron_ingot');
+                    let curCopper = countPlayerItemsBS(player, 'minecraft:copper_ingot');
+
+                    if (curSteel > 0) {
+                        deductPlayerItemsBS(player, 'kubejs:steel_ingot', curSteel);
+                        addBufferIngots(level, stationPos, 'steel', curSteel);
+                    }
+                    if (curIron > 0) {
+                        deductPlayerItemsBS(player, 'minecraft:iron_ingot', curIron);
+                        addBufferIngots(level, stationPos, 'iron', curIron);
+                    }
+                    if (curCopper > 0) {
+                        deductPlayerItemsBS(player, 'minecraft:copper_ingot', curCopper);
+                        addBufferIngots(level, stationPos, 'copper', curCopper);
+                    }
+
+                    if (curSteel > 0 || curIron > 0 || curCopper > 0) {
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
+                        player.sendSystemMessage(Text.of('§a📥 [Буфер] §fСлитки успешно перемещены в накопитель мастерской!'));
+                        openBlacksmithGUI(player, stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    }
+                };
+            });
+
+            // [4, 3] Пакетная Авто-Выплавка ВСЕХ материалов
+            gui.slot(4, 3, s => {
+                let totalMaterials = steelChargeCount + rawIronCount + rawCopperCount;
+                let canBatch = (totalMaterials > 0 && fuelCount > 0);
+                s.setItem(Item.of('minecraft:campfire')
+                    .withCustomName(Text.of('§c🔥 [ Выплавить ВСЕ Материалы ]'))
+                    .withLore([
+                        Text.of('§7Автоматическая пакетная переплавка всей шихты и руд.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(`§7Шихта стали: §f${steelChargeCount} §7| Железо: §f${rawIronCount} §7| Медь: §f${rawCopperCount}`),
+                        Text.of(`§7Доступно топлива: §e${fuelCount} §7ед.`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(canBatch ? '§a▶ Нажмите ЛКМ для полной переплавки' : '§c🔒 Нет материалов или топлива для выплавки')
+                    ]));
+                s.leftClicked = () => {
+                    let curFuel = countPlayerFuelBS(player);
+                    if (curFuel <= 0) {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                        player.sendSystemMessage(Text.of('§c[Очаг] §7Недостаточно топлива для выплавки!'));
+                        return;
+                    }
+
+                    let smeltedSteel = 0;
+                    let smeltedIron = 0;
+                    let smeltedCopper = 0;
+
+                    let curCharges = countPlayerItemsBS(player, 'kubejs:steel_charge');
+                    let batchSteel = Math.min(curCharges, curFuel);
+                    if (batchSteel > 0) {
+                        deductPlayerItemsBS(player, 'kubejs:steel_charge', batchSteel);
+                        deductPlayerFuelBS(player, batchSteel);
+                        addBufferIngots(level, stationPos, 'steel', batchSteel);
+                        curFuel -= batchSteel;
+                        smeltedSteel += batchSteel;
+                    }
+
+                    if (curFuel > 0) {
+                        let curIron = countPlayerItemsBS(player, 'minecraft:raw_iron');
+                        let batchIron = Math.min(curIron, curFuel);
+                        if (batchIron > 0) {
+                            deductPlayerItemsBS(player, 'minecraft:raw_iron', batchIron);
+                            deductPlayerFuelBS(player, batchIron);
+                            addBufferIngots(level, stationPos, 'iron', batchIron);
+                            curFuel -= batchIron;
+                            smeltedIron += batchIron;
+                        }
+                    }
+
+                    if (curFuel > 0) {
+                        let curCopper = countPlayerItemsBS(player, 'minecraft:raw_copper');
+                        let batchCopper = Math.min(curCopper, curFuel);
+                        if (batchCopper > 0) {
+                            deductPlayerItemsBS(player, 'minecraft:raw_copper', batchCopper);
+                            deductPlayerFuelBS(player, batchCopper);
+                            addBufferIngots(level, stationPos, 'copper', batchCopper);
+                            curFuel -= batchCopper;
+                            smeltedCopper += batchCopper;
+                        }
+                    }
+
+                    let totalSmelted = smeltedSteel + smeltedIron + smeltedCopper;
+                    if (totalSmelted > 0) {
+                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 1.0 1.0`);
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.2`);
+                        player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.5 0.4 0.5 0.08 40`);
+                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.4 0.3 0.4 0.05 20`);
+                        player.sendSystemMessage(Text.of(`§a🔥 [Пакетная выплавка] §fВыплавлено: §9${smeltedSteel} стали§f, §f${smeltedIron} железа§f, §6${smeltedCopper} меди§f в буфер!`));
+                        openBlacksmithGUI(player, stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                        player.sendSystemMessage(Text.of('§c[Очаг] §7Не найдено сырья для переплавки!'));
+                    }
+                };
+            });
+
+            // [6, 3] Индикатор топлива
+            gui.slot(6, 3, s => {
+                s.setItem(Item.of('minecraft:coal')
+                    .withCustomName(Text.of(`§7[ Запас Топлива: ${fuelCount} ед. ]`))
+                    .withLore([
+                        Text.of('§7Подходит любое стандартное топливо:'),
+                        Text.of('§e• Уголь / Древесный уголь (1 ед.)'),
+                        Text.of('§e• Стержень ифрита (3 ед.)'),
+                        Text.of('§e• Угольный блок (9 ед.)'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§7Держите топливо в инвентаре для работы Очага.')
+                    ]));
+                s.leftClicked = () => {};
+            });
+
+        } else if (session.tab === 5) {
+            // ------------------------------------------------------------------
+            // TAB 5: 🌋 [ ТИГЕЛЬ ] (ИНФЕРНАЛЬНЫЕ СПЛАВЫ И ВОЗВЫШЕНИЕ НЕЗЕРА)
+            // ------------------------------------------------------------------
+            for (let y = 1; y <= 4; y++) {
+                for (let x = 0; x < 9; x++) {
+                    gui.slot(x, y, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
+                }
+            }
+
+            // Центральный статус Тигля
+            gui.slot(4, 1, s => {
+                s.setItem(Item.of('minecraft:lava_bucket')
+                    .withCustomName(Text.of('§4🌋 [ АДСКИЙ ТИГЕЛЬ НЕЗЕРА (Т2/Т3) ]'))
+                    .withLore([
+                        Text.of('§7Древний очаг первородной магмы для высокотемпературных сплавов.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§a✓ Подключен к единому комплексу мастерской'),
+                        Text.of('§e• Пепельный Сплав (Cinder Alloy)'),
+                        Text.of('§e• Незеритовые пластины и слитки'),
+                        Text.of('§e• Инфернальное возвышение экипировки')
+                    ]));
+                s.leftClicked = () => {};
+            });
+
+            // Слиток 1: Пепельный Сплав
+            gui.slot(2, 2, s => {
+                let scrapCount = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
+                let magmaCount = countPlayerItemsBS(player, 'minecraft:magma_cream');
+                let canCinder = (scrapCount >= 1 && magmaCount >= 1 && fuelCount >= 2);
+                s.setItem(Item.of('skd:cinder_alloy_ingot')
+                    .withCustomName(Text.of('§6🔥 [ Сплавить Пепельный Сплав ]'))
+                    .withLore([
+                        Text.of('§7Высокотемпературный сплав Незера (Тир 2).'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§eРецепт: 1x Незеритовый обломок + 1x Сгусток магмы + 2x Угля'),
+                        Text.of(scrapCount >= 1 ? `§a✓ Обломков незерита: ${scrapCount} шт.` : '§c✗ Нет обломков незерита'),
+                        Text.of(magmaCount >= 1 ? `§a✓ Сгустков магмы: ${magmaCount} шт.` : '§c✗ Нет сгустков магмы'),
+                        Text.of(fuelCount >= 2 ? `§a✓ Топлива: ${fuelCount} ед.` : '§c✗ Требуется 2 ед. топлива'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(canCinder ? '§a▶ Нажмите ЛКМ для плавки сплава' : '§c🔒 Недостаточно компонентов')
+                    ]));
+                s.leftClicked = () => {
+                    let curScrap = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
+                    let curMagma = countPlayerItemsBS(player, 'minecraft:magma_cream');
+                    let curFuel = countPlayerFuelBS(player);
+                    if (curScrap >= 1 && curMagma >= 1 && curFuel >= 2) {
+                        deductPlayerItemsBS(player, 'minecraft:netherite_scrap', 1);
+                        deductPlayerItemsBS(player, 'minecraft:magma_cream', 1);
+                        deductPlayerFuelBS(player, 2);
+                        player.give(Item.of('skd:cinder_alloy_ingot', 1));
+
+                        player.server.runCommandSilent(`playsound minecraft:block.lava.extinguish player ${player.username} ~ ~ ~ 1.0 0.9`);
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.1`);
+                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.4 0.3 0.4 0.05 25`);
+                        player.sendSystemMessage(Text.of('§4🌋 [Тигель] §fВыплавлен §6+1 Пепельный Сплав§f!'));
+                        openBlacksmithGUI(player, stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    }
+                };
+            });
+
+            // Слиток 2: Незеритовый Слиток
+            gui.slot(4, 2, s => {
+                let scrapCount = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
+                let goldCount = countPlayerItemsBS(player, 'minecraft:gold_ingot');
+                let canNetherite = (scrapCount >= 4 && goldCount >= 4 && fuelCount >= 4);
+                s.setItem(Item.of('minecraft:netherite_ingot')
+                    .withCustomName(Text.of('§4✦ [ Отлить Незеритовый Слиток ]'))
+                    .withLore([
+                        Text.of('§7Легендарный инфернальный металл защиты.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§eРецепт: 4x Незеритовый обломок + 4x Золотой слиток + 4x Угля'),
+                        Text.of(scrapCount >= 4 ? `§a✓ Обломков: ${scrapCount}/4 шт.` : `§c✗ Обломков: ${scrapCount}/4 шт.`),
+                        Text.of(goldCount >= 4 ? `§a✓ Золота: ${goldCount}/4 шт.` : `§c✗ Золота: ${goldCount}/4 шт.`),
+                        Text.of(fuelCount >= 4 ? `§a✓ Топлива: ${fuelCount}/4 ед.` : `§c✗ Топлива: ${fuelCount}/4 ед.`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(canNetherite ? '§a▶ Нажмите ЛКМ для отливки слитков' : '§c🔒 Недостаточно компонентов')
+                    ]));
+                s.leftClicked = () => {
+                    let curScrap = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
+                    let curGold = countPlayerItemsBS(player, 'minecraft:gold_ingot');
+                    let curFuel = countPlayerFuelBS(player);
+                    if (curScrap >= 4 && curGold >= 4 && curFuel >= 4) {
+                        deductPlayerItemsBS(player, 'minecraft:netherite_scrap', 4);
+                        deductPlayerItemsBS(player, 'minecraft:gold_ingot', 4);
+                        deductPlayerFuelBS(player, 4);
+                        player.give(Item.of('minecraft:netherite_ingot', 1));
+
+                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 1.0 0.8`);
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 1.0 1.2`);
+                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.5 0.3 0.5 0.08 30`);
+                        player.sendSystemMessage(Text.of('§4🌋 [Тигель] §fОтлит §4+1 Незеритовый Слиток§f!'));
+                        openBlacksmithGUI(player, stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    }
+                };
+            });
+
+            // Слиток 3: Очистка Руды Незера
+            gui.slot(6, 2, s => {
+                let goldOreCount = countPlayerItemsBS(player, 'minecraft:nether_gold_ore');
+                let canGold = (goldOreCount >= 1 && fuelCount >= 1);
+                s.setItem(Item.of('minecraft:nether_gold_ore')
+                    .withCustomName(Text.of('§e⚡ [ Инфернальный Обжиг Золотой Руды ]'))
+                    .withLore([
+                        Text.of('§7Мгновенный высокотемпературный обжиг адской руды.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§eРецепт: 1x Адская золотая руда + 1x Уголь -> +2 Золотых слитка!'),
+                        Text.of(goldOreCount >= 1 ? `§a✓ Адской руды: ${goldOreCount} шт.` : '§c✗ Нет адской золотой руды'),
+                        Text.of(fuelCount >= 1 ? `§a✓ Топлива: ${fuelCount} ед.` : '§c✗ Нет топлива'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(canGold ? '§a▶ Нажмите ЛКМ для обжига (х2 выход!)' : '§c🔒 Недостаточно руды или топлива')
+                    ]));
+                s.leftClicked = () => {
+                    let curOre = countPlayerItemsBS(player, 'minecraft:nether_gold_ore');
+                    let curFuel = countPlayerFuelBS(player);
+                    if (curOre >= 1 && curFuel >= 1) {
+                        deductPlayerItemsBS(player, 'minecraft:nether_gold_ore', 1);
+                        deductPlayerFuelBS(player, 1);
+                        player.give(Item.of('minecraft:gold_ingot', 2));
+
+                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 1.0 1.2`);
+                        player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.3 0.3 0.3 0.05 20`);
+                        player.sendSystemMessage(Text.of('§e⚡ [Тигель] §fВыплавлено §6+2 Золотых Слитка§f!'));
+                        openBlacksmithGUI(player, stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    }
+                };
+            });
+
+            // Инфо-панель в ряду 3
+            gui.slot(4, 3, s => {
+                s.setItem(Item.of('minecraft:magma_block')
+                    .withCustomName(Text.of('§c🔥 [ Температурный Режим: 1800°C ]'))
+                    .withLore([
+                        Text.of('§7Тигель Незера активирован на полную мощность.'),
+                        Text.of('§7Позволяет создавать заготовки Тира 2 и трансмутировать металлы.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(`§7Доступно топлива в инвентаре: §e${fuelCount} §7ед.`)
+                    ]));
+                s.leftClicked = () => {};
+            });
+
+        } else if (session.tab === 6) {
+            // ------------------------------------------------------------------
+            // TAB 6: 🌌 [ НАКОВАЛЬНЯ ] (РУНИЧЕСКАЯ ЗАТОЧКА И СНЯТИЕ ШТРАФОВ)
+            // ------------------------------------------------------------------
+            for (let y = 1; y <= 4; y++) {
+                for (let x = 0; x < 9; x++) {
+                    gui.slot(x, y, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
+                }
+            }
+
+            // Центральный статус Наковальни
+            gui.slot(4, 1, s => {
+                s.setItem(Item.of('minecraft:crying_obsidian')
+                    .withCustomName(Text.of('§5🌌 [ НАКОВАЛЬНЯ БЕЗДНЫ (Т5 THE END) ]'))
+                    .withLore([
+                        Text.of('§7Пустотный монолит рунической гармонизации и закалки.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§a✓ Подключена к единому комплексу мастерской'),
+                        Text.of('§e• Снятие штрафов перековки экипировки'),
+                        Text.of('§e• Доступ к Алтарю Глубокой Заточки (+1..+10)'),
+                        Text.of('§e• Руническая закалка и стабилизация')
+                    ]));
+                s.leftClicked = () => {};
+            });
+
+            // Кнопка 1: Открыть Алтарь Глубокой Заточки (Infernal Forge UI)
+            gui.slot(3, 2, s => {
+                s.setItem(Item.of('kubejs:smithing_stone_1')
+                    .withCustomName(Text.of('§d⚡ [ Алтарь Глубокой Заточки +1..+10 ]'))
+                    .withLore([
+                        Text.of('§7Перейти к полноразмерному алтарю закалки снаряжения.'),
+                        Text.of('§7Использует кузнечные камни I..V и печати эгиды.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§a▶ Нажмите ЛКМ для открытия интерфейса заточки')
+                    ]));
+                s.leftClicked = () => {
+                    player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.1`);
+                    if (typeof openInfernalAnvilGUI === 'function') {
+                        openInfernalAnvilGUI(player);
+                    } else {
+                        player.server.runCommandSilent(`execute as ${player.username} run infernal_anvil`);
+                    }
+                };
+            });
+
+            // Кнопка 2: Руническое Снятие Штрафов / Очищение
+            gui.slot(5, 2, s => {
+                let tearCount = countPlayerItemsBS(player, 'minecraft:ghast_tear');
+                let lapisCount = countPlayerItemsBS(player, 'minecraft:lapis_lazuli');
+                let canPurify = (tearCount >= 1 && lapisCount >= 4);
+                s.setItem(Item.of('minecraft:amethyst_shard')
+                    .withCustomName(Text.of('§b✨ [ Руническое Снятие Штрафов ]'))
+                    .withLore([
+                        Text.of('§7Стабилизирует кристаллическую решетку поврежденного оружия.'),
+                        Text.of('§7Снимает штраф перековки и восстанавливает резонанс.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§eТребуется: 1x Слеза гаста + 4x Лазурит'),
+                        Text.of(tearCount >= 1 ? `§a✓ Слез гаста: ${tearCount} шт.` : '§c✗ Нет слезы гаста'),
+                        Text.of(lapisCount >= 4 ? `§a✓ Лазурита: ${lapisCount}/4 шт.` : `§c✗ Лазурита: ${lapisCount}/4 шт.`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(canPurify ? '§a▶ Нажмите ЛКМ для рунического очищения' : '§c🔒 Недостаточно реагентов')
+                    ]));
+                s.leftClicked = () => {
+                    let curTear = countPlayerItemsBS(player, 'minecraft:ghast_tear');
+                    let curLapis = countPlayerItemsBS(player, 'minecraft:lapis_lazuli');
+                    if (curTear >= 1 && curLapis >= 4) {
+                        deductPlayerItemsBS(player, 'minecraft:ghast_tear', 1);
+                        deductPlayerItemsBS(player, 'minecraft:lapis_lazuli', 4);
+
+                        player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 1.0 1.2`);
+                        player.server.runCommandSilent(`playsound minecraft:entity.player.levelup player ${player.username} ~ ~ ~ 0.8 1.5`);
+                        player.server.runCommandSilent(`particle minecraft:enchant ~ ~1.2 ~ 0.5 0.5 0.5 0.2 40`);
+                        player.sendSystemMessage(Text.of('§5🌌 [Наковальня] §aРуническое очищение завершено! Штрафы перековки сняты.'));
+                        openBlacksmithGUI(player, stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    }
+                };
+            });
+
+            // Инфо-строка
+            gui.slot(4, 3, s => {
+                s.setItem(Item.of('minecraft:ender_eye')
+                    .withCustomName(Text.of('§d👁 [ Резонанс Бездны: Активен ]'))
+                    .withLore([
+                        Text.of('§7Наковальня стабилизирует пространственные аномалии.'),
+                        Text.of('§7Используйте для финальной доводки легендарных артефактов.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§a✓ Полная совместимость с каноном 8 Тиров Элириума.')
+                    ]));
+                s.leftClicked = () => {};
+            });
         }
 
         // ======================================================================
@@ -1042,13 +1672,15 @@ function openBlacksmithGUI(player, stationPos) {
             if (x === 4) {
                 gui.slot(4, 5, s => {
                     s.setItem(Item.of('minecraft:compass')
-                        .withCustomName(Text.of('§e[ Руководство Металлурга Элириума ]'))
+                        .withCustomName(Text.of('§e[ Руководство Единой Мастерской ]'))
                         .withLore([
-                            Text.of('§7Верстак Оружейника кует 15 типов клинков SimplySwords.'),
-                            Text.of('§7Кузнечный Очаг обеспечивает разогрев и ремонт.'),
-                            Text.of('§7Связка [3-1-2-4] пробуждает Великую Кузницу!'),
+                            Text.of('§7Свободная Мастерская объединяет 4 станции в радиусе 4 блоков:'),
+                            Text.of('§6• Верстак Оружейника §7(Оружие, Доспехи, Инструменты)'),
+                            Text.of('§c• Кузнечный Очаг §7(Ремонт +50%, Металлургия и Буфер)'),
+                            Text.of('§4• Адский Тигель §7(Высокотемпературные сплавы Незера)'),
+                            Text.of('§5• Наковальня Бездны §7(Руническая заточка +1..+10)'),
                             Text.of('§8────────────────────────────────'),
-                            Text.of('§a✓ Авто-расход металлов из общего буфера мастерской.')
+                            Text.of('§a✓ Все 4 блока делят общий интерфейс и буфер материалов!')
                         ]));
                     s.leftClicked = () => {};
                 });
@@ -1060,446 +1692,22 @@ function openBlacksmithGUI(player, stationPos) {
 }
 
 // ------------------------------------------------------------------------------
-// OPEN BLACKSMITH HEARTH SMELTER GUI (CHEST MENU 6 ROWS)
+// OPEN BLACKSMITH HEARTH SMELTER GUI (COMPATIBILITY REDIRECT TO MASTER GUI TAB 4)
 // ------------------------------------------------------------------------------
 function openHearthSmelterGUI(player, stationPos) {
-    let level = player.level;
-    let station = (typeof getBlacksmithStationInfo === 'function') 
-        ? getBlacksmithStationInfo(level, stationPos) 
-        : { hasHearth: true, hasWorkbench: false, line: [] };
-
-    let fullTitle = '\uE001§r🔥 §6§lКУЗНЕЧНЫЙ ОЧАГ §c✦ §fВЫПЛАВКА МЕТАЛЛА';
-
-    player.openChestGUI(Text.of(fullTitle), 6, gui => {
-        gui.playerSlots = true;
-        let decoPane = Item.of('minecraft:gray_stained_glass_pane').withCustomName(Text.of('§8 '));
-
-        let buf = getWorkshopBuffer(level, stationPos);
-        let fuelCount = countPlayerFuelBS(player);
-        let steelChargeCount = countPlayerItemsBS(player, 'kubejs:steel_charge');
-        let rawIronCount = countPlayerItemsBS(player, 'minecraft:raw_iron') 
-            + countPlayerItemsBS(player, 'minecraft:iron_ore') 
-            + countPlayerItemsBS(player, 'minecraft:deepslate_iron_ore');
-        let rawCopperCount = countPlayerItemsBS(player, 'minecraft:raw_copper') 
-            + countPlayerItemsBS(player, 'minecraft:copper_ore') 
-            + countPlayerItemsBS(player, 'minecraft:deepslate_copper_ore');
-
-        // ======================================================================
-        // ROW 0: ВЕРХНЯЯ ПАНЕЛЬ СТАТУСА И НАКОПИТЕЛЯ
-        // ======================================================================
-
-        // Slot 0: Статус Очага
-        gui.slot(0, 0, s => {
-            s.setItem(Item.of('minecraft:blast_furnace')
-                .withCustomName(Text.of('§6🔥 [ КУЗНЕЧНЫЙ ОЧАГ ]'))
-                .withLore([
-                    Text.of('§7Высокотемпературный металлургический очаг.'),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of(station.hasWorkbench ? '§a✓ Верстак Оружейника: Подключен' : '§e⚠ Верстак Оружейника: Не найден'),
-                    Text.of(`§e• Доступно топлива в инвентаре: §f${fuelCount} §7ед.`),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of('§7Выплавленный металл отправляется прямо в буфер!')
-                ]));
-            s.leftClicked = () => {};
-        });
-
-        // Slot 2: Буфер Стали (Нажмите чтобы забрать)
-        gui.slot(2, 0, s => {
-            let stCount = buf.steel || 0;
-            s.setItem(Item.of('kubejs:steel_ingot')
-                .withCustomName(Text.of(`§9[ Буфер Стали: ${stCount} шт. ]`))
-                .withLore([
-                    Text.of(`§7Текущий запас в мастерской: §f${stCount} §7шт.`),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of('§a▶ ЛКМ: Забрать 1 слиток в инвентарь'),
-                    Text.of('§b▶ Shift+ЛКМ: Забрать пачку (до 64 шт.)')
-                ]));
-            s.leftClicked = () => {
-                if (buf.steel > 0) {
-                    let take = 1;
-                    buf.steel -= take;
-                    player.give(Item.of('kubejs:steel_ingot', take));
-                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                    openHearthSmelterGUI(player, stationPos);
-                }
-            };
-        });
-
-        // Slot 3: Буфер Железа
-        gui.slot(3, 0, s => {
-            let irCount = buf.iron || 0;
-            s.setItem(Item.of('minecraft:iron_ingot')
-                .withCustomName(Text.of(`§f[ Буфер Железа: ${irCount} шт. ]`))
-                .withLore([
-                    Text.of(`§7Текущий запас в мастерской: §f${irCount} §7шт.`),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of('§a▶ ЛКМ: Забрать 1 слиток в инвентарь'),
-                    Text.of('§b▶ Shift+ЛКМ: Забрать пачку (до 64 шт.)')
-                ]));
-            s.leftClicked = () => {
-                if (buf.iron > 0) {
-                    let take = 1;
-                    buf.iron -= take;
-                    player.give(Item.of('minecraft:iron_ingot', take));
-                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                    openHearthSmelterGUI(player, stationPos);
-                }
-            };
-        });
-
-        // Slot 4: Буфер Меди
-        gui.slot(4, 0, s => {
-            let cuCount = buf.copper || 0;
-            s.setItem(Item.of('minecraft:copper_ingot')
-                .withCustomName(Text.of(`§6[ Буфер Меди: ${cuCount} шт. ]`))
-                .withLore([
-                    Text.of(`§7Текущий запас в мастерской: §f${cuCount} §7шт.`),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of('§a▶ ЛКМ: Забрать 1 слиток в инвентарь'),
-                    Text.of('§b▶ Shift+ЛКМ: Забрать пачку (до 64 шт.)')
-                ]));
-            s.leftClicked = () => {
-                if (buf.copper > 0) {
-                    let take = 1;
-                    buf.copper -= take;
-                    player.give(Item.of('minecraft:copper_ingot', take));
-                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                    openHearthSmelterGUI(player, stationPos);
-                }
-            };
-        });
-
-        // Slot 6: Переход к Верстаку Ковки
-        gui.slot(6, 0, s => {
-            if (station.hasWorkbench) {
-                s.setItem(Item.of('kubejs:blacksmith_workbench')
-                    .withCustomName(Text.of('§6⚒ [ Перейти к Верстаку Ковки ]'))
-                    .withLore([
-                        Text.of('§7Переход в каталог крафта клинков, доспехов и ремонта.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§a▶ Нажмите ЛКМ для перехода')
-                    ]));
-                s.leftClicked = () => {
-                    player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
-                    openBlacksmithGUI(player, station.workbenchPos || stationPos);
-                };
-            } else {
-                s.setItem(Item.of('minecraft:gray_stained_glass_pane').withCustomName(Text.of('§8 ')));
-                s.leftClicked = () => {};
-            }
-        });
-
-        // Slot 8: Закрыть
-        gui.slot(8, 0, s => {
-            s.setItem(Item.of('minecraft:barrier').withCustomName(Text.of('§c✖ [ Закрыть ]')));
-            s.leftClicked = () => {
-                player.closeContainerMenu();
-            };
-        });
-
-        // Разделители ряда 0
-        [1, 5, 7].forEach(slotX => {
-            gui.slot(slotX, 0, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
-        });
-
-        // ======================================================================
-        // ROWS 1..4: МЕТАЛЛУРГИЧЕСКИЕ ОПЕРАЦИИ ВЫПЛАВКИ
-        // ======================================================================
-
-        // Заполнение пустых клеток декорацией
-        for (let y = 1; y <= 4; y++) {
-            for (let x = 0; x < 9; x++) {
-                gui.slot(x, y, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
-            }
-        }
-
-        // Кнопка 1: Выплавка Стали (Slot 2, Row 2)
-        gui.slot(2, 2, s => {
-            let canSmelt = (steelChargeCount >= 1 && fuelCount >= 1);
-            s.setItem(Item.of('kubejs:steel_charge')
-                .withCustomName(Text.of('§b⚡ [ Выплавить Сталь ]'))
-                .withLore([
-                    Text.of('§7Высокотемпературный обжиг шихты в сталь.'),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of('§eРецепт: 1x Шихта стали + 1x Уголь -> +1 Сталь в буфер'),
-                    Text.of(steelChargeCount >= 1 ? `§a✓ Шихты в инвентаре: ${steelChargeCount} шт.` : '§c✗ Нет шихты стали в инвентаре'),
-                    Text.of(fuelCount >= 1 ? `§a✓ Топлива в инвентаре: ${fuelCount} ед.` : '§c✗ Нет топлива (уголь/древесный уголь)'),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of(canSmelt ? '§a▶ ЛКМ: Выплавить 1 слиток' : '§c🔒 Недостаточно шихты или топлива'),
-                    Text.of(canSmelt ? '§b▶ ПКМ: Выплавить ВСЮ шихту из инвентаря' : '')
-                ]));
-            s.leftClicked = () => {
-                let curCharges = countPlayerItemsBS(player, 'kubejs:steel_charge');
-                let curFuel = countPlayerFuelBS(player);
-                if (curCharges >= 1 && curFuel >= 1) {
-                    deductPlayerItemsBS(player, 'kubejs:steel_charge', 1);
-                    deductPlayerFuelBS(player, 1);
-                    addBufferIngots(level, stationPos, 'steel', 1);
-
-                    player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.9 1.1`);
-                    player.server.runCommandSilent(`playsound minecraft:block.lava.extinguish player ${player.username} ~ ~ ~ 0.8 1.4`);
-                    player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.3 0.3 0.3 0.05 15`);
-                    player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.2 0.2 0.2 0.05 8`);
-                    player.sendSystemMessage(Text.of('§a⚡ [Очаг] §fВыплавлен §9+1 Стальной Слиток§f в буфер мастерской!'));
-                    openHearthSmelterGUI(player, stationPos);
-                } else {
-                    player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                }
-            };
-        });
-
-        // Кнопка 2: Переплавка Железа (Slot 4, Row 2)
-        gui.slot(4, 2, s => {
-            let canSmelt = (rawIronCount >= 1 && fuelCount >= 1);
-            s.setItem(Item.of('minecraft:raw_iron')
-                .withCustomName(Text.of('§f⚡ [ Переплавить Железо ]'))
-                .withLore([
-                    Text.of('§7Переплавка сырого железа или руды в слитки.'),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of('§eРецепт: 1x Сырое железо/руда + 1x Уголь -> +1 Железо в буфер'),
-                    Text.of(rawIronCount >= 1 ? `§a✓ Сырого железа/руды: ${rawIronCount} шт.` : '§c✗ Нет железной руды/сырца'),
-                    Text.of(fuelCount >= 1 ? `§a✓ Топлива в инвентаре: ${fuelCount} ед.` : '§c✗ Нет топлива'),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of(canSmelt ? '§a▶ ЛКМ: Выплавить 1 слиток' : '§c🔒 Недостаточно руды или топлива')
-                ]));
-            s.leftClicked = () => {
-                let curFuel = countPlayerFuelBS(player);
-                if (curFuel < 1) {
-                    player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    return;
-                }
-                let taken = false;
-                ['minecraft:raw_iron', 'minecraft:iron_ore', 'minecraft:deepslate_iron_ore'].forEach(oreId => {
-                    if (!taken && countPlayerItemsBS(player, oreId) >= 1) {
-                        deductPlayerItemsBS(player, oreId, 1);
-                        taken = true;
-                    }
-                });
-                if (taken) {
-                    deductPlayerFuelBS(player, 1);
-                    addBufferIngots(level, stationPos, 'iron', 1);
-
-                    player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.9 1.1`);
-                    player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.3 0.3 0.3 0.05 15`);
-                    player.sendSystemMessage(Text.of('§a⚡ [Очаг] §fВыплавлен §f+1 Железный Слиток§f в буфер мастерской!'));
-                    openHearthSmelterGUI(player, stationPos);
-                } else {
-                    player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                }
-            };
-        });
-
-        // Кнопка 3: Переплавка Меди (Slot 6, Row 2)
-        gui.slot(6, 2, s => {
-            let canSmelt = (rawCopperCount >= 1 && fuelCount >= 1);
-            s.setItem(Item.of('minecraft:raw_copper')
-                .withCustomName(Text.of('§6⚡ [ Переплавить Медь ]'))
-                .withLore([
-                    Text.of('§7Переплавка сырой меди или руды в слитки.'),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of('§eРецепт: 1x Сырая медь/руда + 1x Уголь -> +1 Медь в буфер'),
-                    Text.of(rawCopperCount >= 1 ? `§a✓ Сырой меди/руды: ${rawCopperCount} шт.` : '§c✗ Нет медной руды/сырца'),
-                    Text.of(fuelCount >= 1 ? `§a✓ Топлива в инвентаре: ${fuelCount} ед.` : '§c✗ Нет топлива'),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of(canSmelt ? '§a▶ ЛКМ: Выплавить 1 слиток' : '§c🔒 Недостаточно руды или топлива')
-                ]));
-            s.leftClicked = () => {
-                let curFuel = countPlayerFuelBS(player);
-                if (curFuel < 1) {
-                    player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    return;
-                }
-                let taken = false;
-                ['minecraft:raw_copper', 'minecraft:copper_ore', 'minecraft:deepslate_copper_ore'].forEach(oreId => {
-                    if (!taken && countPlayerItemsBS(player, oreId) >= 1) {
-                        deductPlayerItemsBS(player, oreId, 1);
-                        taken = true;
-                    }
-                });
-                if (taken) {
-                    deductPlayerFuelBS(player, 1);
-                    addBufferIngots(level, stationPos, 'copper', 1);
-
-                    player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.9 1.1`);
-                    player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.3 0.3 0.3 0.05 15`);
-                    player.sendSystemMessage(Text.of('§a⚡ [Очаг] §fВыплавлен §6+1 Медный Слиток§f в буфер мастерской!'));
-                    openHearthSmelterGUI(player, stationPos);
-                } else {
-                    player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                }
-            };
-        });
-
-        // Кнопка 4: Загрузить готовые слитки в буфер (Slot 2, Row 3)
-        gui.slot(2, 3, s => {
-            let invSteel = countPlayerItemsBS(player, 'kubejs:steel_ingot');
-            let invIron = countPlayerItemsBS(player, 'minecraft:iron_ingot');
-            let invCopper = countPlayerItemsBS(player, 'minecraft:copper_ingot');
-            let totalIngots = invSteel + invIron + invCopper;
-
-            s.setItem(Item.of('minecraft:hopper')
-                .withCustomName(Text.of('§e📥 [ Загрузить Слитки в Буфер ]'))
-                .withLore([
-                    Text.of('§7Сложить слитки из инвентаря в общий буфер мастерской.'),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of(`§7В инвентаре: Сталь: ${invSteel}, Железо: ${invIron}, Медь: ${invCopper}`),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of(totalIngots > 0 ? '§a▶ Нажмите ЛКМ для загрузки всех слитков' : '§c🔒 Нет слитков в инвентаре для загрузки')
-                ]));
-            s.leftClicked = () => {
-                let curSteel = countPlayerItemsBS(player, 'kubejs:steel_ingot');
-                let curIron = countPlayerItemsBS(player, 'minecraft:iron_ingot');
-                let curCopper = countPlayerItemsBS(player, 'minecraft:copper_ingot');
-
-                if (curSteel > 0) {
-                    deductPlayerItemsBS(player, 'kubejs:steel_ingot', curSteel);
-                    addBufferIngots(level, stationPos, 'steel', curSteel);
-                }
-                if (curIron > 0) {
-                    deductPlayerItemsBS(player, 'minecraft:iron_ingot', curIron);
-                    addBufferIngots(level, stationPos, 'iron', curIron);
-                }
-                if (curCopper > 0) {
-                    deductPlayerItemsBS(player, 'minecraft:copper_ingot', curCopper);
-                    addBufferIngots(level, stationPos, 'copper', curCopper);
-                }
-
-                if (curSteel > 0 || curIron > 0 || curCopper > 0) {
-                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
-                    player.sendSystemMessage(Text.of('§a📥 [Буфер] §fСлитки успешно перемещены в накопитель мастерской!'));
-                    openHearthSmelterGUI(player, stationPos);
-                } else {
-                    player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                }
-            };
-        });
-
-        // Кнопка 5: Пакетная Авто-Выплавка ВСЕХ материалов (Slot 4, Row 3)
-        gui.slot(4, 3, s => {
-            let totalMaterials = steelChargeCount + rawIronCount + rawCopperCount;
-            let canBatch = (totalMaterials > 0 && fuelCount > 0);
-            s.setItem(Item.of('minecraft:campfire')
-                .withCustomName(Text.of('§c🔥 [ Выплавить ВСЕ Материалы ]'))
-                .withLore([
-                    Text.of('§7Автоматическая пакетная переплавка всей шихты и руд.'),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of(`§7Шихта стали: §f${steelChargeCount} §7| Железо: §f${rawIronCount} §7| Медь: §f${rawCopperCount}`),
-                    Text.of(`§7Доступно топлива: §e${fuelCount} §7ед.`),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of(canBatch ? '§a▶ Нажмите ЛКМ для полной переплавки' : '§c🔒 Нет материалов или топлива для выплавки')
-                ]));
-            s.leftClicked = () => {
-                let curFuel = countPlayerFuelBS(player);
-                if (curFuel <= 0) {
-                    player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    player.sendSystemMessage(Text.of('§c[Очаг] §7Недостаточно топлива для выплавки!'));
-                    return;
-                }
-
-                let smeltedSteel = 0;
-                let smeltedIron = 0;
-                let smeltedCopper = 0;
-
-                // 1. Smelt Steel Charges
-                let curCharges = countPlayerItemsBS(player, 'kubejs:steel_charge');
-                let batchSteel = Math.min(curCharges, curFuel);
-                if (batchSteel > 0) {
-                    deductPlayerItemsBS(player, 'kubejs:steel_charge', batchSteel);
-                    deductPlayerFuelBS(player, batchSteel);
-                    addBufferIngots(level, stationPos, 'steel', batchSteel);
-                    curFuel -= batchSteel;
-                    smeltedSteel += batchSteel;
-                }
-
-                // 2. Smelt Raw Iron
-                if (curFuel > 0) {
-                    let curIron = countPlayerItemsBS(player, 'minecraft:raw_iron');
-                    let batchIron = Math.min(curIron, curFuel);
-                    if (batchIron > 0) {
-                        deductPlayerItemsBS(player, 'minecraft:raw_iron', batchIron);
-                        deductPlayerFuelBS(player, batchIron);
-                        addBufferIngots(level, stationPos, 'iron', batchIron);
-                        curFuel -= batchIron;
-                        smeltedIron += batchIron;
-                    }
-                }
-
-                // 3. Smelt Raw Copper
-                if (curFuel > 0) {
-                    let curCopper = countPlayerItemsBS(player, 'minecraft:raw_copper');
-                    let batchCopper = Math.min(curCopper, curFuel);
-                    if (batchCopper > 0) {
-                        deductPlayerItemsBS(player, 'minecraft:raw_copper', batchCopper);
-                        deductPlayerFuelBS(player, batchCopper);
-                        addBufferIngots(level, stationPos, 'copper', batchCopper);
-                        curFuel -= batchCopper;
-                        smeltedCopper += batchCopper;
-                    }
-                }
-
-                let totalSmelted = smeltedSteel + smeltedIron + smeltedCopper;
-                if (totalSmelted > 0) {
-                    player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 1.0 1.0`);
-                    player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.2`);
-                    player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.5 0.4 0.5 0.08 40`);
-                    player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.4 0.3 0.4 0.05 20`);
-                    player.sendSystemMessage(Text.of(`§a🔥 [Пакетная выплавка] §fВыплавлено: §9${smeltedSteel} стали§f, §f${smeltedIron} железа§f, §6${smeltedCopper} меди§f в буфер!`));
-                    openHearthSmelterGUI(player, stationPos);
-                } else {
-                    player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    player.sendSystemMessage(Text.of('§c[Очаг] §7Не найдено сырья для переплавки!'));
-                }
-            };
-        });
-
-        // Кнопка 6: Индикатор топлива (Slot 6, Row 3)
-        gui.slot(6, 3, s => {
-            s.setItem(Item.of('minecraft:coal')
-                .withCustomName(Text.of(`§7[ Запас Топлива: ${fuelCount} ед. ]`))
-                .withLore([
-                    Text.of('§7Подходит любое стандартное топливо:'),
-                    Text.of('§e• Уголь / Древесный уголь (1 ед.)'),
-                    Text.of('§e• Стержень ифрита (3 ед.)'),
-                    Text.of('§e• Угольный блок (9 ед.)'),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of('§7Держите топливо в инвентаре для работы Очага.')
-                ]));
-            s.leftClicked = () => {};
-        });
-
-        // ======================================================================
-        // ROW 5: НИЖНЯЯ ПАНЕЛЬ И РУКОВОДСТВО
-        // ======================================================================
-        for (let x = 0; x < 9; x++) {
-            if (x === 4) {
-                gui.slot(4, 5, s => {
-                    s.setItem(Item.of('minecraft:compass')
-                        .withCustomName(Text.of('§e[ Руководство Металлурга: Очаг ]'))
-                        .withLore([
-                            Text.of('§71. Создайте шихту стали в крафте 2x2 (железо + уголь + глина/кальцит).'),
-                            Text.of('§72. Загрузите шихту и топливо в Кузнечный Очаг.'),
-                            Text.of('§73. Металл сохранится в буфере мастерской и доступен в Верстаке Ковки!'),
-                            Text.of('§8────────────────────────────────'),
-                            Text.of('§a✓ Металл не пропадет при закрытии интерфейса.')
-                        ]));
-                    s.leftClicked = () => {};
-                });
-            } else {
-                gui.slot(x, 5, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
-            }
-        }
-    });
+    let session = getOrCreateBlacksmithSession(player);
+    session.tab = 4;
+    openBlacksmithGUI(player, stationPos);
 }
 
 // ------------------------------------------------------------------------------
-// RIGHT CLICK EVENT HOOKS
+// RIGHT CLICK EVENT HOOKS (ALL 4 BLOCKS OPEN UNIFIED MASTER WORKSHOP GUI)
 // ------------------------------------------------------------------------------
 
-// 1. Right click on Blacksmith Workbench -> Opens Forging & Repair Catalog
+// 1. Right click on Blacksmith Workbench
 BlockEvents.rightClicked('kubejs:blacksmith_workbench', event => {
     let player = event.player;
     if (!player || player.level.isClientSide()) return;
-
     let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
     if (!handStr.includes('MAIN')) return;
 
@@ -1508,41 +1716,24 @@ BlockEvents.rightClicked('kubejs:blacksmith_workbench', event => {
     player.server.runCommandSilent(`playsound minecraft:block.wood.hit player ${player.username} ~ ~ ~ 0.8 1.0`);
 });
 
-// 2. Right click on Blacksmith Hearth -> Opens Metallurgy Smelter GUI
+// 2. Right click on Blacksmith Hearth
 BlockEvents.rightClicked('kubejs:blacksmith_hearth', event => {
     let player = event.player;
     if (!player || player.level.isClientSide()) return;
-
     let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
     if (!handStr.includes('MAIN')) return;
 
     event.cancel();
-    openHearthSmelterGUI(player, event.block.pos);
+    let session = getOrCreateBlacksmithSession(player);
+    session.tab = 4; // Native Hearth tab in Unified Workshop GUI
+    openBlacksmithGUI(player, event.block.pos);
     player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.8 1.0`);
 });
 
-// 3. Right click on Void Anvil
-BlockEvents.rightClicked('kubejs:void_anvil', event => {
-    let player = event.player;
-    if (!player || player.level.isClientSide()) return;
-
-    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
-    if (!handStr.includes('MAIN')) return;
-
-    event.cancel();
-    player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
-    if (typeof openInfernalAnvilGUI === 'function') {
-        openInfernalAnvilGUI(player);
-    } else {
-        player.server.runCommandSilent(`execute as ${player.username} run infernal_anvil`);
-    }
-});
-
-// 4. Right click on Infernal Crucible
+// 3. Right click on Infernal Crucible
 BlockEvents.rightClicked('kubejs:infernal_crucible', event => {
     let player = event.player;
     if (!player || player.level.isClientSide()) return;
-
     let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
     if (!handStr.includes('MAIN')) return;
 
@@ -1553,14 +1744,24 @@ BlockEvents.rightClicked('kubejs:infernal_crucible', event => {
     player.server.runCommandSilent(`playsound minecraft:block.lava.ambient player ${player.username} ${cx} ${cy} ${cz} 0.8 1.0`);
     player.server.runCommandSilent(`particle minecraft:lava ${cx} ${cy + 0.6} ${cz} 0.2 0.2 0.2 0.05 10`);
 
-    let station = (typeof getBlacksmithStationInfo === 'function') 
-        ? getBlacksmithStationInfo(player.level, event.block.pos) 
-        : null;
-    if (station && station.hasWorkbench) {
-        openBlacksmithGUI(player, station.workbenchPos || event.block.pos);
-    } else {
-        player.sendSystemMessage(Text.of('§4🌋 [Адский Горн] §7Высокотемпературный тигель Незера пылает. Подключите его к Верстаку Оружейника [3-1-2-4]!'));
-    }
+    let session = getOrCreateBlacksmithSession(player);
+    session.tab = 5; // Native Crucible tab in Unified Workshop GUI
+    openBlacksmithGUI(player, event.block.pos);
+});
+
+// 4. Right click on Void Anvil
+BlockEvents.rightClicked('kubejs:void_anvil', event => {
+    let player = event.player;
+    if (!player || player.level.isClientSide()) return;
+    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
+    if (!handStr.includes('MAIN')) return;
+
+    event.cancel();
+    player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
+
+    let session = getOrCreateBlacksmithSession(player);
+    session.tab = 6; // Native Anvil tab in Unified Workshop GUI
+    openBlacksmithGUI(player, event.block.pos);
 });
 
 // Cleanup on logout

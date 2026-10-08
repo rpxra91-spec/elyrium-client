@@ -7,7 +7,7 @@
       "model": "elyrium:block/blacksmith_hearth_single"
     },
     "facing=north,part=pair_right": {
-      "model": "elyrium:block/hearth_pair_right"
+      "model": "elyrium:block/blacksmith_hearth_single"
     },
     "facing=north,part=trio_left": {
       "model": "elyrium:block/blacksmith_hearth_single"
@@ -16,7 +16,7 @@
       "model": "elyrium:block/blacksmith_hearth_single"
     },
     "facing=north,part=trio_right": {
-      "model": "elyrium:block/hearth_trio_right"
+      "model": "elyrium:block/blacksmith_hearth_single"
     },
     "facing=north,part=quad_0": {
       "model": "elyrium:block/blacksmith_hearth_single"
@@ -25,9 +25,12 @@
       "model": "elyrium:block/blacksmith_hearth_single"
     },
     "facing=north,part=quad_2": {
-      "model": "elyrium:block/hearth_quad_2"
+      "model": "elyrium:block/blacksmith_hearth_single"
     },
     "facing=north,part=quad_3": {
+      "model": "elyrium:block/blacksmith_hearth_single"
+    },
+    "facing=north": {
       "model": "elyrium:block/blacksmith_hearth_single"
     },
     "facing=east,part=single": {
@@ -39,7 +42,7 @@
       "y": 90
     },
     "facing=east,part=pair_right": {
-      "model": "elyrium:block/hearth_pair_right",
+      "model": "elyrium:block/blacksmith_hearth_single",
       "y": 90
     },
     "facing=east,part=trio_left": {
@@ -51,7 +54,7 @@
       "y": 90
     },
     "facing=east,part=trio_right": {
-      "model": "elyrium:block/hearth_trio_right",
+      "model": "elyrium:block/blacksmith_hearth_single",
       "y": 90
     },
     "facing=east,part=quad_0": {
@@ -63,10 +66,14 @@
       "y": 90
     },
     "facing=east,part=quad_2": {
-      "model": "elyrium:block/hearth_quad_2",
+      "model": "elyrium:block/blacksmith_hearth_single",
       "y": 90
     },
     "facing=east,part=quad_3": {
+      "model": "elyrium:block/blacksmith_hearth_single",
+      "y": 90
+    },
+    "facing=east": {
       "model": "elyrium:block/blacksmith_hearth_single",
       "y": 90
     },
@@ -79,7 +86,7 @@
       "y": 180
     },
     "facing=south,part=pair_right": {
-      "model": "elyrium:block/hearth_pair_right",
+      "model": "elyrium:block/blacksmith_hearth_single",
       "y": 180
     },
     "facing=south,part=trio_left": {
@@ -91,7 +98,7 @@
       "y": 180
     },
     "facing=south,part=trio_right": {
-      "model": "elyrium:block/hearth_trio_right",
+      "model": "elyrium:block/blacksmith_hearth_single",
       "y": 180
     },
     "facing=south,part=quad_0": {
@@ -103,10 +110,14 @@
       "y": 180
     },
     "facing=south,part=quad_2": {
-      "model": "elyrium:block/hearth_quad_2",
+      "model": "elyrium:block/blacksmith_hearth_single",
       "y": 180
     },
     "facing=south,part=quad_3": {
+      "model": "elyrium:block/blacksmith_hearth_single",
+      "y": 180
+    },
+    "facing=south": {
       "model": "elyrium:block/blacksmith_hearth_single",
       "y": 180
     },
@@ -119,7 +130,7 @@
       "y": 270
     },
     "facing=west,part=pair_right": {
-      "model": "elyrium:block/hearth_pair_right",
+      "model": "elyrium:block/blacksmith_hearth_single",
       "y": 270
     },
     "facing=west,part=trio_left": {
@@ -131,7 +142,7 @@
       "y": 270
     },
     "facing=west,part=trio_right": {
-      "model": "elyrium:block/hearth_trio_right",
+      "model": "elyrium:block/blacksmith_hearth_single",
       "y": 270
     },
     "facing=west,part=quad_0": {
@@ -143,10 +154,14 @@
       "y": 270
     },
     "facing=west,part=quad_2": {
-      "model": "elyrium:block/hearth_quad_2",
+      "model": "elyrium:block/blacksmith_hearth_single",
       "y": 270
     },
     "facing=west,part=quad_3": {
+      "model": "elyrium:block/blacksmith_hearth_single",
+      "y": 270
+    },
+    "facing=west": {
       "model": "elyrium:block/blacksmith_hearth_single",
       "y": 270
     }
