@@ -1,8 +1,8 @@
 {
-  "version": "0.4.31",
+  "version": "0.4.32",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-08T22:05:54.356203+00:00",
+  "generated_at": "2026-10-08T22:47:31.545506+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8971,6 +8971,11 @@
       "size": 118
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_nature.json",
+      "sha256": "64a3717b0404ad3e91c4ffb5fd898d257b8ce5138809fb3e497aada1a85b1144",
+      "size": 115
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/elemental_stone_shadow.json",
       "sha256": "646f786b9f5f397e25a8967ff6b8752dbb831052285c016f20680407b2fe1788",
       "size": 115
@@ -9789,6 +9794,11 @@
       "path": "kubejs/assets/kubejs/textures/item/elemental_stone_lightning.png",
       "sha256": "8a02da707ad926aa562e068da9f953e3eb05175d698178325201f0b3fb5b2150",
       "size": 232
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/elemental_stone_nature.png",
+      "sha256": "50ad46015df9067162b2be3486bc7dbb6a1775456ce94412fda9983ecc730577",
+      "size": 227
     },
     {
       "path": "kubejs/assets/kubejs/textures/item/elemental_stone_shadow.png",
@@ -13087,8 +13097,8 @@
     },
     {
       "path": "kubejs/client_scripts/spell_capacity_tooltips.js",
-      "sha256": "be36570933cd08240fbbe8c32df0448bf2435603a95517c8eb160c26ca06ae14",
-      "size": 9120
+      "sha256": "d3aae286288285ae8d86fec576777580cd009b1771fdd5fb43bd8529d8dcf034",
+      "size": 10440
     },
     {
       "path": "kubejs/client_scripts/stamina_hud_overlay.js",
@@ -13956,9 +13966,14 @@
       "size": 5939
     },
     {
+      "path": "kubejs/server_scripts/02_magic/elemental_altar_gui.js",
+      "sha256": "7e00f4514fb5a4d73a4c26353c798f699682bf1ebac4c0a1b74776a6eef559b4",
+      "size": 23402
+    },
+    {
       "path": "kubejs/server_scripts/02_magic/spell_capacity_engine.js",
-      "sha256": "a090d5f6ae54d3d6b60484142147f1bd8f511a2c076e2e64e20be909a303d9e6",
-      "size": 17074
+      "sha256": "478caa0240f5383a3e7c0cdb9e31a3503bead8281813866e4394335f180db5e1",
+      "size": 18955
     },
     {
       "path": "kubejs/server_scripts/02_magic/staff_spell_system.js",
@@ -13987,13 +14002,13 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/elemental_infusion_engine.js",
-      "sha256": "1f74314adccf6be45ded25b8f70877eb2e6f8bacda6923bf00a74744ded82918",
-      "size": 22224
+      "sha256": "ce48255ddd8e85a743ee4529686a71fa0dc69657dfbd60c7e7ba9da15e095108",
+      "size": 23234
     },
     {
       "path": "kubejs/server_scripts/03_combat/elemental_stone_recipes.js",
-      "sha256": "7c584525aebfc6508258005ee863b9f4a5838a61b7066e9991727e1c9777e890",
-      "size": 3194
+      "sha256": "cc8a4437511f034166a017fb4ce72a2a3888513a00d1474f05438d73305f861a",
+      "size": 3680
     },
     {
       "path": "kubejs/server_scripts/03_combat/elyrium_forge_api.js",
@@ -14122,8 +14137,8 @@
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/rpg_unified_leveling.js",
-      "sha256": "3e018ad7b451afa057b900a003db9a206d827d885452f6b0fc718067f0e0030b",
-      "size": 18333
+      "sha256": "c5b4ca1d7947a4120d46a932f673c7beec4449c9f74acf05f16e799c65a4ef2f",
+      "size": 18677
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/skill_abilities_engine.js",
@@ -14397,8 +14412,8 @@
     },
     {
       "path": "kubejs/startup_scripts/elemental_stones.js",
-      "sha256": "3d289267281fc7f192d772b99570cad1ddcde67ab3fbcf0a1aaa5621dd01b178",
-      "size": 6851
+      "sha256": "c2bab9ea54268ed5ac019cf992ddb3c9b52539b74e3f91a673cac43f8d74f3cb",
+      "size": 7937
     },
     {
       "path": "kubejs/startup_scripts/forge_multiblock_blocks.js",
