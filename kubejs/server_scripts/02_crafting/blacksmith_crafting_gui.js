@@ -65,7 +65,7 @@ function getStationAnchorKey(station, fallbackPos) {
 }
 
 function getWorkshopBuffer(level, stationPos) {
-    if (!level || !stationPos) return { steel: 0, iron: 0, copper: 0 };
+    if (!level || !stationPos) return { steel: 0, iron: 0, copper: 0, cinder: 0, netherite: 0 };
     let station = (typeof getBlacksmithStationInfo === 'function') 
         ? getBlacksmithStationInfo(level, stationPos) 
         : null;
@@ -75,12 +75,14 @@ function getWorkshopBuffer(level, stationPos) {
         level.persistentData.blacksmithBuffers = {};
     }
     if (!level.persistentData.blacksmithBuffers[anchor]) {
-        level.persistentData.blacksmithBuffers[anchor] = { steel: 0, iron: 0, copper: 0 };
+        level.persistentData.blacksmithBuffers[anchor] = { steel: 0, iron: 0, copper: 0, cinder: 0, netherite: 0 };
     }
     let b = level.persistentData.blacksmithBuffers[anchor];
     if (typeof b.steel !== 'number') b.steel = 0;
     if (typeof b.iron !== 'number') b.iron = 0;
     if (typeof b.copper !== 'number') b.copper = 0;
+    if (typeof b.cinder !== 'number') b.cinder = 0;
+    if (typeof b.netherite !== 'number') b.netherite = 0;
     return b;
 }
 
@@ -88,6 +90,8 @@ function countBufferIngots(level, stationPos, ingotId) {
     if (!level || !stationPos) return 0;
     let buf = getWorkshopBuffer(level, stationPos);
     let id = String(ingotId).toLowerCase();
+    if (id.includes('cinder')) return buf.cinder || 0;
+    if (id.includes('netherite')) return buf.netherite || 0;
     if (id.includes('steel')) return buf.steel || 0;
     if (id.includes('copper')) return buf.copper || 0;
     if (id.includes('iron')) return buf.iron || 0;
@@ -107,7 +111,9 @@ function deductBufferIngots(level, stationPos, ingotId, needed) {
     let buf = getWorkshopBuffer(level, stationPos);
     let id = String(ingotId).toLowerCase();
     let type = 'iron';
-    if (id.includes('steel')) type = 'steel';
+    if (id.includes('cinder')) type = 'cinder';
+    else if (id.includes('netherite')) type = 'netherite';
+    else if (id.includes('steel')) type = 'steel';
     else if (id.includes('copper')) type = 'copper';
 
     let cur = buf[type] || 0;
@@ -801,7 +807,7 @@ function openBlacksmithGUI(player, stationPos) {
                     .withLore([
                         Text.of('§cТребуется Наковальня Бездны поблизости (в пределах 4 блоков)!'),
                         Text.of('§8────────────────────────────────'),
-                        Text.of('§7Установите Пустотную Наковальню для алтаря глубокой заточки +1..+10.')
+                        Text.of('§7Установите Наковальню Бездны для глубокой заточки +1..+15 в стиле Lineage 2.')
                     ]));
                 s.leftClicked = () => {
                     player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
@@ -1426,7 +1432,7 @@ if (session.tab >= 0 && session.tab <= 2) {
 
         } else if (session.tab === 5) {
             // ------------------------------------------------------------------
-            // TAB 5: 🌋 [ ТИГЕЛЬ ] (ИНФЕРНАЛЬНЫЕ СПЛАВЫ И ВОЗВЫШЕНИЕ НЕЗЕРА)
+            // TAB 5: 🌋 [ ТИГЕЛЬ ] (ИНФЕРНАЛЬНЫЕ СПЛАВЫ И МЕТАЛЛУРГИЯ Т2+)
             // ------------------------------------------------------------------
             for (let y = 1; y <= 4; y++) {
                 for (let x = 0; x < 9; x++) {
@@ -1434,7 +1440,28 @@ if (session.tab >= 0 && session.tab <= 2) {
                 }
             }
 
-            // Центральный статус Тигля
+            // Ряд 1: Индикаторы буфера мастерской для Т2+ металлов
+            // [2, 1] Буфер Пепельного Сплава (Cinder Alloy)
+            gui.slot(2, 1, s => {
+                let cinCount = buf.cinder || 0;
+                s.setItem(Item.of('skd:cinder_alloy_ingot')
+                    .withCustomName(Text.of(`§6[ Буфер Пепельного Сплава: ${cinCount} шт. ]`))
+                    .withLore([
+                        Text.of(`§7Текущий запас в мастерской: §f${cinCount} §7шт.`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§a▶ ЛКМ: Забрать 1 слиток в инвентарь')
+                    ]));
+                s.leftClicked = () => {
+                    if (buf.cinder > 0) {
+                        buf.cinder -= 1;
+                        player.give(Item.of('skd:cinder_alloy_ingot', 1));
+                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                        openBlacksmithGUI(player, stationPos);
+                    }
+                };
+            });
+
+            // [4, 1] Центральный статус Тигля
             gui.slot(4, 1, s => {
                 s.setItem(Item.of('minecraft:lava_bucket')
                     .withCustomName(Text.of('§4🌋 [ АДСКИЙ ТИГЕЛЬ НЕЗЕРА (Т2/Т3) ]'))
@@ -1442,14 +1469,37 @@ if (session.tab >= 0 && session.tab <= 2) {
                         Text.of('§7Древний очаг первородной магмы для высокотемпературных сплавов.'),
                         Text.of('§8────────────────────────────────'),
                         Text.of('§a✓ Подключен к единому комплексу мастерской'),
-                        Text.of('§e• Пепельный Сплав (Cinder Alloy)'),
-                        Text.of('§e• Незеритовые пластины и слитки'),
-                        Text.of('§e• Инфернальное возвышение экипировки')
+                        Text.of('§e• Пепельный Сплав (Cinder Alloy, Т2)'),
+                        Text.of('§e• Очищенный Незерит (Refined Netherite, Т2+)'),
+                        Text.of('§e• Инфернальный обжиг руды Незера (х2 выход)'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(`§7Доступно топлива в инвентаре: §e${fuelCount} §7ед.`)
                     ]));
                 s.leftClicked = () => {};
             });
 
-            // Слиток 1: Пепельный Сплав
+            // [6, 1] Буфер Очищенного Незерита (Refined Netherite)
+            gui.slot(6, 1, s => {
+                let nethCount = buf.netherite || 0;
+                s.setItem(Item.of('kubejs:refined_netherite_ingot')
+                    .withCustomName(Text.of(`§4[ Буфер Очищенного Незерита: ${nethCount} шт. ]`))
+                    .withLore([
+                        Text.of(`§7Текущий запас в мастерской: §f${nethCount} §7шт.`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§a▶ ЛКМ: Забрать 1 слиток в инвентарь')
+                    ]));
+                s.leftClicked = () => {
+                    if (buf.netherite > 0) {
+                        buf.netherite -= 1;
+                        player.give(Item.of('kubejs:refined_netherite_ingot', 1));
+                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_netherite player ${player.username} ~ ~ ~ 0.8 1.2`);
+                        openBlacksmithGUI(player, stationPos);
+                    }
+                };
+            });
+
+            // Ряд 2: Операции плавки металлов Т2+
+            // [2, 2] Сплавить Пепельный Сплав -> в Буфер мастерской
             gui.slot(2, 2, s => {
                 let scrapCount = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
                 let magmaCount = countPlayerItemsBS(player, 'minecraft:magma_cream');
@@ -1459,12 +1509,14 @@ if (session.tab >= 0 && session.tab <= 2) {
                     .withLore([
                         Text.of('§7Высокотемпературный сплав Незера (Тир 2).'),
                         Text.of('§8────────────────────────────────'),
-                        Text.of('§eРецепт: 1x Незеритовый обломок + 1x Сгусток магмы + 2x Угля'),
+                        Text.of('§eРецепт: 1x Незеритовый обломок + 1x Сгусток магмы + 2x Топлива'),
+                        Text.of('§fВыход: §6+1 Пепельный Сплав §7(направляется в буфер)'),
+                        Text.of('§8────────────────────────────────'),
                         Text.of(scrapCount >= 1 ? `§a✓ Обломков незерита: ${scrapCount} шт.` : '§c✗ Нет обломков незерита'),
                         Text.of(magmaCount >= 1 ? `§a✓ Сгустков магмы: ${magmaCount} шт.` : '§c✗ Нет сгустков магмы'),
                         Text.of(fuelCount >= 2 ? `§a✓ Топлива: ${fuelCount} ед.` : '§c✗ Требуется 2 ед. топлива'),
                         Text.of('§8────────────────────────────────'),
-                        Text.of(canCinder ? '§a▶ Нажмите ЛКМ для плавки сплава' : '§c🔒 Недостаточно компонентов')
+                        Text.of(canCinder ? '§a▶ ЛКМ: Выплавить в буфер мастерской' : '§c🔒 Недостаточно компонентов')
                     ]));
                 s.leftClicked = () => {
                     let curScrap = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
@@ -1474,12 +1526,12 @@ if (session.tab >= 0 && session.tab <= 2) {
                         deductPlayerItemsBS(player, 'minecraft:netherite_scrap', 1);
                         deductPlayerItemsBS(player, 'minecraft:magma_cream', 1);
                         deductPlayerFuelBS(player, 2);
-                        player.give(Item.of('skd:cinder_alloy_ingot', 1));
+                        addBufferIngots(level, stationPos, 'cinder', 1);
 
                         player.server.runCommandSilent(`playsound minecraft:block.lava.extinguish player ${player.username} ~ ~ ~ 1.0 0.9`);
                         player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.1`);
                         player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.4 0.3 0.4 0.05 25`);
-                        player.sendSystemMessage(Text.of('§4🌋 [Тигель] §fВыплавлен §6+1 Пепельный Сплав§f!'));
+                        player.sendSystemMessage(Text.of('§4🌋 [Тигель] §fВыплавлен §6+1 Пепельный Сплав§f в буфер мастерской!'));
                         openBlacksmithGUI(player, stationPos);
                     } else {
                         player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
@@ -1487,37 +1539,45 @@ if (session.tab >= 0 && session.tab <= 2) {
                 };
             });
 
-            // Слиток 2: Незеритовый Слиток
+            // [4, 2] Отлить Очищенный Незерит -> в Буфер мастерской
             gui.slot(4, 2, s => {
-                let scrapCount = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
-                let goldCount = countPlayerItemsBS(player, 'minecraft:gold_ingot');
-                let canNetherite = (scrapCount >= 4 && goldCount >= 4 && fuelCount >= 4);
-                s.setItem(Item.of('minecraft:netherite_ingot')
-                    .withCustomName(Text.of('§4✦ [ Отлить Незеритовый Слиток ]'))
+                let netheriteIngots = countPlayerItemsBS(player, 'minecraft:netherite_ingot');
+                let curCinder = countPlayerItemsBS(player, 'skd:cinder_alloy_ingot') + (buf.cinder || 0);
+                let canRefined = (netheriteIngots >= 1 && curCinder >= 1 && fuelCount >= 4);
+                s.setItem(Item.of('kubejs:refined_netherite_ingot')
+                    .withCustomName(Text.of('§4✦ [ Отлить Очищенный Незерит ]'))
                     .withLore([
-                        Text.of('§7Легендарный инфернальный металл защиты.'),
+                        Text.of('§7Предельно очищенный сплав инфернального огня.'),
                         Text.of('§8────────────────────────────────'),
-                        Text.of('§eРецепт: 4x Незеритовый обломок + 4x Золотой слиток + 4x Угля'),
-                        Text.of(scrapCount >= 4 ? `§a✓ Обломков: ${scrapCount}/4 шт.` : `§c✗ Обломков: ${scrapCount}/4 шт.`),
-                        Text.of(goldCount >= 4 ? `§a✓ Золота: ${goldCount}/4 шт.` : `§c✗ Золота: ${goldCount}/4 шт.`),
+                        Text.of('§eРецепт: 1x Незеритовый слиток + 1x Пепельный сплав + 4x Топлива'),
+                        Text.of('§fВыход: §4+1 Очищенный Незерит §7(направляется в буфер)'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(netheriteIngots >= 1 ? `§a✓ Незеритовых слитков: ${netheriteIngots} шт.` : '§c✗ Нет незеритовых слитков'),
+                        Text.of(curCinder >= 1 ? `§a✓ Пепельного сплава (инв+буфер): ${curCinder} шт.` : '§c✗ Нет пепельного сплава'),
                         Text.of(fuelCount >= 4 ? `§a✓ Топлива: ${fuelCount}/4 ед.` : `§c✗ Топлива: ${fuelCount}/4 ед.`),
                         Text.of('§8────────────────────────────────'),
-                        Text.of(canNetherite ? '§a▶ Нажмите ЛКМ для отливки слитков' : '§c🔒 Недостаточно компонентов')
+                        Text.of(canRefined ? '§a▶ ЛКМ: Отлить в буфер мастерской' : '§c🔒 Недостаточно компонентов')
                     ]));
                 s.leftClicked = () => {
-                    let curScrap = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
-                    let curGold = countPlayerItemsBS(player, 'minecraft:gold_ingot');
+                    let curNeth = countPlayerItemsBS(player, 'minecraft:netherite_ingot');
+                    let curCinInv = countPlayerItemsBS(player, 'skd:cinder_alloy_ingot');
+                    let curCinBuf = buf.cinder || 0;
                     let curFuel = countPlayerFuelBS(player);
-                    if (curScrap >= 4 && curGold >= 4 && curFuel >= 4) {
-                        deductPlayerItemsBS(player, 'minecraft:netherite_scrap', 4);
-                        deductPlayerItemsBS(player, 'minecraft:gold_ingot', 4);
+
+                    if (curNeth >= 1 && (curCinInv + curCinBuf >= 1) && curFuel >= 4) {
+                        deductPlayerItemsBS(player, 'minecraft:netherite_ingot', 1);
+                        if (curCinBuf >= 1) {
+                            buf.cinder -= 1;
+                        } else {
+                            deductPlayerItemsBS(player, 'skd:cinder_alloy_ingot', 1);
+                        }
                         deductPlayerFuelBS(player, 4);
-                        player.give(Item.of('minecraft:netherite_ingot', 1));
+                        addBufferIngots(level, stationPos, 'netherite', 1);
 
                         player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 1.0 0.8`);
                         player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 1.0 1.2`);
                         player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.5 0.3 0.5 0.08 30`);
-                        player.sendSystemMessage(Text.of('§4🌋 [Тигель] §fОтлит §4+1 Незеритовый Слиток§f!'));
+                        player.sendSystemMessage(Text.of('§4🌋 [Тигель] §fОтлит §4+1 Очищенный Незеритовый Слиток§f в буфер мастерской!'));
                         openBlacksmithGUI(player, stationPos);
                     } else {
                         player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
@@ -1525,7 +1585,7 @@ if (session.tab >= 0 && session.tab <= 2) {
                 };
             });
 
-            // Слиток 3: Очистка Руды Незера
+            // [6, 2] Инфернальный Обжиг Золотой Руды
             gui.slot(6, 2, s => {
                 let goldOreCount = countPlayerItemsBS(player, 'minecraft:nether_gold_ore');
                 let canGold = (goldOreCount >= 1 && fuelCount >= 1);
@@ -1534,11 +1594,11 @@ if (session.tab >= 0 && session.tab <= 2) {
                     .withLore([
                         Text.of('§7Мгновенный высокотемпературный обжиг адской руды.'),
                         Text.of('§8────────────────────────────────'),
-                        Text.of('§eРецепт: 1x Адская золотая руда + 1x Уголь -> +2 Золотых слитка!'),
+                        Text.of('§eРецепт: 1x Адская золотая руда + 1x Топливо -> +2 Золотых слитка!'),
                         Text.of(goldOreCount >= 1 ? `§a✓ Адской руды: ${goldOreCount} шт.` : '§c✗ Нет адской золотой руды'),
                         Text.of(fuelCount >= 1 ? `§a✓ Топлива: ${fuelCount} ед.` : '§c✗ Нет топлива'),
                         Text.of('§8────────────────────────────────'),
-                        Text.of(canGold ? '§a▶ Нажмите ЛКМ для обжига (х2 выход!)' : '§c🔒 Недостаточно руды или топлива')
+                        Text.of(canGold ? '§a▶ ЛКМ: Обжечь (х2 выход!)' : '§c🔒 Недостаточно руды или топлива')
                     ]));
                 s.leftClicked = () => {
                     let curOre = countPlayerItemsBS(player, 'minecraft:nether_gold_ore');
@@ -1558,17 +1618,81 @@ if (session.tab >= 0 && session.tab <= 2) {
                 };
             });
 
-            // Инфо-панель в ряду 3
-            gui.slot(4, 3, s => {
-                s.setItem(Item.of('minecraft:magma_block')
-                    .withCustomName(Text.of('§c🔥 [ Температурный Режим: 1800°C ]'))
+            // Ряд 3: Загрузка слитков Т2+ в буфер и Пакетная плавка
+            // [3, 3] Загрузить Cinder & Netherite в буфер
+            gui.slot(3, 3, s => {
+                let invCin = countPlayerItemsBS(player, 'skd:cinder_alloy_ingot');
+                let invNeth = countPlayerItemsBS(player, 'kubejs:refined_netherite_ingot') + countPlayerItemsBS(player, 'minecraft:netherite_ingot');
+                let totalT2 = invCin + invNeth;
+                s.setItem(Item.of('minecraft:hopper')
+                    .withCustomName(Text.of('§e📥 [ Загрузить Слитки Т2+ в Буфер ]'))
                     .withLore([
-                        Text.of('§7Тигель Незера активирован на полную мощность.'),
-                        Text.of('§7Позволяет создавать заготовки Тира 2 и трансмутировать металлы.'),
+                        Text.of('§7Переместить пепельный сплав и незерит из сумки в буфер.'),
                         Text.of('§8────────────────────────────────'),
-                        Text.of(`§7Доступно топлива в инвентаре: §e${fuelCount} §7ед.`)
+                        Text.of(`§7В инвентаре: Пепельный сплав: ${invCin}, Незерит: ${invNeth}`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(totalT2 > 0 ? '§a▶ Нажмите ЛКМ для загрузки всех слитков Т2+' : '§c🔒 Нет слитков Т2+ в сумке')
                     ]));
-                s.leftClicked = () => {};
+                s.leftClicked = () => {
+                    let curCin = countPlayerItemsBS(player, 'skd:cinder_alloy_ingot');
+                    let curRef = countPlayerItemsBS(player, 'kubejs:refined_netherite_ingot');
+
+                    if (curCin > 0) {
+                        deductPlayerItemsBS(player, 'skd:cinder_alloy_ingot', curCin);
+                        addBufferIngots(level, stationPos, 'cinder', curCin);
+                    }
+                    if (curRef > 0) {
+                        deductPlayerItemsBS(player, 'kubejs:refined_netherite_ingot', curRef);
+                        addBufferIngots(level, stationPos, 'netherite', curRef);
+                    }
+
+                    if (curCin > 0 || curRef > 0) {
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
+                        player.sendSystemMessage(Text.of('§a📥 [Буфер Тигля] §fСлитки Т2+ перемещены в накопитель мастерской!'));
+                        openBlacksmithGUI(player, stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    }
+                };
+            });
+
+            // [5, 3] Пакетная плавка Пепельного Сплава
+            gui.slot(5, 3, s => {
+                let scrapCount = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
+                let magmaCount = countPlayerItemsBS(player, 'minecraft:magma_cream');
+                let maxBatch = Math.min(scrapCount, magmaCount, Math.floor(fuelCount / 2));
+                s.setItem(Item.of('minecraft:blaze_powder')
+                    .withCustomName(Text.of('§c🔥 [ Пакетная Плавка Пепельного Сплава ]'))
+                    .withLore([
+                        Text.of('§7Выплавить максимальное количество пепельного сплава в 1 клик.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(`§7Доступно для выплавки: §6${maxBatch} §7слитков`),
+                        Text.of(`§7Обломков: ${scrapCount} | Сгустков магмы: ${magmaCount} | Топлива: ${fuelCount}`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(maxBatch > 0 ? '§a▶ Нажмите ЛКМ для пакетной выплавки' : '§c🔒 Недостаточно ресурсов для плавки')
+                    ]));
+                s.leftClicked = () => {
+                    let curScrap = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
+                    let curMagma = countPlayerItemsBS(player, 'minecraft:magma_cream');
+                    let curFuel = countPlayerFuelBS(player);
+                    let batch = Math.min(curScrap, curMagma, Math.floor(curFuel / 2));
+
+                    if (batch > 0) {
+                        deductPlayerItemsBS(player, 'minecraft:netherite_scrap', batch);
+                        deductPlayerItemsBS(player, 'minecraft:magma_cream', batch);
+                        deductPlayerFuelBS(player, batch * 2);
+                        addBufferIngots(level, stationPos, 'cinder', batch);
+
+                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 1.0 1.0`);
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.2`);
+                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.5 0.4 0.5 0.08 35`);
+                        player.sendSystemMessage(Text.of(`§4🌋 [Тигель] §fПакетно выплавлено §6+${batch} Пепельного Сплава§f в буфер мастерской!`));
+                        openBlacksmithGUI(player, stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                        player.sendSystemMessage(Text.of('§c[Тигель] §7Недостаточно ресурсов или топлива!'));
+                    }
+                };
             });
 
         } else if (session.tab === 6) {
@@ -1590,8 +1714,8 @@ if (session.tab >= 0 && session.tab <= 2) {
                         Text.of('§8────────────────────────────────'),
                         Text.of('§a✓ Подключена к единому комплексу мастерской'),
                         Text.of('§e• Снятие штрафов перековки экипировки'),
-                        Text.of('§e• Доступ к Алтарю Глубокой Заточки (+1..+10)'),
-                        Text.of('§e• Руническая закалка и стабилизация')
+                        Text.of('§e• Доступ к Алтарю Глубокой Заточки (+1..+15 Lineage 2)'),
+                        Text.of('§e• Руническая закалка и стабилизация Аур')
                     ]));
                 s.leftClicked = () => {};
             });
@@ -1599,10 +1723,10 @@ if (session.tab >= 0 && session.tab <= 2) {
             // Кнопка 1: Открыть Алтарь Глубокой Заточки (Infernal Forge UI)
             gui.slot(3, 2, s => {
                 s.setItem(Item.of('kubejs:smithing_stone_1')
-                    .withCustomName(Text.of('§d⚡ [ Алтарь Глубокой Заточки +1..+10 ]'))
+                    .withCustomName(Text.of('§d⚡ [ Алтарь Заточки +1..+15 (Lineage 2) ]'))
                     .withLore([
-                        Text.of('§7Перейти к полноразмерному алтарю закалки снаряжения.'),
-                        Text.of('§7Использует кузнечные камни I..V и печати эгиды.'),
+                        Text.of('§7Перейти к полноразмерному алтарю глубокой заточки снаряжения.'),
+                        Text.of('§7Использует Оселки I..V, Печати Эгиды и пробуждает Ауры.'),
                         Text.of('§8────────────────────────────────'),
                         Text.of('§a▶ Нажмите ЛКМ для открытия интерфейса заточки')
                     ]));

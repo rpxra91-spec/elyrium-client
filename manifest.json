@@ -1,8 +1,8 @@
 {
-  "version": "0.4.30",
+  "version": "0.4.31",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-08T17:18:44.138030+00:00",
+  "generated_at": "2026-10-08T22:05:19.009166+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -13037,8 +13037,8 @@
     },
     {
       "path": "kubejs/client_scripts/equipment_reinforcement_tooltips.js",
-      "sha256": "11e67dd1b6cfd4a56255b997b4b618100c751857ac699913485af16d0b85b54c",
-      "size": 13663
+      "sha256": "bf5cf56fcd6704d7e34119af056d89fa23c56ae5d25284332b5da9cd08589135",
+      "size": 16333
     },
     {
       "path": "kubejs/client_scripts/filter_early_weapons.js",
@@ -13942,8 +13942,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_crafting_gui.js",
-      "sha256": "850d7a7fd9020012bd121ea585e30420b21fa73ec4b00e165866001046401285",
-      "size": 108677
+      "sha256": "d4a7675fbc1d30debe46e930f2d425efd697cf6ae42a9994b5f1d0811371654d",
+      "size": 118396
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
@@ -13997,8 +13997,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/elyrium_forge_api.js",
-      "sha256": "0c940f287878d56c6a3094418923b0da35188f0afad2189d66039e4078799d96",
-      "size": 38137
+      "sha256": "28593040ecfee9c09aa42edad6a595057b27def45e4ba87c597dae26587bbc3b",
+      "size": 39473
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_engine.js",
@@ -14037,8 +14037,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/infernal_anvil_gui.js",
-      "sha256": "904bdcf7a7b1df21c2ec8e2a4d028f64b28d20e3c5d712142b8acd3f69caaede",
-      "size": 60715
+      "sha256": "4737d77dc1be6a31f088a699f711b1622b1998ba350e9daeb319ca53479e2d62",
+      "size": 60645
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_inscription.js",
@@ -14112,8 +14112,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_reinforcement_scaling.js",
-      "sha256": "5ede61c518566b3b441be927819042c82147b863b7a455847bc5953b5b54085d",
-      "size": 28516
+      "sha256": "4abc652ff9a03d2928548b6d386a8a29610ca08fbd8c298be45358e936d9bb6e",
+      "size": 35167
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/dynamic_class_resolver.js",
@@ -14432,8 +14432,8 @@
     },
     {
       "path": "kubejs/startup_scripts/smithing_reinforcement_items.js",
-      "sha256": "28e8ed31a719beff54c67180865814bced8a43857e7587666c7875c430bc5c84",
-      "size": 4456
+      "sha256": "c5abea0e666b2f594ec2d68d7e80740ceb89cd713f494ceb36a5104ca0d75aaf",
+      "size": 5036
     },
     {
       "path": "kubejs/startup_scripts/tier4_items.js",

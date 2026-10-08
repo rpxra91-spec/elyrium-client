@@ -165,10 +165,31 @@ function renderReinforcementTooltips(tooltip, item) {
     // A. WEAPONS
     // ==========================================================================
     if (isWeapon) {
-        // 1. Reinforcement badge if reinforced
+        // 1. Reinforcement badge if reinforced (Lineage 2 Color Gradient)
         if (reinforceLvl > 0) {
-            let dmgBonus = reinforceLvl * 5;
-            tooltip.add(Text.of(`§6★ Заточка: §e+${reinforceLvl} §7(+${dmgBonus}% урона)`));
+            let dmgBonus = 0;
+            const WEAPON_BONUSES = {
+                1: 3, 2: 7, 3: 12, 4: 20, 5: 28, 6: 37, 7: 47, 8: 57, 9: 69,
+                10: 84, 11: 102, 12: 122, 13: 144, 14: 169, 15: 200
+            };
+            dmgBonus = WEAPON_BONUSES[reinforceLvl] || (reinforceLvl * 5);
+
+            let badgePrefix = '';
+            if (reinforceLvl >= 1 && reinforceLvl <= 3) {
+                badgePrefix = `§b[+${reinforceLvl}]`;
+            } else if (reinforceLvl >= 4 && reinforceLvl <= 6) {
+                badgePrefix = `§9[+${reinforceLvl}]`;
+            } else if (reinforceLvl >= 7 && reinforceLvl <= 9) {
+                badgePrefix = `§d[+${reinforceLvl}]`;
+            } else if (reinforceLvl >= 10 && reinforceLvl <= 12) {
+                badgePrefix = `§c[+${reinforceLvl}]`;
+            } else if (reinforceLvl >= 13 && reinforceLvl <= 14) {
+                badgePrefix = `§6★ [+${reinforceLvl}] ★`;
+            } else if (reinforceLvl >= 15) {
+                badgePrefix = `§5§l✦ [+15 АУРА БЕЗДНЫ] ✦`;
+            }
+
+            tooltip.add(Text.of(`§6★ Заточка: ${badgePrefix} §a(+${dmgBonus}% урона)`));
         }
 
         // 1.1. Ascension Tier badge if ascended
@@ -257,9 +278,29 @@ function renderReinforcementTooltips(tooltip, item) {
     // ==========================================================================
     else if (isArmor) {
         if (reinforceLvl > 0) {
-            let defBonus = reinforceLvl * 4;
-            let hpBonus = reinforceLvl * 2;
-            tooltip.add(Text.of(`§6★ Закалка: §e+${reinforceLvl} §7(+${defBonus}% защиты, +${hpBonus} HP)`));
+            const ARMOR_DEF_BONUSES = {
+                1: 2, 2: 4, 3: 6, 4: 8, 5: 10, 6: 12, 7: 14, 8: 16, 9: 18,
+                10: 20, 11: 22, 12: 24, 13: 26, 14: 28, 15: 30
+            };
+            let defBonus = ARMOR_DEF_BONUSES[reinforceLvl] || (reinforceLvl * 2);
+            let hpBonus = reinforceLvl * 3;
+
+            let badgePrefix = '';
+            if (reinforceLvl >= 1 && reinforceLvl <= 3) {
+                badgePrefix = `§b[+${reinforceLvl}]`;
+            } else if (reinforceLvl >= 4 && reinforceLvl <= 6) {
+                badgePrefix = `§9[+${reinforceLvl}]`;
+            } else if (reinforceLvl >= 7 && reinforceLvl <= 9) {
+                badgePrefix = `§d[+${reinforceLvl}]`;
+            } else if (reinforceLvl >= 10 && reinforceLvl <= 12) {
+                badgePrefix = `§c[+${reinforceLvl}]`;
+            } else if (reinforceLvl >= 13 && reinforceLvl <= 14) {
+                badgePrefix = `§6★ [+${reinforceLvl}] ★`;
+            } else if (reinforceLvl >= 15) {
+                badgePrefix = `§5§l✦ [+15 АУРА БЕЗДНЫ] ✦`;
+            }
+
+            tooltip.add(Text.of(`§6★ Закалка: ${badgePrefix} §7(+${defBonus}% защиты, +${hpBonus} HP)`));
         }
 
         if (reinforceLvl >= 7) {
@@ -273,14 +314,22 @@ function renderReinforcementTooltips(tooltip, item) {
     else if (isShield) {
         if (reinforceLvl > 0) {
             let shieldBonus = reinforceLvl * 50;
-            tooltip.add(Text.of(`§6★ Закалка: §e+${reinforceLvl} §7(+${shieldBonus} к стойкости блока)`));
+            let badgePrefix = '';
+            if (reinforceLvl >= 1 && reinforceLvl <= 3) badgePrefix = `§b[+${reinforceLvl}]`;
+            else if (reinforceLvl >= 4 && reinforceLvl <= 6) badgePrefix = `§9[+${reinforceLvl}]`;
+            else if (reinforceLvl >= 7 && reinforceLvl <= 9) badgePrefix = `§d[+${reinforceLvl}]`;
+            else if (reinforceLvl >= 10 && reinforceLvl <= 12) badgePrefix = `§c[+${reinforceLvl}]`;
+            else if (reinforceLvl >= 13 && reinforceLvl <= 14) badgePrefix = `§6★ [+${reinforceLvl}] ★`;
+            else if (reinforceLvl >= 15) badgePrefix = `§5§l✦ [+15] ✦`;
+
+            tooltip.add(Text.of(`§6★ Закалка: ${badgePrefix} §7(+${shieldBonus} к стойкости блока)`));
         }
 
         // Posture pool calculation synchronized with shield_guard_posture engine: 100 + (reinforce * 50)
         let maxPosture = 100 + (reinforceLvl * 50);
 
-        // Through-damage mitigation: 75% base + (2.5% * reinforce), reaching 100% at +10
-        let chipReduction = Math.min(100, Math.round(75 + (reinforceLvl * 2.5)));
+        // Through-damage mitigation: 75% base + (1.6% * reinforce), reaching 100% at +15
+        let chipReduction = Math.min(100, Math.round(75 + (reinforceLvl * 1.67)));
 
         tooltip.add(Text.of(`§b🛡 Стойкость блока: §f[${maxPosture} / ${maxPosture}]`));
         tooltip.add(Text.of(`§7Сквозной урон: §a-${chipReduction}%`));

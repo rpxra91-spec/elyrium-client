@@ -50,14 +50,61 @@ const STAT_NAMES_RU = {
 };
 
 // ------------------------------------------------------------------------------
-// HELPER: Get skd_reinforce Level (0..10) from item NBT
+// CONSTANTS: LINEAGE 2 CANON EXPONENTIAL WEAPON DAMAGE BONUSES (+1..+15)
+// ------------------------------------------------------------------------------
+const WEAPON_REINFORCE_BONUS = {
+    0: 0.00,
+    1: 0.03,   // +3%
+    2: 0.07,   // +7%
+    3: 0.12,   // +12%
+    4: 0.20,   // +20%
+    5: 0.28,   // +28%
+    6: 0.37,   // +37%
+    7: 0.47,   // +47%
+    8: 0.57,   // +57%
+    9: 0.69,   // +69%
+    10: 0.84,  // +84%
+    11: 1.02,  // +102%
+    12: 1.22,  // +122%
+    13: 1.44,  // +144%
+    14: 1.69,  // +169%
+    15: 2.00   // +200% (x3 base damage!)
+};
+
+// CONSTANTS: LINEAGE 2 NON-LINEAR ARMOR DEFENSE FACTOR PER PIECE (+1..+15)
+// Up to +30% defense per piece at +15 (+120% total set defense bonus)
+const ARMOR_REINFORCE_DEFENSE = {
+    0: 0.00,
+    1: 0.02, 2: 0.04, 3: 0.06,
+    4: 0.08, 5: 0.10, 6: 0.12,
+    7: 0.14, 8: 0.16, 9: 0.18,
+    10: 0.20, 11: 0.22, 12: 0.24,
+    13: 0.26, 14: 0.28, 15: 0.30
+};
+
+// ------------------------------------------------------------------------------
+// HELPER: Get skd_reinforce Level (0..15) from item NBT
 // ------------------------------------------------------------------------------
 function getReinforceLevel(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return 0;
-    if (item.nbt && item.nbt.contains('skd_reinforce')) {
-        let lvl = item.nbt.getInt('skd_reinforce');
-        return Math.max(0, Math.min(10, lvl));
-    }
+    try {
+        if (item.customData && item.customData.contains('skd_reinforce')) {
+            let lvl = item.customData.getInt('skd_reinforce');
+            return Math.max(0, Math.min(15, lvl));
+        }
+        if (item.nbt && item.nbt.contains('skd_reinforce')) {
+            let lvl = item.nbt.getInt('skd_reinforce');
+            return Math.max(0, Math.min(15, lvl));
+        }
+        let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
+        let cd = item.get(DataComponents.CUSTOM_DATA);
+        if (cd) {
+            let tag = cd.copyTag();
+            if (tag && tag.contains('skd_reinforce')) {
+                return Math.max(0, Math.min(15, tag.getInt('skd_reinforce') || 0));
+            }
+        }
+    } catch (e) {}
     return 0;
 }
 
@@ -369,8 +416,9 @@ EntityEvents.beforeHurt(event => {
 
         let wLvl = getReinforceLevel(weapon);
 
-        // 1. Base Reinforcement Damage Bonus (+5% per level, +50% at +10)
-        let baseMultiplier = 1.0 + (wLvl * 0.05);
+        // 1. Lineage 2 Canon Exponential Weapon Damage Bonus (+1..+15)
+        let reinforceBonus = WEAPON_REINFORCE_BONUS[wLvl] !== undefined ? WEAPON_REINFORCE_BONUS[wLvl] : (wLvl * 0.05);
+        let baseMultiplier = 1.0 + reinforceBonus;
 
         // 1.1. Ascension Tier Damage Bonus (+22% base damage per ascended tier above native)
         let ascTier = getAscendedTier(weapon);
@@ -400,23 +448,38 @@ EntityEvents.beforeHurt(event => {
         }
 
         // 5. Hit Visual FX
-        if (wLvl >= 5 && target.level) {
+        if (wLvl >= 4 && target.level) {
             let tLvl = target.level;
             let ty = target.y + Math.max(0.4, target.eyeHeight * 0.6);
 
-            // Tier +5..+7: wax_off & crit sparks
-            tLvl.spawnParticles('minecraft:wax_off', true, target.x, ty, target.z, 7, 0.25, 0.25, 0.25, 0.08);
-            tLvl.spawnParticles('minecraft:crit', true, target.x, ty, target.z, 10, 0.3, 0.3, 0.3, 0.12);
-
-            // Tier +8..+10: Shockwave burst (totem, electric sparks, burst)
-            if (wLvl >= 8) {
-                tLvl.spawnParticles('minecraft:totem_of_undying', true, target.x, ty, target.z, 18, 0.4, 0.4, 0.4, 0.18);
-                tLvl.spawnParticles('minecraft:electric_spark', true, target.x, ty, target.z, 14, 0.45, 0.45, 0.45, 0.15);
-                tLvl.spawnParticles('minecraft:poof', true, target.x, ty, target.z, 5, 0.2, 0.2, 0.2, 0.05);
-
-                if (wLvl >= 10) {
-                    tLvl.spawnParticles('minecraft:explosion', true, target.x, ty, target.z, 1, 0.0, 0.0, 0.0, 0.0);
-                }
+            // Tier +4..+6: electric_spark & crit sparks
+            if (wLvl >= 4 && wLvl <= 6) {
+                tLvl.spawnParticles('minecraft:electric_spark', true, target.x, ty, target.z, 6, 0.25, 0.25, 0.25, 0.08);
+                tLvl.spawnParticles('minecraft:crit', true, target.x, ty, target.z, 8, 0.3, 0.3, 0.3, 0.12);
+            }
+            // Tier +7..+9: witch & enchant runes
+            else if (wLvl >= 7 && wLvl <= 9) {
+                tLvl.spawnParticles('minecraft:witch', true, target.x, ty, target.z, 10, 0.35, 0.35, 0.35, 0.05);
+                tLvl.spawnParticles('minecraft:enchant', true, target.x, ty, target.z, 12, 0.3, 0.3, 0.3, 0.1);
+            }
+            // Tier +10..+12: flame & small_flame & explosion burst
+            else if (wLvl >= 10 && wLvl <= 12) {
+                tLvl.spawnParticles('minecraft:flame', true, target.x, ty, target.z, 14, 0.4, 0.4, 0.4, 0.05);
+                tLvl.spawnParticles('minecraft:small_flame', true, target.x, ty, target.z, 10, 0.3, 0.3, 0.3, 0.03);
+                tLvl.spawnParticles('minecraft:lava', true, target.x, ty, target.z, 4, 0.2, 0.2, 0.2, 0.05);
+            }
+            // Tier +13..+14: totem & golden crit
+            else if (wLvl >= 13 && wLvl <= 14) {
+                tLvl.spawnParticles('minecraft:totem_of_undying', true, target.x, ty, target.z, 18, 0.45, 0.45, 0.45, 0.15);
+                tLvl.spawnParticles('minecraft:enchanted_hit', true, target.x, ty, target.z, 14, 0.4, 0.4, 0.4, 0.1);
+                tLvl.spawnParticles('minecraft:flash', true, target.x, ty, target.z, 1, 0.0, 0.0, 0.0, 0.0);
+            }
+            // Tier +15: Void Cataclysm (end_rod, portal, soul_fire_flame, explosion)
+            else if (wLvl >= 15) {
+                tLvl.spawnParticles('minecraft:end_rod', true, target.x, ty, target.z, 20, 0.5, 0.5, 0.5, 0.1);
+                tLvl.spawnParticles('minecraft:portal', true, target.x, ty, target.z, 25, 0.6, 0.6, 0.6, 0.15);
+                tLvl.spawnParticles('minecraft:soul_fire_flame', true, target.x, ty, target.z, 16, 0.4, 0.4, 0.4, 0.05);
+                tLvl.spawnParticles('minecraft:explosion', true, target.x, ty, target.z, 2, 0.2, 0.2, 0.2, 0.0);
             }
         }
     }
@@ -437,12 +500,16 @@ EntityEvents.beforeHurt(event => {
         let legsLvl = getReinforceLevel(legs);
         let feetLvl = getReinforceLevel(feet);
 
-        // 3. Armor Bonus: +4% armor/toughness per piece per skd_reinforce level
-        let totalArmorLevels = headLvl + chestLvl + legsLvl + feetLvl;
-        if (totalArmorLevels > 0) {
-            let armorBonusFactor = totalArmorLevels * 0.04;
-            // Classic Elden Ring diminishing returns armor defense curve
-            event.damage = event.damage / (1.0 + armorBonusFactor);
+        // 3. Lineage 2 Non-linear Armor Defense Factor per piece
+        let headBonus = ARMOR_REINFORCE_DEFENSE[headLvl] || (headLvl * 0.02);
+        let chestBonus = ARMOR_REINFORCE_DEFENSE[chestLvl] || (chestLvl * 0.02);
+        let legsBonus = ARMOR_REINFORCE_DEFENSE[legsLvl] || (legsLvl * 0.02);
+        let feetBonus = ARMOR_REINFORCE_DEFENSE[feetLvl] || (feetLvl * 0.02);
+        let totalArmorBonus = headBonus + chestBonus + legsBonus + feetBonus;
+
+        if (totalArmorBonus > 0) {
+            // Classic Lineage 2 / RPG diminishing returns defense curve
+            event.damage = event.damage / (1.0 + totalArmorBonus);
         }
 
         // 4. Armor Resonance: if ALL 4 equipped armor pieces have skd_reinforce >= 7
@@ -462,12 +529,60 @@ EntityEvents.beforeHurt(event => {
 });
 
 // ------------------------------------------------------------------------------
-// TICK HOOK: ARMOR RESONANCE PROTECTIVE AURA PARTICLES (EVERY 20 TICKS)
+// TICK HOOK: WEAPON VISUAL AURAS (+4..+15) & ARMOR RESONANCE (EVERY 10..20 TICKS)
 // ------------------------------------------------------------------------------
 PlayerEvents.tick(event => {
     let player = event.player;
     if (!player) return;
     let tick = (typeof player.tickCount === 'number') ? player.tickCount : (player.age || 0);
+
+    // 1. Lineage 2 Weapon Visual Auras (Hand FX, every 8-10 ticks for smoothness)
+    if (tick % 10 === 0 && player.level) {
+        let weapon = player.mainHandItem;
+        let wLvl = getReinforceLevel(weapon);
+        if (wLvl >= 4) {
+            let lvl = player.level;
+            let px = player.x;
+            let py = player.y + Math.max(0.6, player.eyeHeight * 0.65);
+            let pz = player.z;
+
+            // Offset slightly in front / right for weapon hand aura
+            let yawRad = (player.yaw + 90) * (Math.PI / 180);
+            let hx = px + Math.cos(yawRad) * 0.35;
+            let hz = pz + Math.sin(yawRad) * 0.35;
+
+            // +4..+6: Голубые частицы электрических искр и душевного огня (electric_spark / soul_fire_flame)
+            if (wLvl >= 4 && wLvl <= 6) {
+                lvl.spawnParticles('minecraft:electric_spark', true, hx, py, hz, 2, 0.12, 0.15, 0.12, 0.02);
+                if (tick % 20 === 0) {
+                    lvl.spawnParticles('minecraft:soul_fire_flame', true, hx, py + 0.1, hz, 1, 0.08, 0.1, 0.08, 0.01);
+                }
+            }
+            // +7..+9: Фиолетовые частицы чародейской ауры (witch / enchant)
+            else if (wLvl >= 7 && wLvl <= 9) {
+                lvl.spawnParticles('minecraft:witch', true, hx, py, hz, 3, 0.15, 0.2, 0.15, 0.02);
+                lvl.spawnParticles('minecraft:enchant', true, hx, py + 0.1, hz, 2, 0.15, 0.15, 0.15, 0.05);
+            }
+            // +10..+12: Огненные искры и пламя (flame / small_flame)
+            else if (wLvl >= 10 && wLvl <= 12) {
+                lvl.spawnParticles('minecraft:flame', true, hx, py, hz, 3, 0.15, 0.2, 0.15, 0.02);
+                lvl.spawnParticles('minecraft:small_flame', true, hx, py + 0.1, hz, 2, 0.1, 0.1, 0.1, 0.01);
+            }
+            // +13..+14: Золотые криты и частицы тотема (crit / totemic)
+            else if (wLvl >= 13 && wLvl <= 14) {
+                lvl.spawnParticles('minecraft:totem_of_undying', true, hx, py, hz, 4, 0.2, 0.25, 0.2, 0.05);
+                lvl.spawnParticles('minecraft:enchanted_hit', true, hx, py + 0.1, hz, 3, 0.15, 0.2, 0.15, 0.02);
+            }
+            // +15: Космическая Аура Бездны (end_rod / portal / soul_fire_flame)
+            else if (wLvl >= 15) {
+                lvl.spawnParticles('minecraft:end_rod', true, hx, py, hz, 3, 0.15, 0.25, 0.15, 0.02);
+                lvl.spawnParticles('minecraft:portal', true, hx, py, hz, 5, 0.25, 0.3, 0.25, 0.08);
+                lvl.spawnParticles('minecraft:soul_fire_flame', true, hx, py + 0.1, hz, 2, 0.1, 0.15, 0.1, 0.02);
+            }
+        }
+    }
+
+    // 2. Armor Resonance Protective Aura (Every 20 ticks)
     if (tick % 20 !== 0) return;
 
     let headLvl = getReinforceLevel(player.getHeadArmorItem());
@@ -551,7 +666,8 @@ PlayerEvents.chat(event => {
 
         player.tell(Text.gold('══════════════ [⚔️ МАТРИЦА СКАЛИРОВАНИЯ И ЗАКАЛКИ] ══════════════'));
         player.tell(Text.yellow('🗡️ Оружие: ').append(Text.white(wName)).append(Text.aqua(` [+${wLvl}]`)));
-        player.tell(Text.gray(`   Базовый бонус урона: §a+${wLvl * 5}% §7(при +10 кап: +50%)`));
+        let curBonus = WEAPON_REINFORCE_BONUS[wLvl] !== undefined ? Math.round(WEAPON_REINFORCE_BONUS[wLvl] * 100) : (wLvl * 5);
+        player.tell(Text.gray(`   Экспоненциальный бонус урона: §a+${curBonus}% §7(при +15 кап: +200% / x3 базового урона!)`));
 
         let ascTier = getAscendedTier(weapon);
         let nativeTier = getNativeWeaponTier(weapon);
@@ -583,7 +699,12 @@ PlayerEvents.chat(event => {
 
         player.tell(Text.gold('────────────────────────────────────────────────────────────────'));
         player.tell(Text.yellow('🛡️ Доспехи (Закалка): ').append(Text.gray(`Шлем: §b+${headLvl} §7| Нагрудник: §b+${chestLvl} §7| Поножи: §b+${legsLvl} §7| Ботинки: §b+${feetLvl}`)));
-        player.tell(Text.gray(`   Суммарный бонус защиты: §a+${totalArmorLevels * 4}% §7(+4% за уровень каждой части)`));
+        let headB = Math.round((ARMOR_REINFORCE_DEFENSE[headLvl] || 0) * 100);
+        let chestB = Math.round((ARMOR_REINFORCE_DEFENSE[chestLvl] || 0) * 100);
+        let legsB = Math.round((ARMOR_REINFORCE_DEFENSE[legsLvl] || 0) * 100);
+        let feetB = Math.round((ARMOR_REINFORCE_DEFENSE[feetLvl] || 0) * 100);
+        let sumArmorBonus = headB + chestB + legsB + feetB;
+        player.tell(Text.gray(`   Суммарный бонус защиты сета: §a+${sumArmorBonus}% §7(до +120% на полном сете +15)`));
 
         if (isResonant) {
             player.tell(Text.aqua('   ✦ РЕЗОНАНС ДОСПЕХОВ: §a§lАКТИВЕН §e(-15% входящего урона + Золотисто-Лазурная Аура)'));

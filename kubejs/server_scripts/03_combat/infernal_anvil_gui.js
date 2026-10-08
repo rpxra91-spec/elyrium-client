@@ -36,11 +36,11 @@
 
 // Таблица названий камней для интерфейсных подсказок
 const STONE_DISPLAY_NAMES = {
-    'kubejs:smithing_stone_1': '§bКузнечный Камень I (Пепельный / +1..+3)',
-    'kubejs:smithing_stone_2': '§dКузнечный Камень II (Небесный / +4..+6)',
-    'kubejs:smithing_stone_3': '§6Кузнечный Камень III (Драконий / +7..+8)',
-    'kubejs:smithing_stone_4': '§5Кузнечный Камень IV (Звездный / +9)',
-    'kubejs:smithing_stone_5': '§c✦ Кузнечный Камень V (Скалк-Бездны / +10)'
+    'kubejs:smithing_stone_1': '§fКузнечный Оселок I (+1..+3)',
+    'kubejs:smithing_stone_2': '§bЗакалочный Камень II (+4..+6)',
+    'kubejs:smithing_stone_3': '§dНебесный Камень III (+7..+9)',
+    'kubejs:smithing_stone_4': '§cАстральный Камень IV (+10..+12)',
+    'kubejs:smithing_stone_5': '§5⭐ Божественный Камень Мортума V (+13..+15)'
 };
 
 // Сессии игроков

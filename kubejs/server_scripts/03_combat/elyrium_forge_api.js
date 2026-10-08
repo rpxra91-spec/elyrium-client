@@ -7,10 +7,11 @@
 // ==============================================================================
 
 const FORGE_CHANCES = {
-    1: 100, 2: 50, 3: 30,
+    1: 100, 2: 50, 3: 25,
     4: 15,  5: 10, 6: 6,
-    7: 3.5, 8: 1.8,
-    9: 0.8, 10: 0.3
+    7: 3.5, 8: 2.0, 9: 1.0,
+    10: 0.5, 11: 0.25, 12: 0.10,
+    13: 0.05, 14: 0.02, 15: 0.01
 };
 
 const REQUIRED_STONES = {
@@ -22,16 +23,21 @@ const REQUIRED_STONES = {
     6: 'kubejs:smithing_stone_2',
     7: 'kubejs:smithing_stone_3',
     8: 'kubejs:smithing_stone_3',
-    9: 'kubejs:smithing_stone_4',
-    10: 'kubejs:smithing_stone_5'
+    9: 'kubejs:smithing_stone_3',
+    10: 'kubejs:smithing_stone_4',
+    11: 'kubejs:smithing_stone_4',
+    12: 'kubejs:smithing_stone_4',
+    13: 'kubejs:smithing_stone_5',
+    14: 'kubejs:smithing_stone_5',
+    15: 'kubejs:smithing_stone_5'
 };
 
 const STONE_NAMES = {
-    'kubejs:smithing_stone_1': 'Кузнечный Камень I (Пепельный / +1..+3)',
-    'kubejs:smithing_stone_2': 'Кузнечный Камень II (Небесный / +4..+6)',
-    'kubejs:smithing_stone_3': 'Кузнечный Камень III (Драконий / +7..+8)',
-    'kubejs:smithing_stone_4': 'Кузнечный Камень IV (Звездный / +9)',
-    'kubejs:smithing_stone_5': 'Кузнечный Камень V (Скалк-Бездны / +10)'
+    'kubejs:smithing_stone_1': 'Кузнечный Оселок I (+1..+3)',
+    'kubejs:smithing_stone_2': 'Закалочный Камень II (+4..+6)',
+    'kubejs:smithing_stone_3': 'Небесный Камень III (+7..+9)',
+    'kubejs:smithing_stone_4': 'Астральный Камень IV (+10..+12)',
+    'kubejs:smithing_stone_5': 'Божественный Камень Мортума V (+13..+15)'
 };
 
 function getReinforceTag(item) {
@@ -57,7 +63,7 @@ function getReinforceTag(item) {
 
 function setReinforceTag(item, lvl) {
     if (!item || item.isEmpty()) return;
-    let clamped = Math.max(0, Math.min(10, Math.floor(lvl || 0)));
+    let clamped = Math.max(0, Math.min(15, Math.floor(lvl || 0)));
     try {
         if (item.customData && typeof item.customData.putInt === 'function') {
             item.customData.putInt('skd_reinforce', clamped);
@@ -105,9 +111,11 @@ function updateBadge(item, lvl) {
         } else {
             let badge = '';
             if (lvl <= 3) badge = `§b[+${lvl}]`;
-            else if (lvl <= 6) badge = `§d[+${lvl}]`;
-            else if (lvl <= 8) badge = `§6★ [+${lvl}] ★`;
-            else badge = `§c✦ §6👑 [+${lvl}] §c✦`;
+            else if (lvl <= 6) badge = `§9[+${lvl}]`;
+            else if (lvl <= 9) badge = `§d[+${lvl}]`;
+            else if (lvl <= 12) badge = `§c[+${lvl}]`;
+            else if (lvl <= 14) badge = `§6★ [+${lvl}] ★`;
+            else badge = `§5§l✦ [+15 АПОГЕЙ БЕЗДНЫ] ✦`;
 
             finalComp = Text.of(`${baseName} ${badge}`);
         }
@@ -328,12 +336,12 @@ var ElyriumForgeAPI = {
                 canExecute: false,
                 actionType: null,
                 currentLevel: curLvl,
-                targetLevel: next <= 10 ? next : 10,
+                targetLevel: next <= 15 ? next : 15,
                 chancePercent: 0,
                 isSafeZone: curLvl < 3,
                 hasAegis: hasAegis,
                 requiredReagentId: req,
-                statusMessage: req ? `Требуется: ${STONE_NAMES[req] || req}` : 'Максимальный уровень (+10)!',
+                statusMessage: req ? `Требуется: ${STONE_NAMES[req] || req}` : 'Максимальный уровень (+15 Апогей)!',
                 canBreakOnFail: curLvl >= 3 && !hasAegis
             };
         }
@@ -342,17 +350,17 @@ var ElyriumForgeAPI = {
 
         // 1. Smithing Stones
         if (rId.startsWith('kubejs:smithing_stone_')) {
-            if (curLvl >= 10) {
+            if (curLvl >= 15) {
                 return {
                     canExecute: false,
                     actionType: 'REINFORCE',
-                    currentLevel: 10,
-                    targetLevel: 10,
+                    currentLevel: 15,
+                    targetLevel: 15,
                     chancePercent: 0,
                     isSafeZone: false,
                     hasAegis: hasAegis,
                     requiredReagentId: null,
-                    statusMessage: 'Достигнут абсолютный апогей ковки (+10)!',
+                    statusMessage: 'Достигнут абсолютный апогей заточки (+15 Бездны)!',
                     canBreakOnFail: false
                 };
             }
@@ -564,10 +572,18 @@ var ElyriumForgeAPI = {
                 if (nextLvl >= 7) {
                     player.server.runCommandSilent(`playsound minecraft:entity.lightning_bolt.thunder player ${player.username} ~ ~ ~ 1.2 1.0`);
                 }
-                if (nextLvl === 10) {
+                if (nextLvl >= 10 && nextLvl < 15) {
                     let rawName = resultItem.hoverName.getString();
                     player.server.runCommandSilent(
-                        `tellraw @a ["",{"text":"👑 [АДСКАЯ КУЗНИЦА] ","color":"gold","bold":true},{"text":"Герой ","color":"yellow"},{"text":"${player.username}","color":"white","bold":true},{"text":" закалил ","color":"yellow"},{"text":"${rawName}","color":"light_purple","bold":true},{"text":" до ","color":"yellow"},{"text":"АПОГЕЯ БОГОВ (+10)","color":"red","bold":true},{"text":"!","color":"gray"}]`
+                        `tellraw @a ["",{"text":"👑 [АДСКАЯ КУЗНИЦА] ","color":"gold","bold":true},{"text":"Герой ","color":"yellow"},{"text":"${player.username}","color":"white","bold":true},{"text":" закалил ","color":"yellow"},{"text":"${rawName}","color":"light_purple","bold":true},{"text":" до ","color":"yellow"},{"text":"+${nextLvl}","color":"red","bold":true},{"text":"!","color":"gray"}]`
+                    );
+                }
+                if (nextLvl === 15) {
+                    let rawName = resultItem.hoverName.getString();
+                    player.server.runCommandSilent(`playsound minecraft:ui.toast.challenge_complete player @a ~ ~ ~ 1.5 1.0`);
+                    player.server.runCommandSilent(`playsound minecraft:entity.ender_dragon.death player @a ~ ~ ~ 1.0 1.2`);
+                    player.server.runCommandSilent(
+                        `tellraw @a ["",{"text":"🌌 [АПОГЕЙ БЕЗДНЫ] ","color":"dark_purple","bold":true},{"text":"ВЕЛИКИЙ ТРИУМФ! Кузнец ","color":"gold"},{"text":"${player.username}","color":"aqua","bold":true},{"text":" пробудил Первородную Силу и заточил ","color":"gold"},{"text":"${rawName}","color":"light_purple","bold":true},{"text":" на легендарный уровень ","color":"gold"},{"text":"[+15] (АУРА БЕЗДНЫ)","color":"dark_purple","bold":true},{"text":"!","color":"gold"}]`
                     );
                 }
             }
