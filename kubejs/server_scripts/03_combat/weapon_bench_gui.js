@@ -59,12 +59,39 @@ const WB_ART_INFO = {
 };
 
 const WB_ELEMENTAL_STONES = {
-    'kubejs:elemental_stone_fire': { elem: 'fire', name: 'Пламя', color: '§c', desc: '25-30% конверсия в урон Огнем' },
-    'kubejs:elemental_stone_frost': { elem: 'frost', name: 'Лед', color: '§b', desc: '25-30% конверсия в урон Холодом' },
-    'kubejs:elemental_stone_lightning': { elem: 'lightning', name: 'Молния', color: '§e', desc: '25-30% конверсия в урон Молнией' },
-    'kubejs:elemental_stone_shadow': { elem: 'shadow', name: 'Бездна', color: '§5', desc: '25-30% конверсия в урон Тьмой' },
-    'kubejs:elemental_stone_holy': { elem: 'holy', name: 'Святость', color: '§6', desc: '25-30% конверсия в урон Святостью' }
+    // Rank I
+    'kubejs:elemental_stone_fire': { elem: 'fire', rank: 1, name: 'Пламя', color: '§c', desc: '10% конверсия в чистый урон Огня' },
+    'kubejs:elemental_stone_frost': { elem: 'frost', rank: 1, name: 'Лед', color: '§b', desc: '10% конверсия в чистый урон Холода' },
+    'kubejs:elemental_stone_lightning': { elem: 'lightning', rank: 1, name: 'Молния', color: '§e', desc: '10% конверсия в чистый урон Молнии' },
+    'kubejs:elemental_stone_shadow': { elem: 'shadow', rank: 1, name: 'Бездна', color: '§5', desc: '10% конверсия в чистый урон Тьмы' },
+    'kubejs:elemental_stone_holy': { elem: 'holy', rank: 1, name: 'Свет', color: '§6', desc: '10% конверсия в чистый урон Света' },
+    'kubejs:elemental_stone_nature': { elem: 'nature', rank: 1, name: 'Природа', color: '§a', desc: '10% конверсия в чистый урон Природы' },
+
+    // Rank II
+    'kubejs:elemental_stone_fire_2': { elem: 'fire', rank: 2, name: 'Пламя', color: '§c', desc: '18% конверсия в урон Огня + Поджог 3с' },
+    'kubejs:elemental_stone_frost_2': { elem: 'frost', rank: 2, name: 'Лед', color: '§b', desc: '18% конверсия в урон Холода + Замедление' },
+    'kubejs:elemental_stone_lightning_2': { elem: 'lightning', rank: 2, name: 'Молния', color: '§e', desc: '18% конверсия в урон Молнии + Статический заряд' },
+    'kubejs:elemental_stone_shadow_2': { elem: 'shadow', rank: 2, name: 'Бездна', color: '§5', desc: '18% конверсия в урон Тьмы + Иссушение 2.5с' },
+    'kubejs:elemental_stone_holy_2': { elem: 'holy', rank: 2, name: 'Свет', color: '§6', desc: '18% конверсия в урон Света + 25% по нежити' },
+    'kubejs:elemental_stone_nature_2': { elem: 'nature', rank: 2, name: 'Природа', color: '§a', desc: '18% конверсия в урон Природы + Яд 3с' },
+
+    // Rank III
+    'kubejs:elemental_stone_fire_3': { elem: 'fire', rank: 3, name: 'Пламя', color: '§c', desc: '24% конверсия в урон Огня + Поджог 3с' },
+    'kubejs:elemental_stone_frost_3': { elem: 'frost', rank: 3, name: 'Лед', color: '§b', desc: '24% конверсия в урон Холода + Замедление' },
+    'kubejs:elemental_stone_lightning_3': { elem: 'lightning', rank: 3, name: 'Молния', color: '§e', desc: '24% конверсия в урон Молнии + Статический заряд' },
+    'kubejs:elemental_stone_shadow_3': { elem: 'shadow', rank: 3, name: 'Бездна', color: '§5', desc: '24% конверсия в урон Тьмы + Иссушение 2.5с' },
+    'kubejs:elemental_stone_holy_3': { elem: 'holy', rank: 3, name: 'Свет', color: '§6', desc: '24% конверсия в урон Света + 25% по нежити' },
+    'kubejs:elemental_stone_nature_3': { elem: 'nature', rank: 3, name: 'Природа', color: '§a', desc: '24% конверсия в урон Природы + Яд 3с' },
+
+    // Rank IV
+    'kubejs:elemental_stone_fire_4': { elem: 'fire', rank: 4, name: 'Пламя', color: '§c', desc: '30% конверсия в урон Огня + «Огненная Волна»' },
+    'kubejs:elemental_stone_frost_4': { elem: 'frost', rank: 4, name: 'Лед', color: '§b', desc: '30% конверсия в урон Холода + «Оледенение»' },
+    'kubejs:elemental_stone_lightning_4': { elem: 'lightning', rank: 4, name: 'Молния', color: '§e', desc: '30% конверсия в урон Молнии + «Нисходящий Разряд»' },
+    'kubejs:elemental_stone_shadow_4': { elem: 'shadow', rank: 4, name: 'Бездна', color: '§5', desc: '30% конверсия в урон Тьмы + «Пожирание Тени»' },
+    'kubejs:elemental_stone_holy_4': { elem: 'holy', rank: 4, name: 'Свет', color: '§6', desc: '30% конверсия в урон Света + «Вспышка Очищения»' },
+    'kubejs:elemental_stone_nature_4': { elem: 'nature', rank: 4, name: 'Природа', color: '§a', desc: '30% конверсия в урон Природы + «Оплетающие Споры»' }
 };
+
 
 const ROMAN_NUMS = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'];
 
@@ -277,6 +304,20 @@ function getElementalInfusion(item) {
     }
     return null;
 }
+
+function getElementalStoneId(item) {
+    let tag = getSafeItemCustomData(item);
+    if (!tag) return null;
+    if (tag.contains('skd_elemental_stone')) {
+        return String(tag.getString('skd_elemental_stone')).trim();
+    }
+    let elem = getElementalInfusion(item);
+    if (elem) {
+        return 'kubejs:elemental_stone_' + elem;
+    }
+    return null;
+}
+
 
 function isTier4SocketMaterial(item) {
     if (!item || item.isEmpty()) return false;
@@ -680,15 +721,16 @@ function getSlotElementalItem(session) {
 
     let elem = getElementalInfusion(gear);
     if (elem) {
-        let stoneId = 'kubejs:elemental_stone_' + elem;
-        let info = WB_ELEMENTAL_STONES[stoneId] || { name: elem, color: '§b', desc: 'Стихийная конверсия 30%' };
+        let stoneId = getElementalStoneId(gear) || ('kubejs:elemental_stone_' + elem);
+        let info = WB_ELEMENTAL_STONES[stoneId] || { name: elem, color: '§b', desc: 'Стихийная конверсия' };
+        let rankNum = info.rank || 1;
+        let rankRoman = (rankNum === 1) ? 'I' : (rankNum === 2) ? 'II' : (rankNum === 3) ? 'III' : 'IV';
         return Item.of(stoneId)
-            .withCustomName(Text.of(`§e🔮 Слот 4: ${info.color}Инфузия Стихии: ${info.name}`))
+            .withCustomName(Text.of(`§e🔮 Слот 4: ${info.color}Инфузия: ${info.name} §f[Ранг ${rankRoman}]`))
             .withLore([
                 Text.of('§8[Камень Стихии Оружейника]'),
                 Text.of(`§7• Эффект: §f${info.desc}`),
-                Text.of('§7• Обход брони: §a30% урона наносится чистой стихией'),
-                Text.of('§7• Стихийные реакции: §6Термошок §7и §bСверхпроводимость'),
+                Text.of('§7• Обход брони: §aЧистая стихийная магия в обход защиты'),
                 Text.of('§8────────────────────────────────'),
                 Text.of('§a▶ Кликните сюда, чтобы извлечь камень назад в сумку.')
             ]);
@@ -696,14 +738,15 @@ function getSlotElementalItem(session) {
         return Item.of('minecraft:echo_shard')
             .withCustomName(Text.of('§b🔮 Слот 4: [СТИХИЙНЫЙ СОКЕТ: ПУСТО] ✦'))
             .withLore([
-                Text.of('§7Инкрустируйте сюда любой из 5 Камней Стихий:'),
-                Text.of('§c• Пламя §7(Огонь)  §b• Лед §7(Холод)  §e• Молния'),
-                Text.of('§5• Бездна §7(Тьма)  §6• Святость'),
+                Text.of('§7Инкрустируйте сюда любой из Стихийных Камней (Ранги I..IV):'),
+                Text.of('§c• Пламя  §b• Лед  §e• Молния'),
+                Text.of('§5• Бездна  §6• Свет  §a• Природа'),
                 Text.of('§8────────────────────────────────'),
                 Text.of('§a▶ Нажмите на Камень Стихии в инвентаре снизу.')
             ]);
     }
 }
+
 
 function getSlotApotheosisGemItem(session) {
     let gear = session.equipment;
@@ -1288,12 +1331,13 @@ function openWeaponBenchGUI(player, block) {
 
                 let elem = getElementalInfusion(gear);
                 if (elem) {
-                    let stoneId = 'kubejs:elemental_stone_' + elem;
+                    let stoneId = getElementalStoneId(gear) || ('kubejs:elemental_stone_' + elem);
                     player.give(Item.of(stoneId));
                     let gTag = getSafeItemCustomData(gear);
                     if (gTag) {
                         gTag.remove('skd_elemental_infusion');
                         gTag.remove('skd_elemental_stone');
+                        gTag.remove('skd_elemental_rank');
                         saveSafeItemCustomData(gear, gTag);
                     }
                     player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.2`);
@@ -1310,18 +1354,20 @@ function openWeaponBenchGUI(player, block) {
                     }
                     if (found) {
                         let info = WB_ELEMENTAL_STONES[found.id];
+                        let foundId = String(found.id);
                         found.shrink(1);
                         let gTag = getOrCreateSafeCustomData(gear);
                         if (gTag) {
                             gTag.putString('skd_elemental_infusion', info.elem);
-                            gTag.putString('skd_elemental_stone', found.id);
+                            gTag.putString('skd_elemental_stone', foundId);
+                            gTag.putInt('skd_elemental_rank', info.rank || 1);
                             saveSafeItemCustomData(gear, gTag);
                         }
                         player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                         player.server.runCommandSilent(`particle minecraft:wax_off ${player.x} ${player.y + 1} ${player.z} 0.3 0.3 0.3 0.05 20`);
-                        player.tell(Text.of(`§a✓ Инфузия Стихии ${info.name} успешно инкрустирована в оружие!`));
+                        player.tell(Text.of(`§a✓ Инфузия Стихии ${info.name} [Ранг ${info.rank || 1}] успешно инкрустирована в оружие!`));
                     } else {
-                        player.tell(Text.of('§eℹ В сумке не найдено Камней Стихий (Пламя, Лед, Молния, Бездна, Святость).'));
+                        player.tell(Text.of('§eℹ В сумке не найдено Камней Стихий (Ранги I..IV).'));
                     }
                 }
                 if (sess.benchPos) {
@@ -1693,9 +1739,11 @@ function openWeaponBenchGUI(player, block) {
                 // Слот 4
                 let elem = getElementalInfusion(gear);
                 if (elem) {
-                    player.give(Item.of('kubejs:elemental_stone_' + elem));
+                    let stoneId = getElementalStoneId(gear) || ('kubejs:elemental_stone_' + elem);
+                    player.give(Item.of(stoneId));
                     extractedCount++;
                 }
+
 
                 // Слот 5: Извлечение всех Самоцветов Апофеоза
                 if (WB_SocketHelper) {
@@ -1951,22 +1999,25 @@ function openWeaponBenchGUI(player, block) {
                 let gear = session.equipment;
                 if (gear && !gear.isEmpty()) {
                     let info = WB_ELEMENTAL_STONES[clickedItem.id];
+                    let stoneId = String(clickedItem.id);
                     clickedItem.shrink(1);
                     event.setItem(clickedItem);
 
                     let elemOld = getElementalInfusion(gear);
                     if (elemOld) {
-                        player.give(Item.of('kubejs:elemental_stone_' + elemOld));
+                        let oldStoneId = getElementalStoneId(gear) || ('kubejs:elemental_stone_' + elemOld);
+                        player.give(Item.of(oldStoneId));
                     }
                     let gTag = getOrCreateSafeCustomData(gear);
                     if (gTag) {
                         gTag.putString('skd_elemental_infusion', info.elem);
-                        gTag.putString('skd_elemental_stone', clickedItem.id);
+                        gTag.putString('skd_elemental_stone', stoneId);
+                        gTag.putInt('skd_elemental_rank', info.rank || 1);
                         saveSafeItemCustomData(gear, gTag);
                     }
                     player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                     player.server.runCommandSilent(`particle minecraft:wax_off ${player.x} ${player.y + 1} ${player.z} 0.3 0.3 0.3 0.05 20`);
-                    player.tell(Text.of(`§a✓ Инфузия Стихии ${info.name} успешно инкрустирована в Слот 4!`));
+                    player.tell(Text.of(`§a✓ Инфузия Стихии ${info.name} [Ранг ${info.rank || 1}] успешно инкрустирована в Слот 4!`));
                     if (session.benchPos) {
                         setStoredBenchWeapon(player.level, session.benchPos, session.equipment);
                         updateBenchWorldDisplay(player.level, session.benchPos, session.equipment);
@@ -1975,6 +2026,7 @@ function openWeaponBenchGUI(player, block) {
                     return;
                 }
             }
+
 
             // 5. Трактат Боевых Искусств ➔ Первый свободный сокет (1, 2 или 3)
             if (isMartialTablet(clickedItem)) {

@@ -205,6 +205,40 @@ ItemEvents.modifyTooltips(event => {
             }
         }
 
+        // Display Elemental Stone Attunement Focus Badge
+        let attunedElem = null;
+        let attunedRank = 1;
+        try {
+            if (item.customData && item.customData.contains('elyrium_attuned_element')) {
+                attunedElem = String(item.customData.getString('elyrium_attuned_element')).toLowerCase().trim();
+                if (item.customData.contains('elyrium_attuned_rank')) {
+                    attunedRank = Math.max(1, Math.min(4, item.customData.getInt('elyrium_attuned_rank')));
+                }
+            } else if (item.nbt && item.nbt.contains('elyrium_attuned_element')) {
+                attunedElem = String(item.nbt.getString('elyrium_attuned_element')).toLowerCase().trim();
+                if (item.nbt.contains('elyrium_attuned_rank')) {
+                    attunedRank = Math.max(1, Math.min(4, item.nbt.getInt('elyrium_attuned_rank')));
+                }
+            }
+        } catch (eAtt) {}
+
+        if (attunedElem) {
+            let bonusPct = (attunedRank === 1) ? 5 : (attunedRank === 2) ? 10 : (attunedRank === 3) ? 18 : 25;
+            let rankRoman = (attunedRank === 1) ? 'I' : (attunedRank === 2) ? 'II' : (attunedRank === 3) ? 'III' : 'IV';
+            const ELEMENT_TOOLTIP_NAMES = {
+                'fire': { name: 'Пламя', icon: '🔥', color: '§c' },
+                'frost': { name: 'Лед', icon: '❄', color: '§b' },
+                'lightning': { name: 'Гром', icon: '⚡', color: '§e' },
+                'holy': { name: 'Свет', icon: '✨', color: '§6' },
+                'shadow': { name: 'Бездна', icon: '🌑', color: '§5' },
+                'nature': { name: 'Природа', icon: '🌿', color: '§a' }
+            };
+            let info = ELEMENT_TOOLTIP_NAMES[attunedElem] || { name: attunedElem, icon: '🔮', color: '§d' };
+            let badge = `${info.color}[${info.icon} Стихийный Фокус: ${info.name} [Ранг ${rankRoman}] +${bonusPct}%]`;
+            tooltip.add(Text.of(`  ${badge}`));
+        }
+
+
         if (curWeight > prof.capacity) {
             tooltip.add(Text.of(`§4⚠ МАГИЧЕСКАЯ ПЕРЕГРУЗКА! Спеллы сорвутся при касте! (-50% маны)`));
         }

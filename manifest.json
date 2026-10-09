@@ -1,8 +1,8 @@
 {
-  "version": "0.4.32",
+  "version": "0.4.33",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-08T22:47:31.545506+00:00",
+  "generated_at": "2026-10-09T12:29:09.824662+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8952,33 +8952,123 @@
     },
     {
       "path": "kubejs/assets/kubejs/models/item/elemental_stone_fire.json",
-      "sha256": "9cf86419aa20077361c6c0643deb20abb662ef70cf3ecb52019bdfd00862c5bd",
-      "size": 113
+      "sha256": "99ecd71a6395334e3165e98246e225ff44038ccbc12a52b40ef9d04abd25e295",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_fire_2.json",
+      "sha256": "99ecd71a6395334e3165e98246e225ff44038ccbc12a52b40ef9d04abd25e295",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_fire_3.json",
+      "sha256": "99ecd71a6395334e3165e98246e225ff44038ccbc12a52b40ef9d04abd25e295",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_fire_4.json",
+      "sha256": "99ecd71a6395334e3165e98246e225ff44038ccbc12a52b40ef9d04abd25e295",
+      "size": 117
     },
     {
       "path": "kubejs/assets/kubejs/models/item/elemental_stone_frost.json",
-      "sha256": "f5c4dd6aa63bd94ad1f8943c3cafbc1a5607a344b4b742103fb1fb4ff92824c2",
-      "size": 114
-    },
-    {
-      "path": "kubejs/assets/kubejs/models/item/elemental_stone_holy.json",
-      "sha256": "8965b748abd1fd66988201e361adf55f31fbdff5446009c606729498dda3672f",
-      "size": 113
-    },
-    {
-      "path": "kubejs/assets/kubejs/models/item/elemental_stone_lightning.json",
-      "sha256": "00088a250c34764546b78310a2261293c5ba70a30440619265596ee35300fdd6",
+      "sha256": "7115229bcbc343bee3c31b5acc31958edcd3d9ef5936f2bb5d947a2a84a05bd3",
       "size": 118
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_frost_2.json",
+      "sha256": "7115229bcbc343bee3c31b5acc31958edcd3d9ef5936f2bb5d947a2a84a05bd3",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_frost_3.json",
+      "sha256": "7115229bcbc343bee3c31b5acc31958edcd3d9ef5936f2bb5d947a2a84a05bd3",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_frost_4.json",
+      "sha256": "7115229bcbc343bee3c31b5acc31958edcd3d9ef5936f2bb5d947a2a84a05bd3",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_holy.json",
+      "sha256": "ab68185c9bb9ca9db355f2cec688aea2d061b56d206d5c11497e0b6b16d2a04b",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_holy_2.json",
+      "sha256": "ab68185c9bb9ca9db355f2cec688aea2d061b56d206d5c11497e0b6b16d2a04b",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_holy_3.json",
+      "sha256": "ab68185c9bb9ca9db355f2cec688aea2d061b56d206d5c11497e0b6b16d2a04b",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_holy_4.json",
+      "sha256": "ab68185c9bb9ca9db355f2cec688aea2d061b56d206d5c11497e0b6b16d2a04b",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_lightning.json",
+      "sha256": "d8a3b9aeeb2927877ea69427ee00e0ddfdec2cff467f3e38050552dc1b12d0ce",
+      "size": 122
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_lightning_2.json",
+      "sha256": "d8a3b9aeeb2927877ea69427ee00e0ddfdec2cff467f3e38050552dc1b12d0ce",
+      "size": 122
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_lightning_3.json",
+      "sha256": "d8a3b9aeeb2927877ea69427ee00e0ddfdec2cff467f3e38050552dc1b12d0ce",
+      "size": 122
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_lightning_4.json",
+      "sha256": "d8a3b9aeeb2927877ea69427ee00e0ddfdec2cff467f3e38050552dc1b12d0ce",
+      "size": 122
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/elemental_stone_nature.json",
-      "sha256": "64a3717b0404ad3e91c4ffb5fd898d257b8ce5138809fb3e497aada1a85b1144",
-      "size": 115
+      "sha256": "84c7cc8de50f40ac3e5a55013fcd550e5ff8b96d660535d493c989479c28af31",
+      "size": 119
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_nature_2.json",
+      "sha256": "84c7cc8de50f40ac3e5a55013fcd550e5ff8b96d660535d493c989479c28af31",
+      "size": 119
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_nature_3.json",
+      "sha256": "84c7cc8de50f40ac3e5a55013fcd550e5ff8b96d660535d493c989479c28af31",
+      "size": 119
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_nature_4.json",
+      "sha256": "84c7cc8de50f40ac3e5a55013fcd550e5ff8b96d660535d493c989479c28af31",
+      "size": 119
     },
     {
       "path": "kubejs/assets/kubejs/models/item/elemental_stone_shadow.json",
-      "sha256": "646f786b9f5f397e25a8967ff6b8752dbb831052285c016f20680407b2fe1788",
-      "size": 115
+      "sha256": "ea0b09318abb8cb64e774c4a5a55d484119cc7430694f222200b033867606f40",
+      "size": 119
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_shadow_2.json",
+      "sha256": "ea0b09318abb8cb64e774c4a5a55d484119cc7430694f222200b033867606f40",
+      "size": 119
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_shadow_3.json",
+      "sha256": "ea0b09318abb8cb64e774c4a5a55d484119cc7430694f222200b033867606f40",
+      "size": 119
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/elemental_stone_shadow_4.json",
+      "sha256": "ea0b09318abb8cb64e774c4a5a55d484119cc7430694f222200b033867606f40",
+      "size": 119
     },
     {
       "path": "kubejs/assets/kubejs/models/item/essence_of_purification.json",
@@ -13097,8 +13187,8 @@
     },
     {
       "path": "kubejs/client_scripts/spell_capacity_tooltips.js",
-      "sha256": "d3aae286288285ae8d86fec576777580cd009b1771fdd5fb43bd8529d8dcf034",
-      "size": 10440
+      "sha256": "77e4731db879eed20945f9fdb83c77af887e83a311bdfa4a4c22f807d70a0163",
+      "size": 11155
     },
     {
       "path": "kubejs/client_scripts/stamina_hud_overlay.js",
@@ -13967,13 +14057,13 @@
     },
     {
       "path": "kubejs/server_scripts/02_magic/elemental_altar_gui.js",
-      "sha256": "7e00f4514fb5a4d73a4c26353c798f699682bf1ebac4c0a1b74776a6eef559b4",
-      "size": 23402
+      "sha256": "a2f457e62ba840d666b961bba638d546fa38434d90f060add7d69d08afad5225",
+      "size": 38709
     },
     {
       "path": "kubejs/server_scripts/02_magic/spell_capacity_engine.js",
-      "sha256": "478caa0240f5383a3e7c0cdb9e31a3503bead8281813866e4394335f180db5e1",
-      "size": 18955
+      "sha256": "0ef6b473007a27a42fe194c63e2596a8adf97de1e144a80bd725df2624f54783",
+      "size": 14812
     },
     {
       "path": "kubejs/server_scripts/02_magic/staff_spell_system.js",
@@ -14002,13 +14092,13 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/elemental_infusion_engine.js",
-      "sha256": "ce48255ddd8e85a743ee4529686a71fa0dc69657dfbd60c7e7ba9da15e095108",
-      "size": 23234
+      "sha256": "9b44f0eb7452f14726dec302fd1711cb1a247eb66ab7ae92c437bb548a2ba75e",
+      "size": 30417
     },
     {
       "path": "kubejs/server_scripts/03_combat/elemental_stone_recipes.js",
-      "sha256": "cc8a4437511f034166a017fb4ce72a2a3888513a00d1474f05438d73305f861a",
-      "size": 3680
+      "sha256": "daa2fae1f7807ca2d2d6b008b3cb3a26068452c0e4eb1f3b3ac016f073e8148b",
+      "size": 4351
     },
     {
       "path": "kubejs/server_scripts/03_combat/elyrium_forge_api.js",
@@ -14117,8 +14207,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_gui.js",
-      "sha256": "16910a7e606694d5d3aa98501e2f3b1748c401acfc57b7967eea8e9dba3f1540",
-      "size": 119597
+      "sha256": "2f4e9b2d18f572f166153fac6fc1c1a44bb705dc4d69e3f90f3d84efa27d2d4b",
+      "size": 124165
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",
@@ -14412,8 +14502,8 @@
     },
     {
       "path": "kubejs/startup_scripts/elemental_stones.js",
-      "sha256": "c2bab9ea54268ed5ac019cf992ddb3c9b52539b74e3f91a673cac43f8d74f3cb",
-      "size": 7937
+      "sha256": "3db4ecac8af3171bb3a25d90a9aca934a9e3c60efe5a26eb250d850e4244bd9b",
+      "size": 8511
     },
     {
       "path": "kubejs/startup_scripts/forge_multiblock_blocks.js",
