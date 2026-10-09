@@ -155,13 +155,6 @@ function getMobTier(entity) {
 }
 
 // -----------------------------------------------------------------------------
-// CENTRAL COMBAT HOOK (ORGANIC ARPG BALANCING)
-// -----------------------------------------------------------------------------
-EntityEvents.beforeHurt(event => {
-    // Organically handled by entity attributes, armor, and SimpleStats
-})
-
-// -----------------------------------------------------------------------------
 // CHAT COMMAND: .tier / .тир
 // -----------------------------------------------------------------------------
 PlayerEvents.chat(event => {

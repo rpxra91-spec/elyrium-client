@@ -104,10 +104,9 @@ const BOUNDARY_DATA = [
 // -----------------------------------------------------------------------------
 // HELPER FUNCTIONS: GEOMETRY & PERMISSIONS
 // -----------------------------------------------------------------------------
-// ⚡ CANON UPDATE (UNIFIED OVERWORLD):
-// By decree of the Lead Designer, the Overworld is a single unified realm (Tier 1).
-// Artificial wall lockdown is deactivated so players can freely build, explore, and run MineColonies.
-const OVERWORLD_BOUNDARY_WALLS_ENABLED = false;
+// ⚡ CANON: OVERWORLD 8-SECTOR BOUNDARY WALLS & DEFENSE MATRIX (ACTIVE)
+// Fortified boundary walls at R = [1500, 4500, 8500, 13500, 19500, 26000, 31000, 35000].
+const OVERWORLD_BOUNDARY_WALLS_ENABLED = true;
 
 function isOverworld(level) {
     if (!OVERWORLD_BOUNDARY_WALLS_ENABLED) return false;
