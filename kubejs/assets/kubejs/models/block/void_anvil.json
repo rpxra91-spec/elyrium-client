@@ -1,12 +1,272 @@
 {
-  "parent": "minecraft:block/cube",
+  "credit": "Elyrium RPG Studio - Master Blacksmith Workshop",
   "textures": {
-    "particle": "minecraft:block/end_portal_frame_top",
-    "north": "minecraft:block/end_portal_frame_side",
-    "south": "minecraft:block/end_portal_frame_side",
-    "east": "minecraft:block/end_portal_frame_side",
-    "west": "minecraft:block/end_portal_frame_side",
-    "up": "minecraft:block/end_portal_frame_top",
-    "down": "minecraft:block/end_stone_bricks"
-  }
+    "particle": "elyrium:block/forged_steel_trim",
+    "steel": "elyrium:block/forged_steel_trim",
+    "frame": "elyrium:block/dark_oak_forge_frame",
+    "basalt": "elyrium:block/basalt_crucible_masonry",
+    "lava": "elyrium:block/crucible_lava_animated",
+    "coals": "elyrium:block/hearth_coals_animated",
+    "bellows": "elyrium:block/blacksmith_bellows",
+    "runes": "elyrium:block/void_alloy_runes",
+    "crystal": "elyrium:block/amethyst_crystal_core"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        0,
+        2
+      ],
+      "to": [
+        14,
+        4,
+        14
+      ],
+      "faces": {
+        "down": {
+          "texture": "#runes"
+        },
+        "up": {
+          "texture": "#runes"
+        },
+        "north": {
+          "texture": "#runes"
+        },
+        "south": {
+          "texture": "#runes"
+        },
+        "west": {
+          "texture": "#runes"
+        },
+        "east": {
+          "texture": "#runes"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        4,
+        3
+      ],
+      "to": [
+        13,
+        6,
+        13
+      ],
+      "faces": {
+        "down": {
+          "texture": "#steel"
+        },
+        "up": {
+          "texture": "#steel"
+        },
+        "north": {
+          "texture": "#steel"
+        },
+        "south": {
+          "texture": "#steel"
+        },
+        "west": {
+          "texture": "#steel"
+        },
+        "east": {
+          "texture": "#steel"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        6,
+        4.5
+      ],
+      "to": [
+        11,
+        10,
+        11.5
+      ],
+      "faces": {
+        "down": {
+          "texture": "#runes"
+        },
+        "up": {
+          "texture": "#runes"
+        },
+        "north": {
+          "texture": "#runes"
+        },
+        "south": {
+          "texture": "#runes"
+        },
+        "west": {
+          "texture": "#runes"
+        },
+        "east": {
+          "texture": "#runes"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        10,
+        4
+      ],
+      "to": [
+        11,
+        15,
+        12
+      ],
+      "faces": {
+        "down": {
+          "texture": "#steel"
+        },
+        "up": {
+          "texture": "#steel"
+        },
+        "north": {
+          "texture": "#steel"
+        },
+        "south": {
+          "texture": "#steel"
+        },
+        "west": {
+          "texture": "#steel"
+        },
+        "east": {
+          "texture": "#steel"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        11.5,
+        5
+      ],
+      "to": [
+        3,
+        14.5,
+        11
+      ],
+      "faces": {
+        "down": {
+          "texture": "#steel"
+        },
+        "up": {
+          "texture": "#steel"
+        },
+        "north": {
+          "texture": "#steel"
+        },
+        "south": {
+          "texture": "#steel"
+        },
+        "west": {
+          "texture": "#steel"
+        },
+        "east": {
+          "texture": "#steel"
+        }
+      }
+    },
+    {
+      "from": [
+        -2,
+        12.5,
+        6
+      ],
+      "to": [
+        0,
+        14,
+        10
+      ],
+      "faces": {
+        "down": {
+          "texture": "#steel"
+        },
+        "up": {
+          "texture": "#steel"
+        },
+        "north": {
+          "texture": "#steel"
+        },
+        "south": {
+          "texture": "#steel"
+        },
+        "west": {
+          "texture": "#steel"
+        },
+        "east": {
+          "texture": "#steel"
+        }
+      }
+    },
+    {
+      "from": [
+        11,
+        12,
+        4.5
+      ],
+      "to": [
+        15,
+        14.5,
+        11.5
+      ],
+      "faces": {
+        "down": {
+          "texture": "#steel"
+        },
+        "up": {
+          "texture": "#steel"
+        },
+        "north": {
+          "texture": "#steel"
+        },
+        "south": {
+          "texture": "#steel"
+        },
+        "west": {
+          "texture": "#steel"
+        },
+        "east": {
+          "texture": "#steel"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        14.95,
+        6
+      ],
+      "to": [
+        9,
+        15.05,
+        10
+      ],
+      "faces": {
+        "down": {
+          "texture": "#runes"
+        },
+        "up": {
+          "texture": "#runes"
+        },
+        "north": {
+          "texture": "#runes"
+        },
+        "south": {
+          "texture": "#runes"
+        },
+        "west": {
+          "texture": "#runes"
+        },
+        "east": {
+          "texture": "#runes"
+        }
+      }
+    }
+  ]
 }

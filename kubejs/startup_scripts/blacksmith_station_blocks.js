@@ -2,15 +2,15 @@
 // ⚒️ ELYRIUM RPG: MODULAR BLACKSMITH WORKSHOP & METALLURGY (STARTUP SCRIPT)
 // Minecraft 1.21.1 NeoForge | KubeJS Startup Script
 // ==============================================================================
-// Registers the 4 modular workstation blocks of the Blacksmith Workshop:
-// 1. kubejs:blacksmith_workbench («Верстак Оружейника», Tier 1) - ковка клинков и брони.
-// 2. kubejs:blacksmith_hearth («Кузнечный Очаг / Меха», Tier 1) - разогрев и ремонт.
-// 3. kubejs:infernal_crucible («Адский Горн», Tier 3 Nether) - высокотемпературное возвышение.
-// 4. kubejs:void_anvil («Пустотная Наковальня», Tier 5 The End) - алтарь глубокой заточки +1..+10.
+// Registers the 4 autonomous workstation blocks of the Blacksmith Workshop:
+// 1. kubejs:blacksmith_workbench («Верстак Оружейника», Tier 1) - ковка клинков, брони и починка.
+// 2. kubejs:blacksmith_hearth («Кузнечный Очаг», Tier 1) - плавка руд и шихты на угле/топливе.
+// 3. kubejs:infernal_crucible («Адский Горн», Tier 2 Nether) - высокотемпературное возвышение.
+// 4. kubejs:void_anvil («Наковальня», Tier 4/5) - алтарь глубокой заточки +1..+15.
 //
 // Block Properties:
-// - BlockProperties.HORIZONTAL_FACING (north, south, east, west)
-// - StringProperty('part', ['single', 'pair_left', 'pair_right', 'trio_left', 'trio_mid', 'trio_right', 'quad_0', 'quad_1', 'quad_2', 'quad_3'])
+// - Standard BlockProperties.HORIZONTAL_FACING (north, south, east, west)
+// - 100% autonomous 1x1 stations without pseudo-multiblock merging.
 //
 // Registers Steel Metallurgy items:
 // - kubejs:steel_charge («Шихта Сырой Стали»)
@@ -18,17 +18,9 @@
 // - kubejs:steel_pickaxe («Стальная Кирка», Tier Diamond / Level 3, 650 durability)
 // ==============================================================================
 
-const StringProperty = (name, values) => Java.loadClass('com.elyrium.properties.StringProperty').create(name, values);
-const BS_PART_PROPERTY = StringProperty('part', [
-    'single',
-    'pair_left', 'pair_right',
-    'trio_left', 'trio_mid', 'trio_right',
-    'quad_0', 'quad_1', 'quad_2', 'quad_3'
-]);
-
 StartupEvents.registry('block', event => {
 
-    // 1. ВЕРСТАК ОРУЖЕЙНИКА (Tier 1 Overworld)
+    // 1. ВЕРСТАК ОРУЖЕЙНИКА (Tier 1 Overworld) - Ковка и Починка
     event.create('blacksmith_workbench')
         .displayName('§6⚒ Верстак Оружейника')
         .soundType('wood')
@@ -45,17 +37,10 @@ StartupEvents.registry('block', event => {
         .box(1, 0, 12, 4, 12, 15)
         .box(12, 0, 12, 15, 12, 15)
         .property(BlockProperties.HORIZONTAL_FACING)
-        .property(BS_PART_PROPERTY)
-        .defaultState(state => {
-            state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH);
-            state.setValue(BS_PART_PROPERTY, 'single');
-        })
-        .placementState(state => {
-            state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite);
-            state.setValue(BS_PART_PROPERTY, 'single');
-        });
+        .defaultState(state => state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH))
+        .placementState(state => state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite));
 
-    // 2. КУЗНЕЧНЫЙ ОЧАГ / МЕХА (Tier 1 Overworld)
+    // 2. КУЗНЕЧНЫЙ ОЧАГ (Tier 1 Overworld) - Плавильня на угле
     event.create('blacksmith_hearth')
         .displayName('§c🔥 Кузнечный Очаг')
         .soundType('stone')
@@ -69,17 +54,10 @@ StartupEvents.registry('block', event => {
         .box(0, 0, 0, 16, 11, 16)
         .box(0, 11, 11, 16, 16, 16)
         .property(BlockProperties.HORIZONTAL_FACING)
-        .property(BS_PART_PROPERTY)
-        .defaultState(state => {
-            state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH);
-            state.setValue(BS_PART_PROPERTY, 'single');
-        })
-        .placementState(state => {
-            state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite);
-            state.setValue(BS_PART_PROPERTY, 'single');
-        });
+        .defaultState(state => state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH))
+        .placementState(state => state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite));
 
-    // 3. АДСКИЙ ГОРН (Tier 3 Nether)
+    // 3. АДСКИЙ ГОРН (Tier 2 Nether) - Возвышение эпох и инфернальный жар
     event.create('infernal_crucible')
         .displayName('§4🌋 Адский Горн')
         .soundType('stone')
@@ -92,19 +70,12 @@ StartupEvents.registry('block', event => {
         .notSolid()
         .box(1, 0, 1, 15, 15, 15)
         .property(BlockProperties.HORIZONTAL_FACING)
-        .property(BS_PART_PROPERTY)
-        .defaultState(state => {
-            state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH);
-            state.setValue(BS_PART_PROPERTY, 'single');
-        })
-        .placementState(state => {
-            state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite);
-            state.setValue(BS_PART_PROPERTY, 'single');
-        });
+        .defaultState(state => state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH))
+        .placementState(state => state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite));
 
-    // 4. ПУСТОТНАЯ НАКОВАЛЬНЯ (Tier 5 The End)
+    // 4. НАКОВАЛЬНЯ (Tier 4/5) - Заточка +1..+15
     event.create('void_anvil')
-        .displayName('§5🌌 Пустотная Наковальня')
+        .displayName('§5🌌 Наковальня')
         .soundType('anvil')
         .hardness(10.0)
         .resistance(50.0)
@@ -117,15 +88,8 @@ StartupEvents.registry('block', event => {
         .box(4, 4, 3, 12, 10, 13)
         .box(0, 10, 3, 16, 16, 13)
         .property(BlockProperties.HORIZONTAL_FACING)
-        .property(BS_PART_PROPERTY)
-        .defaultState(state => {
-            state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH);
-            state.setValue(BS_PART_PROPERTY, 'single');
-        })
-        .placementState(state => {
-            state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.opposite);
-            state.setValue(BS_PART_PROPERTY, 'single');
-        });
+        .defaultState(state => state.set(BlockProperties.HORIZONTAL_FACING, Direction.NORTH))
+        .placementState(state => state.set(BlockProperties.HORIZONTAL_FACING, state.horizontalDirection.clockWise));
 });
 
 StartupEvents.registry('item', event => {
@@ -134,7 +98,7 @@ StartupEvents.registry('item', event => {
     event.create('steel_charge')
         .displayName('§8Шихта Сырой Стали')
         .tooltip('§7Смесь железа, углерода (уголь) и флюса (кальцит или глина).')
-        .tooltip('§e▶ Переплавьте в Доменной Печи для получения Стального Слитка.')
+        .tooltip('§e▶ Переплавьте в Кузнечном Очаге для получения Стального Слитка.')
         .maxStackSize(64)
         .tag('c:raw_materials');
 

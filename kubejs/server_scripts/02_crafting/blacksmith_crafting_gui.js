@@ -626,7 +626,8 @@ function openBlacksmithGUI(player, stationPos) {
     if (session.tab === 5 && !session.hasCrucible) session.tab = 0;
     if (session.tab === 6 && !session.hasAnvil) session.tab = 0;
 
-    let ingotPenalty = session.hasHearth ? 0 : 1;
+    // Curator Canon: No standalone penalty on workbench
+            let ingotPenalty = 0;
 
     let guiTitle = session.isGrandForge
         ? '👑 §6§lВЕЛИКАЯ КУЗНИЦА §c✦ §dЭЛИРИУМ'
@@ -870,9 +871,7 @@ if (session.tab >= 0 && session.tab <= 2) {
                     }
                     lore.push(Text.of(ingotLine));
 
-                    if (ingotPenalty > 0) {
-                        lore.push(Text.of('  §c⚠ Включает +1 слиток штрафа (нет Очага)'));
-                    }
+                    // Curator Canon: No penalty lore
 
                     if (recipe.extra && recipe.extraCount > 0) {
                         let extraLine = (hasExtra >= recipe.extraCount)
@@ -898,7 +897,7 @@ if (session.tab >= 0 && session.tab <= 2) {
                             // Dynamic re-check of station status to prevent exploit if Hearth was broken
                             let currentStation = session.stationPos ? getBlacksmithStationInfo(player.level, session.stationPos) : null;
                             let activeHasHearth = currentStation ? currentStation.hasHearth : session.hasHearth;
-                            let curPenalty = activeHasHearth ? 0 : 1;
+                            let curPenalty = 0;
 
                             let curAvail = getAvailableIngotsBS(player, session.stationPos, recipe.ingot, activeHasHearth);
                             let curExtra = recipe.extra ? countPlayerItemsBS(player, recipe.extra) : 999;
@@ -1503,7 +1502,8 @@ if (session.tab >= 0 && session.tab <= 2) {
             gui.slot(2, 2, s => {
                 let scrapCount = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
                 let magmaCount = countPlayerItemsBS(player, 'minecraft:magma_cream');
-                let canCinder = (scrapCount >= 1 && magmaCount >= 1 && fuelCount >= 2);
+                let hasCrucible = session.hasCrucible;
+                let canCinder = (hasCrucible && scrapCount >= 1 && magmaCount >= 1 && fuelCount >= 2);
                 s.setItem(Item.of('skd:cinder_alloy_ingot')
                     .withCustomName(Text.of('§6🔥 [ Сплавить Пепельный Сплав ]'))
                     .withLore([
@@ -1515,10 +1515,16 @@ if (session.tab >= 0 && session.tab <= 2) {
                         Text.of(scrapCount >= 1 ? `§a✓ Обломков незерита: ${scrapCount} шт.` : '§c✗ Нет обломков незерита'),
                         Text.of(magmaCount >= 1 ? `§a✓ Сгустков магмы: ${magmaCount} шт.` : '§c✗ Нет сгустков магмы'),
                         Text.of(fuelCount >= 2 ? `§a✓ Топлива: ${fuelCount} ед.` : '§c✗ Требуется 2 ед. топлива'),
+                        Text.of(hasCrucible ? '§a✓ Адский Горн рядом: Жар достаточен' : '§c✗ ТРЕБУЕТСЯ АДСКИЙ ГОРН РЯДОМ!'),
                         Text.of('§8────────────────────────────────'),
-                        Text.of(canCinder ? '§a▶ ЛКМ: Выплавить в буфер мастерской' : '§c🔒 Недостаточно компонентов')
+                        Text.of(!hasCrucible ? '§c🔒 Требуется Адский Горн для инфернальных сплавов!' : (canCinder ? '§a▶ ЛКМ: Выплавить в буфер мастерской' : '§c🔒 Недостаточно компонентов'))
                     ]));
                 s.leftClicked = () => {
+                    if (!session.hasCrucible) {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                        player.sendSystemMessage(Text.of('§c[Кузница] §7Для выплавки инфернальных сплавов требуется Адский Горн рядом (в радиусе 4 блоков)!'));
+                        return;
+                    }
                     let curScrap = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
                     let curMagma = countPlayerItemsBS(player, 'minecraft:magma_cream');
                     let curFuel = countPlayerFuelBS(player);
@@ -1658,9 +1664,10 @@ if (session.tab >= 0 && session.tab <= 2) {
 
             // [5, 3] Пакетная плавка Пепельного Сплава
             gui.slot(5, 3, s => {
+                let hasCrucible = session.hasCrucible;
                 let scrapCount = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
                 let magmaCount = countPlayerItemsBS(player, 'minecraft:magma_cream');
-                let maxBatch = Math.min(scrapCount, magmaCount, Math.floor(fuelCount / 2));
+                let maxBatch = hasCrucible ? Math.min(scrapCount, magmaCount, Math.floor(fuelCount / 2)) : 0;
                 s.setItem(Item.of('minecraft:blaze_powder')
                     .withCustomName(Text.of('§c🔥 [ Пакетная Плавка Пепельного Сплава ]'))
                     .withLore([
