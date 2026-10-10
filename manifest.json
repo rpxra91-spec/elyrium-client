@@ -2,7 +2,7 @@
   "version": "0.4.35",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-10T10:10:24.778562+00:00",
+  "generated_at": "2026-10-10T10:27:58.592297+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -6882,13 +6882,13 @@
     },
     {
       "path": "kubejs/assets/elyrium/models/block/infernal_crucible.json",
-      "sha256": "e310e7ed388f304507b07e0b460c61e41ae56c6681520575f1aef799e50867d1",
-      "size": 54129
+      "sha256": "edea515eb699839219ce4bcf9fae7daffc0e2f8ed33651c9d0ae648d80277131",
+      "size": 55473
     },
     {
       "path": "kubejs/assets/elyrium/models/block/infernal_crucible_single.json",
-      "sha256": "e310e7ed388f304507b07e0b460c61e41ae56c6681520575f1aef799e50867d1",
-      "size": 54129
+      "sha256": "edea515eb699839219ce4bcf9fae7daffc0e2f8ed33651c9d0ae648d80277131",
+      "size": 55473
     },
     {
       "path": "kubejs/assets/elyrium/models/block/void_anvil.json",
@@ -8737,13 +8737,13 @@
     },
     {
       "path": "kubejs/assets/kubejs/models/block/infernal_crucible.json",
-      "sha256": "e310e7ed388f304507b07e0b460c61e41ae56c6681520575f1aef799e50867d1",
-      "size": 54129
+      "sha256": "edea515eb699839219ce4bcf9fae7daffc0e2f8ed33651c9d0ae648d80277131",
+      "size": 55473
     },
     {
       "path": "kubejs/assets/kubejs/models/block/infernal_crucible_single.json",
-      "sha256": "e310e7ed388f304507b07e0b460c61e41ae56c6681520575f1aef799e50867d1",
-      "size": 54129
+      "sha256": "edea515eb699839219ce4bcf9fae7daffc0e2f8ed33651c9d0ae648d80277131",
+      "size": 55473
     },
     {
       "path": "kubejs/assets/kubejs/models/block/infernal_portal_corner_active.json",
