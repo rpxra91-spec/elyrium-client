@@ -1,19 +1,8 @@
-{
+﻿{
   "variants": {
-    "facing=north": {
-      "model": "elyrium:block/blacksmith_hearth"
-    },
-    "facing=east": {
-      "model": "elyrium:block/blacksmith_hearth",
-      "y": 90
-    },
-    "facing=south": {
-      "model": "elyrium:block/blacksmith_hearth",
-      "y": 180
-    },
-    "facing=west": {
-      "model": "elyrium:block/blacksmith_hearth",
-      "y": 270
-    }
+    "facing=north": { "model": "elyrium:block/blacksmith_hearth_single" },
+    "facing=east":  { "model": "elyrium:block/blacksmith_hearth_single", "y": 90 },
+    "facing=south": { "model": "elyrium:block/blacksmith_hearth_single", "y": 180 },
+    "facing=west":  { "model": "elyrium:block/blacksmith_hearth_single", "y": 270 }
   }
 }

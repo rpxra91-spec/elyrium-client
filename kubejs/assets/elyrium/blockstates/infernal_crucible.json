@@ -1,19 +1,8 @@
-{
+﻿{
   "variants": {
-    "facing=north": {
-      "model": "elyrium:block/infernal_crucible"
-    },
-    "facing=east": {
-      "model": "elyrium:block/infernal_crucible",
-      "y": 90
-    },
-    "facing=south": {
-      "model": "elyrium:block/infernal_crucible",
-      "y": 180
-    },
-    "facing=west": {
-      "model": "elyrium:block/infernal_crucible",
-      "y": 270
-    }
+    "facing=north": { "model": "elyrium:block/infernal_crucible_single" },
+    "facing=east":  { "model": "elyrium:block/infernal_crucible_single", "y": 90 },
+    "facing=south": { "model": "elyrium:block/infernal_crucible_single", "y": 180 },
+    "facing=west":  { "model": "elyrium:block/infernal_crucible_single", "y": 270 }
   }
 }

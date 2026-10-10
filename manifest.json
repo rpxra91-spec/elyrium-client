@@ -2,7 +2,7 @@
   "version": "0.4.35",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-10T09:28:05.557519+00:00",
+  "generated_at": "2026-10-10T09:40:12.366473+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -3872,7 +3872,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "4cfd14f544870f085db484ba78669b3c714e3c7a8c388c2cbf748d94542f9bc7",
+      "sha256": "60462f57ef8bc0ea7615e93c04795e733f3033f74754bb1922b3979e0dbf0ca8",
       "size": 275
     },
     {
@@ -6797,23 +6797,23 @@
     },
     {
       "path": "kubejs/assets/elyrium/blockstates/blacksmith_hearth.json",
-      "sha256": "dd0313c8a2e0d3811feb05dcef07cfd1aa0baca662432be5a222fb6d9e245dde",
-      "size": 397
+      "sha256": "22cdd1a3dfe798b54375a97b14040bf31c4365f4a43594068275f6171026456c",
+      "size": 354
     },
     {
       "path": "kubejs/assets/elyrium/blockstates/blacksmith_workbench.json",
-      "sha256": "00aaeba9f3a91a1fbfe10c50a201db2ea45c5d65da11114d4d698c19b24ac264",
-      "size": 409
+      "sha256": "ab5de96ca44881dbd691e72a807dc8c1c4c091336bef53477ccd5037fc36338b",
+      "size": 366
     },
     {
       "path": "kubejs/assets/elyrium/blockstates/infernal_crucible.json",
-      "sha256": "f95518eca91eaa418041f27eecd34ccd0f3415df9611baf19a6e1e64f76bcd7f",
-      "size": 397
+      "sha256": "1629a7690dba4aaa0d92216163c1a19da7f2a03f3a272143db5a338f10e942df",
+      "size": 354
     },
     {
       "path": "kubejs/assets/elyrium/blockstates/void_anvil.json",
-      "sha256": "cab39034eadc5be82b1e656cf9dc884d1b70ce0466216379831827124e11f98a",
-      "size": 369
+      "sha256": "7f57b9d6a78f99fa5443b8bdedd9f7f1b4946b1782615ff24163ea5747e0620f",
+      "size": 326
     },
     {
       "path": "kubejs/assets/elyrium/blockstates/weapon_bench.json",
@@ -6837,23 +6837,23 @@
     },
     {
       "path": "kubejs/assets/elyrium/models/block/blacksmith_hearth.json",
-      "sha256": "6f7213a16a7010bc25ac7931aad61deeced187b9a6f098441f3a558b3a72fcbc",
-      "size": 7063
+      "sha256": "43b351c124c5de0b8a5f90b6c255bc46aa8b530fe311d715451b87beaaf1eb47",
+      "size": 36326
     },
     {
       "path": "kubejs/assets/elyrium/models/block/blacksmith_hearth_single.json",
-      "sha256": "6f7213a16a7010bc25ac7931aad61deeced187b9a6f098441f3a558b3a72fcbc",
-      "size": 7063
+      "sha256": "43b351c124c5de0b8a5f90b6c255bc46aa8b530fe311d715451b87beaaf1eb47",
+      "size": 36326
     },
     {
       "path": "kubejs/assets/elyrium/models/block/blacksmith_workbench.json",
-      "sha256": "c03f71ce26ee9ca8b770d833a764f8cd9fce905efdef7a6110c53e09fb0ae420",
-      "size": 8716
+      "sha256": "23519d3825ea501dd8ded6e61c2a2ced17f3a765ee1d34d0a1b2a69e62160807",
+      "size": 6170
     },
     {
       "path": "kubejs/assets/elyrium/models/block/blacksmith_workbench_single.json",
-      "sha256": "c03f71ce26ee9ca8b770d833a764f8cd9fce905efdef7a6110c53e09fb0ae420",
-      "size": 8716
+      "sha256": "23519d3825ea501dd8ded6e61c2a2ced17f3a765ee1d34d0a1b2a69e62160807",
+      "size": 6170
     },
     {
       "path": "kubejs/assets/elyrium/models/block/crucible_quad_0.json",
@@ -6882,23 +6882,23 @@
     },
     {
       "path": "kubejs/assets/elyrium/models/block/infernal_crucible.json",
-      "sha256": "15eb4b7f2152abaa0b7b4e805178bc11517429ea4c5f3f490169fd01897d7a13",
-      "size": 9007
+      "sha256": "6ff653b2c51343b147b3d49d4651bdba9a25b29d3bbc3972aeb5ed215a45aeab",
+      "size": 42734
     },
     {
       "path": "kubejs/assets/elyrium/models/block/infernal_crucible_single.json",
-      "sha256": "15eb4b7f2152abaa0b7b4e805178bc11517429ea4c5f3f490169fd01897d7a13",
-      "size": 9007
+      "sha256": "6ff653b2c51343b147b3d49d4651bdba9a25b29d3bbc3972aeb5ed215a45aeab",
+      "size": 42734
     },
     {
       "path": "kubejs/assets/elyrium/models/block/void_anvil.json",
-      "sha256": "1ecdd5029d9f361db70e68866cca0fba5c654896e7234374048a1655c14b043e",
-      "size": 6288
+      "sha256": "6d229bb6b391a8c52729bdb09797ff4887c391233e5cced92b3ae0ed20e3e815",
+      "size": 4641
     },
     {
       "path": "kubejs/assets/elyrium/models/block/void_anvil_single.json",
-      "sha256": "1ecdd5029d9f361db70e68866cca0fba5c654896e7234374048a1655c14b043e",
-      "size": 6288
+      "sha256": "6d229bb6b391a8c52729bdb09797ff4887c391233e5cced92b3ae0ed20e3e815",
+      "size": 4641
     },
     {
       "path": "kubejs/assets/elyrium/models/block/weapon_bench.json",
@@ -6922,23 +6922,23 @@
     },
     {
       "path": "kubejs/assets/elyrium/models/item/blacksmith_hearth.json",
-      "sha256": "47f8f591e02ca32bd2b0638c7c62f16756233d6ab0d7db651c3f085ab7163e59",
-      "size": 1262
+      "sha256": "79252834592f90db57d773d7d6e482cb2ca4c1d2e42acb739f910f973e14ad3a",
+      "size": 59
     },
     {
       "path": "kubejs/assets/elyrium/models/item/blacksmith_workbench.json",
-      "sha256": "c6cf965af01947008a782017b05927d2c857715716201a528be0e0ea46f9e839",
-      "size": 1265
+      "sha256": "715cc4c5a2562a211f2939c295391659464622cf8c03611d38375247d50b9f85",
+      "size": 62
     },
     {
       "path": "kubejs/assets/elyrium/models/item/infernal_crucible.json",
-      "sha256": "63ceccf7ab0a5b92c423c6ef3717d3cc1079a88ee75c30734e468d2fb0e2599b",
-      "size": 1262
+      "sha256": "f9007afb729032dbd40998696f35cb1bafec2193619c9ee1c1d199c1028d66df",
+      "size": 59
     },
     {
       "path": "kubejs/assets/elyrium/models/item/void_anvil.json",
-      "sha256": "04d2f65fbbb87845fc69c4c9649727a9056b82bb948a32c7d33be6dd8454464e",
-      "size": 1255
+      "sha256": "bb5775ef4e26b21a5fb381ff964aa89757faa7f0465c8f88fbf84966c00dafe0",
+      "size": 52
     },
     {
       "path": "kubejs/assets/elyrium/models/item/weapon_bench.json",
@@ -8512,13 +8512,13 @@
     },
     {
       "path": "kubejs/assets/kubejs/blockstates/blacksmith_hearth.json",
-      "sha256": "8ac09c577fcbada1667f416666f6b5d7e699fa00b88a6b29b4b68c8110e93bb7",
-      "size": 393
+      "sha256": "22cdd1a3dfe798b54375a97b14040bf31c4365f4a43594068275f6171026456c",
+      "size": 354
     },
     {
       "path": "kubejs/assets/kubejs/blockstates/blacksmith_workbench.json",
-      "sha256": "7bdc7939030ee71766e331abc35c34141316c679a0e6dc6f3e8ccbc373ecf73f",
-      "size": 405
+      "sha256": "ab5de96ca44881dbd691e72a807dc8c1c4c091336bef53477ccd5037fc36338b",
+      "size": 366
     },
     {
       "path": "kubejs/assets/kubejs/blockstates/forge_hearth.json",
@@ -8532,8 +8532,8 @@
     },
     {
       "path": "kubejs/assets/kubejs/blockstates/infernal_crucible.json",
-      "sha256": "25e5f2092da65e9faff129257e8791dc092d2e253b7457f754c6d751afc670df",
-      "size": 393
+      "sha256": "1629a7690dba4aaa0d92216163c1a19da7f2a03f3a272143db5a338f10e942df",
+      "size": 354
     },
     {
       "path": "kubejs/assets/kubejs/blockstates/infernal_portal_corner_active.json",
@@ -8687,8 +8687,8 @@
     },
     {
       "path": "kubejs/assets/kubejs/blockstates/void_anvil.json",
-      "sha256": "d1a0e90fc5851b9e5ecab7084850f48534c5218f9e1dc0490128cd919bc76b73",
-      "size": 365
+      "sha256": "7f57b9d6a78f99fa5443b8bdedd9f7f1b4946b1782615ff24163ea5747e0620f",
+      "size": 326
     },
     {
       "path": "kubejs/assets/kubejs/blockstates/weapon_bench.json",
@@ -8707,23 +8707,23 @@
     },
     {
       "path": "kubejs/assets/kubejs/models/block/blacksmith_hearth.json",
-      "sha256": "6f7213a16a7010bc25ac7931aad61deeced187b9a6f098441f3a558b3a72fcbc",
-      "size": 7063
+      "sha256": "43b351c124c5de0b8a5f90b6c255bc46aa8b530fe311d715451b87beaaf1eb47",
+      "size": 36326
     },
     {
       "path": "kubejs/assets/kubejs/models/block/blacksmith_hearth_single.json",
-      "sha256": "6f7213a16a7010bc25ac7931aad61deeced187b9a6f098441f3a558b3a72fcbc",
-      "size": 7063
+      "sha256": "43b351c124c5de0b8a5f90b6c255bc46aa8b530fe311d715451b87beaaf1eb47",
+      "size": 36326
     },
     {
       "path": "kubejs/assets/kubejs/models/block/blacksmith_workbench.json",
-      "sha256": "c03f71ce26ee9ca8b770d833a764f8cd9fce905efdef7a6110c53e09fb0ae420",
-      "size": 8716
+      "sha256": "23519d3825ea501dd8ded6e61c2a2ced17f3a765ee1d34d0a1b2a69e62160807",
+      "size": 6170
     },
     {
       "path": "kubejs/assets/kubejs/models/block/blacksmith_workbench_single.json",
-      "sha256": "c03f71ce26ee9ca8b770d833a764f8cd9fce905efdef7a6110c53e09fb0ae420",
-      "size": 8716
+      "sha256": "23519d3825ea501dd8ded6e61c2a2ced17f3a765ee1d34d0a1b2a69e62160807",
+      "size": 6170
     },
     {
       "path": "kubejs/assets/kubejs/models/block/forge_hearth.json",
@@ -8737,13 +8737,13 @@
     },
     {
       "path": "kubejs/assets/kubejs/models/block/infernal_crucible.json",
-      "sha256": "15eb4b7f2152abaa0b7b4e805178bc11517429ea4c5f3f490169fd01897d7a13",
-      "size": 9007
+      "sha256": "6ff653b2c51343b147b3d49d4651bdba9a25b29d3bbc3972aeb5ed215a45aeab",
+      "size": 42734
     },
     {
       "path": "kubejs/assets/kubejs/models/block/infernal_crucible_single.json",
-      "sha256": "15eb4b7f2152abaa0b7b4e805178bc11517429ea4c5f3f490169fd01897d7a13",
-      "size": 9007
+      "sha256": "6ff653b2c51343b147b3d49d4651bdba9a25b29d3bbc3972aeb5ed215a45aeab",
+      "size": 42734
     },
     {
       "path": "kubejs/assets/kubejs/models/block/infernal_portal_corner_active.json",
@@ -8897,13 +8897,13 @@
     },
     {
       "path": "kubejs/assets/kubejs/models/block/void_anvil.json",
-      "sha256": "1ecdd5029d9f361db70e68866cca0fba5c654896e7234374048a1655c14b043e",
-      "size": 6288
+      "sha256": "6d229bb6b391a8c52729bdb09797ff4887c391233e5cced92b3ae0ed20e3e815",
+      "size": 4641
     },
     {
       "path": "kubejs/assets/kubejs/models/block/void_anvil_single.json",
-      "sha256": "1ecdd5029d9f361db70e68866cca0fba5c654896e7234374048a1655c14b043e",
-      "size": 6288
+      "sha256": "6d229bb6b391a8c52729bdb09797ff4887c391233e5cced92b3ae0ed20e3e815",
+      "size": 4641
     },
     {
       "path": "kubejs/assets/kubejs/models/block/weapon_bench.json",
@@ -8972,13 +8972,13 @@
     },
     {
       "path": "kubejs/assets/kubejs/models/item/blacksmith_hearth.json",
-      "sha256": "773ea60c001ab33686ae195de98c48e4b85d084e106ba5210303f94298b4374a",
-      "size": 1261
+      "sha256": "79252834592f90db57d773d7d6e482cb2ca4c1d2e42acb739f910f973e14ad3a",
+      "size": 59
     },
     {
       "path": "kubejs/assets/kubejs/models/item/blacksmith_workbench.json",
-      "sha256": "80a92f9fa62093fab10effcbc1e81ff7aee4c6ef106f59565dc7b3bd3988d070",
-      "size": 1264
+      "sha256": "715cc4c5a2562a211f2939c295391659464622cf8c03611d38375247d50b9f85",
+      "size": 62
     },
     {
       "path": "kubejs/assets/kubejs/models/item/cinder_brigandine_boots.json",
@@ -9182,8 +9182,8 @@
     },
     {
       "path": "kubejs/assets/kubejs/models/item/infernal_crucible.json",
-      "sha256": "52da2916abe112f384616d199aea5971059e9a679bb1a622982bfee38a97d83f",
-      "size": 1261
+      "sha256": "f9007afb729032dbd40998696f35cb1bafec2193619c9ee1c1d199c1028d66df",
+      "size": 59
     },
     {
       "path": "kubejs/assets/kubejs/models/item/infernal_igniter.json",
@@ -9542,8 +9542,8 @@
     },
     {
       "path": "kubejs/assets/kubejs/models/item/void_anvil.json",
-      "sha256": "6f5b3dbd7c0fb7b0a5f1963bfbabbe533cde044a26a2e746f0b0008f0242db67",
-      "size": 1254
+      "sha256": "bb5775ef4e26b21a5fb381ff964aa89757faa7f0465c8f88fbf84966c00dafe0",
+      "size": 52
     },
     {
       "path": "kubejs/assets/kubejs/models/item/weapon_bench.json",
@@ -21742,7 +21742,7 @@
     },
     {
       "path": "shaderpacks/superDuperVanilla.zip.txt",
-      "sha256": "dd4b021a7ff8c3ba705c7fc526248d27bd0888274d921a2c84b00ce628470d94",
+      "sha256": "be3968177236556d6d44e12ec005a48d1f612e773b9bbc1bee182fd8b4d2b310",
       "size": 231
     }
   ]
