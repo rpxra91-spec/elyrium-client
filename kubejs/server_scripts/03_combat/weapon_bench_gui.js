@@ -171,7 +171,19 @@ function isWeaponItem(item) {
 
 function getWeaponProgressionTier(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return 1;
-    for (let t = 11; t >= 1; t--) {
+
+    // 1. Elyrium Tier Tags (8 Tiers Canon + 1.5 Undergarden)
+    if (item.hasTag('elyrium:tier_8')) return 8;
+    if (item.hasTag('elyrium:tier_7')) return 7;
+    if (item.hasTag('elyrium:tier_6')) return 6;
+    if (item.hasTag('elyrium:tier_5')) return 5;
+    if (item.hasTag('elyrium:tier_4')) return 4;
+    if (item.hasTag('elyrium:tier_3')) return 3;
+    if (item.hasTag('elyrium:tier_2')) return 2;
+    if (item.hasTag('elyrium:tier_1_5') || item.hasTag('elyrium:tier_undergarden')) return 1.5;
+    if (item.hasTag('elyrium:tier_1')) return 1;
+
+    for (let t = 8; t >= 1; t--) {
         if (item.hasTag(`skd:tier_${t}`) || item.hasTag(`c:tools/tier_${t}`)) return t;
     }
     try {
@@ -182,16 +194,30 @@ function getWeaponProgressionTier(item) {
     } catch (e) {}
 
     let id = String(item.id).toLowerCase();
-    if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('the_incinerator') || id.includes('aquatooth') || id.includes('halite')) return 11;
-    if (id.includes('apalachia') || id.includes('skythern') || id.includes('divinerpg:apalachia') || id.includes('divinerpg:skythern')) return 10;
-    if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) return 9;
-    if (id.includes('sculk') || id.includes('echo') || id.includes('warden') || id.startsWith('deeperdarker:')) return 8;
-    if (id.includes('starlight') || id.includes('luminite') || id.startsWith('eternal_starlight:') || id.includes('thermal_springstone')) return 7;
-    if (id.includes('dragon') || id.includes('void') || id.includes('ender_guardian') || id.includes('ender_golem') || id.includes('elytra')) return 6;
-    if (id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie') || id.includes('skyjade') || id.startsWith('aether:')) return 5;
-    if (id.includes('cinder') || id.includes('netherite') || id.includes('ignitium') || id.includes('monstrosity')) return 4;
-    if (id.includes('diamond') || id.includes('cobalt') || id.includes('rune') || (id.includes('iron') && !id.includes('crude'))) return 3;
-    if (id.includes('copper') || id.includes('bronze') || id.includes('silver') || id.includes('flint')) return 2;
+    // Tier 8: DivineRPG Mortum, Apalachia & Skythern, Halite, Apex Void
+    if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('apalachia') || id.includes('skythern') || id.includes('divinerpg:apalachia') || id.includes('divinerpg:skythern') || id.includes('the_incinerator') || id.includes('aquatooth') || id.includes('halite')) return 8;
+
+    // Tier 7: DivineRPG Eden & Wildwood
+    if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) return 7;
+
+    // Tier 6: Deeper Darker (Otherside) / Warden
+    if (id.includes('sculk') || id.includes('echo') || id.includes('warden') || id.startsWith('deeperdarker:')) return 6;
+
+    // Tier 5: Eternal Starlight
+    if (id.includes('starlight') || id.includes('luminite') || id.includes('luminarite') || id.startsWith('eternal_starlight:') || id.includes('thermal_springstone')) return 5;
+
+    // Tier 4: The End / Void / Ender Guardian / Dragon / Enderite
+    if (id.includes('dragon') || id.includes('void') || id.includes('ender_guardian') || id.includes('ender_golem') || id.includes('elytra') || id.includes('enderite')) return 4;
+
+    // Tier 3: The Aether & Deep Aether
+    if (id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie') || id.includes('skyjade') || id.startsWith('aether:') || id.startsWith('deep_aether:')) return 3;
+
+    // Tier 2: The Nether (Cinder Alloy, Netherite, Ignitium, Cataclysm)
+    if (id.includes('cinder') || id.includes('netherite') || id.startsWith('cataclysm:') || id.includes('ignitium') || id.includes('witherite') || id.includes('monstrosity') || id.includes('wither') || id.includes('ignis')) return 2;
+
+    // Tier 1.5: The Undergarden
+    if (id.includes('cloggrum') || id.includes('froststeel') || id.startsWith('undergarden:')) return 1.5;
+
     return 1;
 }
 
@@ -607,15 +633,15 @@ function getArtSlotItem(session, slotNum) {
         }
     }
 
-    // Слот 2: Требует Тир 4+
+    // Слот 2: Требует Тир 2+ (Nether)
     if (slotNum === 2) {
-        if (tier < 4) {
+        if (tier < 2) {
             return Item.of('minecraft:barrier')
                 .withCustomName(Text.of('§c🔒 Слот 2: [ЗАБЛОКИРОВАНО]'))
                 .withLore([
                     Text.of(`§7Текущий тир оружия: §eТир ${tier}`),
                     Text.of('§cВторой боевой слот доступен строго'),
-                    Text.of('§cна оружии §6Тира 4+ (Незерит / Пепельный сплав).'),
+                    Text.of('§cна оружии §6Тира 2+ (Незерит / Пепельный сплав).'),
                     Text.of('§8────────────────────────────────'),
                     Text.of('§8Возвысьте оружие на Адской Наковальне.')
                 ]);
@@ -658,15 +684,15 @@ function getArtSlotItem(session, slotNum) {
         }
     }
 
-    // Слот 3: Требует Тир 7+
+    // Слот 3: Требует Тир 5+ (Eternal Starlight)
     if (slotNum === 3) {
-        if (tier < 7) {
+        if (tier < 5) {
             return Item.of('minecraft:barrier')
                 .withCustomName(Text.of('§c🔒 Слот 3: [ЗАБЛОКИРОВАНО]'))
                 .withLore([
                     Text.of(`§7Текущий тир оружия: §eТир ${tier}`),
                     Text.of('§cТретий боевой слот доступен строго'),
-                    Text.of('§cна оружии §bТира 7+ (Eternal Starlight / Звездный металл).'),
+                    Text.of('§cна оружии §bТира 5+ (Eternal Starlight / Звездный металл).'),
                     Text.of('§8────────────────────────────────'),
                     Text.of('§8Возвысьте оружие на Адской Наковальне.')
                 ]);
@@ -771,8 +797,8 @@ function getSlotApotheosisGemItem(session) {
             .withLore([
                 Text.of('§7Оружие не имеет открытых гнезд самоцветов.'),
                 Text.of('§8────────────────────────────────'),
-                Text.of('§e• Пробейте Слот 2 (Т4+): §f+1 гнездо самоцвета'),
-                Text.of('§b• Пробейте Слот 3 (Т7+): §f+2 гнезда самоцветов'),
+                Text.of('§e• Пробейте Слот 2 (Т2+): §f+1 гнездо самоцвета'),
+                Text.of('§b• Пробейте Слот 3 (Т5+): §f+2 гнезда самоцветов'),
                 Text.of('§8────────────────────────────────'),
                 Text.of('§7Используйте Резец Оружейника в мастерской ниже.')
             ]);
@@ -861,8 +887,8 @@ function getPunchActionButtonItem(session) {
     let tier = getWeaponProgressionTier(gear);
     let needSlot = null;
 
-    if (tier >= 4 && !hasSocket2(gear)) needSlot = 2;
-    else if (tier >= 7 && !hasSocket3(gear)) needSlot = 3;
+    if (tier >= 2 && !hasSocket2(gear)) needSlot = 2;
+    else if (tier >= 5 && !hasSocket3(gear)) needSlot = 3;
 
     if (!needSlot) {
         return Item.of('minecraft:nether_star')
@@ -875,7 +901,7 @@ function getPunchActionButtonItem(session) {
 
     let hasChisel = chisel && !chisel.isEmpty() && chisel.id === 'kubejs:weapon_chisel';
     let hasMat = false;
-    let requiredMatName = (needSlot === 2) ? 'Незеритовый / Пепельный слиток (Т4)' : 'Звездный / Люминаритовый слиток (Т7)';
+    let requiredMatName = (needSlot === 2) ? 'Незеритовый / Пепельный слиток (Т2)' : 'Звездный / Люминаритовый слиток (Т5)';
 
     if (needSlot === 2 && isTier4SocketMaterial(mat)) hasMat = true;
     if (needSlot === 3 && isTier7SocketMaterial(mat)) hasMat = true;
@@ -1176,8 +1202,8 @@ function openWeaponBenchGUI(player, block) {
                 if (!gear || gear.isEmpty()) return;
 
                 let tier = getWeaponProgressionTier(gear);
-                if (tier < 4) {
-                    player.tell(Text.of('§c✖ Второй слот требует оружие Тира 4+ (Незерит / Пепельный сплав).'));
+                if (tier < 2) {
+                    player.tell(Text.of('§c✖ Второй слот требует оружие Тира 2+ (Незерит / Пепельный сплав).'));
                     player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
                     return;
                 }
@@ -1254,8 +1280,8 @@ function openWeaponBenchGUI(player, block) {
                 if (!gear || gear.isEmpty()) return;
 
                 let tier = getWeaponProgressionTier(gear);
-                if (tier < 7) {
-                    player.tell(Text.of('§c✖ Третий слот требует оружие Тира 7+ (Eternal Starlight / Звездный металл).'));
+                if (tier < 5) {
+                    player.tell(Text.of('§c✖ Третий слот требует оружие Тира 5+ (Eternal Starlight / Звездный металл).'));
                     player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
                     return;
                 }
@@ -1592,8 +1618,8 @@ function openWeaponBenchGUI(player, block) {
                 let tier = getWeaponProgressionTier(gear);
 
                 let targetSlot = null;
-                if (tier >= 4 && !hasSocket2(gear)) targetSlot = 2;
-                else if (tier >= 7 && !hasSocket3(gear)) targetSlot = 3;
+                if (tier >= 2 && !hasSocket2(gear)) targetSlot = 2;
+                else if (tier >= 5 && !hasSocket3(gear)) targetSlot = 3;
 
                 if (!targetSlot) {
                     player.tell(Text.of('§eℹ Для данного оружия все сокеты текущей эпохи уже открыты.'));
@@ -1611,7 +1637,7 @@ function openWeaponBenchGUI(player, block) {
                 if (targetSlot === 3 && isTier7SocketMaterial(mat)) validMat = true;
 
                 if (!validMat) {
-                    let reqName = (targetSlot === 2) ? 'Незеритовый / Пепельный слиток (Т4)' : 'Звездный / Люминаритовый слиток (Т7)';
+                    let reqName = (targetSlot === 2) ? 'Незеритовый / Пепельный слиток (Т2)' : 'Звездный / Люминаритовый слиток (Т5)';
                     player.tell(Text.of(`§c✖ Для пробития Слота ${targetSlot} требуется ${reqName}!`));
                     player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
                     return;

@@ -2,7 +2,7 @@
   "version": "0.4.34",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-09T13:47:50.532480+00:00",
+  "generated_at": "2026-10-10T07:19:50.966026+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -14162,8 +14162,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
-      "sha256": "eb173dc9d9edae56b8f472d41315153265bfc6ce72161befe3024e559ca0d5ae",
-      "size": 137341
+      "sha256": "e5a539d9537e45694c44d1192cb581200e553500cf07a67db4ffec5244ec88cb",
+      "size": 140000
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
@@ -14207,8 +14207,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_gui.js",
-      "sha256": "2f4e9b2d18f572f166153fac6fc1c1a44bb705dc4d69e3f90f3d84efa27d2d4b",
-      "size": 124165
+      "sha256": "0af63ef2d660dee89c3c0714112bb6a5e7a0888422d93dc7ddead6ba1a8906d9",
+      "size": 127425
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",
@@ -14237,8 +14237,8 @@
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/skills_combat_triggers.js",
-      "sha256": "251223bad85e807f3f89ef85d43911837ee75d2544330c976701a5d7269c8b67",
-      "size": 48656
+      "sha256": "ff06635bd17bcf2dd9416b579ad10e5cd54fa3e18b36b40ba1ccb2392a3a7c6e",
+      "size": 49630
     },
     {
       "path": "kubejs/server_scripts/04_skills_tree/skills_crafting_triggers.js",

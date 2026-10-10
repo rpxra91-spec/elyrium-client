@@ -1502,7 +1502,8 @@ function executeWeaponArt(player, artId, isAirborne, isRunicSlot) {
             }
         });
 
-        let healAmount = totalDealt * 0.15;
+        // Anti-Abuse Canon: capped at 5% damage dealt, max 6.0 HP (3 hearts)
+        let healAmount = Math.min(totalDealt * 0.05, 6.0);
         if (healAmount > 0) {
             player.heal(healAmount);
         }

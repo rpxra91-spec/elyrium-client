@@ -297,7 +297,9 @@ EntityEvents.beforeHurt(event => {
             // --- 11. МАГИЯ КРОВИ (Blood Wizard) ---
             if (tags.contains('skill_wizard_blood_vampirism')) {
                 if (attacker.health < attacker.maxHealth) {
-                    attacker.heal(Math.max(1.0, event.damage * 0.12))
+                    // Anti-Abuse Canon: capped at 4% damage dealt, min 0.5 HP, max 4.0 HP (2 hearts)
+                    let vHeal = Math.min(Math.max(0.5, event.damage * 0.04), 4.0);
+                    attacker.heal(vHeal);
                     attacker.server.runCommandSilent(`particle minecraft:damage_indicator ${attacker.x} ${attacker.y + 1} ${attacker.z} 0.2 0.2 0.2 0.05 3`)
                 }
             }

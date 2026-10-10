@@ -401,12 +401,24 @@ ServerEvents.commandRegistry(event => {
 // 🚫 DE-VANILLAFICATION & PROTECTION OF LEVEL PROGRESSION
 // ------------------------------------------------------------------------------
 
-// 1. Block Vanilla Enchanting Table Interaction
+// 1. Block Vanilla Enchanting Table Interaction & Open Elemental Altar
 BlockEvents.rightClicked('minecraft:enchanting_table', event => {
-    event.cancel();
     let p = event.player;
+    if (!p || p.level.isClientSide()) return;
+
+    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
+    if (!handStr.includes('MAIN')) return;
+
+    // Delegating to Elemental Altar GUI (defined in elemental_altar_gui.js)
+    if (typeof openElementalAltarGUI === 'function') {
+        event.cancel();
+        openElementalAltarGUI(p);
+        return;
+    }
+
+    event.cancel();
     p.tell(Text.of('§c[Древний Запрет] Стол зачарований уничтожен древней магией Элириума!'));
-    p.tell(Text.of('§7Используйте §cАдскую Наковальню§7, кузнечные камни и Трактаты Боевых Искусств.'));
+    p.tell(Text.of('§7Используйте §cАдскую Наковальню§7 или Алтарь Стихий.'));
     p.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${p.username} ~ ~ ~ 0.6 0.5`);
 });
 
