@@ -1,75 +1,129 @@
 // ==============================================================================
-// ⚒️ ELYRIUM RPG: BLACKSMITH WORKBENCH CATALOG CRAFTING & METALLURGY GUI
+// ⚒️ ELYRIUM RPG: UNIFIED MASTER WORKSHOP GUI & 6-TAB SMITHING ENGINE (v2.2)
 // Minecraft 1.21.1 NeoForge | KubeJS Server Script
 // ==============================================================================
-// Clean Separation of Metallurgy & Forging:
-// 1. Blacksmith Hearth (Кузнечный Очаг / Меха):
-//    - Metallurgy station: smelts raw steel charges and ores into Workshop Metal Buffer.
-//    - Allows depositing / withdrawing steel, iron, and copper ingots.
-//    - One-click batch smelting of charges & ores with fuel consumption.
-// 2. Blacksmith Workbench (Верстак Оружейника):
-//    - Forging catalog: 4 dedicated tabs:
-//      Tab 0: ⚔ [ Клинки ] (15 видов оружия SimplySwords)
-//      Tab 1: 🛡 [ Доспехи ] (Т1: Стальной Рыцарь, Разведчик, Бригантина, Железный)
-//      Tab 2: ⛏ [ Инструменты ] (Стальная Кирка [Т алмаз], топоры, лопаты, щит)
-//      Tab 3: 🔧 [ Ремонт ] (Починка экипировки за металл; 50% с Очагом, 25% соло)
-//    - Dual-Source Materials: Crafting & Repair check BOTH player inventory
-//      AND the Workshop Metal Storage Buffer!
-// 3. Custom GUI Overlay:
-//    - Window opens with '\uE001§r' + title, displaying the custom bog oak & bronze
-//      RPG overlay screen.
+// Единый Графический Интерфейс (Unified GUI) для всех 5 кузнечных станций Элириума:
+// 1. `kubejs:blacksmith_workbench` -> Таб 0: ⚒ [ Ковка ] (Сырье 6 слотов, каталог, ghost-индикаторы)
+// 2. Ремонт снаряжения            -> Таб 1: 🔧 [ Ремонт ] (1 слиток = 1/3 прочности, 1..3 слитка)
+// 3. `kubejs:blacksmith_hearth`    -> Таб 2: 🔥 [ Очаг ] (Ванильная плавка на угле, буфер, порог Горна)
+// 4. `kubejs:infernal_crucible`    -> Таб 3: 🌋 [ Горн ] (Возвышение Тиров Экипировки со 100% сохранением)
+// 5. `kubejs:void_anvil`           -> Таб 4: 🌌 [ Наковальня ] (Заточка +1..+15, Оселки, Эгида, Молот)
+// 6. `kubejs:weapon_bench`         -> Таб 5: 🛠 [ Оружейный Стол ] (Боевые искусства [Z]/[X], резцы, сокеты)
+//
+// Любой из 5 блоков при клике ПКМ открывает Unified GUI на своей дефолтной вкладке.
+// Игрок может свободно переключаться между вкладками прямо из окна интерфейса!
+// 100% безопасность: возврат всех предметов из рабочих слотов при закрытии/переключении.
 // ==============================================================================
 
-// Session tracking
-let activeBlacksmithSessions = new Map();
+// Session tracking: сохраняет активные предметы для каждого игрока
+let activeWorkshopSessions = new Map();
 
-function getOrCreateBlacksmithSession(player) {
+function getOrCreateWorkshopSession(player) {
     let uuid = player.uuid.toString();
-    if (!activeBlacksmithSessions.has(uuid)) {
-        activeBlacksmithSessions.set(uuid, {
+    if (!activeWorkshopSessions.has(uuid)) {
+        activeWorkshopSessions.set(uuid, {
             tab: 0,
-            hasHearth: false,
-            hasWorkbench: true,
-            hasCrucible: false,
-            hasAnvil: false,
-            isGrandForge: false,
-            stationPos: null
+            stationPos: null,
+            // Tab 0 (Ковка на Верстаке): 6 слотов сырья
+            forgeIngredients: [null, null, null, null, null, null],
+            selectedRecipeIdx: 0,
+            // Tab 1 (Ремонт): экипировка, слитки, результат
+            repairGear: null,
+            repairIngots: null,
+            repairResult: null,
+            // Tab 2 (Очаг)
+            hearthSmeltInput: null,
+            hearthFuelInput: null,
+            hearthOutput: null,
+            // Tab 3 (Горн - Возвышение)
+            ascendGear: null,
+            ascendCatalyst: null,
+            ascendResult: null,
+            // Tab 4 (Наковальня - Заточка)
+            anvilGear: null,
+            anvilReagent: null,
+            anvilAegis: null,
+            anvilResult: null,
+            // Tab 5 (Оружейный Стол)
+            benchWeapon: null,
+            benchChisel: null,
+            benchMaterial: null,
+            benchPos: null,
+            refreshingTime: 0
         });
     }
-    return activeBlacksmithSessions.get(uuid);
+    return activeWorkshopSessions.get(uuid);
 }
 
-function clearBlacksmithSession(player) {
-    activeBlacksmithSessions.delete(player.uuid.toString());
+// Гарантированный возврат ВСЕХ предметов игроку при закрытии GUI
+function clearAndRefundWorkshopSession(player, force) {
+    let uuid = player.uuid.toString();
+    let sess = activeWorkshopSessions.get(uuid);
+    if (!sess) return;
+
+    if (!force && sess.refreshingTime && (Date.now() - sess.refreshingTime < 450)) {
+        return;
+    }
+
+    // Tab 0
+    if (sess.forgeIngredients) {
+        for (let i = 0; i < sess.forgeIngredients.length; i++) {
+            let st = sess.forgeIngredients[i];
+            if (st && !st.isEmpty()) player.give(st);
+            sess.forgeIngredients[i] = null;
+        }
+    }
+    // Tab 1
+    if (sess.repairGear && !sess.repairGear.isEmpty()) player.give(sess.repairGear);
+    if (sess.repairIngots && !sess.repairIngots.isEmpty()) player.give(sess.repairIngots);
+    if (sess.repairResult && !sess.repairResult.isEmpty()) player.give(sess.repairResult);
+    sess.repairGear = null;
+    sess.repairIngots = null;
+    sess.repairResult = null;
+
+    // Tab 2 (Очаг возвращает загруженное сырье/топливо/выход)
+    if (sess.hearthSmeltInput && !sess.hearthSmeltInput.isEmpty()) player.give(sess.hearthSmeltInput);
+    if (sess.hearthFuelInput && !sess.hearthFuelInput.isEmpty()) player.give(sess.hearthFuelInput);
+    if (sess.hearthOutput && !sess.hearthOutput.isEmpty()) player.give(sess.hearthOutput);
+    sess.hearthSmeltInput = null;
+    sess.hearthFuelInput = null;
+    sess.hearthOutput = null;
+
+    // Tab 3 (Горн)
+    if (sess.ascendGear && !sess.ascendGear.isEmpty()) player.give(sess.ascendGear);
+    if (sess.ascendCatalyst && !sess.ascendCatalyst.isEmpty()) player.give(sess.ascendCatalyst);
+    if (sess.ascendResult && !sess.ascendResult.isEmpty()) player.give(sess.ascendResult);
+    sess.ascendGear = null;
+    sess.ascendCatalyst = null;
+    sess.ascendResult = null;
+
+    // Tab 4 (Наковальня)
+    if (sess.anvilGear && !sess.anvilGear.isEmpty()) player.give(sess.anvilGear);
+    if (sess.anvilReagent && !sess.anvilReagent.isEmpty()) player.give(sess.anvilReagent);
+    if (sess.anvilAegis && !sess.anvilAegis.isEmpty()) player.give(sess.anvilAegis);
+    if (sess.anvilResult && !sess.anvilResult.isEmpty()) player.give(sess.anvilResult);
+    sess.anvilGear = null;
+    sess.anvilReagent = null;
+    sess.anvilAegis = null;
+    sess.anvilResult = null;
+
+    // Tab 5 (Оружейный Стол)
+    if (sess.benchWeapon && !sess.benchWeapon.isEmpty()) player.give(sess.benchWeapon);
+    if (sess.benchChisel && !sess.benchChisel.isEmpty()) player.give(sess.benchChisel);
+    if (sess.benchMaterial && !sess.benchMaterial.isEmpty()) player.give(sess.benchMaterial);
+    sess.benchWeapon = null;
+    sess.benchChisel = null;
+    sess.benchMaterial = null;
+
+    activeWorkshopSessions.delete(uuid);
 }
 
 // ------------------------------------------------------------------------------
 // WORKSHOP METAL STORAGE BUFFER SYSTEM (level.persistentData)
 // ------------------------------------------------------------------------------
-
-function getStationAnchorKey(station, fallbackPos) {
-    if (station && station.line && station.line.length > 0) {
-        let minPos = station.line[0];
-        for (let i = 1; i < station.line.length; i++) {
-            let p = station.line[i];
-            if (p.x < minPos.x || (p.x === minPos.x && (p.y < minPos.y || (p.y === minPos.y && p.z < minPos.z)))) {
-                minPos = p;
-            }
-        }
-        return minPos.x + '_' + minPos.y + '_' + minPos.z;
-    }
-    if (fallbackPos) {
-        return fallbackPos.x + '_' + fallbackPos.y + '_' + fallbackPos.z;
-    }
-    return 'default_station';
-}
-
 function getWorkshopBuffer(level, stationPos) {
     if (!level || !stationPos) return { steel: 0, iron: 0, copper: 0, cinder: 0, netherite: 0 };
-    let station = (typeof getBlacksmithStationInfo === 'function') 
-        ? getBlacksmithStationInfo(level, stationPos) 
-        : null;
-    let anchor = getStationAnchorKey(station, stationPos);
+    let anchor = stationPos.x + '_' + stationPos.y + '_' + stationPos.z;
 
     if (!level.persistentData.blacksmithBuffers) {
         level.persistentData.blacksmithBuffers = {};
@@ -106,26 +160,25 @@ function addBufferIngots(level, stationPos, metalType, count) {
     }
 }
 
-function deductBufferIngots(level, stationPos, ingotId, needed) {
-    if (!level || !stationPos || needed <= 0) return 0;
-    let buf = getWorkshopBuffer(level, stationPos);
-    let id = String(ingotId).toLowerCase();
-    let type = 'iron';
-    if (id.includes('cinder')) type = 'cinder';
-    else if (id.includes('netherite')) type = 'netherite';
-    else if (id.includes('steel')) type = 'steel';
-    else if (id.includes('copper')) type = 'copper';
-
-    let cur = buf[type] || 0;
-    let take = Math.min(cur, needed);
-    buf[type] = Math.max(0, cur - take);
-    return take;
+// Проверка наличия Адского Горна поблизости (в радиусе 4 блоков)
+function hasCrucibleNear(level, pos) {
+    if (!level || !pos) return false;
+    let r = 4;
+    for (let x = -r; x <= r; x++) {
+        for (let y = -r; y <= r; y++) {
+            for (let z = -r; z <= r; z++) {
+                let b = level.getBlock(pos.x + x, pos.y + y, pos.z + z);
+                if (b && (b.id === 'kubejs:infernal_crucible' || b.id === 'kubejs:crucible')) return true;
+            }
+        }
+    }
+    return false;
 }
 
 // ------------------------------------------------------------------------------
-// INVENTORY UTILITIES
+// ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ИНВЕНТАРЯ И ПРЕДМЕТОВ
 // ------------------------------------------------------------------------------
-function matchesBSItemOrTag(st, itemIdOrTag) {
+function matchesItemOrTag(st, itemIdOrTag) {
     if (!st || st.isEmpty()) return false;
     let stId = String(st.id);
     if (itemIdOrTag.startsWith('#')) {
@@ -136,1845 +189,1559 @@ function matchesBSItemOrTag(st, itemIdOrTag) {
     if (itemIdOrTag === 'minecraft:iron_ingot' && (st.hasTag('c:ingots/iron') || st.hasTag('forge:ingots/iron'))) return true;
     if (itemIdOrTag === 'kubejs:steel_ingot' && (st.hasTag('c:ingots/steel') || st.hasTag('forge:ingots/steel'))) return true;
     if (itemIdOrTag === 'minecraft:copper_ingot' && (st.hasTag('c:ingots/copper') || st.hasTag('forge:ingots/copper'))) return true;
+    if (itemIdOrTag === 'skd:cinder_alloy_ingot' && (st.hasTag('c:ingots/cinder_alloy') || stId.includes('cinder_alloy'))) return true;
     return false;
 }
 
-function countPlayerItemsBS(player, itemIdOrTag) {
+function countPlayerItems(player, itemIdOrTag) {
     if (!player || !itemIdOrTag) return 0;
     let inv = player.inventory;
     let count = 0;
-
     for (let i = 0; i < inv.size; i++) {
         let st = inv.getItem(i);
-        if (!st || st.isEmpty()) continue;
-        if (matchesBSItemOrTag(st, itemIdOrTag)) {
+        if (matchesItemOrTag(st, itemIdOrTag)) count += st.count;
+    }
+    return count;
+}
+
+function deductPlayerItems(player, itemIdOrTag, needed) {
+    if (!player || needed <= 0) return true;
+    let inv = player.inventory;
+    let remain = needed;
+    for (let i = 0; i < inv.size && remain > 0; i++) {
+        let st = inv.getItem(i);
+        if (matchesItemOrTag(st, itemIdOrTag)) {
+            let take = Math.min(st.count, remain);
+            st.shrink(take);
+            remain -= take;
+            if (st.isEmpty() || st.count <= 0) {
+                try { inv.setItem(i, Item.of('minecraft:air')); } catch (e) {}
+            }
+        }
+    }
+    return remain === 0;
+}
+
+// Расчет материала ремонта: 1 слиток = 1/3 прочности (1..3 слитка)
+function getRepairMaterial(item) {
+    if (!item || item.isEmpty()) return { id: 'minecraft:iron_ingot', name: 'Железный Слиток' };
+    let id = String(item.id).toLowerCase();
+    if (id.includes('steel') || id.includes('knight')) return { id: 'kubejs:steel_ingot', name: 'Стальной Слиток' };
+    if (id.includes('copper') || id.includes('scout')) return { id: 'minecraft:copper_ingot', name: 'Медный Слиток' };
+    if (id.includes('diamond')) return { id: 'minecraft:diamond', name: 'Алмаз' };
+    if (id.includes('netherite')) return { id: 'minecraft:netherite_ingot', name: 'Незеритовый Слиток' };
+    if (id.includes('gold') || id.includes('golden')) return { id: 'minecraft:gold_ingot', name: 'Золотой Слиток' };
+    if (id.includes('cinder')) return { id: 'skd:cinder_alloy_ingot', name: 'Пепельный Сплав' };
+    if (id.includes('leather')) return { id: 'minecraft:leather', name: 'Кожа' };
+    return { id: 'minecraft:iron_ingot', name: 'Железный Слиток' };
+}
+
+function calculateRepairCost(item) {
+    if (!item || item.isEmpty() || !item.isDamageableItem()) return 0;
+    let dmg = item.damageValue;
+    let max = item.maxDamage;
+    if (dmg <= 0 || max <= 0) return 0;
+    let ratio = dmg / max;
+    if (ratio <= 0.334) return 1;
+    if (ratio <= 0.667) return 2;
+    return 3;
+}
+
+// Определение топлива
+function isFuelItem(item) {
+    if (!item || item.isEmpty()) return false;
+    let id = String(item.id);
+    return id === 'minecraft:coal' || id === 'minecraft:charcoal' || id === 'minecraft:coal_block' || id === 'minecraft:blaze_rod';
+}
+
+function getFuelValue(item) {
+    if (!item || item.isEmpty()) return 0;
+    let id = String(item.id);
+    if (id === 'minecraft:coal_block') return 9;
+    if (id === 'minecraft:blaze_rod') return 3;
+    if (id === 'minecraft:coal' || id === 'minecraft:charcoal') return 1;
+    return 0;
+}
+
+// Проверка возможности плавки в Очаге
+function getHearthSmeltRecipe(item) {
+    if (!item || item.isEmpty()) return null;
+    let id = String(item.id);
+    if (id === 'kubejs:steel_charge') return { result: 'kubejs:steel_ingot', name: 'Стальной Слиток', fuelReq: 1, needsCrucible: false };
+    if (id === 'minecraft:raw_iron' || id.includes('iron_ore')) return { result: 'minecraft:iron_ingot', name: 'Железный Слиток', fuelReq: 1, needsCrucible: false };
+    if (id === 'minecraft:raw_copper' || id.includes('copper_ore')) return { result: 'minecraft:copper_ingot', name: 'Медный Слиток', fuelReq: 1, needsCrucible: false };
+    if (id === 'minecraft:raw_gold' || id.includes('gold_ore')) return { result: 'minecraft:gold_ingot', name: 'Золотой Слиток', fuelReq: 1, needsCrucible: false };
+    if (id === 'minecraft:netherite_scrap') return { result: 'skd:cinder_alloy_ingot', name: 'Пепельный Сплав (Т2)', fuelReq: 2, needsCrucible: true };
+    if (id === 'minecraft:netherite_ingot') return { result: 'kubejs:refined_netherite_ingot', name: 'Очищенный Незерит (Т2+)', fuelReq: 4, needsCrucible: true };
+    return null;
+}
+
+// ------------------------------------------------------------------------------
+// КАТАЛОГ РЕЦЕПТОВ КОВКИ (ТАБ 0)
+// ------------------------------------------------------------------------------
+const WORKSHOP_FORGE_RECIPES = [
+    // ⚔ Клинки SimplySwords
+    { id: 'simplyswords:iron_longsword', name: 'Железный Длинный Меч', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 2, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 1 },
+    { id: 'simplyswords:iron_twinblade', name: 'Железный Двусторонний Клинок', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 3, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+    { id: 'simplyswords:iron_rapier', name: 'Железная Рапира', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 2, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 1 },
+    { id: 'simplyswords:iron_katana', name: 'Железная Катана', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 2, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 1 },
+    { id: 'simplyswords:iron_sai', name: 'Железный Сай', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 1, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 1 },
+    { id: 'simplyswords:iron_spear', name: 'Железное Копье', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 2, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+    { id: 'simplyswords:iron_glaive', name: 'Железная Глефа', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 3, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+    { id: 'simplyswords:iron_warglaive', name: 'Железная Боевая Глефа', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 3, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+    { id: 'simplyswords:iron_cutlass', name: 'Железный Абордажный Клинок', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 2, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 1 },
+    { id: 'simplyswords:iron_claymore', name: 'Железный Клеймор', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 4, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+    { id: 'simplyswords:iron_greataxe', name: 'Железная Секира', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 4, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+    { id: 'simplyswords:iron_greathammer', name: 'Железный Боевой Молот', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 4, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+    { id: 'simplyswords:iron_chakram', name: 'Железный Чакрам', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 2, extra: 'minecraft:leather', extraName: 'Кожаная Обмотка', extraCount: 1 },
+    { id: 'simplyswords:iron_scythe', name: 'Железная Коса', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 3, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+    { id: 'simplyswords:iron_halberd', name: 'Железная Алебарда', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 3, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+
+    // 🛡 Доспехи Т1
+    { id: 'minecraft:iron_helmet', name: 'Железный Шлем', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 5, extra: null, extraName: null, extraCount: 0 },
+    { id: 'minecraft:iron_chestplate', name: 'Железный Нагрудник', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 8, extra: null, extraName: null, extraCount: 0 },
+    { id: 'minecraft:iron_leggings', name: 'Железные Поножи', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 7, extra: null, extraName: null, extraCount: 0 },
+    { id: 'minecraft:iron_boots', name: 'Железные Сапоги', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 4, extra: null, extraName: null, extraCount: 0 },
+
+    // Бригантина Наемника (ДД)
+    { id: 'kubejs:brigandine_helmet', name: 'Шлем Наемника (Бригантина)', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 4, extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 2 },
+    { id: 'kubejs:brigandine_chestplate', name: 'Бригантина Наемника', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 7, extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 4 },
+    { id: 'kubejs:brigandine_leggings', name: 'Поножи Наемника (Бригантина)', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 6, extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 3 },
+    { id: 'kubejs:brigandine_boots', name: 'Сапоги Наемника (Бригантина)', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 3, extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 2 },
+
+    // Медный сет Разведчика (Agility)
+    { id: 'kubejs:scout_hood', name: 'Капюшон Разведчика', ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', ingotCount: 3, extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 3 },
+    { id: 'kubejs:scout_tunic', name: 'Куртка Разведчика', ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', ingotCount: 6, extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 5 },
+    { id: 'kubejs:scout_pants', name: 'Штаны Разведчика', ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', ingotCount: 5, extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 4 },
+    { id: 'kubejs:scout_boots', name: 'Сапоги Разведчика', ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', ingotCount: 3, extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 2 },
+
+    // Стальной Сет Рыцаря (Тяжелый Танк)
+    { id: 'kubejs:steel_knight_helmet', name: 'Шлем Рыцаря Границы', ingot: 'kubejs:steel_ingot', ingotName: 'Стальной Слиток', ingotCount: 5, extra: 'minecraft:diamond', extraName: 'Алмазное Усиление', extraCount: 1 },
+    { id: 'kubejs:steel_knight_chestplate', name: 'Латы Рыцаря Границы', ingot: 'kubejs:steel_ingot', ingotName: 'Стальной Слиток', ingotCount: 8, extra: 'minecraft:diamond', extraName: 'Алмазное Усиление', extraCount: 2 },
+    { id: 'kubejs:steel_knight_leggings', name: 'Поножи Рыцаря Границы', ingot: 'kubejs:steel_ingot', ingotName: 'Стальной Слиток', ingotCount: 7, extra: 'minecraft:diamond', extraName: 'Алмазное Усиление', extraCount: 2 },
+    { id: 'kubejs:steel_knight_boots', name: 'Сапоги Рыцаря Границы', ingot: 'kubejs:steel_ingot', ingotName: 'Стальной Слиток', ingotCount: 4, extra: 'minecraft:diamond', extraName: 'Алмазное Усиление', extraCount: 1 },
+
+    // ⛏ Инструменты
+    { id: 'kubejs:steel_pickaxe', name: 'Стальная Кирка', ingot: 'kubejs:steel_ingot', ingotName: 'Стальной Слиток', ingotCount: 3, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+    { id: 'minecraft:iron_pickaxe', name: 'Железная Кирка', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 3, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+    { id: 'minecraft:iron_axe', name: 'Железный Топор', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 3, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+    { id: 'minecraft:iron_shovel', name: 'Железная Лопата', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 1, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+    { id: 'minecraft:shield', name: 'Боевой Щит Защитника', ingot: 'minecraft:iron_ingot', ingotName: 'Железная Оковка', ingotCount: 5, extra: '#minecraft:planks', extraName: 'Доски', extraCount: 2 }
+];
+
+// Подсчет доступного сырья в 6 слотах ковки (Таб 0)
+function countForgeSlotItems(ingredients, targetIdOrTag) {
+    let count = 0;
+    for (let i = 0; i < ingredients.length; i++) {
+        let st = ingredients[i];
+        if (matchesItemOrTag(st, targetIdOrTag)) {
             count += st.count;
         }
     }
     return count;
 }
 
-function deductPlayerItemsBS(player, itemIdOrTag, needed) {
-    if (!player || needed <= 0) return true;
-    let inv = player.inventory;
+function deductForgeSlotItems(ingredients, targetIdOrTag, needed) {
     let remain = needed;
-
-    for (let i = 0; i < inv.size && remain > 0; i++) {
-        let st = inv.getItem(i);
-        if (!st || st.isEmpty()) continue;
-        if (matchesBSItemOrTag(st, itemIdOrTag)) {
+    for (let i = 0; i < ingredients.length && remain > 0; i++) {
+        let st = ingredients[i];
+        if (matchesItemOrTag(st, targetIdOrTag)) {
             let take = Math.min(st.count, remain);
             st.shrink(take);
             remain -= take;
             if (st.isEmpty() || st.count <= 0) {
-                try { inv.setItem(i, Item.of('minecraft:air')); } catch (e) {}
+                ingredients[i] = null;
             }
         }
     }
     return remain === 0;
 }
 
-// Dual-source material check: Player Inventory + Workshop Buffer
-function getAvailableIngotsBS(player, stationPos, ingotId, hasHearth) {
-    let invCount = countPlayerItemsBS(player, ingotId);
-    let bufCount = hasHearth ? countBufferIngots(player.level, stationPos, ingotId) : 0;
-    return {
-        total: invCount + bufCount,
-        inv: invCount,
-        buffer: bufCount
-    };
-}
-
-// Dual-source deduction: Deduct from Buffer first, then from Player Inventory
-function deductCombinedIngotsBS(player, stationPos, ingotId, needed, hasHearth) {
-    let remain = needed;
-    if (hasHearth) {
-        let takenFromBuf = deductBufferIngots(player.level, stationPos, ingotId, remain);
-        remain -= takenFromBuf;
-    }
-    if (remain > 0) {
-        deductPlayerItemsBS(player, ingotId, remain);
-    }
-}
-
-// Fuel handling for Smelter
-function countPlayerFuelBS(player) {
-    if (!player) return 0;
-    let inv = player.inventory;
-    let total = 0;
-    for (let i = 0; i < inv.size; i++) {
-        let st = inv.getItem(i);
-        if (!st || st.isEmpty()) continue;
-        let id = String(st.id);
-        if (id === 'minecraft:coal' || id === 'minecraft:charcoal') {
-            total += st.count;
-        } else if (id === 'minecraft:coal_block') {
-            total += st.count * 9;
-        } else if (id === 'minecraft:blaze_rod') {
-            total += st.count * 3;
-        }
-    }
-    return total;
-}
-
-function deductPlayerFuelBS(player, amount) {
-    if (!player || amount <= 0) return true;
-    let remain = amount;
-    let inv = player.inventory;
-
-    // 1. Consume coal & charcoal first
-    for (let i = 0; i < inv.size && remain > 0; i++) {
-        let st = inv.getItem(i);
-        if (!st || st.isEmpty()) continue;
-        let id = String(st.id);
-        if (id === 'minecraft:coal' || id === 'minecraft:charcoal') {
-            let take = Math.min(st.count, remain);
-            st.shrink(take);
-            remain -= take;
-            if (st.isEmpty() || st.count <= 0) {
-                try { inv.setItem(i, Item.of('minecraft:air')); } catch (e) {}
-            }
-        }
-    }
-
-    // 2. Consume coal blocks if needed (giving back change in coal)
-    for (let i = 0; i < inv.size && remain > 0; i++) {
-        let st = inv.getItem(i);
-        if (!st || st.isEmpty()) continue;
-        let id = String(st.id);
-        if (id === 'minecraft:coal_block') {
-            while (st.count > 0 && remain > 0) {
-                st.shrink(1);
-                if (remain <= 9) {
-                    let refund = 9 - remain;
-                    remain = 0;
-                    if (refund > 0) player.give(Item.of('minecraft:coal', refund));
-                } else {
-                    remain -= 9;
-                }
-            }
-            if (st.isEmpty() || st.count <= 0) {
-                try { inv.setItem(i, Item.of('minecraft:air')); } catch (e) {}
-            }
-        }
-    }
-
-    // 3. Consume blaze rods if needed
-    for (let i = 0; i < inv.size && remain > 0; i++) {
-        let st = inv.getItem(i);
-        if (!st || st.isEmpty()) continue;
-        let id = String(st.id);
-        if (id === 'minecraft:blaze_rod') {
-            while (st.count > 0 && remain > 0) {
-                st.shrink(1);
-                remain = Math.max(0, remain - 3);
-            }
-            if (st.isEmpty() || st.count <= 0) {
-                try { inv.setItem(i, Item.of('minecraft:air')); } catch (e) {}
-            }
-        }
-    }
-    return remain === 0;
-}
-
-// Determine repair material for an item
-function getRepairMaterial(itemId) {
-    let id = String(itemId).toLowerCase();
-    if (id.includes('steel') || id.includes('knight')) {
-        return { id: 'kubejs:steel_ingot', name: 'Стальной Слиток' };
-    }
-    if (id.includes('copper') || id.includes('scout')) {
-        return { id: 'minecraft:copper_ingot', name: 'Медный Слиток' };
-    }
-    if (id.includes('diamond')) {
-        return { id: 'minecraft:diamond', name: 'Алмаз' };
-    }
-    if (id.includes('netherite')) {
-        return { id: 'minecraft:netherite_scrap', name: 'Незеритовый Обломок' };
-    }
-    if (id.includes('gold') || id.includes('golden')) {
-        return { id: 'minecraft:gold_ingot', name: 'Золотой Слиток' };
-    }
-    if (id.includes('wood') || id.includes('bow')) {
-        return { id: '#minecraft:planks', name: 'Доски' };
-    }
-    if (id.includes('leather')) {
-        return { id: 'minecraft:leather', name: 'Кожа' };
-    }
-    if (id.includes('stone') || id.includes('cobble')) {
-        return { id: 'minecraft:cobblestone', name: 'Булыжник' };
-    }
-    return { id: 'minecraft:iron_ingot', name: 'Железный Слиток' };
-}
-
 // ------------------------------------------------------------------------------
-// CRAFTING CATALOG DEFINITIONS (TABS 0, 1, 2)
+// ЕДИНЫЙ ГРАФИЧЕСКИЙ ИНТЕРФЕЙС (UNIFIED WORKSHOP GUI - 6 ROWS / CHEST MENU)
 // ------------------------------------------------------------------------------
-const BS_CATALOG = [
-    // --------------------------------------------------------------------------
-    // TAB 0: ⚔️ КЛИНКИ SIMPLYSWORDS (15 АРХЕТИПОВ ОРУЖИЯ Т1)
-    // --------------------------------------------------------------------------
-    [
-        {
-            id: 'simplyswords:iron_longsword',
-            name: '§fЖелезный Длинный Меч',
-            desc: 'Классический полуторный меч с балансом дальности и урона.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 2,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 1
-        },
-        {
-            id: 'simplyswords:iron_twinblade',
-            name: '§fЖелезный Двусторонний Клинок',
-            desc: 'Парный шестовой клинок для скоростных комбо-серий.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 3,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2
-        },
-        {
-            id: 'simplyswords:iron_rapier',
-            name: '§fЖелезная Рапира',
-            desc: 'Колющее фехтовальное оружие с повышенной скоростью атаки.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 2,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 1
-        },
-        {
-            id: 'simplyswords:iron_katana',
-            name: '§fЖелезная Катана',
-            desc: 'Изогнутый восточный клинок для быстрых рубящих атак.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 2,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 1
-        },
-        {
-            id: 'simplyswords:iron_sai',
-            name: '§fЖелезный Сай',
-            desc: 'Парный кинжал-трезубец для парирования и молниеносных тычков.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 1,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 1
-        },
-        {
-            id: 'simplyswords:iron_spear',
-            name: '§fЖелезное Копье',
-            desc: 'Длиннодревковое оружие с дистанцией укола до 5 блоков.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 2,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2
-        },
-        {
-            id: 'simplyswords:iron_glaive',
-            name: '§fЖелезная Глефа',
-            desc: 'Рубящее древковое оружие широкого размаха.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 3,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2
-        },
-        {
-            id: 'simplyswords:iron_warglaive',
-            name: '§fЖелезная Боевая Глефа',
-            desc: 'Тяжелый изогнутый клинок на шесте для прорыва строя.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 3,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2
-        },
-        {
-            id: 'simplyswords:iron_cutlass',
-            name: '§fЖелезный Абордажный Клинок',
-            desc: 'Маневренная сабля с гардой для защиты кисти.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 2,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 1
-        },
-        {
-            id: 'simplyswords:iron_claymore',
-            name: '§fЖелезный Клеймор',
-            desc: 'Массивный двуручный меч с сокрушительным кливом по толпе.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 4,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2
-        },
-        {
-            id: 'simplyswords:iron_greataxe',
-            name: '§fЖелезная Секира',
-            desc: 'Двуручный тяжелый топор, проламывающий щиты врагов.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 4,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2
-        },
-        {
-            id: 'simplyswords:iron_greathammer',
-            name: '§fЖелезный Боевой Молот',
-            desc: 'Огромный молот с максимальным ошеломлением и пробоем стойки.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 4,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2
-        },
-        {
-            id: 'simplyswords:iron_chakram',
-            name: '§fЖелезный Чакрам',
-            desc: 'Метательный и контактный боевой кольцевой клинок.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 2,
-            extra: 'minecraft:leather', extraName: 'Кожаная Обмотка', extraCount: 1
-        },
-        {
-            id: 'simplyswords:iron_scythe',
-            name: '§fЖелезная Коса',
-            desc: 'Жнущее оружие с широким радиусом поражения.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 3,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2
-        },
-        {
-            id: 'simplyswords:iron_halberd',
-            name: '§fЖелезная Алебарда',
-            desc: 'Комбинированный топор-копье для пронзания и стягивания.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 3,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2
-        }
-    ],
-
-    // --------------------------------------------------------------------------
-    // TAB 1: 🛡️ ДОСПЕХИ ТИРА 1 (ЖЕЛЕЗО, БРИГАНТИНА, РАЗВЕДЧИК, СТАЛЬНОЙ РЫЦАРЬ)
-    // --------------------------------------------------------------------------
-    [
-        // Железный классический сет
-        {
-            id: 'minecraft:iron_helmet',
-            name: '§fЖелезный Шлем',
-            desc: 'Стандартный защитный шлем пехотинца Верхнего Мира.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 5,
-            extra: null, extraName: null, extraCount: 0
-        },
-        {
-            id: 'minecraft:iron_chestplate',
-            name: '§fЖелезный Нагрудник',
-            desc: 'Стандартная кираса пехотинца Верхнего Мира.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 8,
-            extra: null, extraName: null, extraCount: 0
-        },
-        {
-            id: 'minecraft:iron_leggings',
-            name: '§fЖелезные Поножи',
-            desc: 'Стандартные защитные поножи пехотинца Верхнего Мира.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 7,
-            extra: null, extraName: null, extraCount: 0
-        },
-        {
-            id: 'minecraft:iron_boots',
-            name: '§fЖелезные Сапоги',
-            desc: 'Стандартные кованые сапоги пехотинца Верхнего Мира.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 4,
-            extra: null, extraName: null, extraCount: 0
-        },
-
-        // Бригантина Наемника (Damage Dealer)
-        {
-            id: 'kubejs:brigandine_helmet',
-            name: '§6Шлем Наемника (Бригантина)',
-            desc: 'ДД-Сет: +8% Силы атаки, +5% Шанса крита. Легкий перекат.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 4,
-            extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 2
-        },
-        {
-            id: 'kubejs:brigandine_chestplate',
-            name: '§6Бригантина Наемника',
-            desc: 'ДД-Сет: +15% Силы атаки, +10% Шанса крита. Легкий перекат.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 7,
-            extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 4
-        },
-        {
-            id: 'kubejs:brigandine_leggings',
-            name: '§6Поножи Наемника (Бригантина)',
-            desc: 'ДД-Сет: +10% Силы атаки, +5% Шанса крита. Легкий перекат.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 6,
-            extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 3
-        },
-        {
-            id: 'kubejs:brigandine_boots',
-            name: '§6Сапоги Наемника (Бригантина)',
-            desc: 'ДД-Сет: +5% Скорости бега, +5% Шанса крита. Легкий перекат.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 3,
-            extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 2
-        },
-
-        // Кожано-Медный Сет Разведчика (Agility / Speed)
-        {
-            id: 'kubejs:scout_hood',
-            name: '§aКапюшон Разведчика',
-            desc: 'Ловкость: +8% Скорости атаки, Fast Roll, бонус к скрытности.',
-            ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', baseIngots: 3,
-            extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 3
-        },
-        {
-            id: 'kubejs:scout_tunic',
-            name: '§aКуртка Разведчика',
-            desc: 'Ловкость: +12% Скорости атаки, Fast Roll, бонус к выносливости.',
-            ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', baseIngots: 6,
-            extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 5
-        },
-        {
-            id: 'kubejs:scout_pants',
-            name: '§aШтаны Разведчика',
-            desc: 'Ловкость: +10% Скорости бега, Fast Roll, снижение расхода сил.',
-            ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', baseIngots: 5,
-            extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 4
-        },
-        {
-            id: 'kubejs:scout_boots',
-            name: '§aСапоги Разведчика',
-            desc: 'Ловкость: Бесшумный шаг, Fast Roll, +10% Дистанции уклонения.',
-            ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', baseIngots: 3,
-            extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 2
-        },
-
-        // Стальной Сет Рыцаря Границы (Heavy Tank)
-        {
-            id: 'kubejs:steel_knight_helmet',
-            name: '§9Шлем Рыцаря Границы',
-            desc: 'Тяжелый Танк: Fat Roll, +150 Стойкости, иммунитет к оглушению.',
-            ingot: 'kubejs:steel_ingot', ingotName: 'Стальной Слиток', baseIngots: 5,
-            extra: 'minecraft:diamond', extraName: 'Алмазное Усиление', extraCount: 1
-        },
-        {
-            id: 'kubejs:steel_knight_chestplate',
-            name: '§9Латы Рыцаря Границы',
-            desc: 'Тяжелый Танк: Fat Roll, +300 Стойкости, 50% Отражения урона.',
-            ingot: 'kubejs:steel_ingot', ingotName: 'Стальной Слиток', baseIngots: 8,
-            extra: 'minecraft:diamond', extraName: 'Алмазное Усиление', extraCount: 2
-        },
-        {
-            id: 'kubejs:steel_knight_leggings',
-            name: '§9Поножи Рыцаря Границы',
-            desc: 'Тяжелый Танк: Fat Roll, +200 Стойкости, сопротивление отбрасыванию.',
-            ingot: 'kubejs:steel_ingot', ingotName: 'Стальной Слиток', baseIngots: 7,
-            extra: 'minecraft:diamond', extraName: 'Алмазное Усиление', extraCount: 2
-        },
-        {
-            id: 'kubejs:steel_knight_boots',
-            name: '§9Сапоги Рыцаря Границы',
-            desc: 'Тяжелый Танк: Fat Roll, 100% Защита от падений до 5м.',
-            ingot: 'kubejs:steel_ingot', ingotName: 'Стальной Слиток', baseIngots: 4,
-            extra: 'minecraft:diamond', extraName: 'Алмазное Усиление', extraCount: 1
-        }
-    ],
-
-    // --------------------------------------------------------------------------
-    // TAB 2: ⛏ ИНСТРУМЕНТЫ И ОСНАЩЕНИЕ
-    // --------------------------------------------------------------------------
-    [
-        {
-            id: 'kubejs:steel_pickaxe',
-            name: '§fСтальная Кирка',
-            desc: '★ Алмазный уровень добычи (3)! Необходима для добычи алмазной руды.',
-            ingot: 'kubejs:steel_ingot', ingotName: 'Стальной Слиток', baseIngots: 3,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2
-        },
-        {
-            id: 'minecraft:iron_pickaxe',
-            name: '§fЖелезная Кирка',
-            desc: 'Базовый шахтерский инструмент. Добывает руды до железа/золота/редстоуна.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 3,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2
-        },
-        {
-            id: 'minecraft:iron_axe',
-            name: '§fЖелезный Топор',
-            desc: 'Универсальный инструмент для рубки древесины и тяжелых ударов.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 3,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2
-        },
-        {
-            id: 'minecraft:iron_shovel',
-            name: '§fЖелезная Лопата',
-            desc: 'Инструмент для скоростной выемки грунта, песка и гравия.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 1,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2
-        },
-        {
-            id: 'minecraft:iron_hoe',
-            name: '§fЖелезная Мотыга',
-            desc: 'Инструмент землепашца для вспашки грядок и сбора урожая.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 2,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2
-        },
-        {
-            id: 'minecraft:iron_sword',
-            name: '§fЖелезный Меч',
-            desc: 'Короткий кованый меч пехотинца.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', baseIngots: 2,
-            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 1
-        },
-        {
-            id: 'minecraft:shield',
-            name: '§6Боевой Щит Защитника',
-            desc: 'Щит с оковкой: 100% блок физического урона, запас стойки.',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железная Оковка', baseIngots: 5,
-            extra: '#minecraft:planks', extraName: 'Доски', extraCount: 2
-        }
-    ]
-];
-
-// ------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------
-// OPEN BLACKSMITH WORKBENCH & MASTER WORKSHOP GUI (CHEST MENU 6 ROWS)
-// ------------------------------------------------------------------------------
-function openBlacksmithGUI(player, stationPos) {
+function openUnifiedWorkshopGUI(player, defaultTab, blockPos) {
     let level = player.level;
-    let station = (typeof getBlacksmithStationInfo === 'function') 
-        ? getBlacksmithStationInfo(level, stationPos) 
-        : { hasHearth: false, hasWorkbench: true, hasCrucible: false, hasAnvil: false, isGrandForge: false, line: [] };
-    let session = getOrCreateBlacksmithSession(player);
+    let sess = getOrCreateWorkshopSession(player);
+    if (defaultTab !== undefined && defaultTab !== null) {
+        sess.tab = defaultTab;
+    }
+    if (blockPos) {
+        sess.stationPos = blockPos;
+    }
 
-    session.hasHearth = station.hasHearth;
-    session.hasWorkbench = station.hasWorkbench;
-    session.hasCrucible = station.hasCrucible;
-    session.hasAnvil = station.hasAnvil;
-    session.isGrandForge = station.isGrandForge;
-    session.stationPos = stationPos;
+    let tabNames = [
+        '⚒ [ Ковка ]',
+        '🔧 [ Ремонт ]',
+        '🔥 [ Очаг ]',
+        '🌋 [ Горн ]',
+        '🌌 [ Наковальня ]',
+        '🛠 [ Оружейный Стол ]'
+    ];
 
-    // Tab accessibility fallback: if current tab is locked, fallback to Tab 0
-    if (session.tab === 4 && !session.hasHearth) session.tab = 0;
-    if (session.tab === 5 && !session.hasCrucible) session.tab = 0;
-    if (session.tab === 6 && !session.hasAnvil) session.tab = 0;
-
-    // Curator Canon: No standalone penalty on workbench
-            let ingotPenalty = 0;
-
-    let guiTitle = session.isGrandForge
-        ? '👑 §6§lВЕЛИКАЯ КУЗНИЦА §c✦ §dЭЛИРИУМ'
-        : (session.hasHearth
-            ? '⚒ §6§lМАСТЕРСКАЯ КУЗНЕЦА §a✦ §fЭЛИРИУМ'
-            : '⚒ §7Верстак Оружейника §c(Очаг не найден)');
-
-    let fullTitle = '\uE001§r' + guiTitle;
+    let fullTitle = '\uE001§r§6§lМАСТЕРСКАЯ ЭЛИРИУМА §7✦ ' + tabNames[sess.tab];
 
     player.openChestGUI(Text.of(fullTitle), 6, gui => {
         gui.playerSlots = true;
         gui.closed = () => {
-            clearBlacksmithSession(player);
+            clearAndRefundWorkshopSession(player, false);
         };
 
-        let decoPane = Item.of('minecraft:gray_stained_glass_pane').withCustomName(Text.of('§8 '));
-        let buf = getWorkshopBuffer(level, stationPos);
-        let fuelCount = countPlayerFuelBS(player);
+        let darkPane = Item.of('minecraft:gray_stained_glass_pane').withCustomName(Text.of('§8 '));
+        let borderPane = Item.of('minecraft:black_stained_glass_pane').withCustomName(Text.of('§8 '));
 
         // ======================================================================
-        // ROW 0: ВЕРХНИЙ КАРНИЗ И ЕДИНАЯ НАВИГАЦИЯ ВКЛАДОК (TABS 0..6 + CLOSE)
+        // ROW 0 (Y=0): ЕДИНАЯ ВЕРХНЯЯ ПАНЕЛЬ НАВИГАЦИИ ВКЛАДОК (TAB BAR 0..5)
         // ======================================================================
+        let tabIcons = [
+            'minecraft:iron_sword',       // 0: Ковка
+            'minecraft:anvil',            // 1: Ремонт
+            'minecraft:blast_furnace',    // 2: Очаг
+            'minecraft:lava_bucket',      // 3: Горн
+            'minecraft:crying_obsidian',  // 4: Наковальня
+            'minecraft:smithing_table'    // 5: Оружейный Стол
+        ];
 
-        // Tab 0: ⚔ [ Оружие ]
-        gui.slot(0, 0, s => {
-            let isSel = (session.tab === 0);
-            s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'minecraft:iron_sword')
-                .withCustomName(Text.of(isSel ? '§6▶ §c⚔ [ Оружие ] ◀' : '§c⚔ [ Оружие ]'))
-                .withLore([
-                    Text.of('§7Ковка клинков и древкового оружия SimplySwords.'),
+        for (let t = 0; t < 6; t++) {
+            let isCurrent = (sess.tab === t);
+            let iconItem = Item.of(isCurrent ? 'minecraft:nether_star' : tabIcons[t]);
+            let tName = isCurrent ? `§6▶ §e${tabNames[t]} §6◀` : `§7${tabNames[t]}`;
+
+            gui.slot(t, 0, s => {
+                s.setItem(iconItem.withCustomName(Text.of(tName)).withLore([
+                    Text.of(isCurrent ? '§a[Текущая активная станция]' : '§e▶ Нажмите для мгновенного перехода'),
                     Text.of('§8────────────────────────────────'),
-                    Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода в каталог оружия')
+                    Text.of('§7Все предметы в рабочих слотах остаются в безопасности.')
                 ]));
-            s.leftClicked = () => {
-                session.tab = 0;
-                player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
-                openBlacksmithGUI(player, stationPos);
-            };
-        });
-
-        // Tab 1: 🛡 [ Доспехи ]
-        gui.slot(1, 0, s => {
-            let isSel = (session.tab === 1);
-            s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'minecraft:iron_chestplate')
-                .withCustomName(Text.of(isSel ? '§6▶ §b🛡 [ Доспехи ] ◀' : '§b🛡 [ Доспехи ]'))
-                .withLore([
-                    Text.of('§7Ковка комплектов брони Рыцаря, Разведчика и Железа.'),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода в каталог брони')
-                ]));
-            s.leftClicked = () => {
-                session.tab = 1;
-                player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
-                openBlacksmithGUI(player, stationPos);
-            };
-        });
-
-        // Tab 2: ⛏ [ Инструменты ]
-        gui.slot(2, 0, s => {
-            let isSel = (session.tab === 2);
-            s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'kubejs:steel_pickaxe')
-                .withCustomName(Text.of(isSel ? '§6▶ §e⛏ [ Инструменты ] ◀' : '§e⛏ [ Инструменты ]'))
-                .withLore([
-                    Text.of('§7Ковка Стальной Кирки (Т-алмаз), топоров, лопат и щита.'),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода к инструментам')
-                ]));
-            s.leftClicked = () => {
-                session.tab = 2;
-                player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
-                openBlacksmithGUI(player, stationPos);
-            };
-        });
-
-        // Tab 3: 🔧 [ Ремонт ] (100% починка за 1 слиток)
-        gui.slot(3, 0, s => {
-            let isSel = (session.tab === 3);
-            let repairDurText = '§a100% восстановление прочности за 1 слиток';
-            s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'minecraft:anvil')
-                .withCustomName(Text.of(isSel ? '§6▶ §a🔧 [ Ремонт ] ◀' : '§a🔧 [ Ремонт ]'))
-                .withLore([
-                    Text.of('§7Восстановление прочности поврежденного снаряжения.'),
-                    Text.of(repairDurText),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода к ремонту')
-                ]));
-            s.leftClicked = () => {
-                session.tab = 3;
-                player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
-                openBlacksmithGUI(player, stationPos);
-            };
-        });
-
-        // Tab 4: 🔥 [ Очаг ] (активна только если рядом есть Очаг)
-        gui.slot(4, 0, s => {
-            let isSel = (session.tab === 4);
-            if (session.hasHearth) {
-                s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'minecraft:blast_furnace')
-                    .withCustomName(Text.of(isSel ? '§6▶ §c🔥 [ Очаг ] ◀' : '§c🔥 [ Очаг ]'))
-                    .withLore([
-                        Text.of('§7Высокотемпературная металлургия и буфер слитков.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§a✓ Кузнечный Очаг подключен в радиусе 4 блоков'),
-                        Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода в Очаг')
-                    ]));
                 s.leftClicked = () => {
-                    session.tab = 4;
+                    sess.tab = t;
                     player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
-                    openBlacksmithGUI(player, stationPos);
+                    openUnifiedWorkshopGUI(player, t, sess.stationPos);
                 };
-            } else {
-                s.setItem(Item.of('minecraft:campfire')
-                    .withCustomName(Text.of('§8🔒 [ Очаг: Недоступен ]'))
-                    .withLore([
-                        Text.of('§cТребуется Кузнечный Очаг поблизости (в пределах 4 блоков)!'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§7Установите Кузнечный Очаг в мастерской для выплавки стали.')
-                    ]));
-                s.leftClicked = () => {
-                    player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    player.sendSystemMessage(Text.of('§c[Мастерская] §7Требуется Кузнечный Очаг поблизости!'));
-                };
-            }
-        });
-
-        // Tab 5: 🌋 [ Тигель ] (активна только если рядом есть Адский Тигель)
-        gui.slot(5, 0, s => {
-            let isSel = (session.tab === 5);
-            if (session.hasCrucible) {
-                s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'minecraft:lava_bucket')
-                    .withCustomName(Text.of(isSel ? '§6▶ §4🌋 [ Тигель ] ◀' : '§4🌋 [ Тигель ]'))
-                    .withLore([
-                        Text.of('§7Инфернальный Тигель Незера (Т2/Т3).'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§a✓ Адский Тигель подключен в радиусе 4 блоков'),
-                        Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода к сплавам Незера')
-                    ]));
-                s.leftClicked = () => {
-                    session.tab = 5;
-                    player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
-                    openBlacksmithGUI(player, stationPos);
-                };
-            } else {
-                s.setItem(Item.of('minecraft:magma_block')
-                    .withCustomName(Text.of('§8🔒 [ Тигель: Недоступен ]'))
-                    .withLore([
-                        Text.of('§cТребуется Адский Тигель поблизости (в пределах 4 блоков)!'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§7Установите Адский Тигель для выплавки пепельных сплавов и незерита.')
-                    ]));
-                s.leftClicked = () => {
-                    player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    player.sendSystemMessage(Text.of('§c[Мастерская] §7Требуется Адский Тигель поблизости!'));
-                };
-            }
-        });
-
-        // Tab 6: 🌌 [ Наковальня ] (Открывает Алтарь Заточки +1..+15)
-        gui.slot(6, 0, s => {
-            s.setItem(Item.of('minecraft:crying_obsidian')
-                .withCustomName(Text.of('§5🌌 [ Наковальня: Алтарь Заточки ]'))
-                .withLore([
-                    Text.of('§7Алтарь глубокой заточки снаряжения (+1..+15).'),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of('§a▶ Нажмите ЛКМ для перехода к Заточке!')
-                ]));
-            s.leftClicked = () => {
-                player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
-                if (typeof openInfernalAnvilGUI === 'function') {
-                    openInfernalAnvilGUI(player);
-                }
-            };
-        });
-
-
-        // Slot 7: Разделитель
-        gui.slot(7, 0, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
-
-        // Slot 8: ✖ [ Закрыть ]
-        gui.slot(8, 0, s => {
-            s.setItem(Item.of('minecraft:barrier').withCustomName(Text.of('§c✖ [ Закрыть ]')));
-            s.leftClicked = () => {
-                player.closeContainerMenu();
-            };
-        });
-
-        // ======================================================================
-        // ROWS 1..4: ОСНОВНАЯ РАБОЧАЯ ЗОНА В СООТВЕТСТВИИ С АКТИВНОЙ ВКЛАДКОЙ
-        // ======================================================================
-if (session.tab >= 0 && session.tab <= 2) {
-            // ------------------------------------------------------------------
-            // КАТАЛОГ КОВКИ (TABS 0, 1, 2)
-            // ------------------------------------------------------------------
-            let catalogList = BS_CATALOG[session.tab] || [];
-
-            for (let i = 0; i < 28; i++) {
-                let slotX = 1 + (i % 7);
-                let slotY = 1 + Math.floor(i / 7);
-
-                if (i < catalogList.length) {
-                    let recipe = catalogList[i];
-                    let totalIngots = recipe.baseIngots + ingotPenalty;
-                    let avail = getAvailableIngotsBS(player, stationPos, recipe.ingot, session.hasHearth);
-                    let hasExtra = recipe.extra ? countPlayerItemsBS(player, recipe.extra) : 999;
-
-                    let canCraft = (avail.total >= totalIngots && hasExtra >= recipe.extraCount);
-
-                    let lore = [
-                        Text.of(`§7${recipe.desc}`),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§eТребуемые материалы:')
-                    ];
-
-                    let ingotLine = '';
-                    if (avail.total >= totalIngots) {
-                        if (session.hasHearth && avail.buffer > 0) {
-                            ingotLine = `§a✓ ${recipe.ingotName}: ${avail.total}/${totalIngots} шт. (Инв: ${avail.inv}, Буфер: ${avail.buffer})`;
-                        } else {
-                            ingotLine = `§a✓ ${recipe.ingotName}: ${avail.inv}/${totalIngots} шт.`;
-                        }
-                    } else {
-                        if (session.hasHearth && avail.buffer > 0) {
-                            ingotLine = `§c✗ ${recipe.ingotName}: ${avail.total}/${totalIngots} шт. (Инв: ${avail.inv}, Буфер: ${avail.buffer})`;
-                        } else {
-                            ingotLine = `§c✗ ${recipe.ingotName}: ${avail.inv}/${totalIngots} шт.`;
-                        }
-                    }
-                    lore.push(Text.of(ingotLine));
-
-                    // Curator Canon: No penalty lore
-
-                    if (recipe.extra && recipe.extraCount > 0) {
-                        let extraLine = (hasExtra >= recipe.extraCount)
-                            ? `§a✓ ${recipe.extraName}: ${hasExtra}/${recipe.extraCount} шт.`
-                            : `§c✗ ${recipe.extraName}: ${hasExtra}/${recipe.extraCount} шт.`;
-                        lore.push(Text.of(extraLine));
-                    }
-
-                    lore.push(Text.of('§8────────────────────────────────'));
-                    if (canCraft) {
-                        lore.push(Text.of('§a▶ Нажмите ЛКМ для ковки предмета!'));
-                    } else {
-                        lore.push(Text.of('§c🔒 Недостаточно материалов для ковки'));
-                    }
-
-                    let displayItem = Item.of(recipe.id)
-                        .withCustomName(Text.of(recipe.name))
-                        .withLore(lore);
-
-                    gui.slot(slotX, slotY, s => {
-                        s.setItem(displayItem);
-                        s.leftClicked = () => {
-                            // Dynamic re-check of station status to prevent exploit if Hearth was broken
-                            let currentStation = session.stationPos ? getBlacksmithStationInfo(player.level, session.stationPos) : null;
-                            let activeHasHearth = currentStation ? currentStation.hasHearth : session.hasHearth;
-                            let curPenalty = 0;
-
-                            let curAvail = getAvailableIngotsBS(player, session.stationPos, recipe.ingot, activeHasHearth);
-                            let curExtra = recipe.extra ? countPlayerItemsBS(player, recipe.extra) : 999;
-                            let curTotal = recipe.baseIngots + curPenalty;
-
-                            if (curAvail.total < curTotal || curExtra < recipe.extraCount) {
-                                player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                                player.sendSystemMessage(Text.of('§c[Кузница] §7Недостаточно материалов для ковки!'));
-                                return;
-                            }
-
-                            // Списание ингредиентов (буфер + инвентарь)
-                            deductCombinedIngotsBS(player, session.stationPos, recipe.ingot, curTotal, activeHasHearth);
-                            if (recipe.extra && recipe.extraCount > 0) {
-                                deductPlayerItemsBS(player, recipe.extra, recipe.extraCount);
-                            }
-
-                            // Выдача предмета
-                            player.give(Item.of(recipe.id));
-
-                            // Звук и частицы: звон молота и снопы искр
-                            player.server.runCommandSilent(`playsound minecraft:block.anvil.place player ${player.username} ~ ~ ~ 0.9 1.1`);
-                            player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.25`);
-                            player.server.runCommandSilent(`playsound minecraft:block.anvil.land player ${player.username} ~ ~ ~ 0.9 1.4`);
-                            player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.8 1.2`);
-                            player.server.runCommandSilent(`particle minecraft:crit ~ ~1.2 ~ 0.5 0.3 0.5 0.15 35`);
-                            player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.3 0.2 0.3 0.05 12`);
-
-                            player.sendSystemMessage(Text.of(`§a⚒ [Ковка завершена] §fВы выковали: §6${recipe.name}§f!`));
-                            if (!activeHasHearth) {
-                                player.sendSystemMessage(Text.of('§e(Применен штраф +1 слиток из-за отсутствия Очага)'));
-                            }
-
-                            // Обновление интерфейса
-                            openBlacksmithGUI(player, stationPos);
-                        };
-                    });
-                } else {
-                    // Пустые ячейки сетки
-                    gui.slot(slotX, slotY, s => {
-                        s.setItem(decoPane);
-                        s.leftClicked = () => {};
-                    });
-                }
-            }
-
-            // Рамка по краям (X=0 и X=8)
-            for (let y = 1; y <= 4; y++) {
-                gui.slot(0, y, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
-                gui.slot(8, y, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
-            }
-
-        } else if (session.tab === 3) {
-            // ------------------------------------------------------------------
-            // ВКЛАДКА РЕМОНТА (TAB 3: SCAN INVENTORY FOR DAMAGED ITEMS)
-            // ------------------------------------------------------------------
-            let damagedList = [];
-            let inv = player.inventory;
-
-            for (let i = 0; i < inv.size; i++) {
-                let st = inv.getItem(i);
-                if (!st || st.isEmpty()) continue;
-                if (st.isDamageableItem() && st.damageValue > 0) {
-                    damagedList.push({
-                        slotIndex: i,
-                        item: st,
-                        id: String(st.id),
-                        curDmg: st.damageValue,
-                        maxDmg: st.maxDamage
-                    });
-                }
-            }
-
-            let repairPercent = session.hasHearth ? 0.50 : 0.25;
-            let repairPercentStr = session.hasHearth ? '50%' : '25%';
-
-            for (let i = 0; i < 28; i++) {
-                let slotX = 1 + (i % 7);
-                let slotY = 1 + Math.floor(i / 7);
-
-                if (i < damagedList.length) {
-                    let entry = damagedList[i];
-                    let mat = getRepairMaterial(entry.id);
-                    let isIngot = mat.id.includes('ingot');
-                    let availMat = isIngot
-                        ? getAvailableIngotsBS(player, stationPos, mat.id, session.hasHearth)
-                        : { total: countPlayerItemsBS(player, mat.id), inv: countPlayerItemsBS(player, mat.id), buffer: 0 };
-                    let canRepair = (availMat.total >= 1);
-
-                    let repairPercent = 1.0;
-                    let repairPercentStr = '100%';
-                    let restoreAmount = entry.curDmg;
-                    let currentDur = entry.maxDmg - entry.curDmg;
-
-                    let lore = [
-                        Text.of(`§7Прочность: §f${currentDur} §7/ §f${entry.maxDmg}`),
-                        Text.of(`§7Износ: §c${entry.curDmg} ед. урона`),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(`§eВосстановление: §a+${restoreAmount} ед. (100% Полная починка)`),
-                        Text.of('§eСтоимость починки: 1x ' + mat.name)
-                    ];
-
-                    if (availMat.total >= 1) {
-                        if (session.hasHearth && availMat.buffer > 0) {
-                            lore.push(Text.of(`§a✓ Доступно: ${availMat.total} шт. (Инв: ${availMat.inv}, Буфер: ${availMat.buffer})`));
-                        } else {
-                            lore.push(Text.of(`§a✓ В инвентаре: ${availMat.inv} шт.`));
-                        }
-                    } else {
-                        lore.push(Text.of(`§c✗ Не хватает: ${mat.name}`));
-                    }
-                    lore.push(Text.of('§8────────────────────────────────'));
-
-                    if (canRepair) {
-                        lore.push(Text.of('§a▶ Нажмите ЛКМ для полной починки'));
-                    } else {
-                        lore.push(Text.of('§c🔒 Требуется ' + mat.name + ' для починки'));
-                    }
-
-                    gui.slot(slotX, slotY, s => {
-                        s.setItem(entry.item.copy().withLore(lore));
-                        s.leftClicked = () => {
-                            let currentStation = session.stationPos ? getBlacksmithStationInfo(player.level, session.stationPos) : null;
-                            let activeHasHearth = currentStation ? currentStation.hasHearth : session.hasHearth;
-                            let activePercent = 1.0;
-                            let activeRestore = entry.curDmg;
-
-                            let curAvail = isIngot
-                                ? getAvailableIngotsBS(player, session.stationPos, mat.id, activeHasHearth)
-                                : { total: countPlayerItemsBS(player, mat.id), inv: countPlayerItemsBS(player, mat.id), buffer: 0 };
-
-                            if (curAvail.total < 1) {
-                                player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                                player.sendSystemMessage(Text.of(`§c[Ремонт] §7Для починки требуется 1x §f${mat.name}§7!`));
-                                return;
-                            }
-
-                            // Списание материала (буфер + инвентарь)
-                            if (isIngot) {
-                                deductCombinedIngotsBS(player, session.stationPos, mat.id, 1, activeHasHearth);
-                            } else {
-                                deductPlayerItemsBS(player, mat.id, 1);
-                            }
-
-                            // Поиск и восстановление прочности предмета
-                            let realItem = player.inventory.getItem(entry.slotIndex);
-                            let targetStack = null;
-                            if (realItem && !realItem.isEmpty() && String(realItem.id) === entry.id && realItem.isDamageableItem()) {
-                                targetStack = realItem;
-                            } else {
-                                for (let si = 0; si < player.inventory.size; si++) {
-                                    let testSt = player.inventory.getItem(si);
-                                    if (testSt && !testSt.isEmpty() && String(testSt.id) === entry.id && testSt.isDamageableItem() && testSt.damageValue > 0) {
-                                        targetStack = testSt;
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if (targetStack) {
-                                targetStack.damageValue = Math.max(0, targetStack.damageValue - activeRestore);
-                            }
-
-                            player.server.runCommandSilent(`playsound minecraft:block.lava.extinguish player ${player.username} ~ ~ ~ 1.0 1.1`);
-                            player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.8 1.2`);
-                            player.server.runCommandSilent(`particle minecraft:cloud ~ ~1.2 ~ 0.3 0.4 0.3 0.05 30`);
-                            player.server.runCommandSilent(`particle minecraft:smoke ~ ~1.2 ~ 0.3 0.3 0.3 0.04 15`);
-                            player.sendSystemMessage(Text.of(`§a🔧 [Ремонт] §fПредмет успешно отремонтирован на §e+${activePercentStr}§f!`));
-
-                            openBlacksmithGUI(player, stationPos);
-                        };
-                    });
-                } else if (i === 0 && damagedList.length === 0) {
-                    gui.slot(4, 2, s => {
-                        s.setItem(Item.of('minecraft:sunflower')
-                            .withCustomName(Text.of('§a✓ Вся экипировка в идеальном состоянии!'))
-                            .withLore([
-                                Text.of('§7В вашем инвентаре нет поврежденного снаряжения.'),
-                                Text.of('§8────────────────────────────────'),
-                                Text.of('§7Поврежденные клинки и доспехи автоматически'),
-                                Text.of('§7появятся здесь для починки за металл.')
-                            ]));
-                        s.leftClicked = () => {};
-                    });
-                } else {
-                    gui.slot(slotX, slotY, s => {
-                        s.setItem(decoPane);
-                        s.leftClicked = () => {};
-                    });
-                }
-            }
-
-            for (let y = 1; y <= 4; y++) {
-                gui.slot(0, y, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
-                gui.slot(8, y, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
-            }
-        } else if (session.tab === 4) {
-            // ------------------------------------------------------------------
-            // TAB 4: 🔥 [ ОЧАГ ] (МЕТАЛЛУРГИЯ И ВЫПЛАВКА В ЕДИНОМ МАСТЕР-GUI)
-            // ------------------------------------------------------------------
-            let steelChargeCount = countPlayerItemsBS(player, 'kubejs:steel_charge');
-            let rawIronCount = countPlayerItemsBS(player, 'minecraft:raw_iron') 
-                + countPlayerItemsBS(player, 'minecraft:iron_ore') 
-                + countPlayerItemsBS(player, 'minecraft:deepslate_iron_ore');
-            let rawCopperCount = countPlayerItemsBS(player, 'minecraft:raw_copper') 
-                + countPlayerItemsBS(player, 'minecraft:copper_ore') 
-                + countPlayerItemsBS(player, 'minecraft:deepslate_copper_ore');
-
-            // Заполнение рабочей зоны декорацией
-            for (let y = 1; y <= 4; y++) {
-                for (let x = 0; x < 9; x++) {
-                    gui.slot(x, y, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
-                }
-            }
-
-            // Ряд 1: Индикаторы накопителя металлов (Буфер мастерской)
-            // [2, 1] Буфер Стали
-            gui.slot(2, 1, s => {
-                let stCount = buf.steel || 0;
-                s.setItem(Item.of('kubejs:steel_ingot')
-                    .withCustomName(Text.of(`§9[ Буфер Стали: ${stCount} шт. ]`))
-                    .withLore([
-                        Text.of(`§7Текущий запас в мастерской: §f${stCount} §7шт.`),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§a▶ ЛКМ: Забрать 1 слиток в инвентарь')
-                    ]));
-                s.leftClicked = () => {
-                    if (buf.steel > 0) {
-                        buf.steel -= 1;
-                        player.give(Item.of('kubejs:steel_ingot', 1));
-                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                        openBlacksmithGUI(player, stationPos);
-                    }
-                };
-            });
-
-            // [4, 1] Буфер Железа
-            gui.slot(4, 1, s => {
-                let irCount = buf.iron || 0;
-                s.setItem(Item.of('minecraft:iron_ingot')
-                    .withCustomName(Text.of(`§f[ Буфер Железа: ${irCount} шт. ]`))
-                    .withLore([
-                        Text.of(`§7Текущий запас в мастерской: §f${irCount} §7шт.`),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§a▶ ЛКМ: Забрать 1 слиток в инвентарь')
-                    ]));
-                s.leftClicked = () => {
-                    if (buf.iron > 0) {
-                        buf.iron -= 1;
-                        player.give(Item.of('minecraft:iron_ingot', 1));
-                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                        openBlacksmithGUI(player, stationPos);
-                    }
-                };
-            });
-
-            // [6, 1] Буфер Меди
-            gui.slot(6, 1, s => {
-                let cuCount = buf.copper || 0;
-                s.setItem(Item.of('minecraft:copper_ingot')
-                    .withCustomName(Text.of(`§6[ Буфер Меди: ${cuCount} шт. ]`))
-                    .withLore([
-                        Text.of(`§7Текущий запас в мастерской: §f${cuCount} §7шт.`),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§a▶ ЛКМ: Забрать 1 слиток в инвентарь')
-                    ]));
-                s.leftClicked = () => {
-                    if (buf.copper > 0) {
-                        buf.copper -= 1;
-                        player.give(Item.of('minecraft:copper_ingot', 1));
-                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                        openBlacksmithGUI(player, stationPos);
-                    }
-                };
-            });
-
-            // Ряд 2: Операции выплавки (Сталь, Железо, Медь)
-            // [2, 2] Выплавка Стали
-            gui.slot(2, 2, s => {
-                let canSmelt = (steelChargeCount >= 1 && fuelCount >= 1);
-                s.setItem(Item.of('kubejs:steel_charge')
-                    .withCustomName(Text.of('§b⚡ [ Выплавить Сталь ]'))
-                    .withLore([
-                        Text.of('§7Высокотемпературный обжиг шихты в сталь.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§eРецепт: 1x Шихта стали + 1x Уголь -> +1 Сталь в буфер'),
-                        Text.of(steelChargeCount >= 1 ? `§a✓ Шихты в инвентаре: ${steelChargeCount} шт.` : '§c✗ Нет шихты стали в инвентаре'),
-                        Text.of(fuelCount >= 1 ? `§a✓ Топлива в инвентаре: ${fuelCount} ед.` : '§c✗ Нет топлива (уголь/древесный уголь)'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(canSmelt ? '§a▶ ЛКМ: Выплавить 1 слиток' : '§c🔒 Недостаточно шихты или топлива')
-                    ]));
-                s.leftClicked = () => {
-                    let curCharges = countPlayerItemsBS(player, 'kubejs:steel_charge');
-                    let curFuel = countPlayerFuelBS(player);
-                    if (curCharges >= 1 && curFuel >= 1) {
-                        deductPlayerItemsBS(player, 'kubejs:steel_charge', 1);
-                        deductPlayerFuelBS(player, 1);
-                        addBufferIngots(level, stationPos, 'steel', 1);
-
-                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.9 1.1`);
-                        player.server.runCommandSilent(`playsound minecraft:block.lava.extinguish player ${player.username} ~ ~ ~ 0.8 1.4`);
-                        player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.3 0.3 0.3 0.05 15`);
-                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.2 0.2 0.2 0.05 8`);
-                        player.sendSystemMessage(Text.of('§a⚡ [Очаг] §fВыплавлен §9+1 Стальной Слиток§f в буфер мастерской!'));
-                        openBlacksmithGUI(player, stationPos);
-                    } else {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    }
-                };
-            });
-
-            // [4, 2] Переплавка Железа
-            gui.slot(4, 2, s => {
-                let canSmelt = (rawIronCount >= 1 && fuelCount >= 1);
-                s.setItem(Item.of('minecraft:raw_iron')
-                    .withCustomName(Text.of('§f⚡ [ Переплавить Железо ]'))
-                    .withLore([
-                        Text.of('§7Переплавка сырого железа или руды в слитки.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§eРецепт: 1x Сырое железо/руда + 1x Уголь -> +1 Железо в буфер'),
-                        Text.of(rawIronCount >= 1 ? `§a✓ Сырого железа/руды: ${rawIronCount} шт.` : '§c✗ Нет железной руды/сырца'),
-                        Text.of(fuelCount >= 1 ? `§a✓ Топлива в инвентаре: ${fuelCount} ед.` : '§c✗ Нет топлива'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(canSmelt ? '§a▶ ЛКМ: Выплавить 1 слиток' : '§c🔒 Недостаточно руды или топлива')
-                    ]));
-                s.leftClicked = () => {
-                    let curFuel = countPlayerFuelBS(player);
-                    if (curFuel < 1) {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                        return;
-                    }
-                    let taken = false;
-                    ['minecraft:raw_iron', 'minecraft:iron_ore', 'minecraft:deepslate_iron_ore'].forEach(oreId => {
-                        if (!taken && countPlayerItemsBS(player, oreId) >= 1) {
-                            deductPlayerItemsBS(player, oreId, 1);
-                            taken = true;
-                        }
-                    });
-                    if (taken) {
-                        deductPlayerFuelBS(player, 1);
-                        addBufferIngots(level, stationPos, 'iron', 1);
-
-                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.9 1.1`);
-                        player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.3 0.3 0.3 0.05 15`);
-                        player.sendSystemMessage(Text.of('§a⚡ [Очаг] §fВыплавлен §f+1 Железный Слиток§f в буфер мастерской!'));
-                        openBlacksmithGUI(player, stationPos);
-                    } else {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    }
-                };
-            });
-
-            // [6, 2] Переплавка Меди
-            gui.slot(6, 2, s => {
-                let canSmelt = (rawCopperCount >= 1 && fuelCount >= 1);
-                s.setItem(Item.of('minecraft:raw_copper')
-                    .withCustomName(Text.of('§6⚡ [ Переплавить Медь ]'))
-                    .withLore([
-                        Text.of('§7Переплавка сырой меди или руды в слитки.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§eРецепт: 1x Сырая медь/руда + 1x Уголь -> +1 Медь в буфер'),
-                        Text.of(rawCopperCount >= 1 ? `§a✓ Сырой меди/руды: ${rawCopperCount} шт.` : '§c✗ Нет медной руды/сырца'),
-                        Text.of(fuelCount >= 1 ? `§a✓ Топлива в инвентаре: ${fuelCount} ед.` : '§c✗ Нет топлива'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(canSmelt ? '§a▶ ЛКМ: Выплавить 1 слиток' : '§c🔒 Недостаточно руды или топлива')
-                    ]));
-                s.leftClicked = () => {
-                    let curFuel = countPlayerFuelBS(player);
-                    if (curFuel < 1) {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                        return;
-                    }
-                    let taken = false;
-                    ['minecraft:raw_copper', 'minecraft:copper_ore', 'minecraft:deepslate_copper_ore'].forEach(oreId => {
-                        if (!taken && countPlayerItemsBS(player, oreId) >= 1) {
-                            deductPlayerItemsBS(player, oreId, 1);
-                            taken = true;
-                        }
-                    });
-                    if (taken) {
-                        deductPlayerFuelBS(player, 1);
-                        addBufferIngots(level, stationPos, 'copper', 1);
-
-                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.9 1.1`);
-                        player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.3 0.3 0.3 0.05 15`);
-                        player.sendSystemMessage(Text.of('§a⚡ [Очаг] §fВыплавлен §6+1 Медный Слиток§f в буфер мастерской!'));
-                        openBlacksmithGUI(player, stationPos);
-                    } else {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    }
-                };
-            });
-
-            // Ряд 3: Загрузка слитков, Пакетная выплавка, Запас топлива
-            // [2, 3] Загрузка слитков в буфер
-            gui.slot(2, 3, s => {
-                let invSteel = countPlayerItemsBS(player, 'kubejs:steel_ingot');
-                let invIron = countPlayerItemsBS(player, 'minecraft:iron_ingot');
-                let invCopper = countPlayerItemsBS(player, 'minecraft:copper_ingot');
-                let totalIngots = invSteel + invIron + invCopper;
-
-                s.setItem(Item.of('minecraft:hopper')
-                    .withCustomName(Text.of('§e📥 [ Загрузить Слитки в Буфер ]'))
-                    .withLore([
-                        Text.of('§7Сложить слитки из инвентаря в общий буфер мастерской.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(`§7В инвентаре: Сталь: ${invSteel}, Железо: ${invIron}, Медь: ${invCopper}`),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(totalIngots > 0 ? '§a▶ Нажмите ЛКМ для загрузки всех слитков' : '§c🔒 Нет слитков в инвентаре для загрузки')
-                    ]));
-                s.leftClicked = () => {
-                    let curSteel = countPlayerItemsBS(player, 'kubejs:steel_ingot');
-                    let curIron = countPlayerItemsBS(player, 'minecraft:iron_ingot');
-                    let curCopper = countPlayerItemsBS(player, 'minecraft:copper_ingot');
-
-                    if (curSteel > 0) {
-                        deductPlayerItemsBS(player, 'kubejs:steel_ingot', curSteel);
-                        addBufferIngots(level, stationPos, 'steel', curSteel);
-                    }
-                    if (curIron > 0) {
-                        deductPlayerItemsBS(player, 'minecraft:iron_ingot', curIron);
-                        addBufferIngots(level, stationPos, 'iron', curIron);
-                    }
-                    if (curCopper > 0) {
-                        deductPlayerItemsBS(player, 'minecraft:copper_ingot', curCopper);
-                        addBufferIngots(level, stationPos, 'copper', curCopper);
-                    }
-
-                    if (curSteel > 0 || curIron > 0 || curCopper > 0) {
-                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
-                        player.sendSystemMessage(Text.of('§a📥 [Буфер] §fСлитки успешно перемещены в накопитель мастерской!'));
-                        openBlacksmithGUI(player, stationPos);
-                    } else {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    }
-                };
-            });
-
-            // [4, 3] Пакетная Авто-Выплавка ВСЕХ материалов
-            gui.slot(4, 3, s => {
-                let totalMaterials = steelChargeCount + rawIronCount + rawCopperCount;
-                let canBatch = (totalMaterials > 0 && fuelCount > 0);
-                s.setItem(Item.of('minecraft:campfire')
-                    .withCustomName(Text.of('§c🔥 [ Выплавить ВСЕ Материалы ]'))
-                    .withLore([
-                        Text.of('§7Автоматическая пакетная переплавка всей шихты и руд.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(`§7Шихта стали: §f${steelChargeCount} §7| Железо: §f${rawIronCount} §7| Медь: §f${rawCopperCount}`),
-                        Text.of(`§7Доступно топлива: §e${fuelCount} §7ед.`),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(canBatch ? '§a▶ Нажмите ЛКМ для полной переплавки' : '§c🔒 Нет материалов или топлива для выплавки')
-                    ]));
-                s.leftClicked = () => {
-                    let curFuel = countPlayerFuelBS(player);
-                    if (curFuel <= 0) {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                        player.sendSystemMessage(Text.of('§c[Очаг] §7Недостаточно топлива для выплавки!'));
-                        return;
-                    }
-
-                    let smeltedSteel = 0;
-                    let smeltedIron = 0;
-                    let smeltedCopper = 0;
-
-                    let curCharges = countPlayerItemsBS(player, 'kubejs:steel_charge');
-                    let batchSteel = Math.min(curCharges, curFuel);
-                    if (batchSteel > 0) {
-                        deductPlayerItemsBS(player, 'kubejs:steel_charge', batchSteel);
-                        deductPlayerFuelBS(player, batchSteel);
-                        addBufferIngots(level, stationPos, 'steel', batchSteel);
-                        curFuel -= batchSteel;
-                        smeltedSteel += batchSteel;
-                    }
-
-                    if (curFuel > 0) {
-                        let curIron = countPlayerItemsBS(player, 'minecraft:raw_iron');
-                        let batchIron = Math.min(curIron, curFuel);
-                        if (batchIron > 0) {
-                            deductPlayerItemsBS(player, 'minecraft:raw_iron', batchIron);
-                            deductPlayerFuelBS(player, batchIron);
-                            addBufferIngots(level, stationPos, 'iron', batchIron);
-                            curFuel -= batchIron;
-                            smeltedIron += batchIron;
-                        }
-                    }
-
-                    if (curFuel > 0) {
-                        let curCopper = countPlayerItemsBS(player, 'minecraft:raw_copper');
-                        let batchCopper = Math.min(curCopper, curFuel);
-                        if (batchCopper > 0) {
-                            deductPlayerItemsBS(player, 'minecraft:raw_copper', batchCopper);
-                            deductPlayerFuelBS(player, batchCopper);
-                            addBufferIngots(level, stationPos, 'copper', batchCopper);
-                            curFuel -= batchCopper;
-                            smeltedCopper += batchCopper;
-                        }
-                    }
-
-                    let totalSmelted = smeltedSteel + smeltedIron + smeltedCopper;
-                    if (totalSmelted > 0) {
-                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 1.0 1.0`);
-                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.2`);
-                        player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.5 0.4 0.5 0.08 40`);
-                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.4 0.3 0.4 0.05 20`);
-                        player.sendSystemMessage(Text.of(`§a🔥 [Пакетная выплавка] §fВыплавлено: §9${smeltedSteel} стали§f, §f${smeltedIron} железа§f, §6${smeltedCopper} меди§f в буфер!`));
-                        openBlacksmithGUI(player, stationPos);
-                    } else {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                        player.sendSystemMessage(Text.of('§c[Очаг] §7Не найдено сырья для переплавки!'));
-                    }
-                };
-            });
-
-            // [6, 3] Индикатор топлива
-            gui.slot(6, 3, s => {
-                s.setItem(Item.of('minecraft:coal')
-                    .withCustomName(Text.of(`§7[ Запас Топлива: ${fuelCount} ед. ]`))
-                    .withLore([
-                        Text.of('§7Подходит любое стандартное топливо:'),
-                        Text.of('§e• Уголь / Древесный уголь (1 ед.)'),
-                        Text.of('§e• Стержень ифрита (3 ед.)'),
-                        Text.of('§e• Угольный блок (9 ед.)'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§7Держите топливо в инвентаре для работы Очага.')
-                    ]));
-                s.leftClicked = () => {};
-            });
-
-            // ==================================================================
-            // РЯД 4 (Y=4): ЗОЛОТО И СПЛАВЫ НЕЗЕРА (С ТРЕБОВАНИЕМ ГОРНА В R=4)
-            // ==================================================================
-
-            // [1, 4] Переплавка Золота
-            gui.slot(1, 4, s => {
-                let rawGoldCount = countPlayerItemsBS(player, 'minecraft:raw_gold') + countPlayerItemsBS(player, 'minecraft:gold_ore') + countPlayerItemsBS(player, 'minecraft:deepslate_gold_ore') + countPlayerItemsBS(player, 'minecraft:nether_gold_ore');
-                let canGold = (rawGoldCount >= 1 && fuelCount >= 1);
-                s.setItem(Item.of('minecraft:raw_gold')
-                    .withCustomName(Text.of('§e⚡ [ Переплавить Золото ]'))
-                    .withLore([
-                        Text.of('§7Переплавка сырого золота или золотой руды.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§eРецепт: 1x Сырое золото/руда + 1x Уголь -> +1 Золотой слиток'),
-                        Text.of(rawGoldCount >= 1 ? `§a✓ Сырого золота/руды: ${rawGoldCount} шт.` : '§c✗ Нет золотой руды/сырца'),
-                        Text.of(fuelCount >= 1 ? `§a✓ Топлива в инвентаре: ${fuelCount} ед.` : '§c✗ Нет топлива'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(canGold ? '§a▶ ЛКМ: Выплавить 1 слиток' : '§c🔒 Недостаточно руды или топлива')
-                    ]));
-                s.leftClicked = () => {
-                    let curFuel = countPlayerFuelBS(player);
-                    if (curFuel < 1) {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                        return;
-                    }
-                    let taken = false;
-                    ['minecraft:raw_gold', 'minecraft:nether_gold_ore', 'minecraft:gold_ore', 'minecraft:deepslate_gold_ore'].forEach(oreId => {
-                        if (!taken && countPlayerItemsBS(player, oreId) >= 1) {
-                            deductPlayerItemsBS(player, oreId, 1);
-                            taken = true;
-                        }
-                    });
-                    if (taken) {
-                        deductPlayerFuelBS(player, 1);
-                        player.give(Item.of('minecraft:gold_ingot', 1));
-                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.9 1.1`);
-                        player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.3 0.3 0.3 0.05 15`);
-                        player.sendSystemMessage(Text.of('§e⚡ [Очаг] §fВыплавлен §6+1 Золотой Слиток§f!'));
-                        openBlacksmithGUI(player, stationPos);
-                    } else {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    }
-                };
-            });
-
-            // [3, 4] Пепельный Сплав (Требует Горн в радиусе 4 блоков!)
-            gui.slot(3, 4, s => {
-                let scrapCount = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
-                let magmaCount = countPlayerItemsBS(player, 'minecraft:magma_cream');
-                let hasCrucible = session.hasCrucible;
-                let canCinder = (hasCrucible && scrapCount >= 1 && magmaCount >= 1 && fuelCount >= 2);
-                s.setItem(Item.of('skd:cinder_alloy_ingot')
-                    .withCustomName(Text.of(hasCrucible ? '§6🔥 [ Сплавить Пепельный Сплав (Т2) ]' : '§8🔒 [ Пепельный Сплав: Нужен Горн ]'))
-                    .withLore([
-                        Text.of('§7Инфернальный сплав огня и базальта Преисподней.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§eРецепт: 1x Незеритовый обломок + 1x Сгусток магмы + 2x Топлива'),
-                        Text.of(scrapCount >= 1 ? `§a✓ Обломков незерита: ${scrapCount} шт.` : '§c✗ Нет обломков незерита'),
-                        Text.of(magmaCount >= 1 ? `§a✓ Сгустков магмы: ${magmaCount} шт.` : '§c✗ Нет сгустков магмы'),
-                        Text.of(fuelCount >= 2 ? `§a✓ Топлива: ${fuelCount}/2 ед.` : '§c✗ Требуется 2 ед. топлива'),
-                        Text.of(hasCrucible ? '§a✓ Адский Горн в радиусе 4 блоков: Жар активен!' : '§c🔒 ТРЕБУЕТСЯ АДСКИЙ ГОРН В РАДИУСЕ 4 БЛОКОВ!'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(!hasCrucible ? '§c🔒 Очаг не может достичь инфернального жара без Горна!' : (canCinder ? '§a▶ ЛКМ: Выплавить 1 Пепельный Сплав' : '§c🔒 Недостаточно компонентов'))
-                    ]));
-                s.leftClicked = () => {
-                    if (!session.hasCrucible) {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                        player.sendSystemMessage(Text.of('§c[Очаг] §7Для плавки сплавов Незера требуется Адский Горн поблизости (R=4)!'));
-                        return;
-                    }
-                    let curScrap = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
-                    let curMagma = countPlayerItemsBS(player, 'minecraft:magma_cream');
-                    let curFuel = countPlayerFuelBS(player);
-                    if (curScrap >= 1 && curMagma >= 1 && curFuel >= 2) {
-                        deductPlayerItemsBS(player, 'minecraft:netherite_scrap', 1);
-                        deductPlayerItemsBS(player, 'minecraft:magma_cream', 1);
-                        deductPlayerFuelBS(player, 2);
-                        addBufferIngots(level, stationPos, 'cinder', 1);
-
-                        player.server.runCommandSilent(`playsound minecraft:block.lava.extinguish player ${player.username} ~ ~ ~ 1.0 0.9`);
-                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.1`);
-                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.4 0.3 0.4 0.05 25`);
-                        player.sendSystemMessage(Text.of('§4🌋 [Очаг + Горн] §fВыплавлен §6+1 Пепельный Сплав§f в буфер мастерской!'));
-                        openBlacksmithGUI(player, stationPos);
-                    } else {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    }
-                };
-            });
-
-            // [5, 4] Очищенный Незерит (Требует Горн в радиусе 4 блоков!)
-            gui.slot(5, 4, s => {
-                let netheriteIngots = countPlayerItemsBS(player, 'minecraft:netherite_ingot');
-                let curCinder = countPlayerItemsBS(player, 'skd:cinder_alloy_ingot') + (buf.cinder || 0);
-                let hasCrucible = session.hasCrucible;
-                let canRefined = (hasCrucible && netheriteIngots >= 1 && curCinder >= 1 && fuelCount >= 4);
-                s.setItem(Item.of('kubejs:refined_netherite_ingot')
-                    .withCustomName(Text.of(hasCrucible ? '§4✦ [ Отлить Очищенный Незерит (Т2+) ]' : '§8🔒 [ Очищенный Незерит: Нужен Горн ]'))
-                    .withLore([
-                        Text.of('§7Предельно очищенный сплав инфернального огня.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§eРецепт: 1x Незерит + 1x Пепельный сплав + 4x Топлива'),
-                        Text.of(netheriteIngots >= 1 ? `§a✓ Незерита: ${netheriteIngots} шт.` : '§c✗ Нет незеритовых слитков'),
-                        Text.of(curCinder >= 1 ? `§a✓ Пепельного сплава (инв+буфер): ${curCinder} шт.` : '§c✗ Нет пепельного сплава'),
-                        Text.of(fuelCount >= 4 ? `§a✓ Топлива: ${fuelCount}/4 ед.` : `§c✗ Топлива: ${fuelCount}/4 ед.`),
-                        Text.of(hasCrucible ? '§a✓ Адский Горн в радиусе 4 блоков: Жар активен!' : '§c🔒 ТРЕБУЕТСЯ АДСКИЙ ГОРН В РАДИУСЕ 4 БЛОКОВ!'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(!hasCrucible ? '§c🔒 Очаг не может достичь инфернального жара без Горна!' : (canRefined ? '§a▶ ЛКМ: Отлить в буфер мастерской' : '§c🔒 Недостаточно компонентов'))
-                    ]));
-                s.leftClicked = () => {
-                    if (!session.hasCrucible) {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                        player.sendSystemMessage(Text.of('§c[Очаг] §7Для выплавки Очищенного Незерита требуется Адский Горн поблизости (R=4)!'));
-                        return;
-                    }
-                    let curNeth = countPlayerItemsBS(player, 'minecraft:netherite_ingot');
-                    let curCinInv = countPlayerItemsBS(player, 'skd:cinder_alloy_ingot');
-                    let curCinBuf = buf.cinder || 0;
-                    let curFuel = countPlayerFuelBS(player);
-
-                    if (curNeth >= 1 && (curCinInv + curCinBuf >= 1) && curFuel >= 4) {
-                        deductPlayerItemsBS(player, 'minecraft:netherite_ingot', 1);
-                        if (curCinBuf >= 1) {
-                            buf.cinder -= 1;
-                        } else {
-                            deductPlayerItemsBS(player, 'skd:cinder_alloy_ingot', 1);
-                        }
-                        deductPlayerFuelBS(player, 4);
-                        addBufferIngots(level, stationPos, 'netherite', 1);
-
-                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 1.0 0.8`);
-                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 1.0 1.2`);
-                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.5 0.3 0.5 0.08 30`);
-                        player.sendSystemMessage(Text.of('§4🌋 [Очаг + Горн] §fОтлит §4+1 Очищенный Незерит§f в буфер мастерской!'));
-                        openBlacksmithGUI(player, stationPos);
-                    } else {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    }
-                };
-            });
-
-            // [7, 4] Индикатор статуса Горна
-            gui.slot(7, 4, s => {
-                let hasCrucible = session.hasCrucible;
-                s.setItem(Item.of(hasCrucible ? 'minecraft:magma_block' : 'minecraft:crying_obsidian')
-                    .withCustomName(Text.of(hasCrucible ? '§a🌋 [ Горн Активен (R=4) ]' : '§c🔒 [ Горн Не Найден (R=4) ]'))
-                    .withLore([
-                        Text.of('§7Статус синхронизации Очага с Адским Горном.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(hasCrucible ? '§a✓ Адский Горн обнаружен в радиусе 4 блоков.' : '§c✗ Адский Горн отсутствует поблизости.'),
-                        Text.of(hasCrucible ? '§e• Доступна плавка Пепельного сплава' : '§7• Установите Горн рядом с Очагом'),
-                        Text.of(hasCrucible ? '§e• Доступна отливка Очищенного Незерита' : '§7• для разблокировки сплавов Т2+')
-                    ]));
-                s.leftClicked = () => {};
-            });
-
-        } else if (session.tab === 5) {
-            // ------------------------------------------------------------------
-            // TAB 5: 🌋 [ ТИГЕЛЬ ] (ИНФЕРНАЛЬНЫЕ СПЛАВЫ И МЕТАЛЛУРГИЯ Т2+)
-            // ------------------------------------------------------------------
-            for (let y = 1; y <= 4; y++) {
-                for (let x = 0; x < 9; x++) {
-                    gui.slot(x, y, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
-                }
-            }
-
-            // Ряд 1: Индикаторы буфера мастерской для Т2+ металлов
-            // [2, 1] Буфер Пепельного Сплава (Cinder Alloy)
-            gui.slot(2, 1, s => {
-                let cinCount = buf.cinder || 0;
-                s.setItem(Item.of('skd:cinder_alloy_ingot')
-                    .withCustomName(Text.of(`§6[ Буфер Пепельного Сплава: ${cinCount} шт. ]`))
-                    .withLore([
-                        Text.of(`§7Текущий запас в мастерской: §f${cinCount} §7шт.`),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§a▶ ЛКМ: Забрать 1 слиток в инвентарь')
-                    ]));
-                s.leftClicked = () => {
-                    if (buf.cinder > 0) {
-                        buf.cinder -= 1;
-                        player.give(Item.of('skd:cinder_alloy_ingot', 1));
-                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                        openBlacksmithGUI(player, stationPos);
-                    }
-                };
-            });
-
-            // [4, 1] Центральный статус Тигля
-            gui.slot(4, 1, s => {
-                s.setItem(Item.of('minecraft:lava_bucket')
-                    .withCustomName(Text.of('§4🌋 [ АДСКИЙ ТИГЕЛЬ НЕЗЕРА (Т2/Т3) ]'))
-                    .withLore([
-                        Text.of('§7Древний очаг первородной магмы для высокотемпературных сплавов.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§a✓ Подключен к единому комплексу мастерской'),
-                        Text.of('§e• Пепельный Сплав (Cinder Alloy, Т2)'),
-                        Text.of('§e• Очищенный Незерит (Refined Netherite, Т2+)'),
-                        Text.of('§e• Инфернальный обжиг руды Незера (х2 выход)'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(`§7Доступно топлива в инвентаре: §e${fuelCount} §7ед.`)
-                    ]));
-                s.leftClicked = () => {};
-            });
-
-            // [6, 1] Буфер Очищенного Незерита (Refined Netherite)
-            gui.slot(6, 1, s => {
-                let nethCount = buf.netherite || 0;
-                s.setItem(Item.of('kubejs:refined_netherite_ingot')
-                    .withCustomName(Text.of(`§4[ Буфер Очищенного Незерита: ${nethCount} шт. ]`))
-                    .withLore([
-                        Text.of(`§7Текущий запас в мастерской: §f${nethCount} §7шт.`),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§a▶ ЛКМ: Забрать 1 слиток в инвентарь')
-                    ]));
-                s.leftClicked = () => {
-                    if (buf.netherite > 0) {
-                        buf.netherite -= 1;
-                        player.give(Item.of('kubejs:refined_netherite_ingot', 1));
-                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_netherite player ${player.username} ~ ~ ~ 0.8 1.2`);
-                        openBlacksmithGUI(player, stationPos);
-                    }
-                };
-            });
-
-            // Ряд 2: Операции плавки металлов Т2+
-            // [2, 2] Сплавить Пепельный Сплав -> в Буфер мастерской
-            gui.slot(2, 2, s => {
-                let scrapCount = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
-                let magmaCount = countPlayerItemsBS(player, 'minecraft:magma_cream');
-                let hasCrucible = session.hasCrucible;
-                let canCinder = (hasCrucible && scrapCount >= 1 && magmaCount >= 1 && fuelCount >= 2);
-                s.setItem(Item.of('skd:cinder_alloy_ingot')
-                    .withCustomName(Text.of('§6🔥 [ Сплавить Пепельный Сплав ]'))
-                    .withLore([
-                        Text.of('§7Высокотемпературный сплав Незера (Тир 2).'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§eРецепт: 1x Незеритовый обломок + 1x Сгусток магмы + 2x Топлива'),
-                        Text.of('§fВыход: §6+1 Пепельный Сплав §7(направляется в буфер)'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(scrapCount >= 1 ? `§a✓ Обломков незерита: ${scrapCount} шт.` : '§c✗ Нет обломков незерита'),
-                        Text.of(magmaCount >= 1 ? `§a✓ Сгустков магмы: ${magmaCount} шт.` : '§c✗ Нет сгустков магмы'),
-                        Text.of(fuelCount >= 2 ? `§a✓ Топлива: ${fuelCount} ед.` : '§c✗ Требуется 2 ед. топлива'),
-                        Text.of(hasCrucible ? '§a✓ Адский Горн рядом: Жар достаточен' : '§c✗ ТРЕБУЕТСЯ АДСКИЙ ГОРН РЯДОМ!'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(!hasCrucible ? '§c🔒 Требуется Адский Горн для инфернальных сплавов!' : (canCinder ? '§a▶ ЛКМ: Выплавить в буфер мастерской' : '§c🔒 Недостаточно компонентов'))
-                    ]));
-                s.leftClicked = () => {
-                    if (!session.hasCrucible) {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                        player.sendSystemMessage(Text.of('§c[Кузница] §7Для выплавки инфернальных сплавов требуется Адский Горн рядом (в радиусе 4 блоков)!'));
-                        return;
-                    }
-                    let curScrap = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
-                    let curMagma = countPlayerItemsBS(player, 'minecraft:magma_cream');
-                    let curFuel = countPlayerFuelBS(player);
-                    if (curScrap >= 1 && curMagma >= 1 && curFuel >= 2) {
-                        deductPlayerItemsBS(player, 'minecraft:netherite_scrap', 1);
-                        deductPlayerItemsBS(player, 'minecraft:magma_cream', 1);
-                        deductPlayerFuelBS(player, 2);
-                        addBufferIngots(level, stationPos, 'cinder', 1);
-
-                        player.server.runCommandSilent(`playsound minecraft:block.lava.extinguish player ${player.username} ~ ~ ~ 1.0 0.9`);
-                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.1`);
-                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.4 0.3 0.4 0.05 25`);
-                        player.sendSystemMessage(Text.of('§4🌋 [Тигель] §fВыплавлен §6+1 Пепельный Сплав§f в буфер мастерской!'));
-                        openBlacksmithGUI(player, stationPos);
-                    } else {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    }
-                };
-            });
-
-            // [4, 2] Отлить Очищенный Незерит -> в Буфер мастерской
-            gui.slot(4, 2, s => {
-                let netheriteIngots = countPlayerItemsBS(player, 'minecraft:netherite_ingot');
-                let curCinder = countPlayerItemsBS(player, 'skd:cinder_alloy_ingot') + (buf.cinder || 0);
-                let canRefined = (netheriteIngots >= 1 && curCinder >= 1 && fuelCount >= 4);
-                s.setItem(Item.of('kubejs:refined_netherite_ingot')
-                    .withCustomName(Text.of('§4✦ [ Отлить Очищенный Незерит ]'))
-                    .withLore([
-                        Text.of('§7Предельно очищенный сплав инфернального огня.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§eРецепт: 1x Незеритовый слиток + 1x Пепельный сплав + 4x Топлива'),
-                        Text.of('§fВыход: §4+1 Очищенный Незерит §7(направляется в буфер)'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(netheriteIngots >= 1 ? `§a✓ Незеритовых слитков: ${netheriteIngots} шт.` : '§c✗ Нет незеритовых слитков'),
-                        Text.of(curCinder >= 1 ? `§a✓ Пепельного сплава (инв+буфер): ${curCinder} шт.` : '§c✗ Нет пепельного сплава'),
-                        Text.of(fuelCount >= 4 ? `§a✓ Топлива: ${fuelCount}/4 ед.` : `§c✗ Топлива: ${fuelCount}/4 ед.`),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(canRefined ? '§a▶ ЛКМ: Отлить в буфер мастерской' : '§c🔒 Недостаточно компонентов')
-                    ]));
-                s.leftClicked = () => {
-                    let curNeth = countPlayerItemsBS(player, 'minecraft:netherite_ingot');
-                    let curCinInv = countPlayerItemsBS(player, 'skd:cinder_alloy_ingot');
-                    let curCinBuf = buf.cinder || 0;
-                    let curFuel = countPlayerFuelBS(player);
-
-                    if (curNeth >= 1 && (curCinInv + curCinBuf >= 1) && curFuel >= 4) {
-                        deductPlayerItemsBS(player, 'minecraft:netherite_ingot', 1);
-                        if (curCinBuf >= 1) {
-                            buf.cinder -= 1;
-                        } else {
-                            deductPlayerItemsBS(player, 'skd:cinder_alloy_ingot', 1);
-                        }
-                        deductPlayerFuelBS(player, 4);
-                        addBufferIngots(level, stationPos, 'netherite', 1);
-
-                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 1.0 0.8`);
-                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 1.0 1.2`);
-                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.5 0.3 0.5 0.08 30`);
-                        player.sendSystemMessage(Text.of('§4🌋 [Тигель] §fОтлит §4+1 Очищенный Незеритовый Слиток§f в буфер мастерской!'));
-                        openBlacksmithGUI(player, stationPos);
-                    } else {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    }
-                };
-            });
-
-            // [6, 2] Инфернальный Обжиг Золотой Руды
-            gui.slot(6, 2, s => {
-                let goldOreCount = countPlayerItemsBS(player, 'minecraft:nether_gold_ore');
-                let canGold = (goldOreCount >= 1 && fuelCount >= 1);
-                s.setItem(Item.of('minecraft:nether_gold_ore')
-                    .withCustomName(Text.of('§e⚡ [ Инфернальный Обжиг Золотой Руды ]'))
-                    .withLore([
-                        Text.of('§7Мгновенный высокотемпературный обжиг адской руды.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§eРецепт: 1x Адская золотая руда + 1x Топливо -> +2 Золотых слитка!'),
-                        Text.of(goldOreCount >= 1 ? `§a✓ Адской руды: ${goldOreCount} шт.` : '§c✗ Нет адской золотой руды'),
-                        Text.of(fuelCount >= 1 ? `§a✓ Топлива: ${fuelCount} ед.` : '§c✗ Нет топлива'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(canGold ? '§a▶ ЛКМ: Обжечь (х2 выход!)' : '§c🔒 Недостаточно руды или топлива')
-                    ]));
-                s.leftClicked = () => {
-                    let curOre = countPlayerItemsBS(player, 'minecraft:nether_gold_ore');
-                    let curFuel = countPlayerFuelBS(player);
-                    if (curOre >= 1 && curFuel >= 1) {
-                        deductPlayerItemsBS(player, 'minecraft:nether_gold_ore', 1);
-                        deductPlayerFuelBS(player, 1);
-                        player.give(Item.of('minecraft:gold_ingot', 2));
-
-                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 1.0 1.2`);
-                        player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.3 0.3 0.3 0.05 20`);
-                        player.sendSystemMessage(Text.of('§e⚡ [Тигель] §fВыплавлено §6+2 Золотых Слитка§f!'));
-                        openBlacksmithGUI(player, stationPos);
-                    } else {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    }
-                };
-            });
-
-            // Ряд 3: Загрузка слитков Т2+ в буфер и Пакетная плавка
-            // [3, 3] Загрузить Cinder & Netherite в буфер
-            gui.slot(3, 3, s => {
-                let invCin = countPlayerItemsBS(player, 'skd:cinder_alloy_ingot');
-                let invNeth = countPlayerItemsBS(player, 'kubejs:refined_netherite_ingot') + countPlayerItemsBS(player, 'minecraft:netherite_ingot');
-                let totalT2 = invCin + invNeth;
-                s.setItem(Item.of('minecraft:hopper')
-                    .withCustomName(Text.of('§e📥 [ Загрузить Слитки Т2+ в Буфер ]'))
-                    .withLore([
-                        Text.of('§7Переместить пепельный сплав и незерит из сумки в буфер.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(`§7В инвентаре: Пепельный сплав: ${invCin}, Незерит: ${invNeth}`),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(totalT2 > 0 ? '§a▶ Нажмите ЛКМ для загрузки всех слитков Т2+' : '§c🔒 Нет слитков Т2+ в сумке')
-                    ]));
-                s.leftClicked = () => {
-                    let curCin = countPlayerItemsBS(player, 'skd:cinder_alloy_ingot');
-                    let curRef = countPlayerItemsBS(player, 'kubejs:refined_netherite_ingot');
-
-                    if (curCin > 0) {
-                        deductPlayerItemsBS(player, 'skd:cinder_alloy_ingot', curCin);
-                        addBufferIngots(level, stationPos, 'cinder', curCin);
-                    }
-                    if (curRef > 0) {
-                        deductPlayerItemsBS(player, 'kubejs:refined_netherite_ingot', curRef);
-                        addBufferIngots(level, stationPos, 'netherite', curRef);
-                    }
-
-                    if (curCin > 0 || curRef > 0) {
-                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
-                        player.sendSystemMessage(Text.of('§a📥 [Буфер Тигля] §fСлитки Т2+ перемещены в накопитель мастерской!'));
-                        openBlacksmithGUI(player, stationPos);
-                    } else {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    }
-                };
-            });
-
-            // [5, 3] Пакетная плавка Пепельного Сплава
-            gui.slot(5, 3, s => {
-                let hasCrucible = session.hasCrucible;
-                let scrapCount = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
-                let magmaCount = countPlayerItemsBS(player, 'minecraft:magma_cream');
-                let maxBatch = hasCrucible ? Math.min(scrapCount, magmaCount, Math.floor(fuelCount / 2)) : 0;
-                s.setItem(Item.of('minecraft:blaze_powder')
-                    .withCustomName(Text.of('§c🔥 [ Пакетная Плавка Пепельного Сплава ]'))
-                    .withLore([
-                        Text.of('§7Выплавить максимальное количество пепельного сплава в 1 клик.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(`§7Доступно для выплавки: §6${maxBatch} §7слитков`),
-                        Text.of(`§7Обломков: ${scrapCount} | Сгустков магмы: ${magmaCount} | Топлива: ${fuelCount}`),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(maxBatch > 0 ? '§a▶ Нажмите ЛКМ для пакетной выплавки' : '§c🔒 Недостаточно ресурсов для плавки')
-                    ]));
-                s.leftClicked = () => {
-                    let curScrap = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
-                    let curMagma = countPlayerItemsBS(player, 'minecraft:magma_cream');
-                    let curFuel = countPlayerFuelBS(player);
-                    let batch = Math.min(curScrap, curMagma, Math.floor(curFuel / 2));
-
-                    if (batch > 0) {
-                        deductPlayerItemsBS(player, 'minecraft:netherite_scrap', batch);
-                        deductPlayerItemsBS(player, 'minecraft:magma_cream', batch);
-                        deductPlayerFuelBS(player, batch * 2);
-                        addBufferIngots(level, stationPos, 'cinder', batch);
-
-                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 1.0 1.0`);
-                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.2`);
-                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.5 0.4 0.5 0.08 35`);
-                        player.sendSystemMessage(Text.of(`§4🌋 [Тигель] §fПакетно выплавлено §6+${batch} Пепельного Сплава§f в буфер мастерской!`));
-                        openBlacksmithGUI(player, stationPos);
-                    } else {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                        player.sendSystemMessage(Text.of('§c[Тигель] §7Недостаточно ресурсов или топлива!'));
-                    }
-                };
-            });
-
-        } else if (session.tab === 6) {
-            // ------------------------------------------------------------------
-            // TAB 6: 🌌 [ НАКОВАЛЬНЯ ] (РУНИЧЕСКАЯ ЗАТОЧКА И СНЯТИЕ ШТРАФОВ)
-            // ------------------------------------------------------------------
-            for (let y = 1; y <= 4; y++) {
-                for (let x = 0; x < 9; x++) {
-                    gui.slot(x, y, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
-                }
-            }
-
-            // Центральный статус Наковальни
-            gui.slot(4, 1, s => {
-                s.setItem(Item.of('minecraft:crying_obsidian')
-                    .withCustomName(Text.of('§5🌌 [ НАКОВАЛЬНЯ БЕЗДНЫ (Т5 THE END) ]'))
-                    .withLore([
-                        Text.of('§7Пустотный монолит рунической гармонизации и закалки.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§a✓ Подключена к единому комплексу мастерской'),
-                        Text.of('§e• Снятие штрафов перековки экипировки'),
-                        Text.of('§e• Доступ к Алтарю Глубокой Заточки (+1..+15 Lineage 2)'),
-                        Text.of('§e• Руническая закалка и стабилизация Аур')
-                    ]));
-                s.leftClicked = () => {};
-            });
-
-            // Кнопка 1: Открыть Алтарь Глубокой Заточки (Infernal Forge UI)
-            gui.slot(3, 2, s => {
-                s.setItem(Item.of('kubejs:smithing_stone_1')
-                    .withCustomName(Text.of('§d⚡ [ Алтарь Заточки +1..+15 (Lineage 2) ]'))
-                    .withLore([
-                        Text.of('§7Перейти к полноразмерному алтарю глубокой заточки снаряжения.'),
-                        Text.of('§7Использует Оселки I..V, Печати Эгиды и пробуждает Ауры.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§a▶ Нажмите ЛКМ для открытия интерфейса заточки')
-                    ]));
-                s.leftClicked = () => {
-                    player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.1`);
-                    if (typeof openInfernalAnvilGUI === 'function') {
-                        openInfernalAnvilGUI(player);
-                    } else {
-                        player.server.runCommandSilent(`execute as ${player.username} run infernal_anvil`);
-                    }
-                };
-            });
-
-            // Кнопка 2: Руническое Снятие Штрафов / Очищение
-            gui.slot(5, 2, s => {
-                let tearCount = countPlayerItemsBS(player, 'minecraft:ghast_tear');
-                let lapisCount = countPlayerItemsBS(player, 'minecraft:lapis_lazuli');
-                let canPurify = (tearCount >= 1 && lapisCount >= 4);
-                s.setItem(Item.of('minecraft:amethyst_shard')
-                    .withCustomName(Text.of('§b✨ [ Руническое Снятие Штрафов ]'))
-                    .withLore([
-                        Text.of('§7Стабилизирует кристаллическую решетку поврежденного оружия.'),
-                        Text.of('§7Снимает штраф перековки и восстанавливает резонанс.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§eТребуется: 1x Слеза гаста + 4x Лазурит'),
-                        Text.of(tearCount >= 1 ? `§a✓ Слез гаста: ${tearCount} шт.` : '§c✗ Нет слезы гаста'),
-                        Text.of(lapisCount >= 4 ? `§a✓ Лазурита: ${lapisCount}/4 шт.` : `§c✗ Лазурита: ${lapisCount}/4 шт.`),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of(canPurify ? '§a▶ Нажмите ЛКМ для рунического очищения' : '§c🔒 Недостаточно реагентов')
-                    ]));
-                s.leftClicked = () => {
-                    let curTear = countPlayerItemsBS(player, 'minecraft:ghast_tear');
-                    let curLapis = countPlayerItemsBS(player, 'minecraft:lapis_lazuli');
-                    if (curTear >= 1 && curLapis >= 4) {
-                        deductPlayerItemsBS(player, 'minecraft:ghast_tear', 1);
-                        deductPlayerItemsBS(player, 'minecraft:lapis_lazuli', 4);
-
-                        player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 1.0 1.2`);
-                        player.server.runCommandSilent(`playsound minecraft:entity.player.levelup player ${player.username} ~ ~ ~ 0.8 1.5`);
-                        player.server.runCommandSilent(`particle minecraft:enchant ~ ~1.2 ~ 0.5 0.5 0.5 0.2 40`);
-                        player.sendSystemMessage(Text.of('§5🌌 [Наковальня] §aРуническое очищение завершено! Штрафы перековки сняты.'));
-                        openBlacksmithGUI(player, stationPos);
-                    } else {
-                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    }
-                };
-            });
-
-            // Инфо-строка
-            gui.slot(4, 3, s => {
-                s.setItem(Item.of('minecraft:ender_eye')
-                    .withCustomName(Text.of('§d👁 [ Резонанс Бездны: Активен ]'))
-                    .withLore([
-                        Text.of('§7Наковальня стабилизирует пространственные аномалии.'),
-                        Text.of('§7Используйте для финальной доводки легендарных артефактов.'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§a✓ Полная совместимость с каноном 8 Тиров Элириума.')
-                    ]));
-                s.leftClicked = () => {};
             });
         }
 
+        // Разделители и выход в ряду 0
+        gui.slot(6, 0, s => { s.setItem(darkPane); s.leftClicked = () => {}; });
+        gui.slot(7, 0, s => { s.setItem(darkPane); s.leftClicked = () => {}; });
+        gui.slot(8, 0, s => {
+            s.setItem(Item.of('minecraft:barrier').withCustomName(Text.of('§c✖ [ Закрыть Мастерскую ]')));
+            s.leftClicked = () => {
+                player.closeChestGUI();
+            };
+        });
+
         // ======================================================================
-        // ROW 5: НИЖНИЙ КАРНИЗ И РУКОВОДСТВО
+        // ЗАПОЛНЕНИЕ РАБОЧИХ ЗОН В ЗАВИСИМОСТИ ОТ ВЫБРАННОЙ ВКЛАДКИ
         // ======================================================================
-        for (let x = 0; x < 9; x++) {
-            if (x === 4) {
-                gui.slot(4, 5, s => {
-                    s.setItem(Item.of('minecraft:compass')
-                        .withCustomName(Text.of('§e[ Руководство Единой Мастерской ]'))
-                        .withLore([
-                            Text.of('§7Свободная Мастерская объединяет 4 станции в радиусе 4 блоков:'),
-                            Text.of('§6• Верстак Оружейника §7(Оружие, Доспехи, Инструменты)'),
-                            Text.of('§c• Кузнечный Очаг §7(Ремонт +50%, Металлургия и Буфер)'),
-                            Text.of('§4• Адский Тигель §7(Высокотемпературные сплавы Незера)'),
-                            Text.of('§5• Наковальня Бездны §7(Руническая заточка +1..+10)'),
+
+        // ----------------------------------------------------------------------
+        // ТАБ 0: ⚒ [ КОВКА НА ВЕРСТАКЕ ]
+        // ----------------------------------------------------------------------
+        if (sess.tab === 0) {
+            // Очищаем фон рядов 1..5
+            for (let y = 1; y < 6; y++) {
+                for (let x = 0; x < 9; x++) {
+                    gui.slot(x, y, s => { s.setItem(darkPane); s.leftClicked = () => {}; });
+                }
+            }
+
+            // Инфо-шапка слева (X=2, Y=1)
+            gui.slot(2, 1, s => {
+                s.setItem(Item.of('minecraft:chest').withCustomName(Text.of('§6📥 [ 6 Слотов Сырья для Ковки ]')).withLore([
+                    Text.of('§7Поместите сюда металлы, рукояти и компоненты.'),
+                    Text.of('§a▶ Клик по вещи в сумке снизу моментально кладет ее сюда!'),
+                    Text.of('§e▶ Клик по слоту возвращает предмет обратно в сумку.')
+                ]));
+                s.leftClicked = () => {};
+            });
+
+            // 6 СЛОТОВ СЫРЬЯ (X=1..3, Y=2..3)
+            let slotCoords = [
+                {x: 1, y: 2}, {x: 2, y: 2}, {x: 3, y: 2},
+                {x: 1, y: 3}, {x: 2, y: 3}, {x: 3, y: 3}
+            ];
+
+            for (let idx = 0; idx < 6; idx++) {
+                let pos = slotCoords[idx];
+                let itemInSlot = sess.forgeIngredients[idx];
+                gui.slot(pos.x, pos.y, s => {
+                    if (itemInSlot && !itemInSlot.isEmpty()) {
+                        s.setItem(itemInSlot.copy().withLore([
                             Text.of('§8────────────────────────────────'),
-                            Text.of('§a✓ Все 4 блока делят общий интерфейс и буфер материалов!')
+                            Text.of('§e▶ Нажмите ЛКМ/ПКМ, чтобы вернуть в инвентарь')
+                        ]));
+                        s.leftClicked = () => {
+                            player.give(itemInSlot);
+                            sess.forgeIngredients[idx] = null;
+                            player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                            openUnifiedWorkshopGUI(player, 0, sess.stationPos);
+                        };
+                    } else {
+                        s.setItem(Item.of('minecraft:light_gray_stained_glass_pane')
+                            .withCustomName(Text.of(`§7[ Слот Сырья #${idx + 1} ]`))
+                            .withLore([Text.of('§8Пусто. Кликните предмет в сумке для загрузки.')]));
+                        s.leftClicked = () => {};
+                    }
+                });
+            }
+
+            // ТЕКУЩИЙ ВЫБРАННЫЙ РЕЦЕПТ
+            let curRecipe = WORKSHOP_FORGE_RECIPES[sess.selectedRecipeIdx] || WORKSHOP_FORGE_RECIPES[0];
+            let availIngot = countForgeSlotItems(sess.forgeIngredients, curRecipe.ingot);
+            let availExtra = curRecipe.extra ? countForgeSlotItems(sess.forgeIngredients, curRecipe.extra) : 999;
+            let canCraft = (availIngot >= curRecipe.ingotCount && availExtra >= curRecipe.extraCount);
+
+            // КАТАЛОГ ДОСТУПНОГО КРАФТА СПРАВА (X=5..8, Y=1) - Выбор рецептов
+            gui.slot(5, 1, s => {
+                s.setItem(Item.of('minecraft:book').withCustomName(Text.of('§e📖 [ Каталог Чертежей ]')).withLore([
+                    Text.of('§7Выберите желаемый предмет для ковки:'),
+                    Text.of(`§6Текущий чертеж: §f${curRecipe.name}`)
+                ]));
+                s.leftClicked = () => {};
+            });
+
+            // Навигация по каталогу (влево / вправо)
+            gui.slot(6, 1, s => {
+                s.setItem(Item.of('minecraft:arrow').withCustomName(Text.of('§e◀ Предыдущий Чертеж')));
+                s.leftClicked = () => {
+                    sess.selectedRecipeIdx = (sess.selectedRecipeIdx - 1 + WORKSHOP_FORGE_RECIPES.length) % WORKSHOP_FORGE_RECIPES.length;
+                    player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.6 1.4`);
+                    openUnifiedWorkshopGUI(player, 0, sess.stationPos);
+                };
+            });
+
+            gui.slot(7, 1, s => {
+                s.setItem(Item.of('minecraft:arrow').withCustomName(Text.of('§eСледующий Чертеж ▶')));
+                s.leftClicked = () => {
+                    sess.selectedRecipeIdx = (sess.selectedRecipeIdx + 1) % WORKSHOP_FORGE_RECIPES.length;
+                    player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.6 1.4`);
+                    openUnifiedWorkshopGUI(player, 0, sess.stationPos);
+                };
+            });
+
+            // ПРИЗРАЧНОЕ ТРЕБОВАНИЕ (GHOST REQUIREMENT) СЛОТ X=5, Y=2
+            gui.slot(5, 2, s => {
+                let ghostLore = [
+                    Text.of(`§7Чертеж: §f${curRecipe.name}`),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of(`§7Требуемый металл: §e${curRecipe.ingotName} §f(${availIngot}/${curRecipe.ingotCount})`)
+                ];
+                if (curRecipe.extra) {
+                    ghostLore.push(Text.of(`§7Дополнительно: §e${curRecipe.extraName} §f(${availExtra}/${curRecipe.extraCount})`));
+                }
+                ghostLore.push(Text.of('§8────────────────────────────────'));
+                if (canCraft) {
+                    ghostLore.push(Text.of('§a✓ Все ингредиенты загружены в 6 слотов сырья!'));
+                } else {
+                    ghostLore.push(Text.of('§c✗ Не хватает ресурсов в 6 слотах сырья слева.'));
+                }
+
+                let ghostIcon = Item.of(curRecipe.ingot.startsWith('#') ? 'minecraft:oak_planks' : curRecipe.ingot);
+                s.setItem(ghostIcon.withCustomName(Text.of(canCraft ? '§a✓ [ Ресурсы готовы ]' : '§c⚠ [ Требуемые Ресурсы ]')).withLore(ghostLore));
+                s.leftClicked = () => {};
+            });
+
+            // СЛОТ СТРЕЛКИ (X=6, Y=2)
+            gui.slot(6, 2, s => {
+                s.setItem(Item.of(canCraft ? 'minecraft:spectral_arrow' : 'minecraft:arrow')
+                    .withCustomName(Text.of(canCraft ? '§a»»» ГОТОВО К КОВКЕ »»»' : '§8»»» ОЖИДАНИЕ СЫРЬЯ »»»')));
+                s.leftClicked = () => {};
+            });
+
+            // СЛОТ РЕЗУЛЬТАТА КОВКИ (X=7, Y=2)
+            gui.slot(7, 2, s => {
+                if (canCraft) {
+                    s.setItem(Item.of(curRecipe.id).withLore([
+                        Text.of('§a★ КОВКА ДОСТУПНА! ★'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§e▶ Нажмите ЛКМ, чтобы выковать предмет!'),
+                        Text.of('§7Сырье будет списано из 6 слотов слева.')
+                    ]));
+                    s.leftClicked = () => {
+                        // Списание ингредиентов
+                        deductForgeSlotItems(sess.forgeIngredients, curRecipe.ingot, curRecipe.ingotCount);
+                        if (curRecipe.extra && curRecipe.extraCount > 0) {
+                            deductForgeSlotItems(sess.forgeIngredients, curRecipe.extra, curRecipe.extraCount);
+                        }
+                        player.give(Item.of(curRecipe.id));
+
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.2`);
+                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.8 1.1`);
+                        player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.4 0.3 0.4 0.05 25`);
+                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.3 0.2 0.3 0.05 15`);
+                        player.sendSystemMessage(Text.of(`§a⚒ [Ковка] §fВы успешно выковали: §6${curRecipe.name}§f!`));
+
+                        openUnifiedWorkshopGUI(player, 0, sess.stationPos);
+                    };
+                } else {
+                    // Полупрозрачный призрачный результат
+                    s.setItem(Item.of('minecraft:barrier')
+                        .withCustomName(Text.of(`§8🔒 [ ${curRecipe.name} ]`))
+                        .withLore([
+                            Text.of('§cНедостаточно сырья в слотах слева!'),
+                            Text.of('§7Положите недостающие материалы в 6 ячеек.')
+                        ]));
+                    s.leftClicked = () => {
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
+                    };
+                }
+            });
+        }
+
+        // ----------------------------------------------------------------------
+        // ТАБ 1: 🔧 [ РЕМОНТ (1 СЛИТОК = 1/3 ПРОЧНОСТИ) ]
+        // ----------------------------------------------------------------------
+        else if (sess.tab === 1) {
+            for (let y = 1; y < 6; y++) {
+                for (let x = 0; x < 9; x++) {
+                    gui.slot(x, y, s => { s.setItem(darkPane); s.leftClicked = () => {}; });
+                }
+            }
+
+            // Инфо-шапка (X=4, Y=1)
+            gui.slot(4, 1, s => {
+                s.setItem(Item.of('minecraft:anvil').withCustomName(Text.of('§a🔧 [ СТОЛ РЕМОНТА ЭКИПИРОВКИ ]')).withLore([
+                    Text.of('§7Формула ремонта Элириума:'),
+                    Text.of('§e• Износ ≤ 33.3% ➔ 1 слиток'),
+                    Text.of('§e• Износ 33.4%..66.6% ➔ 2 слитка'),
+                    Text.of('§e• Износ > 66.6% ➔ 3 слитка (100% восстановление)'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of('§a▶ Кликните поврежденную вещь в сумке снизу.')
+                ]));
+                s.leftClicked = () => {};
+            });
+
+            let gear = sess.repairGear;
+            let ingots = sess.repairIngots;
+            let neededCost = (gear && gear.isDamageableItem()) ? calculateRepairCost(gear) : 0;
+            let repMat = gear ? getRepairMaterial(gear) : { id: 'minecraft:iron_ingot', name: 'Слиток' };
+
+            // СЛОТ 1: ПОВРЕЖДЕННАЯ ЭКИПИРОВКА (X=2, Y=2)
+            gui.slot(2, 2, s => {
+                if (gear && !gear.isEmpty()) {
+                    let curDur = gear.maxDamage - gear.damageValue;
+                    s.setItem(gear.copy().withLore([
+                        Text.of(`§7Прочность: §f${curDur} / ${gear.maxDamage}`),
+                        Text.of(`§cИзнос: ${gear.damageValue} ед. урона`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§e▶ Кликните ЛКМ для возврата в инвентарь')
+                    ]));
+                    s.leftClicked = () => {
+                        player.give(gear);
+                        sess.repairGear = null;
+                        sess.repairResult = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        openUnifiedWorkshopGUI(player, 1, sess.stationPos);
+                    };
+                } else {
+                    s.setItem(Item.of('minecraft:shield')
+                        .withCustomName(Text.of('§b✦ [ Слот Поврежденной Экипировки ] ✦'))
+                        .withLore([
+                            Text.of('§7Поместите поврежденное оружие, броню или щит.'),
+                            Text.of('§a▶ Кликните по предмету в сумке снизу!')
                         ]));
                     s.leftClicked = () => {};
-                });
-            } else {
-                gui.slot(x, 5, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
-            }
+                }
+            });
+
+            // СЛОТ 2: СЛИТКИ ДЛЯ РЕМОНТА (X=4, Y=2)
+            gui.slot(4, 2, s => {
+                if (ingots && !ingots.isEmpty()) {
+                    s.setItem(ingots.copy().withLore([
+                        Text.of(`§7Вложено слитков: §f${ingots.count} шт.`),
+                        Text.of(`§eТребуется для ремонта: §f${neededCost} шт.`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§e▶ Кликните ЛКМ для возврата слитков в сумку')
+                    ]));
+                    s.leftClicked = () => {
+                        player.give(ingots);
+                        sess.repairIngots = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        openUnifiedWorkshopGUI(player, 1, sess.stationPos);
+                    };
+                } else {
+                    if (gear && neededCost > 0) {
+                        // Призрачная иконка нужного слитка!
+                        let ghostMatIcon = Item.of(repMat.id.startsWith('#') ? 'minecraft:oak_planks' : repMat.id);
+                        s.setItem(ghostMatIcon.withCustomName(Text.of(`§eТребуется: ${neededCost}x ${repMat.name}`)).withLore([
+                            Text.of(`§cДля 100% починки требуется положить: §6${neededCost}x ${repMat.name}`),
+                            Text.of('§a▶ Кликните по слиткам в инвентаре снизу!')
+                        ]));
+                    } else {
+                        s.setItem(Item.of('minecraft:iron_ingot')
+                            .withCustomName(Text.of('§e🧱 [ Слот Слитков для Ремонта ]'))
+                            .withLore([Text.of('§7Сюда помещаются слитки подходящего металла.')]));
+                    }
+                    s.leftClicked = () => {};
+                }
+            });
+
+            // СЛОТ СТРЕЛКИ (X=6, Y=2)
+            gui.slot(6, 2, s => {
+                let hasEnoughIngots = (ingots && ingots.count >= neededCost && matchesItemOrTag(ingots, repMat.id));
+                s.setItem(Item.of(hasEnoughIngots ? 'minecraft:spectral_arrow' : 'minecraft:arrow')
+                    .withCustomName(Text.of(hasEnoughIngots ? '§a»»» ПОЧИНКА ГОТОВА »»»' : '§8»»» ОЖИДАНИЕ СЛИТКОВ »»»')));
+                s.leftClicked = () => {};
+            });
+
+            // СЛОТ 3: РЕЗУЛЬТАТ РЕМОНТА (X=7, Y=2)
+            gui.slot(7, 2, s => {
+                let hasEnoughIngots = (ingots && ingots.count >= neededCost && matchesItemOrTag(ingots, repMat.id));
+                if (gear && neededCost > 0 && hasEnoughIngots) {
+                    let repairedItem = gear.copy();
+                    repairedItem.damageValue = 0; // 100% починка
+
+                    s.setItem(repairedItem.withLore([
+                        Text.of('§a★ 100% ВОССТАНОВЛЕНИЕ ПРОЧНОСТИ ★'),
+                        Text.of(`§7Стоимость списания: §6${neededCost}x ${repMat.name}`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§e▶ Нажмите ЛКМ, чтобы забрать восстановленный предмет!')
+                    ]));
+                    s.leftClicked = () => {
+                        ingots.shrink(neededCost);
+                        if (ingots.count <= 0) sess.repairIngots = null;
+
+                        let finalItem = gear.copy();
+                        finalItem.damageValue = 0;
+                        sess.repairGear = null;
+                        sess.repairResult = null;
+                        player.give(finalItem);
+
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.2`);
+                        player.server.runCommandSilent(`playsound minecraft:block.lava.extinguish player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        player.server.runCommandSilent(`particle minecraft:wax_off ~ ~1.2 ~ 0.4 0.3 0.4 0.05 30`);
+                        player.sendSystemMessage(Text.of(`§a🔧 [Ремонт] §fПредмет успешно отремонтирован до 100% прочности!`));
+
+                        openUnifiedWorkshopGUI(player, 1, sess.stationPos);
+                    };
+                } else {
+                    s.setItem(Item.of('minecraft:barrier')
+                        .withCustomName(Text.of('§8🔒 [ Результат Ремонта ]'))
+                        .withLore([
+                            Text.of(gear ? `§cТребуется: ${neededCost} слитков ${repMat.name}` : '§7Вставьте поврежденный предмет в Слот 1')
+                        ]));
+                    s.leftClicked = () => {};
+                }
+            });
         }
+
+        // ----------------------------------------------------------------------
+        // ТАБ 2: 🔥 [ КУЗНЕЧНЫЙ ОЧАГ - SMELTER ]
+        // ----------------------------------------------------------------------
+        else if (sess.tab === 2) {
+            for (let y = 1; y < 6; y++) {
+                for (let x = 0; x < 9; x++) {
+                    gui.slot(x, y, s => { s.setItem(darkPane); s.leftClicked = () => {}; });
+                }
+            }
+
+            let hearthPos = sess.stationPos || { x: Math.floor(player.x), y: Math.floor(player.y), z: Math.floor(player.z) };
+            let hasCrucible = hasCrucibleNear(level, hearthPos);
+
+            // СЛОТ СЫРЬЯ СВЕРХУ (X=3, Y=1)
+            gui.slot(3, 1, s => {
+                let smeltIn = sess.hearthSmeltInput;
+                if (smeltIn && !smeltIn.isEmpty()) {
+                    s.setItem(smeltIn.copy().withLore([
+                        Text.of(`§7Количество: §f${smeltIn.count} шт.`),
+                        Text.of('§e▶ Нажмите ЛКМ для возврата сырья в сумку')
+                    ]));
+                    s.leftClicked = () => {
+                        player.give(smeltIn);
+                        sess.hearthSmeltInput = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        openUnifiedWorkshopGUI(player, 2, sess.stationPos);
+                    };
+                } else {
+                    s.setItem(Item.of('minecraft:raw_iron')
+                        .withCustomName(Text.of('§6📥 [ Слот Сырья для Плавения ]'))
+                        .withLore([
+                            Text.of('§7Шихта стали, сырое железо, медь, золото, незерит.'),
+                            Text.of('§a▶ Кликните сырье в сумке снизу для загрузки!')
+                        ]));
+                    s.leftClicked = () => {};
+                }
+            });
+
+            // СЛОТ ТОПЛИВА СНИЗУ (X=3, Y=3)
+            gui.slot(3, 3, s => {
+                let fuelIn = sess.hearthFuelInput;
+                if (fuelIn && !fuelIn.isEmpty()) {
+                    s.setItem(fuelIn.copy().withLore([
+                        Text.of(`§7Запас топлива: §f${fuelIn.count} шт.`),
+                        Text.of('§e▶ Нажмите ЛКМ для возврата топлива в сумку')
+                    ]));
+                    s.leftClicked = () => {
+                        player.give(fuelIn);
+                        sess.hearthFuelInput = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        openUnifiedWorkshopGUI(player, 2, sess.stationPos);
+                    };
+                } else {
+                    s.setItem(Item.of('minecraft:coal')
+                        .withCustomName(Text.of('§8🔥 [ Слот Топлива ]'))
+                        .withLore([
+                            Text.of('§7Уголь, древесный уголь, угольные блоки, стержни ифрита.'),
+                            Text.of('§a▶ Кликните топливо в сумке снизу для загрузки!')
+                        ]));
+                    s.leftClicked = () => {};
+                }
+            });
+
+            // ЦЕНТР (X=4, Y=2): ИНДИКАТОР ПЛАМЕНИ И КНОПКА ПЛАВКИ
+            let smeltIn = sess.hearthSmeltInput;
+            let fuelIn = sess.hearthFuelInput;
+            let recipe = smeltIn ? getHearthSmeltRecipe(smeltIn) : null;
+            let canSmelt = false;
+            let failReason = '';
+
+            if (!smeltIn || smeltIn.isEmpty()) {
+                failReason = 'Загрузите сырье в верхний слот';
+            } else if (!recipe) {
+                failReason = 'Данный материал не переплавляется в Очаге';
+            } else if (!fuelIn || fuelIn.isEmpty()) {
+                failReason = 'Загрузите уголь/топливо в нижний слот';
+            } else if (fuelIn.count < recipe.fuelReq) {
+                failReason = `Требуется минимум ${recipe.fuelReq} ед. топлива`;
+            } else if (recipe.needsCrucible && !hasCrucible) {
+                failReason = 'Инфернальный жар! Требуется Адский Горн в радиусе 4 блоков!';
+            } else {
+                canSmelt = true;
+            }
+
+            gui.slot(4, 2, s => {
+                s.setItem(Item.of(canSmelt ? 'minecraft:campfire' : 'minecraft:flint_and_steel')
+                    .withCustomName(Text.of(canSmelt ? '§c🔥 [ ПЛАМЯ ОЧАГА: НАЖМИТЕ ДЛЯ ВЫПЛАВКИ ]' : '§8🔒 [ Очаг: Ожидание Загрузки ]'))
+                    .withLore([
+                        Text.of(canSmelt ? `§aГотово к плавке: ${recipe.name}` : `§c${failReason}`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(hasCrucible ? '§a✓ Адский Горн рядом: Инфернальные сплавы активны' : '§7• Адский Горн рядом: Не обнаружен (R=4)'),
+                        Text.of(canSmelt ? '§e▶ Нажмите ЛКМ для выплавки слитков!' : '§7Загрузите ресурсы в слоты слева.')
+                    ]));
+                s.leftClicked = () => {
+                    if (!canSmelt) {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                        player.sendSystemMessage(Text.of(`§c[Очаг] §7${failReason}`));
+                        return;
+                    }
+
+                    // Выплавка 1 слитка
+                    smeltIn.shrink(1);
+                    if (smeltIn.count <= 0) sess.hearthSmeltInput = null;
+
+                    fuelIn.shrink(recipe.fuelReq);
+                    if (fuelIn.count <= 0) sess.hearthFuelInput = null;
+
+                    // Направление в слот выхода или в буфер
+                    if (!sess.hearthOutput || sess.hearthOutput.isEmpty()) {
+                        sess.hearthOutput = Item.of(recipe.result, 1);
+                    } else if (sess.hearthOutput.id === recipe.result && sess.hearthOutput.count < 64) {
+                        sess.hearthOutput.grow(1);
+                    } else {
+                        player.give(Item.of(recipe.result, 1));
+                    }
+
+                    player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 1.0 1.1`);
+                    player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.4 0.3 0.4 0.05 30`);
+                    player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.3 0.2 0.3 0.05 15`);
+                    player.sendSystemMessage(Text.of(`§a🔥 [Очаг] §fУспешно выплавлен: §6+1 ${recipe.name}§f!`));
+
+                    openUnifiedWorkshopGUI(player, 2, sess.stationPos);
+                };
+            });
+
+            // СЛОТ ВЫХОДА (X=6, Y=2)
+            gui.slot(6, 2, s => {
+                let outSt = sess.hearthOutput;
+                if (outSt && !outSt.isEmpty()) {
+                    s.setItem(outSt.copy().withLore([
+                        Text.of(`§aВыплавлено: ${outSt.count} шт.`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§e▶ Нажмите ЛКМ, чтобы забрать готовые слитки в сумку!')
+                    ]));
+                    s.leftClicked = () => {
+                        player.give(outSt);
+                        sess.hearthOutput = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
+                        openUnifiedWorkshopGUI(player, 2, sess.stationPos);
+                    };
+                } else {
+                    s.setItem(Item.of('minecraft:hopper')
+                        .withCustomName(Text.of('§e📥 [ Слот Выхода Слитков ]'))
+                        .withLore([Text.of('§7Здесь накапливаются готовые слитки после плавки.')]));
+                    s.leftClicked = () => {};
+                }
+            });
+        }
+
+        // ----------------------------------------------------------------------
+        // ТАБ 3: 🌋 [ АДСКИЙ ГОРН - ВОЗВЫШЕНИЕ ТИРОВ ]
+        // ----------------------------------------------------------------------
+        else if (sess.tab === 3) {
+            for (let y = 1; y < 6; y++) {
+                for (let x = 0; x < 9; x++) {
+                    gui.slot(x, y, s => { s.setItem(darkPane); s.leftClicked = () => {}; });
+                }
+            }
+
+            // Инфо-шапка (X=4, Y=1)
+            gui.slot(4, 1, s => {
+                s.setItem(Item.of('minecraft:lava_bucket').withCustomName(Text.of('§4🌋 [ АДСКИЙ ГОРН: АЛТАРЬ ВОЗВЫШЕНИЯ ]')).withLore([
+                    Text.of('§7Перевод снаряжения в следующую эпоху Канона 8 Тиров:'),
+                    Text.of('§e• Слот 1: Экипировка текущего тира'),
+                    Text.of('§e• Слот 2: Катализатор эпохи (kubejs:ascension_catalyst_t2..t8 / Шаблон)'),
+                    Text.of('§e• Слот 3: Возвышенный артефакт следующего тира'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of('§a✓ 100% сохранение: Уровень заточки (+N), сокеты и скрижали!'),
+                    Text.of('§2✓ Никаких трат лавы и базальта.')
+                ]));
+                s.leftClicked = () => {};
+            });
+
+            let aGear = sess.ascendGear;
+            let aCat = sess.ascendCatalyst;
+
+            // Вызов ElyriumForgeAPI для проверки возвышения
+            let evalAsc = null;
+            if (ElyriumForgeAPI && aGear && aCat) {
+                try {
+                    evalAsc = ElyriumForgeAPI.evaluate(aGear, aCat, null);
+                } catch (e) {}
+            }
+
+            // СЛОТ 1: ЭКИПИРОВКА ТЕКУЩЕГО ТИРА (X=2, Y=2)
+            gui.slot(2, 2, s => {
+                if (aGear && !aGear.isEmpty()) {
+                    s.setItem(aGear.copy().withLore([
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§e▶ Нажмите ЛКМ для возврата предмета в сумку')
+                    ]));
+                    s.leftClicked = () => {
+                        player.give(aGear);
+                        sess.ascendGear = null;
+                        sess.ascendResult = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        openUnifiedWorkshopGUI(player, 3, sess.stationPos);
+                    };
+                } else {
+                    s.setItem(Item.of('minecraft:netherite_chestplate')
+                        .withCustomName(Text.of('§b✦ [ Слот 1: Экипировка Текущего Тира ] ✦'))
+                        .withLore([
+                            Text.of('§7Установите оружие или броню для возвышения.'),
+                            Text.of('§a▶ Кликните по предмету в сумке снизу!')
+                        ]));
+                    s.leftClicked = () => {};
+                }
+            });
+
+            // СЛОТ 2: КАТАЛИЗАТОР ЭПОХИ / ШАБЛОН (X=4, Y=2)
+            gui.slot(4, 2, s => {
+                if (aCat && !aCat.isEmpty()) {
+                    s.setItem(aCat.copy().withLore([
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§e▶ Нажмите ЛКМ для возврата катализатора в сумку')
+                    ]));
+                    s.leftClicked = () => {
+                        player.give(aCat);
+                        sess.ascendCatalyst = null;
+                        sess.ascendResult = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        openUnifiedWorkshopGUI(player, 3, sess.stationPos);
+                    };
+                } else {
+                    s.setItem(Item.of('minecraft:netherite_upgrade_smithing_template')
+                        .withCustomName(Text.of('§6✦ [ Слот 2: Катализатор Возвышения ] ✦'))
+                        .withLore([
+                            Text.of('§7Катализатор Тира (kubejs:ascension_catalyst_t2..t8)'),
+                            Text.of('§7или Шаблон Преемственности (kubejs:tier_upgrade_template).'),
+                            Text.of('§a▶ Кликните по катализатору в сумке снизу!')
+                        ]));
+                    s.leftClicked = () => {};
+                }
+            });
+
+            // СЛОТ СТРЕЛКИ (X=6, Y=2)
+            let canAscend = (evalAsc && evalAsc.canExecute && evalAsc.actionType === 'ASCENSION');
+            gui.slot(6, 2, s => {
+                s.setItem(Item.of(canAscend ? 'minecraft:spectral_arrow' : 'minecraft:arrow')
+                    .withCustomName(Text.of(canAscend ? '§6»»» РИТУАЛ ГОТОВ »»»' : '§8»»» ОЖИДАНИЕ КОМПОНЕНТОВ »»»')));
+                s.leftClicked = () => {};
+            });
+
+            // СЛОТ 3: ВОЗВЫШЕННЫЙ АРТЕФАКТ (X=7, Y=2)
+            gui.slot(7, 2, s => {
+                if (canAscend && evalAsc) {
+                    let preview = evalAsc.targetItem ? evalAsc.targetItem.copy() : aGear.copy();
+                    s.setItem(preview.withLore([
+                        Text.of('§6★ РИТУАЛ ВОЗВЫШЕНИЯ ДОСТУПЕН ★'),
+                        Text.of(`§eЭволюция: §bТир ${evalAsc.currentTier} §7➔ §6Тир ${evalAsc.targetTier}`),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§a✓ Заточка (+N), сокеты и боевые искусства сохраняются 100%!'),
+                        Text.of('§e▶ Нажмите ЛКМ для совершения Возвышения!')
+                    ]));
+                    s.leftClicked = () => {
+                        let res = ElyriumForgeAPI.executeAscension(player, aGear, aCat);
+                        if (res && res.status === 'SUCCESS') {
+                            aCat.shrink(1);
+                            if (aCat.count <= 0) sess.ascendCatalyst = null;
+                            sess.ascendGear = null;
+                            player.give(res.resultGear);
+
+                            player.server.runCommandSilent(`playsound minecraft:ui.toast.challenge_complete player ${player.username} ~ ~ ~ 1.0 1.2`);
+                            player.server.runCommandSilent(`particle minecraft:totem_of_undying ~ ~1.5 ~ 0.5 0.5 0.5 0.2 60`);
+                            player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.5 0.5 0.5 0.1 40`);
+                            player.sendSystemMessage(Text.of(`§6🌋 [Горн] §fЭкипировка успешно возвышена до Тира ${res.targetTier || evalAsc.targetTier}!`));
+
+                            openUnifiedWorkshopGUI(player, 3, sess.stationPos);
+                        } else {
+                            player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
+                            player.sendSystemMessage(Text.of(`§c[Горн] ${res ? res.message : 'Ошибка ритуала возвышения!'}`));
+                        }
+                    };
+                } else {
+                    s.setItem(Item.of('minecraft:barrier')
+                        .withCustomName(Text.of('§8🔒 [ Слот Возвышенного Артефакта ]'))
+                        .withLore([
+                            Text.of(evalAsc ? `§c${evalAsc.statusMessage}` : '§7Установите предмет и катализатор для ритуала')
+                        ]));
+                    s.leftClicked = () => {};
+                }
+            });
+        }
+
+        // ----------------------------------------------------------------------
+        // ТАБ 4: 🌌 [ НАКОВАЛЬНЯ - ЗАТОЧКА +1..+15 ]
+        // ----------------------------------------------------------------------
+        else if (sess.tab === 4) {
+            for (let y = 1; y < 6; y++) {
+                for (let x = 0; x < 9; x++) {
+                    gui.slot(x, y, s => { s.setItem(darkPane); s.leftClicked = () => {}; });
+                }
+            }
+
+            // Инфо-шапка (X=4, Y=1)
+            gui.slot(4, 1, s => {
+                s.setItem(Item.of('minecraft:crying_obsidian').withCustomName(Text.of('§5🌌 [ АЛТАРЬ ЗАТОЧКИ НАКОВАЛЬНИ +1..+15 ]')).withLore([
+                    Text.of('§7Закалка экипировки по правилам Lineage 2:'),
+                    Text.of('§a• +1..+3: Безопасная черта (100%..25%, откат невозможен)'),
+                    Text.of('§c• +4..+15: Зона риска (откат -1 при неудаче)'),
+                    Text.of('§6• Камень Безопасности (Эгида): 100% спасение от отката!'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of('§e▶ Кликните экипировку, оселки или эгиду в сумке снизу.')
+                ]));
+                s.leftClicked = () => {};
+            });
+
+            let gear = sess.anvilGear;
+            let reagent = sess.anvilReagent;
+            let aegis = sess.anvilAegis;
+            let result = sess.anvilResult;
+
+            let evalData = null;
+            if (ElyriumForgeAPI && gear) {
+                try {
+                    evalData = ElyriumForgeAPI.evaluate(gear, reagent, aegis);
+                } catch (e) {}
+            }
+
+            // СЛОТ 1: ЭКИПИРОВКА (X=1, Y=2)
+            gui.slot(1, 2, s => {
+                if (gear && !gear.isEmpty()) {
+                    s.setItem(gear.copy().withLore([
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§e▶ Нажмите ЛКМ для возврата в инвентарь')
+                    ]));
+                    s.leftClicked = () => {
+                        player.give(gear);
+                        sess.anvilGear = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        openUnifiedWorkshopGUI(player, 4, sess.stationPos);
+                    };
+                } else {
+                    s.setItem(Item.of('minecraft:iron_sword')
+                        .withCustomName(Text.of('§b✦ [ Слот 1: Экипировка ] ✦'))
+                        .withLore([Text.of('§7Оружие, броня или боевой щит.'), Text.of('§a▶ Кликните предмет в сумке снизу!')]));
+                    s.leftClicked = () => {};
+                }
+            });
+
+            // СЛОТ 2: ТОЧИЛЬНЫЙ КАМЕНЬ (X=3, Y=2)
+            gui.slot(3, 2, s => {
+                if (reagent && !reagent.isEmpty()) {
+                    s.setItem(reagent.copy().withLore([
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§e▶ Нажмите ЛКМ для возврата оселка в сумку')
+                    ]));
+                    s.leftClicked = () => {
+                        player.give(reagent);
+                        sess.anvilReagent = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        openUnifiedWorkshopGUI(player, 4, sess.stationPos);
+                    };
+                } else {
+                    let reqReagentName = (evalData && evalData.requiredReagentId) ? evalData.requiredReagentId : 'Точильный Камень I..V';
+                    s.setItem(Item.of('minecraft:blaze_powder')
+                        .withCustomName(Text.of('§6✦ [ Слот 2: Точильный Камень ] ✦'))
+                        .withLore([
+                            Text.of(`§7Оселки I..V (kubejs:smithing_stone_1..5).`),
+                            Text.of(`§eТребуется: §f${reqReagentName}`),
+                            Text.of('§a▶ Кликните камень в сумке снизу!')
+                        ]));
+                    s.leftClicked = () => {};
+                }
+            });
+
+            // СЛОТ 3: КАМЕНЬ БЕЗОПАСНОСТИ / ЭГИДА (X=5, Y=2)
+            gui.slot(5, 2, s => {
+                if (aegis && !aegis.isEmpty()) {
+                    s.setItem(aegis.copy().withLore([
+                        Text.of('§6🛡 ЗАЩИТА АКТИВНА: Откат уровня предотвращен!'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§e▶ Нажмите ЛКМ для возврата Эгиды в сумку')
+                    ]));
+                    s.leftClicked = () => {
+                        player.give(aegis);
+                        sess.anvilAegis = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        openUnifiedWorkshopGUI(player, 4, sess.stationPos);
+                    };
+                } else {
+                    s.setItem(Item.of('minecraft:shield')
+                        .withCustomName(Text.of('§d✦ [ Слот 3: Камень Безопасности (Эгида) ] ✦'))
+                        .withLore([
+                            Text.of('§7Печать Кузнечной Эгиды (kubejs:smithing_aegis).'),
+                            Text.of('§6• Предотвращает сброс/откат уровня заточки при неудаче.'),
+                            Text.of('§a▶ Кликните Эгиду в сумке для активации защиты.')
+                        ]));
+                    s.leftClicked = () => {};
+                }
+            });
+
+            // СЛОТ 4: РЕЗУЛЬТАТ ЗАТОЧКИ (X=7, Y=2)
+            gui.slot(7, 2, s => {
+                if (result && !result.isEmpty()) {
+                    s.setItem(result.copy().withLore([
+                        Text.of('§a★ ЗАТОЧКА ЗАВЕРШЕНА! ★'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§e▶ Нажмите ЛКМ, чтобы забрать артефакт в сумку!'),
+                        Text.of('§b▶ Нажмите ПКМ, чтобы вернуть в Слот 1 для следующей заточки!')
+                    ]));
+                    let takeAction = () => {
+                        let resItem = sess.anvilResult;
+                        sess.anvilResult = null;
+                        player.give(resItem);
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
+                        openUnifiedWorkshopGUI(player, 4, sess.stationPos);
+                    };
+                    s.leftClicked = takeAction;
+                    s.rightClicked = () => {
+                        if (!sess.anvilGear || sess.anvilGear.isEmpty()) {
+                            sess.anvilGear = sess.anvilResult;
+                            sess.anvilResult = null;
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                            openUnifiedWorkshopGUI(player, 4, sess.stationPos);
+                        } else {
+                            takeAction();
+                        }
+                    };
+                } else {
+                    s.setItem(Item.of('minecraft:gold_nugget')
+                        .withCustomName(Text.of('§e✦ [ Слот 4: Результат Заточки ] ✦'))
+                        .withLore([Text.of('§7Здесь появится артефакт после удара молотом.')]));
+                    s.leftClicked = () => {};
+                }
+            });
+
+            // КНОПКА МОЛОТА ПО ЦЕНТРУ (X=4, Y=3)
+            let canForge = (evalData && evalData.canExecute && evalData.actionType === 'REINFORCE');
+            gui.slot(4, 3, s => {
+                let hammerItem = Item.of(canForge ? 'minecraft:anvil' : 'minecraft:iron_bars');
+                if (canForge) hammerItem.enchant('minecraft:unbreaking', 1);
+
+                let hammerLore = [
+                    Text.of(canForge ? `§eПрогресс: §b+${evalData.currentLevel} §7➔ §a+${evalData.targetLevel}` : `§c${evalData ? evalData.statusMessage : 'Установите экипировку и оселок'}`),
+                    Text.of('§8────────────────────────────────')
+                ];
+                if (canForge) {
+                    hammerLore.push(Text.of(`§eШанс успеха: §a${evalData.chancePercent}%`));
+                    if (evalData.isSafeZone) {
+                        hammerLore.push(Text.of('§a✓ Безопасная зона (+0..+2): откат невозможен!'));
+                    } else if (evalData.hasAegis) {
+                        hammerLore.push(Text.of('§6🛡 ЗАЩИТА: Печать Эгиды спасет от отката!'));
+                    } else {
+                        hammerLore.push(Text.of(`§4⚠ ОПАСНОСТЬ: При неудаче откат до +${evalData.currentLevel - 1}!`));
+                    }
+                    hammerLore.push(Text.of('§8────────────────────────────────'));
+                    hammerLore.push(Text.of('§e▶ Нажмите ЛКМ, чтобы опустить Кузнечный Молот!'));
+                }
+
+                s.setItem(hammerItem.withCustomName(Text.of(canForge ? '§c🔥 [ УДАРИТЬ КУЗНЕЧНЫМ МОЛОТОМ ]' : '§8[ 🔨 Кузнечный Молот Остыл ]')).withLore(hammerLore));
+                s.leftClicked = () => {
+                    if (!canForge || !ElyriumForgeAPI) {
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
+                        return;
+                    }
+
+                    let forgeRes = ElyriumForgeAPI.executeForge(player, gear, reagent, aegis);
+                    if (forgeRes && forgeRes.status !== 'INVALID') {
+                        // Списание оселка
+                        if (forgeRes.consumeReagentCount > 0 && sess.anvilReagent) {
+                            sess.anvilReagent.shrink(forgeRes.consumeReagentCount);
+                            if (sess.anvilReagent.isEmpty()) sess.anvilReagent = null;
+                        }
+                        // Списание эгиды при поглощении
+                        if (forgeRes.consumeAegis && sess.anvilAegis) {
+                            sess.anvilAegis.shrink(1);
+                            if (sess.anvilAegis.isEmpty()) sess.anvilAegis = null;
+                        }
+
+                        sess.anvilResult = forgeRes.resultGear;
+                        sess.anvilGear = null;
+
+                        let bx = player.x, by = player.y, bz = player.z;
+                        if (forgeRes.status === 'SUCCESS') {
+                            player.server.runCommandSilent(`particle minecraft:wax_off ${bx} ${by + 1.2} ${bz} 0.4 0.4 0.4 0.05 30`);
+                            player.sendSystemMessage(Text.of(`§a${forgeRes.message}`));
+                        } else if (forgeRes.status === 'FAIL_SAVED_BY_AEGIS') {
+                            player.server.runCommandSilent(`particle minecraft:enchanted_hit ${bx} ${by + 1.2} ${bz} 0.4 0.4 0.4 0.1 35`);
+                            player.sendSystemMessage(Text.of(`§6${forgeRes.message}`));
+                        } else {
+                            player.server.runCommandSilent(`particle minecraft:smoke ${bx} ${by + 1.1} ${bz} 0.3 0.3 0.3 0.02 20`);
+                            player.sendSystemMessage(Text.of(`§c${forgeRes.message}`));
+                        }
+
+                        openUnifiedWorkshopGUI(player, 4, sess.stationPos);
+                    } else {
+                        player.sendSystemMessage(Text.of('§cОшибка выполнения операции в ElyriumForgeAPI.'));
+                    }
+                };
+            });
+        }
+
+        // ----------------------------------------------------------------------
+        // ТАБ 5: 🛠 [ ОРУЖЕЙНЫЙ СТОЛ - БОЕВЫЕ ИСКУССТВА & СОКЕТЫ ]
+        // ----------------------------------------------------------------------
+        else if (sess.tab === 5) {
+            for (let y = 1; y < 6; y++) {
+                for (let x = 0; x < 9; x++) {
+                    gui.slot(x, y, s => { s.setItem(darkPane); s.leftClicked = () => {}; });
+                }
+            }
+
+            // Инфо-шапка (X=4, Y=1)
+            gui.slot(4, 1, s => {
+                s.setItem(Item.of('minecraft:smithing_table').withCustomName(Text.of('§6🛠 [ ОРУЖЕЙНЫЙ СТОЛ: БОЕВЫЕ ИСКУССТВА & СОКЕТЫ ]')).withLore([
+                    Text.of('§7Гравировка боевых приемов и инкрустация сокетов:'),
+                    Text.of('§e• Слот I: Оружие (X=1, Y=2)'),
+                    Text.of('§a• Слот 1: Врожденное искусство (ПКМ)'),
+                    Text.of('§6• Слот 2: Второе искусство (клавиша [Z], Т2+)'),
+                    Text.of('§5• Слот 3: Третье искусство (клавиша [X], Т5+)'),
+                    Text.of('§b• Слот 4: Стихийная Инфузия (Камни Рангов I..IV)'),
+                    Text.of('§d• Слот 5: Самоцветы Апофеоза'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of('§a▶ Кликните оружие в инвентаре снизу для установки.')
+                ]));
+                s.leftClicked = () => {};
+            });
+
+            let weapon = sess.benchWeapon;
+
+            // СЛОТ I: ОРУЖИЕ (X=1, Y=2)
+            gui.slot(1, 2, s => {
+                if (weapon && !weapon.isEmpty()) {
+                    s.setItem(weapon.copy().withLore([
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§e▶ Нажмите ЛКМ для возврата оружия в сумку')
+                    ]));
+                    s.leftClicked = () => {
+                        player.give(weapon);
+                        sess.benchWeapon = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        openUnifiedWorkshopGUI(player, 5, sess.stationPos);
+                    };
+                } else {
+                    s.setItem(Item.of('minecraft:netherite_upgrade_smithing_template')
+                        .withCustomName(Text.of('§6✦ [ СЛОТ I: ОРУЖИЕ ] ✦'))
+                        .withLore([
+                            Text.of('§7Установите боевое оружие для гравировки.'),
+                            Text.of('§a▶ Кликните по оружию в сумке снизу!')
+                        ]));
+                    s.leftClicked = () => {};
+                }
+            });
+
+            // СЛОТ 1: Врожденное Боевое Искусство (X=3, Y=2)
+            gui.slot(3, 2, s => {
+                if (weapon && !weapon.isEmpty()) {
+                    let art1 = (typeof getWeaponArtInSlot === 'function') ? getWeaponArtInSlot(weapon, 1) : null;
+                    let info = (art1 && typeof WB_ART_INFO !== 'undefined') ? WB_ART_INFO[art1] : null;
+                    s.setItem(Item.of('minecraft:iron_sword')
+                        .withCustomName(Text.of(info ? `§a⚔ Слот 1: ${info.name}` : '§a⚔ Слот 1: Врожденное Искусство'))
+                        .withLore([
+                            Text.of(info ? `§7• Эффект: §f${info.desc}` : '§7Базовый прием класса оружия.'),
+                            Text.of('§8────────────────────────────────'),
+                            Text.of('§e▶ Активация: клавиша §b[ПКМ] §7(или [Shift+ПКМ] со щитом)'),
+                            Text.of('§a✓ Встроено нативно во все оружие Элириума')
+                        ]));
+                } else {
+                    s.setItem(Item.of('minecraft:gray_stained_glass_pane').withCustomName(Text.of('§8[Слот 1: Установите оружие]')));
+                }
+                s.leftClicked = () => {};
+            });
+
+            // СЛОТ 2: Второе Боевое Искусство [Z] (X=4, Y=2)
+            gui.slot(4, 2, s => {
+                if (weapon && !weapon.isEmpty()) {
+                    let tier = (typeof getWeaponProgressionTier === 'function') ? getWeaponProgressionTier(weapon) : 1;
+                    let hasS2 = (typeof hasSocket2 === 'function') ? hasSocket2(weapon) : true;
+                    let art2 = (typeof getWeaponArtInSlot === 'function') ? getWeaponArtInSlot(weapon, 2) : null;
+                    let info = (art2 && typeof WB_ART_INFO !== 'undefined') ? WB_ART_INFO[art2] : null;
+
+                    if (tier < 2) {
+                        s.setItem(Item.of('minecraft:barrier').withCustomName(Text.of('§c🔒 Слот 2: Требует Тир 2+ (Незерит)')).withLore([Text.of('§7Возвысьте оружие на вкладке [Горн]!')]));
+                    } else if (!hasS2) {
+                        s.setItem(Item.of('minecraft:chain').withCustomName(Text.of('§e🔒 Слот 2: Сокет закрыт')).withLore([Text.of('§7Пробейте сокет Резцом Оружейника!')]));
+                    } else if (info) {
+                        s.setItem(Item.of('kubejs:martial_tablet_lightning_thrust').withCustomName(Text.of(`§d💎 Слот 2: §e${info.name}`)).withLore([
+                            Text.of(`§7• Эффект: §f${info.desc}`),
+                            Text.of('§8────────────────────────────────'),
+                            Text.of('§e▶ Активация: клавиша §b[Z]'),
+                            Text.of('§a▶ Нажмите сюда для извлечения скрижали в сумку')
+                        ]));
+                        s.leftClicked = () => {
+                            if (typeof getTabletIdForArt === 'function') {
+                                let tabId = getTabletIdForArt(art2);
+                                player.give(Item.of(tabId));
+                                let gTag = (typeof getSafeItemCustomData === 'function') ? getSafeItemCustomData(weapon) : null;
+                                if (gTag) {
+                                    gTag.remove('skd_art_2');
+                                    gTag.remove('skd_art_2_rank');
+                                    gTag.remove('elyrium_inscribed_art');
+                                    if (typeof saveSafeItemCustomData === 'function') saveSafeItemCustomData(weapon, gTag);
+                                }
+                                player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                                player.sendSystemMessage(Text.of('§a✓ Скрижаль Слота 2 возвращена в сумку!'));
+                                openUnifiedWorkshopGUI(player, 5, sess.stationPos);
+                            }
+                        };
+                        return;
+                    } else {
+                        s.setItem(Item.of('minecraft:amethyst_shard').withCustomName(Text.of('§a✦ Слот 2: [ОТКРЫТЫЙ СОКЕТ] ✦')).withLore([
+                            Text.of('§7Сокет готов к инкрустации скрижали.'),
+                            Text.of('§e▶ Активация приема в бою: клавиша §b[Z]'),
+                            Text.of('§a▶ Кликните Скрижаль в сумке снизу для установки!')
+                        ]));
+                    }
+                } else {
+                    s.setItem(Item.of('minecraft:gray_stained_glass_pane').withCustomName(Text.of('§8[Слот 2: Установите оружие]')));
+                }
+                s.leftClicked = () => {};
+            });
+
+            // СЛОТ 3: Третье Боевое Искусство [X] (X=5, Y=2)
+            gui.slot(5, 2, s => {
+                if (weapon && !weapon.isEmpty()) {
+                    let tier = (typeof getWeaponProgressionTier === 'function') ? getWeaponProgressionTier(weapon) : 1;
+                    let hasS3 = (typeof hasSocket3 === 'function') ? hasSocket3(weapon) : false;
+                    let art3 = (typeof getWeaponArtInSlot === 'function') ? getWeaponArtInSlot(weapon, 3) : null;
+                    let info = (art3 && typeof WB_ART_INFO !== 'undefined') ? WB_ART_INFO[art3] : null;
+
+                    if (tier < 5) {
+                        s.setItem(Item.of('minecraft:barrier').withCustomName(Text.of('§c🔒 Слот 3: Требует Тир 5+ (Eternal Starlight)')).withLore([Text.of('§7Возвысьте оружие до Тира 5!')]));
+                    } else if (!hasS3) {
+                        s.setItem(Item.of('minecraft:chain').withCustomName(Text.of('§e🔒 Слот 3: Сокет закрыт')).withLore([Text.of('§7Пробейте сокет Резцом Оружейника!')]));
+                    } else if (info) {
+                        s.setItem(Item.of('kubejs:martial_tablet_holy_blade').withCustomName(Text.of(`§5🌟 Слот 3: §e${info.name}`)).withLore([
+                            Text.of(`§7• Эффект: §f${info.desc}`),
+                            Text.of('§8────────────────────────────────'),
+                            Text.of('§e▶ Активация: клавиша §b[X]'),
+                            Text.of('§a▶ Нажмите сюда для извлечения скрижали в сумку')
+                        ]));
+                        s.leftClicked = () => {
+                            if (typeof getTabletIdForArt === 'function') {
+                                let tabId = getTabletIdForArt(art3);
+                                player.give(Item.of(tabId));
+                                let gTag = (typeof getSafeItemCustomData === 'function') ? getSafeItemCustomData(weapon) : null;
+                                if (gTag) {
+                                    gTag.remove('skd_art_3');
+                                    gTag.remove('skd_art_3_rank');
+                                    if (typeof saveSafeItemCustomData === 'function') saveSafeItemCustomData(weapon, gTag);
+                                }
+                                player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                                player.sendSystemMessage(Text.of('§a✓ Скрижаль Слота 3 возвращена в сумку!'));
+                                openUnifiedWorkshopGUI(player, 5, sess.stationPos);
+                            }
+                        };
+                        return;
+                    } else {
+                        s.setItem(Item.of('minecraft:amethyst_shard').withCustomName(Text.of('§a✦ Слот 3: [ОТКРЫТЫЙ СОКЕТ] ✦')).withLore([
+                            Text.of('§7Сокет готов к инкрустации скрижали.'),
+                            Text.of('§e▶ Активация приема в бою: клавиша §b[X]'),
+                            Text.of('§a▶ Кликните Скрижаль в сумке снизу для установки!')
+                        ]));
+                    }
+                } else {
+                    s.setItem(Item.of('minecraft:gray_stained_glass_pane').withCustomName(Text.of('§8[Слот 3: Установите оружие]')));
+                }
+                s.leftClicked = () => {};
+            });
+
+            // СЛОТ 4: Стихийная Инфузия (X=6, Y=2)
+            gui.slot(6, 2, s => {
+                if (weapon && !weapon.isEmpty()) {
+                    let elem = (typeof getElementalInfusion === 'function') ? getElementalInfusion(weapon) : null;
+                    if (elem) {
+                        let stoneId = (typeof getElementalStoneId === 'function') ? getElementalStoneId(weapon) : ('kubejs:elemental_stone_' + elem);
+                        s.setItem(Item.of(stoneId).withCustomName(Text.of(`§e🔮 Слот 4: Стихия [${elem}]`)).withLore([
+                            Text.of('§7• Конверсия урона в чистую магию стихии.'),
+                            Text.of('§8────────────────────────────────'),
+                            Text.of('§a▶ Нажмите ЛКМ для извлечения камня в сумку!')
+                        ]));
+                        s.leftClicked = () => {
+                            player.give(Item.of(stoneId));
+                            let gTag = (typeof getSafeItemCustomData === 'function') ? getSafeItemCustomData(weapon) : null;
+                            if (gTag) {
+                                gTag.remove('skd_elemental_infusion');
+                                gTag.remove('skd_elemental_stone');
+                                gTag.remove('skd_elemental_rank');
+                                if (typeof saveSafeItemCustomData === 'function') saveSafeItemCustomData(weapon, gTag);
+                            }
+                            player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                            player.sendSystemMessage(Text.of('§a✓ Камень Стихии возвращен в сумку!'));
+                            openUnifiedWorkshopGUI(player, 5, sess.stationPos);
+                        };
+                        return;
+                    } else {
+                        s.setItem(Item.of('minecraft:echo_shard').withCustomName(Text.of('§b🔮 Слот 4: [Стихийный Сокет: Пусто]')).withLore([
+                            Text.of('§7Инкрустируйте Камень Стихии (Ранги I..IV).'),
+                            Text.of('§a▶ Кликните Камень Стихии в сумке снизу!')
+                        ]));
+                    }
+                } else {
+                    s.setItem(Item.of('minecraft:gray_stained_glass_pane').withCustomName(Text.of('§8[Слот 4: Установите оружие]')));
+                }
+                s.leftClicked = () => {};
+            });
+
+            // СЛОТ 5: Самоцветы Апофеоза (X=7, Y=2)
+            gui.slot(7, 2, s => {
+                if (weapon && !weapon.isEmpty()) {
+                    let apothSockets = 0;
+                    try {
+                        let rawGear = weapon.getItemStack ? weapon.getItemStack() : weapon;
+                        if (typeof WB_SocketHelper !== 'undefined' && WB_SocketHelper) {
+                            apothSockets = WB_SocketHelper.getSockets(rawGear);
+                        }
+                    } catch (e) {}
+
+                    s.setItem(Item.of('minecraft:amethyst_cluster')
+                        .withCustomName(Text.of(`§d💎 Слот 5: Самоцветы [Гнезд: ${apothSockets}]`))
+                        .withLore([
+                            Text.of(`§7Открыто гнезд под самоцветы Апофеоза: §a${apothSockets}`),
+                            Text.of('§8────────────────────────────────'),
+                            Text.of('§7Инкрустируйте самоцветы через меню инвентаря Apotheosis.')
+                        ]));
+                } else {
+                    s.setItem(Item.of('minecraft:gray_stained_glass_pane').withCustomName(Text.of('§8[Слот 5: Установите оружие]')));
+                }
+                s.leftClicked = () => {};
+            });
+
+            // КНОПКА «ПРОБИТЬ СОКЕТ РЕЗЦОМ» (X=4, Y=3)
+            gui.slot(4, 3, s => {
+                s.setItem(Item.of('minecraft:chiseled_stone_bricks')
+                    .withCustomName(Text.of('§6⚒ [ Пробить Сокет Резцом Оружейника ]'))
+                    .withLore([
+                        Text.of('§7100% гарантия мастера без риска поломки оружия!'),
+                        Text.of('§e• Слот 2: Резец + Незеритовый/Пепельный слиток (Т2+)'),
+                        Text.of('§b• Слот 3: Резец + Звездный/Люминаритовый слиток (Т5+)'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§a▶ Нажмите ЛКМ для попытки пробития следующего сокета.')
+                    ]));
+                s.leftClicked = () => {
+                    if (!weapon || weapon.isEmpty()) {
+                        player.sendSystemMessage(Text.of('§c[Верстак] Сначала установите оружие в Слот I!'));
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
+                        return;
+                    }
+                    let tier = (typeof getWeaponProgressionTier === 'function') ? getWeaponProgressionTier(weapon) : 1;
+                    let hasS2 = (typeof hasSocket2 === 'function') ? hasSocket2(weapon) : false;
+                    let hasS3 = (typeof hasSocket3 === 'function') ? hasSocket3(weapon) : false;
+
+                    let targetSlot = null;
+                    if (tier >= 2 && !hasS2) targetSlot = 2;
+                    else if (tier >= 5 && !hasS3) targetSlot = 3;
+
+                    if (!targetSlot) {
+                        player.sendSystemMessage(Text.of('§e[Верстак] Для данного оружия все сокеты текущей эпохи уже открыты!'));
+                        return;
+                    }
+
+                    // Проверяем наличие Резца и слитков в сумке игрока
+                    let chiselCount = countPlayerItems(player, 'kubejs:weapon_chisel');
+                    if (chiselCount < 1) {
+                        player.sendSystemMessage(Text.of('§c[Верстак] В сумке не найден Резец Оружейника (kubejs:weapon_chisel)!'));
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
+                        return;
+                    }
+
+                    let requiredMat = (targetSlot === 2) ? 'minecraft:netherite_ingot' : 'eternal_starlight:aethersent_ingot';
+                    let matName = (targetSlot === 2) ? 'Незеритовый / Пепельный слиток' : 'Звездный / Люминаритовый слиток';
+                    let hasMat = (targetSlot === 2) 
+                        ? (countPlayerItems(player, 'minecraft:netherite_ingot') > 0 || countPlayerItems(player, 'skd:cinder_alloy_ingot') > 0)
+                        : (countPlayerItems(player, 'eternal_starlight:aethersent_ingot') > 0 || countPlayerItems(player, 'kubejs:ascension_catalyst_t5') > 0);
+
+                    if (!hasMat) {
+                        player.sendSystemMessage(Text.of(`§c[Верстак] Для Слота ${targetSlot} требуется ${matName} в инвентаре!`));
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
+                        return;
+                    }
+
+                    // Списание 1 слитка
+                    if (targetSlot === 2) {
+                        if (countPlayerItems(player, 'minecraft:netherite_ingot') > 0) deductPlayerItems(player, 'minecraft:netherite_ingot', 1);
+                        else deductPlayerItems(player, 'skd:cinder_alloy_ingot', 1);
+                    } else {
+                        if (countPlayerItems(player, 'eternal_starlight:aethersent_ingot') > 0) deductPlayerItems(player, 'eternal_starlight:aethersent_ingot', 1);
+                        else deductPlayerItems(player, 'kubejs:ascension_catalyst_t5', 1);
+                    }
+
+                    // Запись сокета в оружие
+                    let gTag = (typeof getOrCreateSafeCustomData === 'function') ? getOrCreateSafeCustomData(weapon) : null;
+                    if (gTag) {
+                        gTag.putBoolean('skd_socket_' + targetSlot, true);
+                        gTag.putInt('skd_socket_' + targetSlot, 1);
+                        let curSockets = gTag.getInt('skd_sockets') || 0;
+                        gTag.putInt('skd_sockets', Math.max(curSockets, targetSlot - 1));
+                        if (typeof saveSafeItemCustomData === 'function') saveSafeItemCustomData(weapon, gTag);
+                    }
+
+                    // Апофеоз гнездо
+                    try {
+                        let rawGear = weapon.getItemStack ? weapon.getItemStack() : weapon;
+                        if (typeof WB_SocketHelper !== 'undefined' && WB_SocketHelper) {
+                            let oldSockets = WB_SocketHelper.getSockets(rawGear);
+                            WB_SocketHelper.setSockets(rawGear, oldSockets + 1);
+                        }
+                    } catch (eApoth) {}
+
+                    player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 1.0 1.2`);
+                    player.server.runCommandSilent(`particle minecraft:wax_off ~ ~1.2 ~ 0.4 0.4 0.4 0.05 35`);
+                    player.sendSystemMessage(Text.of(`§a✦ [Верстак] Боевой Слот ${targetSlot} успешно пробит со 100% гарантией мастера! ✦`));
+
+                    openUnifiedWorkshopGUI(player, 5, sess.stationPos);
+                };
+            });
+        }
+
+        // ======================================================================
+        // ИНТЕЛЛЕКТУАЛЬНЫЙ 1-КЛИК РОУТИНГ ИЗ ИНВЕНТАРЯ ИГРОКА (gui.inventoryClicked)
+        // ======================================================================
+        gui.inventoryClicked = event => {
+            let clickedItem = event.item;
+            if (!clickedItem || clickedItem.isEmpty() || clickedItem.id === 'minecraft:air') return;
+
+            // ------------------------------------------------------------------
+            // ТАБ 0: КОВКА НА ВЕРСТАКЕ -> ПОМЕЩЕНИЕ В ПЕРВЫЙ СВОБОДНЫЙ ИЗ 6 СЛОТОВ
+            // ------------------------------------------------------------------
+            if (sess.tab === 0) {
+                let emptyIdx = -1;
+                for (let i = 0; i < 6; i++) {
+                    if (!sess.forgeIngredients[i] || sess.forgeIngredients[i].isEmpty()) {
+                        emptyIdx = i;
+                        break;
+                    }
+                }
+
+                if (emptyIdx !== -1) {
+                    let toPut = clickedItem.copy();
+                    sess.forgeIngredients[emptyIdx] = toPut;
+                    event.setItem(Item.of('minecraft:air'));
+                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    openUnifiedWorkshopGUI(player, 0, sess.stationPos);
+                } else {
+                    player.sendSystemMessage(Text.of('§e[Ковка] Все 6 слотов сырья заняты! Извлеките лишнее.'));
+                }
+                return;
+            }
+
+            // ------------------------------------------------------------------
+            // ТАБ 1: РЕМОНТ
+            // ------------------------------------------------------------------
+            if (sess.tab === 1) {
+                // Если кликнули поврежденную вещь -> Слот экипировки
+                if (clickedItem.isDamageableItem() && clickedItem.damageValue > 0) {
+                    if (sess.repairGear && !sess.repairGear.isEmpty()) player.give(sess.repairGear);
+                    sess.repairGear = clickedItem.split(1);
+                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    openUnifiedWorkshopGUI(player, 1, sess.stationPos);
+                    return;
+                }
+                // Если кликнули слиток -> Слот слитков
+                let id = String(clickedItem.id).toLowerCase();
+                if (id.includes('ingot') || id.includes('diamond') || id.includes('leather')) {
+                    if (sess.repairIngots && !sess.repairIngots.isEmpty()) player.give(sess.repairIngots);
+                    sess.repairIngots = clickedItem.copy();
+                    event.setItem(Item.of('minecraft:air'));
+                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    openUnifiedWorkshopGUI(player, 1, sess.stationPos);
+                    return;
+                }
+            }
+
+            // ------------------------------------------------------------------
+            // ТАБ 2: ОЧАГ
+            // ------------------------------------------------------------------
+            if (sess.tab === 2) {
+                // Топливо -> Слот топлива (X=3, Y=3)
+                if (isFuelItem(clickedItem)) {
+                    if (sess.hearthFuelInput && !sess.hearthFuelInput.isEmpty()) player.give(sess.hearthFuelInput);
+                    sess.hearthFuelInput = clickedItem.copy();
+                    event.setItem(Item.of('minecraft:air'));
+                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    openUnifiedWorkshopGUI(player, 2, sess.stationPos);
+                    return;
+                }
+                // Сырье плавки -> Слот сырья (X=3, Y=1)
+                if (getHearthSmeltRecipe(clickedItem)) {
+                    if (sess.hearthSmeltInput && !sess.hearthSmeltInput.isEmpty()) player.give(sess.hearthSmeltInput);
+                    sess.hearthSmeltInput = clickedItem.copy();
+                    event.setItem(Item.of('minecraft:air'));
+                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    openUnifiedWorkshopGUI(player, 2, sess.stationPos);
+                    return;
+                }
+            }
+
+            // ------------------------------------------------------------------
+            // ТАБ 3: ГОРН (ВОЗВЫШЕНИЕ)
+            // ------------------------------------------------------------------
+            if (sess.tab === 3) {
+                let id = String(clickedItem.id);
+                if (id.startsWith('kubejs:ascension_catalyst_t') || id === 'kubejs:tier_upgrade_template') {
+                    if (sess.ascendCatalyst && !sess.ascendCatalyst.isEmpty()) player.give(sess.ascendCatalyst);
+                    sess.ascendCatalyst = clickedItem.copy();
+                    event.setItem(Item.of('minecraft:air'));
+                    player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    openUnifiedWorkshopGUI(player, 3, sess.stationPos);
+                    return;
+                }
+                // Экипировка
+                if (clickedItem.isDamageableItem() || (typeof isAnvilGear === 'function' && isAnvilGear(clickedItem))) {
+                    if (sess.ascendGear && !sess.ascendGear.isEmpty()) player.give(sess.ascendGear);
+                    sess.ascendGear = clickedItem.split(1);
+                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    openUnifiedWorkshopGUI(player, 3, sess.stationPos);
+                    return;
+                }
+            }
+
+            // ------------------------------------------------------------------
+            // ТАБ 4: НАКОВАЛЬНЯ (ЗАТОЧКА)
+            // ------------------------------------------------------------------
+            if (sess.tab === 4) {
+                let id = String(clickedItem.id);
+                if (id === 'kubejs:smithing_aegis') {
+                    if (sess.anvilAegis && !sess.anvilAegis.isEmpty()) player.give(sess.anvilAegis);
+                    sess.anvilAegis = clickedItem.copy();
+                    event.setItem(Item.of('minecraft:air'));
+                    player.server.runCommandSilent(`playsound minecraft:item.shield.block player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    openUnifiedWorkshopGUI(player, 4, sess.stationPos);
+                    return;
+                }
+                if (id.startsWith('kubejs:smithing_stone_')) {
+                    if (sess.anvilReagent && !sess.anvilReagent.isEmpty()) player.give(sess.anvilReagent);
+                    sess.anvilReagent = clickedItem.copy();
+                    event.setItem(Item.of('minecraft:air'));
+                    player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    openUnifiedWorkshopGUI(player, 4, sess.stationPos);
+                    return;
+                }
+                if (clickedItem.isDamageableItem()) {
+                    if (sess.anvilGear && !sess.anvilGear.isEmpty()) player.give(sess.anvilGear);
+                    sess.anvilGear = clickedItem.split(1);
+                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    openUnifiedWorkshopGUI(player, 4, sess.stationPos);
+                    return;
+                }
+            }
+
+            // ------------------------------------------------------------------
+            // ТАБ 5: ОРУЖЕЙНЫЙ СТОЛ
+            // ------------------------------------------------------------------
+            if (sess.tab === 5) {
+                let id = String(clickedItem.id);
+                // Скрижаль
+                if (id.startsWith('kubejs:martial_tablet_')) {
+                    let gear = sess.benchWeapon;
+                    if (gear && !gear.isEmpty()) {
+                        let artId = (typeof extractTabletArtId === 'function') ? extractTabletArtId(clickedItem) : null;
+                        let rank = (typeof extractTabletRank === 'function') ? extractTabletRank(clickedItem) : 1;
+                        let hasS2 = (typeof hasSocket2 === 'function') ? hasSocket2(gear) : true;
+                        let hasS3 = (typeof hasSocket3 === 'function') ? hasSocket3(gear) : false;
+                        let art2 = (typeof getWeaponArtInSlot === 'function') ? getWeaponArtInSlot(gear, 2) : null;
+                        let art3 = (typeof getWeaponArtInSlot === 'function') ? getWeaponArtInSlot(gear, 3) : null;
+
+                        let targetSlot = null;
+                        if (hasS2 && !art2) targetSlot = 2;
+                        else if (hasS3 && !art3) targetSlot = 3;
+
+                        if (targetSlot && artId) {
+                            clickedItem.shrink(1);
+                            let gTag = (typeof getOrCreateSafeCustomData === 'function') ? getOrCreateSafeCustomData(gear) : null;
+                            if (gTag) {
+                                gTag.putString('skd_art_' + targetSlot, artId);
+                                gTag.putInt('skd_art_' + targetSlot + '_rank', rank);
+                                if (targetSlot === 2) gTag.putString('elyrium_inscribed_art', artId);
+                                if (typeof saveSafeItemCustomData === 'function') saveSafeItemCustomData(gear, gTag);
+                            }
+                            player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 0.8 1.4`);
+                            player.sendSystemMessage(Text.of(`§a✓ Скрижаль инкрустирована в Слот ${targetSlot}!`));
+                            openUnifiedWorkshopGUI(player, 5, sess.stationPos);
+                            return;
+                        }
+                    }
+                }
+                // Стихийный камень
+                if (id.startsWith('kubejs:elemental_stone_')) {
+                    let gear = sess.benchWeapon;
+                    if (gear && !gear.isEmpty()) {
+                        let info = (typeof WB_ELEMENTAL_STONES !== 'undefined') ? WB_ELEMENTAL_STONES[id] : null;
+                        if (info) {
+                            clickedItem.shrink(1);
+                            let gTag = (typeof getOrCreateSafeCustomData === 'function') ? getOrCreateSafeCustomData(gear) : null;
+                            if (gTag) {
+                                gTag.putString('skd_elemental_infusion', info.elem);
+                                gTag.putString('skd_elemental_stone', id);
+                                gTag.putInt('skd_elemental_rank', info.rank || 1);
+                                if (typeof saveSafeItemCustomData === 'function') saveSafeItemCustomData(gear, gTag);
+                            }
+                            player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 0.8 1.4`);
+                            player.sendSystemMessage(Text.of(`§a✓ Инфузия Стихии ${info.name} успешно инкрустирована!`));
+                            openUnifiedWorkshopGUI(player, 5, sess.stationPos);
+                            return;
+                        }
+                    }
+                }
+                // Оружие
+                if (typeof isWeaponItem === 'function' ? isWeaponItem(clickedItem) : clickedItem.hasTag('minecraft:swords')) {
+                    if (sess.benchWeapon && !sess.benchWeapon.isEmpty()) player.give(sess.benchWeapon);
+                    sess.benchWeapon = clickedItem.split(1);
+                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    openUnifiedWorkshopGUI(player, 5, sess.stationPos);
+                    return;
+                }
+            }
+        };
     });
 }
 
 // ------------------------------------------------------------------------------
-// OPEN BLACKSMITH HEARTH SMELTER GUI (COMPATIBILITY REDIRECT TO MASTER GUI TAB 4)
-// ------------------------------------------------------------------------------
-function openHearthSmelterGUI(player, stationPos) {
-    let session = getOrCreateBlacksmithSession(player);
-    session.tab = 4;
-    openBlacksmithGUI(player, stationPos);
-}
-
-// ------------------------------------------------------------------------------
-// RIGHT CLICK EVENT HOOKS (ALL 4 BLOCKS OPEN UNIFIED MASTER WORKSHOP GUI)
+// ОБРАБОТЧИКИ КЛИКОВ ПКМ ДЛЯ ВСЕХ 5 БЛОКОВ КУЗНИЦЫ
 // ------------------------------------------------------------------------------
 
-// 1. Right click on Blacksmith Workbench
+// 1. Верстак Оружейника -> Таб 0 (Ковка)
 BlockEvents.rightClicked('kubejs:blacksmith_workbench', event => {
     let player = event.player;
     if (!player || player.level.isClientSide()) return;
@@ -1982,11 +1749,11 @@ BlockEvents.rightClicked('kubejs:blacksmith_workbench', event => {
     if (!handStr.includes('MAIN')) return;
 
     event.cancel();
-    openBlacksmithGUI(player, event.block.pos);
+    openUnifiedWorkshopGUI(player, 0, event.block.pos);
     player.server.runCommandSilent(`playsound minecraft:block.wood.hit player ${player.username} ~ ~ ~ 0.8 1.0`);
 });
 
-// 2. Right click on Blacksmith Hearth
+// 2. Кузнечный Очаг -> Таб 2 (Очаг - Smelter)
 BlockEvents.rightClicked('kubejs:blacksmith_hearth', event => {
     let player = event.player;
     if (!player || player.level.isClientSide()) return;
@@ -1994,13 +1761,11 @@ BlockEvents.rightClicked('kubejs:blacksmith_hearth', event => {
     if (!handStr.includes('MAIN')) return;
 
     event.cancel();
-    let session = getOrCreateBlacksmithSession(player);
-    session.tab = 4; // Native Hearth tab in Unified Workshop GUI
-    openBlacksmithGUI(player, event.block.pos);
+    openUnifiedWorkshopGUI(player, 2, event.block.pos);
     player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.8 1.0`);
 });
 
-// 3. Right click on Infernal Crucible
+// 3. Адский Горн -> Таб 3 (Горн - Возвышение)
 BlockEvents.rightClicked('kubejs:infernal_crucible', event => {
     let player = event.player;
     if (!player || player.level.isClientSide()) return;
@@ -2013,13 +1778,10 @@ BlockEvents.rightClicked('kubejs:infernal_crucible', event => {
     let cz = event.block.z + 0.5;
     player.server.runCommandSilent(`playsound minecraft:block.lava.ambient player ${player.username} ${cx} ${cy} ${cz} 0.8 1.0`);
     player.server.runCommandSilent(`particle minecraft:lava ${cx} ${cy + 0.6} ${cz} 0.2 0.2 0.2 0.05 10`);
-
-    let session = getOrCreateBlacksmithSession(player);
-    session.tab = 5; // Native Crucible tab in Unified Workshop GUI
-    openBlacksmithGUI(player, event.block.pos);
+    openUnifiedWorkshopGUI(player, 3, event.block.pos);
 });
 
-// 4. Right click on Void Anvil (Directly opens Sharpening Altar)
+// 4. Наковальня Бездны -> Таб 4 (Наковальня - Заточка)
 BlockEvents.rightClicked('kubejs:void_anvil', event => {
     let player = event.player;
     if (!player || player.level.isClientSide()) return;
@@ -2027,18 +1789,36 @@ BlockEvents.rightClicked('kubejs:void_anvil', event => {
     if (!handStr.includes('MAIN')) return;
 
     event.cancel();
+    openUnifiedWorkshopGUI(player, 4, event.block.pos);
     player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
-
-    if (typeof openInfernalAnvilGUI === 'function') {
-        openInfernalAnvilGUI(player);
-    } else {
-        let session = getOrCreateBlacksmithSession(player);
-        session.tab = 6;
-        openBlacksmithGUI(player, event.block.pos);
-    }
 });
 
-// Cleanup on logout
+// 5. Оружейный Стол -> Таб 5 (Оружейный Стол - Боевые Искусства)
+BlockEvents.rightClicked('kubejs:weapon_bench', event => {
+    let player = event.player;
+    if (!player || player.level.isClientSide()) return;
+    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
+    if (!handStr.includes('MAIN')) return;
+
+    event.cancel();
+    openUnifiedWorkshopGUI(player, 5, event.block.pos);
+    player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
+});
+
+// Совместимость с вызовами legacy GUI
+function openBlacksmithGUI(player, stationPos) {
+    openUnifiedWorkshopGUI(player, 0, stationPos);
+}
+
+function openHearthSmelterGUI(player, stationPos) {
+    openUnifiedWorkshopGUI(player, 2, stationPos);
+}
+
+// Очистка при выходе из мира
 PlayerEvents.loggedOut(event => {
-    if (event.player) clearBlacksmithSession(event.player);
+    if (event.player) clearAndRefundWorkshopSession(event.player, true);
+});
+
+PlayerEvents.inventoryClosed(event => {
+    if (event.player) clearAndRefundWorkshopSession(event.player, false);
 });

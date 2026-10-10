@@ -2160,7 +2160,11 @@ BlockEvents.rightClicked('kubejs:weapon_bench', event => {
     }
 
     event.cancel();
-    openWeaponBenchGUI(player, block);
+    if (typeof openUnifiedWorkshopGUI === 'function') {
+        openUnifiedWorkshopGUI(player, 5, blockPos);
+    } else {
+        openWeaponBenchGUI(player, block);
+    }
     player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
 });
 
@@ -2175,7 +2179,11 @@ ItemEvents.rightClicked(event => {
     let target = event.target || (player.rayTrace ? player.rayTrace(5.0) : null);
     if (target && target.block && String(target.block.id) === 'kubejs:weapon_bench') {
         event.cancel();
-        openWeaponBenchGUI(player, target.block);
+        if (typeof openUnifiedWorkshopGUI === 'function') {
+            openUnifiedWorkshopGUI(player, 5, target.block.pos);
+        } else {
+            openWeaponBenchGUI(player, target.block);
+        }
         player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
     }
 });

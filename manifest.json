@@ -1,8 +1,8 @@
 {
-  "version": "0.4.34",
+  "version": "0.4.35",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-10T08:25:52.514361+00:00",
+  "generated_at": "2026-10-10T09:28:05.557519+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -9566,6 +9566,11 @@
       "size": 110
     },
     {
+      "path": "kubejs/assets/kubejs/textures/block/amethyst_crystal_core.png",
+      "sha256": "928adf0eaed288d34b4b6f07104ff4fcf63edf2d2943b7c1dfc4b8a33c56eb01",
+      "size": 762
+    },
+    {
       "path": "kubejs/assets/kubejs/textures/block/ancient_bone.png",
       "sha256": "e68bfc652f2e20dbc9fbe0e3a7706ee6f107f10e8f63e832046aaea0b5333636",
       "size": 422
@@ -9591,6 +9596,16 @@
       "size": 49
     },
     {
+      "path": "kubejs/assets/kubejs/textures/block/basalt_crucible_masonry.png",
+      "sha256": "a416661dd94abfc5bbfd7a44223d8e79da328f6aa490fadab2f6297c25a4b2a2",
+      "size": 672
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/blacksmith_bellows.png",
+      "sha256": "e5e23566980a6fc728d2687cc3b015a1aa083533e26da308d42988fc3694ba79",
+      "size": 426
+    },
+    {
       "path": "kubejs/assets/kubejs/textures/block/bone_bastion_stone.png",
       "sha256": "f5e322626708399f379ca7a70a22aadfdd4cda55ac89abd344420ffb4d07c2e4",
       "size": 358
@@ -9606,6 +9621,16 @@
       "size": 407
     },
     {
+      "path": "kubejs/assets/kubejs/textures/block/crucible_lava_animated.png",
+      "sha256": "3ebd7753573ccd045ca5e4ea1a2bd5dcf3d548fc0839c866c20c84f05fe54bce",
+      "size": 17102
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/crucible_lava_animated.png.mcmeta",
+      "sha256": "4b674104af9db3baca6f5a2e79a29d6d902306e8635f1bd96a9b20e75864d76a",
+      "size": 75
+    },
+    {
       "path": "kubejs/assets/kubejs/textures/block/crystal_active.png",
       "sha256": "891fb45b5e598ac66b06fb5e3e672a32c77193c4e41d4de2f40061db78106807",
       "size": 3399
@@ -9619,6 +9644,26 @@
       "path": "kubejs/assets/kubejs/textures/block/crystal_dormant.png",
       "sha256": "09bc4369a84f1e510cdc933906fd6cf4da3f65aa7018f312392b2a32c27f2687",
       "size": 308
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/dark_oak_forge_frame.png",
+      "sha256": "1c20beedaf8f0c85dc39317c7af3959d75636aa6d3280699d9b1b933763e3fc8",
+      "size": 437
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/forged_steel_trim.png",
+      "sha256": "b3f5f8e8734fc3a2def53870da6c4e84190c571149dfe05d5cbe4535fac64f70",
+      "size": 500
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/hearth_coals_animated.png",
+      "sha256": "fa566347d469d89f75722e5fd40d507e4bf35abbef1b4b03b482834a588e3c29",
+      "size": 2449
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/hearth_coals_animated.png.mcmeta",
+      "sha256": "cecb1e8a1aa4f86b2798e76dfcfcaee46d2134788b3f1ed9616df8966ef6ba51",
+      "size": 68
     },
     {
       "path": "kubejs/assets/kubejs/textures/block/infernal_anvil_body.png",
@@ -9849,6 +9894,11 @@
       "path": "kubejs/assets/kubejs/textures/block/rune_threshold_r_dormant.png",
       "sha256": "5212db905b45763e554939461533ac1d02c5a764c5a0bb89e429f0bb9fd8f0b5",
       "size": 367
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/block/void_alloy_runes.png",
+      "sha256": "02d2babcb27303c366b5a6f63e37deaf3fe316babdd1538b63a78edb44b12829",
+      "size": 573
     },
     {
       "path": "kubejs/assets/kubejs/textures/block/weapon_bench_blueprint.png",
@@ -14117,8 +14167,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_crafting_gui.js",
-      "sha256": "8cc4b0659f427f127667d26288e69662c449d960bd1549a761cf3be7afecce38",
-      "size": 131444
+      "sha256": "00655bc1f51578a0d0c93edfcb032b09847453bc9a52db0cd24d9d2c4a4c1562",
+      "size": 119102
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
@@ -14217,8 +14267,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/infernal_anvil_gui.js",
-      "sha256": "3eced8887354e5b3afa126dd6deaab12391353d7ff80a0ead0836eec0c6e0faa",
-      "size": 61185
+      "sha256": "7f151c1944d95a45eaf37bad34ececb499d5d085709e94c6caf5e6d8c53351f5",
+      "size": 61635
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_inscription.js",
@@ -14282,8 +14332,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_gui.js",
-      "sha256": "b2035a7070a9685a3cb1475a84eaff73ae394ba67c96b1e6cdae768f59e42749",
-      "size": 127427
+      "sha256": "ed379fc29b2d1d86a189cb0bbbe5f8bbbc05ccca153ba09cd5923eb7cf0d575c",
+      "size": 127723
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",

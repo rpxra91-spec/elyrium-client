@@ -1007,7 +1007,11 @@ BlockEvents.rightClicked('kubejs:void_anvil', event => {
     if (!handStr.includes('MAIN')) return;
 
     event.cancel();
-    openInfernalAnvilGUI(player);
+    if (typeof openUnifiedWorkshopGUI === 'function') {
+        openUnifiedWorkshopGUI(player, 4, event.block.pos);
+    } else {
+        openInfernalAnvilGUI(player);
+    }
     player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
 });
 
@@ -1019,7 +1023,11 @@ BlockEvents.rightClicked('kubejs:infernal_anvil', event => {
     if (!handStr.includes('MAIN')) return;
 
     event.cancel();
-    openInfernalAnvilGUI(player);
+    if (typeof openUnifiedWorkshopGUI === 'function') {
+        openUnifiedWorkshopGUI(player, 4, event.block.pos);
+    } else {
+        openInfernalAnvilGUI(player);
+    }
     player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
 });
 
@@ -1036,7 +1044,11 @@ ItemEvents.rightClicked(event => {
         let bId = String(target.block.id);
         if (bId === 'kubejs:void_anvil' || bId === 'kubejs:infernal_anvil') {
             event.cancel();
-            openInfernalAnvilGUI(player);
+            if (typeof openUnifiedWorkshopGUI === 'function') {
+                openUnifiedWorkshopGUI(player, 4, target.block.pos);
+            } else {
+                openInfernalAnvilGUI(player);
+            }
             player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
         }
     }
