@@ -705,7 +705,7 @@
       ],
       "faces": {
         "down": {
-          "texture": "#coals",
+          "texture": "#steel",
           "uv": [
             3.5,
             3.5,
@@ -714,7 +714,7 @@
           ]
         },
         "up": {
-          "texture": "#coals",
+          "texture": "#steel",
           "uv": [
             3.5,
             3.5,
@@ -723,7 +723,7 @@
           ]
         },
         "north": {
-          "texture": "#coals",
+          "texture": "#steel",
           "uv": [
             3.5,
             3.5,
@@ -732,7 +732,7 @@
           ]
         },
         "south": {
-          "texture": "#coals",
+          "texture": "#steel",
           "uv": [
             3.5,
             3.5,
@@ -741,7 +741,7 @@
           ]
         },
         "west": {
-          "texture": "#coals",
+          "texture": "#steel",
           "uv": [
             3.5,
             3.5,
@@ -750,7 +750,7 @@
           ]
         },
         "east": {
-          "texture": "#coals",
+          "texture": "#steel",
           "uv": [
             3.5,
             3.5,
@@ -2184,74 +2184,6 @@
             3.5,
             3.7,
             4.5
-          ]
-        }
-      }
-    },
-    {
-      "from": [
-        0.8,
-        7.2,
-        0.0
-      ],
-      "to": [
-        3.2,
-        7.5,
-        0.2
-      ],
-      "faces": {
-        "down": {
-          "texture": "#steel",
-          "uv": [
-            0.8,
-            7.2,
-            3.2,
-            7.5
-          ]
-        },
-        "up": {
-          "texture": "#steel",
-          "uv": [
-            0.8,
-            7.2,
-            3.2,
-            7.5
-          ]
-        },
-        "north": {
-          "texture": "#steel",
-          "uv": [
-            0.8,
-            7.2,
-            3.2,
-            7.5
-          ]
-        },
-        "south": {
-          "texture": "#steel",
-          "uv": [
-            0.8,
-            7.2,
-            3.2,
-            7.5
-          ]
-        },
-        "west": {
-          "texture": "#steel",
-          "uv": [
-            0.8,
-            7.2,
-            3.2,
-            7.5
-          ]
-        },
-        "east": {
-          "texture": "#steel",
-          "uv": [
-            0.8,
-            7.2,
-            3.2,
-            7.5
           ]
         }
       }
