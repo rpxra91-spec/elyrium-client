@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=north": {
-      "model": "elyrium:block/void_anvil"
+      "model": "kubejs:block/void_anvil"
     },
     "facing=east": {
-      "model": "elyrium:block/void_anvil",
+      "model": "kubejs:block/void_anvil",
       "y": 90
     },
     "facing=south": {
-      "model": "elyrium:block/void_anvil",
+      "model": "kubejs:block/void_anvil",
       "y": 180
     },
     "facing=west": {
-      "model": "elyrium:block/void_anvil",
+      "model": "kubejs:block/void_anvil",
       "y": 270
     }
   }

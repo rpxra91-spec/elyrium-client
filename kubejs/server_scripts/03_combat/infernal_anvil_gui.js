@@ -998,7 +998,19 @@ function openInfernalAnvilGUI(player) {
 // ИНТЕГРАЦИЯ С МИРОМ: ОТКРЫТИЕ АДСКОЙ НАКОВАЛЬНИ
 // ------------------------------------------------------------------------------
 
-// 1. Таргетированный клик по блоку Адской Наковальни
+// 1. Таргетированный клик по блоку Наковальни (void_anvil & legacy infernal_anvil)
+BlockEvents.rightClicked('kubejs:void_anvil', event => {
+    let player = event.player;
+    if (!player || player.level.isClientSide()) return;
+
+    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
+    if (!handStr.includes('MAIN')) return;
+
+    event.cancel();
+    openInfernalAnvilGUI(player);
+    player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
+});
+
 BlockEvents.rightClicked('kubejs:infernal_anvil', event => {
     let player = event.player;
     if (!player || player.level.isClientSide()) return;
@@ -1020,10 +1032,13 @@ ItemEvents.rightClicked(event => {
     if (!handStr.includes('MAIN')) return;
 
     let target = event.target || (player.rayTrace ? player.rayTrace(5.0) : null);
-    if (target && target.block && String(target.block.id) === 'kubejs:infernal_anvil') {
-        event.cancel();
-        openInfernalAnvilGUI(player);
-        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
+    if (target && target.block) {
+        let bId = String(target.block.id);
+        if (bId === 'kubejs:void_anvil' || bId === 'kubejs:infernal_anvil') {
+            event.cancel();
+            openInfernalAnvilGUI(player);
+            player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
+        }
     }
 });
 

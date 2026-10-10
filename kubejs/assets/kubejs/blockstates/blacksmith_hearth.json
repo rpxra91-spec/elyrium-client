@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=north": {
-      "model": "elyrium:block/blacksmith_hearth"
+      "model": "kubejs:block/blacksmith_hearth"
     },
     "facing=east": {
-      "model": "elyrium:block/blacksmith_hearth",
+      "model": "kubejs:block/blacksmith_hearth",
       "y": 90
     },
     "facing=south": {
-      "model": "elyrium:block/blacksmith_hearth",
+      "model": "kubejs:block/blacksmith_hearth",
       "y": 180
     },
     "facing=west": {
-      "model": "elyrium:block/blacksmith_hearth",
+      "model": "kubejs:block/blacksmith_hearth",
       "y": 270
     }
   }

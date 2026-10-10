@@ -702,10 +702,10 @@ function openBlacksmithGUI(player, stationPos) {
             };
         });
 
-        // Tab 3: 🔧 [ Ремонт ] (+25% соло, +50% если рядом Очаг)
+        // Tab 3: 🔧 [ Ремонт ] (100% починка за 1 слиток)
         gui.slot(3, 0, s => {
             let isSel = (session.tab === 3);
-            let repairDurText = session.hasHearth ? '§a+50% прочности за 1 слиток (Очаг)' : '§e+25% прочности за 1 слиток (соло)';
+            let repairDurText = '§a100% восстановление прочности за 1 слиток';
             s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'minecraft:anvil')
                 .withCustomName(Text.of(isSel ? '§6▶ §a🔧 [ Ремонт ] ◀' : '§a🔧 [ Ремонт ]'))
                 .withLore([
@@ -785,37 +785,23 @@ function openBlacksmithGUI(player, stationPos) {
             }
         });
 
-        // Tab 6: 🌌 [ Наковальня ] (активна только если рядом есть Наковальня Бездны)
+        // Tab 6: 🌌 [ Наковальня ] (Открывает Алтарь Заточки +1..+15)
         gui.slot(6, 0, s => {
-            let isSel = (session.tab === 6);
-            if (session.hasAnvil) {
-                s.setItem(Item.of(isSel ? 'minecraft:nether_star' : 'minecraft:crying_obsidian')
-                    .withCustomName(Text.of(isSel ? '§6▶ §5🌌 [ Наковальня ] ◀' : '§5🌌 [ Наковальня ]'))
-                    .withLore([
-                        Text.of('§7Пустотная Наковальня Бездны (Т5).'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§a✓ Наковальня Бездны подключена в радиусе 4 блоков'),
-                        Text.of(isSel ? '§a[Текущий раздел]' : '§e▶ Нажмите для перехода к рунической закалке')
-                    ]));
-                s.leftClicked = () => {
-                    session.tab = 6;
-                    player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.8 1.2`);
-                    openBlacksmithGUI(player, stationPos);
-                };
-            } else {
-                s.setItem(Item.of('minecraft:obsidian')
-                    .withCustomName(Text.of('§8🔒 [ Наковальня: Недоступна ]'))
-                    .withLore([
-                        Text.of('§cТребуется Наковальня Бездны поблизости (в пределах 4 блоков)!'),
-                        Text.of('§8────────────────────────────────'),
-                        Text.of('§7Установите Наковальню Бездны для глубокой заточки +1..+15 в стиле Lineage 2.')
-                    ]));
-                s.leftClicked = () => {
-                    player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
-                    player.sendSystemMessage(Text.of('§c[Мастерская] §7Требуется Наковальня Бездны поблизости!'));
-                };
-            }
+            s.setItem(Item.of('minecraft:crying_obsidian')
+                .withCustomName(Text.of('§5🌌 [ Наковальня: Алтарь Заточки ]'))
+                .withLore([
+                    Text.of('§7Алтарь глубокой заточки снаряжения (+1..+15).'),
+                    Text.of('§8────────────────────────────────'),
+                    Text.of('§a▶ Нажмите ЛКМ для перехода к Заточке!')
+                ]));
+            s.leftClicked = () => {
+                player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
+                if (typeof openInfernalAnvilGUI === 'function') {
+                    openInfernalAnvilGUI(player);
+                }
+            };
         });
+
 
         // Slot 7: Разделитель
         gui.slot(7, 0, s => { s.setItem(decoPane); s.leftClicked = () => {}; });
@@ -987,14 +973,16 @@ if (session.tab >= 0 && session.tab <= 2) {
                         : { total: countPlayerItemsBS(player, mat.id), inv: countPlayerItemsBS(player, mat.id), buffer: 0 };
                     let canRepair = (availMat.total >= 1);
 
-                    let restoreAmount = Math.max(1, Math.floor(entry.maxDmg * repairPercent));
+                    let repairPercent = 1.0;
+                    let repairPercentStr = '100%';
+                    let restoreAmount = entry.curDmg;
                     let currentDur = entry.maxDmg - entry.curDmg;
 
                     let lore = [
                         Text.of(`§7Прочность: §f${currentDur} §7/ §f${entry.maxDmg}`),
                         Text.of(`§7Износ: §c${entry.curDmg} ед. урона`),
                         Text.of('§8────────────────────────────────'),
-                        Text.of(`§eВосстановление: §a+${restoreAmount} ед. (+${repairPercentStr})`),
+                        Text.of(`§eВосстановление: §a+${restoreAmount} ед. (100% Полная починка)`),
                         Text.of('§eСтоимость починки: 1x ' + mat.name)
                     ];
 
@@ -1009,12 +997,8 @@ if (session.tab >= 0 && session.tab <= 2) {
                     }
                     lore.push(Text.of('§8────────────────────────────────'));
 
-                    if (!session.hasHearth) {
-                        lore.push(Text.of('§e⚠ Очаг не подключен: ремонт лишь на 25%!'));
-                    }
-
                     if (canRepair) {
-                        lore.push(Text.of('§a▶ Нажмите ЛКМ для ремонта предмета'));
+                        lore.push(Text.of('§a▶ Нажмите ЛКМ для полной починки'));
                     } else {
                         lore.push(Text.of('§c🔒 Требуется ' + mat.name + ' для починки'));
                     }
@@ -1024,9 +1008,8 @@ if (session.tab >= 0 && session.tab <= 2) {
                         s.leftClicked = () => {
                             let currentStation = session.stationPos ? getBlacksmithStationInfo(player.level, session.stationPos) : null;
                             let activeHasHearth = currentStation ? currentStation.hasHearth : session.hasHearth;
-                            let activePercent = activeHasHearth ? 0.50 : 0.25;
-                            let activePercentStr = activeHasHearth ? '50%' : '25%';
-                            let activeRestore = Math.max(1, Math.floor(entry.maxDmg * activePercent));
+                            let activePercent = 1.0;
+                            let activeRestore = entry.curDmg;
 
                             let curAvail = isIngot
                                 ? getAvailableIngotsBS(player, session.stationPos, mat.id, activeHasHearth)
@@ -1425,6 +1408,162 @@ if (session.tab >= 0 && session.tab <= 2) {
                         Text.of('§e• Угольный блок (9 ед.)'),
                         Text.of('§8────────────────────────────────'),
                         Text.of('§7Держите топливо в инвентаре для работы Очага.')
+                    ]));
+                s.leftClicked = () => {};
+            });
+
+            // ==================================================================
+            // РЯД 4 (Y=4): ЗОЛОТО И СПЛАВЫ НЕЗЕРА (С ТРЕБОВАНИЕМ ГОРНА В R=4)
+            // ==================================================================
+
+            // [1, 4] Переплавка Золота
+            gui.slot(1, 4, s => {
+                let rawGoldCount = countPlayerItemsBS(player, 'minecraft:raw_gold') + countPlayerItemsBS(player, 'minecraft:gold_ore') + countPlayerItemsBS(player, 'minecraft:deepslate_gold_ore') + countPlayerItemsBS(player, 'minecraft:nether_gold_ore');
+                let canGold = (rawGoldCount >= 1 && fuelCount >= 1);
+                s.setItem(Item.of('minecraft:raw_gold')
+                    .withCustomName(Text.of('§e⚡ [ Переплавить Золото ]'))
+                    .withLore([
+                        Text.of('§7Переплавка сырого золота или золотой руды.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§eРецепт: 1x Сырое золото/руда + 1x Уголь -> +1 Золотой слиток'),
+                        Text.of(rawGoldCount >= 1 ? `§a✓ Сырого золота/руды: ${rawGoldCount} шт.` : '§c✗ Нет золотой руды/сырца'),
+                        Text.of(fuelCount >= 1 ? `§a✓ Топлива в инвентаре: ${fuelCount} ед.` : '§c✗ Нет топлива'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(canGold ? '§a▶ ЛКМ: Выплавить 1 слиток' : '§c🔒 Недостаточно руды или топлива')
+                    ]));
+                s.leftClicked = () => {
+                    let curFuel = countPlayerFuelBS(player);
+                    if (curFuel < 1) {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                        return;
+                    }
+                    let taken = false;
+                    ['minecraft:raw_gold', 'minecraft:nether_gold_ore', 'minecraft:gold_ore', 'minecraft:deepslate_gold_ore'].forEach(oreId => {
+                        if (!taken && countPlayerItemsBS(player, oreId) >= 1) {
+                            deductPlayerItemsBS(player, oreId, 1);
+                            taken = true;
+                        }
+                    });
+                    if (taken) {
+                        deductPlayerFuelBS(player, 1);
+                        player.give(Item.of('minecraft:gold_ingot', 1));
+                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.9 1.1`);
+                        player.server.runCommandSilent(`particle minecraft:flame ~ ~1.2 ~ 0.3 0.3 0.3 0.05 15`);
+                        player.sendSystemMessage(Text.of('§e⚡ [Очаг] §fВыплавлен §6+1 Золотой Слиток§f!'));
+                        openBlacksmithGUI(player, stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    }
+                };
+            });
+
+            // [3, 4] Пепельный Сплав (Требует Горн в радиусе 4 блоков!)
+            gui.slot(3, 4, s => {
+                let scrapCount = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
+                let magmaCount = countPlayerItemsBS(player, 'minecraft:magma_cream');
+                let hasCrucible = session.hasCrucible;
+                let canCinder = (hasCrucible && scrapCount >= 1 && magmaCount >= 1 && fuelCount >= 2);
+                s.setItem(Item.of('skd:cinder_alloy_ingot')
+                    .withCustomName(Text.of(hasCrucible ? '§6🔥 [ Сплавить Пепельный Сплав (Т2) ]' : '§8🔒 [ Пепельный Сплав: Нужен Горн ]'))
+                    .withLore([
+                        Text.of('§7Инфернальный сплав огня и базальта Преисподней.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§eРецепт: 1x Незеритовый обломок + 1x Сгусток магмы + 2x Топлива'),
+                        Text.of(scrapCount >= 1 ? `§a✓ Обломков незерита: ${scrapCount} шт.` : '§c✗ Нет обломков незерита'),
+                        Text.of(magmaCount >= 1 ? `§a✓ Сгустков магмы: ${magmaCount} шт.` : '§c✗ Нет сгустков магмы'),
+                        Text.of(fuelCount >= 2 ? `§a✓ Топлива: ${fuelCount}/2 ед.` : '§c✗ Требуется 2 ед. топлива'),
+                        Text.of(hasCrucible ? '§a✓ Адский Горн в радиусе 4 блоков: Жар активен!' : '§c🔒 ТРЕБУЕТСЯ АДСКИЙ ГОРН В РАДИУСЕ 4 БЛОКОВ!'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(!hasCrucible ? '§c🔒 Очаг не может достичь инфернального жара без Горна!' : (canCinder ? '§a▶ ЛКМ: Выплавить 1 Пепельный Сплав' : '§c🔒 Недостаточно компонентов'))
+                    ]));
+                s.leftClicked = () => {
+                    if (!session.hasCrucible) {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                        player.sendSystemMessage(Text.of('§c[Очаг] §7Для плавки сплавов Незера требуется Адский Горн поблизости (R=4)!'));
+                        return;
+                    }
+                    let curScrap = countPlayerItemsBS(player, 'minecraft:netherite_scrap');
+                    let curMagma = countPlayerItemsBS(player, 'minecraft:magma_cream');
+                    let curFuel = countPlayerFuelBS(player);
+                    if (curScrap >= 1 && curMagma >= 1 && curFuel >= 2) {
+                        deductPlayerItemsBS(player, 'minecraft:netherite_scrap', 1);
+                        deductPlayerItemsBS(player, 'minecraft:magma_cream', 1);
+                        deductPlayerFuelBS(player, 2);
+                        addBufferIngots(level, stationPos, 'cinder', 1);
+
+                        player.server.runCommandSilent(`playsound minecraft:block.lava.extinguish player ${player.username} ~ ~ ~ 1.0 0.9`);
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.9 1.1`);
+                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.4 0.3 0.4 0.05 25`);
+                        player.sendSystemMessage(Text.of('§4🌋 [Очаг + Горн] §fВыплавлен §6+1 Пепельный Сплав§f в буфер мастерской!'));
+                        openBlacksmithGUI(player, stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    }
+                };
+            });
+
+            // [5, 4] Очищенный Незерит (Требует Горн в радиусе 4 блоков!)
+            gui.slot(5, 4, s => {
+                let netheriteIngots = countPlayerItemsBS(player, 'minecraft:netherite_ingot');
+                let curCinder = countPlayerItemsBS(player, 'skd:cinder_alloy_ingot') + (buf.cinder || 0);
+                let hasCrucible = session.hasCrucible;
+                let canRefined = (hasCrucible && netheriteIngots >= 1 && curCinder >= 1 && fuelCount >= 4);
+                s.setItem(Item.of('kubejs:refined_netherite_ingot')
+                    .withCustomName(Text.of(hasCrucible ? '§4✦ [ Отлить Очищенный Незерит (Т2+) ]' : '§8🔒 [ Очищенный Незерит: Нужен Горн ]'))
+                    .withLore([
+                        Text.of('§7Предельно очищенный сплав инфернального огня.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of('§eРецепт: 1x Незерит + 1x Пепельный сплав + 4x Топлива'),
+                        Text.of(netheriteIngots >= 1 ? `§a✓ Незерита: ${netheriteIngots} шт.` : '§c✗ Нет незеритовых слитков'),
+                        Text.of(curCinder >= 1 ? `§a✓ Пепельного сплава (инв+буфер): ${curCinder} шт.` : '§c✗ Нет пепельного сплава'),
+                        Text.of(fuelCount >= 4 ? `§a✓ Топлива: ${fuelCount}/4 ед.` : `§c✗ Топлива: ${fuelCount}/4 ед.`),
+                        Text.of(hasCrucible ? '§a✓ Адский Горн в радиусе 4 блоков: Жар активен!' : '§c🔒 ТРЕБУЕТСЯ АДСКИЙ ГОРН В РАДИУСЕ 4 БЛОКОВ!'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(!hasCrucible ? '§c🔒 Очаг не может достичь инфернального жара без Горна!' : (canRefined ? '§a▶ ЛКМ: Отлить в буфер мастерской' : '§c🔒 Недостаточно компонентов'))
+                    ]));
+                s.leftClicked = () => {
+                    if (!session.hasCrucible) {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                        player.sendSystemMessage(Text.of('§c[Очаг] §7Для выплавки Очищенного Незерита требуется Адский Горн поблизости (R=4)!'));
+                        return;
+                    }
+                    let curNeth = countPlayerItemsBS(player, 'minecraft:netherite_ingot');
+                    let curCinInv = countPlayerItemsBS(player, 'skd:cinder_alloy_ingot');
+                    let curCinBuf = buf.cinder || 0;
+                    let curFuel = countPlayerFuelBS(player);
+
+                    if (curNeth >= 1 && (curCinInv + curCinBuf >= 1) && curFuel >= 4) {
+                        deductPlayerItemsBS(player, 'minecraft:netherite_ingot', 1);
+                        if (curCinBuf >= 1) {
+                            buf.cinder -= 1;
+                        } else {
+                            deductPlayerItemsBS(player, 'skd:cinder_alloy_ingot', 1);
+                        }
+                        deductPlayerFuelBS(player, 4);
+                        addBufferIngots(level, stationPos, 'netherite', 1);
+
+                        player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 1.0 0.8`);
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 1.0 1.2`);
+                        player.server.runCommandSilent(`particle minecraft:lava ~ ~1.2 ~ 0.5 0.3 0.5 0.08 30`);
+                        player.sendSystemMessage(Text.of('§4🌋 [Очаг + Горн] §fОтлит §4+1 Очищенный Незерит§f в буфер мастерской!'));
+                        openBlacksmithGUI(player, stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.stone.hit player ${player.username} ~ ~ ~ 0.8 0.8`);
+                    }
+                };
+            });
+
+            // [7, 4] Индикатор статуса Горна
+            gui.slot(7, 4, s => {
+                let hasCrucible = session.hasCrucible;
+                s.setItem(Item.of(hasCrucible ? 'minecraft:magma_block' : 'minecraft:crying_obsidian')
+                    .withCustomName(Text.of(hasCrucible ? '§a🌋 [ Горн Активен (R=4) ]' : '§c🔒 [ Горн Не Найден (R=4) ]'))
+                    .withLore([
+                        Text.of('§7Статус синхронизации Очага с Адским Горном.'),
+                        Text.of('§8────────────────────────────────'),
+                        Text.of(hasCrucible ? '§a✓ Адский Горн обнаружен в радиусе 4 блоков.' : '§c✗ Адский Горн отсутствует поблизости.'),
+                        Text.of(hasCrucible ? '§e• Доступна плавка Пепельного сплава' : '§7• Установите Горн рядом с Очагом'),
+                        Text.of(hasCrucible ? '§e• Доступна отливка Очищенного Незерита' : '§7• для разблокировки сплавов Т2+')
                     ]));
                 s.leftClicked = () => {};
             });
@@ -1880,7 +2019,7 @@ BlockEvents.rightClicked('kubejs:infernal_crucible', event => {
     openBlacksmithGUI(player, event.block.pos);
 });
 
-// 4. Right click on Void Anvil
+// 4. Right click on Void Anvil (Directly opens Sharpening Altar)
 BlockEvents.rightClicked('kubejs:void_anvil', event => {
     let player = event.player;
     if (!player || player.level.isClientSide()) return;
@@ -1890,9 +2029,13 @@ BlockEvents.rightClicked('kubejs:void_anvil', event => {
     event.cancel();
     player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
 
-    let session = getOrCreateBlacksmithSession(player);
-    session.tab = 6; // Native Anvil tab in Unified Workshop GUI
-    openBlacksmithGUI(player, event.block.pos);
+    if (typeof openInfernalAnvilGUI === 'function') {
+        openInfernalAnvilGUI(player);
+    } else {
+        let session = getOrCreateBlacksmithSession(player);
+        session.tab = 6;
+        openBlacksmithGUI(player, event.block.pos);
+    }
 });
 
 // Cleanup on logout
