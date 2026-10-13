@@ -1,8 +1,19 @@
-﻿{
+{
   "variants": {
-    "facing=north": { "model": "elyrium:block/void_anvil_single" },
-    "facing=east":  { "model": "elyrium:block/void_anvil_single", "y": 90 },
-    "facing=south": { "model": "elyrium:block/void_anvil_single", "y": 180 },
-    "facing=west":  { "model": "elyrium:block/void_anvil_single", "y": 270 }
+    "facing=north": {
+      "model": "kubejs:block/void_anvil_single",
+      "y": 90
+    },
+    "facing=east": {
+      "model": "kubejs:block/void_anvil_single",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "kubejs:block/void_anvil_single",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "kubejs:block/void_anvil_single"
+    }
   }
 }

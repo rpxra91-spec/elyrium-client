@@ -1,15 +1,15 @@
 {
   "credit": "Elyrium RPG Studio - Master Blacksmith Workshop",
   "textures": {
-    "particle": "elyrium:block/forged_steel_trim",
-    "steel": "elyrium:block/forged_steel_trim",
-    "frame": "elyrium:block/dark_oak_forge_frame",
-    "basalt": "elyrium:block/basalt_crucible_masonry",
-    "lava": "elyrium:block/crucible_lava_animated",
-    "coals": "elyrium:block/hearth_coals_animated",
-    "bellows": "elyrium:block/blacksmith_bellows",
-    "runes": "elyrium:block/void_alloy_runes",
-    "crystal": "elyrium:block/amethyst_crystal_core"
+    "particle": "kubejs:block/forged_steel_trim",
+    "steel": "kubejs:block/forged_steel_trim",
+    "frame": "kubejs:block/dark_oak_forge_frame",
+    "basalt": "kubejs:block/basalt_crucible_masonry",
+    "lava": "kubejs:block/crucible_lava_animated",
+    "coals": "kubejs:block/hearth_coals_animated",
+    "bellows": "kubejs:block/blacksmith_bellows",
+    "runes": "kubejs:block/void_alloy_runes",
+    "crystal": "kubejs:block/amethyst_crystal_core"
   },
   "elements": [
     {
@@ -1784,7 +1784,7 @@
       "from": [
         1.5,
         8,
-        -0.2
+        0.0
       ],
       "to": [
         14.5,
@@ -1852,7 +1852,7 @@
       "from": [
         3.5,
         8.5,
-        -0.5
+        0.0
       ],
       "to": [
         4.8,
@@ -1920,7 +1920,7 @@
       "from": [
         3.8,
         3.5,
-        -0.5
+        0.0
       ],
       "to": [
         4.5,
@@ -2056,12 +2056,12 @@
       "from": [
         0.5,
         3,
-        -1.5
+        0.1
       ],
       "to": [
         3.5,
         8,
-        0.5
+        2.1
       ],
       "faces": {
         "down": {
@@ -2124,12 +2124,12 @@
       "from": [
         0.3,
         3.5,
-        -1.7
+        0.1
       ],
       "to": [
         3.7,
         4.5,
-        0.7
+        2.5
       ],
       "faces": {
         "down": {
@@ -2192,12 +2192,12 @@
       "from": [
         0.8,
         7.2,
-        -1.2
+        0.1
       ],
       "to": [
         3.2,
         7.5,
-        0.2
+        1.5
       ],
       "faces": {
         "down": {
