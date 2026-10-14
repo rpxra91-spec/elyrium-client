@@ -375,6 +375,8 @@ ServerEvents.recipes(event => {
         'hazennstuff:zenalite_voidstone_ore'
     ]
     HIDDEN_ITEMS.forEach(id => {
-        event.remove({ output: id })
-    })
-})
+        if (Item.exists(id)) {
+            event.remove({ output: id });
+        }
+    });
+});

@@ -157,9 +157,13 @@
               ]
             },
             {
-              "function": "minecraft:set_stored_enchantments",
-              "enchantments": {
-                "minecraft:sharpness": 2
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:stored_enchantments": {
+                  "levels": {
+                    "minecraft:sharpness": 2
+                  }
+                }
               }
             }
           ]

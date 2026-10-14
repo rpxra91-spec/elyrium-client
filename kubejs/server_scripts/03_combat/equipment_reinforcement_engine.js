@@ -17,12 +17,12 @@ try {
             if (!right || right.isEmpty()) return;
 
             let rId = right.id ? String(right.id) : '';
-            if (rId.startsWith('kubejs:smithing_stone_') || rId === 'kubejs:ancient_smith_aegis') {
+            if (rId.startsWith('kubejs:smithing_stone_') || rId === 'kubejs:smithing_aegis' || rId === 'kubejs:ancient_smith_aegis') {
                 event.setOutput(Item.empty);
                 let player = event.player;
                 if (player) {
                     player.displayClientMessage(
-                        Text.of('§c✖ Обычная наковальня раскалывается от жара! §eИспользуйте §6Адскую Наковальню§e (Tier 4 Незер).'),
+                        Text.of('§c✖ Обычная наковальня раскалывается от жара! §eИспользуйте §5Наковальню Бездны§e в Мастерской.'),
                         true
                     );
                 }

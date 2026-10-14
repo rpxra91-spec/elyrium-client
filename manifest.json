@@ -1,8 +1,8 @@
 {
-  "version": "0.4.35",
+  "version": "0.4.36",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-13T22:59:21.294570+00:00",
+  "generated_at": "2026-10-14T11:07:24.522060+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -14167,8 +14167,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_crafting_gui.js",
-      "sha256": "00655bc1f51578a0d0c93edfcb032b09847453bc9a52db0cd24d9d2c4a4c1562",
-      "size": 119102
+      "sha256": "65c2be52909590d187a2f271eca30905e9e78487ba9827621e761f02fb36cc71",
+      "size": 119164
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
@@ -14232,18 +14232,18 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_engine.js",
-      "sha256": "614a8fd93668e3b1266f914fc70c9aadbef708cf89ae4dc1fdf445f71aef5045",
-      "size": 1803
+      "sha256": "b4199e24132e39f3da3b6aa331588f665b5989ccbc45a65308911639f67ed469",
+      "size": 1842
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_recipes.js",
-      "sha256": "2796ef28839f49cfb4fe84bf71b1a0011a3da2d5c59af4b7126f474d27d0b7e5",
-      "size": 19710
+      "sha256": "c533e1165ff76cfbf0f5fc1b985a45e7e7d58578adec67a6812aec8defe6d952",
+      "size": 19478
     },
     {
       "path": "kubejs/server_scripts/03_combat/forge_multiblock_recipes.js",
-      "sha256": "2fb5b327c743cf23e53b7d6647902b93d5883d621d9787dca80fa573434f6612",
-      "size": 2379
+      "sha256": "2cf017b0e150c72c45d556e821036df5aa2a6b26a78bd1d353b0eae352a02fef",
+      "size": 1023
     },
     {
       "path": "kubejs/server_scripts/03_combat/forge_workshop_gui.js",
@@ -14562,8 +14562,8 @@
     },
     {
       "path": "kubejs/server_scripts/07_recipes_filters/filter_hazennstuff.js",
-      "sha256": "d3a45477c3ab29979b35f78465fc85fa238175f8b4f7c9f5d0841d2107377ef7",
-      "size": 16740
+      "sha256": "9245fde73d8154324cd9f566c621159fcb9759e9166e9ca62f05a214445fd3ac",
+      "size": 16788
     },
     {
       "path": "kubejs/server_scripts/07_recipes_filters/general_recipes.js",
@@ -16157,8 +16157,8 @@
     },
     {
       "path": "moonlight-global-datapacks/aincrad_mobs/data/aincrad/loot_table/bosses/boss_f5_warlord.json",
-      "sha256": "39cca40faee5890faf54b218b6d5ec37ce70331242e4a9874de5ab1d1cbbc62b",
-      "size": 4698
+      "sha256": "f6b6c72fd380037453653a69faae5dce6e91a61300de36080ad5ea31fda20b13",
+      "size": 4810
     },
     {
       "path": "moonlight-global-datapacks/aincrad_mobs/data/aincrad/loot_table/champions/champion_f1.json",

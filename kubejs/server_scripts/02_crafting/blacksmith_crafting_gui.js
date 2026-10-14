@@ -304,16 +304,16 @@ const WORKSHOP_FORGE_RECIPES = [
     { id: 'minecraft:iron_boots', name: 'Железные Сапоги', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 4, extra: null, extraName: null, extraCount: 0 },
 
     // Бригантина Наемника (ДД)
-    { id: 'kubejs:brigandine_helmet', name: 'Шлем Наемника (Бригантина)', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 4, extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 2 },
-    { id: 'kubejs:brigandine_chestplate', name: 'Бригантина Наемника', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 7, extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 4 },
-    { id: 'kubejs:brigandine_leggings', name: 'Поножи Наемника (Бригантина)', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 6, extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 3 },
-    { id: 'kubejs:brigandine_boots', name: 'Сапоги Наемника (Бригантина)', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 3, extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 2 },
+    { id: 'kubejs:iron_brigandine_helmet', name: 'Шлем Наемника (Бригантина)', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 4, extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 2 },
+    { id: 'kubejs:iron_brigandine_chestplate', name: 'Бригантина Наемника', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 7, extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 4 },
+    { id: 'kubejs:iron_brigandine_leggings', name: 'Поножи Наемника (Бригантина)', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 6, extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 3 },
+    { id: 'kubejs:iron_brigandine_boots', name: 'Сапоги Наемника (Бригантина)', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 3, extra: 'minecraft:leather', extraName: 'Кожаная Подкладка', extraCount: 2 },
 
     // Медный сет Разведчика (Agility)
-    { id: 'kubejs:scout_hood', name: 'Капюшон Разведчика', ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', ingotCount: 3, extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 3 },
-    { id: 'kubejs:scout_tunic', name: 'Куртка Разведчика', ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', ingotCount: 6, extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 5 },
-    { id: 'kubejs:scout_pants', name: 'Штаны Разведчика', ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', ingotCount: 5, extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 4 },
-    { id: 'kubejs:scout_boots', name: 'Сапоги Разведчика', ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', ingotCount: 3, extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 2 },
+    { id: 'kubejs:scout_leather_helmet', name: 'Капюшон Разведчика', ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', ingotCount: 3, extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 3 },
+    { id: 'kubejs:scout_leather_chestplate', name: 'Куртка Разведчика', ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', ingotCount: 6, extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 5 },
+    { id: 'kubejs:scout_leather_leggings', name: 'Штаны Разведчика', ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', ingotCount: 5, extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 4 },
+    { id: 'kubejs:scout_leather_boots', name: 'Сапоги Разведчика', ingot: 'minecraft:copper_ingot', ingotName: 'Медный Слиток', ingotCount: 3, extra: 'minecraft:leather', extraName: 'Дубленая Кожа', extraCount: 2 },
 
     // Стальной Сет Рыцаря (Тяжелый Танк)
     { id: 'kubejs:steel_knight_helmet', name: 'Шлем Рыцаря Границы', ingot: 'kubejs:steel_ingot', ingotName: 'Стальной Слиток', ingotCount: 5, extra: 'minecraft:diamond', extraName: 'Алмазное Усиление', extraCount: 1 },

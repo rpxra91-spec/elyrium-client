@@ -18,20 +18,9 @@
 ServerEvents.recipes(event => {
 
     // --------------------------------------------------------------------------
-    // 0. АДСКАЯ НАКОВАЛЬНЯ (infernal_anvil) - КУЗНИЦА НЕЗЕРА (TIER 4)
+    // 0. АДСКАЯ НАКОВАЛЬНЯ (УСТАРЕЛО: Заменена на kubejs:void_anvil в steel_metallurgy_recipes.js)
     // --------------------------------------------------------------------------
-    event.shaped('kubejs:infernal_anvil', [
-        'CAC',
-        'BNB',
-        'OZO'
-    ], {
-        C: 'skd:cinder_alloy_ingot',
-        A: 'minecraft:anvil',
-        B: 'minecraft:blaze_rod',
-        N: 'minecraft:netherite_scrap',
-        O: 'minecraft:crying_obsidian',
-        Z: 'minecraft:obsidian'
-    }).id('elyrium:crafting/infernal_anvil');
+    // event.shaped('kubejs:infernal_anvil', ...).id('elyrium:crafting/infernal_anvil');
 
     // --------------------------------------------------------------------------
     // 1. TIER 4: КУЗНЕЧНЫЙ ОСЕЛОК I (smithing_stone_1: +1..+2) - НЕЗЕР

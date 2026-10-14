@@ -7,65 +7,10 @@
 // - Стол Кузнеца (Smithing Bench): 4 доски + 2 слитка (железо/медь/кремень).
 // ==============================================================================
 
+// NOTE: Legacy recipes disabled. Workstations (blacksmith_workbench, blacksmith_hearth)
+// are registered and crafted via steel_metallurgy_recipes.js in v0.4.35+
 ServerEvents.recipes(event => {
-    // 1. КУЗНЕЧНЫЙ ГОРН (Coal recipe)
-    event.shaped('kubejs:forge_hearth', [
-        'CCC',
-        'CFC',
-        'CCC'
-    ], {
-        C: '#minecraft:stone_tool_materials',
-        F: 'minecraft:coal'
-    }).id('elyrium:crafting/forge_hearth_coal');
-
-    // 2. КУЗНЕЧНЫЙ ГОРН (Charcoal recipe)
-    event.shaped('kubejs:forge_hearth', [
-        'CCC',
-        'CFC',
-        'CCC'
-    ], {
-        C: '#minecraft:stone_tool_materials',
-        F: 'minecraft:charcoal'
-    }).id('elyrium:crafting/forge_hearth_charcoal');
-
-    // 3. КУЗНЕЧНЫЙ ГОРН (Furnace + Clay/Iron alternate)
-    event.shaped('kubejs:forge_hearth', [
-        'III',
-        'CFC',
-        'CCC'
-    ], {
-        I: 'minecraft:iron_ingot',
-        C: 'minecraft:clay_ball',
-        F: 'minecraft:furnace'
-    }).id('elyrium:crafting/forge_hearth_furnace');
-
-    // 4. СТОЛ КУЗНЕЦА (Iron Ingots)
-    event.shaped('kubejs:smithing_bench', [
-        'II ',
-        'PP ',
-        'PP '
-    ], {
-        I: 'minecraft:iron_ingot',
-        P: '#minecraft:planks'
-    }).id('elyrium:crafting/smithing_bench_iron');
-
-    // 5. СТОЛ КУЗНЕЦА (Copper Ingots - Early Camp)
-    event.shaped('kubejs:smithing_bench', [
-        'CC ',
-        'PP ',
-        'PP '
-    ], {
-        C: 'minecraft:copper_ingot',
-        P: '#minecraft:planks'
-    }).id('elyrium:crafting/smithing_bench_copper');
-
-    // 6. СТОЛ КУЗНЕЦА (Flint - Primitive Starter)
-    event.shaped('kubejs:smithing_bench', [
-        'FF ',
-        'PP ',
-        'PP '
-    ], {
-        F: 'minecraft:flint',
-        P: '#minecraft:planks'
-    }).id('elyrium:crafting/smithing_bench_flint');
+    // Legacy recipes replaced by steel_metallurgy_recipes.js:
+    // kubejs:blacksmith_workbench, kubejs:blacksmith_hearth, kubejs:infernal_crucible, kubejs:void_anvil
 });
+
