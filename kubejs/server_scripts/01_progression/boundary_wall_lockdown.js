@@ -1,5 +1,5 @@
 // ==============================================================================
-// ⚡ ELYRIUM: BOUNDARY WALL LOCKDOWN & DEFENSE MATRIX (PHASE 16 / CANON 11 TIERS)
+// ⚡ ELYRIUM: BOUNDARY WALL LOCKDOWN & DEFENSE MATRIX (CANON 8 TIERS)
 // Minecraft 1.21.1 NeoForge | KubeJS Server Script
 // ==============================================================================
 // 1. 8 Overworld Boundary Walls:
@@ -31,10 +31,10 @@ const BOUNDARY_DATA = [
         tier: 1,
         radius: 1500,
         name: 'Рубеж I (Колыбель Цивилизации ➔ Пепельные Рубежи)',
-        primarySeal: 'skd_sector1_completed',
-        altSeals: ['skd_tier1_completed'],
-        bossName: 'Хранитель Сектора I (Коболедиатор / Древний Остан / Малгарос)',
-        warnMsg: '§c⚡ Древний Барьер Рубежа I не пропускает вас! Одолейте Хранителя Сектора I.'
+        primarySeal: 'skd_tier1_completed',
+        altSeals: ['skd_sector1_completed'],
+        bossName: 'Хранитель Сектора I (Коболедиатор / Древний Остан / Левиафан)',
+        warnMsg: '§c⚡ Древний Барьер Рубежа I не пропускает вас! Одолейте Хранителя Сектора I (Tier 1).'
     },
     {
         tier: 2,
@@ -42,62 +42,62 @@ const BOUNDARY_DATA = [
         name: 'Рубеж II (Пепельные Рубежи ➔ Предгорья Эфира)',
         primarySeal: 'skd_tier2_completed',
         altSeals: [],
-        bossName: 'Предвестник (The Harbinger)',
-        warnMsg: '§c⚡ Древний Барьер Рубежа II не пропускает вас! Одолейте Предвестника (Tier 2).'
+        bossName: 'Владыка Преисподней (Netherite Monstrosity / Ignis, Tier 2)',
+        warnMsg: '§c⚡ Древний Барьер Рубежа II не пропускает вас! Покорите пламя Преисподней (Tier 2).'
     },
     {
         tier: 3,
         radius: 8500,
         name: 'Рубеж III (Предгорья Эфира ➔ Разломы Бездны)',
         primarySeal: 'skd_tier3_completed',
-        altSeals: ['skd_tier4_completed'],
-        bossName: 'Титан Малгарос / Левиафан (Tier 3)',
-        warnMsg: '§c⚡ Древний Барьер Рубежа III не пропускает вас! Снимите печать Черной Цитадели (Tier 3).'
+        altSeals: [],
+        bossName: 'Хранители Эфира (Sun Spirit / Valkyrie Queen, Tier 3)',
+        warnMsg: '§c⚡ Древний Барьер Рубежа III не пропускает вас! Покорите Небеса Эфира (Tier 3).'
     },
     {
         tier: 4,
         radius: 13500,
         name: 'Рубеж IV (Разломы Бездны ➔ Звездный Фронтир)',
         primarySeal: 'skd_tier4_completed',
-        altSeals: ['skd_tier5_completed'],
-        bossName: 'Netherite Monstrosity / Ignis (Tier 4)',
-        warnMsg: '§c⚡ Древний Барьер Рубежа IV не пропускает вас! Покорите пламя Преисподней (Tier 4).'
+        altSeals: [],
+        bossName: 'Владыка Края (Ender Dragon / Ender Guardian, Tier 4)',
+        warnMsg: '§c⚡ Древний Барьер Рубежа IV не пропускает вас! Одолейте Владык Бездны Края (Tier 4).'
     },
     {
         tier: 5,
         radius: 19500,
         name: 'Рубеж V (Звездный Фронтир ➔ Скалковые Пустоши)',
         primarySeal: 'skd_tier5_completed',
-        altSeals: ['skd_tier6_completed'],
-        bossName: 'Sun Spirit / Valkyrie Queen (Tier 5)',
-        warnMsg: '§c⚡ Древний Барьер Рубежа V не пропускает вас! Покорите Небеса Эфира (Tier 5).'
+        altSeals: [],
+        bossName: 'Титан Звезд (Starlight Golem / Lunar Beast, Tier 5)',
+        warnMsg: '§c⚡ Древний Барьер Рубежа V не пропускает вас! Одолейте Титана Звезд (Tier 5).'
     },
     {
         tier: 6,
         radius: 26000,
         name: 'Рубеж VI (Скалковые Пустоши ➔ Священный Эдем)',
         primarySeal: 'skd_tier6_completed',
-        altSeals: ['skd_tier7_completed'],
-        bossName: 'Ender Dragon / Ender Guardian (Tier 6)',
-        warnMsg: '§c⚡ Древний Барьер Рубежа VI не пропускает вас! Одолейте Владык Бездны Края (Tier 6).'
+        altSeals: [],
+        bossName: 'Хранитель Глубинной Тьмы (Warden / Древний Сталкер, Tier 6)',
+        warnMsg: '§c⚡ Древний Барьер Рубежа VI не пропускает вас! Покорите Глубины Бездны (Tier 6).'
     },
     {
         tier: 7,
         radius: 31000,
         name: 'Рубеж VII (Священный Эдем ➔ Пределы Мортума)',
         primarySeal: 'skd_tier7_completed',
-        altSeals: ['skd_tier8_completed'],
-        bossName: 'Starlight Golem / Lunar Beast (Tier 7)',
-        warnMsg: '§c⚡ Древний Барьер Рубежа VII не пропускает вас! Одолейте Титана Звезд (Tier 7).'
+        altSeals: [],
+        bossName: 'Исполины Эдема и Диколесья (Eden Titans, Tier 7)',
+        warnMsg: '§c⚡ Древний Барьер Рубежа VII не пропускает вас! Одолейте Исполинов Эдема (Tier 7).'
     },
     {
         tier: 8,
         radius: 35000,
         name: 'Рубеж VIII (Пределы Мортума ➔ Зона Искажения)',
         primarySeal: 'skd_tier8_completed',
-        altSeals: ['skd_tier10_completed'],
-        bossName: 'Warden Бездны / Древний Сталкер (Tier 8)',
-        warnMsg: '§c⚡ Древний Барьер Рубежа VIII не пропускает вас! Покорите Глубины Бездны (Tier 8).'
+        altSeals: [],
+        bossName: 'Владыка Смерти Мортума (Ancient Entity, Tier 8)',
+        warnMsg: '§c⚡ Древний Барьер Рубежа VIII не пропускает вас! Сокрушите Владыку Смерти Мортума (Tier 8).'
     }
 ];
 
@@ -504,10 +504,16 @@ PlayerEvents.chat(event => {
 
     if (msg === '.boundary' || msg === '!boundary' || msg === '.рубеж' || msg === '!рубеж' ||
         msg === '.sector1' || msg === '!sector1') {
-        player.tell(Text.gold('══════════════ [🌍 ЕДИНЫЙ ВЕРХНИЙ МИР: ТИР 1] ══════════════'));
-        player.tell(Text.green('✦ Верхний Мир является единым бесшовным пространством (Tier 1).'));
-        player.tell(Text.white('  Внутренние стены отключены для свободного выживания и MineColonies.'));
-        player.tell(Text.yellow('  Для проверки прогрессии по 8 тирам используйте: ').append(Text.aqua('.progression')));
+        let dist = Math.round(Math.hypot(player.x, player.z));
+        player.tell(Text.gold('══════════════ [🌍 РУБЕЖИ И СЕКТОРА ВЕРХНЕГО МИРА] ══════════════'));
+        player.tell(Text.yellow(`📍 Ваши координаты: [X: ${Math.round(player.x)}, Z: ${Math.round(player.z)}] | Радиус R = ${dist}м`));
+        for (let i = 0; i < BOUNDARY_DATA.length; i++) {
+            let b = BOUNDARY_DATA[i];
+            let unlocked = hasUnlockedBoundary(player, i);
+            let icon = unlocked ? '§a[✔ ОТКРЫТ]' : '§c[✖ БЛОКИРОВАН]';
+            player.tell(Text.of(`${icon} §eРубеж ${b.tier} (R=${b.radius}м): §f${b.name.split(' (')[0]} §7[Требуется: ${b.bossName}]`));
+        }
+        player.tell(Text.gray('Подробная прогрессия по измерениям доступна по команде: ').append(Text.aqua('.progression')));
         player.tell(Text.gold('════════════════════════════════════════════════════════════════'));
         event.cancel();
         return;

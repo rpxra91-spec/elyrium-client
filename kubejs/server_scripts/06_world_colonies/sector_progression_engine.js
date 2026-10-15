@@ -27,7 +27,7 @@ const SECTOR_DEFINITIONS = [
         minR: 1500,
         maxR: 4500,
         requiredTier: 2,
-        sealKey: 'skd_sector1_completed',
+        sealKey: 'skd_tier1_completed',
         titleColor: 'red',
         featureDesc: 'Инфернальное дыхание: мобы огнеупорны и поджигают при ударе',
         mobPool: ['minecraft:wither_skeleton', 'minecraft:magma_cube', 'minecraft:piglin_brute', 'minecraft:zombified_piglin']
@@ -39,7 +39,7 @@ const SECTOR_DEFINITIONS = [
         minR: 4500,
         maxR: 8500,
         requiredTier: 3,
-        sealKey: 'skd_tier4_completed',
+        sealKey: 'skd_tier2_completed',
         titleColor: 'aqua',
         featureDesc: 'Эфирная гравитация: легкие прыжки, мобы не получают урона от падений',
         mobPool: ['aether:cockatrice', 'aether:blue_swet', 'aether:golden_swet', 'aether:evil_whirlwind']
@@ -51,7 +51,7 @@ const SECTOR_DEFINITIONS = [
         minR: 8500,
         maxR: 13500,
         requiredTier: 4,
-        sealKey: 'skd_tier5_completed',
+        sealKey: 'skd_tier3_completed',
         titleColor: 'dark_purple',
         featureDesc: 'Пространственный сдвиг: мобы блинкуются за спину при получении урона',
         mobPool: ['minecraft:enderman', 'minecraft:endermite', 'minecraft:phantom']
@@ -63,7 +63,7 @@ const SECTOR_DEFINITIONS = [
         minR: 13500,
         maxR: 19500,
         requiredTier: 5,
-        sealKey: 'skd_tier6_completed',
+        sealKey: 'skd_tier4_completed',
         titleColor: 'light_purple',
         featureDesc: 'Звездное сияние: мобы двигаются на 20% быстрее и мерцают звездным светом',
         mobPool: ['eternal_starlight:boarwarf', 'eternal_starlight:lonestar_skeleton', 'eternal_starlight:freeze', 'eternal_starlight:astral_golem']
@@ -75,7 +75,7 @@ const SECTOR_DEFINITIONS = [
         minR: 19500,
         maxR: 26000,
         requiredTier: 6,
-        sealKey: 'skd_tier7_completed',
+        sealKey: 'skd_tier5_completed',
         titleColor: 'dark_aqua',
         featureDesc: 'Скалк-резонанс: атаки мобов пробивают броню, бег вызывает импульсы Тьмы',
         mobPool: ['deeperdarker:shattered', 'deeperdarker:stalker', 'deeperdarker:sculk_snapper', 'deeperdarker:sculk_centipede']
@@ -87,7 +87,7 @@ const SECTOR_DEFINITIONS = [
         minR: 26000,
         maxR: 31000,
         requiredTier: 7,
-        sealKey: 'skd_tier8_completed',
+        sealKey: 'skd_tier6_completed',
         titleColor: 'gold',
         featureDesc: 'Божественная витальность: мобы обладают непрерывной регенерацией здоровья',
         mobPool: ['divinerpg:eden_cadillion', 'divinerpg:eden_tomo', 'divinerpg:madivel', 'divinerpg:wildwood_golem', 'divinerpg:sun_archer']
@@ -99,7 +99,7 @@ const SECTOR_DEFINITIONS = [
         minR: 31000,
         maxR: 35000,
         requiredTier: 8,
-        sealKey: 'skd_tier10_completed',
+        sealKey: 'skd_tier7_completed',
         titleColor: 'dark_red',
         featureDesc: 'Некротическая аура: удары накладывают иссушение, вампиризм атак мобов',
         mobPool: ['divinerpg:mortum_cadillion', 'divinerpg:soul_stealer', 'divinerpg:soul_fiend', 'divinerpg:demon_of_darkness']
@@ -129,7 +129,8 @@ function hasSectorAccess(player, sector) {
 
     let data = player.persistentData;
     if (data.getBoolean(sector.sealKey)) return true;
-    if (data.getBoolean('skd_tier10_completed')) return true; // Max progression has all
+    if (sector.sealKey === 'skd_tier1_completed' && data.getBoolean('skd_sector1_completed')) return true;
+    if (data.getBoolean('skd_tier8_completed')) return true; // Max progression has all
     return false;
 }
 

@@ -3,7 +3,7 @@
 // ==============================================================================
 
 // ==============================================================================
-// 🏛️ ELYRIUM: SECTOR WALL & GRAND GATEHOUSE PALETTES (11 TIERS CANON)
+// 🏛️ ELYRIUM: SECTOR WALL & GRAND GATEHOUSE PALETTES (8 TIERS CANON)
 // Verified by Explorer M1-3 | 112/112 Block IDs strictly verified
 // ==============================================================================
 

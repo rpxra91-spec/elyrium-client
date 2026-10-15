@@ -1,8 +1,8 @@
 {
-  "version": "0.4.37",
+  "version": "0.4.38",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-15T07:15:19.851163+00:00",
+  "generated_at": "2026-10-15T15:50:57.819871+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -14117,8 +14117,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/boundary_wall_lockdown.js",
-      "sha256": "2c0df30ccb13ecc2a1b7291a5d067b0ac3305c5e5056ef9036d84070c9126421",
-      "size": 25019
+      "sha256": "9e461254ae2ef84827848e9cbb7542a060931f832cf5af1355dc56e7bd94db08",
+      "size": 25454
     },
     {
       "path": "kubejs/server_scripts/01_progression/diamond_mining_barrier.js",
@@ -14152,8 +14152,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/sector_wall_generator.js",
-      "sha256": "8e27d244f2b25240db5bdff8c24921c2188031e4dcd786f30f4ca41631f7d419",
-      "size": 31976
+      "sha256": "c7d5820457570f6b2e7dc4873d4fcc99fbd5746696a79d7e62d6d80aab1fcf96",
+      "size": 31975
     },
     {
       "path": "kubejs/server_scripts/01_progression/world_progression_gossip.js",
@@ -14537,8 +14537,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/sector_progression_engine.js",
-      "sha256": "51608e12a3843ec64f00f15900fba1914ea0468bee22f799f058c10680773990",
-      "size": 15211
+      "sha256": "0f89fd59b431d3733edd33dc568b1d7bfd0a40b9e3ab9a40cc1e2e771a8d03f2",
+      "size": 15314
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/server_idle_system.js",
