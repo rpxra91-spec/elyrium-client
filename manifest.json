@@ -1,8 +1,8 @@
 {
-  "version": "0.4.36",
+  "version": "0.4.37",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-14T11:07:24.522060+00:00",
+  "generated_at": "2026-10-15T07:15:19.851163+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -14167,8 +14167,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_crafting_gui.js",
-      "sha256": "65c2be52909590d187a2f271eca30905e9e78487ba9827621e761f02fb36cc71",
-      "size": 119164
+      "sha256": "8703edfe19366a6981437395dd42e3440e13c7afa04d7b8ccef456cc069b8d2c",
+      "size": 119177
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
@@ -14177,8 +14177,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/steel_metallurgy_recipes.js",
-      "sha256": "9e3bd8949fda75faae960b66add8cc5a8a94a0db9e8445164be50c5f811deb22",
-      "size": 5939
+      "sha256": "eadb91eef47d2a90773ee2f68f42d4f4e8b9f1a4da69ee8a99aa0bb566034560",
+      "size": 5976
     },
     {
       "path": "kubejs/server_scripts/02_magic/elemental_altar_gui.js",
@@ -14237,8 +14237,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_recipes.js",
-      "sha256": "c533e1165ff76cfbf0f5fc1b985a45e7e7d58578adec67a6812aec8defe6d952",
-      "size": 19478
+      "sha256": "d92b940c6d2cb91b31fa2df64a99d089591ff323782884615643e2cd5cc32c76",
+      "size": 18169
     },
     {
       "path": "kubejs/server_scripts/03_combat/forge_multiblock_recipes.js",
@@ -14662,8 +14662,8 @@
     },
     {
       "path": "kubejs/startup_scripts/smithing_reinforcement_items.js",
-      "sha256": "c5abea0e666b2f594ec2d68d7e80740ceb89cd713f494ceb36a5104ca0d75aaf",
-      "size": 5036
+      "sha256": "150539e9bf41bd4b802fc9797adaefba8d794c78f07e5ffb0dc540c5489c00eb",
+      "size": 5158
     },
     {
       "path": "kubejs/startup_scripts/tier4_items.js",

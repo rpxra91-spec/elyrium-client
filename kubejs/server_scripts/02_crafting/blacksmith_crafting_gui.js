@@ -375,8 +375,8 @@ function openUnifiedWorkshopGUI(player, defaultTab, blockPos) {
         '🔧 [ Ремонт ]',
         '🔥 [ Очаг ]',
         '🌋 [ Горн ]',
-        '🌌 [ Наковальня ]',
-        '🛠 [ Оружейный Стол ]'
+        '🌌 [ Наковальня Бездны ]',
+        '🛠 [ Оружейное Дело ]'
     ];
 
     let fullTitle = '\uE001§r§6§lМАСТЕРСКАЯ ЭЛИРИУМА §7✦ ' + tabNames[sess.tab];

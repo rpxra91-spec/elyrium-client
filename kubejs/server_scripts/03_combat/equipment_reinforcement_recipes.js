@@ -23,81 +23,10 @@ ServerEvents.recipes(event => {
     // event.shaped('kubejs:infernal_anvil', ...).id('elyrium:crafting/infernal_anvil');
 
     // --------------------------------------------------------------------------
-    // 1. TIER 4: КУЗНЕЧНЫЙ ОСЕЛОК I (smithing_stone_1: +1..+2) - НЕЗЕР
+    // 1. TIER 4: КУЗНЕЧНЫЙ ОСЕЛОК БЕЗДНЫ I (smithing_stone_1: +1..+3) - КРАЙ (THE END)
     // --------------------------------------------------------------------------
-    // Вариант A: Пепельный Сплав + Базальт + Огненный порошок
+    // Вариант A: Пурпурный блок + Эндерняк + Жемчуг Края (2 шт.)
     event.shaped('2x kubejs:smithing_stone_1', [
-        ' B ',
-        'PCP',
-        ' B '
-    ], {
-        C: 'skd:cinder_alloy_ingot',
-        B: 'minecraft:basalt',
-        P: 'minecraft:blaze_powder'
-    }).id('elyrium:crafting/smithing_stone_1_cinder');
-
-    // Вариант B: Незеритовый обломок + Базальт + Магма (4 шт. - повышенный выход)
-    event.shaped('4x kubejs:smithing_stone_1', [
-        ' B ',
-        'MNM',
-        ' B '
-    ], {
-        N: 'minecraft:netherite_scrap',
-        B: 'minecraft:basalt',
-        M: 'minecraft:magma_block'
-    }).id('elyrium:crafting/smithing_stone_1_netherite');
-
-    // Вариант C: Адский Кирпич + Базальт + Огненный порошок (1 шт.)
-    event.shaped('1x kubejs:smithing_stone_1', [
-        ' B ',
-        'PKP',
-        ' B '
-    ], {
-        K: 'minecraft:nether_brick',
-        B: 'minecraft:basalt',
-        P: 'minecraft:blaze_powder'
-    }).id('elyrium:crafting/smithing_stone_1_nether_brick');
-
-    // --------------------------------------------------------------------------
-    // 2. TIER 5: НЕБЕСНЫЙ КАМЕНЬ II (smithing_stone_2: +3..+4) - ЭФИР (THE AETHER)
-    // --------------------------------------------------------------------------
-    // Вариант A: Занорит + Амброзиум
-    event.shaped('2x kubejs:smithing_stone_2', [
-        ' A ',
-        'ZZZ',
-        ' A '
-    ], {
-        A: 'aether:ambrosium_shard',
-        Z: 'aether:zanite_gemstone'
-    }).id('elyrium:crafting/smithing_stone_2_zanite');
-
-    // Вариант B: Зачарованный Гравитит + Амброзиум (4 шт. - высший выход)
-    event.shaped('4x kubejs:smithing_stone_2', [
-        ' G ',
-        'AZA',
-        ' G '
-    ], {
-        G: 'aether:enchanted_gravitite',
-        Z: 'aether:zanite_gemstone',
-        A: 'aether:ambrosium_shard'
-    }).id('elyrium:crafting/smithing_stone_2_gravitite');
-
-    // --------------------------------------------------------------------------
-    // 3. TIER 6: ПУСТОТНЫЙ КАМЕНЬ III (smithing_stone_3: +5..+6) - КРАЙ (THE END)
-    // --------------------------------------------------------------------------
-    // Вариант A: Пурпур + Эндерняк + Дыхание Дракона (2 шт.)
-    event.shaped('2x kubejs:smithing_stone_3', [
-        ' P ',
-        'EBE',
-        ' P '
-    ], {
-        P: 'minecraft:purpur_block',
-        E: 'minecraft:end_stone',
-        B: 'minecraft:dragon_breath'
-    }).id('elyrium:crafting/smithing_stone_3_dragon_breath');
-
-    // Вариант B: Пурпур + Эндерняк + Жемчуг Края (1 шт.)
-    event.shaped('1x kubejs:smithing_stone_3', [
         ' P ',
         'ESE',
         ' P '
@@ -105,55 +34,83 @@ ServerEvents.recipes(event => {
         P: 'minecraft:purpur_block',
         E: 'minecraft:end_stone',
         S: 'minecraft:ender_pearl'
-    }).id('elyrium:crafting/smithing_stone_3_end_pearl');
+    }).id('elyrium:crafting/smithing_stone_1_end_pearl');
+
+    // Вариант B: Пурпурный блок + Эндерняк + Дыхание Дракона (4 шт. - высший выход)
+    event.shaped('4x kubejs:smithing_stone_1', [
+        ' P ',
+        'EBE',
+        ' P '
+    ], {
+        P: 'minecraft:purpur_block',
+        E: 'minecraft:end_stone',
+        B: 'minecraft:dragon_breath'
+    }).id('elyrium:crafting/smithing_stone_1_dragon_breath');
+
+    // Вариант C: Панцирь Шалкера + Кирпичи Края + Жемчуг Края (4 шт.)
+    event.shaped('4x kubejs:smithing_stone_1', [
+        ' S ',
+        'EPE',
+        ' S '
+    ], {
+        S: 'minecraft:shulker_shell',
+        E: 'minecraft:end_stone_bricks',
+        P: 'minecraft:ender_pearl'
+    }).id('elyrium:crafting/smithing_stone_1_shulker');
 
     // --------------------------------------------------------------------------
-    // 4. TIER 7-8: АСТРАЛЬНЫЙ КАМЕНЬ IV (smithing_stone_4: +7..+8)
+    // 2. TIER 5: ЗАКАЛОЧНЫЙ КАМЕНЬ ЗВЕЗД II (smithing_stone_2: +4..+6) - ETERNAL STARLIGHT
     // --------------------------------------------------------------------------
-    // Вариант A: Слиток Эфиросента (Eternal Starlight) + Осколки Эха + Катализатор Скалка (2 шт.)
-    event.shaped('2x kubejs:smithing_stone_4', [
-        ' M ',
-        'ECE',
-        ' M '
+    // Вариант A: Слиток Эфиросента + Осколки Звездных Кристаллов (2 шт.)
+    event.shaped('2x kubejs:smithing_stone_2', [
+        ' R ',
+        'SMS',
+        ' B '
     ], {
         M: 'eternal_starlight:aethersent_ingot',
-        E: 'minecraft:echo_shard',
-        C: 'minecraft:sculk_catalyst'
-    }).id('elyrium:crafting/smithing_stone_4_aethersent');
+        R: 'eternal_starlight:red_starlight_crystal_shard',
+        B: 'eternal_starlight:blue_starlight_crystal_shard',
+        S: 'minecraft:purpur_block'
+    }).id('elyrium:crafting/smithing_stone_2_aethersent');
 
-    // Вариант B: Слиток Големной Стали (Golem Steel Ingot) (2 шт.)
-    event.shaped('2x kubejs:smithing_stone_4', [
+    // Вариант B: Слиток Големной Стали + Люминарит (4 шт.)
+    event.shaped('4x kubejs:smithing_stone_2', [
         ' M ',
-        'ECE',
+        'RSR',
         ' M '
     ], {
         M: 'eternal_starlight:golem_steel_ingot',
-        E: 'minecraft:echo_shard',
-        C: 'minecraft:sculk_catalyst'
-    }).id('elyrium:crafting/smithing_stone_4_golem_steel');
-
-    // Вариант C: Слиток Глубинного Серебра (Deepsilver Ingot) (2 шт.)
-    event.shaped('2x kubejs:smithing_stone_4', [
-        ' M ',
-        'ECE',
-        ' M '
-    ], {
-        M: 'eternal_starlight:deepsilver_ingot',
-        E: 'minecraft:echo_shard',
-        C: 'minecraft:sculk_catalyst'
-    }).id('elyrium:crafting/smithing_stone_4_deepsilver');
-
-    // Вариант D: Кристаллы Звездного Света (Красный + Синий) (1 шт.)
-    event.shaped('1x kubejs:smithing_stone_4', [
-        ' R ',
-        'ECE',
-        ' B '
-    ], {
         R: 'eternal_starlight:red_starlight_crystal_shard',
-        B: 'eternal_starlight:blue_starlight_crystal_shard',
+        S: 'minecraft:purpur_block'
+    }).id('elyrium:crafting/smithing_stone_2_golem_steel');
+
+    // --------------------------------------------------------------------------
+    // 3. TIER 6: НЕБЕСНЫЙ КАМЕНЬ ГЛУБИН III (smithing_stone_3: +7..+9) - DEEPER DARKER
+    // --------------------------------------------------------------------------
+    // Вариант A: Осколки Эха + Скалк-катализатор + Камень Бездны (2 шт.)
+    event.shaped('2x kubejs:smithing_stone_3', [
+        ' E ',
+        'SCS',
+        ' E '
+    ], {
         E: 'minecraft:echo_shard',
-        C: 'minecraft:sculk_catalyst'
-    }).id('elyrium:crafting/smithing_stone_4_crystals');
+        C: 'minecraft:sculk_catalyst',
+        S: 'minecraft:end_stone'
+    }).id('elyrium:crafting/smithing_stone_3_sculk_echo');
+
+    // --------------------------------------------------------------------------
+    // 4. TIER 7: АСТРАЛЬНЫЙ КАМЕНЬ ЭДЕМА IV (smithing_stone_4: +10..+12) - DIVINERPG EDEN
+    // --------------------------------------------------------------------------
+    // Вариант A: Самоцвет Эдема + Самоцвет Диколесья + Божественные Осколки (2 шт.)
+    event.shaped('2x kubejs:smithing_stone_4', [
+        ' E ',
+        'WSW',
+        ' E '
+    ], {
+        E: 'divinerpg:eden_gem',
+        W: 'divinerpg:wildwood_gem',
+        S: 'divinerpg:divine_shards'
+    }).id('elyrium:crafting/smithing_stone_4_divine');
 
     // --------------------------------------------------------------------------
     // 5. TIER 9-11: БОЖЕСТВЕННЫЙ КАМЕНЬ МОРТУМА V (smithing_stone_5: +9..+10)

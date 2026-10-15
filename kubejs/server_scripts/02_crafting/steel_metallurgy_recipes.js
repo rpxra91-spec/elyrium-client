@@ -134,11 +134,12 @@ ServerEvents.recipes(event => {
 
     event.shaped('kubejs:void_anvil', [
         'AAA',
-        ' E ',
+        'PEP',
         'OOO'
     ], {
         A: 'minecraft:anvil',
         E: 'minecraft:ender_eye',
+        P: 'minecraft:purpur_block',
         O: 'minecraft:obsidian'
     }).id('elyrium:crafting/void_anvil');
 });
