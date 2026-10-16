@@ -1,8 +1,8 @@
 {
-  "version": "0.4.38",
+  "version": "0.4.39",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-15T15:50:57.819871+00:00",
+  "generated_at": "2026-10-16T10:01:43.883592+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -14279,6 +14279,11 @@
       "path": "kubejs/server_scripts/03_combat/martial_arts_loot.js",
       "sha256": "561c0b142c97ea2e11b6bff40404f8ac57fd33a00e09411139dfd7f90e2e6718",
       "size": 34435
+    },
+    {
+      "path": "kubejs/server_scripts/03_combat/nomadic_world_bosses_engine.js",
+      "sha256": "0bfa268fa7bf0e28860b33661c46425b9deb30477a7bf17b14f33f8816b1ff84",
+      "size": 34614
     },
     {
       "path": "kubejs/server_scripts/03_combat/party_xp_share.js",
