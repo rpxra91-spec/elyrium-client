@@ -48,24 +48,20 @@ const NOMAD_CONFIG = {
         bandit_warlord: {
             id: 'bandit_warlord',
             displayName: '§6[★ Вожак] Атаман Черной Дубравы§r',
-            barTitle: 'Атаман Разбойников Черной Дубравы',
+            barTitle: 'Атаман Черной Дубравы (Королевский Драугр)',
             barColor: 'yellow',
-            entityType: 'minecraft:vindicator',
-            maxHp: 135,
+            entityType: 'cataclysm:royal_draugr', // Свирепый древний вожак в рогатом шлеме и меховых латах
+            maxHp: 140,
             speed: 0.28,
             attackDamage: 7,
             armor: 9,
             armorToughness: 3,
             mainHand: 'minecraft:iron_sword',
             offHand: 'minecraft:shield',
-            helmet: 'kubejs:scout_leather_helmet',
-            chest: 'kubejs:iron_brigandine_chestplate',
-            legs: 'kubejs:iron_brigandine_leggings',
-            feet: 'kubejs:scout_leather_boots',
             biomes: ['forest', 'plains', 'birch_forest', 'dark_forest'],
             minions: [
-                { type: 'minecraft:pillager', count: 2, mainHand: 'minecraft:crossbow' },
-                { type: 'minecraft:vindicator', count: 1, mainHand: 'minecraft:iron_axe' },
+                { type: 'cataclysm:draugr', count: 2, mainHand: 'minecraft:iron_axe' },
+                { type: 'minecraft:pillager', count: 1, mainHand: 'minecraft:crossbow' },
                 { type: 'minecraft:wolf', count: 1, aggressive: true }
             ],
             abilities: {
@@ -94,7 +90,8 @@ const NOMAD_CONFIG = {
             barTitle: 'Седогривый Вожак Стаи (Лютоволк-Альфа)',
             barColor: 'red',
             entityType: 'minecraft:wolf',
-            maxHp: 115,
+            scale: 1.35, // Увеличенный в 1.35 раза размер модели гигантского волка
+            maxHp: 120,
             speed: 0.35,
             attackDamage: 6,
             armor: 6,
@@ -125,23 +122,19 @@ const NOMAD_CONFIG = {
         fallen_deserter_knight: {
             id: 'fallen_deserter_knight',
             displayName: '§b[★ Вожак] Отверженный Рыцарь-Дезертир§r',
-            barTitle: 'Отверженный Рыцарь-Дезертир',
+            barTitle: 'Отверженный Рыцарь-Дезертир (Хранитель Цитадели)',
             barColor: 'blue',
-            entityType: 'minecraft:zombie',
-            maxHp: 155,
+            entityType: 'irons_spellbooks:citadel_keeper', // Монументальный закованный в железо темный рыцарь с 3D-геомоделью
+            maxHp: 160,
             speed: 0.24,
             attackDamage: 8,
             armor: 12,
             armorToughness: 4,
             mainHand: 'minecraft:iron_sword',
             offHand: 'minecraft:shield',
-            helmet: 'minecraft:iron_helmet',
-            chest: 'minecraft:iron_chestplate',
-            legs: 'minecraft:iron_leggings',
-            feet: 'minecraft:iron_boots',
             biomes: ['plains', 'meadow', 'sunflower_plains', 'river', 'beach'],
             minions: [
-                { type: 'minecraft:zombie', count: 2, helmet: 'minecraft:leather_helmet', mainHand: 'minecraft:iron_sword' }
+                { type: 'minecraft:zombie', count: 2, helmet: 'minecraft:iron_helmet', mainHand: 'minecraft:iron_sword' }
             ],
             abilities: {
                 shieldGuardReduction: 0.50, // блокирует 50% урона в лоб
@@ -238,6 +231,13 @@ function spawnNomadBoss(server, bossId, x, y, z, forced) {
         server.runCommandSilent(`attribute ${stringUuid} minecraft:movement_speed base set ${config.speed}`);
     }
     server.runCommandSilent(`attribute ${stringUuid} minecraft:follow_range base set 36`);
+    if (config.scale) {
+        server.runCommandSilent(`attribute ${stringUuid} minecraft:generic.scale base set ${config.scale}`);
+        server.runCommandSilent(`attribute ${stringUuid} minecraft:scale base set ${config.scale}`);
+    }
+    if (config.entityType === 'minecraft:wolf') {
+        server.runCommandSilent(`data merge entity ${stringUuid} {CollarColor:14b,AngryAt:[I;0,0,0,0],AngerTime:99999}`);
+    }
 
     // Reset current HP to max
     bossEntity.health = config.maxHp;
