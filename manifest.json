@@ -1,8 +1,8 @@
 {
-  "version": "0.4.40",
+  "version": "0.4.41",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-17T04:16:56.849229+00:00",
+  "generated_at": "2026-10-17T14:44:36.367405+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -14282,8 +14282,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/nomadic_world_bosses_engine.js",
-      "sha256": "86ed36369070901951f40014624b0267bea489b0b4c2147363d94232c0dcfdb6",
-      "size": 50606
+      "sha256": "3faac62af2d4c91bf46eab9b5de0e670a8b0f88d6617346174ef45703454582e",
+      "size": 77931
     },
     {
       "path": "kubejs/server_scripts/03_combat/party_xp_share.js",
