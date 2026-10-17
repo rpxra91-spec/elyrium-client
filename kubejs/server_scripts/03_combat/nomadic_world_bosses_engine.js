@@ -1,30 +1,25 @@
 // ==============================================================================
-// 🐺 ELYRIUM RPG: NOMADIC WORLD BOSSES ENGINE (КОЧЕВЫЕ МИРОВЫЕ ВОЖАКИ)
+// 🐺 ELYRIUM RPG: NOMADIC WARBANDS & FIELD CAMPS ENGINE (v1.2)
 // Minecraft 1.21.1 NeoForge | KubeJS Server Script
 // ==============================================================================
-// 1. Sector-Based Roaming Bosses:
-//    - Sector I (R = 250..1450m): Lightweight roaming bosses with small retinues.
+// 1. Sector-Based Roaming Warbands & Field Camps:
+//    - Sector I (R = 250..1450m): 4 Distinct Warbands with full role synergy.
 //    - Spawn protection around capital / origin (R < 250m is strictly forbidden).
-// 2. 3 Unique Sector I Boss Archetypes:
-//    - 🪓 bandit_warlord: Атаман Разбойников Черной Дубравы (Vindicator + Crossbowmen + Hound).
-//    - 🐺 direwolf_alpha: Седогривый Вожак Стаи (Alpha Wolf + Fierce Pack + Fear Howl).
-//    - 🛡️ fallen_deserter_knight: Отверженный Рыцарь-Дезертир (Knight + Squires + Shield Guard).
-// 3. Live Tuning & Configuration:
-//    - All HP, Armor, Speed, Damage, Minions, Cooldowns and Loot are declared in
-//      the NOMAD_CONFIG object below.
-//    - Modify values and execute `/kubejs reload server_scripts` to apply on the fly!
-// 4. Vanilla Bossbar & Audio Telegraphing:
-//    - Dynamic bossbar for players in combat radius (<= 32 blocks).
-//    - Distant war horn / drum call upon approaching.
-// 5. Anti-Trash RPG Loot:
-//    - Guaranteed Tier 1 Respec Shard (kubejs:respec_shard_copper).
-//    - Epoch crafting ingots & leathers.
-//    - Chance for Rank I Martial Arts Tablets and Cracked Elemental Stones.
-// 6. Admin Testing Suite:
-//    - /nomad spawn <boss_id> [x y z]
-//    - /nomad list
-//    - /nomad clear
-//    - /nomad testloot <boss_id>
+// 2. 4 Unique Warband Archetypes with 3D-Models from Mods:
+//    - 🪓 bandit_warlord: Атаман Черной Дубравы (Royal Draugr + Elite Shield Draugr + Koboleton Snipers + Amethyst Hound + Herbalist).
+//    - 🐺 direwolf_alpha: Седогривый Вожак Стаи (Alpha Wolf 1.35x + Glacon Beast + Lonestar Pathfinder + Fierce Wolves + Pack Shaman).
+//    - 🛡️ fallen_deserter_knight: Отверженный Рыцарь-Дезертир (Citadel Keeper + Heavy Squires + Sun Marksman + War Mastiff + Renegade Cryomancer).
+//    - ⛰️ mountain_brigand_gang: Ватага Горных Грабителей (Cyclops Overseer + Heavy Draugr Thug + Koboleton Skirmishers + Pack Ratlin + Arsonist Pyromancer).
+// 3. Dynamic Squad AI & Role Synergy:
+//    - Retinue actively defends Leader (aggro redirection upon leader hurt).
+//    - Retinue leashing (minions pull back if > 18 blocks away).
+//    - Leadership Lost debuff (Weakness & panic upon leader demise).
+// 4. Procedural Field Campsites:
+//    - Atmospheric campfire, sleeping rolls, supply barrels, and watch totem.
+//    - Clean cleanup protocol upon warband clear or expiration (Zero-Trash).
+// 5. Anti-Trash RPG Loot & Tuning:
+//    - Respec catalysts, epoch ingots, Martial Arts tablets, Elemental stones.
+//    - Live tuning via NOMAD_CONFIG and `/kubejs reload server_scripts`.
 // ==============================================================================
 
 // ==============================================================================
@@ -33,16 +28,17 @@
 const NOMAD_CONFIG = {
     enabled: true,
     checkIntervalTicks: 400,       // Интервал проверки спавна: каждые 20 сек
-    maxActivePerSector1: 2,        // Максимум активных вожаков в Секторе I одновременно
+    maxActivePerSector1: 3,        // Максимум активных банд в Секторе I одновременно
     spawnMinR: 250,                // Минимальный радиус от спавна (безопасная гавань)
     spawnMaxR: 1450,               // Максимальный радиус Сектора I (до стены 1500м)
     playerSearchRadiusMin: 45,     // Минимальная дистанция от игрока при спавне
     playerSearchRadiusMax: 75,     // Максимальная дистанция от игрока при спавне
     combatRadius: 32,              // Радиус активности боя и боссбара
-    bossDespawnTimeoutMinutes: 30, // Авто-уход босса, если бой не начат за 30 минут
+    bossDespawnTimeoutMinutes: 30, // Авто-уход банды, если бой не завершен за 30 минут
+    campSpawnChance: 0.85,         // Шанс развертывания лагерной стоянки вокруг костра
 
     // --------------------------------------------------------------------------
-    // ⚔️ БОССЫ СЕКТОРА I (OVERWORLD TIER 1)
+    // ⚔️ БОЕВЫЕ БАНДЫ СЕКТОРА I (OVERWORLD TIER 1)
     // --------------------------------------------------------------------------
     bosses: {
         bandit_warlord: {
@@ -50,7 +46,7 @@ const NOMAD_CONFIG = {
             displayName: '§6[★ Вожак] Атаман Черной Дубравы§r',
             barTitle: 'Атаман Черной Дубравы (Королевский Драугр)',
             barColor: 'yellow',
-            entityType: 'cataclysm:royal_draugr', // Свирепый древний вожак в рогатом шлеме и меховых латах
+            entityType: 'cataclysm:royal_draugr', // Северный вожак в рогатом шлеме и латах
             maxHp: 140,
             speed: 0.28,
             attackDamage: 7,
@@ -59,10 +55,16 @@ const NOMAD_CONFIG = {
             mainHand: 'minecraft:iron_sword',
             offHand: 'minecraft:shield',
             biomes: ['forest', 'plains', 'birch_forest', 'dark_forest'],
+            campType: 'woodland_camp',
             minions: [
-                { type: 'cataclysm:draugr', count: 2, mainHand: 'minecraft:iron_axe' },
-                { type: 'minecraft:pillager', count: 1, mainHand: 'minecraft:crossbow' },
-                { type: 'minecraft:wolf', count: 1, aggressive: true }
+                // 1. Щитовик Авангарда
+                { type: 'cataclysm:elite_draugr', count: 1, role: 'tank', name: '§eЭлитный Драугр-Щитовик§r', hp: 45, armor: 8, mainHand: 'minecraft:iron_axe', offHand: 'minecraft:shield' },
+                // 2. Стрелки-Застрельщики
+                { type: 'cataclysm:koboleton', count: 2, role: 'ranged', name: '§fКобольд-Снайпер§r', hp: 26, armor: 4, mainHand: 'minecraft:crossbow' },
+                // 3. Зверь-Преследователь
+                { type: 'cataclysm:amethyst_crab', count: 1, role: 'beast', name: '§dПещерный Краб-Гончая§r', hp: 38, armor: 6, dmg: 5 },
+                // 4. Саппорт / Мини-Элита
+                { type: 'irons_spellbooks:apothecarist', count: 1, role: 'caster', name: '§aПолевой Травник Банды§r', hp: 32, armor: 4 }
             ],
             abilities: {
                 warCryCooldown: 35, // секунд
@@ -72,7 +74,7 @@ const NOMAD_CONFIG = {
                 guaranteed: [
                     { item: 'kubejs:respec_shard_copper', count: 1 },
                     { item: 'minecraft:copper_ingot', min: 4, max: 8 },
-                    { item: 'minecraft:iron_ingot', min: 2, max: 5 },
+                    { item: 'minecraft:iron_ingot', min: 3, max: 6 },
                     { item: 'minecraft:leather', min: 3, max: 6 }
                 ],
                 chanceLoot: [
@@ -90,15 +92,23 @@ const NOMAD_CONFIG = {
             barTitle: 'Седогривый Вожак Стаи (Лютоволк-Альфа)',
             barColor: 'red',
             entityType: 'minecraft:wolf',
-            scale: 1.35, // Увеличенный в 1.35 раза размер модели гигантского волка
+            scale: 1.35, // Увеличенный размер Лютоволка
             maxHp: 120,
             speed: 0.35,
             attackDamage: 6,
             armor: 6,
             armorToughness: 2,
             biomes: ['taiga', 'snowy_taiga', 'plains', 'forest', 'meadow'],
+            campType: 'den_camp',
             minions: [
-                { type: 'minecraft:wolf', count: 4, aggressive: true, hp: 28, dmg: 4 }
+                // 1. Зверь Авангарда
+                { type: 'divinerpg:glacon', count: 1, role: 'tank', name: '§bМорозный Зверь-Авангард§r', hp: 55, armor: 6, dmg: 5 },
+                // 2. Стрелок-Охотник
+                { type: 'eternal_starlight:lonestar_skeleton', count: 1, role: 'ranged', name: '§bОхотник Звездных Пустошей§r', hp: 28, armor: 4, mainHand: 'minecraft:bow' },
+                // 3. Волки-Преследователи
+                { type: 'minecraft:wolf', count: 3, role: 'beast', name: '§7Свирепый Волк Стаи§r', aggressive: true, hp: 24, dmg: 4 },
+                // 4. Шаман Стаи
+                { type: 'divinerpg:kobblin', count: 1, role: 'caster', name: '§6Шаман Стаи Кобблин§r', hp: 30, armor: 3, mainHand: 'minecraft:stick' }
             ],
             abilities: {
                 fearHowlCooldown: 20 // секунд
@@ -124,7 +134,7 @@ const NOMAD_CONFIG = {
             displayName: '§b[★ Вожак] Отверженный Рыцарь-Дезертир§r',
             barTitle: 'Отверженный Рыцарь-Дезертир (Хранитель Цитадели)',
             barColor: 'blue',
-            entityType: 'irons_spellbooks:citadel_keeper', // Монументальный закованный в железо темный рыцарь с 3D-геомоделью
+            entityType: 'irons_spellbooks:citadel_keeper', // Монументальный закованный в железо темный рыцарь
             maxHp: 160,
             speed: 0.24,
             attackDamage: 8,
@@ -133,8 +143,16 @@ const NOMAD_CONFIG = {
             mainHand: 'minecraft:iron_sword',
             offHand: 'minecraft:shield',
             biomes: ['plains', 'meadow', 'sunflower_plains', 'river', 'beach'],
+            campType: 'knight_outpost',
             minions: [
-                { type: 'minecraft:zombie', count: 2, helmet: 'minecraft:iron_helmet', mainHand: 'minecraft:iron_sword' }
+                // 1. Закованный в железо Оруженосец
+                { type: 'divinerpg:enchanted_warrior', count: 1, role: 'tank', name: '§9Зачарованный Оруженосец§r', hp: 42, armor: 8, mainHand: 'minecraft:iron_sword', offHand: 'minecraft:shield' },
+                // 2. Стрелок Солнечных Пустошей
+                { type: 'divinerpg:sun_archer', count: 1, role: 'ranged', name: '§6Мятежный Стрелок-Застрельщик§r', hp: 28, armor: 4, mainHand: 'minecraft:bow' },
+                // 3. Боевой Мастиф
+                { type: 'minecraft:wolf', count: 1, role: 'beast', name: '§8Сторожевой Мастиф Конвоя§r', aggressive: true, hp: 30, dmg: 4 },
+                // 4. Отступник Криомантии
+                { type: 'irons_spellbooks:cryomancer', count: 1, role: 'caster', name: '§bРенегат Ордена Криомантов§r', hp: 35, armor: 5 }
             ],
             abilities: {
                 shieldGuardReduction: 0.50, // блокирует 50% урона в лоб
@@ -154,6 +172,48 @@ const NOMAD_CONFIG = {
                     { item: 'kubejs:elemental_stone_shadow', chance: 0.20 }
                 ]
             }
+        },
+
+        mountain_brigand_gang: {
+            id: 'mountain_brigand_gang',
+            displayName: '§e[★ Вожак] Надзиратель Горных Грабителей§r',
+            barTitle: 'Надзиратель Грабителей (Циклоп-Каторжник)',
+            barColor: 'purple',
+            entityType: 'divinerpg:cyclops', // Одноглазый свирепый гигант
+            maxHp: 150,
+            speed: 0.25,
+            attackDamage: 8,
+            armor: 8,
+            armorToughness: 2,
+            biomes: ['windswept_hills', 'stony_peaks', 'savanna', 'badlands', 'plateau'],
+            campType: 'brigand_redoubt',
+            minions: [
+                // 1. Латный Громила
+                { type: 'cataclysm:draugr', count: 1, role: 'tank', name: '§8Горный Громила-Драугр§r', hp: 40, armor: 6, mainHand: 'minecraft:iron_axe' },
+                // 2. Стрелок-Кобольд
+                { type: 'cataclysm:koboleton', count: 2, role: 'ranged', name: '§6Кобольд-Застрельщик Пустошей§r', hp: 24, armor: 3, mainHand: 'minecraft:crossbow' },
+                // 3. Зверь-Преследователь
+                { type: 'eternal_starlight:ratlin', count: 1, role: 'beast', name: '§7Прирученный Пещерный Ратлин§r', hp: 28, armor: 3, dmg: 4 },
+                // 4. Поджигатель-Пиромант
+                { type: 'irons_spellbooks:pyromancer', count: 1, role: 'caster', name: '§cБеглый Пиромант-Поджигатель§r', hp: 32, armor: 4 }
+            ],
+            abilities: {
+                cyclopsSmashCooldown: 18 // секунд
+            },
+            loot: {
+                guaranteed: [
+                    { item: 'kubejs:respec_shard_copper', count: 1 },
+                    { item: 'minecraft:raw_iron', min: 4, max: 8 },
+                    { item: 'minecraft:coal', min: 6, max: 12 },
+                    { item: 'minecraft:copper_ingot', min: 4, max: 8 }
+                ],
+                chanceLoot: [
+                    { item: 'kubejs:martial_tablet_whirlwind', chance: 0.25 },
+                    { item: 'kubejs:martial_tablet_bone_crusher', chance: 0.25 },
+                    { item: 'kubejs:elemental_stone_fire', chance: 0.20 },
+                    { item: 'kubejs:elemental_stone_shadow', chance: 0.20 }
+                ]
+            }
         }
     }
 };
@@ -167,7 +227,6 @@ if (!global.ElyriumNomadBosses) {
 
 function getActiveNomadCount(sector) {
     let count = 0;
-    let now = Date.now();
     for (let uuid in global.ElyriumNomadBosses) {
         let boss = global.ElyriumNomadBosses[uuid];
         if (!boss) continue;
@@ -178,9 +237,27 @@ function getActiveNomadCount(sector) {
     return count;
 }
 
+// Удаление лагеря из блоков мира
+function removeCampsiteBlocks(server, campBlocks) {
+    if (!campBlocks || campBlocks.length === 0) return;
+    let overworld = server.getLevel('minecraft:overworld');
+    if (!overworld) return;
+
+    campBlocks.forEach(b => {
+        let currentBlock = overworld.getBlock(b.x, b.y, b.z);
+        if (currentBlock && currentBlock.id !== 'minecraft:air') {
+            // Удаляем только блоки, которые мы ставили
+            if (currentBlock.id === b.placedId) {
+                overworld.setBlock(b.x, b.y, b.z, b.originalId || 'minecraft:air');
+            }
+        }
+    });
+}
+
 function cleanExpiredBosses(server) {
     let now = Date.now();
     let maxLifetimeMs = NOMAD_CONFIG.bossDespawnTimeoutMinutes * 60 * 1000;
+    let overworld = server.getLevel('minecraft:overworld');
 
     for (let uuid in global.ElyriumNomadBosses) {
         let boss = global.ElyriumNomadBosses[uuid];
@@ -190,9 +267,67 @@ function cleanExpiredBosses(server) {
         if (elapsed > maxLifetimeMs) {
             // Remove bossbar
             server.runCommandSilent(`bossbar remove nomad_${boss.barId}`);
+
+            // Remove camp blocks cleanly
+            if (boss.campBlocks) {
+                removeCampsiteBlocks(server, boss.campBlocks);
+            }
+
+            // Discard entities
+            if (overworld) {
+                let bossEnt = overworld.getEntity(uuid);
+                if (bossEnt) bossEnt.discard();
+                if (boss.minionUuids) {
+                    boss.minionUuids.forEach(mId => {
+                        let mEnt = overworld.getEntity(mId);
+                        if (mEnt) mEnt.discard();
+                    });
+                }
+            }
+
             delete global.ElyriumNomadBosses[uuid];
         }
     }
+}
+
+// ==============================================================================
+// 🏕️ ПРОЦЕДУРНОЕ РАЗВЕРТЫВАНИЕ ПОЛЕВОГО ЛАГЕРЯ (FIELD CAMPSITE)
+// ==============================================================================
+function deployCampsite(overworld, cx, cy, cz, campType) {
+    let placedBlocks = [];
+
+    function safePlace(x, y, z, blockId) {
+        let existing = overworld.getBlock(x, y, z);
+        let origId = existing ? existing.id : 'minecraft:air';
+        // Не ломаем твердые природные блоки основания, ставим только на/в воздух/траву
+        if (origId === 'minecraft:air' || origId.includes('grass') || origId.includes('flower') || origId.includes('fern')) {
+            overworld.setBlock(x, y, z, blockId);
+            placedBlocks.push({ x: x, y: y, z: z, originalId: origId, placedId: blockId.split('[')[0] });
+        }
+    }
+
+    // 1. Центральный костер стоянки
+    safePlace(cx, cy, cz, 'minecraft:campfire[lit=true]');
+
+    // 2. Сидячие бревна / тюки вокруг костра
+    safePlace(cx + 2, cy, cz, 'minecraft:oak_log[axis=z]');
+    safePlace(cx - 2, cy, cz, 'minecraft:oak_log[axis=z]');
+
+    // 3. Спальные лежанки / палаточный угол (шерсть + ковер)
+    safePlace(cx, cy, cz + 2, 'minecraft:hay_block');
+    safePlace(cx + 1, cy, cz + 2, 'minecraft:brown_carpet');
+    safePlace(cx - 1, cy, cz + 2, 'minecraft:brown_carpet');
+
+    // 4. Бочки с припасами и ящики стоянки
+    safePlace(cx + 2, cy, cz - 2, 'minecraft:barrel');
+    safePlace(cx - 2, cy, cz - 2, 'minecraft:barrel');
+
+    // 5. Сторожевой тотем / шест с факелом
+    safePlace(cx + 3, cy, cz + 1, 'minecraft:oak_fence');
+    safePlace(cx + 3, cy + 1, cz + 1, 'minecraft:oak_fence');
+    safePlace(cx + 3, cy + 2, cz + 1, 'minecraft:torch');
+
+    return placedBlocks;
 }
 
 // ==============================================================================
@@ -205,10 +340,16 @@ function spawnNomadBoss(server, bossId, x, y, z, forced) {
     let overworld = server.getLevel('minecraft:overworld');
     if (!overworld) return null;
 
+    // Развертывание полевой стоянки лагеря (если включено)
+    let campBlocks = [];
+    if (NOMAD_CONFIG.campSpawnChance && Math.random() <= NOMAD_CONFIG.campSpawnChance) {
+        campBlocks = deployCampsite(overworld, x, y, z, config.campType || 'woodland_camp');
+    }
+
     let bossEntity = overworld.createEntity(config.entityType);
     if (!bossEntity) return null;
 
-    bossEntity.setPos(x + 0.5, y, z + 0.5);
+    bossEntity.setPos(x + 0.5, y + 0.5, z + 0.5);
     bossEntity.addTag('elyrium_nomad_boss');
     bossEntity.addTag('nomad_id_' + bossId);
     bossEntity.setCustomName(Text.of(config.displayName));
@@ -220,7 +361,7 @@ function spawnNomadBoss(server, bossId, x, y, z, forced) {
     let stringUuid = bossEntity.stringUuid;
     let barId = stringUuid.replace(/-/g, '_').substring(0, 16);
 
-    // Apply attributes via reliable commands
+    // Apply attributes via reliable server commands
     server.runCommandSilent(`attribute ${stringUuid} minecraft:max_health base set ${config.maxHp}`);
     server.runCommandSilent(`attribute ${stringUuid} minecraft:attack_damage base set ${config.attackDamage}`);
     server.runCommandSilent(`attribute ${stringUuid} minecraft:armor base set ${config.armor}`);
@@ -230,7 +371,7 @@ function spawnNomadBoss(server, bossId, x, y, z, forced) {
     if (config.speed) {
         server.runCommandSilent(`attribute ${stringUuid} minecraft:movement_speed base set ${config.speed}`);
     }
-    server.runCommandSilent(`attribute ${stringUuid} minecraft:follow_range base set 36`);
+    server.runCommandSilent(`attribute ${stringUuid} minecraft:follow_range base set 40`);
     if (config.scale) {
         server.runCommandSilent(`attribute ${stringUuid} minecraft:generic.scale base set ${config.scale}`);
         server.runCommandSilent(`attribute ${stringUuid} minecraft:scale base set ${config.scale}`);
@@ -259,29 +400,42 @@ function spawnNomadBoss(server, bossId, x, y, z, forced) {
 
     let minionUuids = [];
 
-    // Spawn Minions
+    // Spawn Minions (Ролевая Свита Отряда)
     if (config.minions && config.minions.length > 0) {
         config.minions.forEach(mGroup => {
             for (let i = 0; i < mGroup.count; i++) {
-                let offsetX = (Math.random() - 0.5) * 6;
-                let offsetZ = (Math.random() - 0.5) * 6;
+                let offsetX = (Math.random() - 0.5) * 8;
+                let offsetZ = (Math.random() - 0.5) * 8;
                 let minion = overworld.createEntity(mGroup.type);
                 if (minion) {
                     minion.setPos(x + offsetX, y, z + offsetZ);
                     minion.addTag('elyrium_nomad_minion');
                     minion.addTag('nomad_parent_' + stringUuid);
-                    minion.setCustomName(Text.of(`§7[Свита] ${config.displayName}`));
-                    minion.setCustomNameVisible(false);
+                    if (mGroup.role) minion.addTag('nomad_role_' + mGroup.role);
+                    
+                    let minionName = mGroup.name || `§7[Свита] ${config.displayName}`;
+                    minion.setCustomName(Text.of(minionName));
+                    minion.setCustomNameVisible(true);
+
                     if (minion.spawn()) {
                         let mUuid = minion.stringUuid;
                         minionUuids.push(mUuid);
+
                         if (mGroup.hp) server.runCommandSilent(`attribute ${mUuid} minecraft:max_health base set ${mGroup.hp}`);
+                        if (mGroup.armor) server.runCommandSilent(`attribute ${mUuid} minecraft:armor base set ${mGroup.armor}`);
                         if (mGroup.dmg) server.runCommandSilent(`attribute ${mUuid} minecraft:attack_damage base set ${mGroup.dmg}`);
+                        server.runCommandSilent(`attribute ${mUuid} minecraft:follow_range base set 36`);
+
                         if (mGroup.mainHand) server.runCommandSilent(`item replace entity ${mUuid} weapon.mainhand with ${mGroup.mainHand}`);
+                        if (mGroup.offHand) server.runCommandSilent(`item replace entity ${mUuid} weapon.offhand with ${mGroup.offHand}`);
                         if (mGroup.helmet) server.runCommandSilent(`item replace entity ${mUuid} armor.head with ${mGroup.helmet}`);
+
                         if (mGroup.aggressive && mGroup.type === 'minecraft:wolf') {
                             server.runCommandSilent(`data merge entity ${mUuid} {AngryAt:[I;0,0,0,0],AngerTime:99999}`);
                         }
+
+                        // Установка текущего здоровья
+                        if (mGroup.hp) minion.health = mGroup.hp;
                     }
                 }
             }
@@ -290,7 +444,7 @@ function spawnNomadBoss(server, bossId, x, y, z, forced) {
 
     // Audio telegraph & Atmosphere
     server.runCommandSilent(`playsound minecraft:item.goat_horn.sound.0 neutral @a[x=${x},y=${y},z=${z},distance=..64] ${x} ${y} ${z} 1.5 0.8`);
-    server.runCommandSilent(`particle minecraft:campfire_signal_smoke ${x} ${y + 1} ${z} 0.5 1.5 0.5 0.05 30`);
+    server.runCommandSilent(`particle minecraft:campfire_signal_smoke ${x} ${y + 1} ${z} 0.5 1.5 0.5 0.05 35`);
 
     // Register in global tracking
     global.ElyriumNomadBosses[stringUuid] = {
@@ -306,14 +460,15 @@ function spawnNomadBoss(server, bossId, x, y, z, forced) {
         lastWarCry: 0,
         lastFearHowl: 0,
         lastSlam: 0,
-        minionUuids: minionUuids
+        minionUuids: minionUuids,
+        campBlocks: campBlocks
     };
 
     return global.ElyriumNomadBosses[stringUuid];
 }
 
 // ==============================================================================
-// ⏱️ ТИКОВЫЙ ЦИКЛ: СПАВН, ПАТРУЛЬ, БОССБАР И СПОСОБНОСТИ
+// ⏱️ ТИКОВЫЙ ЦИКЛ: СПАВН, ПАТРУЛЬ, БОССБАР, ПРИВЯЗКА СВИТЫ И СПОСОБНОСТИ
 // ==============================================================================
 ServerEvents.tick(event => {
     let server = event.server;
@@ -358,7 +513,7 @@ ServerEvents.tick(event => {
                             let selectedId = bossKeys[Math.floor(Math.random() * bossKeys.length)];
                             let spawnedBoss = spawnNomadBoss(server, selectedId, spawnX, topY, spawnZ, false);
                             if (spawnedBoss) {
-                                targetPlayer.displayClientMessage(Text.of(`§6⚔ Вблизи рыщет ${spawnedBoss.name} со своей свитой!§r`), true);
+                                targetPlayer.displayClientMessage(Text.of(`§6⚔ Разведка доносит: в окрестностях замечен ${spawnedBoss.name} со своим отрядом!§r`), true);
                             }
                         }
                     }
@@ -368,7 +523,7 @@ ServerEvents.tick(event => {
     }
 
     // --------------------------------------------------------------------------
-    // 2. БОССБАРЫ И БОЕВОЙ ЦИКЛ (Каждые 20 тиков = 1 сек)
+    // 2. БОССБАРЫ, КООРДИНАЦИЯ СВИТЫ И СПОСОБНОСТИ (Каждые 20 тиков = 1 сек)
     // --------------------------------------------------------------------------
     if (server.tickCount % 20 === 0) {
         for (let uuid in global.ElyriumNomadBosses) {
@@ -379,6 +534,7 @@ ServerEvents.tick(event => {
             if (!entity || !entity.isLiving() || !entity.isAlive()) {
                 // Boss died or despawned
                 server.runCommandSilent(`bossbar remove nomad_${bossInfo.barId}`);
+                if (bossInfo.campBlocks) removeCampsiteBlocks(server, bossInfo.campBlocks);
                 delete global.ElyriumNomadBosses[uuid];
                 continue;
             }
@@ -407,7 +563,36 @@ ServerEvents.tick(event => {
             }
 
             // ------------------------------------------------------------------
-            // 3. БОЕВЫЕ СПОСОБНОСТИ ВОЖАКОВ (Таймеры)
+            // 3. ТАКТИЧЕСКОЕ ПОВЕДЕНИЕ И ПРИВЯЗКА СВИТЫ (SQUAD LEASHING)
+            // ------------------------------------------------------------------
+            if (bossInfo.minionUuids && bossInfo.minionUuids.length > 0) {
+                let aliveMinions = [];
+                bossInfo.minionUuids.forEach(mUuid => {
+                    let minionEnt = overworld.getEntity(mUuid);
+                    if (minionEnt && minionEnt.isLiving() && minionEnt.isAlive()) {
+                        aliveMinions.push(mUuid);
+
+                        // Проверка дистанции от Вожака
+                        let distToLeader = Math.sqrt(
+                            (minionEnt.x - entity.x) * (minionEnt.x - entity.x) +
+                            (minionEnt.z - entity.z) * (minionEnt.z - entity.z)
+                        );
+
+                        // Если миньон отстал более чем на 18 блоков — возвращаем в строй к Лидеру
+                        if (distToLeader > 18.0) {
+                            minionEnt.potionEffects.add('minecraft:speed', 80, 1, false, false);
+                            // Если у миньона нет активной цели, сдвигаем импульс к вожаку
+                            let dx = (entity.x - minionEnt.x) / distToLeader * 0.4;
+                            let dz = (entity.z - minionEnt.z) / distToLeader * 0.4;
+                            minionEnt.setDeltaMovement(dx, 0.1, dz);
+                        }
+                    }
+                });
+                bossInfo.minionUuids = aliveMinions;
+            }
+
+            // ------------------------------------------------------------------
+            // 4. БОЕВЫЕ СПОСОБНОСТИ ВОЖАКОВ (Таймеры)
             // ------------------------------------------------------------------
             let nowSec = Math.floor(Date.now() / 1000);
 
@@ -424,7 +609,7 @@ ServerEvents.tick(event => {
                 }
             }
 
-            // Б. Падший Рыцарь: Землетрясение / Удар булавой (раз в 16с)
+            // Б. Падший Рыцарь: Сотрясение земли булавой (раз в 16с)
             if (bossInfo.bossId === 'fallen_deserter_knight' && nearPlayers.length > 0) {
                 if (!bossInfo.lastSlam || nowSec - bossInfo.lastSlam >= NOMAD_CONFIG.bosses.fallen_deserter_knight.abilities.slamCooldown) {
                     bossInfo.lastSlam = nowSec;
@@ -440,37 +625,64 @@ ServerEvents.tick(event => {
                     });
                 }
             }
+
+            // В. Горный Надзиратель: Размашистый удар Циклопа (раз в 18с)
+            if (bossInfo.bossId === 'mountain_brigand_gang' && nearPlayers.length > 0) {
+                if (!bossInfo.lastSlam || nowSec - bossInfo.lastSlam >= NOMAD_CONFIG.bosses.mountain_brigand_gang.abilities.cyclopsSmashCooldown) {
+                    bossInfo.lastSlam = nowSec;
+                    server.runCommandSilent(`playsound minecraft:entity.ravager.attack hostile @a[x=${entity.x},y=${entity.y},z=${entity.z},distance=..20] ${entity.x} ${entity.y} ${entity.z} 1.6 0.6`);
+                    server.runCommandSilent(`particle minecraft:large_smoke ${entity.x} ${entity.y + 1} ${entity.z} 1.0 0.5 1.0 0.05 20`);
+                    nearPlayers.forEach(p => {
+                        let d = Math.sqrt((p.x - entity.x) * (p.x - entity.x) + (p.z - entity.z) * (p.z - entity.z));
+                        if (d <= 5.5) {
+                            p.attack(overworld.damageSources().mobAttack(entity), 5.0);
+                            p.potionEffects.add('minecraft:nausea', 80, 0, false, true);
+                            p.displayClientMessage(Text.of('§e⛰ Надзиратель наносит сокрушительный удар по земле!§r'), true);
+                        }
+                    });
+                }
+            }
         }
     }
 });
 
 // ==============================================================================
-// 💥 ПЕРЕХВАТ УРОНА: РЕАКЦИИ И СПОСОБНОСТИ ПРИ АТАКЕ
+// 💥 ПЕРЕХВАТ УРОНА: РЕАКЦИИ, ЗАЩИТА ВОЖАКА СВИТОЙ И БОЕВЫЕ СТОЙКИ
 // ==============================================================================
 EntityEvents.beforeHurt(event => {
     let target = event.entity;
     if (!target || !target.isLiving()) return;
 
+    let server = event.server;
+    let overworld = server.getLevel('minecraft:overworld');
+    let attacker = event.source.actual;
+
+    // 1. ЕСЛИ АТАКУЮТ ВОЖАКА: Свита синхронно переключается на обидчика!
     if (target.tags.contains('elyrium_nomad_boss')) {
         let stringUuid = target.stringUuid;
         let bossInfo = global.ElyriumNomadBosses[stringUuid];
         if (!bossInfo) return;
 
-        let server = event.server;
-        let overworld = server.getLevel('minecraft:overworld');
         let nowSec = Math.floor(Date.now() / 1000);
 
-        // 1. Падший Рыцарь: Глухая Оборона со Щитом (-50% урона в лоб)
-        if (bossInfo.bossId === 'fallen_deserter_knight') {
-            let src = event.source.actual;
-            if (src && src.isPlayer()) {
-                // 50% срез входящего урона
-                event.damage = event.damage * (1.0 - NOMAD_CONFIG.bosses.fallen_deserter_knight.abilities.shieldGuardReduction);
-                server.runCommandSilent(`playsound minecraft:item.shield.block player @a[x=${target.x},y=${target.y},z=${target.z},distance=..16] ${target.x} ${target.y} ${target.z} 1.0 1.0`);
-            }
+        // Перенаправление агро свиты на обидчика
+        if (attacker && attacker.isPlayer() && bossInfo.minionUuids) {
+            bossInfo.minionUuids.forEach(mUuid => {
+                let minionEnt = overworld.getEntity(mUuid);
+                if (minionEnt && minionEnt.isLiving() && minionEnt.isAlive()) {
+                    // Активируем преследование
+                    server.runCommandSilent(`execute as ${mUuid} run data merge entity @s {AngryAt:[I;0,0,0,0],AngerTime:600}`);
+                }
+            });
         }
 
-        // 2. Атаман Черной Дубравы: Боевой Клич при HP < 55%
+        // А. Падший Рыцарь: Глухая Оборона со Щитом (-50% урона в лоб)
+        if (bossInfo.bossId === 'fallen_deserter_knight' && attacker && attacker.isPlayer()) {
+            event.damage = event.damage * (1.0 - NOMAD_CONFIG.bosses.fallen_deserter_knight.abilities.shieldGuardReduction);
+            server.runCommandSilent(`playsound minecraft:item.shield.block player @a[x=${target.x},y=${target.y},z=${target.z},distance=..16] ${target.x} ${target.y} ${target.z} 1.0 1.0`);
+        }
+
+        // Б. Атаман Черной Дубравы: Боевой Клич при HP < 55%
         if (bossInfo.bossId === 'bandit_warlord') {
             let maxHp = NOMAD_CONFIG.bosses.bandit_warlord.maxHp;
             let currentHp = target.health;
@@ -482,6 +694,16 @@ EntityEvents.beforeHurt(event => {
 
                     target.potionEffects.add('minecraft:strength', 200, 0, false, true);
                     target.potionEffects.add('minecraft:speed', 200, 0, false, true);
+
+                    // Бафф свиты при боевом кличе
+                    if (bossInfo.minionUuids) {
+                        bossInfo.minionUuids.forEach(mUuid => {
+                            let mEnt = overworld.getEntity(mUuid);
+                            if (mEnt && mEnt.isLiving()) {
+                                mEnt.potionEffects.add('minecraft:speed', 160, 0, false, true);
+                            }
+                        });
+                    }
 
                     // Alert nearby players
                     let nearPlayers = overworld.getEntitiesWithin(AABB.of(
@@ -499,7 +721,7 @@ EntityEvents.beforeHurt(event => {
 });
 
 // ==============================================================================
-// 🏆 СМЕРТЬ ВОЖАКА: ВЫДАЧА РПГ-ЛУТА И ТОРЖЕСТВО ПОБЕДЫ
+// 🏆 СМЕРТЬ ВОЖАКА: ДЕБАФФ СВИТЫ «ПОТЕРЯ ЛИДЕРА», РПГ-ЛУТ И ЗАЧИСТКА ЛАГЕРЯ
 // ==============================================================================
 EntityEvents.death(event => {
     let entity = event.entity;
@@ -521,9 +743,27 @@ EntityEvents.death(event => {
         let server = event.server;
         let level = entity.level;
 
-        // Clean bossbar
+        // 1. ДЕБАФФ «ПОТЕРЯ ЛИДЕРА» ДЛЯ ОСТАВШЕЙСЯ СВИТЫ
+        if (bossInfo && bossInfo.minionUuids) {
+            bossInfo.minionUuids.forEach(mUuid => {
+                let mEnt = level.getEntity(mUuid);
+                if (mEnt && mEnt.isLiving() && mEnt.isAlive()) {
+                    mEnt.potionEffects.add('minecraft:weakness', 140, 1, false, true);
+                    mEnt.potionEffects.add('minecraft:slowness', 100, 1, false, true);
+                    server.runCommandSilent(`particle minecraft:cloud ${mEnt.x} ${mEnt.y + 1} ${mEnt.z} 0.5 0.5 0.5 0.05 10`);
+                }
+            });
+        }
+
+        // 2. Очистка боссбара и лагеря
         if (bossInfo) {
             server.runCommandSilent(`bossbar remove nomad_${bossInfo.barId}`);
+            if (bossInfo.campBlocks) {
+                // Плавное убирание костра и лагеря через 30 секунд
+                server.scheduleInTicks(600, () => {
+                    removeCampsiteBlocks(server, bossInfo.campBlocks);
+                });
+            }
             delete global.ElyriumNomadBosses[stringUuid];
         }
 
@@ -541,13 +781,13 @@ EntityEvents.death(event => {
         nearPlayers.forEach(p => {
             p.tell(Text.gold('═════════════════════════════════════════════════════'));
             p.tell(Text.yellow(`🏆 КОЧЕВОЙ ВОЖАК ПОВЕРЖЕН: ${bossTitle}`));
-            p.tell(Text.green('   Банда разгромлена! Земли Сектора I на время вздохнули спокойно.'));
+            p.tell(Text.green('   Лидер отряда пал! Свита деморализована, лагерь разгромлен.'));
             p.tell(Text.gold('═════════════════════════════════════════════════════'));
         });
 
-        // Drop Loot
+        // 3. Выдача RPG-Лута
         if (config && config.loot) {
-            // 1. Guaranteed Drops
+            // Guaranteed Drops
             if (config.loot.guaranteed) {
                 config.loot.guaranteed.forEach(g => {
                     let count = g.count || (g.min + Math.floor(Math.random() * (g.max - g.min + 1)));
@@ -560,7 +800,7 @@ EntityEvents.death(event => {
                 });
             }
 
-            // 2. Chance Drops
+            // Chance Drops
             if (config.loot.chanceLoot) {
                 config.loot.chanceLoot.forEach(c => {
                     if (Math.random() <= c.chance) {
@@ -594,7 +834,7 @@ ServerEvents.command(event => {
         let bossId = parts[2] ? parts[2].toLowerCase() : 'bandit_warlord';
         if (!NOMAD_CONFIG.bosses[bossId]) {
             let valid = Object.keys(NOMAD_CONFIG.bosses).join(', ');
-            let msg = `§cНеизвестный вожак: ${bossId}! Доступные: ${valid}`;
+            let msg = `§cНеизвестная банда: ${bossId}! Доступные: ${valid}`;
             if (player) player.displayClientMessage(Text.of(msg), false);
             else server.tell(Text.of(msg));
             return;
@@ -611,7 +851,7 @@ ServerEvents.command(event => {
         }
 
         let boss = spawnNomadBoss(server, bossId, sx, sy, sz, true);
-        let resp = boss ? `§aУспешно заспавнен ${boss.name} на [${sx}, ${sy}, ${sz}]!` : `§cОшибка спавна ${bossId}!`;
+        let resp = boss ? `§aУспешно развернут ${boss.name} с лагерем на [${sx}, ${sy}, ${sz}]!` : `§cОшибка спавна ${bossId}!`;
         if (player) player.displayClientMessage(Text.of(resp), false);
         else server.tell(Text.of(resp));
         return;
@@ -619,7 +859,7 @@ ServerEvents.command(event => {
 
     if (subCmd === 'list') {
         let count = 0;
-        let header = '§6══════════════ [ АКТИВНЫЕ КОЧЕВЫЕ ВОЖАКИ ] ══════════════§r';
+        let header = '§6══════════════ [ АКТИВНЫЕ КОЧЕВЫЕ БАНДЫ И ЛАГЕРЯ ] ══════════════§r';
         if (player) player.displayClientMessage(Text.of(header), false);
         else server.tell(Text.of(header));
 
@@ -628,13 +868,14 @@ ServerEvents.command(event => {
             if (!b) continue;
             count++;
             let r = Math.floor(Math.sqrt(b.x * b.x + b.z * b.z));
-            let line = `§e${count}. ${b.name} §7| Позиция: §f[${b.x}, ${b.y}, ${b.z}] (R=${r}м) §7| Свита: §b${b.minionUuids.length} мобов`;
+            let campStatus = b.campBlocks && b.campBlocks.length > 0 ? '§a[Лагерь Развернут]' : '§7[Пеший Патруль]';
+            let line = `§e${count}. ${b.name} §7| Позиция: §f[${b.x}, ${b.y}, ${b.z}] (R=${r}м) §7| Свита: §b${b.minionUuids.length} мобов §7| ${campStatus}`;
             if (player) player.displayClientMessage(Text.of(line), false);
             else server.tell(Text.of(line));
         }
 
         if (count === 0) {
-            let noBosses = '§7В мире сейчас нет активных кочевых вожаков.';
+            let noBosses = '§7В мире сейчас нет активных кочевых банд.';
             if (player) player.displayClientMessage(Text.of(noBosses), false);
             else server.tell(Text.of(noBosses));
         }
@@ -648,6 +889,9 @@ ServerEvents.command(event => {
             let b = global.ElyriumNomadBosses[uuid];
             if (b) {
                 server.runCommandSilent(`bossbar remove nomad_${b.barId}`);
+                if (b.campBlocks) {
+                    removeCampsiteBlocks(server, b.campBlocks);
+                }
                 if (overworld) {
                     let ent = overworld.getEntity(uuid);
                     if (ent) ent.discard();
@@ -660,7 +904,7 @@ ServerEvents.command(event => {
             }
         }
         global.ElyriumNomadBosses = {};
-        let resp = `§aУдалено ${cleared} кочевых вожаков и их свит из мира!`;
+        let resp = `§aУдалено ${cleared} кочевых банд, их свиты и полевые лагеря!`;
         if (player) player.displayClientMessage(Text.of(resp), false);
         else server.tell(Text.of(resp));
         return;
@@ -668,11 +912,11 @@ ServerEvents.command(event => {
 
     // Default: Help
     let helpMsg = [
-        '§6═══════════════ [ СИСТЕМА КОЧЕВЫХ ВОЖАКОВ /nomad ] ═══════════════§r',
-        '§e/nomad spawn <bandit_warlord|direwolf_alpha|fallen_deserter_knight> §7- заспавнить вожака рядом',
-        '§e/nomad list §7- показать список активных вожаков в мире',
-        '§e/nomad clear §7- очистить всех активных вожаков и их миньонов',
-        '§7Все параметры (HP, урон, лут) меняются на лету через /kubejs reload server_scripts!'
+        '§6═══════════════ [ ДВИЖОК КОЧЕВЫХ БАНД И ЛАГЕРЕЙ /nomad ] ═══════════════§r',
+        '§e/nomad spawn <bandit_warlord|direwolf_alpha|fallen_deserter_knight|mountain_brigand_gang> §7- развернуть банду с лагерем',
+        '§e/nomad list §7- показать список активных банд, свит и стоянок',
+        '§e/nomad clear §7- очистить всех активных мобов и убрать лагерные блоки',
+        '§7Все параметры (HP, урон, свита, лут) меняются на лету через /kubejs reload server_scripts!'
     ];
     helpMsg.forEach(m => {
         if (player) player.displayClientMessage(Text.of(m), false);
