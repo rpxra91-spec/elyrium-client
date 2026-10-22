@@ -18,63 +18,7 @@ try {
     J_WeaponRegistry_2H = Java.loadClass('net.bettercombat.logic.WeaponRegistry');
 } catch (eClass) {}
 
-function isTwoHandedWeapon(item) {
-    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
-
-    // 1. Better Combat WeaponRegistry check
-    if (J_WeaponRegistry_2H) {
-        try {
-            let rawStack = item.getItemStack ? item.getItemStack() : (item.minecraftItemStack || item);
-            let attrs = J_WeaponRegistry_2H.getAttributes(rawStack);
-            if (attrs) {
-                if (typeof attrs.two_handed === 'function' && attrs.two_handed()) return true;
-                if (attrs.two_handed === true) return true;
-                if (typeof attrs.isTwoHanded === 'function' && attrs.isTwoHanded()) return true;
-            }
-        } catch (eBc) {}
-    }
-
-    let id = String(item.id).toLowerCase();
-
-    // 2. Bows and Crossbows (Two-Handed)
-    if (((id.includes('bow') && !id.includes('bowl')) || id.includes('crossbow')) ||
-        item.hasTag('c:tools/bows') || item.hasTag('c:tools/crossbows') ||
-        item.hasTag('minecraft:enchantable/bow') || item.hasTag('minecraft:enchantable/crossbow')) {
-        return true;
-    }
-
-    // 3. Spears, Lances, Polearms, Staves, Glaives
-    if (id.includes('spear') || id.includes('lance') || id.includes('glaive') ||
-        id.includes('halberd') || id.includes('polearm') || id.includes('staff') ||
-        id.includes('quarterstaff') || id.includes('pike') ||
-        item.hasTag('c:tools/spears') || item.hasTag('c:spears')) {
-        return true;
-    }
-
-    // 4. Heavy Melee & Two-Handed Swords / Hammers / Scythes
-    if (id.includes('claymore') ||
-        id.includes('greathammer') ||
-        id.includes('greatsword') ||
-        id.includes('scythe') ||
-        id.includes('breaker') ||
-        id.includes('hammer') ||
-        id.includes('greataxe') ||
-        id.includes('warhammer') ||
-        id.includes('maul') ||
-        id.includes('twinblade') ||
-        id.includes('warglaive') ||
-        id.includes('zweihander') ||
-        id.includes('colossal')) {
-        return true;
-    }
-
-    // 5. Data Tags
-    if (item.hasTag('c:two_handed') || item.hasTag('bettercombat:two_handed') || item.hasTag('skd:two_handed')) {
-        return true;
-    }
-
-    return false;
-}
+// Note: requiresTwoHands(item) and isTwoHandedWeapon(item) are canonically provided by 00_core/elyrium_core_lib.js
 
 function isOffhandRestricted(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
@@ -151,7 +95,7 @@ function enforceTwoHandedRestriction(player) {
     let mainHand = player.mainHandItem;
     let offHand = player.offHandItem;
 
-    let is2H = isTwoHandedWeapon(mainHand);
+    let is2H = requiresTwoHands(mainHand);
     let isOffRestricted = isOffhandRestricted(offHand);
 
     // Versatile Dual-Grip Exception: Spears allow shields in offhand (Hoplite / Legionnaire style)

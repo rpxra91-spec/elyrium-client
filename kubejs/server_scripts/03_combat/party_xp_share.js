@@ -37,28 +37,7 @@ function calculateBaseMobXp(entity) {
     }
 }
 
-// Helper: Get effective player level (SimpleStats or XP level)
-function getPlayerLevel(player) {
-    try {
-        let pData = player.persistentData;
-        let perks = pData.getCompound('simplestats_perks');
-        if (perks) {
-            let total = (perks.getInt('strength') || 0) +
-                        (perks.getInt('vitality') || 0) +
-                        (perks.getInt('defense') || 0) +
-                        (perks.getInt('agility') || 0) +
-                        (perks.getInt('crit') || 0) +
-                        (perks.getInt('mana') || 0);
-            if (total > 0) {
-                return Math.max(1, Math.ceil(total / 2));
-            }
-        }
-        if (typeof player.experienceLevel !== 'undefined') {
-            return Number(player.experienceLevel) || 1
-        }
-    } catch (e) {}
-    return 1
-}
+// Note: getPlayerLevel(player) is canonically provided by 00_core/elyrium_core_lib.js
 
 EntityEvents.death(event => {
     let entity = event.entity

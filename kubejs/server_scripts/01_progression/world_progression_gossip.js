@@ -30,10 +30,7 @@ const GOSSIP_DATABASE = {
     ]
 };
 
-function getPlayerTier(player) {
-    if (!player) return 1;
-    return Math.max(1, player.persistentData.getInt('elyrium_progression_tier') || 1);
-}
+// Note: getPlayerTier(player) is canonically provided by 00_core/elyrium_core_lib.js
 
 // ------------------------------------------------------------------------------
 // 1. NPC INTERACTION: DIALOGUES, GOSSIP & SERVICES

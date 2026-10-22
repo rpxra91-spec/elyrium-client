@@ -83,30 +83,8 @@ const ARMOR_REINFORCE_DEFENSE = {
 };
 
 // ------------------------------------------------------------------------------
-// HELPER: Get skd_reinforce Level (0..15) from item NBT
+// HELPER: getReinforceLevel(item) is canonically provided by 00_core/elyrium_core_lib.js
 // ------------------------------------------------------------------------------
-function getReinforceLevel(item) {
-    if (!item || item.isEmpty() || item.id === 'minecraft:air') return 0;
-    try {
-        if (item.customData && item.customData.contains('skd_reinforce')) {
-            let lvl = item.customData.getInt('skd_reinforce');
-            return Math.max(0, Math.min(15, lvl));
-        }
-        if (item.nbt && item.nbt.contains('skd_reinforce')) {
-            let lvl = item.nbt.getInt('skd_reinforce');
-            return Math.max(0, Math.min(15, lvl));
-        }
-        let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
-        let cd = item.get(DataComponents.CUSTOM_DATA);
-        if (cd) {
-            let tag = cd.copyTag();
-            if (tag && tag.contains('skd_reinforce')) {
-                return Math.max(0, Math.min(15, tag.getInt('skd_reinforce') || 0));
-            }
-        }
-    } catch (e) {}
-    return 0;
-}
 
 // ------------------------------------------------------------------------------
 // HELPER: Get skd_tier Level (1..11) from item NBT

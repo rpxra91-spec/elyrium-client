@@ -18,28 +18,7 @@
 //      At +10: blocks 100% physical and 100% elemental/magic (0% through).
 // ==============================================================================
 
-function isShield(item) {
-    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
-    let id = item.id.toLowerCase();
-    return item.hasTag('c:tools/shields') ||
-           item.hasTag('c:shields') ||
-           item.hasTag('forge:shields') ||
-           item.hasTag('minecraft:shields') ||
-           id.includes('shield');
-}
-
-function getReinforceLevel(item) {
-    if (!item || item.isEmpty()) return 0;
-    try {
-        if (item.nbt && item.nbt.contains('skd_reinforce')) {
-            return item.nbt.getInt('skd_reinforce') || 0;
-        }
-        if (item.customData && item.customData.contains('skd_reinforce')) {
-            return item.customData.getInt('skd_reinforce') || 0;
-        }
-    } catch (e) {}
-    return 0;
-}
+// Note: isShield(item) and getReinforceLevel(item) are canonically provided by 00_core/elyrium_core_lib.js
 
 function getActiveShield(player) {
     if (!player) return null;

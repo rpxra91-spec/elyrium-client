@@ -16,12 +16,12 @@
 // ==============================================================================
 
 // Session tracking: сохраняет активные предметы для каждого игрока
-let activeWorkshopSessions = new Map();
+let activeBlacksmithSessions = new Map();
 
-function getOrCreateWorkshopSession(player) {
+function getOrCreateBlacksmithSession(player) {
     let uuid = player.uuid.toString();
-    if (!activeWorkshopSessions.has(uuid)) {
-        activeWorkshopSessions.set(uuid, {
+    if (!activeBlacksmithSessions.has(uuid)) {
+        activeBlacksmithSessions.set(uuid, {
             tab: 0,
             stationPos: null,
             // Tab 0 (Ковка на Верстаке): 6 слотов сырья
@@ -52,13 +52,13 @@ function getOrCreateWorkshopSession(player) {
             refreshingTime: 0
         });
     }
-    return activeWorkshopSessions.get(uuid);
+    return activeBlacksmithSessions.get(uuid);
 }
 
 // Гарантированный возврат ВСЕХ предметов игроку при закрытии GUI
-function clearAndRefundWorkshopSession(player, force) {
+function clearAndRefundBlacksmithSession(player, force) {
     let uuid = player.uuid.toString();
-    let sess = activeWorkshopSessions.get(uuid);
+    let sess = activeBlacksmithSessions.get(uuid);
     if (!sess) return;
 
     if (!force && sess.refreshingTime && (Date.now() - sess.refreshingTime < 450)) {
@@ -115,7 +115,7 @@ function clearAndRefundWorkshopSession(player, force) {
     sess.benchChisel = null;
     sess.benchMaterial = null;
 
-    activeWorkshopSessions.delete(uuid);
+    activeBlacksmithSessions.delete(uuid);
 }
 
 // ------------------------------------------------------------------------------
@@ -178,49 +178,7 @@ function hasCrucibleNear(level, pos) {
 // ------------------------------------------------------------------------------
 // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ИНВЕНТАРЯ И ПРЕДМЕТОВ
 // ------------------------------------------------------------------------------
-function matchesItemOrTag(st, itemIdOrTag) {
-    if (!st || st.isEmpty()) return false;
-    let stId = String(st.id);
-    if (itemIdOrTag.startsWith('#')) {
-        let tag = itemIdOrTag.substring(1);
-        return st.hasTag(tag);
-    }
-    if (stId === itemIdOrTag) return true;
-    if (itemIdOrTag === 'minecraft:iron_ingot' && (st.hasTag('c:ingots/iron') || st.hasTag('forge:ingots/iron'))) return true;
-    if (itemIdOrTag === 'kubejs:steel_ingot' && (st.hasTag('c:ingots/steel') || st.hasTag('forge:ingots/steel'))) return true;
-    if (itemIdOrTag === 'minecraft:copper_ingot' && (st.hasTag('c:ingots/copper') || st.hasTag('forge:ingots/copper'))) return true;
-    if (itemIdOrTag === 'skd:cinder_alloy_ingot' && (st.hasTag('c:ingots/cinder_alloy') || stId.includes('cinder_alloy'))) return true;
-    return false;
-}
-
-function countPlayerItems(player, itemIdOrTag) {
-    if (!player || !itemIdOrTag) return 0;
-    let inv = player.inventory;
-    let count = 0;
-    for (let i = 0; i < inv.size; i++) {
-        let st = inv.getItem(i);
-        if (matchesItemOrTag(st, itemIdOrTag)) count += st.count;
-    }
-    return count;
-}
-
-function deductPlayerItems(player, itemIdOrTag, needed) {
-    if (!player || needed <= 0) return true;
-    let inv = player.inventory;
-    let remain = needed;
-    for (let i = 0; i < inv.size && remain > 0; i++) {
-        let st = inv.getItem(i);
-        if (matchesItemOrTag(st, itemIdOrTag)) {
-            let take = Math.min(st.count, remain);
-            st.shrink(take);
-            remain -= take;
-            if (st.isEmpty() || st.count <= 0) {
-                try { inv.setItem(i, Item.of('minecraft:air')); } catch (e) {}
-            }
-        }
-    }
-    return remain === 0;
-}
+// Note: matchesItemOrTag, countPlayerItems, and deductPlayerItems are canonically provided by 00_core/elyrium_core_lib.js
 
 // Расчет материала ремонта: 1 слиток = 1/3 прочности (1..3 слитка)
 function getRepairMaterial(item) {
@@ -362,7 +320,7 @@ function deductForgeSlotItems(ingredients, targetIdOrTag, needed) {
 // ------------------------------------------------------------------------------
 function openUnifiedWorkshopGUI(player, defaultTab, blockPos) {
     let level = player.level;
-    let sess = getOrCreateWorkshopSession(player);
+    let sess = getOrCreateBlacksmithSession(player);
     if (defaultTab !== undefined && defaultTab !== null) {
         sess.tab = defaultTab;
     }
@@ -384,7 +342,7 @@ function openUnifiedWorkshopGUI(player, defaultTab, blockPos) {
     player.openChestGUI(Text.of(fullTitle), 6, gui => {
         gui.playerSlots = true;
         gui.closed = () => {
-            clearAndRefundWorkshopSession(player, false);
+            clearAndRefundBlacksmithSession(player, false);
         };
 
         let darkPane = Item.of('minecraft:gray_stained_glass_pane').withCustomName(Text.of('§8 '));
@@ -1816,9 +1774,9 @@ function openHearthSmelterGUI(player, stationPos) {
 
 // Очистка при выходе из мира
 PlayerEvents.loggedOut(event => {
-    if (event.player) clearAndRefundWorkshopSession(event.player, true);
+    if (event.player) clearAndRefundBlacksmithSession(event.player, true);
 });
 
 PlayerEvents.inventoryClosed(event => {
-    if (event.player) clearAndRefundWorkshopSession(event.player, false);
+    if (event.player) clearAndRefundBlacksmithSession(event.player, false);
 });

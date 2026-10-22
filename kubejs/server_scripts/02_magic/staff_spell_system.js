@@ -59,13 +59,7 @@ const STAFF_CONFIG = {
     }
 };
 
-function getRawItemStack(item) {
-    if (!item) return null;
-    if (typeof item.getItemStack === 'function') {
-        return item.getItemStack();
-    }
-    return item;
-}
+// Note: getRawItemStack(item) is canonically provided by 00_core/elyrium_core_lib.js
 
 function setupStaffSpellContainer(itemStack) {
     if (!itemStack || itemStack.isEmpty()) return false;

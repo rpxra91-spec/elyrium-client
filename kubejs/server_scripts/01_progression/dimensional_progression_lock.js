@@ -83,22 +83,7 @@ const TIER_DIMENSION_REQUIREMENTS = {
     }
 }
 
-function getPlayerTier(player) {
-    if (!player) return 1
-    if (player.isCreative && player.isCreative()) return 8
-    if (player.isSpectator && player.isSpectator()) return 8
-    if (player.tags && (player.tags.contains('tier_bypass') || player.tags.contains('admin_bypass'))) return 8
-
-    let data = player.persistentData
-    if (data.getBoolean('skd_tier7_completed')) return 8
-    if (data.getBoolean('skd_tier6_completed')) return 7
-    if (data.getBoolean('skd_tier5_completed')) return 6
-    if (data.getBoolean('skd_tier4_completed')) return 5
-    if (data.getBoolean('skd_tier3_completed')) return 4
-    if (data.getBoolean('skd_tier2_completed')) return 3
-    if (data.getBoolean('skd_tier1_completed') || data.getBoolean('skd_sector1_completed')) return 2
-    return 1
-}
+// Note: getPlayerTier(player) is canonically provided by 00_core/elyrium_core_lib.js
 
 function checkDimensionAccess(player) {
     if (!player || !player.isAlive()) return

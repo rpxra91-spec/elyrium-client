@@ -147,79 +147,7 @@ function clearAndRefundBenchSession(player, force) {
 // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ КЛАССИФИКАЦИИ И NBT
 // ------------------------------------------------------------------------------
 
-function isWeaponItem(item) {
-    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
-    let id = String(item.id).toLowerCase();
-    if (item.hasTag('c:tools/melee_weapon') || item.hasTag('minecraft:swords') ||
-        item.hasTag('c:swords') || item.hasTag('c:tools/swords') ||
-        item.hasTag('minecraft:axes') || item.hasTag('c:tools/axes') ||
-        item.hasTag('c:tools/bows') || item.hasTag('c:tools/crossbows') ||
-        item.hasTag('minecraft:bows') || item.hasTag('c:tools/daggers') ||
-        item.hasTag('c:tools/maces') || item.hasTag('c:tools/hammers') ||
-        item.hasTag('c:tools/shields') || item.hasTag('c:shields') ||
-        item.hasTag('minecraft:shields')) {
-        return true;
-    }
-    return id.includes('sword') || id.includes('blade') || id.includes('claymore') ||
-           id.includes('greatsword') || id.includes('katana') || id.includes('dagger') ||
-           id.includes('hammer') || id.includes('spear') || id.includes('halberd') ||
-           id.includes('greataxe') || id.includes('axe') || id.includes('bow') ||
-           id.includes('crossbow') || id.includes('mace') || id.includes('club') ||
-           id.includes('scythe') || id.includes('rapier') || id.includes('saber') ||
-           id.includes('shield');
-}
-
-function getWeaponProgressionTier(item) {
-    if (!item || item.isEmpty() || item.id === 'minecraft:air') return 1;
-
-    // 1. Elyrium Tier Tags (8 Tiers Canon + 1.5 Undergarden)
-    if (item.hasTag('elyrium:tier_8')) return 8;
-    if (item.hasTag('elyrium:tier_7')) return 7;
-    if (item.hasTag('elyrium:tier_6')) return 6;
-    if (item.hasTag('elyrium:tier_5')) return 5;
-    if (item.hasTag('elyrium:tier_4')) return 4;
-    if (item.hasTag('elyrium:tier_3')) return 3;
-    if (item.hasTag('elyrium:tier_2')) return 2;
-    if (item.hasTag('elyrium:tier_1_5') || item.hasTag('elyrium:tier_undergarden')) return 1.5;
-    if (item.hasTag('elyrium:tier_1')) return 1;
-
-    for (let t = 8; t >= 1; t--) {
-        if (item.hasTag(`skd:tier_${t}`) || item.hasTag(`c:tools/tier_${t}`)) return t;
-    }
-    try {
-        let tag = getSafeItemCustomData(item);
-        if (tag && tag.contains('skd_tier')) {
-            return tag.getInt('skd_tier') || 1;
-        }
-    } catch (e) {}
-
-    let id = String(item.id).toLowerCase();
-    // Tier 8: DivineRPG Mortum, Apalachia & Skythern, Halite, Apex Void
-    if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('apalachia') || id.includes('skythern') || id.includes('divinerpg:apalachia') || id.includes('divinerpg:skythern') || id.includes('the_incinerator') || id.includes('aquatooth') || id.includes('halite')) return 8;
-
-    // Tier 7: DivineRPG Eden & Wildwood
-    if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) return 7;
-
-    // Tier 6: Deeper Darker (Otherside) / Warden
-    if (id.includes('sculk') || id.includes('echo') || id.includes('warden') || id.startsWith('deeperdarker:')) return 6;
-
-    // Tier 5: Eternal Starlight
-    if (id.includes('starlight') || id.includes('luminite') || id.includes('luminarite') || id.startsWith('eternal_starlight:') || id.includes('thermal_springstone')) return 5;
-
-    // Tier 4: The End / Void / Ender Guardian / Dragon / Enderite
-    if (id.includes('dragon') || id.includes('void') || id.includes('ender_guardian') || id.includes('ender_golem') || id.includes('elytra') || id.includes('enderite')) return 4;
-
-    // Tier 3: The Aether & Deep Aether
-    if (id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie') || id.includes('skyjade') || id.startsWith('aether:') || id.startsWith('deep_aether:')) return 3;
-
-    // Tier 2: The Nether (Cinder Alloy, Netherite, Ignitium, Cataclysm)
-    if (id.includes('cinder') || id.includes('netherite') || id.startsWith('cataclysm:') || id.includes('ignitium') || id.includes('witherite') || id.includes('monstrosity') || id.includes('wither') || id.includes('ignis')) return 2;
-
-    // Tier 1.5: The Undergarden
-    if (id.includes('cloggrum') || id.includes('froststeel') || id.startsWith('undergarden:')) return 1.5;
-
-    return 1;
-}
+// Note: isWeaponItem(item) and getWeaponProgressionTier(item) are canonically provided by 00_core/elyrium_core_lib.js
 
 function getSafeItemCustomData(item) {
     if (!item || item.isEmpty()) return null;
@@ -262,11 +190,7 @@ function getOrCreateSafeCustomData(item) {
     return null;
 }
 
-function getReinforceLevel(item) {
-    let tag = getSafeItemCustomData(item);
-    if (tag && tag.contains('skd_reinforce')) return tag.getInt('skd_reinforce') || 0;
-    return 0;
-}
+// Note: getReinforceLevel(item) is canonically provided by 00_core/elyrium_core_lib.js
 
 function getSocketCount(item) {
     let tag = getSafeItemCustomData(item);

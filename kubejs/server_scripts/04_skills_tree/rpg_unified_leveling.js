@@ -28,22 +28,7 @@ function getRawPlayer(player) {
     return player.minecraftPlayer || player.minecraftEntity || player.entity || player;
 }
 
-// Helper: Get effective RPG level of player (Direct Java API or NBT fallback)
-function getPlayerLevel(player) {
-    if (!player) return 1;
-    if (LevelManager) {
-        try {
-            let raw = getRawPlayer(player);
-            return LevelManager.getLevel(raw);
-        } catch (e) {
-            try {
-                return LevelManager.getLevel(player);
-            } catch (e2) {}
-        }
-    }
-    let pData = player.persistentData;
-    return pData ? Math.max(1, pData.getInt('simplestats_level')) : 1;
-}
+// Note: getPlayerLevel(player) is canonically provided by 00_core/elyrium_core_lib.js
 
 // Helper: Calculate XP required for next level in SimpleStats
 function getRequiredXpForLevel(lvl) {

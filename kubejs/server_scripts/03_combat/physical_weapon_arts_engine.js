@@ -508,39 +508,7 @@ function applyEntityMotion(entity, vx, vy, vz) {
 // HELPER FUNCTIONS: WEAPON CLASSIFICATION
 // ------------------------------------------------------------------------------
 
-function isTwoHandedWeapon(item) {
-    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
-    let id = String(item.id).toLowerCase();
-    if (id.includes('claymore') ||
-        id.includes('greathammer') ||
-        id.includes('greatsword') ||
-        id.includes('halberd') ||
-        id.includes('scythe') ||
-        id.includes('breaker') ||
-        id.includes('hammer') ||
-        id.includes('greataxe') ||
-        id.includes('twinblade') ||
-        id.includes('warglaive') ||
-        id.includes('spear') ||
-        id.includes('lance') ||
-        id.includes('zweihander') ||
-        id.includes('colossal')) {
-        return true;
-    }
-    if (item.hasTag('c:two_handed') || item.hasTag('bettercombat:two_handed') || item.hasTag('skd:two_handed')) {
-        return true;
-    }
-    return false;
-}
-
-function isSpear(item) {
-    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
-    let id = String(item.id).toLowerCase();
-    return id.includes('spear') || id.includes('halberd') || id.includes('lance') ||
-           id.includes('glaive') || id.includes('polearm') || id.includes('trident') ||
-           id.includes('pike') || item.hasTag('c:tools/spears') || item.hasTag('c:spears') ||
-           item.hasTag('c:tools/polearms') || item.hasTag('c:polearms');
-}
+// Note: isTwoHandedWeapon(item) and isSpear(item) are canonically provided by 00_core/elyrium_core_lib.js
 
 function isBow(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
@@ -550,15 +518,7 @@ function isBow(item) {
             item.hasTag('minecraft:enchantable/bow') || item.hasTag('minecraft:enchantable/crossbow'));
 }
 
-function isShield(item) {
-    if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;
-    let id = String(item.id).toLowerCase();
-    return item.hasTag('c:tools/shields') ||
-           item.hasTag('c:shields') ||
-           item.hasTag('forge:shields') ||
-           item.hasTag('minecraft:shields') ||
-           id.includes('shield');
-}
+// Note: isShield(item) is canonically provided by 00_core/elyrium_core_lib.js
 
 function isOneHandedWeapon(item) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return false;

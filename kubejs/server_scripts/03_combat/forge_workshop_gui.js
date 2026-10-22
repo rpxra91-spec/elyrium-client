@@ -16,12 +16,12 @@
 // ==============================================================================
 
 // Session tracking
-let activeWorkshopSessions = new Map();
+let activeForgeWorkshopSessions = new Map();
 
-function getOrCreateWorkshopSession(player) {
+function getOrCreateForgeWorkshopSession(player) {
     let uuid = player.uuid.toString();
-    if (!activeWorkshopSessions.has(uuid)) {
-        activeWorkshopSessions.set(uuid, {
+    if (!activeForgeWorkshopSessions.has(uuid)) {
+        activeForgeWorkshopSessions.set(uuid, {
             tab: 0,              // 0..7
             selectedIdx: 0,      // Index within current tab
             bossAspect: 'medium',// 'mage' | 'scout' | 'medium' | 'tank'
@@ -30,12 +30,12 @@ function getOrCreateWorkshopSession(player) {
             refreshingTime: 0
         });
     }
-    return activeWorkshopSessions.get(uuid);
+    return activeForgeWorkshopSessions.get(uuid);
 }
 
-function clearWorkshopSession(player) {
+function clearForgeWorkshopSession(player) {
     let uuid = player.uuid.toString();
-    activeWorkshopSessions.delete(uuid);
+    activeForgeWorkshopSessions.delete(uuid);
 }
 
 // ------------------------------------------------------------------------------
@@ -695,24 +695,7 @@ const FORGE_CATALOG = [
 ];
 
 // Helper: Count items in player inventory
-function countPlayerItems(player, itemIdOrTag) {
-    if (!player || !itemIdOrTag) return 0;
-    let inv = player.inventory;
-    let count = 0;
-    let isTag = itemIdOrTag.startsWith('#');
-    let tagName = isTag ? itemIdOrTag.substring(1) : null;
-
-    for (let i = 0; i < inv.size; i++) {
-        let st = inv.getItem(i);
-        if (!st || st.isEmpty()) continue;
-        if (isTag) {
-            if (st.hasTag(tagName)) count += st.count;
-        } else {
-            if (String(st.id) === itemIdOrTag) count += st.count;
-        }
-    }
-    return count;
-}
+// Note: countPlayerItems(player, itemIdOrTag) is canonically provided by 00_core/elyrium_core_lib.js
 
 // Helper: Find item stack matching id or tag
 function findPlayerItem(player, itemIdOrTag) {
@@ -731,31 +714,13 @@ function findPlayerItem(player, itemIdOrTag) {
 }
 
 // Helper: Deduct items from player inventory
-function deductPlayerItems(player, itemIdOrTag, needed) {
-    if (!player || needed <= 0) return true;
-    let inv = player.inventory;
-    let remain = needed;
-    let isTag = itemIdOrTag.startsWith('#');
-    let tagName = isTag ? itemIdOrTag.substring(1) : null;
-
-    for (let i = 0; i < inv.size && remain > 0; i++) {
-        let st = inv.getItem(i);
-        if (!st || st.isEmpty()) continue;
-        let match = isTag ? st.hasTag(tagName) : (String(st.id) === itemIdOrTag);
-        if (match) {
-            let take = Math.min(st.count, remain);
-            st.shrink(take);
-            remain -= take;
-        }
-    }
-    return remain === 0;
-}
+// Note: deductPlayerItems(player, itemIdOrTag, needed) is canonically provided by 00_core/elyrium_core_lib.js
 
 // ------------------------------------------------------------------------------
 // OPEN WORKSHOP GUI (CHEST MENU 6 ROWS / 54 SLOTS)
 // ------------------------------------------------------------------------------
 function openForgeWorkshopGUI(player, hasAnvil, benchPos) {
-    let session = getOrCreateWorkshopSession(player);
+    let session = getOrCreateForgeWorkshopSession(player);
     session.hasAnvil = !!hasAnvil;
     if (benchPos) session.benchPos = benchPos;
 
@@ -777,7 +742,7 @@ function openForgeWorkshopGUI(player, hasAnvil, benchPos) {
     player.openChestGUI(Text.of('⚒ §8§lКУЗНЕЧНЫЙ КОМПЛЕКС §c✦ §6ЭЛИРИУМ'), 6, gui => {
         gui.playerSlots = true;
         gui.closed = () => {
-            clearWorkshopSession(player);
+            clearForgeWorkshopSession(player);
         };
 
         // ======================================================================
@@ -870,7 +835,7 @@ function openForgeWorkshopGUI(player, hasAnvil, benchPos) {
                         Text.of('§a▶ Нажмите для перехода к Алтарю Заточки!')
                     ]));
                 s.leftClicked = () => {
-                    clearWorkshopSession(player);
+                    clearForgeWorkshopSession(player);
                     player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
                     if (typeof openInfernalAnvilGUI === 'function') {
                         openInfernalAnvilGUI(player);
@@ -1394,7 +1359,7 @@ BlockEvents.rightClicked('kubejs:forge_hearth', event => {
 // Guaranteed cleanup on disconnect
 PlayerEvents.loggedOut(event => {
     let p = event.player;
-    if (p) clearWorkshopSession(p);
+    if (p) clearForgeWorkshopSession(p);
 });
 
 // Dev test command
