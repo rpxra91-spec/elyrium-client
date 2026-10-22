@@ -1,8 +1,8 @@
 {
-  "version": "0.4.42",
+  "version": "0.4.43",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-22T20:45:09.985154+00:00",
+  "generated_at": "2026-10-22T21:50:19.628122+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -13262,8 +13262,8 @@
     },
     {
       "path": "kubejs/client_scripts/equipment_reinforcement_tooltips.js",
-      "sha256": "bf5cf56fcd6704d7e34119af056d89fa23c56ae5d25284332b5da9cd08589135",
-      "size": 16333
+      "sha256": "31d9d6b147580d5c8fb3a2426e207ade8944c63115ce950108a5c9b6da6fadc0",
+      "size": 17100
     },
     {
       "path": "kubejs/client_scripts/filter_early_weapons.js",
@@ -13292,8 +13292,8 @@
     },
     {
       "path": "kubejs/client_scripts/martial_arts_tooltips.js",
-      "sha256": "51393013c6cbb8d0bd4112531df921a2f87e96ccbff2a8e627e8d1f6e1208dda",
-      "size": 37235
+      "sha256": "3d93e0c6841d44254afbdbacb8b329c8551c79f446c553be06ec98697a00047c",
+      "size": 35819
     },
     {
       "path": "kubejs/client_scripts/modular_multitool_tooltips.js",
@@ -14112,8 +14112,8 @@
     },
     {
       "path": "kubejs/server_scripts/00_core/elyrium_core_lib.js",
-      "sha256": "41f6ec5ecc520500ba2d2f42e1c48acc13b7b82220840cdb0867e663d494f88a",
-      "size": 16844
+      "sha256": "7b1591abd071f61a70b9af895329c6e3f17364166bffad1f30824473f9dc9f8c",
+      "size": 17013
     },
     {
       "path": "kubejs/server_scripts/01_progression/anti_elytra_skip.js",

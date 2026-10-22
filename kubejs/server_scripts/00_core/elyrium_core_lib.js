@@ -112,11 +112,11 @@ function getWeaponProgressionTier(item) {
 function getPlayerLevel(player) {
     if (!player) return 1;
 
-    // 1. SimpleStats LevelManager Java API
+    // 1. SimpleStats LevelManager Java API (network.roto.simplestats.leveling.LevelManager)
     try {
-        let LevelManagerClass = Java.loadClass('net.caffeinemc.mods.simplestats.LevelManager');
+        let LevelManagerClass = Java.loadClass('network.roto.simplestats.leveling.LevelManager');
         if (LevelManagerClass) {
-            let raw = (typeof player.minecraftPlayer !== 'undefined' && player.minecraftPlayer) ? player.minecraftPlayer : (player.raw || player);
+            let raw = (typeof player.minecraftPlayer !== 'undefined' && player.minecraftPlayer) ? player.minecraftPlayer : (player.raw || player.entity || player);
             try {
                 let lvl = LevelManagerClass.getLevel(raw);
                 if (lvl && lvl > 0) return lvl;
@@ -136,15 +136,16 @@ function getPlayerLevel(player) {
             let lvl = pData.getInt('simplestats_level');
             if (lvl && lvl > 0) return lvl;
 
-            // 3. Fallback: simplestats_perks compound
+            // 3. Fallback: simplestats_perks compound (strength, vitality, defense, agility, crit, mana)
             let perks = pData.getCompound('simplestats_perks');
             if (perks) {
                 let total = (perks.getInt('strength') || 0) +
                             (perks.getInt('vitality') || 0) +
+                            (perks.getInt('defense') || 0) +
                             (perks.getInt('agility') || 0) +
-                            (perks.getInt('intelligence') || 0) +
-                            (perks.getInt('wisdom') || 0);
-                if (total > 0) return Math.max(1, Math.floor(total / 2));
+                            (perks.getInt('crit') || 0) +
+                            (perks.getInt('mana') || 0);
+                if (total > 0) return Math.max(1, Math.ceil(total / 2));
             }
         }
     } catch (ePd) {}

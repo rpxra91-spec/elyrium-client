@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.4.43",
+    "date": "2026-10-23",
+    "title": "Хотфикс Ядра: SimpleStats JVM API, 6 Перков и Гармонизация Тултипов",
+    "highlights": [
+      "Исправлен classpath LevelManager на network.roto.simplestats.leveling.LevelManager",
+      "Калибровка 6 перков SimpleStats (strength, vitality, defense, agility, crit, mana)",
+      "Устранен последний клиентский дубль getWeaponProgressionTier в martial_arts_tooltips.js",
+      "Гармонизирован тир Undergarden (1.5) в клиентских тултипах экипировки",
+      "Зафиксированы 5 пред-рефакторинговых бэкапов _pre_core.js.bak в реестре BACKUP_MANIFEST.md"
+    ]
+  },
+  {
     "version": "0.4.42",
     "date": "2026-10-22",
     "title": "Системное Ядро Elyrium Core & Устранение Коллизий Области Видимости (Rhino Scope)",

@@ -90,18 +90,30 @@ function getReinforceLevel(item) {
 function getWeaponProgressionTier(item, id) {
     if (!item || item.isEmpty() || item.id === 'minecraft:air') return 1;
 
+    // 1. Elyrium Tier Tags (8 Tiers Canon + 1.5 Undergarden)
+    if (item.hasTag('elyrium:tier_8')) return 8;
+    if (item.hasTag('elyrium:tier_7')) return 7;
+    if (item.hasTag('elyrium:tier_6')) return 6;
+    if (item.hasTag('elyrium:tier_5')) return 5;
+    if (item.hasTag('elyrium:tier_4')) return 4;
+    if (item.hasTag('elyrium:tier_3')) return 3;
+    if (item.hasTag('elyrium:tier_2')) return 2;
+    if (item.hasTag('elyrium:tier_1_5') || item.hasTag('elyrium:tier_undergarden')) return 1.5;
+    if (item.hasTag('elyrium:tier_1')) return 1;
+
     for (let t = 8; t >= 1; t--) {
         if (item.hasTag(`skd:tier_${t}`) || item.hasTag(`c:tools/tier_${t}`)) return t;
     }
 
-    if (id.includes('mortum') || id.includes('divinerpg:mortum') || id.includes('aquatooth') || id.includes('halite') || id.includes('apalachia') || id.includes('skythern')) return 8;
-    if (id.includes('eden') || id.includes('wildwood') || id.includes('divinerpg:eden') || id.includes('divinerpg:wildwood')) return 7;
-    if (id.includes('sculk') || id.includes('echo') || id.includes('warden') || id.startsWith('deeperdarker:')) return 6;
-    if (id.includes('starlight') || id.includes('luminite') || id.includes('luminarite') || id.startsWith('eternal_starlight:')) return 5;
-    if (id.includes('dragon') || id.includes('void') || id.includes('ender_guardian') || id.includes('ender_golem') || id.includes('elytra') || id.includes('enderite')) return 4;
-    if (id.includes('gravitite') || id.includes('zanite') || id.includes('valkyrie') || id.includes('skyjade') || id.startsWith('aether:') || id.startsWith('deep_aether:')) return 3;
-    if (id.includes('cinder') || id.includes('netherite') || id.startsWith('cataclysm:') || id.includes('ignitium') || id.includes('witherite') || id.includes('monstrosity') || id.includes('wither')) return 2;
-    if (id.includes('cloggrum') || id.includes('froststeel') || id.startsWith('undergarden:')) return 1;
+    let itemId = id || String(item.id).toLowerCase();
+    if (itemId.includes('mortum') || itemId.includes('divinerpg:mortum') || itemId.includes('aquatooth') || itemId.includes('halite') || itemId.includes('apalachia') || itemId.includes('skythern')) return 8;
+    if (itemId.includes('eden') || itemId.includes('wildwood') || itemId.includes('divinerpg:eden') || itemId.includes('divinerpg:wildwood')) return 7;
+    if (itemId.includes('sculk') || itemId.includes('echo') || itemId.includes('warden') || itemId.startsWith('deeperdarker:')) return 6;
+    if (itemId.includes('starlight') || itemId.includes('luminite') || itemId.includes('luminarite') || itemId.startsWith('eternal_starlight:')) return 5;
+    if (itemId.includes('dragon') || itemId.includes('void') || itemId.includes('ender_guardian') || itemId.includes('ender_golem') || itemId.includes('elytra') || itemId.includes('enderite')) return 4;
+    if (itemId.includes('gravitite') || itemId.includes('zanite') || itemId.includes('valkyrie') || itemId.includes('skyjade') || itemId.startsWith('aether:') || itemId.startsWith('deep_aether:')) return 3;
+    if (itemId.includes('cinder') || itemId.includes('netherite') || itemId.startsWith('cataclysm:') || itemId.includes('ignitium') || itemId.includes('witherite') || itemId.includes('monstrosity') || itemId.includes('wither')) return 2;
+    if (itemId.includes('cloggrum') || itemId.includes('froststeel') || itemId.startsWith('undergarden:')) return 1.5;
     return 1;
 }
 
