@@ -39,6 +39,12 @@ const TIER_DIMENSION_REQUIREMENTS = {
         bossName: 'Духа Солнца Аэзера (Sun Spirit / Valkyrie Queen)',
         prereqKey: 'skd_tier3_completed'
     },
+    'eternal_starlight:starlight': {
+        tier: 5,
+        prereqTier: 4,
+        bossName: 'Дракона Края (Ender Dragon / Ender Guardian)',
+        prereqKey: 'skd_tier4_completed'
+    },
     'eternal_starlight:starlight_dimension': {
         tier: 5,
         prereqTier: 4,

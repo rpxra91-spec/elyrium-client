@@ -250,7 +250,7 @@ BlockEvents.rightClicked(event => {
         setColosseumGate(server, false)
 
         // Звуки и спецэффекты
-        server.runCommandSilent(`execute in ${DIM_LAYER_01} run playsound cataclysm:netherite_monstrosity_ambient hostile @a ${RUNWAY.altarX} -90 ${RUNWAY.altarZ} 2 0.8`)
+        server.runCommandSilent(`execute in ${DIM_LAYER_01} run playsound cataclysm:monstrosityawaken hostile @a ${RUNWAY.altarX} -90 ${RUNWAY.altarZ} 2 0.8`)
         server.runCommandSilent(`execute in ${DIM_LAYER_01} run particle minecraft:soul_fire_flame ${RUNWAY.altarX} -88 ${RUNWAY.altarZ} 2 2 2 0.1 80`)
 
         // Спавн Незеритового Титана точно в центре открытого зала (Z = -320)

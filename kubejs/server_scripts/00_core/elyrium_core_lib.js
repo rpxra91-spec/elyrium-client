@@ -207,7 +207,7 @@ function isTwoHandedWeapon(item) {
 
     // Better Combat weapon registry check (if available)
     try {
-        let registry = Java.loadClass('net.bettercombat.api.WeaponRegistry');
+        let registry = Java.loadClass('net.bettercombat.logic.WeaponRegistry');
         if (registry) {
             let rawStack = (typeof item.getItemStack === 'function') ? item.getItemStack() : (item.minecraftItemStack || item);
             let attrs = registry.getAttributes(rawStack);

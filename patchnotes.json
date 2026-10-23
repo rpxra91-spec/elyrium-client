@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.4.44",
+    "date": "2026-10-23",
+    "title": "Глубокий Сквозной Аудит Кодовой Базы & Ликвидация Скрытых Аномалий",
+    "highlights": [
+      "Better Combat JVM Classpath: исправлен вызов net.bettercombat.logic.WeaponRegistry в ядре (elyrium_core_lib.js:210)",
+      "Дроп Кочевых Боссов: исправлен незарегистрированный ID скрижали kubejs:martial_tablet_arrow_barrage в nomadic_world_bosses_engine.js:554",
+      "Прогрессия Измерений (Tier 5): добавлен канонический ID eternal_starlight:starlight в dimensional_progression_lock.js",
+      "Рейды Колоний: устранены 9 фантомных сущностей astral_dimension в custom_epic_raids.js, предотвращая сбои спавна армий",
+      "Звуки Бездны: исправлен эвент пробуждения Титана в Колизее на канонический cataclysm:monstrosityawaken",
+      "Полная валидация: проверены 153 вызова Java.loadClass, 268 скриптов, моб-эффекты, теги и 9 165 предметов"
+    ]
+  },
+  {
     "version": "0.4.43",
     "date": "2026-10-23",
     "title": "Хотфикс Ядра: SimpleStats JVM API, 6 Перков и Гармонизация Тултипов",

@@ -551,7 +551,7 @@ const NOMAD_CONFIG = {
                     { item: 'kubejs:steel_ingot', min: 2, max: 5 }
                 ],
                 chanceLoot: [
-                    { item: 'kubejs:martial_tablet_fan_barrage', chance: 0.25 },
+                    { item: 'kubejs:martial_tablet_arrow_barrage', chance: 0.25 },
                     { item: 'kubejs:elemental_stone_holy_2', chance: 0.25 }
                 ]
             }

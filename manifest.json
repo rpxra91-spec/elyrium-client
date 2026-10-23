@@ -1,8 +1,8 @@
 {
-  "version": "0.4.43",
+  "version": "0.4.44",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-22T21:50:19.628122+00:00",
+  "generated_at": "2026-10-23T06:31:54.248693+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -14112,8 +14112,8 @@
     },
     {
       "path": "kubejs/server_scripts/00_core/elyrium_core_lib.js",
-      "sha256": "7b1591abd071f61a70b9af895329c6e3f17364166bffad1f30824473f9dc9f8c",
-      "size": 17013
+      "sha256": "8d879b0ec8d890bee4752d2de18d23ade4aa1dc36741a1839c37890a94f46490",
+      "size": 17015
     },
     {
       "path": "kubejs/server_scripts/01_progression/anti_elytra_skip.js",
@@ -14132,8 +14132,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/dimensional_progression_lock.js",
-      "sha256": "7fcd8917278a76a078a8cbd25d689e8caa48d21659d05530fa912634f6eb090e",
-      "size": 15962
+      "sha256": "6e305404a74cb3a0d1d727f6ff6ae2552ff9c2483f967a2af9dcea8999f1c3ea",
+      "size": 16164
     },
     {
       "path": "kubejs/server_scripts/01_progression/elyrium_continent_tp.js",
@@ -14287,8 +14287,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/nomadic_world_bosses_engine.js",
-      "sha256": "3faac62af2d4c91bf46eab9b5de0e670a8b0f88d6617346174ef45703454582e",
-      "size": 77931
+      "sha256": "33758ae97e0b9b27d4f805ca1c5d605d9bdd14a3a2c540e63db43ede13242cae",
+      "size": 77933
     },
     {
       "path": "kubejs/server_scripts/03_combat/party_xp_share.js",
@@ -14442,8 +14442,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/abyss_sprint2_mechanics.js",
-      "sha256": "d58193a4a90450d480879e427a2398a853c25375045e0fe55756771ecbd42781",
-      "size": 25577
+      "sha256": "09b3b03b2a16f8e17bd26afda09ca4593de7cf37f6bb978946c75d8ae3428301",
+      "size": 25565
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/anti_grief_dungeon_lockdown.js",
@@ -14482,8 +14482,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/custom_epic_raids.js",
-      "sha256": "b8b8ef145fd726b1d4a1d173642c243323b56581158335fc69009f537e731d71",
-      "size": 11554
+      "sha256": "3d9a6f6abfca8c3f7c3ac3b599d701011e624ae93824a94c5a0b112c55fd8b12",
+      "size": 11499
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/darkness_spawn_suppressor.js",

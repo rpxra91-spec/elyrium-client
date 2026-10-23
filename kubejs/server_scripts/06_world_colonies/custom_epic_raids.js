@@ -18,11 +18,11 @@ const FACTION_ARMIES = {
             'eternal_starlight:stranghoul', 'eternal_starlight:tangled_husk',
             'cataclysm:ancient_remnant', 'cataclysm:drowned_host',
             'divinerpg:ancient_entity', 'divinerpg:husk',
-            'astral_dimension:fried_zombie', 'irons_spellbooks:catacombs_zombie'
+            'eternal_starlight:zombified_ratlin', 'irons_spellbooks:catacombs_zombie'
         ],
         elites: [
             'minecraft:wither_skeleton', 'deeperdarker:shattered',
-            'astral_dimension:ruined_knight', 'divinerpg:gruzzorlug_knight',
+            'cataclysm:elite_draugr', 'divinerpg:gruzzorlug_knight',
             'cataclysm:deepling_brute', 'divinerpg:dissiment'
         ],
         commanders: [
@@ -50,20 +50,20 @@ const FACTION_ARMIES = {
         name: '🌑 Твари Бездны и Скулка',
         scouts_and_soldiers: [
             'deeperdarker:sculk_centipede', 'deeperdarker:sculk_snapper',
-            'deeperdarker:sludge', 'astral_dimension:amethyst_crawler',
-            'astral_dimension:baby_amethyst_crawler', 'astral_dimension:amethyst_sentry',
+            'deeperdarker:sludge', 'cataclysm:amethyst_crab',
+            'eternal_starlight:gleech', 'deeperdarker:sculk_leech',
             'divinerpg:cave_crawler', 'divinerpg:desert_crawler',
             'divinerpg:ender_spider', 'divinerpg:soul_spider',
             'eternal_starlight:nightfall_spider', 'eternal_starlight:seeker',
             'irons_spellbooks:ice_spider'
         ],
         elites: [
-            'deeperdarker:shriek_worm', 'astral_dimension:corrupted_astral_golem',
-            'astral_dimension:amethyst_knight', 'eternal_starlight:astral_golem',
+            'deeperdarker:shriek_worm', 'eternal_starlight:grimstone_golem',
+            'cataclysm:amethyst_crab', 'eternal_starlight:astral_golem',
             'cataclysm:ender_golem'
         ],
         commanders: [
-            'deeperdarker:stalker', 'astral_dimension:titan_sentry'
+            'deeperdarker:stalker', 'eternal_starlight:starlight_golem'
         ]
     },
 
@@ -76,7 +76,7 @@ const FACTION_ARMIES = {
         ],
         elites: [
             'minecraft:witch', 'minecraft:evoker',
-            'astral_dimension:melee_astral_golem',
+            'eternal_starlight:boarwarf',
             'irons_spellbooks:citadel_keeper'
         ],
         commanders: [
