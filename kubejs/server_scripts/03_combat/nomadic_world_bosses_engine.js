@@ -44,12 +44,19 @@ const NOMAD_CONFIG = {
     sectorCaps: {
         1: 5,   // Сектор I (R=250..1450)
         2: 12,  // Сектор II (R=1500..4500, площадь 56.5 км²)
-        3: 18   // Сектор III (R=4500..8500, площадь 163.4 км²)
+        3: 18,  // Сектор III (R=4500..8500, площадь 163.4 км²)
+        4: 24   // Сектор IV (R=8500..13500, площадь 345.6 км² — Край и Бездна)
     },
     dimensionCaps: {
         'minecraft:the_nether': 4,
         'aether:the_aether': 4,
-        'undergarden:undergarden': 3
+        'undergarden:undergarden': 3,
+        'minecraft:the_end': 4,
+        'eternal_starlight:starlight': 4,
+        'deeperdarker:otherside': 3,
+        'divinerpg:eden': 3,
+        'divinerpg:wildwood': 3,
+        'divinerpg:mortum': 3
     },
 
     // --------------------------------------------------------------------------
@@ -664,6 +671,325 @@ const NOMAD_CONFIG = {
                     { item: 'kubejs:elemental_stone_nature_2', chance: 0.25 }
                 ]
             }
+        },
+
+        // ======================================================================
+        // СЕКТОР IV (OVERWORLD TIER 4: РУБЕЖИ КРАЯ И БЕЗДНЫ, R = 8500..13500м)
+        // ======================================================================
+        void_cult_cabal: {
+            id: 'void_cult_cabal',
+            displayName: '§5[★ Вожак] Верховный Чернокнижник Пустоты§r',
+            barTitle: 'Верховный Чернокнижник Пустоты (Адепт Края)',
+            barColor: 'purple',
+            rarity: 'common',
+            weight: 40,
+            sector: 4,
+            dimension: 'both',
+            behavior: 'nomadic',
+            entityType: 'cataclysm:deepling_warlock',
+            maxHp: 210,
+            speed: 0.27,
+            attackDamage: 11,
+            armor: 12,
+            campType: 'void_camp',
+            minions: [
+                { type: 'cataclysm:deepling_brute', count: 2, role: 'tank', name: '§5Глубинный Гвардеец Края§r', hp: 65, armor: 10, dmg: 8 },
+                { type: 'irons_spellbooks:cultist', count: 1, role: 'caster', name: '§dАдепт Темного Затмения§r', hp: 45, armor: 6 },
+                { type: 'divinerpg:soul_spider', count: 1, role: 'beast', name: '§8Призрачный Паук Бездны§r', hp: 38, dmg: 6 }
+            ],
+            abilities: { voidBurstCooldown: 16 },
+            loot: {
+                guaranteed: [
+                    { item: 'kubejs:respec_shard_copper', count: 1 },
+                    { item: 'minecraft:ender_pearl', min: 2, max: 5 },
+                    { item: 'kubejs:steel_ingot', min: 3, max: 6 }
+                ],
+                chanceLoot: [
+                    { item: 'kubejs:martial_tablet_shadow_step', chance: 0.30 },
+                    { item: 'kubejs:elemental_stone_shadow_3', chance: 0.25 }
+                ]
+            }
+        },
+
+        sculk_abyssal_stalker: {
+            id: 'sculk_abyssal_stalker',
+            displayName: '§1[★ Вожак] Скалк-Ловчий Темных Глубин§r',
+            barTitle: 'Скалк-Ловчий Темных Глубин (Эхо Бездны)',
+            barColor: 'blue',
+            rarity: 'common',
+            weight: 35,
+            sector: 4,
+            dimension: 'both',
+            behavior: 'nomadic',
+            entityType: 'deeperdarker:shattered',
+            maxHp: 220,
+            speed: 0.28,
+            attackDamage: 12,
+            armor: 12,
+            campType: 'sculk_redoubt',
+            minions: [
+                { type: 'deeperdarker:sculk_snapper', count: 2, role: 'tank', name: '§3Скалк-Панцирник Авангарда§r', hp: 55, armor: 8, dmg: 7 },
+                { type: 'deeperdarker:sculk_centipede', count: 1, role: 'beast', name: '§1Скалк-Многоножка Охоты§r', hp: 45, dmg: 7 },
+                { type: 'deeperdarker:sludge', count: 1, role: 'beast', name: '§0Слизевик Забвения§r', hp: 35, dmg: 5 }
+            ],
+            abilities: { sculkRoarCooldown: 18 },
+            loot: {
+                guaranteed: [
+                    { item: 'kubejs:respec_shard_copper', count: 1 },
+                    { item: 'minecraft:echo_shard', min: 1, max: 3 }
+                ],
+                chanceLoot: [
+                    { item: 'kubejs:martial_tablet_bone_crusher', chance: 0.30 },
+                    { item: 'kubejs:elemental_stone_shadow_3', chance: 0.25 }
+                ]
+            }
+        },
+
+        ender_dusk_patrol: {
+            id: 'ender_dusk_patrol',
+            displayName: '§d[★ Вожак] Центурион Сумрака Края§r',
+            barTitle: 'Центурион Сумрака Края (Страж Разлома)',
+            barColor: 'pink',
+            rarity: 'uncommon',
+            weight: 25,
+            sector: 4,
+            dimension: 'both',
+            behavior: 'nomadic',
+            entityType: 'cataclysm:amethyst_crab',
+            maxHp: 250,
+            speed: 0.26,
+            attackDamage: 13,
+            armor: 14,
+            armorToughness: 6,
+            campType: 'void_camp',
+            minions: [
+                { type: 'divinerpg:ender_spider', count: 2, role: 'beast', name: '§5Странник Разлома Края§r', hp: 50, dmg: 8 },
+                { type: 'eternal_starlight:lonestar_skeleton', count: 2, role: 'ranged', name: '§dСтрелок Темного Небосвода§r', hp: 42, armor: 6, mainHand: 'minecraft:bow' }
+            ],
+            abilities: { crabSlamCooldown: 16 },
+            loot: {
+                guaranteed: [
+                    { item: 'kubejs:respec_shard_copper', count: 1 },
+                    { item: 'minecraft:amethyst_shard', min: 4, max: 8 },
+                    { item: 'minecraft:ender_pearl', min: 2, max: 4 }
+                ],
+                chanceLoot: [
+                    { item: 'kubejs:martial_tablet_severing_cleave', chance: 0.35 },
+                    { item: 'kubejs:elemental_stone_shadow_3', chance: 0.30 }
+                ]
+            }
+        },
+
+        abyssal_dreadnought: {
+            id: 'abyssal_dreadnought',
+            displayName: '§4[★ Вожак] Панцирный Дредноут Бездны§r',
+            barTitle: 'Панцирный Дредноут Бездны (Тяжелый Колосс)',
+            barColor: 'red',
+            rarity: 'rare',
+            weight: 15,
+            sector: 4,
+            dimension: 'both',
+            behavior: 'nomadic',
+            entityType: 'cataclysm:deepling_brute',
+            maxHp: 290,
+            speed: 0.25,
+            attackDamage: 14,
+            armor: 16,
+            armorToughness: 8,
+            campType: 'void_camp',
+            minions: [
+                { type: 'cataclysm:deepling_warlock', count: 2, role: 'caster', name: '§5Адепт Темного Потока§r', hp: 52, armor: 8 },
+                { type: 'deeperdarker:sculk_snapper', count: 2, role: 'tank', name: '§1Броненосный Скалк-Защитник§r', hp: 60, armor: 10, dmg: 7 }
+            ],
+            abilities: { bruteSmashCooldown: 18 },
+            loot: {
+                guaranteed: [
+                    { item: 'kubejs:respec_shard_copper', count: 2 },
+                    { item: 'minecraft:diamond', min: 2, max: 5 },
+                    { item: 'kubejs:steel_ingot', min: 4, max: 8 }
+                ],
+                chanceLoot: [
+                    { item: 'kubejs:martial_tablet_earth_sunder', chance: 0.40 },
+                    { item: 'kubejs:elemental_stone_shadow_3', chance: 0.35 }
+                ]
+            }
+        },
+
+        mythic_void_harbinger: {
+            id: 'mythic_void_harbinger',
+            displayName: '§5§l[👑 ДИКОВИНКА] Предвестник Разлома Края§r',
+            barTitle: '★ ПРЕДВЕСТНИК РАЗЛОМА КРАЯ (ВЛАДЫКА ПУСТОТЫ) ★',
+            barColor: 'purple',
+            rarity: 'mythic',
+            weight: 5,
+            sector: 4,
+            dimension: 'both',
+            behavior: 'nomadic',
+            entityType: 'cataclysm:ender_golem',
+            maxHp: 420,
+            speed: 0.25,
+            attackDamage: 16,
+            armor: 18,
+            armorToughness: 10,
+            campType: 'void_camp',
+            minions: [
+                { type: 'cataclysm:deepling_brute', count: 2, role: 'tank', name: '§5Гвардеец Разлома Края§r', hp: 75, armor: 12, dmg: 9 },
+                { type: 'cataclysm:deepling_warlock', count: 2, role: 'caster', name: '§dВерховный Сектант Бездны§r', hp: 58, armor: 8 },
+                { type: 'deeperdarker:stalker', count: 1, role: 'beast', name: '§1Теневой Сталкер Глубин§r', hp: 65, dmg: 9 }
+            ],
+            abilities: { voidSlamCooldown: 20 },
+            loot: {
+                guaranteed: [
+                    { item: 'kubejs:respec_shard_copper', count: 2 },
+                    { item: 'kubejs:tier_upgrade_template', count: 1 },
+                    { item: 'minecraft:ender_eye', min: 2, max: 4 },
+                    { item: 'minecraft:diamond_block', count: 1 }
+                ],
+                chanceLoot: [
+                    { item: 'kubejs:martial_tablet_thousand_cuts', chance: 0.45 },
+                    { item: 'kubejs:martial_tablet_arrow_barrage', chance: 0.45 },
+                    { item: 'kubejs:elemental_stone_shadow_3', chance: 0.50 }
+                ]
+            }
+        },
+
+        // ======================================================================
+        // ФОРПОСТЫ ДАЛЬНИХ ИЗМЕРЕНИЙ (NATIVE DIMENSIONS TIER 4 - 8)
+        // ======================================================================
+        end_garrison_outpost: {
+            id: 'end_garrison_outpost',
+            displayName: '§5[★ Форпост] Хранитель Цитадели Края§r',
+            barTitle: 'Хранитель Цитадели Края (Голем Энда)',
+            barColor: 'purple',
+            rarity: 'rare',
+            weight: 30,
+            sector: 0,
+            dimension: 'minecraft:the_end',
+            behavior: 'static_outpost',
+            entityType: 'cataclysm:ender_golem',
+            maxHp: 350,
+            speed: 0.24,
+            attackDamage: 15,
+            armor: 16,
+            armorToughness: 8,
+            campType: 'void_camp',
+            minions: [
+                { type: 'cataclysm:deepling_brute', count: 2, role: 'tank', name: '§5Страж Врат Энда§r', hp: 65, armor: 10, dmg: 8 },
+                { type: 'divinerpg:ender_spider', count: 2, role: 'beast', name: '§dПаук Пустоты Края§r', hp: 45, dmg: 7 }
+            ],
+            abilities: { voidSlamCooldown: 18 },
+            loot: {
+                guaranteed: [
+                    { item: 'kubejs:respec_shard_copper', count: 1 },
+                    { item: 'minecraft:ender_pearl', min: 4, max: 8 }
+                ],
+                chanceLoot: [
+                    { item: 'kubejs:martial_tablet_severing_cleave', chance: 0.35 },
+                    { item: 'kubejs:elemental_stone_shadow_3', chance: 0.30 }
+                ]
+            }
+        },
+
+        starlight_titan_bastion: {
+            id: 'starlight_titan_bastion',
+            displayName: '§b[★ Форпост] Титан Звездного Бастиона§r',
+            barTitle: 'Титан Звездного Бастиона (Страж Созвездий)',
+            barColor: 'blue',
+            rarity: 'rare',
+            weight: 30,
+            sector: 0,
+            dimension: 'eternal_starlight:starlight',
+            behavior: 'static_outpost',
+            entityType: 'eternal_starlight:starlight_golem',
+            maxHp: 320,
+            speed: 0.24,
+            attackDamage: 14,
+            armor: 15,
+            armorToughness: 8,
+            campType: 'starlight_camp',
+            minions: [
+                { type: 'eternal_starlight:astral_golem', count: 2, role: 'tank', name: '§bАстральный Защитник§r', hp: 60, armor: 10, dmg: 7 },
+                { type: 'eternal_starlight:grimstone_golem', count: 1, role: 'tank', name: '§8Мрачнокаменный Страж§r', hp: 55, armor: 10, dmg: 6 }
+            ],
+            abilities: { starlightPulseCooldown: 18 },
+            loot: {
+                guaranteed: [
+                    { item: 'kubejs:respec_shard_copper', count: 1 },
+                    { item: 'eternal_starlight:starlight_crystal_shard', min: 3, max: 6 }
+                ],
+                chanceLoot: [
+                    { item: 'kubejs:martial_tablet_lightning_thrust', chance: 0.35 },
+                    { item: 'kubejs:elemental_stone_holy_3', chance: 0.30 }
+                ]
+            }
+        },
+
+        sculk_shadow_citadel: {
+            id: 'sculk_shadow_citadel',
+            displayName: '§1[★ Форпост] Древний Сталкер Бездны§r',
+            barTitle: 'Древний Сталкер Бездны (Владыка Скалка)',
+            barColor: 'blue',
+            rarity: 'rare',
+            weight: 30,
+            sector: 0,
+            dimension: 'deeperdarker:otherside',
+            behavior: 'static_outpost',
+            entityType: 'deeperdarker:stalker',
+            maxHp: 300,
+            speed: 0.28,
+            attackDamage: 15,
+            armor: 14,
+            armorToughness: 6,
+            campType: 'sculk_redoubt',
+            minions: [
+                { type: 'deeperdarker:shattered', count: 2, role: 'tank', name: '§1Осколочный Скалк-Пехотинец§r', hp: 55, armor: 8, dmg: 7 },
+                { type: 'deeperdarker:sculk_centipede', count: 1, role: 'beast', name: '§3Скалк-Многоножка Охранения§r', hp: 45, dmg: 7 }
+            ],
+            abilities: { sculkStalkerRoarCooldown: 16 },
+            loot: {
+                guaranteed: [
+                    { item: 'kubejs:respec_shard_copper', count: 1 },
+                    { item: 'minecraft:echo_shard', min: 2, max: 4 }
+                ],
+                chanceLoot: [
+                    { item: 'kubejs:martial_tablet_bone_crusher', chance: 0.35 },
+                    { item: 'kubejs:elemental_stone_shadow_3', chance: 0.30 }
+                ]
+            }
+        },
+
+        divine_wildwood_redoubt: {
+            id: 'divine_wildwood_redoubt',
+            displayName: '§a[★ Форпост] Рыцарь Древнего Диколесья§r',
+            barTitle: 'Рыцарь Древнего Диколесья (Элитный Титан)',
+            barColor: 'green',
+            rarity: 'rare',
+            weight: 30,
+            sector: 0,
+            dimension: 'both',
+            behavior: 'static_outpost',
+            entityType: 'divinerpg:gruzzorlug_knight',
+            maxHp: 320,
+            speed: 0.25,
+            attackDamage: 14,
+            armor: 16,
+            armorToughness: 8,
+            campType: 'divine_sanctuary',
+            minions: [
+                { type: 'divinerpg:enchanted_warrior', count: 2, role: 'tank', name: '§aЗачарованный Гвардеец Диколесья§r', hp: 60, armor: 10, dmg: 7 },
+                { type: 'divinerpg:sun_archer', count: 2, role: 'ranged', name: '§eЛучник Священной Рощи§r', hp: 45, armor: 6, mainHand: 'minecraft:bow' }
+            ],
+            abilities: { wildwoodSlamCooldown: 18 },
+            loot: {
+                guaranteed: [
+                    { item: 'kubejs:respec_shard_copper', count: 1 },
+                    { item: 'minecraft:emerald', min: 3, max: 6 }
+                ],
+                chanceLoot: [
+                    { item: 'kubejs:martial_tablet_earth_sunder', chance: 0.35 },
+                    { item: 'kubejs:elemental_stone_nature_3', chance: 0.30 }
+                ]
+            }
         }
     }
 };
@@ -797,6 +1123,51 @@ function deployCampsite(level, cx, cy, cz, campType) {
         safePlace(cx + 2, cy, cz - 2, 'minecraft:barrel');
         safePlace(cx + 3, cy, cz + 1, 'minecraft:deepslate_wall');
         safePlace(cx + 3, cy + 1, cz + 1, 'minecraft:soul_torch');
+    } else if (campType === 'void_camp') {
+        // Редут Пустоты и Края (Сектор IV / The End)
+        safePlace(cx, cy, cz, 'minecraft:soul_campfire[lit=true]');
+        safePlace(cx + 2, cy, cz, 'minecraft:end_stone_bricks');
+        safePlace(cx - 2, cy, cz, 'minecraft:end_stone_bricks');
+        safePlace(cx, cy, cz + 2, 'minecraft:purpur_block');
+        safePlace(cx + 1, cy, cz + 2, 'minecraft:purple_carpet');
+        safePlace(cx - 1, cy, cz + 2, 'minecraft:black_carpet');
+        safePlace(cx + 2, cy, cz - 2, 'minecraft:crying_obsidian');
+        safePlace(cx - 2, cy, cz - 2, 'minecraft:barrel');
+        safePlace(cx + 3, cy, cz + 1, 'minecraft:chain');
+        safePlace(cx + 3, cy + 1, cz + 1, 'minecraft:soul_torch');
+    } else if (campType === 'starlight_camp') {
+        // Звездный лагерь (Eternal Starlight)
+        safePlace(cx, cy, cz, 'minecraft:soul_campfire[lit=true]');
+        safePlace(cx + 2, cy, cz, 'minecraft:polished_deepslate');
+        safePlace(cx - 2, cy, cz, 'minecraft:polished_deepslate');
+        safePlace(cx, cy, cz + 2, 'minecraft:chiseled_deepslate');
+        safePlace(cx + 1, cy, cz + 2, 'minecraft:light_blue_carpet');
+        safePlace(cx - 1, cy, cz + 2, 'minecraft:cyan_carpet');
+        safePlace(cx + 2, cy, cz - 2, 'minecraft:barrel');
+        safePlace(cx + 3, cy, cz + 1, 'minecraft:deepslate_wall');
+        safePlace(cx + 3, cy + 1, cz + 1, 'minecraft:lantern');
+    } else if (campType === 'sculk_redoubt') {
+        // Скалк-цитадель (Deeper Darker / Скалк-зоны)
+        safePlace(cx, cy, cz, 'minecraft:soul_campfire[lit=true]');
+        safePlace(cx + 2, cy, cz, 'minecraft:bone_block[axis=y]');
+        safePlace(cx - 2, cy, cz, 'minecraft:bone_block[axis=y]');
+        safePlace(cx, cy, cz + 2, 'minecraft:sculk');
+        safePlace(cx + 1, cy, cz + 2, 'minecraft:black_carpet');
+        safePlace(cx - 1, cy, cz + 2, 'minecraft:cyan_carpet');
+        safePlace(cx + 2, cy, cz - 2, 'minecraft:barrel');
+        safePlace(cx + 3, cy, cz + 1, 'minecraft:deepslate_wall');
+        safePlace(cx + 3, cy + 1, cz + 1, 'minecraft:soul_torch');
+    } else if (campType === 'divine_sanctuary') {
+        // Древнее святилище (DivineRPG)
+        safePlace(cx, cy, cz, 'minecraft:campfire[lit=true]');
+        safePlace(cx + 2, cy, cz, 'minecraft:smooth_stone');
+        safePlace(cx - 2, cy, cz, 'minecraft:smooth_stone');
+        safePlace(cx, cy, cz + 2, 'minecraft:gold_block');
+        safePlace(cx + 1, cy, cz + 2, 'minecraft:yellow_carpet');
+        safePlace(cx - 1, cy, cz + 2, 'minecraft:green_carpet');
+        safePlace(cx + 2, cy, cz - 2, 'minecraft:barrel');
+        safePlace(cx + 3, cy, cz + 1, 'minecraft:stone_brick_wall');
+        safePlace(cx + 3, cy + 1, cz + 1, 'minecraft:torch');
     } else {
         // Стандартный лесной / горный лагерь
         safePlace(cx, cy, cz, 'minecraft:campfire[lit=true]');
@@ -989,6 +1360,7 @@ ServerEvents.tick(event => {
                     if (r >= 250 && r <= 1450) sector = 1;
                     else if (r > 1450 && r <= 4500) sector = 2;
                     else if (r > 4500 && r <= 8500) sector = 3;
+                    else if (r > 8500 && r <= 13500) sector = 4;
 
                     if (sector === 0) return;
 
@@ -1018,8 +1390,8 @@ ServerEvents.tick(event => {
                     let spawnR = Math.sqrt(spawnX * spawnX + spawnZ * spawnZ);
 
                     // Валидация радиуса сектора
-                    let minR = (sector === 1) ? 250 : (sector === 2) ? 1500 : 4500;
-                    let maxR = (sector === 1) ? 1450 : (sector === 2) ? 4500 : 8500;
+                    let minR = (sector === 1) ? 250 : (sector === 2) ? 1500 : (sector === 3) ? 4500 : 8500;
+                    let maxR = (sector === 1) ? 1450 : (sector === 2) ? 4500 : (sector === 3) ? 8500 : 13500;
                     if (spawnR < minR || spawnR > maxR) return;
 
                     // 4. Проверка дистанции от других банд (Anti-Clustering >= 250м)
@@ -1065,7 +1437,17 @@ ServerEvents.tick(event => {
         }
 
         // Спавн форпостов в Незере и Эфире
-        ['minecraft:the_nether', 'aether:the_aether', 'undergarden:undergarden'].forEach(dimId => {
+        [
+            'minecraft:the_nether',
+            'aether:the_aether',
+            'undergarden:undergarden',
+            'minecraft:the_end',
+            'eternal_starlight:starlight',
+            'deeperdarker:otherside',
+            'divinerpg:eden',
+            'divinerpg:wildwood',
+            'divinerpg:mortum'
+        ].forEach(dimId => {
             let dimLevel = server.getLevel(dimId);
             if (!dimLevel) return;
 
