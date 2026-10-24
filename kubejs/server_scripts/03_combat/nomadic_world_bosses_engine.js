@@ -1489,14 +1489,30 @@ ServerEvents.tick(event => {
                     let dimEligible = [];
                     for (let id in NOMAD_CONFIG.bosses) {
                         let arc = NOMAD_CONFIG.bosses[id];
-                        if (arc.dimension === dimId || arc.dimension === 'both') {
+                        if (arc.dimension === dimId) {
                             dimEligible.push(arc);
+                        } else if (arc.dimension === 'both') {
+                            // Строгая гармонизация секторов Оверворлда с их каноническими измерениями
+                            if (dimId === 'minecraft:the_nether' && arc.sector === 2) dimEligible.push(arc);
+                            else if (dimId === 'aether:the_aether' && arc.sector === 3) dimEligible.push(arc);
+                            else if (dimId === 'minecraft:the_end' && arc.sector === 4) dimEligible.push(arc);
+                            else if (dimId.startsWith('divinerpg:') && arc.id === 'divine_wildwood_redoubt') dimEligible.push(arc);
                         }
                     }
 
                     if (dimEligible.length > 0) {
-                        let pick = dimEligible[Math.floor(Math.random() * dimEligible.length)];
-                        spawnNomadBoss(server, pick.id, sx, groundY, sz, dimId);
+                        // Взвешенный ролл редкости (Common, Uncommon, Rare, Mythic)
+                        let totalWeight = dimEligible.reduce((sum, a) => sum + (a.weight || 10), 0);
+                        let roll = Math.random() * totalWeight;
+                        let selected = dimEligible[0];
+                        for (let a of dimEligible) {
+                            roll -= (a.weight || 10);
+                            if (roll <= 0) {
+                                selected = a;
+                                break;
+                            }
+                        }
+                        spawnNomadBoss(server, selected.id, sx, groundY, sz, dimId);
                     }
                 }
             });
