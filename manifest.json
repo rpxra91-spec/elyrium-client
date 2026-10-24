@@ -1,8 +1,8 @@
 {
-  "version": "0.4.48",
+  "version": "0.4.49",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-24T03:19:38.659382+00:00",
+  "generated_at": "2026-10-24T13:32:08.559407+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -13482,8 +13482,8 @@
     },
     {
       "path": "kubejs/client_scripts/canonical_equipment_names_and_lore.js",
-      "sha256": "4845dbe7434a8cd87f254a60349174a9befba998d41bfa4736def2c4935045a1",
-      "size": 63042
+      "sha256": "97c5c0182e5666123ce3f1b13faf215615e25bf8d89b9e774a396f5fc1f1a009",
+      "size": 50005
     },
     {
       "path": "kubejs/client_scripts/dodge_camera_fx.js",
@@ -14402,8 +14402,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_crafting_gui.js",
-      "sha256": "c06f5b8f2afeee841e44c91cc9ccb605bfa248e0b616cfbd39ce9226819240f6",
-      "size": 116391
+      "sha256": "c9fc08e350d87aba0aea71b54234755221d457d65d926da3582322028eef228f",
+      "size": 116396
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
@@ -14482,8 +14482,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/forge_workshop_gui.js",
-      "sha256": "904633bba4370d6a21aaeae77ee6f36c524ccd9127ea229b398d4bc29e4dfa02",
-      "size": 97020
+      "sha256": "2449e4ca937715f63a23118f82713c32e5d30411e1c962f0d0d291668b80155a",
+      "size": 97085
     },
     {
       "path": "kubejs/server_scripts/03_combat/gear_score_system.js",

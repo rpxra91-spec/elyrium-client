@@ -258,10 +258,10 @@ const WORKSHOP_FORGE_RECIPES = [
     { id: 'simplyswords:stormbringer', name: 'Призыватель Звездной Бури', ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 3, extra: 'eternal_starlight:starlight_flower', extraName: 'Звездный Цветок', extraCount: 2 },
     { id: 'deeperdarker:warden_sword', name: 'Резонирующий Меч Эхо-Удара Sonic Boom', ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 3, extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 2 },
     { id: 'simplyswords:whisperwind', name: 'Кинжал Шепота Скалк-Бездны', ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 2, extra: 'minecraft:echo_shard', extraName: 'Осколок Эха', extraCount: 3 },
-    { id: 'divinerpg:eden_blade', name: 'Солнечный Клинок Первородного Эдема', ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 4, extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1 },
-    { id: 'simplyswords:arcanethyst', name: 'Арканетистовая Глефа Вечности', ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 3, extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1 },
-    { id: 'divinerpg:halite_blade', name: 'Абсолютный Клинок Демиурга Халита', ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 5, extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 2 },
-    { id: 'simplyswords:livyatan', name: 'Левиафан Апокалипсиса Мортума', ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 6, extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 2 },
+    { id: 'simplyswords:righteous_relic', name: 'Праведная Реликвия Высшего Света', ingot: 'minecraft:gold_block', ingotName: 'Золотой Блок Святости', ingotCount: 3, extra: 'aether:enchanted_gravitite', extraName: 'Гравитит', extraCount: 2 },
+    { id: 'simplyswords:caelestis', name: 'Селестис — Небесный Меч', ingot: 'minecraft:gold_block', ingotName: 'Золотой Блок Святости', ingotCount: 4, extra: 'aether:sun_altar', extraName: 'Солнечный Алтарь', extraCount: 1 },
+    { id: 'cataclysm:final_fractal', name: 'Финальный Фрактал Реальности', ingot: 'minecraft:netherite_block', ingotName: 'Незеритовый Блок Бездны', ingotCount: 2, extra: 'cataclysm:void_core', extraName: 'Ядро Бездны', extraCount: 1 },
+    { id: 'simplyswords:livyatan', name: 'Ливиафан — Повелитель Океана', ingot: 'minecraft:netherite_block', ingotName: 'Незеритовый Блок Бездны', ingotCount: 3, extra: 'cataclysm:abyssal_egg', extraName: 'Яйцо Бездны', extraCount: 1 },
 
     // 🛡 Доспехи Т1
     { id: 'minecraft:iron_helmet', name: 'Железный Шлем', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 5, extra: null, extraName: null, extraCount: 0 },
