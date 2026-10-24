@@ -1,6 +1,6 @@
 {
   "parent": "simplyswords:item/template_twinblade",
   "textures": {
-    "layer0": "simplyswords:item/netherite_twinblade"
+    "layer0": "simplyswords:item/twinblade_end_gobber"
   }
 }

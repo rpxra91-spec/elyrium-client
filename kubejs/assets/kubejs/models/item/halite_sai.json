@@ -1,6 +1,6 @@
 {
   "parent": "simplyswords:item/template_sai",
   "textures": {
-    "layer0": "simplyswords:item/iron_sai"
+    "layer0": "simplyswords:item/sai_metallurgium"
   }
 }

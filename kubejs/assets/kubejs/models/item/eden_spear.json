@@ -1,6 +1,6 @@
 {
   "parent": "simplyswords:item/template_spear",
   "textures": {
-    "layer0": "simplyswords:item/gold_spear"
+    "layer0": "simplyswords:item/spear_carmot"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "simplyswords:item/template_scythe",
   "textures": {
-    "layer0": "simplyswords:item/iron_scythe"
+    "layer0": "simplyswords:item/scythe_metallurgium"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "simplyswords:item/template_halberd",
   "textures": {
-    "layer0": "simplyswords:item/gold_halberd"
+    "layer0": "simplyswords:item/halberd_carmot"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "simplyswords:item/template_greataxe",
   "textures": {
-    "layer0": "simplyswords:item/netherite_greataxe"
+    "layer0": "simplyswords:item/greataxe_end_gobber"
   }
 }

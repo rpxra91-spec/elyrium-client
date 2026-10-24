@@ -1,6 +1,6 @@
 {
   "parent": "simplyswords:item/template_rapier",
   "textures": {
-    "layer0": "simplyswords:item/netherite_rapier"
+    "layer0": "simplyswords:item/rapier_end_gobber"
   }
 }

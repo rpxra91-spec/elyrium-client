@@ -1,6 +1,6 @@
 {
   "parent": "simplyswords:item/template_longdagger",
   "textures": {
-    "layer0": "simplyswords:item/diamond_longdagger"
+    "layer0": "simplyswords:item/rapier_celestium"
   }
 }

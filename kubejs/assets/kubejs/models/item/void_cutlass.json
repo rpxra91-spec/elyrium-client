@@ -1,6 +1,6 @@
 {
   "parent": "simplyswords:item/template_cutlass",
   "textures": {
-    "layer0": "simplyswords:item/netherite_cutlass"
+    "layer0": "simplyswords:item/cutlass_end_gobber"
   }
 }

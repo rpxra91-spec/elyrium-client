@@ -1,6 +1,6 @@
 {
   "parent": "simplyswords:item/template_greataxe",
   "textures": {
-    "layer0": "simplyswords:item/diamond_greataxe"
+    "layer0": "simplyswords:item/greataxe_celestium"
   }
 }

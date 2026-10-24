@@ -1,6 +1,6 @@
 {
   "parent": "simplyswords:item/template_sword",
   "textures": {
-    "layer0": "simplyswords:item/diamond_sword"
+    "layer0": "simplyswords:item/warglaive_celestium"
   }
 }
