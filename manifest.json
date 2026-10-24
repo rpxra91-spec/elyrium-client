@@ -1,8 +1,8 @@
 {
-  "version": "0.4.46",
+  "version": "0.4.47",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-24T01:25:49.020579+00:00",
+  "generated_at": "2026-10-24T02:36:06.883904+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8911,6 +8911,236 @@
       "size": 17680
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/abyssal_apex_monolith_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/abyssal_apex_monolith_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/abyssal_apex_monolith_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/abyssal_apex_monolith_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/abyssal_monolith_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/abyssal_monolith_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/abyssal_monolith_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/abyssal_monolith_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/abyssal_shroud_cloak.json",
+      "sha256": "593b5646d6f63a74ee627bbdc1b47f569c5122a843ae3275be61ef8190abc199",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/acoustic_priest_boots.json",
+      "sha256": "68c9ec85f99527e4404e71597dc5e8795c0622625988656f95a6008a0d45e977",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/acoustic_priest_chestplate.json",
+      "sha256": "ef17ec1612654f44029e779f9ac970112a02065475f24f780acf77c287dba364",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/acoustic_priest_helmet.json",
+      "sha256": "495e7f79d7cf0664ee097304d134255608be73b262b41ff9818bd846f99a93e7",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/acoustic_priest_leggings.json",
+      "sha256": "13474ebf28832c288f8badd21113e029e6baa99ad827d0290bdbf427e7ecc2c9",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/aether_feather_quiver.json",
+      "sha256": "2e416f9c1b826ea035f124f945c3211033b3ac57b6d6ce6602369cc86001c2c6",
+      "size": 106
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/aether_hierophant_boots.json",
+      "sha256": "c35ba8c0fb4065a7f193ecd5618d0253a9c6097c4d2fb65efe19f699ddb09049",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/aether_hierophant_chestplate.json",
+      "sha256": "ff880c11b2f453b01816af71959c46114d0fb07c315ef9baa17a971b07a217df",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/aether_hierophant_helmet.json",
+      "sha256": "f64ea0b99acd6e8130b5832d6290f7dd3d157f7578255a2f35bd706821509517",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/aether_hierophant_leggings.json",
+      "sha256": "e0585841a5565195dc02bb4be119c63253f2dda7247e54a534e05dd7be636ac5",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_depth_warrior_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_depth_warrior_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_depth_warrior_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_depth_warrior_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_ent_lord_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_ent_lord_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_ent_lord_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_ent_lord_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_entity_boots.json",
+      "sha256": "68c9ec85f99527e4404e71597dc5e8795c0622625988656f95a6008a0d45e977",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_entity_chestplate.json",
+      "sha256": "ef17ec1612654f44029e779f9ac970112a02065475f24f780acf77c287dba364",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_entity_helmet.json",
+      "sha256": "495e7f79d7cf0664ee097304d134255608be73b262b41ff9818bd846f99a93e7",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_entity_leggings.json",
+      "sha256": "13474ebf28832c288f8badd21113e029e6baa99ad827d0290bdbf427e7ecc2c9",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_remnant_sword.json",
+      "sha256": "a861537d8edce50d8e9b736acd0735f8d5e81aa2225502ba3350e495a69da838",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_stalker_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_stalker_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_stalker_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ancient_stalker_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/apalachia_crystal_staff.json",
+      "sha256": "e34904419c011f11de523b6047b4e4621b1285a24de1069148f546fbdca2438d",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/apalachia_mind_crystal.json",
+      "sha256": "4cd2c9a5a8181d7a133888b2ecafb04ea998b422ca48d2e4988af5e2c8dd31b7",
+      "size": 107
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/apex_halite_titan_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/apex_halite_titan_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/apex_halite_titan_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/apex_halite_titan_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/apex_titan_belt.json",
+      "sha256": "fb1d41f49501d426fcbfc4551169f20ed394c217a3f9420325dbc37adc05eda3",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/apprentice_mage_boots.json",
+      "sha256": "178a3203f09297b2b527d6cbef1302aeafe9887f028bce955061a7338230c8e7",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/apprentice_mage_chestplate.json",
+      "sha256": "98ad76f55af546f10a4e13720b39e3c40ac5b590d00cad31150ee65f0e0320f6",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/apprentice_mage_helmet.json",
+      "sha256": "46e04576e25ceafb22b7c2ec5b9d885970bc4292ed4fc59c2fdabe0922630668",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/apprentice_mage_leggings.json",
+      "sha256": "100d14853dc20b86c892de062535b979b2bf5637053226108bae307f9bd1c702",
+      "size": 116
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/ascension_catalyst_t10.json",
       "sha256": "f22facde4bd3d6434b5c163df5ed5690c7678ed82b4d32ce3dc4f1e733fb3bfb",
       "size": 115
@@ -8951,6 +9181,66 @@
       "size": 114
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/astral_weaver_boots.json",
+      "sha256": "68c9ec85f99527e4404e71597dc5e8795c0622625988656f95a6008a0d45e977",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/astral_weaver_chestplate.json",
+      "sha256": "ef17ec1612654f44029e779f9ac970112a02065475f24f780acf77c287dba364",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/astral_weaver_helmet.json",
+      "sha256": "495e7f79d7cf0664ee097304d134255608be73b262b41ff9818bd846f99a93e7",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/astral_weaver_leggings.json",
+      "sha256": "13474ebf28832c288f8badd21113e029e6baa99ad827d0290bdbf427e7ecc2c9",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/astrologer_boots.json",
+      "sha256": "178a3203f09297b2b527d6cbef1302aeafe9887f028bce955061a7338230c8e7",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/astrologer_chestplate.json",
+      "sha256": "98ad76f55af546f10a4e13720b39e3c40ac5b590d00cad31150ee65f0e0320f6",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/astrologer_helmet.json",
+      "sha256": "46e04576e25ceafb22b7c2ec5b9d885970bc4292ed4fc59c2fdabe0922630668",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/astrologer_leggings.json",
+      "sha256": "100d14853dc20b86c892de062535b979b2bf5637053226108bae307f9bd1c702",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/basalt_ranger_boots.json",
+      "sha256": "2b526a4783a4b1581e3f6ab1f30bf2ef803c0de22f3f6563d3b5aeffeacd0f88",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/basalt_ranger_chestplate.json",
+      "sha256": "70ce7899ab698e93e4e5688e231543c90aca702be9215cd69c50e3a95003b021",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/basalt_ranger_helmet.json",
+      "sha256": "af51e149f77e79443ee1cff97464219269ccd11baed77b3e5c90dfaca1e33494",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/basalt_ranger_leggings.json",
+      "sha256": "1efc1a9e76cdc57e28072fe8bb116abd09ee6c81a81f803feb422c7bdaa4096b",
+      "size": 118
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/bastion_hunter_boots.json",
       "sha256": "c35ba8c0fb4065a7f193ecd5618d0253a9c6097c4d2fb65efe19f699ddb09049",
       "size": 107
@@ -8971,6 +9261,26 @@
       "size": 110
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/bastion_stalker_boots.json",
+      "sha256": "2b526a4783a4b1581e3f6ab1f30bf2ef803c0de22f3f6563d3b5aeffeacd0f88",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/bastion_stalker_chestplate.json",
+      "sha256": "70ce7899ab698e93e4e5688e231543c90aca702be9215cd69c50e3a95003b021",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/bastion_stalker_helmet.json",
+      "sha256": "af51e149f77e79443ee1cff97464219269ccd11baed77b3e5c90dfaca1e33494",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/bastion_stalker_leggings.json",
+      "sha256": "1efc1a9e76cdc57e28072fe8bb116abd09ee6c81a81f803feb422c7bdaa4096b",
+      "size": 118
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/blacksmith_hearth.json",
       "sha256": "79252834592f90db57d773d7d6e482cb2ca4c1d2e42acb739f910f973e14ad3a",
       "size": 59
@@ -8979,6 +9289,26 @@
       "path": "kubejs/assets/kubejs/models/item/blacksmith_workbench.json",
       "sha256": "715cc4c5a2562a211f2939c295391659464622cf8c03611d38375247d50b9f85",
       "size": 62
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/catacomb_hunter_boots.json",
+      "sha256": "2b526a4783a4b1581e3f6ab1f30bf2ef803c0de22f3f6563d3b5aeffeacd0f88",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/catacomb_hunter_chestplate.json",
+      "sha256": "70ce7899ab698e93e4e5688e231543c90aca702be9215cd69c50e3a95003b021",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/catacomb_hunter_helmet.json",
+      "sha256": "af51e149f77e79443ee1cff97464219269ccd11baed77b3e5c90dfaca1e33494",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/catacomb_hunter_leggings.json",
+      "sha256": "1efc1a9e76cdc57e28072fe8bb116abd09ee6c81a81f803feb422c7bdaa4096b",
+      "size": 118
     },
     {
       "path": "kubejs/assets/kubejs/models/item/cinder_brigandine_boots.json",
@@ -8998,6 +9328,26 @@
     {
       "path": "kubejs/assets/kubejs/models/item/cinder_brigandine_leggings.json",
       "sha256": "1efc1a9e76cdc57e28072fe8bb116abd09ee6c81a81f803feb422c7bdaa4096b",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_lamellar_boots.json",
+      "sha256": "fa332bd9d633a60118831745d1d8413cb5ed6287240107002836e39891b30133",
+      "size": 110
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_lamellar_chestplate.json",
+      "sha256": "1f5a38daea01d1f4beed11840f96fac449f5fbae819ff4e1bfaf1b2d9fff2086",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_lamellar_helmet.json",
+      "sha256": "e62adb3ba33a448dbfe55fcad31743c304426b3bfe577aecf05aa3bda218e155",
+      "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_lamellar_leggings.json",
+      "sha256": "0b3d98a4cdc6896dc068a24fd0d97bdc6d3a6cea14167e4d6414f38a68c6b30e",
       "size": 113
     },
     {
@@ -9021,9 +9371,344 @@
       "size": 111
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/cinder_pyromancer_boots.json",
+      "sha256": "178a3203f09297b2b527d6cbef1302aeafe9887f028bce955061a7338230c8e7",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_pyromancer_chestplate.json",
+      "sha256": "98ad76f55af546f10a4e13720b39e3c40ac5b590d00cad31150ee65f0e0320f6",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_pyromancer_helmet.json",
+      "sha256": "46e04576e25ceafb22b7c2ec5b9d885970bc4292ed4fc59c2fdabe0922630668",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cinder_pyromancer_leggings.json",
+      "sha256": "100d14853dc20b86c892de062535b979b2bf5637053226108bae307f9bd1c702",
+      "size": 116
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/cinder_staff.json",
       "sha256": "de57dd743ab1b9472dcc9cd61d7dbe353f389de4137aa8f325fa84cdb717ee6e",
       "size": 104
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cloggrum_monolith_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cloggrum_monolith_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cloggrum_monolith_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cloggrum_monolith_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cloggrum_quiver.json",
+      "sha256": "2e416f9c1b826ea035f124f945c3211033b3ac57b6d6ce6602369cc86001c2c6",
+      "size": 106
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cloggrum_scout_boots.json",
+      "sha256": "2b526a4783a4b1581e3f6ab1f30bf2ef803c0de22f3f6563d3b5aeffeacd0f88",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cloggrum_scout_chestplate.json",
+      "sha256": "70ce7899ab698e93e4e5688e231543c90aca702be9215cd69c50e3a95003b021",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cloggrum_scout_helmet.json",
+      "sha256": "af51e149f77e79443ee1cff97464219269ccd11baed77b3e5c90dfaca1e33494",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cloggrum_scout_leggings.json",
+      "sha256": "1efc1a9e76cdc57e28072fe8bb116abd09ee6c81a81f803feb422c7bdaa4096b",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/copper_lamellar_boots.json",
+      "sha256": "2b526a4783a4b1581e3f6ab1f30bf2ef803c0de22f3f6563d3b5aeffeacd0f88",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/copper_lamellar_chestplate.json",
+      "sha256": "70ce7899ab698e93e4e5688e231543c90aca702be9215cd69c50e3a95003b021",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/copper_lamellar_helmet.json",
+      "sha256": "af51e149f77e79443ee1cff97464219269ccd11baed77b3e5c90dfaca1e33494",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/copper_lamellar_leggings.json",
+      "sha256": "1efc1a9e76cdc57e28072fe8bb116abd09ee6c81a81f803feb422c7bdaa4096b",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/crypt_guardian_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/crypt_guardian_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/crypt_guardian_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/crypt_guardian_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/cursium_amulet.json",
+      "sha256": "8d3a1aeef2b1de1c9be2d69cff89c1c848ad87e4a57e2e91ab8625f1327960d7",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/depth_echo_resonator.json",
+      "sha256": "93164d50e1e049762371784f2494ef3e9cd1ce8ee9f2d4b05e138c4025c1104e",
+      "size": 110
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/dragon_priest_boots.json",
+      "sha256": "178a3203f09297b2b527d6cbef1302aeafe9887f028bce955061a7338230c8e7",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/dragon_priest_chestplate.json",
+      "sha256": "98ad76f55af546f10a4e13720b39e3c40ac5b590d00cad31150ee65f0e0320f6",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/dragon_priest_helmet.json",
+      "sha256": "46e04576e25ceafb22b7c2ec5b9d885970bc4292ed4fc59c2fdabe0922630668",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/dragon_priest_leggings.json",
+      "sha256": "100d14853dc20b86c892de062535b979b2bf5637053226108bae307f9bd1c702",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/dragon_scale_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/dragon_scale_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/dragon_scale_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/dragon_scale_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/echo_resonance_staff.json",
+      "sha256": "d0bdff519b02c2e14ab5a028b1800573836e669b2c785bf8551e82e3ca235552",
+      "size": 109
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_archer_boots.json",
+      "sha256": "c35ba8c0fb4065a7f193ecd5618d0253a9c6097c4d2fb65efe19f699ddb09049",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_archer_chestplate.json",
+      "sha256": "ff880c11b2f453b01816af71959c46114d0fb07c315ef9baa17a971b07a217df",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_archer_helmet.json",
+      "sha256": "f64ea0b99acd6e8130b5832d6290f7dd3d157f7578255a2f35bd706821509517",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_archer_leggings.json",
+      "sha256": "e0585841a5565195dc02bb4be119c63253f2dda7247e54a534e05dd7be636ac5",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_blossom_pendant.json",
+      "sha256": "e241d167a14b49aa710a5ab390cbf244ed863ec577c487517c38f01dd0bea4ea",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_claymore.json",
+      "sha256": "c6b24d49edaed5f72727fbca6eaa4ce211919de111f8d0a32d77068ae2bfff15",
+      "size": 127
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_cutlass.json",
+      "sha256": "a0ab724e33d5887e8e481de6060faa7d10edef5cd7fac66df571b1bfdaf9661e",
+      "size": 125
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_glaive.json",
+      "sha256": "c2fc48dc93e19a88a8ecac50a5d213bda98795ffe6a91b0f9a4463c4616dd9ee",
+      "size": 123
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_greataxe.json",
+      "sha256": "598355d3ffa2f74015bd170ef2d8038006de80e03518e41c30d161fc4f07a1b4",
+      "size": 127
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_greathammer.json",
+      "sha256": "22d7bd6b27e2eabed96aed6017cb9d0e663beab1061acfe3571f4f164b3c2da2",
+      "size": 133
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_grove_guardian_boots.json",
+      "sha256": "c35ba8c0fb4065a7f193ecd5618d0253a9c6097c4d2fb65efe19f699ddb09049",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_grove_guardian_chestplate.json",
+      "sha256": "ff880c11b2f453b01816af71959c46114d0fb07c315ef9baa17a971b07a217df",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_grove_guardian_helmet.json",
+      "sha256": "f64ea0b99acd6e8130b5832d6290f7dd3d157f7578255a2f35bd706821509517",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_grove_guardian_leggings.json",
+      "sha256": "e0585841a5565195dc02bb4be119c63253f2dda7247e54a534e05dd7be636ac5",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_halberd.json",
+      "sha256": "6ecbcd65383f494c0b4a42b362e3ebafb07db8a261ff02935caa258ee2f30e6c",
+      "size": 125
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_katana.json",
+      "sha256": "78e9d5e8c2091c40fcaef10a78a3567f0b8b8d83d7e084bb68d0bb2209596562",
+      "size": 123
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_lamellar_boots.json",
+      "sha256": "c35ba8c0fb4065a7f193ecd5618d0253a9c6097c4d2fb65efe19f699ddb09049",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_lamellar_chestplate.json",
+      "sha256": "ff880c11b2f453b01816af71959c46114d0fb07c315ef9baa17a971b07a217df",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_lamellar_helmet.json",
+      "sha256": "f64ea0b99acd6e8130b5832d6290f7dd3d157f7578255a2f35bd706821509517",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_lamellar_leggings.json",
+      "sha256": "e0585841a5565195dc02bb4be119c63253f2dda7247e54a534e05dd7be636ac5",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_longdagger.json",
+      "sha256": "16d11582128a6ece103a58f4c753cb60e541703ab4e53bc38a22f9ca87961969",
+      "size": 131
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_longsword.json",
+      "sha256": "916c648f48ea0279aeeb47e604f115465f690961397d7c849a4c573a31b5dba1",
+      "size": 129
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_petal_cloak.json",
+      "sha256": "593b5646d6f63a74ee627bbdc1b47f569c5122a843ae3275be61ef8190abc199",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_rapier.json",
+      "sha256": "145b002abfbe47ce70faba2be9cee816e22d4bfab003e712ee30c1dcbfa7222c",
+      "size": 123
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_sai.json",
+      "sha256": "440c7a7c981f69b9609a1a90b4de86e53a1cf7e410df461d273700ae7dc8d038",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_scythe.json",
+      "sha256": "e68b9abc36b3149f8a49e6c3dd449f98b49ccd98b145035a311e8a618091bc2a",
+      "size": 123
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_solar_glaive.json",
+      "sha256": "98601f7163b1b24491e5b79f90a30491c65f6f58f813c21264fac5cc107f54a3",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_solar_mage_boots.json",
+      "sha256": "c35ba8c0fb4065a7f193ecd5618d0253a9c6097c4d2fb65efe19f699ddb09049",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_solar_mage_chestplate.json",
+      "sha256": "ff880c11b2f453b01816af71959c46114d0fb07c315ef9baa17a971b07a217df",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_solar_mage_helmet.json",
+      "sha256": "f64ea0b99acd6e8130b5832d6290f7dd3d157f7578255a2f35bd706821509517",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_solar_mage_leggings.json",
+      "sha256": "e0585841a5565195dc02bb4be119c63253f2dda7247e54a534e05dd7be636ac5",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_spear.json",
+      "sha256": "c7898dcb6b4a0657c08f391b2fe143c5960073de4b93418b04e30a8724f5bdfe",
+      "size": 121
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_sun_ring.json",
+      "sha256": "900ab0b12d585054d8909f7d4f34a01ffc95ed83765cace0023ba1ad4b79daaf",
+      "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_sword.json",
+      "sha256": "f00f4206fec8e4d00dd2bfd82a37a23d6d9bcbe758ba284ff38cce72eb1444bd",
+      "size": 121
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/eden_twinblade.json",
+      "sha256": "e93ff9960334b7b40ff6e2703222f42f590a5e76d5ae4d02c58871923954d3b1",
+      "size": 129
     },
     {
       "path": "kubejs/assets/kubejs/models/item/elemental_stone_fire.json",
@@ -9146,14 +9831,304 @@
       "size": 119
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/end_citadel_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/end_citadel_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/end_citadel_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/end_citadel_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ender_golem_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ender_golem_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ender_golem_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ender_golem_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ender_guardian_boots.json",
+      "sha256": "68c9ec85f99527e4404e71597dc5e8795c0622625988656f95a6008a0d45e977",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ender_guardian_chestplate.json",
+      "sha256": "ef17ec1612654f44029e779f9ac970112a02065475f24f780acf77c287dba364",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ender_guardian_helmet.json",
+      "sha256": "495e7f79d7cf0664ee097304d134255608be73b262b41ff9818bd846f99a93e7",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/ender_guardian_leggings.json",
+      "sha256": "13474ebf28832c288f8badd21113e029e6baa99ad827d0290bdbf427e7ecc2c9",
+      "size": 116
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/essence_of_purification.json",
       "sha256": "5b190e8da7cf83082d6844e285a8f1bc6600e0ec123a1aa9c1df7e6a2ff7548a",
       "size": 115
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/eye_of_ancient_entity.json",
+      "sha256": "1b7f6d70fa47a52f9345d21d63220e75f8bf02f0f68d5ec51efff3e5256beff0",
+      "size": 109
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/falcon_eye_boots.json",
+      "sha256": "2b526a4783a4b1581e3f6ab1f30bf2ef803c0de22f3f6563d3b5aeffeacd0f88",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/falcon_eye_chestplate.json",
+      "sha256": "70ce7899ab698e93e4e5688e231543c90aca702be9215cd69c50e3a95003b021",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/falcon_eye_helmet.json",
+      "sha256": "af51e149f77e79443ee1cff97464219269ccd11baed77b3e5c90dfaca1e33494",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/falcon_eye_leggings.json",
+      "sha256": "1efc1a9e76cdc57e28072fe8bb116abd09ee6c81a81f803feb422c7bdaa4096b",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/forest_hunter_boots.json",
+      "sha256": "2b526a4783a4b1581e3f6ab1f30bf2ef803c0de22f3f6563d3b5aeffeacd0f88",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/forest_hunter_chestplate.json",
+      "sha256": "70ce7899ab698e93e4e5688e231543c90aca702be9215cd69c50e3a95003b021",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/forest_hunter_helmet.json",
+      "sha256": "af51e149f77e79443ee1cff97464219269ccd11baed77b3e5c90dfaca1e33494",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/forest_hunter_leggings.json",
+      "sha256": "1efc1a9e76cdc57e28072fe8bb116abd09ee6c81a81f803feb422c7bdaa4096b",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/forest_strider_boots.json",
+      "sha256": "178a3203f09297b2b527d6cbef1302aeafe9887f028bce955061a7338230c8e7",
+      "size": 113
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/forge_hearth.json",
       "sha256": "c5873cec194b11f4653cc0f4426ab25c9c35248bd2576613340fe61bc3b0e56a",
       "size": 44
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/forgotten_guardian_heart.json",
+      "sha256": "c3e2c4cfbc07c95614abd2261f1315a1c8e2d75bc121b3f5cdb5d89580f3f984",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/frost_mystic_boots.json",
+      "sha256": "68c9ec85f99527e4404e71597dc5e8795c0622625988656f95a6008a0d45e977",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/frost_mystic_chestplate.json",
+      "sha256": "ef17ec1612654f44029e779f9ac970112a02065475f24f780acf77c287dba364",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/frost_mystic_helmet.json",
+      "sha256": "495e7f79d7cf0664ee097304d134255608be73b262b41ff9818bd846f99a93e7",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/frost_mystic_leggings.json",
+      "sha256": "13474ebf28832c288f8badd21113e029e6baa99ad827d0290bdbf427e7ecc2c9",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/froststeel_plate_boots.json",
+      "sha256": "fa332bd9d633a60118831745d1d8413cb5ed6287240107002836e39891b30133",
+      "size": 110
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/froststeel_plate_chestplate.json",
+      "sha256": "1f5a38daea01d1f4beed11840f96fac449f5fbae819ff4e1bfaf1b2d9fff2086",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/froststeel_plate_helmet.json",
+      "sha256": "e62adb3ba33a448dbfe55fcad31743c304426b3bfe577aecf05aa3bda218e155",
+      "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/froststeel_plate_leggings.json",
+      "sha256": "0b3d98a4cdc6896dc068a24fd0d97bdc6d3a6cea14167e4d6414f38a68c6b30e",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/froststeel_ring.json",
+      "sha256": "164dc6705e28287361c6d6ebcf11ab4c604c8360b50e3c47d6c6804594b7ffa0",
+      "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/golden_cloud_boots.json",
+      "sha256": "c35ba8c0fb4065a7f193ecd5618d0253a9c6097c4d2fb65efe19f699ddb09049",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/golden_cloud_chestplate.json",
+      "sha256": "ff880c11b2f453b01816af71959c46114d0fb07c315ef9baa17a971b07a217df",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/golden_cloud_helmet.json",
+      "sha256": "f64ea0b99acd6e8130b5832d6290f7dd3d157f7578255a2f35bd706821509517",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/golden_cloud_leggings.json",
+      "sha256": "e0585841a5565195dc02bb4be119c63253f2dda7247e54a534e05dd7be636ac5",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/golem_titan_plate_boots.json",
+      "sha256": "68c9ec85f99527e4404e71597dc5e8795c0622625988656f95a6008a0d45e977",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/golem_titan_plate_chestplate.json",
+      "sha256": "ef17ec1612654f44029e779f9ac970112a02065475f24f780acf77c287dba364",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/golem_titan_plate_helmet.json",
+      "sha256": "495e7f79d7cf0664ee097304d134255608be73b262b41ff9818bd846f99a93e7",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/golem_titan_plate_leggings.json",
+      "sha256": "13474ebf28832c288f8badd21113e029e6baa99ad827d0290bdbf427e7ecc2c9",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_claymore.json",
+      "sha256": "57140e6b216ffdbecaa1048fb0af0010dcafa1fdfbd0509df52bc2e963aa1dbe",
+      "size": 127
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_cutlass.json",
+      "sha256": "f059baffd60d95677cfe73e201b221a7bd2207f5b1fbf013842464d522a419f1",
+      "size": 125
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_demigod_spear.json",
+      "sha256": "79b5baa086741b6487e048257add100dedaf3801450107a026b10a7576d02464",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_glaive.json",
+      "sha256": "2d4b894d4932e4f3f9027acc28a5ee7c442289140ccf94c83b2b1f8bf6ce94a9",
+      "size": 123
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_greataxe.json",
+      "sha256": "08fc020de1d4e083e34ea1ed0da4efae9ac7d74006b8d5f826fc4a2e67a42e52",
+      "size": 127
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_greatblade.json",
+      "sha256": "11f83d0ffd63d6c05aff9e2daa9ccd0614097b25dec6b74763d275198695cf28",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_greathammer.json",
+      "sha256": "18a3b185507d34cfcd6263795348a6dcc69b0a6c024153237c7ee7dda8c4c499",
+      "size": 133
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_halberd.json",
+      "sha256": "4b066177c540337e50af6001a74c321336e19552140ff55082fb373e85b97bab",
+      "size": 125
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_katana.json",
+      "sha256": "5755b59668bf6e369732f17de444864c220c458a5a6db4279ffcc1f41620ec63",
+      "size": 123
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_longdagger.json",
+      "sha256": "d74f92544433e93670a3135e71a4d47ac659246cd09802eb0e97832c7108f190",
+      "size": 131
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_longsword.json",
+      "sha256": "997de8c91bab8e3d203cbdda88230f26211cf460a6e89789b4053682f297d1d2",
+      "size": 129
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_rapier.json",
+      "sha256": "8150f3bc491e08a014702cb660a5bbeeb4878f1403aae70aabf38b41b31634b7",
+      "size": 123
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_ring_of_power.json",
+      "sha256": "900ab0b12d585054d8909f7d4f34a01ffc95ed83765cace0023ba1ad4b79daaf",
+      "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_sai.json",
+      "sha256": "d7875a2380d8784cefcadefc07df2117af330d03d4e98c625308f832757d80da",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_scythe.json",
+      "sha256": "e417b6fd2371b95829e3659f75c1dc26be799634bc8fc09629b0dc6803a17aef",
+      "size": 123
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_spear.json",
+      "sha256": "5e1bc8d9ddbafeb399ed04b410e0fc9b9228a8ace5bd818c6b70008f21a368f9",
+      "size": 121
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_sword.json",
+      "sha256": "1414a5d271a53cebdfa153b9f8a5565c2a9397010b3a3e13bd5b645f9444d3eb",
+      "size": 121
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/halite_twinblade.json",
+      "sha256": "1f70b0dc8f87d9b6078f8e6902a3d4bca4b20be0dec0ca673f50f990d4bc57df",
+      "size": 129
     },
     {
       "path": "kubejs/assets/kubejs/models/item/ignis_core_boots.json",
@@ -9173,6 +10148,26 @@
     {
       "path": "kubejs/assets/kubejs/models/item/ignis_core_leggings.json",
       "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/infantry_paladin_boots.json",
+      "sha256": "fa332bd9d633a60118831745d1d8413cb5ed6287240107002836e39891b30133",
+      "size": 110
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/infantry_paladin_chestplate.json",
+      "sha256": "1f5a38daea01d1f4beed11840f96fac449f5fbae819ff4e1bfaf1b2d9fff2086",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/infantry_paladin_helmet.json",
+      "sha256": "e62adb3ba33a448dbfe55fcad31743c304426b3bfe577aecf05aa3bda218e155",
+      "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/infantry_paladin_leggings.json",
+      "sha256": "0b3d98a4cdc6896dc068a24fd0d97bdc6d3a6cea14167e4d6414f38a68c6b30e",
       "size": 113
     },
     {
@@ -9231,6 +10226,26 @@
       "size": 62
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/infernal_warlock_boots.json",
+      "sha256": "c35ba8c0fb4065a7f193ecd5618d0253a9c6097c4d2fb65efe19f699ddb09049",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/infernal_warlock_chestplate.json",
+      "sha256": "ff880c11b2f453b01816af71959c46114d0fb07c315ef9baa17a971b07a217df",
+      "size": 117
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/infernal_warlock_helmet.json",
+      "sha256": "f64ea0b99acd6e8130b5832d6290f7dd3d157f7578255a2f35bd706821509517",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/infernal_warlock_leggings.json",
+      "sha256": "e0585841a5565195dc02bb4be119c63253f2dda7247e54a534e05dd7be636ac5",
+      "size": 115
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/iron_brigandine_boots.json",
       "sha256": "2b526a4783a4b1581e3f6ab1f30bf2ef803c0de22f3f6563d3b5aeffeacd0f88",
       "size": 110
@@ -9249,6 +10264,46 @@
       "path": "kubejs/assets/kubejs/models/item/iron_brigandine_leggings.json",
       "sha256": "1efc1a9e76cdc57e28072fe8bb116abd09ee6c81a81f803feb422c7bdaa4096b",
       "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/luminar_lamellar_boots.json",
+      "sha256": "68c9ec85f99527e4404e71597dc5e8795c0622625988656f95a6008a0d45e977",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/luminar_lamellar_chestplate.json",
+      "sha256": "ef17ec1612654f44029e779f9ac970112a02065475f24f780acf77c287dba364",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/luminar_lamellar_helmet.json",
+      "sha256": "495e7f79d7cf0664ee097304d134255608be73b262b41ff9818bd846f99a93e7",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/luminar_lamellar_leggings.json",
+      "sha256": "13474ebf28832c288f8badd21113e029e6baa99ad827d0290bdbf427e7ecc2c9",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/magma_juggernaut_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/magma_juggernaut_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/magma_juggernaut_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/magma_juggernaut_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
     },
     {
       "path": "kubejs/assets/kubejs/models/item/martial_tablet_arrow_barrage.json",
@@ -9411,6 +10466,131 @@
       "size": 116
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/mortum_death_knight_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/mortum_death_knight_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/mortum_death_knight_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/mortum_death_knight_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/mortum_death_scythe.json",
+      "sha256": "4658ef7a0fd75350a0e3120ea2c5322493083ff8ecc162defc29856875e5a1ac",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/mortum_death_shroud.json",
+      "sha256": "593b5646d6f63a74ee627bbdc1b47f569c5122a843ae3275be61ef8190abc199",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/mortum_quiver.json",
+      "sha256": "2e416f9c1b826ea035f124f945c3211033b3ac57b6d6ce6602369cc86001c2c6",
+      "size": 106
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/mortum_reaper_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/mortum_reaper_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/mortum_reaper_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/mortum_reaper_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/nature_quiver.json",
+      "sha256": "2e416f9c1b826ea035f124f945c3211033b3ac57b6d6ce6602369cc86001c2c6",
+      "size": 106
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/netherite_brigandine_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/netherite_brigandine_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/netherite_brigandine_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/netherite_brigandine_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/nightglow_robes_boots.json",
+      "sha256": "68c9ec85f99527e4404e71597dc5e8795c0622625988656f95a6008a0d45e977",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/nightglow_robes_chestplate.json",
+      "sha256": "ef17ec1612654f44029e779f9ac970112a02065475f24f780acf77c287dba364",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/nightglow_robes_helmet.json",
+      "sha256": "495e7f79d7cf0664ee097304d134255608be73b262b41ff9818bd846f99a93e7",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/nightglow_robes_leggings.json",
+      "sha256": "13474ebf28832c288f8badd21113e029e6baa99ad827d0290bdbf427e7ecc2c9",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/primordial_tree_heart.json",
+      "sha256": "e1bdbabd59ead8c6b2c0420c5c0a16adcc3ebeda65e5d4a46c7cde7de9f2ed03",
+      "size": 105
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/resonarium_brigandine_boots.json",
+      "sha256": "68c9ec85f99527e4404e71597dc5e8795c0622625988656f95a6008a0d45e977",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/resonarium_brigandine_chestplate.json",
+      "sha256": "ef17ec1612654f44029e779f9ac970112a02065475f24f780acf77c287dba364",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/resonarium_brigandine_helmet.json",
+      "sha256": "495e7f79d7cf0664ee097304d134255608be73b262b41ff9818bd846f99a93e7",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/resonarium_brigandine_leggings.json",
+      "sha256": "13474ebf28832c288f8badd21113e029e6baa99ad827d0290bdbf427e7ecc2c9",
+      "size": 116
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/rift_apprentice_robe_boots.json",
       "sha256": "178a3203f09297b2b527d6cbef1302aeafe9887f028bce955061a7338230c8e7",
       "size": 108
@@ -9436,6 +10616,51 @@
       "size": 104
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/rift_hunter_boots.json",
+      "sha256": "2b526a4783a4b1581e3f6ab1f30bf2ef803c0de22f3f6563d3b5aeffeacd0f88",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/rift_hunter_chestplate.json",
+      "sha256": "70ce7899ab698e93e4e5688e231543c90aca702be9215cd69c50e3a95003b021",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/rift_hunter_helmet.json",
+      "sha256": "af51e149f77e79443ee1cff97464219269ccd11baed77b3e5c90dfaca1e33494",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/rift_hunter_leggings.json",
+      "sha256": "1efc1a9e76cdc57e28072fe8bb116abd09ee6c81a81f803feb422c7bdaa4096b",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/root_belt.json",
+      "sha256": "db920e532e629180fa12cd0205768659618c681e648dabae46e7cc69a39ebd89",
+      "size": 107
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/rot_queen_boots.json",
+      "sha256": "178a3203f09297b2b527d6cbef1302aeafe9887f028bce955061a7338230c8e7",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/rot_queen_chestplate.json",
+      "sha256": "98ad76f55af546f10a4e13720b39e3c40ac5b590d00cad31150ee65f0e0320f6",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/rot_queen_helmet.json",
+      "sha256": "46e04576e25ceafb22b7c2ec5b9d885970bc4292ed4fc59c2fdabe0922630668",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/rot_queen_leggings.json",
+      "sha256": "100d14853dc20b86c892de062535b979b2bf5637053226108bae307f9bd1c702",
+      "size": 116
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/scout_leather_boots.json",
       "sha256": "178a3203f09297b2b527d6cbef1302aeafe9887f028bce955061a7338230c8e7",
       "size": 108
@@ -9456,9 +10681,234 @@
       "size": 111
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/sculk_claymore.json",
+      "sha256": "f96d98c27560b574aa5e74b1f8129402ac7598b3a875d6befaec336a82a847e4",
+      "size": 128
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_cutlass.json",
+      "sha256": "f7a20b20155281dfc38cbb6b92798a2f86324450a9a2a420144c1f53097a933d",
+      "size": 126
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_glaive.json",
+      "sha256": "e5617be1e828cdd7f9bb4e6109fef9430ba50946ecec11b85528dfd7aae8b633",
+      "size": 124
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_greataxe.json",
+      "sha256": "4be0711b35918427b2b0db12948b215ca04a770a4522412ff987555702e14107",
+      "size": 128
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_greathammer.json",
+      "sha256": "31079fc6b80f1ef0a6177ea15913569a836b58e2b09f9f4544bd736f85d275e7",
+      "size": 134
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_halberd.json",
+      "sha256": "54f636efa662efa5a74dad445c07917aa3904e230337957de2604b5fbdff41cf",
+      "size": 126
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_katana.json",
+      "sha256": "9b1b1b6e893d30906d2de16e57287a5b1cf1420e82b91d7328f4450b99e9739d",
+      "size": 124
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_longdagger.json",
+      "sha256": "6610052bebbf657e40ee902ee59369fef032e74f481ee7a8ac2f3025065f0efc",
+      "size": 132
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_longsword.json",
+      "sha256": "a29129ea68f199b55c14f5d130fe9459435d719b9c75908f95836bf8440445e4",
+      "size": 130
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_quiver.json",
+      "sha256": "2e416f9c1b826ea035f124f945c3211033b3ac57b6d6ce6602369cc86001c2c6",
+      "size": 106
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_rapier.json",
+      "sha256": "771fc8105d1fb4314133bc5ec25426990ae14089c0dc275e56fd32b41bd75c13",
+      "size": 124
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_resonator_boots.json",
+      "sha256": "178a3203f09297b2b527d6cbef1302aeafe9887f028bce955061a7338230c8e7",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_resonator_chestplate.json",
+      "sha256": "98ad76f55af546f10a4e13720b39e3c40ac5b590d00cad31150ee65f0e0320f6",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_resonator_helmet.json",
+      "sha256": "46e04576e25ceafb22b7c2ec5b9d885970bc4292ed4fc59c2fdabe0922630668",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_resonator_leggings.json",
+      "sha256": "100d14853dc20b86c892de062535b979b2bf5637053226108bae307f9bd1c702",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_sai.json",
+      "sha256": "bd26c12f1e5eb0286a7f6cfb0e90fa15ff484abf0d2c1dfa4f5a15818bc7ac0e",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_scythe.json",
+      "sha256": "1424834c21b9367315979430072a3aaf36aaedc973d99b2d70ad6b14de8ccdf0",
+      "size": 124
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_spear.json",
+      "sha256": "9ffedaed85dd255c637865d3d15e461ae8b4497fb74c7a9fc98cac7e4fcd0d15",
+      "size": 122
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_stalker_boots.json",
+      "sha256": "2b526a4783a4b1581e3f6ab1f30bf2ef803c0de22f3f6563d3b5aeffeacd0f88",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_stalker_chestplate.json",
+      "sha256": "70ce7899ab698e93e4e5688e231543c90aca702be9215cd69c50e3a95003b021",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_stalker_helmet.json",
+      "sha256": "af51e149f77e79443ee1cff97464219269ccd11baed77b3e5c90dfaca1e33494",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_stalker_leggings.json",
+      "sha256": "1efc1a9e76cdc57e28072fe8bb116abd09ee6c81a81f803feb422c7bdaa4096b",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_sword.json",
+      "sha256": "e5c943d499b9db56ce7d17a99e7fba4998e9f4501f3cbeb5bb29a7c0d5217197",
+      "size": 122
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_tendril_belt.json",
+      "sha256": "99647f228f52097db7dc2226fda897199ea491921b2f9b0258f5a2259163dc49",
+      "size": 104
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_twinblade.json",
+      "sha256": "174dce05f4a83fd069ace5276f99f6c66b379f6908ae46e484cfa56970e3ad51",
+      "size": 130
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sculk_whisper_dagger.json",
+      "sha256": "7d85af8717850bd54595d78c02da693ab14c470a214771627f31917bc90c2854",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/shulkerat_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/shulkerat_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/shulkerat_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/shulkerat_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/sigil_of_transmutation.json",
       "sha256": "c2858a670c616914afc861651566fd8dec73cb8e1b8e1d5d8417aebbca06538c",
       "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/silent_dark_hunter_boots.json",
+      "sha256": "2b526a4783a4b1581e3f6ab1f30bf2ef803c0de22f3f6563d3b5aeffeacd0f88",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/silent_dark_hunter_chestplate.json",
+      "sha256": "70ce7899ab698e93e4e5688e231543c90aca702be9215cd69c50e3a95003b021",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/silent_dark_hunter_helmet.json",
+      "sha256": "af51e149f77e79443ee1cff97464219269ccd11baed77b3e5c90dfaca1e33494",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/silent_dark_hunter_leggings.json",
+      "sha256": "1efc1a9e76cdc57e28072fe8bb116abd09ee6c81a81f803feb422c7bdaa4096b",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/silent_stalker_boots.json",
+      "sha256": "178a3203f09297b2b527d6cbef1302aeafe9887f028bce955061a7338230c8e7",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/skythern_storm_bow.json",
+      "sha256": "aad401b72a30f6d5d375940f104f4c7eed8a53885f47ba8daea2512228255403",
+      "size": 97
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/skythern_storm_brigandine_boots.json",
+      "sha256": "68c9ec85f99527e4404e71597dc5e8795c0622625988656f95a6008a0d45e977",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/skythern_storm_brigandine_chestplate.json",
+      "sha256": "ef17ec1612654f44029e779f9ac970112a02065475f24f780acf77c287dba364",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/skythern_storm_brigandine_helmet.json",
+      "sha256": "495e7f79d7cf0664ee097304d134255608be73b262b41ff9818bd846f99a93e7",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/skythern_storm_brigandine_leggings.json",
+      "sha256": "13474ebf28832c288f8badd21113e029e6baa99ad827d0290bdbf427e7ecc2c9",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/skythern_storm_heart.json",
+      "sha256": "cc1bf0566ddbb68ff09977dc12c18694a469f09a020b9163a1de18a289dcd410",
+      "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/skythern_storm_lord_boots.json",
+      "sha256": "68c9ec85f99527e4404e71597dc5e8795c0622625988656f95a6008a0d45e977",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/skythern_storm_lord_chestplate.json",
+      "sha256": "ef17ec1612654f44029e779f9ac970112a02065475f24f780acf77c287dba364",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/skythern_storm_lord_helmet.json",
+      "sha256": "495e7f79d7cf0664ee097304d134255608be73b262b41ff9818bd846f99a93e7",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/skythern_storm_lord_leggings.json",
+      "sha256": "13474ebf28832c288f8badd21113e029e6baa99ad827d0290bdbf427e7ecc2c9",
+      "size": 116
     },
     {
       "path": "kubejs/assets/kubejs/models/item/smithing_aegis.json",
@@ -9496,9 +10946,179 @@
       "size": 108
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/sonic_pulverizer_bow.json",
+      "sha256": "aad401b72a30f6d5d375940f104f4c7eed8a53885f47ba8daea2512228255403",
+      "size": 97
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sonic_weaver_boots.json",
+      "sha256": "68c9ec85f99527e4404e71597dc5e8795c0622625988656f95a6008a0d45e977",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sonic_weaver_chestplate.json",
+      "sha256": "ef17ec1612654f44029e779f9ac970112a02065475f24f780acf77c287dba364",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sonic_weaver_helmet.json",
+      "sha256": "495e7f79d7cf0664ee097304d134255608be73b262b41ff9818bd846f99a93e7",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/sonic_weaver_leggings.json",
+      "sha256": "13474ebf28832c288f8badd21113e029e6baa99ad827d0290bdbf427e7ecc2c9",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/soul_crystal_greatsword.json",
+      "sha256": "9083c4a5c6ebe549de2db40f401a41c12e20ec36c4b3d55e1c45b43f43fe5b37",
+      "size": 113
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/sphere_of_ascension.json",
       "sha256": "3f353e338f776ea2761a413a9c70189b8004b0dd7cdd2900a246da7078d5386c",
       "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/spore_charm.json",
+      "sha256": "865cd83a9561cfe73442d71685a508e2f85f13c8f2ce77ab15ea63459e2547ae",
+      "size": 110
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/spore_shaman_boots.json",
+      "sha256": "178a3203f09297b2b527d6cbef1302aeafe9887f028bce955061a7338230c8e7",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/spore_shaman_chestplate.json",
+      "sha256": "98ad76f55af546f10a4e13720b39e3c40ac5b590d00cad31150ee65f0e0320f6",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/spore_shaman_helmet.json",
+      "sha256": "46e04576e25ceafb22b7c2ec5b9d885970bc4292ed4fc59c2fdabe0922630668",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/spore_shaman_leggings.json",
+      "sha256": "100d14853dc20b86c892de062535b979b2bf5637053226108bae307f9bd1c702",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/star_archer_boots.json",
+      "sha256": "2b526a4783a4b1581e3f6ab1f30bf2ef803c0de22f3f6563d3b5aeffeacd0f88",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/star_archer_chestplate.json",
+      "sha256": "70ce7899ab698e93e4e5688e231543c90aca702be9215cd69c50e3a95003b021",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/star_archer_helmet.json",
+      "sha256": "af51e149f77e79443ee1cff97464219269ccd11baed77b3e5c90dfaca1e33494",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/star_archer_leggings.json",
+      "sha256": "1efc1a9e76cdc57e28072fe8bb116abd09ee6c81a81f803feb422c7bdaa4096b",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_alchemist_boots.json",
+      "sha256": "178a3203f09297b2b527d6cbef1302aeafe9887f028bce955061a7338230c8e7",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_alchemist_chestplate.json",
+      "sha256": "98ad76f55af546f10a4e13720b39e3c40ac5b590d00cad31150ee65f0e0320f6",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_alchemist_helmet.json",
+      "sha256": "46e04576e25ceafb22b7c2ec5b9d885970bc4292ed4fc59c2fdabe0922630668",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_alchemist_leggings.json",
+      "sha256": "100d14853dc20b86c892de062535b979b2bf5637053226108bae307f9bd1c702",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_claymore.json",
+      "sha256": "9c151326a78b992dc1cb49a0b86942be2ac6311b06722fd706df267472d65559",
+      "size": 130
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_cutlass.json",
+      "sha256": "ac1098f8c4ee395368472b6496fcfb295b57c98d86eee8219c6da0da9fa76e8b",
+      "size": 128
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_glaive.json",
+      "sha256": "8dd92343a7016d36e001c4912c5db686b9e234ce9659a11949fd72d332a8f18d",
+      "size": 126
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_greataxe.json",
+      "sha256": "fdd76b5819347a6ac80c80b7723958983c212405eda5abbf829ea3a01845d0c0",
+      "size": 130
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_greathammer.json",
+      "sha256": "565dd21e8c83576d73c204c69972c2377cac6bd2bd27bbb0cdcea2ffb2940509",
+      "size": 136
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_halberd.json",
+      "sha256": "caf561c73ed01286cd3522f800b53e7d383dceaf7292d87b69acbb58e3fda3e7",
+      "size": 128
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_katana.json",
+      "sha256": "05960d7e1c35223354c39f2fc5052d2c8aa076c6f9b22e0d1442eb3cb0c7ca30",
+      "size": 126
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_longdagger.json",
+      "sha256": "8f1b66142c35d8f090a64b8be5c440859097627d93f7b465b4ce09292c386186",
+      "size": 134
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_longsword.json",
+      "sha256": "95ccbce5575c7c48ac8daa6c0b6b01a8733869933f25b613a2443030a040daa5",
+      "size": 132
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_rapier.json",
+      "sha256": "a3cffed7937a40e85a9def4bc63c648f162dc540769fea70ce0aa62cd1ea2918",
+      "size": 126
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_sai.json",
+      "sha256": "e4424c3018cb841bad78c8e1b9a9c8541e073fb30056cdb058cf856d4acdfa96",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_scythe.json",
+      "sha256": "5d4671b5a711cbcfbf2af08497d7558a20ae87361b524f665d5945736079e1b4",
+      "size": 126
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_spear.json",
+      "sha256": "80a132c12f9bc4b917cbdc145b912478144e31b4e6290059e510ddfa496bac8b",
+      "size": 124
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_sword.json",
+      "sha256": "cbc41387542aaf93cd6be43470fa5a1a81a4d3890c2df5843e006233d1910ba6",
+      "size": 124
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/starlight_twinblade.json",
+      "sha256": "a38c3573d16749b6871e33b47853b12f94a1b6575f2a295a933152a82b9f76f1",
+      "size": 132
     },
     {
       "path": "kubejs/assets/kubejs/models/item/steel_charge.json",
@@ -9536,14 +11156,244 @@
       "size": 107
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/storm_ring.json",
+      "sha256": "900ab0b12d585054d8909f7d4f34a01ffc95ed83765cace0023ba1ad4b79daaf",
+      "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/stormbird_boots.json",
+      "sha256": "fa332bd9d633a60118831745d1d8413cb5ed6287240107002836e39891b30133",
+      "size": 110
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/stormbird_chestplate.json",
+      "sha256": "1f5a38daea01d1f4beed11840f96fac449f5fbae819ff4e1bfaf1b2d9fff2086",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/stormbird_helmet.json",
+      "sha256": "e62adb3ba33a448dbfe55fcad31743c304426b3bfe577aecf05aa3bda218e155",
+      "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/stormbird_leggings.json",
+      "sha256": "0b3d98a4cdc6896dc068a24fd0d97bdc6d3a6cea14167e4d6414f38a68c6b30e",
+      "size": 113
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/tier_upgrade_template.json",
       "sha256": "9589ddac8f28ab0e8dccb53d326d267a70691035be09e459e67e4f07b126733c",
       "size": 113
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/treant_colossus_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/treant_colossus_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/treant_colossus_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/treant_colossus_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/tree_of_life_boots.json",
+      "sha256": "68c9ec85f99527e4404e71597dc5e8795c0622625988656f95a6008a0d45e977",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/tree_of_life_chestplate.json",
+      "sha256": "ef17ec1612654f44029e779f9ac970112a02065475f24f780acf77c287dba364",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/tree_of_life_helmet.json",
+      "sha256": "495e7f79d7cf0664ee097304d134255608be73b262b41ff9818bd846f99a93e7",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/tree_of_life_leggings.json",
+      "sha256": "13474ebf28832c288f8badd21113e029e6baa99ad827d0290bdbf427e7ecc2c9",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/true_darkness_ring.json",
+      "sha256": "164dc6705e28287361c6d6ebcf11ab4c604c8360b50e3c47d6c6804594b7ffa0",
+      "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/undergarden_spore_bow.json",
+      "sha256": "aad401b72a30f6d5d375940f104f4c7eed8a53885f47ba8daea2512228255403",
+      "size": 97
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/void_anvil.json",
       "sha256": "bb5775ef4e26b21a5fb381ff964aa89757faa7f0465c8f88fbf84966c00dafe0",
       "size": 52
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_claymore.json",
+      "sha256": "31d02bd7da6b502e847a3de5d7dd873d94b1022f4603159d14b1bac93b108e60",
+      "size": 132
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_cutlass.json",
+      "sha256": "9d0190404c399744c122c14a3e979587d26caea408fa497ef8054295e7f89d97",
+      "size": 130
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_glaive.json",
+      "sha256": "66ab34f717e0e783fd13414d75ba5d39bf974e0f1468c95c3fcbc6d8ebb525b3",
+      "size": 128
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_greataxe.json",
+      "sha256": "7f407070d8fdbbb7c21eb96fa7c31b9c9ba3f452102724fb5a81510fbb44634d",
+      "size": 132
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_greathammer.json",
+      "sha256": "e80a649524e1ccde6f96e4cdc83228d50c48ab8a8c8abccdd3a22f0cf9ffbb7e",
+      "size": 138
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_halberd.json",
+      "sha256": "65c9716865bf01b045a5b17fa52719c5e49db388700b84feff59fddd2e856298",
+      "size": 130
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_katana.json",
+      "sha256": "15c2d7f7673136555403363c489054565f657877521e547ab997ea5c16ab3d73",
+      "size": 128
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_longdagger.json",
+      "sha256": "a11f083f95730ef56f1796d65b851e4aded425cb962097718c991564dd0a6555",
+      "size": 136
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_longsword.json",
+      "sha256": "c8aa5f68fd09f6f791a5980804f982a734a0e785f17c64d22ffc62d4c6fca2b4",
+      "size": 134
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_quiver.json",
+      "sha256": "2e416f9c1b826ea035f124f945c3211033b3ac57b6d6ce6602369cc86001c2c6",
+      "size": 106
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_rapier.json",
+      "sha256": "38f59920e5032075d359fbef0d84a652410dad6fa04b4790888b5650ec9f1a70",
+      "size": 128
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_sai.json",
+      "sha256": "b5b068ef288201a3c37aa8a01e34fcb455b79b70ef3d9654534dcc18710d984c",
+      "size": 122
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_scythe.json",
+      "sha256": "fac9c4267fc5906e4c0967899b35c2dba6c89303d14f82456de7190a6c89814c",
+      "size": 128
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_shift_ring.json",
+      "sha256": "164dc6705e28287361c6d6ebcf11ab4c604c8360b50e3c47d6c6804594b7ffa0",
+      "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_spear.json",
+      "sha256": "9abd31ba6ea50f25085ba653221d50f4d02d5f24e9e2ef66b0718b495600a080",
+      "size": 126
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_sword.json",
+      "sha256": "2adaac94966394d4de88d8bf3e2385888605a442c943e4783de2f9a0d8a87687",
+      "size": 126
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_twinblade.json",
+      "sha256": "e71325978117709d0847544501b1d4ee499ab04c2bb8a76e4fd402b270a347e0",
+      "size": 134
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_walker_boots.json",
+      "sha256": "178a3203f09297b2b527d6cbef1302aeafe9887f028bce955061a7338230c8e7",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_walker_chestplate.json",
+      "sha256": "98ad76f55af546f10a4e13720b39e3c40ac5b590d00cad31150ee65f0e0320f6",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_walker_helmet.json",
+      "sha256": "46e04576e25ceafb22b7c2ec5b9d885970bc4292ed4fc59c2fdabe0922630668",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_walker_leggings.json",
+      "sha256": "100d14853dc20b86c892de062535b979b2bf5637053226108bae307f9bd1c702",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_warrior_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_warrior_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_warrior_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/void_warrior_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/warden_heart_boots.json",
+      "sha256": "baec10ad90a3f6ab5c138fe24fa617d6dd46751185064bc97bb56cca5f64ff9d",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/warden_heart_chestplate.json",
+      "sha256": "9a453bafe31ec74ac2b50bb1648eba78be0b07e3a5557649da3bda185a29530a",
+      "size": 120
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/warden_heart_curio.json",
+      "sha256": "93164d50e1e049762371784f2494ef3e9cd1ce8ee9f2d4b05e138c4025c1104e",
+      "size": 110
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/warden_heart_helmet.json",
+      "sha256": "8e53e23fd9747410f3fffa33c1ca47e790981fb609177eb80245100d62190b75",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/warden_heart_leggings.json",
+      "sha256": "ebf17da5cd36d70dfa7c46eacffa91b3a0267053c94d74822b651946d5e17616",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/warden_tendril_blade.json",
+      "sha256": "748562c0012771a3dfbeeaea53102ff16abcf40793bf0b3fe9dad694f23186bc",
+      "size": 111
     },
     {
       "path": "kubejs/assets/kubejs/models/item/weapon_bench.json",
@@ -9554,6 +11404,56 @@
       "path": "kubejs/assets/kubejs/models/item/weapon_chisel.json",
       "sha256": "1a62a76ea1dcb29d50f9229a56446a0b93b37ce3ae92f0e2e8e578b539d60752",
       "size": 106
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/wildwood_archdruid_boots.json",
+      "sha256": "178a3203f09297b2b527d6cbef1302aeafe9887f028bce955061a7338230c8e7",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/wildwood_archdruid_chestplate.json",
+      "sha256": "98ad76f55af546f10a4e13720b39e3c40ac5b590d00cad31150ee65f0e0320f6",
+      "size": 118
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/wildwood_archdruid_helmet.json",
+      "sha256": "46e04576e25ceafb22b7c2ec5b9d885970bc4292ed4fc59c2fdabe0922630668",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/wildwood_archdruid_leggings.json",
+      "sha256": "100d14853dc20b86c892de062535b979b2bf5637053226108bae307f9bd1c702",
+      "size": 116
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/wildwood_brigandine_boots.json",
+      "sha256": "fa332bd9d633a60118831745d1d8413cb5ed6287240107002836e39891b30133",
+      "size": 110
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/wildwood_brigandine_chestplate.json",
+      "sha256": "1f5a38daea01d1f4beed11840f96fac449f5fbae819ff4e1bfaf1b2d9fff2086",
+      "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/wildwood_brigandine_helmet.json",
+      "sha256": "e62adb3ba33a448dbfe55fcad31743c304426b3bfe577aecf05aa3bda218e155",
+      "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/wildwood_brigandine_leggings.json",
+      "sha256": "0b3d98a4cdc6896dc068a24fd0d97bdc6d3a6cea14167e4d6414f38a68c6b30e",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/wildwood_elder_staff.json",
+      "sha256": "d0bdff519b02c2e14ab5a028b1800573836e669b2c785bf8551e82e3ca235552",
+      "size": 109
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/wildwood_giant_belt.json",
+      "sha256": "99647f228f52097db7dc2226fda897199ea491921b2f9b0258f5a2259163dc49",
+      "size": 104
     },
     {
       "path": "kubejs/assets/kubejs/models/item/world_heart.json",
@@ -14172,8 +16072,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_crafting_gui.js",
-      "sha256": "f6303a85d74fcd6b8eeb46c952af4dfdd876717bfe75f769e6037dbaf07c8f5e",
-      "size": 115775
+      "sha256": "16a022793487bba3f96a3eacc0c1c6a250a12ae42caf7517acef6a9853c0d907",
+      "size": 138649
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
@@ -14252,8 +16152,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/forge_workshop_gui.js",
-      "sha256": "6a688dc77c2d9fae8574029d4a078b934118da84b38b564e5f10b63179051b82",
-      "size": 84180
+      "sha256": "af6278de76d2a96d9e3a80fbd030fe257232b93b5f0ac0d159aa4390d0b221cf",
+      "size": 133464
     },
     {
       "path": "kubejs/server_scripts/03_combat/gear_score_system.js",

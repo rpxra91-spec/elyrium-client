@@ -1,0 +1,6 @@
+{
+  "parent": "simplyswords:item/template_longdagger",
+  "textures": {
+    "layer0": "simplyswords:item/gold_longdagger"
+  }
+}
