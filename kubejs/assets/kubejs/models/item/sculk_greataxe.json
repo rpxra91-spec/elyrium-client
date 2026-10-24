@@ -1,6 +1,0 @@
-{
-  "parent": "simplyswords:item/template_greataxe",
-  "textures": {
-    "layer0": "simplyswords:item/runic_greataxe"
-  }
-}

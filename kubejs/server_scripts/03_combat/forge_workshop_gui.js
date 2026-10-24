@@ -364,765 +364,223 @@ const FORGE_CATALOG = [
     ],
 
     // --------------------------------------------------------------------------
-    // TAB 4: 🗡️ ОРУЖИЕ, ЩИТЫ И ПОСОХИ
-    // --------------------------------------------------------------------------
+        // TAB 4: 🗡️ ОРУЖЕЙНЫЙ АРСЕНАЛ ВСЕХ 8 ТИРОВ
     [
         {
-            id: 'minecraft:iron_sword',
-            name: '§fЖелезный Меч',
-            tier: 'Tier 0 (Верхний Мир)',
-            role: 'Одноручный Клинок: Базовый физ. урон 6.0, скорость 1.6',
+            id: 'simplyswords:iron_longsword',
+            name: '§f§lСтальной Длинный Меч Границы§r',
+            tier: 'Tier 1 (Верхний Мир)',
+            role: '§7Оружие стражей Рубежного Вала. Надежная закаленная сталь.',
             ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 4,
             extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 1,
             cat: null, catName: null, catCount: 0
         },
         {
-            id: 'minecraft:shield',
-            name: '§6Боевой Щит',
-            tier: 'Tier 0 (Верхний Мир)',
-            role: 'Щит Защитника: Пул Стойки 100 ед., Блок 100% Физ. Урона',
-            ingot: 'minecraft:iron_ingot', ingotName: 'Железная Оковка', ingotCount: 5,
-            extra: '#minecraft:planks', extraName: 'Дубовый Сердечник', extraCount: 2,
+            id: 'simplyswords:iron_claymore',
+            name: '§f§lСтальной Клеймор Наемника§r',
+            tier: 'Tier 1 (Верхний Мир)',
+            role: '§7Тяжелый двуручный клинок для кругового сокрушения вражеского строя.',
+            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 8,
+            extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2,
             cat: null, catName: null, catCount: 0
         },
         {
-            id: 'minecraft:bow',
-            name: '§aОхотничий Лук',
-            tier: 'Tier 0 (Верхний Мир)',
-            role: 'Стрелковое Оружие: Дальность 30м, баллистический выстрел',
-            ingot: 'minecraft:copper_ingot', ingotName: 'Медные Наконечники', ingotCount: 6,
-            extra: 'minecraft:string', extraName: 'Тетива', extraCount: 3,
+            id: 'simplyswords:bramblethorn',
+            name: '§a§lШипованный Терновник Древнего Леса§r',
+            tier: 'Tier 1 (Верхний Мир)',
+            role: '§7Живой клинок, обвитый ядовитыми терновыми побегами.',
+            ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 6,
+            extra: 'minecraft:vine', extraName: 'Лоза Терновника', extraCount: 4,
             cat: null, catName: null, catCount: 0
         },
         {
-            id: 'kubejs:cinder_staff',
-            name: '§cИнфернальный Посох Пепла',
-            tier: 'Tier 2 (Незер)',
-            role: 'Посох Огня: 20 Емкости, Огненная Стрела II, +25% Огненный Урон',
-            ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 6,
-            extra: 'minecraft:blaze_powder', extraName: 'Огненная Эссенция', extraCount: 4,
-            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
+            id: 'cataclysm:black_steel_sword',
+            name: '§8§lПалаш Черной Стали Цитадели§r',
+            tier: 'Tier 1 (Верхний Мир)',
+            role: '§7Выкован из глубинного темного железа древних кузнецов.',
+            ingot: 'minecraft:iron_ingot', ingotName: 'Черная Сталь', ingotCount: 8,
+            extra: 'minecraft:obsidian', extraName: 'Обсидиановый Скол', extraCount: 2,
+            cat: null, catName: null, catCount: 0
         },
         {
-            id: 'skd:cinder_katana',
-            name: '§cПепельная Катана',
+            id: 'undergarden:cloggrum_battleaxe',
+            name: '§2§lКлоггрумовая Секира Глубин§r',
+            tier: 'Tier 1.5 (Подземный Сад)',
+            role: '§7Тяжелый топор из токсичной руды катакомб. Раскалывает щиты с первого удара.',
+            ingot: 'undergarden:cloggrum_ingot', ingotName: 'Клоггрумовый Слиток', ingotCount: 6,
+            extra: 'undergarden:twistytwig', extraName: 'Ветвь Катакомб', extraCount: 2,
+            cat: null, catName: null, catCount: 0
+        },
+        {
+            id: 'undergarden:froststeel_sword',
+            name: '§b§lКлинок Вечной Мерзлоты Froststeel§r',
+            tier: 'Tier 1.5 (Подземный Сад)',
+            role: '§7Морозный металл сковывает раны врагов льдом, замедляя их на 50%.',
+            ingot: 'undergarden:froststeel_ingot', ingotName: 'Слиток Морозной Стали', ingotCount: 4,
+            extra: 'undergarden:twistytwig', extraName: 'Ветвь Катакомб', extraCount: 1,
+            cat: null, catName: null, catCount: 0
+        },
+        {
+            id: 'undergarden:utherium_sword',
+            name: '§5§lУтеритовый Рапирный Клинок§r',
+            tier: 'Tier 1.5 (Подземный Сад)',
+            role: '§7Редчайший кристаллический металл глубин. Наносит дополнительный урон гнили.',
+            ingot: 'undergarden:utherium_crystal', ingotName: 'Кристалл Утериума', ingotCount: 4,
+            extra: 'undergarden:twistytwig', extraName: 'Ветвь Катакомб', extraCount: 1,
+            cat: null, catName: null, catCount: 0
+        },
+        {
+            id: 'simplyswords:emberblade',
+            name: '§c§lКлинок Тлеющего Угля Преисподней§r',
             tier: 'Tier 2 (Незер)',
-            role: 'Быстрый Клинок: Урон 8.0, Скорость 1.6, Фантомный Выпад (Иай)',
+            role: '§7Жар преисподней не остывает ни на секунду. Поджигает цель и воспламеняет воздух.',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 4,
             extra: 'minecraft:blaze_rod', extraName: 'Огненный Стержень', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'skd:cinder_claymore',
-            name: '§cПепельный Клеймор',
+            id: 'simplyswords:molten_edge',
+            name: '§6§lРаскаленная Грань Лавового Озера§r',
             tier: 'Tier 2 (Незер)',
-            role: 'Двуручный Меч: Урон 11.0, Скорость 1.0, Вихревой Размах на 360°',
+            role: '§7Лезвие из застывшей лавы, расплавляющей любую броню при замахе.',
             ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 6,
-            extra: 'minecraft:blaze_rod', extraName: 'Огненный Стержень', extraCount: 2,
-            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
+            extra: 'minecraft:magma_block', extraName: 'Магма', extraCount: 2,
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'skd:cinder_scythe',
-            name: '§cПепельная Коса',
+            id: 'cataclysm:the_incinerator',
+            name: '§4§l👑 Испепелитель Падшего Короля Игниса§r',
             tier: 'Tier 2 (Незер)',
-            role: 'Боевая Коса: Урон 10.0, Скорость 1.1, Кровавая Жатва с вампиризмом',
-            ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 6,
-            extra: 'minecraft:blaze_rod', extraName: 'Огненный Стержень', extraCount: 2,
-            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
-        },
-        {
-            id: 'skd:cinder_bow',
-            name: '§cПепельный Составной Лук',
-            tier: 'Tier 2 (Незер)',
-            role: 'Составной Лук: Пробитие 25% брони, поджог стрел',
-            ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 6,
-            extra: 'minecraft:blaze_rod', extraName: 'Огненный Стержень', extraCount: 2,
-            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения II', catCount: 2
-        },
-
-        // --- Tier 4 (Край / Бездна) SimplySwords ---
-        {
-            id: 'kubejs:void_rapier',
-            name: '§5Пустотный Рапира',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Быстрый колющий выпад, крит. урон x1.5, высокая скорость',
-            ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 4,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
-        },
-        {
-            id: 'kubejs:void_sai',
-            name: '§5Пустотный Саи',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Сверхбыстрые дуалы, парирование и обезоруживание',
-            ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 4,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
-        },
-        {
-            id: 'kubejs:void_longdagger',
-            name: '§5Пустотный Длинный Кинжал',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Кинжал ассасина: +40% урон со спины, скорость 3.0',
-            ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 4,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
-        },
-        {
-            id: 'kubejs:void_sword',
-            name: '§5Пустотный Меч',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Универсальный клинок: баланс урона, парирования и скорости',
-            ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 4,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
-        },
-        {
-            id: 'kubejs:void_katana',
-            name: '§5Пустотный Катана',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Клинок Иайдо: стремительные рассекающие выпады',
-            ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 4,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
-        },
-        {
-            id: 'kubejs:void_cutlass',
-            name: '§5Пустотный Палаш',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Абордажный палаш: широкий свип и оглушение',
-            ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 4,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
-        },
-        {
-            id: 'kubejs:void_longsword',
-            name: '§5Пустотный Длинный Меч',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Полуторный меч: повышенный радиус поражения',
-            ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 4,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
-        },
-        {
-            id: 'kubejs:void_claymore',
-            name: '§5Пустотный Клеймор',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Тяжелый двуручник: 360° круговой вихрь и гипер-броня',
+            role: '§7Легендарный меч Игниса. Обрушивает огненный смерч судного дня.',
             ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 8,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            extra: 'minecraft:nether_star', extraName: 'Звезда Незера', extraCount: 1,
+            cat: 'kubejs:ascension_catalyst_t2', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'kubejs:void_greataxe',
-            name: '§5Пустотный Секира',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Сокрушительная секира: пробитие щитов и раскол брони',
+            id: 'aether:lightning_sword',
+            name: '§e§lГромовой Клинок Бури Эфира§r',
+            tier: 'Tier 3 (Небесный Эфир)',
+            role: '§7Наконечник меча призывает молнию прямо с небесных облаков при каждом ударе.',
+            ingot: 'aether:enchanted_gravitite', ingotName: 'Зачарованный Гравитит', ingotCount: 4,
+            extra: 'aether:golden_amber', extraName: 'Золотой Янтарь', extraCount: 1,
+            cat: 'kubejs:ascension_catalyst_t3', catName: 'Катализатор Возвышения', catCount: 2
+        },
+        {
+            id: 'aether:holy_sword',
+            name: '§f§lСвященный Паладинский Меч Небес§r',
+            tier: 'Tier 3 (Небесный Эфир)',
+            role: '§7Освященное оружие высших архонтов. Наносит +50% святого урона нежити и демонам.',
+            ingot: 'aether:zanite_gemstone', ingotName: 'Занорит', ingotCount: 4,
+            extra: 'aether:aechor_petal', extraName: 'Лепесток Эйхора', extraCount: 2,
+            cat: 'kubejs:ascension_catalyst_t3', catName: 'Катализатор Возвышения', catCount: 2
+        },
+        {
+            id: 'simplyswords:sunfire',
+            name: '§e§lСолнечное Пламя Золотого Облака§r',
+            tier: 'Tier 3 (Небесный Эфир)',
+            role: '§7Солнечный свет сконденсирован в лезвие безупречной чистоты.',
+            ingot: 'aether:enchanted_gravitite', ingotName: 'Зачарованный Гравитит', ingotCount: 6,
+            extra: 'aether:sun_altar', extraName: 'Солнечная Эссенция', extraCount: 1,
+            cat: 'kubejs:ascension_catalyst_t3', catName: 'Катализатор Возвышения', catCount: 2
+        },
+        {
+            id: 'cataclysm:zweiender',
+            name: '§5§lЦвайэндер Раскола Пространства§r',
+            tier: 'Tier 4 (Цитадели Края)',
+            role: '§7Двуручный клинок, рассекающий ткань пространства. Телепортирует врагов в эпицентр удара.',
             ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 8,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 2,
+            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'kubejs:void_greathammer',
-            name: '§5Пустотный Боевой Молот',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Молот титанов: массовое оглушение и ударная волна',
-            ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 8,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
-        },
-        {
-            id: 'kubejs:void_scythe',
-            name: '§5Пустотный Боевая Коса',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Жатва душ: сплеш-урон по дуге и кровотечение',
-            ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 6,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
-        },
-        {
-            id: 'kubejs:void_spear',
-            name: '§5Пустотный Полуторное Копьё',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Копейный выпад: максимальная дистанция атаки +2.5 блока',
+            id: 'simplyswords:shadowsting',
+            name: '§5§lТеневое Жало Пожирателя Края§r',
+            tier: 'Tier 4 (Цитадели Края)',
+            role: '§7Тонкий стилет темной материи. Игнорирует 40% брони и накладывает увядание.',
             ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 4,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            extra: 'minecraft:popped_chorus_fruit', extraName: 'Плод Хоруса', extraCount: 4,
+            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'kubejs:void_halberd',
-            name: '§5Пустотный Алебарда',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Тяжелая алебарда: комбо рубящих и колющих атак',
-            ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 6,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
+            id: 'cataclysm:final_fractal',
+            name: '§d§l👑 Финальный Фрактал Бездны§r',
+            tier: 'Tier 4 (Цитадели Края)',
+            role: '§7Бесконечный фрактальный меч. Вызывает шквал фантомных клинков из параллельных миров.',
+            ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 12,
+            extra: 'minecraft:dragon_breath', extraName: 'Дыхание Дракона', extraCount: 2,
+            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'kubejs:void_glaive',
-            name: '§5Пустотный Глефа',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Боевая глефа: непрерывный шквал вращательных ударов',
-            ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 6,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
-        },
-        {
-            id: 'kubejs:void_twinblade',
-            name: '§5Пустотный Твинблейд',
-            tier: 'Tier 4 (Край / Бездна)',
-            role: 'Двусторонний клинок: парный вихрь Better Combat',
-            ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 6,
-            extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения IV', catCount: 2
-        },
-
-        // --- Tier 5 (Eternal Starlight) SimplySwords ---
-        {
-            id: 'kubejs:starlight_rapier',
-            name: '§bЗвездный Рапира',
+            id: 'eternal_starlight:moonring_sword',
+            name: '§b§lКлинок Лунного Кольца Сияния§r',
             tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Быстрый колющий выпад, крит. урон x1.5, высокая скорость',
+            role: '§7Свет двух лун отражается в полированной стали. Регенерирует стамину при каждом взмахе.',
             ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 4,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
+            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Кристалла', extraCount: 2,
+            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'kubejs:starlight_sai',
-            name: '§bЗвездный Саи',
+            id: 'simplyswords:stormbringer',
+            name: '§3§lПризыватель Звездной Бури§r',
             tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Сверхбыстрые дуалы, парирование и обезоруживание',
-            ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 4,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
-        },
-        {
-            id: 'kubejs:starlight_longdagger',
-            name: '§bЗвездный Длинный Кинжал',
-            tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Кинжал ассасина: +40% урон со спины, скорость 3.0',
-            ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 4,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
-        },
-        {
-            id: 'kubejs:starlight_sword',
-            name: '§bЗвездный Меч',
-            tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Универсальный клинок: баланс урона, парирования и скорости',
-            ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 4,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
-        },
-        {
-            id: 'kubejs:starlight_katana',
-            name: '§bЗвездный Катана',
-            tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Клинок Иайдо: стремительные рассекающие выпады',
-            ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 4,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
-        },
-        {
-            id: 'kubejs:starlight_cutlass',
-            name: '§bЗвездный Палаш',
-            tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Абордажный палаш: широкий свип и оглушение',
-            ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 4,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
-        },
-        {
-            id: 'kubejs:starlight_longsword',
-            name: '§bЗвездный Длинный Меч',
-            tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Полуторный меч: повышенный радиус поражения',
-            ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 4,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
-        },
-        {
-            id: 'kubejs:starlight_claymore',
-            name: '§bЗвездный Клеймор',
-            tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Тяжелый двуручник: 360° круговой вихрь и гипер-броня',
-            ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 8,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
-        },
-        {
-            id: 'kubejs:starlight_greataxe',
-            name: '§bЗвездный Секира',
-            tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Сокрушительная секира: пробитие щитов и раскол брони',
-            ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 8,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
-        },
-        {
-            id: 'kubejs:starlight_greathammer',
-            name: '§bЗвездный Боевой Молот',
-            tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Молот титанов: массовое оглушение и ударная волна',
-            ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 8,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
-        },
-        {
-            id: 'kubejs:starlight_scythe',
-            name: '§bЗвездный Боевая Коса',
-            tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Жатва душ: сплеш-урон по дуге и кровотечение',
+            role: '§7Обрушивает кометный дождь на головы окруживших врагов.',
             ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 6,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
+            extra: 'eternal_starlight:starlight_flower', extraName: 'Звездный Цветок', extraCount: 2,
+            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'kubejs:starlight_spear',
-            name: '§bЗвездный Полуторное Копьё',
-            tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Копейный выпад: максимальная дистанция атаки +2.5 блока',
-            ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 4,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
-        },
-        {
-            id: 'kubejs:starlight_halberd',
-            name: '§bЗвездный Алебарда',
-            tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Тяжелая алебарда: комбо рубящих и колющих атак',
-            ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 6,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
-        },
-        {
-            id: 'kubejs:starlight_glaive',
-            name: '§bЗвездный Глефа',
-            tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Боевая глефа: непрерывный шквал вращательных ударов',
-            ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 6,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
-        },
-        {
-            id: 'kubejs:starlight_twinblade',
-            name: '§bЗвездный Твинблейд',
-            tier: 'Tier 5 (Eternal Starlight)',
-            role: 'Двусторонний клинок: парный вихрь Better Combat',
-            ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 6,
-            extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Звездного Кристалла', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t5', catName: 'Катализатор Возвышения V', catCount: 2
-        },
-
-        // --- Tier 6 (Otherside / Скалк-Бездна) SimplySwords ---
-        {
-            id: 'kubejs:sculk_rapier',
-            name: '§3Скалк- Рапира',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Быстрый колющий выпад, крит. урон x1.5, высокая скорость',
-            ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 4,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
-        },
-        {
-            id: 'kubejs:sculk_sai',
-            name: '§3Скалк- Саи',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Сверхбыстрые дуалы, парирование и обезоруживание',
-            ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 4,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
-        },
-        {
-            id: 'kubejs:sculk_longdagger',
-            name: '§3Скалк- Длинный Кинжал',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Кинжал ассасина: +40% урон со спины, скорость 3.0',
-            ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 4,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
-        },
-        {
-            id: 'kubejs:sculk_sword',
-            name: '§3Скалк- Меч',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Универсальный клинок: баланс урона, парирования и скорости',
-            ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 4,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
-        },
-        {
-            id: 'kubejs:sculk_katana',
-            name: '§3Скалк- Катана',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Клинок Иайдо: стремительные рассекающие выпады',
-            ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 4,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
-        },
-        {
-            id: 'kubejs:sculk_cutlass',
-            name: '§3Скалк- Палаш',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Абордажный палаш: широкий свип и оглушение',
-            ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 4,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
-        },
-        {
-            id: 'kubejs:sculk_longsword',
-            name: '§3Скалк- Длинный Меч',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Полуторный меч: повышенный радиус поражения',
-            ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 4,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
-        },
-        {
-            id: 'kubejs:sculk_claymore',
-            name: '§3Скалк- Клеймор',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Тяжелый двуручник: 360° круговой вихрь и гипер-броня',
-            ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 8,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
-        },
-        {
-            id: 'kubejs:sculk_greataxe',
-            name: '§3Скалк- Секира',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Сокрушительная секира: пробитие щитов и раскол брони',
-            ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 8,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
-        },
-        {
-            id: 'kubejs:sculk_greathammer',
-            name: '§3Скалк- Боевой Молот',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Молот титанов: массовое оглушение и ударная волна',
-            ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 8,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
-        },
-        {
-            id: 'kubejs:sculk_scythe',
-            name: '§3Скалк- Боевая Коса',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Жатва душ: сплеш-урон по дуге и кровотечение',
+            id: 'deeperdarker:warden_sword',
+            name: '§3§lРезонирующий Меч Эхо-Удара Sonic Boom§r',
+            tier: 'Tier 6 (Deeper Darker)',
+            role: '§7Меч из плоти Вардена. Заряжает звуковую волну Sonic Boom, пробивающую стены.',
             ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 6,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
+            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 2,
+            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'kubejs:sculk_spear',
-            name: '§3Скалк- Полуторное Копьё',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Копейный выпад: максимальная дистанция атаки +2.5 блока',
+            id: 'simplyswords:whisperwind',
+            name: '§8§lКинжал Шепота Скалк-Бездны§r',
+            tier: 'Tier 6 (Deeper Darker)',
+            role: '§7Движется быстрее звука. Шаги владельца не вызывают вибраций скалка.',
             ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 4,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
+            extra: 'minecraft:echo_shard', extraName: 'Осколок Эха', extraCount: 3,
+            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'kubejs:sculk_halberd',
-            name: '§3Скалк- Алебарда',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Тяжелая алебарда: комбо рубящих и колющих атак',
-            ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 6,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
-        },
-        {
-            id: 'kubejs:sculk_glaive',
-            name: '§3Скалк- Глефа',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Боевая глефа: непрерывный шквал вращательных ударов',
-            ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 6,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
-        },
-        {
-            id: 'kubejs:sculk_twinblade',
-            name: '§3Скалк- Твинблейд',
-            tier: 'Tier 6 (Otherside / Скалк-Бездна)',
-            role: 'Двусторонний клинок: парный вихрь Better Combat',
-            ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 6,
-            extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t6', catName: 'Катализатор Возвышения VI', catCount: 2
-        },
-
-        // --- Tier 7 (DivineRPG: Eden) SimplySwords ---
-        {
-            id: 'kubejs:eden_rapier',
-            name: '§eЭдемский Рапира',
+            id: 'divinerpg:eden_blade',
+            name: '§e§lСолнечный Клинок Первородного Эдема§r',
             tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Быстрый колющий выпад, крит. урон x1.5, высокая скорость',
-            ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 4,
-            extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
-        },
-        {
-            id: 'kubejs:eden_sai',
-            name: '§eЭдемский Саи',
-            tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Сверхбыстрые дуалы, парирование и обезоруживание',
-            ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 4,
-            extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
-        },
-        {
-            id: 'kubejs:eden_longdagger',
-            name: '§eЭдемский Длинный Кинжал',
-            tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Кинжал ассасина: +40% урон со спины, скорость 3.0',
-            ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 4,
-            extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
-        },
-        {
-            id: 'kubejs:eden_sword',
-            name: '§eЭдемский Меч',
-            tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Универсальный клинок: баланс урона, парирования и скорости',
-            ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 4,
-            extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
-        },
-        {
-            id: 'kubejs:eden_katana',
-            name: '§eЭдемский Катана',
-            tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Клинок Иайдо: стремительные рассекающие выпады',
-            ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 4,
-            extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
-        },
-        {
-            id: 'kubejs:eden_cutlass',
-            name: '§eЭдемский Палаш',
-            tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Абордажный палаш: широкий свип и оглушение',
-            ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 4,
-            extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
-        },
-        {
-            id: 'kubejs:eden_longsword',
-            name: '§eЭдемский Длинный Меч',
-            tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Полуторный меч: повышенный радиус поражения',
-            ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 4,
-            extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
-        },
-        {
-            id: 'kubejs:eden_claymore',
-            name: '§eЭдемский Клеймор',
-            tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Тяжелый двуручник: 360° круговой вихрь и гипер-броня',
+            role: '§7Первородное золото богов. Наносит колоссальный чистый урон и ослепляет врагов.',
             ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 8,
             extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'kubejs:eden_greataxe',
-            name: '§eЭдемский Секира',
+            id: 'simplyswords:arcanethyst',
+            name: '§d§lАрканетистовая Глефа Вечности§r',
             tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Сокрушительная секира: пробитие щитов и раскол брони',
-            ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 8,
-            extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
-        },
-        {
-            id: 'kubejs:eden_greathammer',
-            name: '§eЭдемский Боевой Молот',
-            tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Молот титанов: массовое оглушение и ударная волна',
-            ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 8,
-            extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
-        },
-        {
-            id: 'kubejs:eden_scythe',
-            name: '§eЭдемский Боевая Коса',
-            tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Жатва душ: сплеш-урон по дуге и кровотечение',
+            role: '§7Древнейшая глефа друидов. Вращается в вихре чистой первородной магии.',
             ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 6,
             extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
+            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'kubejs:eden_spear',
-            name: '§eЭдемский Полуторное Копьё',
-            tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Копейный выпад: максимальная дистанция атаки +2.5 блока',
-            ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 4,
-            extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
-        },
-        {
-            id: 'kubejs:eden_halberd',
-            name: '§eЭдемский Алебарда',
-            tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Тяжелая алебарда: комбо рубящих и колющих атак',
-            ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 6,
-            extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
-        },
-        {
-            id: 'kubejs:eden_glaive',
-            name: '§eЭдемский Глефа',
-            tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Боевая глефа: непрерывный шквал вращательных ударов',
-            ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 6,
-            extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
-        },
-        {
-            id: 'kubejs:eden_twinblade',
-            name: '§eЭдемский Твинблейд',
-            tier: 'Tier 7 (DivineRPG: Eden)',
-            role: 'Двусторонний клинок: парный вихрь Better Combat',
-            ingot: 'divinerpg:wildwood_chunk', ingotName: 'Фрагмент Диколесья', ingotCount: 6,
-            extra: 'divinerpg:eden_heart', extraName: 'Сердце Эдема', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения VII', catCount: 2
-        },
-
-        // --- Tier 8 (DivineRPG: Mortum Apex) SimplySwords ---
-        {
-            id: 'kubejs:halite_rapier',
-            name: '§dХалитовый Рапира',
+            id: 'divinerpg:halite_blade',
+            name: '§d§l👑 Абсолютный Клинок Демиурга Халита§r',
             tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Быстрый колющий выпад, крит. урон x1.5, высокая скорость',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 4,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
+            role: '§7Абсолютный венец кузнечного ремесла. Рассекает саму реальность с уроном за гранью возможного.',
+            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 10,
+            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 2,
+            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'kubejs:halite_sai',
-            name: '§dХалитовый Саи',
+            id: 'simplyswords:livyatan',
+            name: '§4§lЛевиафан Апокалипсиса Мортума§r',
             tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Сверхбыстрые дуалы, парирование и обезоруживание',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 4,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
-        },
-        {
-            id: 'kubejs:halite_longdagger',
-            name: '§dХалитовый Длинный Кинжал',
-            tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Кинжал ассасина: +40% урон со спины, скорость 3.0',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 4,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
-        },
-        {
-            id: 'kubejs:halite_sword',
-            name: '§dХалитовый Меч',
-            tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Универсальный клинок: баланс урона, парирования и скорости',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 4,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
-        },
-        {
-            id: 'kubejs:halite_katana',
-            name: '§dХалитовый Катана',
-            tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Клинок Иайдо: стремительные рассекающие выпады',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 4,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
-        },
-        {
-            id: 'kubejs:halite_cutlass',
-            name: '§dХалитовый Палаш',
-            tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Абордажный палаш: широкий свип и оглушение',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 4,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
-        },
-        {
-            id: 'kubejs:halite_longsword',
-            name: '§dХалитовый Длинный Меч',
-            tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Полуторный меч: повышенный радиус поражения',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 4,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
-        },
-        {
-            id: 'kubejs:halite_claymore',
-            name: '§dХалитовый Клеймор',
-            tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Тяжелый двуручник: 360° круговой вихрь и гипер-броня',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 8,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
-        },
-        {
-            id: 'kubejs:halite_greataxe',
-            name: '§dХалитовый Секира',
-            tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Сокрушительная секира: пробитие щитов и раскол брони',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 8,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
-        },
-        {
-            id: 'kubejs:halite_greathammer',
-            name: '§dХалитовый Боевой Молот',
-            tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Молот титанов: массовое оглушение и ударная волна',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 8,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
-        },
-        {
-            id: 'kubejs:halite_scythe',
-            name: '§dХалитовый Боевая Коса',
-            tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Жатва душ: сплеш-урон по дуге и кровотечение',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 6,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
-        },
-        {
-            id: 'kubejs:halite_spear',
-            name: '§dХалитовый Полуторное Копьё',
-            tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Копейный выпад: максимальная дистанция атаки +2.5 блока',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 4,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
-        },
-        {
-            id: 'kubejs:halite_halberd',
-            name: '§dХалитовый Алебарда',
-            tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Тяжелая алебарда: комбо рубящих и колющих атак',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 6,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
-        },
-        {
-            id: 'kubejs:halite_glaive',
-            name: '§dХалитовый Глефа',
-            tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Боевая глефа: непрерывный шквал вращательных ударов',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 6,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
-        },
-        {
-            id: 'kubejs:halite_twinblade',
-            name: '§dХалитовый Твинблейд',
-            tier: 'Tier 8 (DivineRPG: Mortum Apex)',
-            role: 'Двусторонний клинок: парный вихрь Better Combat',
-            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 6,
-            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 1,
-            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения VIII', catCount: 2
+            role: '§7Двуручный клинок неизбежного финала. Каждое попадание сотрясает мир волной пустоты.',
+            ingot: 'divinerpg:mortum_fragments', ingotName: 'Осколок Мортума', ingotCount: 12,
+            extra: 'divinerpg:mortum_soul', extraName: 'Душа Мортума', extraCount: 2,
+            cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения', catCount: 2
         },
     ],
 

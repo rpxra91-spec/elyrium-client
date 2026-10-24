@@ -1,6 +1,0 @@
-{
-  "parent": "simplyswords:item/template_spear",
-  "textures": {
-    "layer0": "simplyswords:item/spear_metallurgium"
-  }
-}
