@@ -1,8 +1,8 @@
 {
-  "version": "0.4.50",
+  "version": "0.4.51",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-25T10:25:50.241359+00:00",
+  "generated_at": "2026-10-25T10:35:06.345036+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -14407,8 +14407,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_crafting_gui.js",
-      "sha256": "74211c20d5275505a6d0eaebcf76ee191cd3c4ed55b6b85ba802e4758a310d52",
-      "size": 117553
+      "sha256": "57f5d9dfe831f3a1a06babff04055b1b8e18565673c900b29f68ed39b475e35f",
+      "size": 117953
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
@@ -14487,8 +14487,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/forge_workshop_gui.js",
-      "sha256": "2449e4ca937715f63a23118f82713c32e5d30411e1c962f0d0d291668b80155a",
-      "size": 97085
+      "sha256": "d1fd43a61c16b8c75b07adda790653820baf82ed2a5d2c46588cb41a64bbcae9",
+      "size": 97113
     },
     {
       "path": "kubejs/server_scripts/03_combat/gear_score_system.js",

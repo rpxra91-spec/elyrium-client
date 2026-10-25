@@ -1,10 +1,10 @@
 {
-  "version": "0.4.50",
+  "version": "0.4.51",
   "launcher_version": "1.1.0",
   "launcher_sha256": "56863a206d9488d74cf8e7542b54e3b3cf530c8d6602cb6cc67287e0bb8747aa",
   "launcher_size": 32282245,
   "launcher_url": "http://80.76.43.175/ElyriumLauncher.exe",
-  "tag": "v0.4.50",
+  "tag": "v0.4.51",
   "channel": "alpha",
   "stage": "Active Development",
   "updated_at": "2026-10-25"
