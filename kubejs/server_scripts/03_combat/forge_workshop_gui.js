@@ -461,8 +461,8 @@ const FORGE_CATALOG = [
             name: '§e§lГромовой Клинок Бури Эфира§r',
             tier: 'Tier 3 (Небесный Эфир)',
             role: '§7Наконечник меча призывает молнию прямо с небесных облаков при каждом ударе.',
-            ingot: 'aether:enchanted_gravitite', ingotName: 'Зачарованный Гравитит', ingotCount: 4,
-            extra: 'aether:golden_amber', extraName: 'Золотой Янтарь', extraCount: 1,
+            ingot: 'kubejs:celestial_astralyte_ingot', ingotName: 'Небесный Астралит', ingotCount: 16,
+            extra: 'aether:golden_amber', extraName: 'Золотой Янтарь', extraCount: 2,
             cat: 'kubejs:ascension_catalyst_t3', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
@@ -470,7 +470,7 @@ const FORGE_CATALOG = [
             name: '§f§lСвященный Паладинский Меч Небес§r',
             tier: 'Tier 3 (Небесный Эфир)',
             role: '§7Освященное оружие высших архонтов. Наносит +50% святого урона нежити и демонам.',
-            ingot: 'aether:zanite_gemstone', ingotName: 'Занорит', ingotCount: 4,
+            ingot: 'kubejs:celestial_astralyte_ingot', ingotName: 'Небесный Астралит', ingotCount: 16,
             extra: 'aether:aechor_petal', extraName: 'Лепесток Эйхора', extraCount: 2,
             cat: 'kubejs:ascension_catalyst_t3', catName: 'Катализатор Возвышения', catCount: 2
         },
@@ -479,7 +479,7 @@ const FORGE_CATALOG = [
             name: '§e§lСолнечное Пламя Золотого Облака§r',
             tier: 'Tier 3 (Небесный Эфир)',
             role: '§7Солнечный свет сконденсирован в лезвие безупречной чистоты.',
-            ingot: 'aether:enchanted_gravitite', ingotName: 'Зачарованный Гравитит', ingotCount: 6,
+            ingot: 'kubejs:celestial_astralyte_ingot', ingotName: 'Небесный Астралит', ingotCount: 18,
             extra: 'aether:sun_altar', extraName: 'Солнечная Эссенция', extraCount: 1,
             cat: 'kubejs:ascension_catalyst_t3', catName: 'Катализатор Возвышения', catCount: 2
         },

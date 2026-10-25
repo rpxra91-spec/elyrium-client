@@ -2,7 +2,7 @@
   "version": "0.4.50",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-25T09:51:51.024169+00:00",
+  "generated_at": "2026-10-25T10:25:50.241359+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -10216,6 +10216,11 @@
       "size": 273
     },
     {
+      "path": "kubejs/assets/kubejs/textures/item/celestial_astralyte_ingot.png",
+      "sha256": "8999a877536e63295429253f82c050bd7d3d7fd504ea2c08e77dcd8e29c1e4bd",
+      "size": 246
+    },
+    {
       "path": "kubejs/assets/kubejs/textures/item/elemental_stone_fire.png",
       "sha256": "c91dc9b1735699002beeb9993122b63c6f566cb3a3c4690a416d3576778c996c",
       "size": 237
@@ -13482,8 +13487,8 @@
     },
     {
       "path": "kubejs/client_scripts/canonical_equipment_names_and_lore.js",
-      "sha256": "5b0bdab05f0c554f590b74f7e93f16bf51cec15e99d2467e9622e92b425dac24",
-      "size": 47552
+      "sha256": "70ddd670c8ce5487130259596db8ce9727456f673ae1af4d90a763b2944850a0",
+      "size": 48145
     },
     {
       "path": "kubejs/client_scripts/dodge_camera_fx.js",
@@ -14402,8 +14407,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_crafting_gui.js",
-      "sha256": "c9fc08e350d87aba0aea71b54234755221d457d65d926da3582322028eef228f",
-      "size": 116396
+      "sha256": "74211c20d5275505a6d0eaebcf76ee191cd3c4ed55b6b85ba802e4758a310d52",
+      "size": 117553
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
@@ -14412,8 +14417,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/steel_metallurgy_recipes.js",
-      "sha256": "eadb91eef47d2a90773ee2f68f42d4f4e8b9f1a4da69ee8a99aa0bb566034560",
-      "size": 5976
+      "sha256": "2a3912a9a06ac94c6def8a28c64ae1e23cc1ce8c0aef4c7033f6f57870e141de",
+      "size": 7195
     },
     {
       "path": "kubejs/server_scripts/02_magic/elemental_altar_gui.js",
@@ -14462,8 +14467,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/elyrium_forge_api.js",
-      "sha256": "28593040ecfee9c09aa42edad6a595057b27def45e4ba87c597dae26587bbc3b",
-      "size": 39473
+      "sha256": "da43761d6c1208b2a48f7174b858d8d29cf1cb4f066c2e1f15d3099390533bdb",
+      "size": 46502
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_engine.js",
@@ -14852,8 +14857,8 @@
     },
     {
       "path": "kubejs/startup_scripts/blacksmith_station_blocks.js",
-      "sha256": "136d287ecdaa51ad11c6ef2104e1e0f6dcaaab6f45aa1c1ca3dfed8772111d1a",
-      "size": 6533
+      "sha256": "d730e8f668d2ffa92249bf4fbfed76b14637b7674969e2fd6ab8f0e9462e9be6",
+      "size": 7529
     },
     {
       "path": "kubejs/startup_scripts/custom_gear_registry.js",

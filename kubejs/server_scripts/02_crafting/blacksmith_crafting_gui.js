@@ -231,6 +231,7 @@ function getHearthSmeltRecipe(item) {
     if (id === 'minecraft:raw_gold' || id.includes('gold_ore')) return { result: 'minecraft:gold_ingot', name: 'Золотой Слиток', fuelReq: 1, needsCrucible: false };
     if (id === 'minecraft:netherite_scrap') return { result: 'skd:cinder_alloy_ingot', name: 'Пепельный Сплав (Т2)', fuelReq: 2, needsCrucible: true };
     if (id === 'minecraft:netherite_ingot') return { result: 'kubejs:refined_netherite_ingot', name: 'Очищенный Незерит (Т2+)', fuelReq: 4, needsCrucible: true };
+    if (id === 'aether:enchanted_gravitite') return { result: 'kubejs:celestial_astralyte_ingot', name: 'Небесный Астралит (Т3)', fuelReq: 3, needsCrucible: true };
     return null;
 }
 
@@ -238,37 +239,54 @@ function getHearthSmeltRecipe(item) {
 // КАТАЛОГ РЕЦЕПТОВ КОВКИ (ТАБ 0)
 // ------------------------------------------------------------------------------
 const WORKSHOP_FORGE_RECIPES = [
-    { id: 'simplyswords:iron_longsword', name: 'Стальной Длинный Меч Границы', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 2, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 1 },
-    { id: 'simplyswords:iron_claymore', name: 'Стальной Клеймор Наемника', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 4, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
-    { id: 'simplyswords:bramblethorn', name: 'Шипованный Терновник Древнего Леса', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 3, extra: 'minecraft:vine', extraName: 'Лоза Терновника', extraCount: 4 },
-    { id: 'cataclysm:black_steel_sword', name: 'Палаш Черной Стали Цитадели', ingot: 'minecraft:iron_ingot', ingotName: 'Черная Сталь', ingotCount: 4, extra: 'minecraft:obsidian', extraName: 'Обсидиановый Скол', extraCount: 2 },
-    { id: 'undergarden:cloggrum_battleaxe', name: 'Клоггрумовая Секира Глубин', ingot: 'undergarden:cloggrum_ingot', ingotName: 'Клоггрумовый Слиток', ingotCount: 3, extra: 'undergarden:twistytwig', extraName: 'Ветвь Катакомб', extraCount: 2 },
-    { id: 'undergarden:froststeel_sword', name: 'Клинок Вечной Мерзлоты Froststeel', ingot: 'undergarden:froststeel_ingot', ingotName: 'Слиток Морозной Стали', ingotCount: 2, extra: 'undergarden:twistytwig', extraName: 'Ветвь Катакомб', extraCount: 1 },
-    { id: 'undergarden:utherium_sword', name: 'Утеритовый Рапирный Клинок', ingot: 'undergarden:utherium_crystal', ingotName: 'Кристалл Утериума', ingotCount: 2, extra: 'undergarden:twistytwig', extraName: 'Ветвь Катакомб', extraCount: 1 },
-    { id: 'simplyswords:emberblade', name: 'Клинок Тлеющего Угля Преисподней', ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 2, extra: 'minecraft:blaze_rod', extraName: 'Огненный Стержень', extraCount: 1 },
-    { id: 'simplyswords:molten_edge', name: 'Раскаленная Грань Лавового Озера', ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 3, extra: 'minecraft:magma_block', extraName: 'Магма', extraCount: 2 },
-    { id: 'cataclysm:the_incinerator', name: 'Испепелитель Падшего Короля Игниса', ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 4, extra: 'minecraft:nether_star', extraName: 'Звезда Незера', extraCount: 1 },
-    { id: 'aether:lightning_sword', name: 'Громовой Клинок Бури Эфира', ingot: 'aether:enchanted_gravitite', ingotName: 'Зачарованный Гравитит', ingotCount: 2, extra: 'aether:golden_amber', extraName: 'Золотой Янтарь', extraCount: 1 },
-    { id: 'aether:holy_sword', name: 'Священный Паладинский Меч Небес', ingot: 'aether:zanite_gemstone', ingotName: 'Занорит', ingotCount: 2, extra: 'aether:aechor_petal', extraName: 'Лепесток Эйхора', extraCount: 2 },
-    { id: 'simplyswords:sunfire', name: 'Солнечное Пламя Золотого Облака', ingot: 'aether:enchanted_gravitite', ingotName: 'Зачарованный Гравитит', ingotCount: 3, extra: 'aether:sun_altar', extraName: 'Солнечная Эссенция', extraCount: 1 },
-    { id: 'cataclysm:zweiender', name: 'Цвайэндер Раскола Пространства', ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 4, extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 2 },
-    { id: 'simplyswords:shadowsting', name: 'Теневое Жало Пожирателя Края', ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 2, extra: 'minecraft:popped_chorus_fruit', extraName: 'Плод Хоруса', extraCount: 4 },
-    { id: 'cataclysm:final_fractal', name: 'Финальный Фрактал Бездны', ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 6, extra: 'minecraft:dragon_breath', extraName: 'Дыхание Дракона', extraCount: 2 },
-    { id: 'eternal_starlight:moonring_sword', name: 'Клинок Лунного Кольца Сияния', ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 2, extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Кристалла', extraCount: 2 },
-    { id: 'simplyswords:stormbringer', name: 'Призыватель Звездной Бури', ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 3, extra: 'eternal_starlight:starlight_flower', extraName: 'Звездный Цветок', extraCount: 2 },
-    { id: 'deeperdarker:warden_sword', name: 'Резонирующий Меч Эхо-Удара Sonic Boom', ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 3, extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 2 },
-    { id: 'simplyswords:whisperwind', name: 'Кинжал Шепота Скалк-Бездны', ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 2, extra: 'minecraft:echo_shard', extraName: 'Осколок Эха', extraCount: 3 },
-    { id: 'simplyswords:righteous_relic', name: 'Праведная Реликвия Высшего Света', ingot: 'minecraft:gold_block', ingotName: 'Золотой Блок Святости', ingotCount: 3, extra: 'aether:enchanted_gravitite', extraName: 'Гравитит', extraCount: 2 },
-    { id: 'simplyswords:caelestis', name: 'Селестис — Небесный Меч', ingot: 'minecraft:gold_block', ingotName: 'Золотой Блок Святости', ingotCount: 4, extra: 'aether:sun_altar', extraName: 'Солнечный Алтарь', extraCount: 1 },
-    { id: 'cataclysm:final_fractal', name: 'Финальный Фрактал Реальности', ingot: 'minecraft:netherite_block', ingotName: 'Незеритовый Блок Бездны', ingotCount: 2, extra: 'cataclysm:void_core', extraName: 'Ядро Бездны', extraCount: 1 },
-    { id: 'simplyswords:livyatan', name: 'Ливиафан — Повелитель Океана', ingot: 'minecraft:netherite_block', ingotName: 'Незеритовый Блок Бездны', ingotCount: 3, extra: 'cataclysm:abyssal_egg', extraName: 'Яйцо Бездны', extraCount: 1 },
+    // ⚔️ Оружие Т1 (Верхний Мир: Сталь / Железо)
+    { id: 'simplyswords:iron_longsword', name: 'Стальной Длинный Меч Границы', ingot: 'minecraft:iron_ingot', ingotName: 'Железный / Стальной Слиток', ingotCount: 14, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+    { id: 'simplyswords:iron_claymore', name: 'Стальной Клеймор Наемника', ingot: 'minecraft:iron_ingot', ingotName: 'Железный / Стальной Слиток', ingotCount: 18, extra: 'minecraft:stick', extraName: 'Рукоять', extraCount: 2 },
+    { id: 'simplyswords:bramblethorn', name: 'Шипованный Терновник Древнего Леса', ingot: 'minecraft:iron_ingot', ingotName: 'Железный / Стальной Слиток', ingotCount: 16, extra: 'minecraft:vine', extraName: 'Лоза Терновника', extraCount: 4 },
+    { id: 'cataclysm:black_steel_sword', name: 'Палаш Черной Стали Цитадели', ingot: 'minecraft:iron_ingot', ingotName: 'Черная Сталь', ingotCount: 16, extra: 'minecraft:obsidian', extraName: 'Обсидиановый Скол', extraCount: 2 },
 
-    // 🛡 Доспехи Т1
-    { id: 'minecraft:iron_helmet', name: 'Железный Шлем', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 5, extra: null, extraName: null, extraCount: 0 },
-    { id: 'minecraft:iron_chestplate', name: 'Железный Нагрудник', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 8, extra: null, extraName: null, extraCount: 0 },
-    { id: 'minecraft:iron_leggings', name: 'Железные Поножи', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 7, extra: null, extraName: null, extraCount: 0 },
-    { id: 'minecraft:iron_boots', name: 'Железные Сапоги', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 4, extra: null, extraName: null, extraCount: 0 },
-    { id: 'minecraft:shield', name: 'Боевой Щит Защитника', ingot: 'minecraft:iron_ingot', ingotName: 'Железная Оковка', ingotCount: 5, extra: '#minecraft:planks', extraName: 'Доски', extraCount: 2 }
+    // ⚔️ Оружие Т1.5 (Подземный Сад: Клоггрум / Морозная Сталь / Утериум)
+    { id: 'undergarden:cloggrum_battleaxe', name: 'Клоггрумовая Секира Глубин', ingot: 'undergarden:cloggrum_ingot', ingotName: 'Клоггрумовый Слиток', ingotCount: 18, extra: 'undergarden:twistytwig', extraName: 'Ветвь Катакомб', extraCount: 2 },
+    { id: 'undergarden:froststeel_sword', name: 'Клинок Вечной Мерзлоты Froststeel', ingot: 'undergarden:froststeel_ingot', ingotName: 'Слиток Морозной Стали', ingotCount: 16, extra: 'undergarden:twistytwig', extraName: 'Ветвь Катакомб', extraCount: 2 },
+    { id: 'undergarden:utherium_sword', name: 'Утеритовый Рапирный Клинок', ingot: 'undergarden:utherium_crystal', ingotName: 'Кристалл Утериума', ingotCount: 16, extra: 'undergarden:twistytwig', extraName: 'Ветвь Катакомб', extraCount: 2 },
+
+    // ⚔️ Оружие Т2 (Преисподняя: Пепельный Сплав / Незерит)
+    { id: 'simplyswords:emberblade', name: 'Клинок Тлеющего Угля Преисподней', ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 16, extra: 'minecraft:blaze_rod', extraName: 'Огненный Стержень', extraCount: 2 },
+    { id: 'simplyswords:molten_edge', name: 'Раскаленная Грань Лавового Озера', ingot: 'skd:cinder_alloy_ingot', ingotName: 'Пепельный Сплав', ingotCount: 18, extra: 'minecraft:magma_block', extraName: 'Магма', extraCount: 2 },
+    { id: 'cataclysm:the_incinerator', name: 'Испепелитель Падшего Короля Игниса', ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 20, extra: 'minecraft:nether_star', extraName: 'Звезда Незера', extraCount: 1 },
+
+    // ⚔️ Оружие Т3 (Небесный Эфир: Небесный Астралит)
+    { id: 'aether:lightning_sword', name: 'Громовой Клинок Бури Эфира', ingot: 'kubejs:celestial_astralyte_ingot', ingotName: 'Небесный Астралит', ingotCount: 16, extra: 'aether:golden_amber', extraName: 'Золотой Янтарь', extraCount: 2 },
+    { id: 'aether:holy_sword', name: 'Священный Паладинский Меч Небес', ingot: 'kubejs:celestial_astralyte_ingot', ingotName: 'Небесный Астралит', ingotCount: 16, extra: 'aether:aechor_petal', extraName: 'Лепесток Эйхора', extraCount: 2 },
+    { id: 'simplyswords:sunfire', name: 'Солнечное Пламя Золотого Облака', ingot: 'kubejs:celestial_astralyte_ingot', ingotName: 'Небесный Астралит', ingotCount: 18, extra: 'aether:sun_altar', extraName: 'Солнечная Эссенция', extraCount: 1 },
+
+    // ⚔️ Оружие Т4 (Цитадели Края: Незерит / Руническая Сталь)
+    { id: 'cataclysm:zweiender', name: 'Цвайэндер Раскола Пространства', ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 18, extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 2 },
+    { id: 'simplyswords:shadowsting', name: 'Теневое Жало Пожирателя Края', ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 16, extra: 'minecraft:popped_chorus_fruit', extraName: 'Плод Хоруса', extraCount: 4 },
+    { id: 'cataclysm:final_fractal', name: 'Финальный Фрактал Бездны', ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 20, extra: 'minecraft:dragon_breath', extraName: 'Дыхание Дракона', extraCount: 2 },
+
+    // ⚔️ Оружие Т5 (Вечное Сияние: Эфирсент)
+    { id: 'eternal_starlight:moonring_sword', name: 'Клинок Лунного Кольца Сияния', ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 16, extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Кристалла', extraCount: 2 },
+    { id: 'simplyswords:stormbringer', name: 'Призыватель Звездной Бури', ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 18, extra: 'eternal_starlight:starlight_flower', extraName: 'Звездный Цветок', extraCount: 2 },
+
+    // ⚔️ Оружие Т6 (Скалк-Бездна: Резонарий)
+    { id: 'deeperdarker:warden_sword', name: 'Резонирующий Меч Эхо-Удара Sonic Boom', ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 18, extra: 'deeperdarker:reinforced_echo_shard', extraName: 'Усиленный Осколок Эха', extraCount: 2 },
+    { id: 'simplyswords:whisperwind', name: 'Кинжал Шепота Скалк-Бездны', ingot: 'deeperdarker:resonarium', ingotName: 'Резонарий', ingotCount: 16, extra: 'minecraft:echo_shard', extraName: 'Осколок Эха', extraCount: 3 },
+
+    // ⚔️ Оружие Т7 (Первородный Эдем: Золото Святости / Душа Эдема)
+    { id: 'simplyswords:righteous_relic', name: 'Праведная Реликвия Высшего Света', ingot: 'minecraft:gold_block', ingotName: 'Золотой Блок Святости', ingotCount: 18, extra: 'aether:enchanted_gravitite', extraName: 'Гравитит', extraCount: 3 },
+    { id: 'simplyswords:caelestis', name: 'Селестис — Небесный Меч', ingot: 'minecraft:gold_block', ingotName: 'Золотой Блок Святости', ingotCount: 20, extra: 'aether:sun_altar', extraName: 'Солнечный Алтарь', extraCount: 1 },
+
+    // ⚔️ Оружие Т8 (Апогей Мортума: Незеритовый Блок Бездны / Артефакты)
+    { id: 'cataclysm:final_fractal', name: 'Финальный Фрактал Реальности', ingot: 'minecraft:netherite_block', ingotName: 'Незеритовый Блок Бездны', ingotCount: 20, extra: 'cataclysm:void_core', extraName: 'Ядро Бездны', extraCount: 2 },
+    { id: 'simplyswords:livyatan', name: 'Ливиафан — Повелитель Океана', ingot: 'minecraft:netherite_block', ingotName: 'Незеритовый Блок Бездны', ingotCount: 20, extra: 'cataclysm:abyssal_egg', extraName: 'Яйцо Бездны', extraCount: 1 },
+
+    // 🛡 Доспехи Т1 (Базовая Защита)
+    { id: 'minecraft:iron_helmet', name: 'Железный Шлем', ingot: 'minecraft:iron_ingot', ingotName: 'Железный / Стальной Слиток', ingotCount: 16, extra: null, extraName: null, extraCount: 0 },
+    { id: 'minecraft:iron_chestplate', name: 'Железный Нагрудник', ingot: 'minecraft:iron_ingot', ingotName: 'Железный / Стальной Слиток', ingotCount: 20, extra: null, extraName: null, extraCount: 0 },
+    { id: 'minecraft:iron_leggings', name: 'Железные Поножи', ingot: 'minecraft:iron_ingot', ingotName: 'Железный / Стальной Слиток', ingotCount: 16, extra: null, extraName: null, extraCount: 0 },
+    { id: 'minecraft:iron_boots', name: 'Железные Сапоги', ingot: 'minecraft:iron_ingot', ingotName: 'Железный / Стальной Слиток', ingotCount: 12, extra: null, extraName: null, extraCount: 0 },
+    { id: 'minecraft:shield', name: 'Боевой Щит Защитника', ingot: 'minecraft:iron_ingot', ingotName: 'Железная Оковка', ingotCount: 12, extra: '#minecraft:planks', extraName: 'Доски', extraCount: 4 }
 ];
 
 // Подсчет доступного сырья в 6 слотах ковки (Таб 0)
@@ -832,11 +850,11 @@ function openUnifiedWorkshopGUI(player, defaultTab, blockPos) {
                 s.setItem(Item.of('minecraft:lava_bucket').withCustomName(Text.of('§4🌋 [ АДСКИЙ ГОРН: АЛТАРЬ ВОЗВЫШЕНИЯ ]')).withLore([
                     Text.of('§7Перевод снаряжения в следующую эпоху Канона 8 Тиров:'),
                     Text.of('§e• Слот 1: Экипировка текущего тира'),
-                    Text.of('§e• Слот 2: Катализатор эпохи (kubejs:ascension_catalyst_t2..t8 / Шаблон)'),
-                    Text.of('§e• Слот 3: Возвышенный артефакт следующего тира'),
+                    Text.of('§e• Слот 2: Катализатор эпохи (kubejs:ascension_catalyst_t2..t8)'),
+                    Text.of('§e• В инвентаре: 8x Слитков металла целевой эпохи'),
                     Text.of('§8────────────────────────────────'),
                     Text.of('§a✓ 100% сохранение: Уровень заточки (+N), сокеты и скрижали!'),
-                    Text.of('§2✓ Никаких трат лавы и базальта.')
+                    Text.of('§6✦ Классическое оружие трансформируется, редкое/босс — усиливается!')
                 ]));
                 s.leftClicked = () => {};
             });
@@ -848,7 +866,7 @@ function openUnifiedWorkshopGUI(player, defaultTab, blockPos) {
             let evalAsc = null;
             if (ElyriumForgeAPI && aGear && aCat) {
                 try {
-                    evalAsc = ElyriumForgeAPI.evaluate(aGear, aCat, null);
+                    evalAsc = ElyriumForgeAPI.evaluate(player, aGear, aCat, null);
                 } catch (e) {}
             }
 
@@ -918,6 +936,7 @@ function openUnifiedWorkshopGUI(player, defaultTab, blockPos) {
                     s.setItem(preview.withLore([
                         Text.of('§6★ РИТУАЛ ВОЗВЫШЕНИЯ ДОСТУПЕН ★'),
                         Text.of(`§eЭволюция: §bТир ${evalAsc.currentTier} §7➔ §6Тир ${evalAsc.targetTier}`),
+                        Text.of(`§6✦ Расход металла: §f${evalAsc.requiredIngotCount || 8}x слитков эпохи (из сумки)`),
                         Text.of('§8────────────────────────────────'),
                         Text.of('§a✓ Заточка (+N), сокеты и боевые искусства сохраняются 100%!'),
                         Text.of('§e▶ Нажмите ЛКМ для совершения Возвышения!')

@@ -230,6 +230,12 @@ function isValidItem(id) {
     }
 }
 
+const SIMPLY_SWORDS_ARCHETYPES = [
+    'longsword', 'twinblade', 'rapier', 'katana', 'sai',
+    'spear', 'glaive', 'warglaive', 'halberd', 'claymore',
+    'greathammer', 'greataxe', 'chakram', 'scythe', 'cutlass'
+];
+
 const DIRECT_ASCENSIONS = {
     2: {
         'minecraft:diamond_sword': 'minecraft:netherite_sword',
@@ -271,6 +277,63 @@ const DIRECT_ASCENSIONS = {
         'divinerpg:eden_boots': 'divinerpg:mortum_boots'
     }
 };
+
+// 15 Classic Weapon Archetypes: Morph on upgrade across tiers
+SIMPLY_SWORDS_ARCHETYPES.forEach(arch => {
+    // T1 -> T2 (Nether): Iron / Diamond -> Netherite
+    DIRECT_ASCENSIONS[2]['simplyswords:iron_' + arch] = 'simplyswords:netherite_' + arch;
+    DIRECT_ASCENSIONS[2]['simplyswords:diamond_' + arch] = 'simplyswords:netherite_' + arch;
+    // T2 -> T4 (The End): Netherite -> Runic
+    DIRECT_ASCENSIONS[4]['simplyswords:netherite_' + arch] = 'simplyswords:runic_' + arch;
+});
+
+// Hardcore Ingot Costs for Ascension (Tempering: 8-10 ingots of target tier)
+const ASCENSION_INGOT_REQUIREMENTS = {
+    2: { id: 'skd:cinder_alloy_ingot', altId: 'minecraft:netherite_ingot', name: 'Пепельный Сплав / Незерит', count: 8 },
+    3: { id: 'kubejs:celestial_astralyte_ingot', altId: 'aether:enchanted_gravitite', name: 'Небесный Астралит', count: 8 },
+    4: { id: 'minecraft:netherite_ingot', altId: 'cataclysm:black_steel_ingot', name: 'Незеритовый Слиток / Черная Сталь', count: 8 },
+    5: { id: 'eternal_starlight:aethersent_ingot', altId: 'eternal_starlight:thermal_springstone', name: 'Слиток Эфирсента', count: 8 },
+    6: { id: 'deeperdarker:resonarium', altId: 'deeperdarker:reinforced_echo_shard', name: 'Резонарий Скалка', count: 8 },
+    7: { id: 'minecraft:gold_block', altId: 'divinerpg:eden_soul', name: 'Золотой Блок Святости / Душа Эдема', count: 8 },
+    8: { id: 'minecraft:netherite_block', altId: 'divinerpg:mortum_soul', name: 'Незеритовый Блок Бездны / Душа Мортума', count: 8 }
+};
+
+function safeCountPlayerItems(player, target) {
+    if (!player || !target) return 0;
+    if (typeof countPlayerItems === 'function') return countPlayerItems(player, target);
+    let count = 0;
+    try {
+        let inv = player.inventory;
+        if (inv) {
+            for (let i = 0; i < inv.size; i++) {
+                let st = inv.getStackInSlot(i);
+                if (st && !st.isEmpty() && String(st.id) === target) count += st.count;
+            }
+        }
+    } catch (e) {}
+    return count;
+}
+
+function safeDeductPlayerItems(player, target, need) {
+    if (!player || !target || need <= 0) return true;
+    if (typeof deductPlayerItems === 'function') return deductPlayerItems(player, target, need);
+    let remain = need;
+    try {
+        let inv = player.inventory;
+        if (inv) {
+            for (let i = 0; i < inv.size && remain > 0; i++) {
+                let st = inv.getStackInSlot(i);
+                if (st && !st.isEmpty() && String(st.id) === target) {
+                    let take = Math.min(st.count, remain);
+                    st.shrink(take);
+                    remain -= take;
+                }
+            }
+        }
+    } catch (e) {}
+    return remain === 0;
+}
+
 
 function findAscensionTargetItem(gear, targetTier) {
     if (!gear || gear.isEmpty()) return null;
@@ -431,6 +494,54 @@ var ElyriumForgeAPI = {
                     targetItemId = gear.id;
                 }
 
+                let reqIngots = ASCENSION_INGOT_REQUIREMENTS[targetTier];
+                let playerHasIngots = true;
+                let currentIngotCount = 0;
+                let reqId = null;
+                let reqAltId = null;
+                let reqCount = 0;
+                let reqName = '';
+
+                if (reqIngots) {
+                    reqId = reqIngots.id;
+                    reqAltId = reqIngots.altId;
+                    reqCount = reqIngots.count;
+                    reqName = reqIngots.name;
+
+                    if (player) {
+                        let c1 = safeCountPlayerItems(player, reqId);
+                        let c2 = reqAltId ? safeCountPlayerItems(player, reqAltId) : 0;
+                        currentIngotCount = c1 + c2;
+                        if (currentIngotCount < reqCount) {
+                            playerHasIngots = false;
+                        }
+                    }
+                }
+
+                if (!playerHasIngots) {
+                    return {
+                        canExecute: false,
+                        actionType: 'ASCENSION',
+                        successRate: 0,
+                        chancePercent: 0,
+                        currentTier: curTier,
+                        targetTier: targetTier,
+                        targetItem: targetItemObj,
+                        targetItemId: targetItemId,
+                        costLevel: 0,
+                        currentLevel: curLvl,
+                        targetLevel: curLvl,
+                        isSafeZone: true,
+                        hasAegis: hasAegis,
+                        requiredReagentId: rId,
+                        requiredIngotId: reqId,
+                        requiredAltIngotId: reqAltId,
+                        requiredIngotCount: reqCount,
+                        statusMessage: `Не хватает металла: требуется ${reqCount}x ${reqName} (у вас: ${currentIngotCount}/${reqCount})`,
+                        canBreakOnFail: false
+                    };
+                }
+
                 return {
                     canExecute: true,
                     actionType: 'ASCENSION',
@@ -445,8 +556,11 @@ var ElyriumForgeAPI = {
                     targetLevel: curLvl,
                     isSafeZone: true,
                     hasAegis: hasAegis,
-                    requiredReagentId: null,
-                    statusMessage: `Возвышение Оружия в Эпоху Тира ${targetTier} (Шанс: 100%)`,
+                    requiredReagentId: rId,
+                    requiredIngotId: reqId,
+                    requiredAltIngotId: reqAltId,
+                    requiredIngotCount: reqCount,
+                    statusMessage: `Возвышение в Тир ${targetTier}: 100% [Слитки: ${player ? currentIngotCount + '/' + reqCount : reqCount + 'x'}]`,
                     canBreakOnFail: false
                 };
             } else if (curTier >= targetTier) {
@@ -587,6 +701,20 @@ var ElyriumForgeAPI = {
                     );
                 }
             }
+
+        // Deduct Hardcore Ingot requirement (8-10 ingots of target tier)
+        if (player && evalData.requiredIngotId && evalData.requiredIngotCount > 0) {
+            let reqId = evalData.requiredIngotId;
+            let altId = evalData.requiredAltIngotId;
+            let need = evalData.requiredIngotCount;
+            let c1 = safeCountPlayerItems(player, reqId);
+            let take1 = Math.min(c1, need);
+            if (take1 > 0) safeDeductPlayerItems(player, reqId, take1);
+            let remain = need - take1;
+            if (remain > 0 && altId) {
+                safeDeductPlayerItems(player, altId, remain);
+            }
+        }
 
             return {
                 status: 'SUCCESS',

@@ -122,6 +122,13 @@ ItemEvents.tooltip(event => {
     ]);
 
     // --- TIER 3: THE AETHER (НЕБЕСНЫЙ ЭФИР & ПАРЯЩИЕ ОСТРОВА) ---
+    event.add('kubejs:celestial_astralyte_ingot', [
+        Text.of('§e§lНебесный Астралит§r'),
+        Text.of('§8[§9TIER III: НЕБЕСНЫЙ ЭФИР§8]'),
+        Text.of('§7Флагманский сплав Небес: слияние Занита и Очарованного Гравитита.'),
+        Text.of('§6✦ Требуется для ковки и возвышения снаряжения Эпохи Эфира.'),
+        Text.of('§8────────────────────────────────')
+    ]);
     event.add('aether:lightning_sword', [
         Text.of('§e§lКлинок Небесной Грозы§r'),
         Text.of('§8[§9TIER III: НЕБЕСНЫЙ ЭФИР§8]'),

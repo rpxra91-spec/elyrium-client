@@ -142,4 +142,29 @@ ServerEvents.recipes(event => {
         P: 'minecraft:purpur_block',
         O: 'minecraft:obsidian'
     }).id('elyrium:crafting/void_anvil');
+
+
+    // --------------------------------------------------------------------------
+    // 7. НЕБЕСНЫЙ АСТРАЛИТ (СИНТЕЗ СПЛАВА ТИРА III)
+    // --------------------------------------------------------------------------
+    // Каноническое слияние: 4x Занит + 2x Очарованный Гравитит + 1x Золотой Янтарь
+    event.shapeless('kubejs:celestial_astralyte_ingot', [
+        'aether:zanite_gemstone',
+        'aether:zanite_gemstone',
+        'aether:zanite_gemstone',
+        'aether:zanite_gemstone',
+        'aether:enchanted_gravitite',
+        'aether:enchanted_gravitite',
+        'aether:golden_amber'
+    ]).id('elyrium:metallurgy/celestial_astralyte_ingot_shapeless');
+
+    event.shaped('2x kubejs:celestial_astralyte_ingot', [
+        'ZGZ',
+        'GAG',
+        'ZGZ'
+    ], {
+        Z: 'aether:zanite_gemstone',
+        G: 'aether:enchanted_gravitite',
+        A: 'aether:golden_amber'
+    }).id('elyrium:metallurgy/celestial_astralyte_ingot_matrix');
 });
