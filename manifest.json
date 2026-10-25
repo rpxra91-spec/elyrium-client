@@ -1,8 +1,8 @@
 {
-  "version": "0.4.51",
+  "version": "0.4.52",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-25T10:35:06.345036+00:00",
+  "generated_at": "2026-10-25T18:49:02.005930+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -6786,6 +6786,16 @@
       "size": 1203
     },
     {
+      "path": "kubejs/assets/aether/lang/en_us.json",
+      "sha256": "2eab74d2c9596253821f173e99ef847b98956df68be574e99e2ba203df6646f0",
+      "size": 119
+    },
+    {
+      "path": "kubejs/assets/aether/lang/ru_ru.json",
+      "sha256": "e91c26ac18e1c3b2a567d0cc4687bd899725c96d27e511e2323a238fae8046c9",
+      "size": 156
+    },
+    {
       "path": "kubejs/assets/apotheosis/lang/en_us.json",
       "sha256": "3e1a60271bbeb40ff5963827ca0d7aec124f347e6069040ddce8b29297fbfd9e",
       "size": 764
@@ -6794,6 +6804,26 @@
       "path": "kubejs/assets/apotheosis/lang/ru_ru.json",
       "sha256": "1ebf43e5f8744dabcd1da728ea7db49079edef9da6a31c654f30224644ae35f6",
       "size": 870
+    },
+    {
+      "path": "kubejs/assets/cataclysm/lang/en_us.json",
+      "sha256": "5f4d1b0e23aa4bd6e68f523da1ce0ba65d1e9d60ffe9d87fc5783f5fd85b4240",
+      "size": 241
+    },
+    {
+      "path": "kubejs/assets/cataclysm/lang/ru_ru.json",
+      "sha256": "f2c4a8f5a45bce3594b425a75bfe79906f81d374ca2c298acd26d89329eb1c76",
+      "size": 300
+    },
+    {
+      "path": "kubejs/assets/deeperdarker/lang/en_us.json",
+      "sha256": "6d86accf018fd5a532aea6bc53a92291c3bb7f145c93bb2fa09936b195f8dffd",
+      "size": 66
+    },
+    {
+      "path": "kubejs/assets/deeperdarker/lang/ru_ru.json",
+      "sha256": "f8ef2f9e4bba0e739d0800f6ddfd397d45496dc21fd49a1b3381335a71f6fa1c",
+      "size": 84
     },
     {
       "path": "kubejs/assets/elyrium/blockstates/blacksmith_hearth.json",
@@ -8511,6 +8541,16 @@
       "size": 578
     },
     {
+      "path": "kubejs/assets/eternal_starlight/lang/en_us.json",
+      "sha256": "c80f6c2ac9024f50207c07684fa78c0c8dd67a200592f512c0fab8c8da44f660",
+      "size": 154
+    },
+    {
+      "path": "kubejs/assets/eternal_starlight/lang/ru_ru.json",
+      "sha256": "77a0f38eeb84deb2b5f8bd259a572ab0b8379666869c213d9e34f7ee0ac70e8a",
+      "size": 196
+    },
+    {
       "path": "kubejs/assets/kubejs/blockstates/blacksmith_hearth.json",
       "sha256": "22cdd1a3dfe798b54375a97b14040bf31c4365f4a43594068275f6171026456c",
       "size": 354
@@ -8697,13 +8737,13 @@
     },
     {
       "path": "kubejs/assets/kubejs/lang/en_us.json",
-      "sha256": "138c7cc89d920c37c3e01e2509269d073aee7472d562e20d6e604eea1f1aebc5",
-      "size": 2820
+      "sha256": "eb5c3f441571e265383778662166d1498267ea840ab972f1b299b2f725e3f2b0",
+      "size": 3285
     },
     {
       "path": "kubejs/assets/kubejs/lang/ru_ru.json",
-      "sha256": "96a27ffc48ba5a9e6e40fa46b0cec39ab4b84232e8f74381752dae8418d726ab",
-      "size": 6634
+      "sha256": "98c626a9ee6497ad0a652b358bf29c06fc57624cb6a087c4b7ab4ee14c5a8ed1",
+      "size": 7256
     },
     {
       "path": "kubejs/assets/kubejs/models/block/blacksmith_hearth.json",
@@ -10256,6 +10296,36 @@
       "size": 191
     },
     {
+      "path": "kubejs/assets/kubejs/textures/item/glyph_elemental.png",
+      "sha256": "e9054efbfb895b6f8c05df5e27bb508064dc89f47388cd1ec0726094aa41c738",
+      "size": 245
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/glyph_protection.png",
+      "sha256": "372dcd8de59e12638501c0ee2ec58afe3b0d0f06d96b914d17aef0d008f211fc",
+      "size": 225
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/glyph_sharpness.png",
+      "sha256": "5649ac416abf71b712c4efe376144bc3452c3e0a522d612d97b95e4917b21813",
+      "size": 202
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/glyph_swiftness.png",
+      "sha256": "69b58f0357f70e8ddaf172088a8da3d488eb8fc48a83510b3b9626cbb5396625",
+      "size": 214
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/glyph_unbreaking.png",
+      "sha256": "10f5ebd53bd308321f4b3fc16b023d6e4bf5cbb29700a3991097b7a327372d53",
+      "size": 222
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/glyph_vampirism.png",
+      "sha256": "34c0ae7517db5c13926e855dd488df1079d12eaf1f20cdb7a7bba7658432d25d",
+      "size": 209
+    },
+    {
       "path": "kubejs/assets/kubejs/textures/item/infernal_igniter.png",
       "sha256": "a30d9309547026d4b545d8f74405cb1fc56d000d109ed8b9e1fde480c67fc34d",
       "size": 258
@@ -10469,6 +10539,11 @@
       "path": "kubejs/assets/kubejs/textures/item/multitool_module_smelting.png",
       "sha256": "f120a4abf7c877c18c8b5aa35d7585dd291319711712cc5b1a43c447d11a705b",
       "size": 194
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/runic_ink.png",
+      "sha256": "d132f6e359d9561e8c255c7ec1fd2563ef0b5f5746e31a5f0c1d5580b4263286",
+      "size": 161
     },
     {
       "path": "kubejs/assets/kubejs/textures/item/sigil_of_transmutation.png",
@@ -12026,6 +12101,16 @@
       "size": 1905
     },
     {
+      "path": "kubejs/assets/simplyswords/lang/en_us.json",
+      "sha256": "ed8ab1bd2c74394328678a942e5d3c8d79871d0a6bc1734c88d7168c5829e76f",
+      "size": 942
+    },
+    {
+      "path": "kubejs/assets/simplyswords/lang/ru_ru.json",
+      "sha256": "27fa1b67607c76b9165c4b503118aa550c9ac2bc33d31373197bbd39e9720131",
+      "size": 1289
+    },
+    {
       "path": "kubejs/assets/skilltree/textures/icons/alchemist_class.png",
       "sha256": "b28e192bd4a146f7c8526e7deb7dc5a3d512afbcfdfa4af0088e14e2463db858",
       "size": 319
@@ -13486,6 +13571,16 @@
       "size": 423
     },
     {
+      "path": "kubejs/assets/undergarden/lang/en_us.json",
+      "sha256": "2237b4a6edf203beab186e34c0b7ae1e913c819c9ad182f1bcf02f5218fde58f",
+      "size": 147
+    },
+    {
+      "path": "kubejs/assets/undergarden/lang/ru_ru.json",
+      "sha256": "78921716b5f98b6729307533d7850a55739f2332de46578288a7610671053c9b",
+      "size": 181
+    },
+    {
       "path": "kubejs/client_scripts/canonical_equipment_names_and_lore.js",
       "sha256": "70ddd670c8ce5487130259596db8ce9727456f673ae1af4d90a763b2944850a0",
       "size": 48145
@@ -14356,6 +14451,16 @@
       "size": 7993
     },
     {
+      "path": "kubejs/server_scripts/01_progression/anti_vanilla_exploits.js",
+      "sha256": "6ec4eb682dc5ffe86e40d6155daf0f12e4a62b2039e97ab3ff1de5dd1e0ca47c",
+      "size": 4907
+    },
+    {
+      "path": "kubejs/server_scripts/01_progression/boss_catalyst_drops_and_recipes.js",
+      "sha256": "126b36c04daa63d321cfc4edf2173a4344de807026a8209e1af6710a5592b982",
+      "size": 7245
+    },
+    {
       "path": "kubejs/server_scripts/01_progression/boundary_wall_lockdown.js",
       "sha256": "9e461254ae2ef84827848e9cbb7542a060931f832cf5af1355dc56e7bd94db08",
       "size": 25454
@@ -14534,6 +14639,11 @@
       "path": "kubejs/server_scripts/03_combat/physical_weapon_arts_engine.js",
       "sha256": "09c0ce03a85a92e0680ea484900cf1fa5e6723307c5f45b147f17bd124d6f28f",
       "size": 135940
+    },
+    {
+      "path": "kubejs/server_scripts/03_combat/runic_enchanting_engine.js",
+      "sha256": "7dc623cefc32f3174c315dbb9a85cbbc89f2fa098c9baf1ea794490292def903",
+      "size": 9187
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
@@ -14904,6 +15014,11 @@
       "path": "kubejs/startup_scripts/rpg_items.js",
       "sha256": "b370595938f1eb274f0133b734728dac72ab323ed727b9d9918fb548c48a3564",
       "size": 35456
+    },
+    {
+      "path": "kubejs/startup_scripts/runic_glyphs_registry.js",
+      "sha256": "1f3f790cdfd6af1ed5c854d4157251bd3ea9af19da4f9d09224d671043a4adcd",
+      "size": 5853
     },
     {
       "path": "kubejs/startup_scripts/smithing_reinforcement_items.js",

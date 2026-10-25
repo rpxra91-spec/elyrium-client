@@ -58,5 +58,12 @@
   "item.kubejs.elemental_stone_frost": "Камень Стихии: Лед",
   "item.kubejs.elemental_stone_lightning": "Камень Стихии: Молния",
   "item.kubejs.elemental_stone_shadow": "Камень Стихии: Бездна",
-  "item.kubejs.elemental_stone_holy": "Камень Стихии: Святость"
+  "item.kubejs.elemental_stone_holy": "Камень Стихии: Святость",
+  "item.kubejs.runic_ink": "Рунная Тушь",
+  "item.kubejs.glyph_sharpness": "Древний Глиф: Заточка",
+  "item.kubejs.glyph_protection": "Древний Глиф: Оплот",
+  "item.kubejs.glyph_unbreaking": "Древний Глиф: Несокрушимость",
+  "item.kubejs.glyph_vampirism": "Древний Глиф: Похищение Жизни",
+  "item.kubejs.glyph_swiftness": "Древний Глиф: Скороход",
+  "item.kubejs.glyph_elemental": "Древний Глиф: Стихийный Раскол"
 }

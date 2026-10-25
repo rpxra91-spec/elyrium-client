@@ -40,5 +40,12 @@
   "item.kubejs.elemental_stone_frost": "Elemental Stone: Frost",
   "item.kubejs.elemental_stone_lightning": "Elemental Stone: Lightning",
   "item.kubejs.elemental_stone_shadow": "Elemental Stone: Void",
-  "item.kubejs.elemental_stone_holy": "Elemental Stone: Holy"
+  "item.kubejs.elemental_stone_holy": "Elemental Stone: Holy",
+  "item.kubejs.runic_ink": "Runic Ink",
+  "item.kubejs.glyph_sharpness": "Ancient Glyph: Sharpness",
+  "item.kubejs.glyph_protection": "Ancient Glyph: Protection",
+  "item.kubejs.glyph_unbreaking": "Ancient Glyph: Unbreaking",
+  "item.kubejs.glyph_vampirism": "Ancient Glyph: Vampirism",
+  "item.kubejs.glyph_swiftness": "Ancient Glyph: Swiftness",
+  "item.kubejs.glyph_elemental": "Ancient Glyph: Elemental Rend"
 }
