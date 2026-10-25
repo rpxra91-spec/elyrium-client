@@ -1,8 +1,8 @@
 {
-  "version": "0.4.49",
+  "version": "0.4.50",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-24T13:32:08.559407+00:00",
+  "generated_at": "2026-10-25T09:51:51.024169+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -13482,8 +13482,8 @@
     },
     {
       "path": "kubejs/client_scripts/canonical_equipment_names_and_lore.js",
-      "sha256": "97c5c0182e5666123ce3f1b13faf215615e25bf8d89b9e774a396f5fc1f1a009",
-      "size": 50005
+      "sha256": "5b0bdab05f0c554f590b74f7e93f16bf51cec15e99d2467e9622e92b425dac24",
+      "size": 47552
     },
     {
       "path": "kubejs/client_scripts/dodge_camera_fx.js",
