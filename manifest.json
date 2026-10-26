@@ -1,8 +1,8 @@
 {
-  "version": "0.4.58",
+  "version": "0.4.59",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-26T22:17:34.907627+00:00",
+  "generated_at": "2026-10-26T22:28:28.538702+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -3872,7 +3872,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "ed7f02f08e6a7c7c4208b2092da19e52d2fc01b611e9f7ab13f010f032ddfca7",
+      "sha256": "b27fffdfba66bccb5d96ab43b115592a4b8b2fc3b3ad4d37802c115b502a7623",
       "size": 276
     },
     {
@@ -13967,8 +13967,8 @@
     },
     {
       "path": "kubejs/client_scripts/canonical_equipment_names_and_lore.js",
-      "sha256": "d9a24377bd6c5e3b4a53040f3a1cb4f8ebcf3bd7c2646445ea6b6f4288401544",
-      "size": 48180
+      "sha256": "9cabadd9ed7539e5a4e4d3afd09f7cc065be55551661e0184493751bfd93519f",
+      "size": 48223
     },
     {
       "path": "kubejs/client_scripts/dodge_camera_fx.js",
