@@ -1699,71 +1699,33 @@ function openUnifiedWorkshopGUI(player, defaultTab, blockPos) {
 }
 
 // ------------------------------------------------------------------------------
-// ОБРАБОТЧИКИ КЛИКОВ ПКМ ДЛЯ ВСЕХ 5 БЛОКОВ КУЗНИЦЫ
+// ОБРАБОТЧИКИ КЛИКОВ ПКМ ДЛЯ ВСЕХ 5 БЛОКОВ КУЗНИЦЫ (ВЫНЕСЕНЫ В АВТОНОМНЫЕ СТАНКИ)
 // ------------------------------------------------------------------------------
 
-// 1. Верстак Оружейника -> Таб 0 (Ковка)
-BlockEvents.rightClicked('kubejs:blacksmith_workbench', event => {
-    let player = event.player;
-    if (!player || player.level.isClientSide()) return;
-    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
-    if (!handStr.includes('MAIN')) return;
-
-    event.cancel();
-    openUnifiedWorkshopGUI(player, 0, event.block.pos);
-    player.server.runCommandSilent(`playsound minecraft:block.wood.hit player ${player.username} ~ ~ ~ 0.8 1.0`);
-});
+// 1. Верстак Оружейника -> Вынесен в отдельный не-сундучный станок blacksmith_workbench_gui.js (v1.0)
+// BlockEvents.rightClicked handled autonomously in blacksmith_workbench_gui.js
 
 // 2. Кузнечный Очаг -> Вынесен в отдельный не-сундучный станок hearth_smeltery_gui.js (v1.0)
 // BlockEvents.rightClicked handled autonomously in hearth_smeltery_gui.js
 
-// 3. Адский Горн -> Таб 3 (Горн - Возвышение)
-BlockEvents.rightClicked('kubejs:infernal_crucible', event => {
-    let player = event.player;
-    if (!player || player.level.isClientSide()) return;
-    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
-    if (!handStr.includes('MAIN')) return;
+// 3. Адский Горн -> Вынесен в отдельный не-сундучный станок infernal_crucible_gui.js (v1.0)
+// BlockEvents.rightClicked handled autonomously in infernal_crucible_gui.js
 
-    event.cancel();
-    let cx = event.block.x + 0.5;
-    let cy = event.block.y + 0.5;
-    let cz = event.block.z + 0.5;
-    player.server.runCommandSilent(`playsound minecraft:block.lava.ambient player ${player.username} ${cx} ${cy} ${cz} 0.8 1.0`);
-    player.server.runCommandSilent(`particle minecraft:lava ${cx} ${cy + 0.6} ${cz} 0.2 0.2 0.2 0.05 10`);
-    openUnifiedWorkshopGUI(player, 3, event.block.pos);
-});
+// 4. Наковальня Бездны -> Вынесен в отдельный не-сундучный станок void_anvil_gui.js (v1.0)
+// BlockEvents.rightClicked handled autonomously in void_anvil_gui.js
 
-// 4. Наковальня Бездны -> Таб 4 (Наковальня - Заточка)
-BlockEvents.rightClicked('kubejs:void_anvil', event => {
-    let player = event.player;
-    if (!player || player.level.isClientSide()) return;
-    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
-    if (!handStr.includes('MAIN')) return;
-
-    event.cancel();
-    openUnifiedWorkshopGUI(player, 4, event.block.pos);
-    player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
-});
-
-// 5. Оружейный Стол -> Таб 5 (Оружейный Стол - Боевые Искусства)
-BlockEvents.rightClicked('kubejs:weapon_bench', event => {
-    let player = event.player;
-    if (!player || player.level.isClientSide()) return;
-    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
-    if (!handStr.includes('MAIN')) return;
-
-    event.cancel();
-    openUnifiedWorkshopGUI(player, 5, event.block.pos);
-    player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
-});
+// 5. Оружейный Стол -> Вынесен в отдельный не-сундучный станок weapon_bench_gui.js (v1.0)
+// BlockEvents.rightClicked handled autonomously in weapon_bench_gui.js
 
 // Совместимость с вызовами legacy GUI
 function openBlacksmithGUI(player, stationPos) {
-    openUnifiedWorkshopGUI(player, 0, stationPos);
+    if (typeof openBlacksmithWorkbenchGUI === 'function') openBlacksmithWorkbenchGUI(player, stationPos);
+    else openUnifiedWorkshopGUI(player, 0, stationPos);
 }
 
 function openHearthSmelterGUI(player, stationPos) {
-    openUnifiedWorkshopGUI(player, 2, stationPos);
+    if (typeof openHearthSmelteryGUI === 'function') openHearthSmelteryGUI(player, stationPos);
+    else openUnifiedWorkshopGUI(player, 2, stationPos);
 }
 
 // Очистка при выходе из мира

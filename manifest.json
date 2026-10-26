@@ -1,8 +1,8 @@
 {
-  "version": "0.4.55",
+  "version": "0.4.56",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-26T00:43:01.779046+00:00",
+  "generated_at": "2026-10-26T07:43:20.590881+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -14862,8 +14862,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_crafting_gui.js",
-      "sha256": "0599aafef23c79e6e0b53a0c902bbe18f3b0b0b69aa09575d172e96b4e2d91c3",
-      "size": 117622
+      "sha256": "f67cfef3dec10e82585a67251dc12742d83fb893840bf8dadce4d4963f664aaf",
+      "size": 116345
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
@@ -14871,9 +14871,19 @@
       "size": 9723
     },
     {
+      "path": "kubejs/server_scripts/02_crafting/blacksmith_workbench_gui.js",
+      "sha256": "f81f3c2a6b20465a7b52fb911bbb6383554db36c2350408c6ce47b7e205cb481",
+      "size": 25115
+    },
+    {
       "path": "kubejs/server_scripts/02_crafting/hearth_smeltery_gui.js",
       "sha256": "c089e132ac1a1c5c56c2bd93d7038307254121408e253a0dadd72120746e7105",
       "size": 16861
+    },
+    {
+      "path": "kubejs/server_scripts/02_crafting/infernal_crucible_gui.js",
+      "sha256": "729c1fd3c41011587fcf4d0852364d8c7b14403898aaa7c9004e22fdf0c7b3f2",
+      "size": 17673
     },
     {
       "path": "kubejs/server_scripts/02_crafting/steel_metallurgy_recipes.js",
@@ -15041,14 +15051,19 @@
       "size": 8371
     },
     {
+      "path": "kubejs/server_scripts/03_combat/void_anvil_gui.js",
+      "sha256": "e97234f505d74c5cbd4f0bda404124cd7c133df302cefb7fa5681c72bfe655c1",
+      "size": 18453
+    },
+    {
       "path": "kubejs/server_scripts/03_combat/wave_defense_arena.js",
       "sha256": "1d762c040846011e651ac9ef9666ee3743082daccad95565733801e42bf052f9",
       "size": 1386
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_gui.js",
-      "sha256": "80885dec3382eb7b5f94544e289238f959c5503bdda8ff8ec16845f70ef021d1",
-      "size": 121333
+      "sha256": "6e937c32ccb5b3e97fa65da838a1e2b67bef1864a57617c4b0a875b208e34a12",
+      "size": 114648
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",
@@ -20821,6 +20836,11 @@
       "size": 332
     },
     {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/blacksmith_workbench_overlay.png",
+      "sha256": "cdbcb697e525cf5ab76b57c31af648ce1a05f50462451776d120e3fa71e7ce7e",
+      "size": 2287
+    },
+    {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/celestial_constellation_bg.png",
       "sha256": "377bdb134a3f43017c56f63020fc460bbbb133132a1c27c98c1235e7605ed6a5",
       "size": 202236
@@ -20841,9 +20861,24 @@
       "size": 3008
     },
     {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/infernal_crucible_overlay.png",
+      "sha256": "815ea0b16a7d8deef8aa260ca0beb56a1449b22439d8f3e8019f84bfaa0e2513",
+      "size": 2407
+    },
+    {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/runic_table_overlay.png",
       "sha256": "f9368b7039d649b2fcd93e5b5feb237d0680eec39a29d7242541bd74a926372b",
       "size": 2458
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/void_anvil_overlay.png",
+      "sha256": "af5cb916b057e47944d641fa31dd9712933ae16b324c9d216aa7887b528fe930",
+      "size": 2496
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/weapon_bench_overlay.png",
+      "sha256": "c58ba0a10def0b5d8c13dec714b01b74f0d5fdee2d0c05455614a7f864b12f5f",
+      "size": 2452
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/skills/alchemist_class.png",
@@ -22452,8 +22487,8 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/minecraft/font/default.json",
-      "sha256": "1f55d60425bc451c872294359db4833d57ef6929c983926226fef0c94485a675",
-      "size": 658
+      "sha256": "deecc0be9328fc9baf25c5f1f274556c3c72540822d9b8c4b0da5b76787c42b5",
+      "size": 1389
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/simplestats/lang/ru_ru.json",

@@ -893,7 +893,7 @@ function openWeaponBenchGUI(player, block) {
         }
     }
 
-    player.openChestGUI(Text.of('🛠 §6§lОРУЖЕЙНЫЙ ВЕРСТАК §8✦ §eЭЛИРИУМ'), 4, gui => {
+    player.openChestGUI(Text.of('\uF808\uE006§r§6§lОРУЖЕЙНЫЙ СТОЛ'), 3, gui => {
         gui.playerSlots = true;
         gui.closed = () => {
             clearAndRefundBenchSession(player, false);
@@ -906,14 +906,8 @@ function openWeaponBenchGUI(player, block) {
         let oakTrim = Item.of('minecraft:brown_stained_glass_pane').withCustomName(Text.of('§6✦ Массив Мореного Дуба ✦'));
         let linkLine = Item.of('minecraft:chain').withCustomName(Text.of('§7»»» Рунический Канал »»»'));
 
-        for (let x = 0; x < 9; x++) {
-            for (let y = 0; y < 4; y++) {
-                gui.slot(x, y, s => {
-                    s.setItem(ironFrame);
-                    s.leftClicked = () => {}; s.rightClicked = () => {};
-                });
-            }
-        }
+        // Clean Non-Chest Overlay (zero filler panes)
+
 
         // ======================================================================
         // РЯД 0 (Y=0): ИНФОРМАЦИЯ, СЛОТ I (ОРУЖИЕ) И СТАТУС
@@ -937,7 +931,7 @@ function openWeaponBenchGUI(player, block) {
         });
 
         // СЛОТ I: ОРУЖИЕ (X=4, Y=0)
-        gui.slot(4, 0, s => {
+        gui.slot(1, 1, s => {
             s.setItem(getSlotWeaponItem(session));
             let clickHandler = () => {
                 let sess = getOrCreateBenchSession(player, blockPos);
@@ -1042,13 +1036,10 @@ function openWeaponBenchGUI(player, block) {
         // ======================================================================
 
         // МАРКИРОВКА ЛИНИИ (X=0, Y=1)
-        gui.slot(0, 1, s => {
-            s.setItem(Item.of('minecraft:writable_book').withCustomName(Text.of('§6✦ СОКЕТЫ ОРУЖИЯ ✦')));
-            s.leftClicked = () => {}; s.rightClicked = () => {};
-        });
+        
 
         // СЛОТ 1: Врожденное / Основное искусство (X=1, Y=1)
-        gui.slot(1, 1, s => {
+        gui.slot(7, 2, s => {
             s.setItem(getArtSlotItem(session, 1));
             let clickHandler = () => {
                 let sess = getOrCreateBenchSession(player, blockPos);
@@ -1115,7 +1106,7 @@ function openWeaponBenchGUI(player, block) {
             s.leftClicked = clickHandler; s.rightClicked = clickHandler;
         });
 
-        gui.slot(2, 1, s => { s.setItem(linkLine); s.leftClicked = () => {}; s.rightClicked = () => {}; });
+        
 
         // СЛОТ 2: Дополнительное искусство Т4+ (X=3, Y=1)
         gui.slot(3, 1, s => {
@@ -1193,7 +1184,7 @@ function openWeaponBenchGUI(player, block) {
             s.leftClicked = clickHandler; s.rightClicked = clickHandler;
         });
 
-        gui.slot(4, 1, s => { s.setItem(linkLine); s.leftClicked = () => {}; s.rightClicked = () => {}; });
+        
 
         // СЛОТ 3: Дополнительное искусство Т7+ (X=5, Y=1)
         gui.slot(5, 1, s => {
@@ -1269,7 +1260,7 @@ function openWeaponBenchGUI(player, block) {
             s.leftClicked = clickHandler; s.rightClicked = clickHandler;
         });
 
-        gui.slot(6, 1, s => { s.setItem(linkLine); s.leftClicked = () => {}; s.rightClicked = () => {}; });
+        
 
         // СЛОТ 4: Стихийная Инфузия (X=7, Y=1)
         gui.slot(7, 1, s => {
@@ -1330,7 +1321,7 @@ function openWeaponBenchGUI(player, block) {
         });
 
         // СЛОТ 5: Самоцвет Апофеоза (X=8, Y=1)
-        gui.slot(8, 1, s => {
+        gui.slot(4, 0, s => {
             s.setItem(getSlotApotheosisGemItem(session));
             let clickHandler = () => {
                 let sess = getOrCreateBenchSession(player, blockPos);
@@ -1495,7 +1486,7 @@ function openWeaponBenchGUI(player, block) {
             s.leftClicked = clickHandler; s.rightClicked = clickHandler;
         });
 
-        gui.slot(2, 2, s => { s.setItem(linkLine); s.leftClicked = () => {}; s.rightClicked = () => {}; });
+        
 
         // СЛОТ ТИРОВОГО СЛИТКА (X=3, Y=2)
         gui.slot(3, 2, s => {
@@ -1634,7 +1625,7 @@ function openWeaponBenchGUI(player, block) {
             s.leftClicked = clickHandler; s.rightClicked = clickHandler;
         });
 
-        gui.slot(5, 2, s => { s.setItem(linkLine); s.leftClicked = () => {}; s.rightClicked = () => {}; });
+        
 
         // КНОПКА «БЕЗОПАСНОЕ ИЗВЛЕЧЕНИЕ СКРИЖАЛЕЙ И КАМНЕЙ» (X=6, Y=2)
         gui.slot(6, 2, s => {
@@ -1748,144 +1739,10 @@ function openWeaponBenchGUI(player, block) {
             s.leftClicked = clickHandler; s.rightClicked = clickHandler;
         });
 
-        gui.slot(7, 2, s => { s.setItem(oakTrim); s.leftClicked = () => {}; s.rightClicked = () => {}; });
-        gui.slot(8, 2, s => { s.setItem(oakTrim); s.leftClicked = () => {}; s.rightClicked = () => {}; });
+        
+        
 
-        // ======================================================================
-        // РЯД 3 (Y=3): БЫСТРЫЕ ДЕЙСТВИЯ И ВЫХОД
-        // ======================================================================
 
-        // 0,3: Авто-оружие из руки
-        gui.slot(0, 3, s => {
-            s.setItem(Item.of('minecraft:iron_sword').withCustomName(Text.of('§6⚡ [ ВЗЯТЬ ОРУЖИЕ ИЗ РУКИ ]')));
-            let clickHandler = () => {
-                let sess = getOrCreateBenchSession(player, blockPos);
-                let main = player.mainHandItem;
-                if (main && !main.isEmpty() && isWeaponItem(main)) {
-                    if (sess.equipment && !sess.equipment.isEmpty()) player.give(sess.equipment);
-                    sess.equipment = main.split(1);
-                    if (sess.benchPos) {
-                        setStoredBenchWeapon(player.level, sess.benchPos, sess.equipment);
-                        updateBenchWorldDisplay(player.level, sess.benchPos, sess.equipment);
-                    }
-                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                }
-                refreshWeaponBenchGUI(player, blockPos);
-            };
-            s.leftClicked = clickHandler; s.rightClicked = clickHandler;
-        });
-
-        // 2,3: Авто-вставить резец
-        gui.slot(2, 3, s => {
-            s.setItem(Item.of('kubejs:weapon_chisel').withCustomName(Text.of('§6🗡 [ АВТО-РЕЗЕЦ ИЗ СУМКИ ]')));
-            let clickHandler = () => {
-                let sess = getOrCreateBenchSession(player, blockPos);
-                let inv = player.inventory;
-                for (let i = 0; i < inv.size; i++) {
-                    let st = inv.getItem(i);
-                    if (st && !st.isEmpty() && st.id === 'kubejs:weapon_chisel') {
-                        if (sess.chisel && !sess.chisel.isEmpty()) player.give(sess.chisel);
-                        sess.chisel = st.split(1);
-                        player.server.runCommandSilent(`playsound minecraft:item.flintandsteel.use player ${player.username} ~ ~ ~ 0.8 1.4`);
-                        break;
-                    }
-                }
-                refreshWeaponBenchGUI(player, blockPos);
-            };
-            s.leftClicked = clickHandler; s.rightClicked = clickHandler;
-        });
-
-        // 4,3: Очистить стол (забрать все в сумку)
-        gui.slot(4, 3, s => {
-            s.setItem(Item.of('minecraft:barrel')
-                .withCustomName(Text.of('§c🔄 [ ЗАБРАТЬ ВСЕ СО СТОЛА В СУМКУ ]'))
-                .withLore([
-                    Text.of('§7Возвращает оружие, резец и материал в сумку.'),
-                    Text.of('§73D-модель оружия на столе будет убрана.')
-                ]));
-            let clickHandler = () => {
-                let sess = getOrCreateBenchSession(player, blockPos);
-                if (sess.equipment && !sess.equipment.isEmpty()) {
-                    player.give(sess.equipment);
-                    sess.equipment = null;
-                }
-                if (sess.chisel && !sess.chisel.isEmpty()) {
-                    player.give(sess.chisel);
-                    sess.chisel = null;
-                }
-                if (sess.tierMaterial && !sess.tierMaterial.isEmpty()) {
-                    player.give(sess.tierMaterial);
-                    sess.tierMaterial = null;
-                }
-                if (sess.benchPos) {
-                    setStoredBenchWeapon(player.level, sess.benchPos, null);
-                    clearBenchWorldDisplay(player.level, sess.benchPos);
-                }
-                player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.2`);
-                player.tell(Text.of('§a✓ Все предметы возвращены в сумку.'));
-                refreshWeaponBenchGUI(player, blockPos);
-            };
-            s.leftClicked = clickHandler; s.rightClicked = clickHandler;
-        });
-
-        // 6,3: Авто-скрижаль
-        gui.slot(6, 3, s => {
-            s.setItem(Item.of('kubejs:martial_tablet_whirlwind').withCustomName(Text.of('§e💎 [ АВТО-СКРИЖАЛЬ ИЗ СУМКИ ]')));
-            let clickHandler = () => {
-                let sess = getOrCreateBenchSession(player, blockPos);
-                let gear = sess.equipment;
-                if (gear && !gear.isEmpty()) {
-                    let inv = player.inventory;
-                    for (let i = 0; i < inv.size; i++) {
-                        let st = inv.getItem(i);
-                        if (st && !st.isEmpty() && isMartialTablet(st)) {
-                            let artId = extractTabletArtId(st);
-                            let rank = extractTabletRank(st);
-                            // Ищем свободный сокет (1, 2 или 3)
-                            let targetSlot = null;
-                            if (!getWeaponArtInSlot(gear, 1)) targetSlot = 1;
-                            else if (hasSocket2(gear) && !getWeaponArtInSlot(gear, 2)) targetSlot = 2;
-                            else if (hasSocket3(gear) && !getWeaponArtInSlot(gear, 3)) targetSlot = 3;
-
-                            if (targetSlot) {
-                                st.shrink(1);
-                                let gTag = getOrCreateSafeCustomData(gear);
-                                if (gTag) {
-                                    gTag.putString('skd_art_' + targetSlot, artId);
-                                    gTag.putInt('skd_art_' + targetSlot + '_rank', rank);
-                                    if (targetSlot === 1) {
-                                        gTag.putString('skd_weapon_art', artId);
-                                        gTag.putInt('skd_art_rank', rank);
-                                    } else if (targetSlot === 2) {
-                                        gTag.putString('elyrium_inscribed_art', artId);
-                                    }
-                                    saveSafeItemCustomData(gear, gTag);
-                                }
-                                player.server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 0.8 1.4`);
-                                player.tell(Text.of(`§a✓ Скрижаль инкрустирована в Слот ${targetSlot}!`));
-                                break;
-                            }
-                        }
-                    }
-                }
-                if (sess.benchPos) {
-                    setStoredBenchWeapon(player.level, sess.benchPos, sess.equipment);
-                    updateBenchWorldDisplay(player.level, sess.benchPos, sess.equipment);
-                }
-                refreshWeaponBenchGUI(player, blockPos);
-            };
-            s.leftClicked = clickHandler; s.rightClicked = clickHandler;
-        });
-
-        // 8,3: Выход
-        gui.slot(8, 3, s => {
-            s.setItem(Item.of('minecraft:barrier').withCustomName(Text.of('§c✖ [ ЗАКРЫТЬ МЕНЮ ]')));
-            let clickHandler = () => {
-                clearAndRefundBenchSession(player, true);
-                player.closeChestGUI();
-            };
-            s.leftClicked = clickHandler; s.rightClicked = clickHandler;
-        });
 
         // ======================================================================
         // ИНТЕЛЛЕКТУАЛЬНЫЙ 1-КЛИК РОУТИНГ ИЗ ИНВЕНТАРЯ ИГРОКА (gui.inventoryClicked)

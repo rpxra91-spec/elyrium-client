@@ -28,6 +28,42 @@
       ]
     },
     {
+      "type": "bitmap",
+      "file": "elyrium:gui/void_anvil_overlay.png",
+      "ascent": 13,
+      "height": 166,
+      "chars": [
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "elyrium:gui/infernal_crucible_overlay.png",
+      "ascent": 13,
+      "height": 166,
+      "chars": [
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "elyrium:gui/weapon_bench_overlay.png",
+      "ascent": 13,
+      "height": 166,
+      "chars": [
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "elyrium:gui/blacksmith_workbench_overlay.png",
+      "ascent": 13,
+      "height": 166,
+      "chars": [
+        ""
+      ]
+    },
+    {
       "type": "space",
       "advances": {
         "": -8
