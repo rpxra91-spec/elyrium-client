@@ -1,8 +1,8 @@
 {
-  "version": "0.4.57",
+  "version": "0.4.58",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-26T22:03:54.677418+00:00",
+  "generated_at": "2026-10-26T22:17:34.907627+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -3872,8 +3872,8 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "02412e4bead1914192bf929d8c2a687e877615fb6ee49f6635c412d2d40e9ec1",
-      "size": 268
+      "sha256": "ed7f02f08e6a7c7c4208b2092da19e52d2fc01b611e9f7ab13f010f032ddfca7",
+      "size": 276
     },
     {
       "path": "config/openloader/advanced_options.json",
@@ -6807,13 +6807,13 @@
     },
     {
       "path": "kubejs/assets/cataclysm/lang/en_us.json",
-      "sha256": "5f4d1b0e23aa4bd6e68f523da1ce0ba65d1e9d60ffe9d87fc5783f5fd85b4240",
-      "size": 241
+      "sha256": "c344bf14d8a48e587eebddf52226dbd687c5d2840d29ad2f73401efcd990ba35",
+      "size": 247
     },
     {
       "path": "kubejs/assets/cataclysm/lang/ru_ru.json",
-      "sha256": "f2c4a8f5a45bce3594b425a75bfe79906f81d374ca2c298acd26d89329eb1c76",
-      "size": 300
+      "sha256": "1b1696edc673950ce315debecfaf1dd81e638ed61a0b959b723d957aa9a0edc0",
+      "size": 306
     },
     {
       "path": "kubejs/assets/deeperdarker/lang/en_us.json",
@@ -13967,8 +13967,8 @@
     },
     {
       "path": "kubejs/client_scripts/canonical_equipment_names_and_lore.js",
-      "sha256": "b6a3fd43261e1ccbceb53041d2813dbb5b8ed6fbb1729abcb96a5eb42718d433",
-      "size": 48152
+      "sha256": "d9a24377bd6c5e3b4a53040f3a1cb4f8ebcf3bd7c2646445ea6b6f4288401544",
+      "size": 48180
     },
     {
       "path": "kubejs/client_scripts/dodge_camera_fx.js",
@@ -14907,8 +14907,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_crafting_gui.js",
-      "sha256": "f67cfef3dec10e82585a67251dc12742d83fb893840bf8dadce4d4963f664aaf",
-      "size": 116345
+      "sha256": "e4b5df7ca794b081ff94db3491c8a4d1c4e3bca9d1523cedd007b22eefeaef36",
+      "size": 116347
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
@@ -15002,8 +15002,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/forge_workshop_gui.js",
-      "sha256": "d1fd43a61c16b8c75b07adda790653820baf82ed2a5d2c46588cb41a64bbcae9",
-      "size": 97113
+      "sha256": "7ff351c36e8bdb9ca9c6a34d2c69d6ce61e97d87417814b378c1021c703738e0",
+      "size": 97079
     },
     {
       "path": "kubejs/server_scripts/03_combat/gear_score_system.js",

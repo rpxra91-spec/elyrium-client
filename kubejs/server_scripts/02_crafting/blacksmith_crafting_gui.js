@@ -261,9 +261,9 @@ const WORKSHOP_FORGE_RECIPES = [
     { id: 'simplyswords:sunfire', name: 'Солнечное Пламя Золотого Облака', ingot: 'kubejs:celestial_astralyte_ingot', ingotName: 'Небесный Астралит', ingotCount: 18, extra: 'aether:sun_altar', extraName: 'Солнечная Эссенция', extraCount: 1 },
 
     // ⚔️ Оружие Т4 (Цитадели Края: Незерит / Руническая Сталь)
-    { id: 'cataclysm:zweiender', name: 'Цвайэндер Раскола Пространства', ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 18, extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 2 },
+    { id: 'cataclysm:the_immolator', name: 'Иммолятор Раскола Бездны', ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 18, extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 2 },
     { id: 'simplyswords:shadowsting', name: 'Теневое Жало Пожирателя Края', ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 16, extra: 'minecraft:popped_chorus_fruit', extraName: 'Плод Хоруса', extraCount: 4 },
-    { id: 'cataclysm:final_fractal', name: 'Финальный Фрактал Бездны', ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 20, extra: 'minecraft:dragon_breath', extraName: 'Дыхание Дракона', extraCount: 2 },
+    { id: 'simplyswords:soulrender', name: 'Коса Астрального Разлома', ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 20, extra: 'minecraft:dragon_breath', extraName: 'Дыхание Дракона', extraCount: 2 },
 
     // ⚔️ Оружие Т5 (Вечное Сияние: Эфирсент)
     { id: 'eternal_starlight:moonring_sword', name: 'Клинок Лунного Кольца Сияния', ingot: 'eternal_starlight:aethersent_ingot', ingotName: 'Слиток Эфирсента', ingotCount: 16, extra: 'eternal_starlight:blue_starlight_crystal_shard', extraName: 'Осколок Кристалла', extraCount: 2 },
@@ -278,7 +278,7 @@ const WORKSHOP_FORGE_RECIPES = [
     { id: 'simplyswords:caelestis', name: 'Селестис — Небесный Меч', ingot: 'minecraft:gold_block', ingotName: 'Золотой Блок Святости', ingotCount: 20, extra: 'aether:sun_altar', extraName: 'Солнечный Алтарь', extraCount: 1 },
 
     // ⚔️ Оружие Т8 (Апогей Мортума: Незеритовый Блок Бездны / Артефакты)
-    { id: 'cataclysm:final_fractal', name: 'Финальный Фрактал Реальности', ingot: 'minecraft:netherite_block', ingotName: 'Незеритовый Блок Бездны', ingotCount: 20, extra: 'cataclysm:void_core', extraName: 'Ядро Бездны', extraCount: 2 },
+    { id: 'cataclysm:the_annihilator', name: 'Аннигилятор Первозданной Пустоты', ingot: 'minecraft:netherite_block', ingotName: 'Незеритовый Блок Бездны', ingotCount: 20, extra: 'cataclysm:void_core', extraName: 'Ядро Бездны', extraCount: 2 },
     { id: 'simplyswords:livyatan', name: 'Ливиафан — Повелитель Океана', ingot: 'minecraft:netherite_block', ingotName: 'Незеритовый Блок Бездны', ingotCount: 20, extra: 'cataclysm:abyssal_egg', extraName: 'Яйцо Бездны', extraCount: 1 },
 
     // 🛡 Доспехи Т1 (Базовая Защита)

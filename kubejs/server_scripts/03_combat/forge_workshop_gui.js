@@ -484,10 +484,10 @@ const FORGE_CATALOG = [
             cat: 'kubejs:ascension_catalyst_t3', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'cataclysm:zweiender',
-            name: '§5§lЦвайэндер Раскола Пространства§r',
+            id: 'cataclysm:the_immolator',
+            name: '§5§lИммолятор Раскола Бездны§r',
             tier: 'Tier 4 (Цитадели Края)',
-            role: '§7Двуручный клинок, рассекающий ткань пространства. Телепортирует врагов в эпицентр удара.',
+            role: '§7Двуручный клинок темного пламени. Обрушивает огненный смерч на клейменных врагов.',
             ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 8,
             extra: 'minecraft:ender_eye', extraName: 'Око Края', extraCount: 2,
             cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения', catCount: 2
@@ -502,10 +502,10 @@ const FORGE_CATALOG = [
             cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'cataclysm:final_fractal',
-            name: '§d§l👑 Финальный Фрактал Бездны§r',
+            id: 'simplyswords:soulrender',
+            name: '§5§l👑 Коса Астрального Разлома§r',
             tier: 'Tier 4 (Цитадели Края)',
-            role: '§7Бесконечный фрактальный меч. Вызывает шквал фантомных клинков из параллельных миров.',
+            role: '§7Двуручная коса Бездны, разрывающая ткань пространства при взмахе.',
             ingot: 'minecraft:netherite_ingot', ingotName: 'Незеритовый Слиток', ingotCount: 12,
             extra: 'minecraft:dragon_breath', extraName: 'Дыхание Дракона', extraCount: 2,
             cat: 'kubejs:ascension_catalyst_t4', catName: 'Катализатор Возвышения', catCount: 2
@@ -565,10 +565,10 @@ const FORGE_CATALOG = [
             cat: 'kubejs:ascension_catalyst_t7', catName: 'Катализатор Возвышения', catCount: 2
         },
         {
-            id: 'cataclysm:final_fractal',
-            name: '§d§l👑 Финальный Фрактал Реальности§r',
+            id: 'cataclysm:the_annihilator',
+            name: '§5§l👑 Аннигилятор Первозданной Пустоты§r',
             tier: 'Tier 8 (Божественный Абсолют)',
-            role: '§7Бесконечный многомерный меч. Вызывает шквал фантомных клинков из всех миров.',
+            role: '§7Колоссальное двуручное оружие погибели миров. Дробит пространство и материю в пыль.',
             ingot: 'minecraft:netherite_block', ingotName: 'Незеритовый Блок Бездны', ingotCount: 4,
             extra: 'cataclysm:void_core', extraName: 'Ядро Бездны', extraCount: 2,
             cat: 'kubejs:ascension_catalyst_t8', catName: 'Катализатор Возвышения', catCount: 2
