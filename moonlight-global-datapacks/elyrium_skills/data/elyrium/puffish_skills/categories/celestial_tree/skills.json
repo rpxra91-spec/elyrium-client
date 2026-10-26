@@ -1,452 +1,452 @@
 {
   "adventurer_class": {
-    "x": 0.0,
-    "y": -170.0,
+    "x": 5.6,
+    "y": -224.0,
     "definition": "adventurer_class"
   },
   "adventurer_final": {
     "x": 0.0,
-    "y": -926.0,
+    "y": -1203.8,
     "definition": "adventurer_final"
   },
   "adventurer_skill_1": {
-    "x": 0.0,
-    "y": -200.0,
+    "x": -12.9,
+    "y": -276.7,
     "definition": "adventurer_skill_1"
   },
   "adventurer_skill_10": {
-    "x": 0.0,
-    "y": -602.0,
+    "x": -0.8,
+    "y": -783.6,
     "definition": "adventurer_skill_10"
   },
   "adventurer_skill_11": {
-    "x": 0.0,
-    "y": -632.0,
+    "x": 0.1,
+    "y": -830.1,
     "definition": "adventurer_skill_11"
   },
   "adventurer_skill_11_1": {
-    "x": 12.0,
-    "y": -662.0,
+    "x": 25.8,
+    "y": -860.7,
     "definition": "adventurer_skill_11_1"
   },
   "adventurer_skill_11_10": {
-    "x": -30.0,
-    "y": -716.0,
+    "x": -40.7,
+    "y": -934.5,
     "definition": "adventurer_skill_11_10"
   },
   "adventurer_skill_11_11": {
-    "x": -48.0,
-    "y": -740.0,
+    "x": -65.5,
+    "y": -965.8,
     "definition": "adventurer_skill_11_11"
   },
   "adventurer_skill_11_12": {
-    "x": -36.0,
-    "y": -770.0,
+    "x": -46.7,
+    "y": -1001.1,
     "definition": "adventurer_skill_11_12"
   },
   "adventurer_skill_11_13": {
-    "x": -18.0,
-    "y": -806.0,
+    "x": -23.4,
+    "y": -1047.8,
     "definition": "adventurer_skill_11_13"
   },
   "adventurer_skill_11_2": {
-    "x": 12.0,
-    "y": -692.0,
+    "x": 20.0,
+    "y": -900.2,
     "definition": "adventurer_skill_11_2"
   },
   "adventurer_skill_11_3": {
-    "x": 30.0,
-    "y": -716.0,
+    "x": 40.7,
+    "y": -934.4,
     "definition": "adventurer_skill_11_3"
   },
   "adventurer_skill_11_4": {
-    "x": 48.0,
-    "y": -740.0,
+    "x": 65.5,
+    "y": -965.8,
     "definition": "adventurer_skill_11_4"
   },
   "adventurer_skill_11_5": {
-    "x": 36.0,
-    "y": -770.0,
+    "x": 46.7,
+    "y": -1001.1,
     "definition": "adventurer_skill_11_5"
   },
   "adventurer_skill_11_6": {
-    "x": 18.0,
-    "y": -806.0,
+    "x": 23.4,
+    "y": -1047.8,
     "definition": "adventurer_skill_11_6"
   },
   "adventurer_skill_11_8": {
-    "x": -12.0,
-    "y": -662.0,
+    "x": -25.7,
+    "y": -860.6,
     "definition": "adventurer_skill_11_8"
   },
   "adventurer_skill_11_9": {
-    "x": -12.0,
-    "y": -692.0,
+    "x": -20.0,
+    "y": -900.2,
     "definition": "adventurer_skill_11_9"
   },
   "adventurer_skill_12": {
     "x": 0.0,
-    "y": -842.0,
+    "y": -1094.6,
     "definition": "adventurer_skill_12"
   },
   "adventurer_skill_13": {
     "x": 0.0,
-    "y": -884.0,
+    "y": -1149.2,
     "definition": "adventurer_skill_13"
   },
   "adventurer_skill_2": {
-    "x": 0.0,
-    "y": -230.0,
+    "x": 7.0,
+    "y": -311.4,
     "definition": "adventurer_skill_2"
   },
   "adventurer_skill_3": {
-    "x": 0.0,
-    "y": -260.0,
+    "x": -1.8,
+    "y": -350.4,
     "definition": "adventurer_skill_3"
   },
   "adventurer_skill_4": {
     "x": 0.0,
-    "y": -290.0,
+    "y": -390.3,
     "definition": "adventurer_skill_4"
   },
   "adventurer_skill_4_1": {
-    "x": 24.0,
-    "y": -308.0,
+    "x": 37.7,
+    "y": -403.7,
     "definition": "adventurer_skill_4_1"
   },
   "adventurer_skill_4_2": {
-    "x": 48.0,
-    "y": -326.0,
+    "x": 72.9,
+    "y": -422.7,
     "definition": "adventurer_skill_4_2"
   },
   "adventurer_skill_4_3": {
-    "x": 24.0,
-    "y": -344.0,
+    "x": 39.3,
+    "y": -445.1,
     "definition": "adventurer_skill_4_3"
   },
   "adventurer_skill_4_4": {
-    "x": -24.0,
-    "y": -308.0,
+    "x": -37.6,
+    "y": -403.8,
     "definition": "adventurer_skill_4_4"
   },
   "adventurer_skill_4_5": {
-    "x": -48.0,
-    "y": -326.0,
+    "x": -73.0,
+    "y": -422.4,
     "definition": "adventurer_skill_4_5"
   },
   "adventurer_skill_4_6": {
-    "x": -24.0,
-    "y": -344.0,
+    "x": -39.5,
+    "y": -444.9,
     "definition": "adventurer_skill_4_6"
   },
   "adventurer_skill_5": {
-    "x": 0.0,
-    "y": -362.0,
+    "x": -0.1,
+    "y": -451.8,
     "definition": "adventurer_skill_5"
   },
   "adventurer_skill_6": {
-    "x": 0.0,
-    "y": -392.0,
+    "x": 2.3,
+    "y": -491.8,
     "definition": "adventurer_skill_6"
   },
   "adventurer_skill_6_1": {
-    "x": 30.0,
-    "y": -398.0,
+    "x": 39.8,
+    "y": -517.0,
     "definition": "adventurer_skill_6_1"
   },
   "adventurer_skill_6_2": {
-    "x": 66.0,
-    "y": -404.0,
+    "x": 88.1,
+    "y": -520.2,
     "definition": "adventurer_skill_6_2"
   },
   "adventurer_skill_6_3": {
-    "x": -30.0,
-    "y": -398.0,
+    "x": -42.0,
+    "y": -515.1,
     "definition": "adventurer_skill_6_3"
   },
   "adventurer_skill_6_4": {
-    "x": -66.0,
-    "y": -404.0,
+    "x": -88.0,
+    "y": -522.5,
     "definition": "adventurer_skill_6_4"
   },
   "adventurer_skill_8": {
-    "x": 0.0,
-    "y": -482.0,
+    "x": -13.6,
+    "y": -647.4,
     "definition": "adventurer_skill_8"
   },
   "adventurer_skill_9": {
-    "x": 0.0,
-    "y": -512.0,
+    "x": 2.7,
+    "y": -683.9,
     "definition": "adventurer_skill_9"
   },
   "adventurer_skill_9_1": {
-    "x": 12.0,
-    "y": -542.0,
+    "x": 35.9,
+    "y": -706.1,
     "definition": "adventurer_skill_9_1"
   },
   "adventurer_skill_9_2": {
-    "x": 12.0,
-    "y": -572.0,
+    "x": 24.3,
+    "y": -744.4,
     "definition": "adventurer_skill_9_2"
   },
   "adventurer_skill_9_3": {
-    "x": -12.0,
-    "y": -542.0,
+    "x": -31.8,
+    "y": -704.1,
     "definition": "adventurer_skill_9_3"
   },
   "adventurer_skill_9_4": {
-    "x": -12.0,
-    "y": -572.0,
+    "x": -24.2,
+    "y": -743.4,
     "definition": "adventurer_skill_9_4"
   },
   "adventurer_skill_split": {
-    "x": 0.0,
-    "y": -422.0,
+    "x": -1.6,
+    "y": -538.1,
     "definition": "adventurer_skill_split"
   },
   "adventurer_subclass": {
-    "x": 0.0,
-    "y": -452.0,
+    "x": 3.9,
+    "y": -597.3,
     "definition": "adventurer_subclass"
   },
   "archer_final": {
-    "x": 120.0,
-    "y": -782.0,
+    "x": 156.0,
+    "y": -1018.2,
     "definition": "archer_final"
   },
   "archer_skill_2": {
-    "x": 54.0,
-    "y": -476.0,
+    "x": 75.0,
+    "y": -627.8,
     "definition": "archer_skill_2"
   },
   "archer_skill_2_1_1": {
-    "x": 90.0,
-    "y": -494.0,
+    "x": 118.6,
+    "y": -638.9,
     "definition": "archer_skill_2_1_1"
   },
   "archer_skill_2_1_2": {
-    "x": 120.0,
-    "y": -506.0,
+    "x": 154.3,
+    "y": -656.9,
     "definition": "archer_skill_2_1_2"
   },
   "archer_skill_2_1_3": {
-    "x": 144.0,
-    "y": -518.0,
+    "x": 190.1,
+    "y": -674.8,
     "definition": "archer_skill_2_1_3"
   },
   "archer_skill_2_1_4": {
-    "x": 144.0,
-    "y": -476.0,
+    "x": 187.2,
+    "y": -618.8,
     "definition": "archer_skill_2_1_4"
   },
   "archer_skill_2_1_5": {
-    "x": 120.0,
-    "y": -542.0,
+    "x": 156.0,
+    "y": -704.6,
     "definition": "archer_skill_2_1_5"
   },
   "archer_skill_2_1_6": {
-    "x": 144.0,
-    "y": -572.0,
+    "x": 187.2,
+    "y": -743.6,
     "definition": "archer_skill_2_1_6"
   },
   "archer_skill_2_1_7": {
-    "x": 156.0,
-    "y": -608.0,
+    "x": 202.8,
+    "y": -790.4,
     "definition": "archer_skill_2_1_7"
   },
   "archer_skill_2_1_8": {
-    "x": 168.0,
-    "y": -644.0,
+    "x": 218.4,
+    "y": -837.2,
     "definition": "archer_skill_2_1_8"
   },
   "archer_skill_2_1_8_1": {
-    "x": 192.0,
-    "y": -680.0,
+    "x": 249.6,
+    "y": -884.0,
     "definition": "archer_skill_2_1_8_1"
   },
   "archer_skill_2_1_9": {
-    "x": 144.0,
-    "y": -674.0,
+    "x": 187.2,
+    "y": -876.2,
     "definition": "archer_skill_2_1_9"
   },
   "archer_skill_2_2_1": {
-    "x": 72.0,
-    "y": -512.0,
+    "x": 90.1,
+    "y": -666.9,
     "definition": "archer_skill_2_2_1"
   },
   "archer_skill_2_2_2": {
-    "x": 84.0,
-    "y": -542.0,
+    "x": 110.0,
+    "y": -701.6,
     "definition": "archer_skill_2_2_2"
   },
   "archer_skill_2_2_3": {
-    "x": 84.0,
-    "y": -572.0,
+    "x": 109.2,
+    "y": -748.1,
     "definition": "archer_skill_2_2_3"
   },
   "archer_skill_2_2_4": {
-    "x": 66.0,
-    "y": -608.0,
+    "x": 85.8,
+    "y": -789.9,
     "definition": "archer_skill_2_2_4"
   },
   "archer_skill_2_2_5": {
-    "x": 102.0,
-    "y": -608.0,
+    "x": 132.6,
+    "y": -789.9,
     "definition": "archer_skill_2_2_5"
   },
   "archer_skill_2_2_6": {
-    "x": 66.0,
-    "y": -638.0,
+    "x": 85.8,
+    "y": -829.9,
     "definition": "archer_skill_2_2_6"
   },
   "archer_skill_2_2_7": {
-    "x": 102.0,
-    "y": -638.0,
+    "x": 132.6,
+    "y": -829.9,
     "definition": "archer_skill_2_2_7"
   },
   "archer_skill_2_2_8": {
-    "x": 84.0,
-    "y": -668.0,
+    "x": 109.3,
+    "y": -864.4,
     "definition": "archer_skill_2_2_8"
   },
   "archer_skill_2_2_9": {
-    "x": 84.0,
-    "y": -698.0,
+    "x": 106.5,
+    "y": -910.8,
     "definition": "archer_skill_2_2_9"
   },
   "archer_skill_3": {
-    "x": 120.0,
-    "y": -710.0,
+    "x": 158.9,
+    "y": -918.8,
     "definition": "archer_skill_3"
   },
   "archer_skill_4": {
-    "x": 120.0,
-    "y": -740.0,
+    "x": 155.8,
+    "y": -965.2,
     "definition": "archer_skill_4"
   },
   "archer_subclass": {
-    "x": 30.0,
-    "y": -452.0,
+    "x": 66.2,
+    "y": -575.5,
     "definition": "archer_subclass"
   },
   "assassin_final": {
-    "x": -120.0,
-    "y": -782.0,
+    "x": -156.0,
+    "y": -1018.2,
     "definition": "assassin_final"
   },
   "assassin_skill_2": {
-    "x": -54.0,
-    "y": -476.0,
+    "x": -74.7,
+    "y": -627.2,
     "definition": "assassin_skill_2"
   },
   "assassin_skill_2_1_1": {
-    "x": -90.0,
-    "y": -494.0,
+    "x": -118.6,
+    "y": -638.9,
     "definition": "assassin_skill_2_1_1"
   },
   "assassin_skill_2_1_2": {
-    "x": -120.0,
-    "y": -506.0,
+    "x": -154.3,
+    "y": -656.9,
     "definition": "assassin_skill_2_1_2"
   },
   "assassin_skill_2_1_3": {
-    "x": -144.0,
-    "y": -518.0,
+    "x": -190.1,
+    "y": -674.8,
     "definition": "assassin_skill_2_1_3"
   },
   "assassin_skill_2_1_4": {
-    "x": -144.0,
-    "y": -476.0,
+    "x": -187.2,
+    "y": -618.8,
     "definition": "assassin_skill_2_1_4"
   },
   "assassin_skill_2_1_5": {
-    "x": -120.0,
-    "y": -542.0,
+    "x": -156.0,
+    "y": -704.6,
     "definition": "assassin_skill_2_1_5"
   },
   "assassin_skill_2_1_6": {
-    "x": -144.0,
-    "y": -572.0,
+    "x": -187.2,
+    "y": -743.6,
     "definition": "assassin_skill_2_1_6"
   },
   "assassin_skill_2_1_7": {
-    "x": -156.0,
-    "y": -608.0,
+    "x": -202.8,
+    "y": -790.4,
     "definition": "assassin_skill_2_1_7"
   },
   "assassin_skill_2_1_8": {
-    "x": -168.0,
-    "y": -644.0,
+    "x": -218.4,
+    "y": -837.2,
     "definition": "assassin_skill_2_1_8"
   },
   "assassin_skill_2_1_8_1": {
-    "x": -192.0,
-    "y": -680.0,
+    "x": -249.6,
+    "y": -884.0,
     "definition": "assassin_skill_2_1_8_1"
   },
   "assassin_skill_2_1_9": {
-    "x": -144.0,
-    "y": -674.0,
+    "x": -187.2,
+    "y": -876.2,
     "definition": "assassin_skill_2_1_9"
   },
   "assassin_skill_2_2_1": {
-    "x": -72.0,
-    "y": -512.0,
+    "x": -90.1,
+    "y": -666.9,
     "definition": "assassin_skill_2_2_1"
   },
   "assassin_skill_2_2_2": {
-    "x": -84.0,
-    "y": -542.0,
+    "x": -110.0,
+    "y": -701.6,
     "definition": "assassin_skill_2_2_2"
   },
   "assassin_skill_2_2_3": {
-    "x": -84.0,
-    "y": -572.0,
+    "x": -109.2,
+    "y": -748.1,
     "definition": "assassin_skill_2_2_3"
   },
   "assassin_skill_2_2_4": {
-    "x": -66.0,
-    "y": -608.0,
+    "x": -85.8,
+    "y": -789.9,
     "definition": "assassin_skill_2_2_4"
   },
   "assassin_skill_2_2_5": {
-    "x": -102.0,
-    "y": -608.0,
+    "x": -132.6,
+    "y": -789.9,
     "definition": "assassin_skill_2_2_5"
   },
   "assassin_skill_2_2_6": {
-    "x": -66.0,
-    "y": -638.0,
+    "x": -85.8,
+    "y": -829.9,
     "definition": "assassin_skill_2_2_6"
   },
   "assassin_skill_2_2_7": {
-    "x": -102.0,
-    "y": -638.0,
+    "x": -132.6,
+    "y": -829.9,
     "definition": "assassin_skill_2_2_7"
   },
   "assassin_skill_2_2_8": {
-    "x": -84.0,
-    "y": -668.0,
+    "x": -109.3,
+    "y": -864.4,
     "definition": "assassin_skill_2_2_8"
   },
   "assassin_skill_2_2_9": {
-    "x": -84.0,
-    "y": -698.0,
+    "x": -106.5,
+    "y": -910.8,
     "definition": "assassin_skill_2_2_9"
   },
   "assassin_skill_3": {
-    "x": -120.0,
-    "y": -710.0,
+    "x": -158.9,
+    "y": -918.8,
     "definition": "assassin_skill_3"
   },
   "assassin_skill_4": {
-    "x": -120.0,
-    "y": -740.0,
+    "x": -155.8,
+    "y": -965.2,
     "definition": "assassin_skill_4"
   },
   "assassin_subclass": {
-    "x": -30.0,
-    "y": -452.0,
+    "x": -61.2,
+    "y": -575.9,
     "definition": "assassin_subclass"
   },
   "basic_start": {
@@ -456,3938 +456,3938 @@
     "root": true
   },
   "basic_start_1": {
-    "x": -46.0,
-    "y": -46.0,
+    "x": -59.8,
+    "y": -59.8,
     "definition": "basic_start_1"
   },
   "basic_start_1_1": {
-    "x": -81.3,
-    "y": -81.3,
+    "x": -111.6,
+    "y": -111.6,
     "definition": "basic_start_1_1"
   },
   "basic_start_2": {
     "x": 0.0,
-    "y": -65.0,
+    "y": -84.5,
     "definition": "basic_start_2"
   },
   "basic_start_2_1": {
-    "x": 0.0,
-    "y": -115.0,
+    "x": -0.3,
+    "y": -157.7,
     "definition": "basic_start_2_1"
   },
   "basic_start_3": {
-    "x": 46.0,
-    "y": -46.0,
+    "x": 59.8,
+    "y": -59.8,
     "definition": "basic_start_3"
   },
   "basic_start_3_1": {
-    "x": 81.3,
-    "y": -81.3,
+    "x": 111.5,
+    "y": -111.6,
     "definition": "basic_start_3_1"
   },
   "basic_start_4": {
-    "x": 65.0,
+    "x": 84.5,
     "y": 0.0,
     "definition": "basic_start_4"
   },
   "basic_start_4_1": {
-    "x": 115.0,
-    "y": 0.0,
+    "x": 156.7,
+    "y": 0.1,
     "definition": "basic_start_4_1"
   },
   "basic_start_5": {
-    "x": 46.0,
-    "y": 46.0,
+    "x": 59.8,
+    "y": 59.8,
     "definition": "basic_start_5"
   },
   "basic_start_5_1": {
-    "x": 81.3,
-    "y": 81.3,
+    "x": 111.7,
+    "y": 111.4,
     "definition": "basic_start_5_1"
   },
   "basic_start_6": {
     "x": -0.0,
-    "y": 65.0,
+    "y": 84.5,
     "definition": "basic_start_6"
   },
   "basic_start_6_1": {
-    "x": -0.0,
-    "y": 115.0,
+    "x": 0.2,
+    "y": 157.8,
     "definition": "basic_start_6_1"
   },
   "basic_start_7": {
-    "x": -46.0,
-    "y": 46.0,
+    "x": -59.8,
+    "y": 59.8,
     "definition": "basic_start_7"
   },
   "basic_start_7_1": {
-    "x": -81.3,
-    "y": 81.3,
+    "x": -111.6,
+    "y": 111.7,
     "definition": "basic_start_7_1"
   },
   "basic_start_8": {
-    "x": -65.0,
+    "x": -84.5,
     "y": 0.0,
     "definition": "basic_start_8"
   },
   "basic_start_8_1": {
-    "x": -115.0,
-    "y": 0.0,
+    "x": -157.9,
+    "y": 0.1,
     "definition": "basic_start_8_1"
   },
   "craftsman_alchemist_final_1": {
-    "x": -620.8,
-    "y": -485.1,
+    "x": -805.8,
+    "y": -631.9,
     "definition": "craftsman_alchemist_final_1"
   },
   "craftsman_alchemist_final_2": {
-    "x": -654.8,
-    "y": -451.1,
+    "x": -852.5,
+    "y": -585.2,
     "definition": "craftsman_alchemist_final_2"
   },
   "craftsman_alchemist_skill_2": {
-    "x": -374.8,
-    "y": -298.4,
+    "x": -498.3,
+    "y": -390.8,
     "definition": "craftsman_alchemist_skill_2"
   },
   "craftsman_alchemist_skill_2_1_1": {
-    "x": -413.0,
-    "y": -285.7,
+    "x": -535.7,
+    "y": -368.1,
     "definition": "craftsman_alchemist_skill_2_1_1"
   },
   "craftsman_alchemist_skill_2_1_2": {
-    "x": -442.6,
-    "y": -272.9,
+    "x": -573.6,
+    "y": -355.3,
     "definition": "craftsman_alchemist_skill_2_1_2"
   },
   "craftsman_alchemist_skill_2_1_3": {
-    "x": -468.1,
-    "y": -264.5,
+    "x": -611.6,
+    "y": -342.9,
     "definition": "craftsman_alchemist_skill_2_1_3"
   },
   "craftsman_alchemist_skill_2_1_4": {
-    "x": -438.4,
-    "y": -234.8,
+    "x": -569.9,
+    "y": -305.2,
     "definition": "craftsman_alchemist_skill_2_1_4"
   },
   "craftsman_alchemist_skill_2_1_5": {
-    "x": -468.1,
-    "y": -298.4,
+    "x": -608.5,
+    "y": -387.9,
     "definition": "craftsman_alchemist_skill_2_1_5"
   },
   "craftsman_alchemist_skill_2_1_6": {
-    "x": -506.3,
-    "y": -302.6,
+    "x": -658.2,
+    "y": -393.4,
     "definition": "craftsman_alchemist_skill_2_1_6"
   },
   "craftsman_alchemist_skill_2_1_7": {
-    "x": -540.2,
-    "y": -319.6,
+    "x": -702.3,
+    "y": -415.5,
     "definition": "craftsman_alchemist_skill_2_1_7"
   },
   "craftsman_alchemist_skill_2_1_8": {
-    "x": -574.2,
-    "y": -336.6,
+    "x": -746.5,
+    "y": -437.6,
     "definition": "craftsman_alchemist_skill_2_1_8"
   },
   "craftsman_alchemist_skill_2_1_8_1": {
-    "x": -616.6,
-    "y": -345.1,
+    "x": -801.6,
+    "y": -448.6,
     "definition": "craftsman_alchemist_skill_2_1_8_1"
   },
   "craftsman_alchemist_skill_2_1_9": {
-    "x": -578.4,
-    "y": -374.8,
+    "x": -751.9,
+    "y": -487.2,
     "definition": "craftsman_alchemist_skill_2_1_9"
   },
   "craftsman_alchemist_skill_2_2_1": {
-    "x": -413.0,
-    "y": -311.1,
+    "x": -536.9,
+    "y": -408.1,
     "definition": "craftsman_alchemist_skill_2_2_1"
   },
   "craftsman_alchemist_skill_2_2_2": {
-    "x": -442.6,
-    "y": -323.9,
+    "x": -575.0,
+    "y": -420.7,
     "definition": "craftsman_alchemist_skill_2_2_2"
   },
   "craftsman_alchemist_skill_2_2_3": {
-    "x": -463.9,
-    "y": -345.1,
+    "x": -603.4,
+    "y": -449.0,
     "definition": "craftsman_alchemist_skill_2_2_3"
   },
   "craftsman_alchemist_skill_2_2_4": {
-    "x": -476.6,
-    "y": -383.3,
+    "x": -619.2,
+    "y": -497.9,
     "definition": "craftsman_alchemist_skill_2_2_4"
   },
   "craftsman_alchemist_skill_2_2_5": {
-    "x": -502.0,
-    "y": -357.8,
+    "x": -652.3,
+    "y": -464.8,
     "definition": "craftsman_alchemist_skill_2_2_5"
   },
   "craftsman_alchemist_skill_2_2_6": {
-    "x": -497.8,
-    "y": -404.5,
+    "x": -647.5,
+    "y": -526.2,
     "definition": "craftsman_alchemist_skill_2_2_6"
   },
   "craftsman_alchemist_skill_2_2_7": {
-    "x": -523.3,
-    "y": -379.0,
+    "x": -680.6,
+    "y": -493.0,
     "definition": "craftsman_alchemist_skill_2_2_7"
   },
   "craftsman_alchemist_skill_2_2_8": {
-    "x": -531.7,
-    "y": -413.0,
+    "x": -688.4,
+    "y": -534.0,
     "definition": "craftsman_alchemist_skill_2_2_8"
   },
   "craftsman_alchemist_skill_2_2_9": {
-    "x": -553.0,
-    "y": -434.2,
+    "x": -719.6,
+    "y": -568.5,
     "definition": "craftsman_alchemist_skill_2_2_9"
   },
   "craftsman_alchemist_skill_3": {
-    "x": -586.9,
-    "y": -417.2,
+    "x": -764.9,
+    "y": -541.1,
     "definition": "craftsman_alchemist_skill_3"
   },
   "craftsman_alchemist_skill_4": {
-    "x": -612.4,
-    "y": -442.6,
+    "x": -796.2,
+    "y": -575.5,
     "definition": "craftsman_alchemist_skill_4"
   },
   "craftsman_alchemist_subclass": {
-    "x": -340.8,
-    "y": -298.4,
+    "x": -455.3,
+    "y": -359.8,
     "definition": "craftsman_alchemist_subclass"
   },
   "craftsman_arcansmith_class": {
-    "x": -170.0,
-    "y": 0.0,
+    "x": -220.1,
+    "y": -5.4,
     "definition": "craftsman_arcansmith_class"
   },
   "craftsman_arcansmith_final": {
-    "x": -926.0,
+    "x": -1203.8,
     "y": 0.0,
     "definition": "craftsman_arcansmith_final"
   },
   "craftsman_arcansmith_skill_1": {
-    "x": -200.0,
-    "y": 0.0,
+    "x": -274.0,
+    "y": 10.3,
     "definition": "craftsman_arcansmith_skill_1"
   },
   "craftsman_arcansmith_skill_10": {
-    "x": -602.0,
-    "y": 0.0,
+    "x": -783.5,
+    "y": -1.0,
     "definition": "craftsman_arcansmith_skill_10"
   },
   "craftsman_arcansmith_skill_11": {
-    "x": -632.0,
+    "x": -830.0,
     "y": 0.0,
     "definition": "craftsman_arcansmith_skill_11"
   },
   "craftsman_arcansmith_skill_11_1": {
-    "x": -662.0,
-    "y": -12.0,
+    "x": -860.6,
+    "y": -25.7,
     "definition": "craftsman_arcansmith_skill_11_1"
   },
   "craftsman_arcansmith_skill_11_10": {
-    "x": -716.0,
-    "y": 30.0,
+    "x": -934.5,
+    "y": 40.7,
     "definition": "craftsman_arcansmith_skill_11_10"
   },
   "craftsman_arcansmith_skill_11_11": {
-    "x": -740.0,
-    "y": 48.0,
+    "x": -965.8,
+    "y": 65.5,
     "definition": "craftsman_arcansmith_skill_11_11"
   },
   "craftsman_arcansmith_skill_11_12": {
-    "x": -770.0,
-    "y": 36.0,
+    "x": -1001.1,
+    "y": 46.7,
     "definition": "craftsman_arcansmith_skill_11_12"
   },
   "craftsman_arcansmith_skill_11_13": {
-    "x": -806.0,
-    "y": 18.0,
+    "x": -1047.8,
+    "y": 23.4,
     "definition": "craftsman_arcansmith_skill_11_13"
   },
   "craftsman_arcansmith_skill_11_2": {
-    "x": -692.0,
-    "y": -12.0,
+    "x": -900.2,
+    "y": -20.0,
     "definition": "craftsman_arcansmith_skill_11_2"
   },
   "craftsman_arcansmith_skill_11_3": {
-    "x": -716.0,
-    "y": -30.0,
+    "x": -934.4,
+    "y": -40.7,
     "definition": "craftsman_arcansmith_skill_11_3"
   },
   "craftsman_arcansmith_skill_11_4": {
-    "x": -740.0,
-    "y": -48.0,
+    "x": -965.8,
+    "y": -65.5,
     "definition": "craftsman_arcansmith_skill_11_4"
   },
   "craftsman_arcansmith_skill_11_5": {
-    "x": -770.0,
-    "y": -36.0,
+    "x": -1001.1,
+    "y": -46.7,
     "definition": "craftsman_arcansmith_skill_11_5"
   },
   "craftsman_arcansmith_skill_11_6": {
-    "x": -806.0,
-    "y": -18.0,
+    "x": -1047.8,
+    "y": -23.4,
     "definition": "craftsman_arcansmith_skill_11_6"
   },
   "craftsman_arcansmith_skill_11_8": {
-    "x": -662.0,
-    "y": 12.0,
+    "x": -860.6,
+    "y": 25.8,
     "definition": "craftsman_arcansmith_skill_11_8"
   },
   "craftsman_arcansmith_skill_11_9": {
-    "x": -692.0,
-    "y": 12.0,
+    "x": -900.2,
+    "y": 20.0,
     "definition": "craftsman_arcansmith_skill_11_9"
   },
   "craftsman_arcansmith_skill_12": {
-    "x": -842.0,
+    "x": -1094.6,
     "y": 0.0,
     "definition": "craftsman_arcansmith_skill_12"
   },
   "craftsman_arcansmith_skill_13": {
-    "x": -884.0,
+    "x": -1149.2,
     "y": 0.0,
     "definition": "craftsman_arcansmith_skill_13"
   },
   "craftsman_arcansmith_skill_2": {
-    "x": -230.0,
-    "y": 0.0,
+    "x": -310.6,
+    "y": -5.7,
     "definition": "craftsman_arcansmith_skill_2"
   },
   "craftsman_arcansmith_skill_3": {
-    "x": -260.0,
-    "y": 0.0,
+    "x": -349.9,
+    "y": 1.5,
     "definition": "craftsman_arcansmith_skill_3"
   },
   "craftsman_arcansmith_skill_4": {
-    "x": -290.0,
-    "y": 0.0,
+    "x": -389.9,
+    "y": -0.1,
     "definition": "craftsman_arcansmith_skill_4"
   },
   "craftsman_arcansmith_skill_4_1": {
-    "x": -308.0,
-    "y": -24.0,
+    "x": -403.7,
+    "y": -37.6,
     "definition": "craftsman_arcansmith_skill_4_1"
   },
   "craftsman_arcansmith_skill_4_2": {
-    "x": -326.0,
-    "y": -48.0,
+    "x": -422.4,
+    "y": -72.9,
     "definition": "craftsman_arcansmith_skill_4_2"
   },
   "craftsman_arcansmith_skill_4_3": {
-    "x": -344.0,
-    "y": -24.0,
+    "x": -445.0,
+    "y": -39.5,
     "definition": "craftsman_arcansmith_skill_4_3"
   },
   "craftsman_arcansmith_skill_4_4": {
-    "x": -308.0,
-    "y": 24.0,
+    "x": -403.7,
+    "y": 37.5,
     "definition": "craftsman_arcansmith_skill_4_4"
   },
   "craftsman_arcansmith_skill_4_5": {
-    "x": -326.0,
-    "y": 48.0,
+    "x": -422.6,
+    "y": 72.7,
     "definition": "craftsman_arcansmith_skill_4_5"
   },
   "craftsman_arcansmith_skill_4_6": {
-    "x": -344.0,
-    "y": 24.0,
+    "x": -444.9,
+    "y": 39.2,
     "definition": "craftsman_arcansmith_skill_4_6"
   },
   "craftsman_arcansmith_skill_5": {
-    "x": -362.0,
-    "y": 0.0,
+    "x": -452.2,
+    "y": -0.2,
     "definition": "craftsman_arcansmith_skill_5"
   },
   "craftsman_arcansmith_skill_6": {
-    "x": -392.0,
-    "y": 0.0,
+    "x": -492.1,
+    "y": 2.4,
     "definition": "craftsman_arcansmith_skill_6"
   },
   "craftsman_arcansmith_skill_6_1": {
-    "x": -398.0,
-    "y": -30.0,
+    "x": -515.2,
+    "y": -41.9,
     "definition": "craftsman_arcansmith_skill_6_1"
   },
   "craftsman_arcansmith_skill_6_2": {
-    "x": -404.0,
-    "y": -66.0,
+    "x": -522.5,
+    "y": -87.9,
     "definition": "craftsman_arcansmith_skill_6_2"
   },
   "craftsman_arcansmith_skill_6_3": {
-    "x": -398.0,
-    "y": 30.0,
+    "x": -517.1,
+    "y": 39.7,
     "definition": "craftsman_arcansmith_skill_6_3"
   },
   "craftsman_arcansmith_skill_6_4": {
-    "x": -404.0,
-    "y": 66.0,
+    "x": -520.2,
+    "y": 88.1,
     "definition": "craftsman_arcansmith_skill_6_4"
   },
   "craftsman_arcansmith_skill_8": {
-    "x": -482.0,
-    "y": 0.0,
+    "x": -647.2,
+    "y": -14.6,
     "definition": "craftsman_arcansmith_skill_8"
   },
   "craftsman_arcansmith_skill_9": {
-    "x": -512.0,
-    "y": 0.0,
+    "x": -683.0,
+    "y": 3.2,
     "definition": "craftsman_arcansmith_skill_9"
   },
   "craftsman_arcansmith_skill_9_1": {
-    "x": -542.0,
-    "y": -12.0,
+    "x": -703.8,
+    "y": -31.0,
     "definition": "craftsman_arcansmith_skill_9_1"
   },
   "craftsman_arcansmith_skill_9_2": {
-    "x": -572.0,
-    "y": -12.0,
+    "x": -743.3,
+    "y": -24.2,
     "definition": "craftsman_arcansmith_skill_9_2"
   },
   "craftsman_arcansmith_skill_9_3": {
-    "x": -542.0,
-    "y": 12.0,
+    "x": -706.2,
+    "y": 35.8,
     "definition": "craftsman_arcansmith_skill_9_3"
   },
   "craftsman_arcansmith_skill_9_4": {
-    "x": -572.0,
-    "y": 12.0,
+    "x": -744.5,
+    "y": 24.3,
     "definition": "craftsman_arcansmith_skill_9_4"
   },
   "craftsman_arcansmith_skill_split": {
-    "x": -422.0,
-    "y": 0.0,
+    "x": -538.4,
+    "y": -1.6,
     "definition": "craftsman_arcansmith_skill_split"
   },
   "craftsman_arcansmith_subclass": {
-    "x": -452.0,
-    "y": 0.0,
+    "x": -597.6,
+    "y": 4.1,
     "definition": "craftsman_arcansmith_subclass"
   },
   "craftsman_blacksmith_final_1": {
-    "x": -926.0,
-    "y": 120.0,
+    "x": -1180.1,
+    "y": 154.5,
     "definition": "craftsman_blacksmith_final_1"
   },
   "craftsman_blacksmith_final_2": {
-    "x": -926.0,
-    "y": 60.0,
+    "x": -1203.8,
+    "y": 69.6,
     "definition": "craftsman_blacksmith_final_2"
   },
   "craftsman_blacksmith_final_3": {
-    "x": -883.6,
-    "y": 77.6,
+    "x": -1142.8,
+    "y": 94.9,
     "definition": "craftsman_blacksmith_final_3"
   },
   "craftsman_blacksmith_final_4": {
-    "x": -866.0,
-    "y": 120.0,
+    "x": -1118.8,
+    "y": 157.8,
     "definition": "craftsman_blacksmith_final_4"
   },
   "craftsman_blacksmith_final_5": {
-    "x": -883.6,
-    "y": 162.4,
+    "x": -1143.0,
+    "y": 218.5,
     "definition": "craftsman_blacksmith_final_5"
   },
   "craftsman_blacksmith_final_6": {
-    "x": -926.0,
-    "y": 180.0,
+    "x": -1204.3,
+    "y": 242.7,
     "definition": "craftsman_blacksmith_final_6"
   },
   "craftsman_blacksmith_final_7": {
-    "x": -968.4,
-    "y": 162.4,
+    "x": -1265.0,
+    "y": 216.9,
     "definition": "craftsman_blacksmith_final_7"
   },
   "craftsman_blacksmith_final_8": {
-    "x": -986.0,
-    "y": 120.0,
+    "x": -1290.1,
+    "y": 155.9,
     "definition": "craftsman_blacksmith_final_8"
   },
   "craftsman_blacksmith_final_9": {
-    "x": -968.4,
-    "y": 77.6,
+    "x": -1264.7,
+    "y": 95.0,
     "definition": "craftsman_blacksmith_final_9"
   },
   "craftsman_blacksmith_skill_2": {
-    "x": -476.0,
-    "y": 54.0,
+    "x": -627.8,
+    "y": 75.0,
     "definition": "craftsman_blacksmith_skill_2"
   },
   "craftsman_blacksmith_skill_2_1_1": {
-    "x": -494.0,
-    "y": 90.0,
+    "x": -639.1,
+    "y": 118.5,
     "definition": "craftsman_blacksmith_skill_2_1_1"
   },
   "craftsman_blacksmith_skill_2_1_2": {
-    "x": -506.0,
-    "y": 120.0,
+    "x": -656.9,
+    "y": 154.3,
     "definition": "craftsman_blacksmith_skill_2_1_2"
   },
   "craftsman_blacksmith_skill_2_1_3": {
-    "x": -518.0,
-    "y": 144.0,
+    "x": -674.8,
+    "y": 190.0,
     "definition": "craftsman_blacksmith_skill_2_1_3"
   },
   "craftsman_blacksmith_skill_2_1_4": {
-    "x": -476.0,
-    "y": 144.0,
+    "x": -618.8,
+    "y": 187.2,
     "definition": "craftsman_blacksmith_skill_2_1_4"
   },
   "craftsman_blacksmith_skill_2_1_5": {
-    "x": -542.0,
-    "y": 120.0,
+    "x": -704.6,
+    "y": 156.0,
     "definition": "craftsman_blacksmith_skill_2_1_5"
   },
   "craftsman_blacksmith_skill_2_1_6": {
-    "x": -572.0,
-    "y": 144.0,
+    "x": -743.6,
+    "y": 187.2,
     "definition": "craftsman_blacksmith_skill_2_1_6"
   },
   "craftsman_blacksmith_skill_2_1_7": {
-    "x": -608.0,
-    "y": 156.0,
+    "x": -790.4,
+    "y": 202.8,
     "definition": "craftsman_blacksmith_skill_2_1_7"
   },
   "craftsman_blacksmith_skill_2_1_8": {
-    "x": -644.0,
-    "y": 168.0,
+    "x": -837.2,
+    "y": 218.4,
     "definition": "craftsman_blacksmith_skill_2_1_8"
   },
   "craftsman_blacksmith_skill_2_1_8_1": {
-    "x": -680.0,
-    "y": 192.0,
+    "x": -884.0,
+    "y": 249.6,
     "definition": "craftsman_blacksmith_skill_2_1_8_1"
   },
   "craftsman_blacksmith_skill_2_1_9": {
-    "x": -674.0,
-    "y": 144.0,
+    "x": -876.2,
+    "y": 187.2,
     "definition": "craftsman_blacksmith_skill_2_1_9"
   },
   "craftsman_blacksmith_skill_2_2_1": {
-    "x": -512.0,
-    "y": 72.0,
+    "x": -668.2,
+    "y": 91.0,
     "definition": "craftsman_blacksmith_skill_2_2_1"
   },
   "craftsman_blacksmith_skill_2_2_2": {
-    "x": -542.0,
-    "y": 84.0,
+    "x": -704.1,
+    "y": 109.2,
     "definition": "craftsman_blacksmith_skill_2_2_2"
   },
   "craftsman_blacksmith_skill_2_2_3": {
-    "x": -572.0,
-    "y": 84.0,
+    "x": -744.1,
+    "y": 109.2,
     "definition": "craftsman_blacksmith_skill_2_2_3"
   },
   "craftsman_blacksmith_skill_2_2_4": {
-    "x": -608.0,
-    "y": 66.0,
+    "x": -789.9,
+    "y": 85.8,
     "definition": "craftsman_blacksmith_skill_2_2_4"
   },
   "craftsman_blacksmith_skill_2_2_5": {
-    "x": -608.0,
-    "y": 102.0,
+    "x": -789.9,
+    "y": 132.6,
     "definition": "craftsman_blacksmith_skill_2_2_5"
   },
   "craftsman_blacksmith_skill_2_2_6": {
-    "x": -638.0,
-    "y": 66.0,
+    "x": -829.9,
+    "y": 85.8,
     "definition": "craftsman_blacksmith_skill_2_2_6"
   },
   "craftsman_blacksmith_skill_2_2_7": {
-    "x": -638.0,
-    "y": 102.0,
+    "x": -829.9,
+    "y": 132.6,
     "definition": "craftsman_blacksmith_skill_2_2_7"
   },
   "craftsman_blacksmith_skill_2_2_8": {
-    "x": -668.0,
-    "y": 84.0,
+    "x": -864.4,
+    "y": 109.3,
     "definition": "craftsman_blacksmith_skill_2_2_8"
   },
   "craftsman_blacksmith_skill_2_2_9": {
-    "x": -698.0,
-    "y": 84.0,
+    "x": -910.8,
+    "y": 106.8,
     "definition": "craftsman_blacksmith_skill_2_2_9"
   },
   "craftsman_blacksmith_skill_3": {
-    "x": -710.0,
-    "y": 120.0,
+    "x": -923.0,
+    "y": 158.4,
     "definition": "craftsman_blacksmith_skill_3"
   },
   "craftsman_blacksmith_skill_4": {
-    "x": -746.0,
-    "y": 120.0,
+    "x": -969.5,
+    "y": 156.0,
     "definition": "craftsman_blacksmith_skill_4"
   },
   "craftsman_blacksmith_skill_5": {
-    "x": -776.0,
-    "y": 120.0,
+    "x": -1009.5,
+    "y": 156.0,
     "definition": "craftsman_blacksmith_skill_5"
   },
   "craftsman_blacksmith_skill_6": {
-    "x": -806.0,
-    "y": 120.0,
+    "x": -1069.6,
+    "y": 154.1,
     "definition": "craftsman_blacksmith_skill_6"
   },
   "craftsman_blacksmith_subclass": {
-    "x": -452.0,
-    "y": 30.0,
+    "x": -575.5,
+    "y": 66.3,
     "definition": "craftsman_blacksmith_subclass"
   },
   "craftsman_cook_final_1": {
-    "x": -485.1,
-    "y": -620.8,
+    "x": -631.9,
+    "y": -805.8,
     "definition": "craftsman_cook_final_1"
   },
   "craftsman_cook_final_2": {
-    "x": -451.1,
-    "y": -654.8,
+    "x": -585.2,
+    "y": -852.5,
     "definition": "craftsman_cook_final_2"
   },
   "craftsman_cook_skill_2": {
-    "x": -298.4,
-    "y": -374.8,
+    "x": -390.4,
+    "y": -497.5,
     "definition": "craftsman_cook_skill_2"
   },
   "craftsman_cook_skill_2_1_1": {
-    "x": -285.7,
-    "y": -413.0,
+    "x": -368.1,
+    "y": -535.7,
     "definition": "craftsman_cook_skill_2_1_1"
   },
   "craftsman_cook_skill_2_1_2": {
-    "x": -272.9,
-    "y": -442.6,
+    "x": -355.3,
+    "y": -573.6,
     "definition": "craftsman_cook_skill_2_1_2"
   },
   "craftsman_cook_skill_2_1_3": {
-    "x": -264.5,
-    "y": -468.1,
+    "x": -342.9,
+    "y": -611.6,
     "definition": "craftsman_cook_skill_2_1_3"
   },
   "craftsman_cook_skill_2_1_4": {
-    "x": -234.8,
-    "y": -438.4,
+    "x": -305.2,
+    "y": -569.9,
     "definition": "craftsman_cook_skill_2_1_4"
   },
   "craftsman_cook_skill_2_1_5": {
-    "x": -298.4,
-    "y": -468.1,
+    "x": -387.9,
+    "y": -608.5,
     "definition": "craftsman_cook_skill_2_1_5"
   },
   "craftsman_cook_skill_2_1_6": {
-    "x": -302.6,
-    "y": -506.3,
+    "x": -393.4,
+    "y": -658.2,
     "definition": "craftsman_cook_skill_2_1_6"
   },
   "craftsman_cook_skill_2_1_7": {
-    "x": -319.6,
-    "y": -540.2,
+    "x": -415.5,
+    "y": -702.3,
     "definition": "craftsman_cook_skill_2_1_7"
   },
   "craftsman_cook_skill_2_1_8": {
-    "x": -336.6,
-    "y": -574.2,
+    "x": -437.6,
+    "y": -746.5,
     "definition": "craftsman_cook_skill_2_1_8"
   },
   "craftsman_cook_skill_2_1_8_1": {
-    "x": -345.1,
-    "y": -616.6,
+    "x": -448.6,
+    "y": -801.6,
     "definition": "craftsman_cook_skill_2_1_8_1"
   },
   "craftsman_cook_skill_2_1_9": {
-    "x": -374.8,
-    "y": -578.4,
+    "x": -487.2,
+    "y": -751.9,
     "definition": "craftsman_cook_skill_2_1_9"
   },
   "craftsman_cook_skill_2_2_1": {
-    "x": -311.1,
-    "y": -413.0,
+    "x": -408.1,
+    "y": -536.9,
     "definition": "craftsman_cook_skill_2_2_1"
   },
   "craftsman_cook_skill_2_2_2": {
-    "x": -323.9,
-    "y": -442.6,
+    "x": -420.7,
+    "y": -575.0,
     "definition": "craftsman_cook_skill_2_2_2"
   },
   "craftsman_cook_skill_2_2_3": {
-    "x": -345.1,
-    "y": -463.9,
+    "x": -449.0,
+    "y": -603.4,
     "definition": "craftsman_cook_skill_2_2_3"
   },
   "craftsman_cook_skill_2_2_4": {
-    "x": -383.3,
-    "y": -476.6,
+    "x": -497.9,
+    "y": -619.2,
     "definition": "craftsman_cook_skill_2_2_4"
   },
   "craftsman_cook_skill_2_2_5": {
-    "x": -357.8,
-    "y": -502.0,
+    "x": -464.8,
+    "y": -652.3,
     "definition": "craftsman_cook_skill_2_2_5"
   },
   "craftsman_cook_skill_2_2_6": {
-    "x": -404.5,
-    "y": -497.8,
+    "x": -526.2,
+    "y": -647.5,
     "definition": "craftsman_cook_skill_2_2_6"
   },
   "craftsman_cook_skill_2_2_7": {
-    "x": -379.0,
-    "y": -523.3,
+    "x": -493.0,
+    "y": -680.6,
     "definition": "craftsman_cook_skill_2_2_7"
   },
   "craftsman_cook_skill_2_2_8": {
-    "x": -413.0,
-    "y": -531.7,
+    "x": -534.0,
+    "y": -688.4,
     "definition": "craftsman_cook_skill_2_2_8"
   },
   "craftsman_cook_skill_2_2_9": {
-    "x": -434.2,
-    "y": -553.0,
+    "x": -568.7,
+    "y": -719.4,
     "definition": "craftsman_cook_skill_2_2_9"
   },
   "craftsman_cook_skill_3": {
-    "x": -417.2,
-    "y": -586.9,
+    "x": -538.0,
+    "y": -762.5,
     "definition": "craftsman_cook_skill_3"
   },
   "craftsman_cook_skill_4": {
-    "x": -438.4,
-    "y": -608.1,
+    "x": -572.9,
+    "y": -793.3,
     "definition": "craftsman_cook_skill_4"
   },
   "craftsman_cook_subclass": {
-    "x": -298.4,
-    "y": -340.8,
+    "x": -364.5,
+    "y": -451.3,
     "definition": "craftsman_cook_subclass"
   },
   "craftsman_deli_alchemist_class": {
-    "x": -120.2,
-    "y": -120.2,
+    "x": -150.0,
+    "y": -156.2,
     "definition": "craftsman_deli_alchemist_class"
   },
   "craftsman_deli_alchemist_final": {
-    "x": -654.8,
-    "y": -654.8,
+    "x": -851.2,
+    "y": -851.2,
     "definition": "craftsman_deli_alchemist_final"
   },
   "craftsman_deli_alchemist_skill_1": {
-    "x": -141.4,
-    "y": -141.4,
+    "x": -194.8,
+    "y": -190.1,
     "definition": "craftsman_deli_alchemist_skill_1"
   },
   "craftsman_deli_alchemist_skill_10": {
-    "x": -425.7,
-    "y": -425.7,
+    "x": -553.2,
+    "y": -554.8,
     "definition": "craftsman_deli_alchemist_skill_10"
   },
   "craftsman_deli_alchemist_skill_11": {
-    "x": -446.9,
-    "y": -446.9,
+    "x": -586.9,
+    "y": -586.8,
     "definition": "craftsman_deli_alchemist_skill_11"
   },
   "craftsman_deli_alchemist_skill_11_1": {
-    "x": -459.6,
-    "y": -476.6,
+    "x": -590.4,
+    "y": -626.7,
     "definition": "craftsman_deli_alchemist_skill_11_1"
   },
   "craftsman_deli_alchemist_skill_11_10": {
-    "x": -527.5,
-    "y": -485.1,
+    "x": -689.5,
+    "y": -632.0,
     "definition": "craftsman_deli_alchemist_skill_11_10"
   },
   "craftsman_deli_alchemist_skill_11_11": {
-    "x": -557.2,
-    "y": -489.3,
+    "x": -729.2,
+    "y": -636.6,
     "definition": "craftsman_deli_alchemist_skill_11_11"
   },
   "craftsman_deli_alchemist_skill_11_12": {
-    "x": -569.9,
-    "y": -519.0,
+    "x": -740.9,
+    "y": -674.8,
     "definition": "craftsman_deli_alchemist_skill_11_12"
   },
   "craftsman_deli_alchemist_skill_11_13": {
-    "x": -582.7,
-    "y": -557.2,
+    "x": -757.5,
+    "y": -724.4,
     "definition": "craftsman_deli_alchemist_skill_11_13"
   },
   "craftsman_deli_alchemist_skill_11_2": {
-    "x": -480.8,
-    "y": -497.8,
+    "x": -622.4,
+    "y": -650.7,
     "definition": "craftsman_deli_alchemist_skill_11_2"
   },
   "craftsman_deli_alchemist_skill_11_3": {
-    "x": -485.1,
-    "y": -527.5,
+    "x": -632.0,
+    "y": -689.5,
     "definition": "craftsman_deli_alchemist_skill_11_3"
   },
   "craftsman_deli_alchemist_skill_11_4": {
-    "x": -489.3,
-    "y": -557.2,
+    "x": -636.6,
+    "y": -729.2,
     "definition": "craftsman_deli_alchemist_skill_11_4"
   },
   "craftsman_deli_alchemist_skill_11_5": {
-    "x": -519.0,
-    "y": -569.9,
+    "x": -674.8,
+    "y": -740.9,
     "definition": "craftsman_deli_alchemist_skill_11_5"
   },
   "craftsman_deli_alchemist_skill_11_6": {
-    "x": -557.2,
-    "y": -582.7,
+    "x": -724.4,
+    "y": -757.5,
     "definition": "craftsman_deli_alchemist_skill_11_6"
   },
   "craftsman_deli_alchemist_skill_11_8": {
-    "x": -476.6,
-    "y": -459.6,
+    "x": -626.7,
+    "y": -590.4,
     "definition": "craftsman_deli_alchemist_skill_11_8"
   },
   "craftsman_deli_alchemist_skill_11_9": {
-    "x": -497.8,
-    "y": -480.8,
+    "x": -650.7,
+    "y": -622.4,
     "definition": "craftsman_deli_alchemist_skill_11_9"
   },
   "craftsman_deli_alchemist_skill_12": {
-    "x": -595.4,
-    "y": -595.4,
+    "x": -774.0,
+    "y": -774.0,
     "definition": "craftsman_deli_alchemist_skill_12"
   },
   "craftsman_deli_alchemist_skill_13": {
-    "x": -625.1,
-    "y": -625.1,
+    "x": -812.6,
+    "y": -812.6,
     "definition": "craftsman_deli_alchemist_skill_13"
   },
   "craftsman_deli_alchemist_skill_2": {
-    "x": -162.6,
-    "y": -162.6,
+    "x": -220.3,
+    "y": -220.9,
     "definition": "craftsman_deli_alchemist_skill_2"
   },
   "craftsman_deli_alchemist_skill_3": {
-    "x": -183.8,
-    "y": -183.8,
+    "x": -248.7,
+    "y": -249.0,
     "definition": "craftsman_deli_alchemist_skill_3"
   },
   "craftsman_deli_alchemist_skill_4": {
-    "x": -205.1,
-    "y": -205.1,
+    "x": -277.1,
+    "y": -277.1,
     "definition": "craftsman_deli_alchemist_skill_4"
   },
   "craftsman_deli_alchemist_skill_4_1": {
-    "x": -200.8,
-    "y": -234.8,
+    "x": -258.5,
+    "y": -312.5,
     "definition": "craftsman_deli_alchemist_skill_4_1"
   },
   "craftsman_deli_alchemist_skill_4_2": {
-    "x": -196.6,
-    "y": -264.5,
+    "x": -246.9,
+    "y": -350.8,
     "definition": "craftsman_deli_alchemist_skill_4_2"
   },
   "craftsman_deli_alchemist_skill_4_3": {
-    "x": -226.3,
-    "y": -260.2,
+    "x": -286.7,
+    "y": -342.7,
     "definition": "craftsman_deli_alchemist_skill_4_3"
   },
   "craftsman_deli_alchemist_skill_4_4": {
-    "x": -234.8,
-    "y": -200.8,
+    "x": -312.5,
+    "y": -258.5,
     "definition": "craftsman_deli_alchemist_skill_4_4"
   },
   "craftsman_deli_alchemist_skill_4_5": {
-    "x": -264.5,
-    "y": -196.6,
+    "x": -350.9,
+    "y": -247.3,
     "definition": "craftsman_deli_alchemist_skill_4_5"
   },
   "craftsman_deli_alchemist_skill_4_6": {
-    "x": -260.2,
-    "y": -226.3,
+    "x": -342.2,
+    "y": -287.1,
     "definition": "craftsman_deli_alchemist_skill_4_6"
   },
   "craftsman_deli_alchemist_skill_5": {
-    "x": -256.0,
-    "y": -256.0,
+    "x": -319.8,
+    "y": -320.2,
     "definition": "craftsman_deli_alchemist_skill_5"
   },
   "craftsman_deli_alchemist_skill_6": {
-    "x": -277.2,
-    "y": -277.2,
+    "x": -351.0,
+    "y": -345.2,
     "definition": "craftsman_deli_alchemist_skill_6"
   },
   "craftsman_deli_alchemist_skill_6_1": {
-    "x": -260.2,
-    "y": -302.6,
+    "x": -333.8,
+    "y": -393.7,
     "definition": "craftsman_deli_alchemist_skill_6_1"
   },
   "craftsman_deli_alchemist_skill_6_2": {
-    "x": -239.0,
-    "y": -332.3,
+    "x": -307.8,
+    "y": -432.2,
     "definition": "craftsman_deli_alchemist_skill_6_2"
   },
   "craftsman_deli_alchemist_skill_6_3": {
-    "x": -302.6,
-    "y": -260.2,
+    "x": -393.5,
+    "y": -338.2,
     "definition": "craftsman_deli_alchemist_skill_6_3"
   },
   "craftsman_deli_alchemist_skill_6_4": {
-    "x": -332.3,
-    "y": -239.0,
+    "x": -430.1,
+    "y": -305.9,
     "definition": "craftsman_deli_alchemist_skill_6_4"
   },
   "craftsman_deli_alchemist_skill_8": {
-    "x": -340.8,
-    "y": -340.8,
+    "x": -445.6,
+    "y": -468.1,
     "definition": "craftsman_deli_alchemist_skill_8"
   },
   "craftsman_deli_alchemist_skill_9": {
-    "x": -362.0,
-    "y": -362.0,
+    "x": -484.0,
+    "y": -479.2,
     "definition": "craftsman_deli_alchemist_skill_9"
   },
   "craftsman_deli_alchemist_skill_9_1": {
-    "x": -374.8,
-    "y": -391.7,
+    "x": -476.4,
+    "y": -518.5,
     "definition": "craftsman_deli_alchemist_skill_9_1"
   },
   "craftsman_deli_alchemist_skill_9_2": {
-    "x": -396.0,
-    "y": -413.0,
+    "x": -508.3,
+    "y": -542.6,
     "definition": "craftsman_deli_alchemist_skill_9_2"
   },
   "craftsman_deli_alchemist_skill_9_3": {
-    "x": -391.7,
-    "y": -374.8,
+    "x": -523.8,
+    "y": -474.6,
     "definition": "craftsman_deli_alchemist_skill_9_3"
   },
   "craftsman_deli_alchemist_skill_9_4": {
-    "x": -413.0,
-    "y": -396.0,
+    "x": -543.8,
+    "y": -509.3,
     "definition": "craftsman_deli_alchemist_skill_9_4"
   },
   "craftsman_deli_alchemist_skill_split": {
-    "x": -298.4,
-    "y": -298.4,
+    "x": -378.9,
+    "y": -382.4,
     "definition": "craftsman_deli_alchemist_skill_split"
   },
   "craftsman_deli_alchemist_subclass": {
-    "x": -319.6,
-    "y": -319.6,
+    "x": -425.9,
+    "y": -418.9,
     "definition": "craftsman_deli_alchemist_subclass"
   },
   "craftsman_enchanter_final_1": {
-    "x": -782.0,
-    "y": -96.0,
+    "x": -1016.6,
+    "y": -123.0,
     "definition": "craftsman_enchanter_final_1"
   },
   "craftsman_enchanter_final_2": {
-    "x": -782.0,
-    "y": -144.0,
+    "x": -1016.6,
+    "y": -189.0,
     "definition": "craftsman_enchanter_final_2"
   },
   "craftsman_enchanter_skill_2": {
-    "x": -476.0,
-    "y": -54.0,
+    "x": -627.2,
+    "y": -74.7,
     "definition": "craftsman_enchanter_skill_2"
   },
   "craftsman_enchanter_skill_2_1_1": {
-    "x": -494.0,
-    "y": -90.0,
+    "x": -639.1,
+    "y": -118.5,
     "definition": "craftsman_enchanter_skill_2_1_1"
   },
   "craftsman_enchanter_skill_2_1_2": {
-    "x": -506.0,
-    "y": -120.0,
+    "x": -656.9,
+    "y": -154.3,
     "definition": "craftsman_enchanter_skill_2_1_2"
   },
   "craftsman_enchanter_skill_2_1_3": {
-    "x": -518.0,
-    "y": -144.0,
+    "x": -674.8,
+    "y": -190.0,
     "definition": "craftsman_enchanter_skill_2_1_3"
   },
   "craftsman_enchanter_skill_2_1_4": {
-    "x": -476.0,
-    "y": -144.0,
+    "x": -618.8,
+    "y": -187.2,
     "definition": "craftsman_enchanter_skill_2_1_4"
   },
   "craftsman_enchanter_skill_2_1_5": {
-    "x": -542.0,
-    "y": -120.0,
+    "x": -704.6,
+    "y": -156.0,
     "definition": "craftsman_enchanter_skill_2_1_5"
   },
   "craftsman_enchanter_skill_2_1_6": {
-    "x": -572.0,
-    "y": -144.0,
+    "x": -743.6,
+    "y": -187.2,
     "definition": "craftsman_enchanter_skill_2_1_6"
   },
   "craftsman_enchanter_skill_2_1_7": {
-    "x": -608.0,
-    "y": -156.0,
+    "x": -790.4,
+    "y": -202.8,
     "definition": "craftsman_enchanter_skill_2_1_7"
   },
   "craftsman_enchanter_skill_2_1_8": {
-    "x": -644.0,
-    "y": -168.0,
+    "x": -837.2,
+    "y": -218.4,
     "definition": "craftsman_enchanter_skill_2_1_8"
   },
   "craftsman_enchanter_skill_2_1_8_1": {
-    "x": -680.0,
-    "y": -192.0,
+    "x": -884.0,
+    "y": -249.6,
     "definition": "craftsman_enchanter_skill_2_1_8_1"
   },
   "craftsman_enchanter_skill_2_1_9": {
-    "x": -674.0,
-    "y": -144.0,
+    "x": -876.2,
+    "y": -187.2,
     "definition": "craftsman_enchanter_skill_2_1_9"
   },
   "craftsman_enchanter_skill_2_2_1": {
-    "x": -512.0,
-    "y": -72.0,
+    "x": -668.2,
+    "y": -91.0,
     "definition": "craftsman_enchanter_skill_2_2_1"
   },
   "craftsman_enchanter_skill_2_2_2": {
-    "x": -542.0,
-    "y": -84.0,
+    "x": -704.1,
+    "y": -109.2,
     "definition": "craftsman_enchanter_skill_2_2_2"
   },
   "craftsman_enchanter_skill_2_2_3": {
-    "x": -572.0,
-    "y": -84.0,
+    "x": -744.1,
+    "y": -109.2,
     "definition": "craftsman_enchanter_skill_2_2_3"
   },
   "craftsman_enchanter_skill_2_2_4": {
-    "x": -608.0,
-    "y": -66.0,
+    "x": -789.9,
+    "y": -85.8,
     "definition": "craftsman_enchanter_skill_2_2_4"
   },
   "craftsman_enchanter_skill_2_2_5": {
-    "x": -608.0,
-    "y": -102.0,
+    "x": -789.9,
+    "y": -132.6,
     "definition": "craftsman_enchanter_skill_2_2_5"
   },
   "craftsman_enchanter_skill_2_2_6": {
-    "x": -638.0,
-    "y": -66.0,
+    "x": -829.9,
+    "y": -85.8,
     "definition": "craftsman_enchanter_skill_2_2_6"
   },
   "craftsman_enchanter_skill_2_2_7": {
-    "x": -638.0,
-    "y": -102.0,
+    "x": -829.9,
+    "y": -132.6,
     "definition": "craftsman_enchanter_skill_2_2_7"
   },
   "craftsman_enchanter_skill_2_2_8": {
-    "x": -668.0,
-    "y": -84.0,
+    "x": -864.4,
+    "y": -109.3,
     "definition": "craftsman_enchanter_skill_2_2_8"
   },
   "craftsman_enchanter_skill_2_2_9": {
-    "x": -698.0,
-    "y": -84.0,
+    "x": -910.8,
+    "y": -106.5,
     "definition": "craftsman_enchanter_skill_2_2_9"
   },
   "craftsman_enchanter_skill_3": {
-    "x": -710.0,
-    "y": -120.0,
+    "x": -919.6,
+    "y": -158.8,
     "definition": "craftsman_enchanter_skill_3"
   },
   "craftsman_enchanter_skill_4": {
-    "x": -740.0,
-    "y": -120.0,
+    "x": -966.0,
+    "y": -155.9,
     "definition": "craftsman_enchanter_skill_4"
   },
   "craftsman_enchanter_subclass": {
-    "x": -452.0,
-    "y": -30.0,
+    "x": -575.9,
+    "y": -61.2,
     "definition": "craftsman_enchanter_subclass"
   },
   "side_bagger_class": {
-    "x": 157.1,
-    "y": -65.1,
+    "x": 211.0,
+    "y": -103.1,
     "definition": "side_bagger_class"
   },
   "side_bagger_skill_1": {
-    "x": 116.6,
-    "y": -32.1,
+    "x": 130.7,
+    "y": -34.6,
     "definition": "side_bagger_skill_1"
   },
   "side_bagger_skill_2": {
-    "x": 105.1,
-    "y": -59.8,
+    "x": 117.5,
+    "y": -72.1,
     "definition": "side_bagger_skill_2"
   },
   "side_bagger_skill_3": {
-    "x": 129.3,
-    "y": -53.6,
+    "x": 171.3,
+    "y": -55.4,
     "definition": "side_bagger_skill_3"
   },
   "side_bagger_skill_3_1": {
-    "x": 158.2,
-    "y": -49.3,
+    "x": 217.1,
+    "y": -49.8,
     "definition": "side_bagger_skill_3_1"
   },
   "side_bagger_skill_3_2": {
-    "x": 146.7,
-    "y": -77.0,
+    "x": 155.0,
+    "y": -100.2,
     "definition": "side_bagger_skill_3_2"
   },
   "side_bagger_skill_3_3": {
-    "x": 181.3,
-    "y": -58.9,
+    "x": 256.0,
+    "y": -56.8,
     "definition": "side_bagger_skill_3_3"
   },
   "side_bagger_skill_3_4": {
-    "x": 169.8,
-    "y": -86.6,
+    "x": 218.8,
+    "y": -159.2,
     "definition": "side_bagger_skill_3_4"
   },
   "side_bagger_skill_4": {
-    "x": 198.6,
-    "y": -82.3,
+    "x": 273.2,
+    "y": -100.5,
     "definition": "side_bagger_skill_4"
   },
   "side_bagger_skill_4_1": {
-    "x": 220.1,
-    "y": -69.5,
+    "x": 295.7,
+    "y": -59.8,
     "definition": "side_bagger_skill_4_1"
   },
   "side_bagger_skill_4_2": {
-    "x": 204.8,
-    "y": -106.5,
+    "x": 260.2,
+    "y": -150.9,
     "definition": "side_bagger_skill_4_2"
   },
   "side_bagger_skill_4_3": {
-    "x": 242.5,
-    "y": -68.0,
+    "x": 330.1,
+    "y": -79.9,
     "definition": "side_bagger_skill_4_3"
   },
   "side_bagger_skill_4_4": {
-    "x": 219.5,
-    "y": -123.4,
+    "x": 289.3,
+    "y": -178.4,
     "definition": "side_bagger_skill_4_4"
   },
   "side_bagger_skill_4_5": {
-    "x": 266.3,
-    "y": -88.7,
+    "x": 373.8,
+    "y": -108.6,
     "definition": "side_bagger_skill_4_5"
   },
   "side_bagger_skill_4_6": {
-    "x": 251.0,
-    "y": -125.6,
+    "x": 343.9,
+    "y": -190.6,
     "definition": "side_bagger_skill_4_6"
   },
   "side_bagger_skill_5": {
-    "x": 231.0,
-    "y": -95.7,
+    "x": 320.9,
+    "y": -135.8,
     "definition": "side_bagger_skill_5"
   },
   "side_builder_class": {
-    "x": -157.1,
-    "y": -65.1,
+    "x": -221.3,
+    "y": -75.5,
     "definition": "side_builder_class"
   },
   "side_builder_skill_1": {
-    "x": -105.1,
-    "y": -59.8,
+    "x": -116.4,
+    "y": -67.6,
     "definition": "side_builder_skill_1"
   },
   "side_builder_skill_2": {
-    "x": -116.6,
+    "x": -134.3,
     "y": -32.1,
     "definition": "side_builder_skill_2"
   },
   "side_builder_skill_3": {
-    "x": -129.3,
-    "y": -53.6,
+    "x": -159.3,
+    "y": -83.4,
     "definition": "side_builder_skill_3"
   },
   "side_builder_skill_3_1": {
-    "x": -146.7,
-    "y": -77.0,
+    "x": -188.4,
+    "y": -119.1,
     "definition": "side_builder_skill_3_1"
   },
   "side_builder_skill_3_2": {
-    "x": -158.2,
-    "y": -49.3,
+    "x": -177.2,
+    "y": -40.5,
     "definition": "side_builder_skill_3_2"
   },
   "side_builder_skill_3_3": {
-    "x": -169.8,
-    "y": -86.6,
+    "x": -221.4,
+    "y": -141.0,
     "definition": "side_builder_skill_3_3"
   },
   "side_builder_skill_3_4": {
-    "x": -181.3,
-    "y": -58.9,
+    "x": -264.2,
+    "y": -39.2,
     "definition": "side_builder_skill_3_4"
   },
   "side_builder_skill_4": {
-    "x": -198.6,
-    "y": -82.3,
+    "x": -263.7,
+    "y": -121.7,
     "definition": "side_builder_skill_4"
   },
   "side_builder_skill_4_1": {
-    "x": -204.8,
-    "y": -106.5,
+    "x": -251.8,
+    "y": -166.6,
     "definition": "side_builder_skill_4_1"
   },
   "side_builder_skill_4_2": {
-    "x": -220.1,
-    "y": -69.5,
+    "x": -290.7,
+    "y": -77.3,
     "definition": "side_builder_skill_4_2"
   },
   "side_builder_skill_4_3": {
-    "x": -219.5,
-    "y": -123.4,
+    "x": -290.3,
+    "y": -177.1,
     "definition": "side_builder_skill_4_3"
   },
   "side_builder_skill_4_4": {
-    "x": -242.5,
-    "y": -68.0,
+    "x": -330.7,
+    "y": -78.5,
     "definition": "side_builder_skill_4_4"
   },
   "side_builder_skill_4_5": {
-    "x": -251.0,
-    "y": -125.6,
+    "x": -340.9,
+    "y": -187.3,
     "definition": "side_builder_skill_4_5"
   },
   "side_builder_skill_4_6": {
-    "x": -266.3,
-    "y": -88.7,
+    "x": -377.5,
+    "y": -108.6,
     "definition": "side_builder_skill_4_6"
   },
   "side_builder_skill_5": {
-    "x": -231.0,
-    "y": -95.7,
+    "x": -322.3,
+    "y": -130.8,
     "definition": "side_builder_skill_5"
   },
   "side_farmer_class": {
-    "x": -65.1,
-    "y": 157.1,
+    "x": -76.1,
+    "y": 220.9,
     "definition": "side_farmer_class"
   },
   "side_farmer_skill_1": {
-    "x": -59.8,
-    "y": 105.1,
+    "x": -68.0,
+    "y": 115.0,
     "definition": "side_farmer_skill_1"
   },
   "side_farmer_skill_2": {
-    "x": -32.1,
-    "y": 116.6,
+    "x": -32.4,
+    "y": 133.8,
     "definition": "side_farmer_skill_2"
   },
   "side_farmer_skill_3": {
-    "x": -53.6,
-    "y": 129.3,
+    "x": -78.6,
+    "y": 159.1,
     "definition": "side_farmer_skill_3"
   },
   "side_farmer_skill_3_1": {
-    "x": -77.0,
-    "y": 146.7,
+    "x": -116.2,
+    "y": 185.7,
     "definition": "side_farmer_skill_3_1"
   },
   "side_farmer_skill_3_2": {
-    "x": -49.3,
-    "y": 158.2,
+    "x": -37.3,
+    "y": 180.4,
     "definition": "side_farmer_skill_3_2"
   },
   "side_farmer_skill_3_3": {
-    "x": -86.6,
-    "y": 169.8,
+    "x": -139.1,
+    "y": 218.2,
     "definition": "side_farmer_skill_3_3"
   },
   "side_farmer_skill_3_4": {
-    "x": -58.9,
-    "y": 181.3,
+    "x": -43.2,
+    "y": 267.1,
     "definition": "side_farmer_skill_3_4"
   },
   "side_farmer_skill_4": {
-    "x": -82.3,
-    "y": 198.6,
+    "x": -121.1,
+    "y": 264.0,
     "definition": "side_farmer_skill_4"
   },
   "side_farmer_skill_4_1": {
-    "x": -106.5,
-    "y": 204.8,
+    "x": -165.5,
+    "y": 250.6,
     "definition": "side_farmer_skill_4_1"
   },
   "side_farmer_skill_4_2": {
-    "x": -69.5,
-    "y": 220.1,
+    "x": -77.3,
+    "y": 290.7,
     "definition": "side_farmer_skill_4_2"
   },
   "side_farmer_skill_4_3": {
-    "x": -123.4,
-    "y": 219.5,
+    "x": -176.8,
+    "y": 289.0,
     "definition": "side_farmer_skill_4_3"
   },
   "side_farmer_skill_4_4": {
-    "x": -68.0,
-    "y": 242.5,
+    "x": -78.5,
+    "y": 330.7,
     "definition": "side_farmer_skill_4_4"
   },
   "side_farmer_skill_4_5": {
-    "x": -125.6,
-    "y": 251.0,
+    "x": -187.4,
+    "y": 341.0,
     "definition": "side_farmer_skill_4_5"
   },
   "side_farmer_skill_4_6": {
-    "x": -88.7,
-    "y": 266.3,
+    "x": -108.6,
+    "y": 377.6,
     "definition": "side_farmer_skill_4_6"
   },
   "side_farmer_skill_5": {
-    "x": -95.7,
-    "y": 231.0,
+    "x": -130.9,
+    "y": 322.5,
     "definition": "side_farmer_skill_5"
   },
   "side_fisherman_class": {
-    "x": 157.1,
-    "y": 65.1,
+    "x": 219.7,
+    "y": 75.3,
     "definition": "side_fisherman_class"
   },
   "side_fisherman_skill_1": {
-    "x": 105.1,
-    "y": 59.8,
+    "x": 115.4,
+    "y": 67.8,
     "definition": "side_fisherman_skill_1"
   },
   "side_fisherman_skill_2": {
-    "x": 116.6,
-    "y": 32.1,
+    "x": 132.7,
+    "y": 31.9,
     "definition": "side_fisherman_skill_2"
   },
   "side_fisherman_skill_3": {
-    "x": 129.3,
-    "y": 53.6,
+    "x": 157.1,
+    "y": 86.7,
     "definition": "side_fisherman_skill_3"
   },
   "side_fisherman_skill_3_1": {
-    "x": 146.7,
-    "y": 77.0,
+    "x": 189.4,
+    "y": 119.5,
     "definition": "side_fisherman_skill_3_1"
   },
   "side_fisherman_skill_3_2": {
-    "x": 158.2,
-    "y": 49.3,
+    "x": 172.7,
+    "y": 43.1,
     "definition": "side_fisherman_skill_3_2"
   },
   "side_fisherman_skill_3_3": {
-    "x": 169.8,
-    "y": 86.6,
+    "x": 221.9,
+    "y": 141.7,
     "definition": "side_fisherman_skill_3_3"
   },
   "side_fisherman_skill_3_4": {
-    "x": 181.3,
-    "y": 58.9,
+    "x": 259.4,
+    "y": 35.4,
     "definition": "side_fisherman_skill_3_4"
   },
   "side_fisherman_skill_4": {
-    "x": 198.6,
-    "y": 82.3,
+    "x": 262.9,
+    "y": 120.1,
     "definition": "side_fisherman_skill_4"
   },
   "side_fisherman_skill_4_1": {
-    "x": 204.8,
-    "y": 106.5,
+    "x": 253.4,
+    "y": 165.9,
     "definition": "side_fisherman_skill_4_1"
   },
   "side_fisherman_skill_4_2": {
-    "x": 220.1,
-    "y": 69.5,
+    "x": 290.7,
+    "y": 77.3,
     "definition": "side_fisherman_skill_4_2"
   },
   "side_fisherman_skill_4_3": {
-    "x": 219.5,
-    "y": 123.4,
+    "x": 291.5,
+    "y": 177.6,
     "definition": "side_fisherman_skill_4_3"
   },
   "side_fisherman_skill_4_4": {
-    "x": 242.5,
-    "y": 68.0,
+    "x": 330.6,
+    "y": 78.5,
     "definition": "side_fisherman_skill_4_4"
   },
   "side_fisherman_skill_4_5": {
-    "x": 251.0,
-    "y": 125.6,
+    "x": 340.8,
+    "y": 186.8,
     "definition": "side_fisherman_skill_4_5"
   },
   "side_fisherman_skill_4_6": {
-    "x": 266.3,
-    "y": 88.7,
+    "x": 376.7,
+    "y": 108.9,
     "definition": "side_fisherman_skill_4_6"
   },
   "side_fisherman_skill_5": {
-    "x": 231.0,
-    "y": 95.7,
+    "x": 321.3,
+    "y": 130.7,
     "definition": "side_fisherman_skill_5"
   },
   "side_hunter_class": {
-    "x": 65.1,
-    "y": 157.1,
+    "x": 100.8,
+    "y": 208.3,
     "definition": "side_hunter_class"
   },
   "side_hunter_skill_1": {
-    "x": 32.1,
-    "y": 116.6,
+    "x": 33.0,
+    "y": 127.5,
     "definition": "side_hunter_skill_1"
   },
   "side_hunter_skill_2": {
-    "x": 59.8,
-    "y": 105.1,
+    "x": 71.6,
+    "y": 117.4,
     "definition": "side_hunter_skill_2"
   },
   "side_hunter_skill_3": {
-    "x": 53.6,
-    "y": 129.3,
+    "x": 53.1,
+    "y": 168.2,
     "definition": "side_hunter_skill_3"
   },
   "side_hunter_skill_3_1": {
-    "x": 49.3,
-    "y": 158.2,
+    "x": 47.5,
+    "y": 213.7,
     "definition": "side_hunter_skill_3_1"
   },
   "side_hunter_skill_3_2": {
-    "x": 77.0,
-    "y": 146.7,
+    "x": 95.9,
+    "y": 150.9,
     "definition": "side_hunter_skill_3_2"
   },
   "side_hunter_skill_3_3": {
-    "x": 58.9,
-    "y": 181.3,
+    "x": 56.2,
+    "y": 252.6,
     "definition": "side_hunter_skill_3_3"
   },
   "side_hunter_skill_3_4": {
-    "x": 86.6,
-    "y": 169.8,
+    "x": 157.1,
+    "y": 213.3,
     "definition": "side_hunter_skill_3_4"
   },
   "side_hunter_skill_4": {
-    "x": 82.3,
-    "y": 198.6,
+    "x": 101.4,
+    "y": 270.7,
     "definition": "side_hunter_skill_4"
   },
   "side_hunter_skill_4_1": {
-    "x": 69.5,
-    "y": 220.1,
+    "x": 61.1,
+    "y": 293.8,
     "definition": "side_hunter_skill_4_1"
   },
   "side_hunter_skill_4_2": {
-    "x": 106.5,
-    "y": 204.8,
+    "x": 150.8,
+    "y": 260.2,
     "definition": "side_hunter_skill_4_2"
   },
   "side_hunter_skill_4_3": {
-    "x": 68.0,
-    "y": 242.5,
+    "x": 79.4,
+    "y": 329.3,
     "definition": "side_hunter_skill_4_3"
   },
   "side_hunter_skill_4_4": {
-    "x": 123.4,
-    "y": 219.5,
+    "x": 178.3,
+    "y": 289.2,
     "definition": "side_hunter_skill_4_4"
   },
   "side_hunter_skill_4_5": {
-    "x": 88.7,
-    "y": 266.3,
+    "x": 108.9,
+    "y": 373.2,
     "definition": "side_hunter_skill_4_5"
   },
   "side_hunter_skill_4_6": {
-    "x": 125.6,
-    "y": 251.0,
+    "x": 189.5,
+    "y": 343.4,
     "definition": "side_hunter_skill_4_6"
   },
   "side_hunter_skill_5": {
-    "x": 95.7,
-    "y": 231.0,
+    "x": 134.9,
+    "y": 319.7,
     "definition": "side_hunter_skill_5"
   },
   "side_miner_class": {
-    "x": 65.1,
-    "y": -157.1,
+    "x": 75.8,
+    "y": -218.7,
     "definition": "side_miner_class"
   },
   "side_miner_skill_1": {
-    "x": 59.8,
-    "y": -105.1,
+    "x": 67.4,
+    "y": -112.7,
     "definition": "side_miner_skill_1"
   },
   "side_miner_skill_2": {
-    "x": 32.1,
-    "y": -116.6,
+    "x": 32.2,
+    "y": -133.6,
     "definition": "side_miner_skill_2"
   },
   "side_miner_skill_3": {
-    "x": 53.6,
-    "y": -129.3,
+    "x": 77.7,
+    "y": -156.7,
     "definition": "side_miner_skill_3"
   },
   "side_miner_skill_3_1": {
-    "x": 77.0,
-    "y": -146.7,
+    "x": 115.7,
+    "y": -182.3,
     "definition": "side_miner_skill_3_1"
   },
   "side_miner_skill_3_2": {
-    "x": 49.3,
-    "y": -158.2,
+    "x": 36.4,
+    "y": -177.7,
     "definition": "side_miner_skill_3_2"
   },
   "side_miner_skill_3_3": {
-    "x": 86.6,
-    "y": -169.8,
+    "x": 139.1,
+    "y": -217.8,
     "definition": "side_miner_skill_3_3"
   },
   "side_miner_skill_3_4": {
-    "x": 58.9,
-    "y": -181.3,
+    "x": 43.2,
+    "y": -264.6,
     "definition": "side_miner_skill_3_4"
   },
   "side_miner_skill_4": {
-    "x": 82.3,
-    "y": -198.6,
+    "x": 119.8,
+    "y": -263.5,
     "definition": "side_miner_skill_4"
   },
   "side_miner_skill_4_1": {
-    "x": 106.5,
-    "y": -204.8,
+    "x": 164.5,
+    "y": -250.9,
     "definition": "side_miner_skill_4_1"
   },
   "side_miner_skill_4_2": {
-    "x": 69.5,
-    "y": -220.1,
+    "x": 77.2,
+    "y": -290.7,
     "definition": "side_miner_skill_4_2"
   },
   "side_miner_skill_4_3": {
-    "x": 123.4,
-    "y": -219.5,
+    "x": 176.7,
+    "y": -289.0,
     "definition": "side_miner_skill_4_3"
   },
   "side_miner_skill_4_4": {
-    "x": 68.0,
-    "y": -242.5,
+    "x": 78.5,
+    "y": -330.7,
     "definition": "side_miner_skill_4_4"
   },
   "side_miner_skill_4_5": {
-    "x": 125.6,
-    "y": -251.0,
+    "x": 187.1,
+    "y": -340.9,
     "definition": "side_miner_skill_4_5"
   },
   "side_miner_skill_4_6": {
-    "x": 88.7,
-    "y": -266.3,
+    "x": 108.8,
+    "y": -377.0,
     "definition": "side_miner_skill_4_6"
   },
   "side_miner_skill_5": {
-    "x": 95.7,
-    "y": -231.0,
+    "x": 130.8,
+    "y": -321.8,
     "definition": "side_miner_skill_5"
   },
   "side_traveler_class": {
-    "x": -157.1,
-    "y": 65.1,
+    "x": -209.6,
+    "y": 102.3,
     "definition": "side_traveler_class"
   },
   "side_traveler_skill_1": {
-    "x": -116.6,
-    "y": 32.1,
+    "x": -129.5,
+    "y": 34.2,
     "definition": "side_traveler_skill_1"
   },
   "side_traveler_skill_2": {
-    "x": -105.1,
-    "y": 59.8,
+    "x": -117.9,
+    "y": 72.3,
     "definition": "side_traveler_skill_2"
   },
   "side_traveler_skill_3": {
-    "x": -129.3,
-    "y": 53.6,
+    "x": -171.0,
+    "y": 53.1,
     "definition": "side_traveler_skill_3"
   },
   "side_traveler_skill_3_1": {
-    "x": -158.2,
-    "y": 49.3,
+    "x": -216.8,
+    "y": 48.6,
     "definition": "side_traveler_skill_3_1"
   },
   "side_traveler_skill_3_2": {
-    "x": -146.7,
-    "y": 77.0,
+    "x": -152.9,
+    "y": 95.7,
     "definition": "side_traveler_skill_3_2"
   },
   "side_traveler_skill_3_3": {
-    "x": -181.3,
-    "y": 58.9,
+    "x": -255.4,
+    "y": 57.1,
     "definition": "side_traveler_skill_3_3"
   },
   "side_traveler_skill_3_4": {
-    "x": -169.8,
-    "y": 86.6,
+    "x": -213.3,
+    "y": 158.7,
     "definition": "side_traveler_skill_3_4"
   },
   "side_traveler_skill_4": {
-    "x": -198.6,
-    "y": 82.3,
+    "x": -272.0,
+    "y": 100.5,
     "definition": "side_traveler_skill_4"
   },
   "side_traveler_skill_4_1": {
-    "x": -220.1,
-    "y": 69.5,
+    "x": -295.1,
+    "y": 60.2,
     "definition": "side_traveler_skill_4_1"
   },
   "side_traveler_skill_4_2": {
-    "x": -204.8,
-    "y": 106.5,
+    "x": -260.2,
+    "y": 150.7,
     "definition": "side_traveler_skill_4_2"
   },
   "side_traveler_skill_4_3": {
-    "x": -242.5,
-    "y": 68.0,
+    "x": -329.9,
+    "y": 79.8,
     "definition": "side_traveler_skill_4_3"
   },
   "side_traveler_skill_4_4": {
-    "x": -219.5,
-    "y": 123.4,
+    "x": -289.2,
+    "y": 178.3,
     "definition": "side_traveler_skill_4_4"
   },
   "side_traveler_skill_4_5": {
-    "x": -266.3,
-    "y": 88.7,
+    "x": -373.3,
+    "y": 108.8,
     "definition": "side_traveler_skill_4_5"
   },
   "side_traveler_skill_4_6": {
-    "x": -251.0,
-    "y": 125.6,
+    "x": -343.6,
+    "y": 189.9,
     "definition": "side_traveler_skill_4_6"
   },
   "side_traveler_skill_5": {
-    "x": -231.0,
-    "y": 95.7,
+    "x": -320.1,
+    "y": 135.3,
     "definition": "side_traveler_skill_5"
   },
   "side_woodcutter_class": {
-    "x": -65.1,
-    "y": -157.1,
+    "x": -102.1,
+    "y": -208.6,
     "definition": "side_woodcutter_class"
   },
   "side_woodcutter_skill_1": {
-    "x": -32.1,
-    "y": -116.6,
+    "x": -34.0,
+    "y": -128.8,
     "definition": "side_woodcutter_skill_1"
   },
   "side_woodcutter_skill_2": {
-    "x": -59.8,
-    "y": -105.1,
+    "x": -72.1,
+    "y": -117.5,
     "definition": "side_woodcutter_skill_2"
   },
   "side_woodcutter_skill_3": {
-    "x": -53.6,
-    "y": -129.3,
+    "x": -52.1,
+    "y": -170.8,
     "definition": "side_woodcutter_skill_3"
   },
   "side_woodcutter_skill_3_1": {
-    "x": -49.3,
-    "y": -158.2,
+    "x": -48.0,
+    "y": -216.6,
     "definition": "side_woodcutter_skill_3_1"
   },
   "side_woodcutter_skill_3_2": {
-    "x": -77.0,
-    "y": -146.7,
+    "x": -94.5,
+    "y": -152.1,
     "definition": "side_woodcutter_skill_3_2"
   },
   "side_woodcutter_skill_3_3": {
-    "x": -58.9,
-    "y": -181.3,
+    "x": -56.9,
+    "y": -255.2,
     "definition": "side_woodcutter_skill_3_3"
   },
   "side_woodcutter_skill_3_4": {
-    "x": -86.6,
-    "y": -169.8,
+    "x": -158.2,
+    "y": -211.7,
     "definition": "side_woodcutter_skill_3_4"
   },
   "side_woodcutter_skill_4": {
-    "x": -82.3,
-    "y": -198.6,
+    "x": -100.8,
+    "y": -271.3,
     "definition": "side_woodcutter_skill_4"
   },
   "side_woodcutter_skill_4_1": {
-    "x": -69.5,
-    "y": -220.1,
+    "x": -60.7,
+    "y": -294.9,
     "definition": "side_woodcutter_skill_4_1"
   },
   "side_woodcutter_skill_4_2": {
-    "x": -106.5,
-    "y": -204.8,
+    "x": -150.8,
+    "y": -260.2,
     "definition": "side_woodcutter_skill_4_2"
   },
   "side_woodcutter_skill_4_3": {
-    "x": -68.0,
-    "y": -242.5,
+    "x": -79.8,
+    "y": -330.0,
     "definition": "side_woodcutter_skill_4_3"
   },
   "side_woodcutter_skill_4_4": {
-    "x": -123.4,
-    "y": -219.5,
+    "x": -178.3,
+    "y": -289.2,
     "definition": "side_woodcutter_skill_4_4"
   },
   "side_woodcutter_skill_4_5": {
-    "x": -88.7,
-    "y": -266.3,
+    "x": -108.9,
+    "y": -373.2,
     "definition": "side_woodcutter_skill_4_5"
   },
   "side_woodcutter_skill_4_6": {
-    "x": -125.6,
-    "y": -251.0,
+    "x": -189.6,
+    "y": -343.4,
     "definition": "side_woodcutter_skill_4_6"
   },
   "side_woodcutter_skill_5": {
-    "x": -95.7,
-    "y": -231.0,
+    "x": -135.1,
+    "y": -319.8,
     "definition": "side_woodcutter_skill_5"
   },
   "warrior_attackers_class": {
-    "x": 120.2,
-    "y": -120.2,
+    "x": 163.4,
+    "y": -155.4,
     "definition": "warrior_attackers_class"
   },
   "warrior_attackers_final": {
-    "x": 654.8,
-    "y": -654.8,
+    "x": 851.2,
+    "y": -851.2,
     "definition": "warrior_attackers_final"
   },
   "warrior_attackers_skill_1": {
-    "x": 141.4,
-    "y": -141.4,
+    "x": 186.4,
+    "y": -206.5,
     "definition": "warrior_attackers_skill_1"
   },
   "warrior_attackers_skill_10": {
-    "x": 425.7,
-    "y": -425.7,
+    "x": 554.3,
+    "y": -553.1,
     "definition": "warrior_attackers_skill_10"
   },
   "warrior_attackers_skill_11": {
-    "x": 446.9,
-    "y": -446.9,
+    "x": 586.5,
+    "y": -586.5,
     "definition": "warrior_attackers_skill_11"
   },
   "warrior_attackers_skill_11_1": {
-    "x": 476.6,
-    "y": -459.6,
+    "x": 626.5,
+    "y": -588.5,
     "definition": "warrior_attackers_skill_11_1"
   },
   "warrior_attackers_skill_11_10": {
-    "x": 485.1,
-    "y": -527.5,
+    "x": 633.4,
+    "y": -687.6,
     "definition": "warrior_attackers_skill_11_10"
   },
   "warrior_attackers_skill_11_11": {
-    "x": 489.3,
-    "y": -557.2,
+    "x": 632.9,
+    "y": -734.1,
     "definition": "warrior_attackers_skill_11_11"
   },
   "warrior_attackers_skill_11_12": {
-    "x": 519.0,
-    "y": -569.9,
+    "x": 678.7,
+    "y": -742.2,
     "definition": "warrior_attackers_skill_11_12"
   },
   "warrior_attackers_skill_11_13": {
-    "x": 557.2,
-    "y": -582.7,
+    "x": 724.4,
+    "y": -757.5,
     "definition": "warrior_attackers_skill_11_13"
   },
   "warrior_attackers_skill_11_2": {
-    "x": 497.8,
-    "y": -480.8,
+    "x": 649.5,
+    "y": -621.2,
     "definition": "warrior_attackers_skill_11_2"
   },
   "warrior_attackers_skill_11_3": {
-    "x": 527.5,
-    "y": -485.1,
+    "x": 687.6,
+    "y": -633.4,
     "definition": "warrior_attackers_skill_11_3"
   },
   "warrior_attackers_skill_11_4": {
-    "x": 557.2,
-    "y": -489.3,
+    "x": 734.1,
+    "y": -632.9,
     "definition": "warrior_attackers_skill_11_4"
   },
   "warrior_attackers_skill_11_5": {
-    "x": 569.9,
-    "y": -519.0,
+    "x": 742.2,
+    "y": -678.7,
     "definition": "warrior_attackers_skill_11_5"
   },
   "warrior_attackers_skill_11_6": {
-    "x": 582.7,
-    "y": -557.2,
+    "x": 757.5,
+    "y": -724.4,
     "definition": "warrior_attackers_skill_11_6"
   },
   "warrior_attackers_skill_11_8": {
-    "x": 459.6,
-    "y": -476.6,
+    "x": 588.5,
+    "y": -626.5,
     "definition": "warrior_attackers_skill_11_8"
   },
   "warrior_attackers_skill_11_9": {
-    "x": 480.8,
-    "y": -497.8,
+    "x": 621.2,
+    "y": -649.5,
     "definition": "warrior_attackers_skill_11_9"
   },
   "warrior_attackers_skill_12": {
-    "x": 595.4,
-    "y": -595.4,
+    "x": 774.0,
+    "y": -774.0,
     "definition": "warrior_attackers_skill_12"
   },
   "warrior_attackers_skill_13": {
-    "x": 625.1,
-    "y": -625.1,
+    "x": 812.6,
+    "y": -812.6,
     "definition": "warrior_attackers_skill_13"
   },
   "warrior_attackers_skill_2": {
-    "x": 162.6,
-    "y": -162.6,
+    "x": 225.6,
+    "y": -214.4,
     "definition": "warrior_attackers_skill_2"
   },
   "warrior_attackers_skill_3": {
-    "x": 183.8,
-    "y": -183.8,
+    "x": 245.9,
+    "y": -248.8,
     "definition": "warrior_attackers_skill_3"
   },
   "warrior_attackers_skill_4": {
-    "x": 205.1,
-    "y": -205.1,
+    "x": 275.6,
+    "y": -275.6,
     "definition": "warrior_attackers_skill_4"
   },
   "warrior_attackers_skill_4_1": {
-    "x": 234.8,
-    "y": -200.8,
+    "x": 311.9,
+    "y": -258.8,
     "definition": "warrior_attackers_skill_4_1"
   },
   "warrior_attackers_skill_4_2": {
-    "x": 264.5,
-    "y": -196.6,
+    "x": 350.3,
+    "y": -247.4,
     "definition": "warrior_attackers_skill_4_2"
   },
   "warrior_attackers_skill_4_3": {
-    "x": 260.2,
-    "y": -226.3,
+    "x": 342.4,
+    "y": -286.9,
     "definition": "warrior_attackers_skill_4_3"
   },
   "warrior_attackers_skill_4_4": {
-    "x": 200.8,
-    "y": -234.8,
+    "x": 258.9,
+    "y": -311.9,
     "definition": "warrior_attackers_skill_4_4"
   },
   "warrior_attackers_skill_4_5": {
-    "x": 196.6,
-    "y": -264.5,
+    "x": 247.4,
+    "y": -350.2,
     "definition": "warrior_attackers_skill_4_5"
   },
   "warrior_attackers_skill_4_6": {
-    "x": 226.3,
-    "y": -260.2,
+    "x": 286.9,
+    "y": -342.2,
     "definition": "warrior_attackers_skill_4_6"
   },
   "warrior_attackers_skill_5": {
-    "x": 256.0,
-    "y": -256.0,
+    "x": 320.3,
+    "y": -320.2,
     "definition": "warrior_attackers_skill_5"
   },
   "warrior_attackers_skill_6": {
-    "x": 277.2,
-    "y": -277.2,
+    "x": 348.1,
+    "y": -349.0,
     "definition": "warrior_attackers_skill_6"
   },
   "warrior_attackers_skill_6_1": {
-    "x": 302.6,
-    "y": -260.2,
+    "x": 393.7,
+    "y": -335.0,
     "definition": "warrior_attackers_skill_6_1"
   },
   "warrior_attackers_skill_6_2": {
-    "x": 332.3,
-    "y": -239.0,
+    "x": 432.2,
+    "y": -308.9,
     "definition": "warrior_attackers_skill_6_2"
   },
   "warrior_attackers_skill_6_3": {
-    "x": 260.2,
-    "y": -302.6,
+    "x": 337.8,
+    "y": -393.6,
     "definition": "warrior_attackers_skill_6_3"
   },
   "warrior_attackers_skill_6_4": {
-    "x": 239.0,
-    "y": -332.3,
+    "x": 310.7,
+    "y": -432.0,
     "definition": "warrior_attackers_skill_6_4"
   },
   "warrior_attackers_skill_8": {
-    "x": 340.8,
-    "y": -340.8,
+    "x": 466.6,
+    "y": -445.3,
     "definition": "warrior_attackers_skill_8"
   },
   "warrior_attackers_skill_9": {
-    "x": 362.0,
-    "y": -362.0,
+    "x": 479.3,
+    "y": -483.2,
     "definition": "warrior_attackers_skill_9"
   },
   "warrior_attackers_skill_9_1": {
-    "x": 391.7,
-    "y": -374.8,
+    "x": 518.7,
+    "y": -476.1,
     "definition": "warrior_attackers_skill_9_1"
   },
   "warrior_attackers_skill_9_2": {
-    "x": 413.0,
-    "y": -396.0,
+    "x": 542.8,
+    "y": -508.0,
     "definition": "warrior_attackers_skill_9_2"
   },
   "warrior_attackers_skill_9_3": {
-    "x": 374.8,
-    "y": -391.7,
+    "x": 474.6,
+    "y": -522.9,
     "definition": "warrior_attackers_skill_9_3"
   },
   "warrior_attackers_skill_9_4": {
-    "x": 396.0,
-    "y": -413.0,
+    "x": 508.7,
+    "y": -543.8,
     "definition": "warrior_attackers_skill_9_4"
   },
   "warrior_attackers_skill_split": {
-    "x": 298.4,
-    "y": -298.4,
+    "x": 382.6,
+    "y": -380.1,
     "definition": "warrior_attackers_skill_split"
   },
   "warrior_attackers_subclass": {
-    "x": 319.6,
-    "y": -319.6,
+    "x": 416.1,
+    "y": -429.3,
     "definition": "warrior_attackers_subclass"
   },
   "warrior_berserk_final": {
-    "x": 637.8,
-    "y": -468.1,
+    "x": 830.3,
+    "y": -609.7,
     "definition": "warrior_berserk_final"
   },
   "warrior_berserk_skill_2": {
-    "x": 374.8,
-    "y": -298.4,
+    "x": 496.1,
+    "y": -390.2,
     "definition": "warrior_berserk_skill_2"
   },
   "warrior_berserk_skill_2_1_1": {
-    "x": 413.0,
-    "y": -285.7,
+    "x": 535.6,
+    "y": -367.9,
     "definition": "warrior_berserk_skill_2_1_1"
   },
   "warrior_berserk_skill_2_1_2": {
-    "x": 442.6,
-    "y": -272.9,
+    "x": 573.6,
+    "y": -355.3,
     "definition": "warrior_berserk_skill_2_1_2"
   },
   "warrior_berserk_skill_2_1_3": {
-    "x": 468.1,
-    "y": -264.5,
+    "x": 611.6,
+    "y": -342.8,
     "definition": "warrior_berserk_skill_2_1_3"
   },
   "warrior_berserk_skill_2_1_4": {
-    "x": 438.4,
-    "y": -234.8,
+    "x": 569.9,
+    "y": -305.2,
     "definition": "warrior_berserk_skill_2_1_4"
   },
   "warrior_berserk_skill_2_1_5": {
-    "x": 468.1,
-    "y": -298.4,
+    "x": 608.5,
+    "y": -387.9,
     "definition": "warrior_berserk_skill_2_1_5"
   },
   "warrior_berserk_skill_2_1_6": {
-    "x": 506.3,
-    "y": -302.6,
+    "x": 658.2,
+    "y": -393.4,
     "definition": "warrior_berserk_skill_2_1_6"
   },
   "warrior_berserk_skill_2_1_7": {
-    "x": 540.2,
-    "y": -319.6,
+    "x": 702.3,
+    "y": -415.5,
     "definition": "warrior_berserk_skill_2_1_7"
   },
   "warrior_berserk_skill_2_1_8": {
-    "x": 574.2,
-    "y": -336.6,
+    "x": 746.5,
+    "y": -437.6,
     "definition": "warrior_berserk_skill_2_1_8"
   },
   "warrior_berserk_skill_2_1_8_1": {
-    "x": 616.6,
-    "y": -345.1,
+    "x": 801.6,
+    "y": -448.6,
     "definition": "warrior_berserk_skill_2_1_8_1"
   },
   "warrior_berserk_skill_2_1_9": {
-    "x": 578.4,
-    "y": -374.8,
+    "x": 751.9,
+    "y": -487.2,
     "definition": "warrior_berserk_skill_2_1_9"
   },
   "warrior_berserk_skill_2_2_1": {
-    "x": 413.0,
-    "y": -311.1,
+    "x": 535.3,
+    "y": -407.9,
     "definition": "warrior_berserk_skill_2_2_1"
   },
   "warrior_berserk_skill_2_2_2": {
-    "x": 442.6,
-    "y": -323.9,
+    "x": 573.9,
+    "y": -418.4,
     "definition": "warrior_berserk_skill_2_2_2"
   },
   "warrior_berserk_skill_2_2_3": {
-    "x": 463.9,
-    "y": -345.1,
+    "x": 606.2,
+    "y": -451.8,
     "definition": "warrior_berserk_skill_2_2_3"
   },
   "warrior_berserk_skill_2_2_4": {
-    "x": 476.6,
-    "y": -383.3,
+    "x": 619.2,
+    "y": -497.9,
     "definition": "warrior_berserk_skill_2_2_4"
   },
   "warrior_berserk_skill_2_2_5": {
-    "x": 502.0,
-    "y": -357.8,
+    "x": 652.3,
+    "y": -464.8,
     "definition": "warrior_berserk_skill_2_2_5"
   },
   "warrior_berserk_skill_2_2_6": {
-    "x": 497.8,
-    "y": -404.5,
+    "x": 647.5,
+    "y": -526.2,
     "definition": "warrior_berserk_skill_2_2_6"
   },
   "warrior_berserk_skill_2_2_7": {
-    "x": 523.3,
-    "y": -379.0,
+    "x": 680.6,
+    "y": -493.0,
     "definition": "warrior_berserk_skill_2_2_7"
   },
   "warrior_berserk_skill_2_2_8": {
-    "x": 531.7,
-    "y": -413.0,
+    "x": 688.4,
+    "y": -534.0,
     "definition": "warrior_berserk_skill_2_2_8"
   },
   "warrior_berserk_skill_2_2_9": {
-    "x": 553.0,
-    "y": -434.2,
+    "x": 719.3,
+    "y": -568.8,
     "definition": "warrior_berserk_skill_2_2_9"
   },
   "warrior_berserk_skill_3": {
-    "x": 586.9,
-    "y": -417.2,
+    "x": 762.0,
+    "y": -537.4,
     "definition": "warrior_berserk_skill_3"
   },
   "warrior_berserk_skill_4": {
-    "x": 608.1,
-    "y": -438.4,
+    "x": 792.7,
+    "y": -572.3,
     "definition": "warrior_berserk_skill_4"
   },
   "warrior_berserk_subclass": {
-    "x": 340.8,
-    "y": -298.4,
+    "x": 448.8,
+    "y": -366.3,
     "definition": "warrior_berserk_subclass"
   },
   "warrior_defenders_class": {
-    "x": 170.0,
-    "y": 0.0,
+    "x": 212.7,
+    "y": 4.2,
     "definition": "warrior_defenders_class"
   },
   "warrior_defenders_final": {
-    "x": 926.0,
+    "x": 1203.8,
     "y": 0.0,
     "definition": "warrior_defenders_final"
   },
   "warrior_defenders_skill_1": {
-    "x": 200.0,
-    "y": 0.0,
+    "x": 268.5,
+    "y": -3.5,
     "definition": "warrior_defenders_skill_1"
   },
   "warrior_defenders_skill_10": {
-    "x": 602.0,
-    "y": 0.0,
+    "x": 783.1,
+    "y": 1.2,
     "definition": "warrior_defenders_skill_10"
   },
   "warrior_defenders_skill_11": {
-    "x": 632.0,
-    "y": 0.0,
+    "x": 829.6,
+    "y": -0.0,
     "definition": "warrior_defenders_skill_11"
   },
   "warrior_defenders_skill_11_1": {
-    "x": 662.0,
-    "y": 12.0,
+    "x": 859.2,
+    "y": 26.9,
     "definition": "warrior_defenders_skill_11_1"
   },
   "warrior_defenders_skill_11_10": {
-    "x": 716.0,
-    "y": -30.0,
+    "x": 934.1,
+    "y": -38.4,
     "definition": "warrior_defenders_skill_11_10"
   },
   "warrior_defenders_skill_11_11": {
-    "x": 740.0,
-    "y": -48.0,
+    "x": 966.6,
+    "y": -71.6,
     "definition": "warrior_defenders_skill_11_11"
   },
   "warrior_defenders_skill_11_12": {
-    "x": 770.0,
-    "y": -36.0,
+    "x": 1004.7,
+    "y": -44.9,
     "definition": "warrior_defenders_skill_11_12"
   },
   "warrior_defenders_skill_11_13": {
-    "x": 806.0,
-    "y": -18.0,
+    "x": 1047.8,
+    "y": -23.4,
     "definition": "warrior_defenders_skill_11_13"
   },
   "warrior_defenders_skill_11_2": {
-    "x": 692.0,
-    "y": 12.0,
+    "x": 898.6,
+    "y": 20.0,
     "definition": "warrior_defenders_skill_11_2"
   },
   "warrior_defenders_skill_11_3": {
-    "x": 716.0,
-    "y": 30.0,
+    "x": 934.1,
+    "y": 38.4,
     "definition": "warrior_defenders_skill_11_3"
   },
   "warrior_defenders_skill_11_4": {
-    "x": 740.0,
-    "y": 48.0,
+    "x": 966.7,
+    "y": 71.6,
     "definition": "warrior_defenders_skill_11_4"
   },
   "warrior_defenders_skill_11_5": {
-    "x": 770.0,
-    "y": 36.0,
+    "x": 1004.7,
+    "y": 44.9,
     "definition": "warrior_defenders_skill_11_5"
   },
   "warrior_defenders_skill_11_6": {
-    "x": 806.0,
-    "y": 18.0,
+    "x": 1047.8,
+    "y": 23.4,
     "definition": "warrior_defenders_skill_11_6"
   },
   "warrior_defenders_skill_11_8": {
-    "x": 662.0,
-    "y": -12.0,
+    "x": 859.2,
+    "y": -26.9,
     "definition": "warrior_defenders_skill_11_8"
   },
   "warrior_defenders_skill_11_9": {
-    "x": 692.0,
-    "y": -12.0,
+    "x": 898.6,
+    "y": -20.0,
     "definition": "warrior_defenders_skill_11_9"
   },
   "warrior_defenders_skill_12": {
-    "x": 842.0,
+    "x": 1094.6,
     "y": 0.0,
     "definition": "warrior_defenders_skill_12"
   },
   "warrior_defenders_skill_13": {
-    "x": 884.0,
+    "x": 1149.2,
     "y": 0.0,
     "definition": "warrior_defenders_skill_13"
   },
   "warrior_defenders_skill_2": {
-    "x": 230.0,
-    "y": 0.0,
+    "x": 308.5,
+    "y": -4.0,
     "definition": "warrior_defenders_skill_2"
   },
   "warrior_defenders_skill_3": {
-    "x": 260.0,
-    "y": 0.0,
+    "x": 347.9,
+    "y": 2.5,
     "definition": "warrior_defenders_skill_3"
   },
   "warrior_defenders_skill_4": {
-    "x": 290.0,
-    "y": 0.0,
+    "x": 394.3,
+    "y": -0.1,
     "definition": "warrior_defenders_skill_4"
   },
   "warrior_defenders_skill_4_1": {
-    "x": 308.0,
-    "y": 24.0,
+    "x": 406.3,
+    "y": 44.9,
     "definition": "warrior_defenders_skill_4_1"
   },
   "warrior_defenders_skill_4_2": {
-    "x": 326.0,
-    "y": 48.0,
+    "x": 428.6,
+    "y": 78.1,
     "definition": "warrior_defenders_skill_4_2"
   },
   "warrior_defenders_skill_4_3": {
-    "x": 344.0,
-    "y": 24.0,
+    "x": 446.1,
+    "y": 40.0,
     "definition": "warrior_defenders_skill_4_3"
   },
   "warrior_defenders_skill_4_4": {
-    "x": 308.0,
-    "y": -24.0,
+    "x": 406.6,
+    "y": -44.9,
     "definition": "warrior_defenders_skill_4_4"
   },
   "warrior_defenders_skill_4_5": {
-    "x": 326.0,
-    "y": -48.0,
+    "x": 428.7,
+    "y": -78.2,
     "definition": "warrior_defenders_skill_4_5"
   },
   "warrior_defenders_skill_4_6": {
-    "x": 344.0,
-    "y": -24.0,
+    "x": 446.4,
+    "y": -39.9,
     "definition": "warrior_defenders_skill_4_6"
   },
   "warrior_defenders_skill_5": {
-    "x": 362.0,
-    "y": 0.0,
+    "x": 442.3,
+    "y": 0.1,
     "definition": "warrior_defenders_skill_5"
   },
   "warrior_defenders_skill_6": {
-    "x": 392.0,
-    "y": 0.0,
+    "x": 488.7,
+    "y": -2.2,
     "definition": "warrior_defenders_skill_6"
   },
   "warrior_defenders_skill_6_1": {
-    "x": 398.0,
-    "y": 30.0,
+    "x": 517.2,
+    "y": 43.9,
     "definition": "warrior_defenders_skill_6_1"
   },
   "warrior_defenders_skill_6_2": {
-    "x": 404.0,
-    "y": 66.0,
+    "x": 524.0,
+    "y": 89.9,
     "definition": "warrior_defenders_skill_6_2"
   },
   "warrior_defenders_skill_6_3": {
-    "x": 398.0,
-    "y": -30.0,
+    "x": 518.5,
+    "y": -42.5,
     "definition": "warrior_defenders_skill_6_3"
   },
   "warrior_defenders_skill_6_4": {
-    "x": 404.0,
-    "y": -66.0,
+    "x": 520.9,
+    "y": -90.7,
     "definition": "warrior_defenders_skill_6_4"
   },
   "warrior_defenders_skill_8": {
-    "x": 482.0,
-    "y": 0.0,
+    "x": 648.4,
+    "y": 16.9,
     "definition": "warrior_defenders_skill_8"
   },
   "warrior_defenders_skill_9": {
-    "x": 512.0,
-    "y": 0.0,
+    "x": 682.7,
+    "y": -3.7,
     "definition": "warrior_defenders_skill_9"
   },
   "warrior_defenders_skill_9_1": {
-    "x": 542.0,
-    "y": 12.0,
+    "x": 703.3,
+    "y": 30.6,
     "definition": "warrior_defenders_skill_9_1"
   },
   "warrior_defenders_skill_9_2": {
-    "x": 572.0,
-    "y": 12.0,
+    "x": 742.9,
+    "y": 24.5,
     "definition": "warrior_defenders_skill_9_2"
   },
   "warrior_defenders_skill_9_3": {
-    "x": 542.0,
-    "y": -12.0,
+    "x": 706.1,
+    "y": -36.1,
     "definition": "warrior_defenders_skill_9_3"
   },
   "warrior_defenders_skill_9_4": {
-    "x": 572.0,
-    "y": -12.0,
+    "x": 744.3,
+    "y": -24.6,
     "definition": "warrior_defenders_skill_9_4"
   },
   "warrior_defenders_skill_split": {
-    "x": 422.0,
-    "y": 0.0,
+    "x": 541.3,
+    "y": 4.1,
     "definition": "warrior_defenders_skill_split"
   },
   "warrior_defenders_subclass": {
-    "x": 452.0,
-    "y": 0.0,
+    "x": 600.1,
+    "y": -5.0,
     "definition": "warrior_defenders_subclass"
   },
   "warrior_paladin_final": {
-    "x": 782.0,
-    "y": -120.0,
+    "x": 1016.6,
+    "y": -156.0,
     "definition": "warrior_paladin_final"
   },
   "warrior_paladin_skill_2": {
-    "x": 476.0,
-    "y": -54.0,
+    "x": 627.3,
+    "y": -74.9,
     "definition": "warrior_paladin_skill_2"
   },
   "warrior_paladin_skill_2_1_1": {
-    "x": 494.0,
-    "y": -90.0,
+    "x": 638.9,
+    "y": -118.6,
     "definition": "warrior_paladin_skill_2_1_1"
   },
   "warrior_paladin_skill_2_1_2": {
-    "x": 506.0,
-    "y": -120.0,
+    "x": 656.9,
+    "y": -154.3,
     "definition": "warrior_paladin_skill_2_1_2"
   },
   "warrior_paladin_skill_2_1_3": {
-    "x": 518.0,
-    "y": -144.0,
+    "x": 674.8,
+    "y": -190.1,
     "definition": "warrior_paladin_skill_2_1_3"
   },
   "warrior_paladin_skill_2_1_4": {
-    "x": 476.0,
-    "y": -144.0,
+    "x": 618.8,
+    "y": -187.2,
     "definition": "warrior_paladin_skill_2_1_4"
   },
   "warrior_paladin_skill_2_1_5": {
-    "x": 542.0,
-    "y": -120.0,
+    "x": 704.6,
+    "y": -156.0,
     "definition": "warrior_paladin_skill_2_1_5"
   },
   "warrior_paladin_skill_2_1_6": {
-    "x": 572.0,
-    "y": -144.0,
+    "x": 743.6,
+    "y": -187.2,
     "definition": "warrior_paladin_skill_2_1_6"
   },
   "warrior_paladin_skill_2_1_7": {
-    "x": 608.0,
-    "y": -156.0,
+    "x": 790.4,
+    "y": -202.8,
     "definition": "warrior_paladin_skill_2_1_7"
   },
   "warrior_paladin_skill_2_1_8": {
-    "x": 644.0,
-    "y": -168.0,
+    "x": 837.2,
+    "y": -218.4,
     "definition": "warrior_paladin_skill_2_1_8"
   },
   "warrior_paladin_skill_2_1_8_1": {
-    "x": 680.0,
-    "y": -192.0,
+    "x": 884.0,
+    "y": -249.6,
     "definition": "warrior_paladin_skill_2_1_8_1"
   },
   "warrior_paladin_skill_2_1_9": {
-    "x": 674.0,
-    "y": -144.0,
+    "x": 876.2,
+    "y": -187.2,
     "definition": "warrior_paladin_skill_2_1_9"
   },
   "warrior_paladin_skill_2_2_1": {
-    "x": 512.0,
-    "y": -72.0,
+    "x": 666.9,
+    "y": -90.1,
     "definition": "warrior_paladin_skill_2_2_1"
   },
   "warrior_paladin_skill_2_2_2": {
-    "x": 542.0,
-    "y": -84.0,
+    "x": 701.6,
+    "y": -110.0,
     "definition": "warrior_paladin_skill_2_2_2"
   },
   "warrior_paladin_skill_2_2_3": {
-    "x": 572.0,
-    "y": -84.0,
+    "x": 748.1,
+    "y": -109.2,
     "definition": "warrior_paladin_skill_2_2_3"
   },
   "warrior_paladin_skill_2_2_4": {
-    "x": 608.0,
-    "y": -66.0,
+    "x": 789.9,
+    "y": -85.8,
     "definition": "warrior_paladin_skill_2_2_4"
   },
   "warrior_paladin_skill_2_2_5": {
-    "x": 608.0,
-    "y": -102.0,
+    "x": 789.9,
+    "y": -132.6,
     "definition": "warrior_paladin_skill_2_2_5"
   },
   "warrior_paladin_skill_2_2_6": {
-    "x": 638.0,
-    "y": -66.0,
+    "x": 829.9,
+    "y": -85.8,
     "definition": "warrior_paladin_skill_2_2_6"
   },
   "warrior_paladin_skill_2_2_7": {
-    "x": 638.0,
-    "y": -102.0,
+    "x": 829.9,
+    "y": -132.6,
     "definition": "warrior_paladin_skill_2_2_7"
   },
   "warrior_paladin_skill_2_2_8": {
-    "x": 668.0,
-    "y": -84.0,
+    "x": 864.7,
+    "y": -109.2,
     "definition": "warrior_paladin_skill_2_2_8"
   },
   "warrior_paladin_skill_2_2_9": {
-    "x": 698.0,
-    "y": -84.0,
+    "x": 911.1,
+    "y": -109.2,
     "definition": "warrior_paladin_skill_2_2_9"
   },
   "warrior_paladin_skill_3": {
-    "x": 710.0,
-    "y": -120.0,
+    "x": 922.5,
+    "y": -156.0,
     "definition": "warrior_paladin_skill_3"
   },
   "warrior_paladin_skill_4": {
-    "x": 740.0,
-    "y": -120.0,
+    "x": 962.5,
+    "y": -156.0,
     "definition": "warrior_paladin_skill_4"
   },
   "warrior_paladin_subclass": {
-    "x": 452.0,
-    "y": -30.0,
+    "x": 575.0,
+    "y": -66.0,
     "definition": "warrior_paladin_subclass"
   },
   "warrior_swordsman_final": {
-    "x": 468.1,
-    "y": -637.8,
+    "x": 611.5,
+    "y": -832.1,
     "definition": "warrior_swordsman_final"
   },
   "warrior_swordsman_skill_2": {
-    "x": 298.4,
-    "y": -374.8,
+    "x": 389.2,
+    "y": -492.1,
     "definition": "warrior_swordsman_skill_2"
   },
   "warrior_swordsman_skill_2_1_1": {
-    "x": 285.7,
-    "y": -413.0,
+    "x": 367.9,
+    "y": -535.6,
     "definition": "warrior_swordsman_skill_2_1_1"
   },
   "warrior_swordsman_skill_2_1_2": {
-    "x": 272.9,
-    "y": -442.6,
+    "x": 355.3,
+    "y": -573.6,
     "definition": "warrior_swordsman_skill_2_1_2"
   },
   "warrior_swordsman_skill_2_1_3": {
-    "x": 264.5,
-    "y": -468.1,
+    "x": 342.8,
+    "y": -611.6,
     "definition": "warrior_swordsman_skill_2_1_3"
   },
   "warrior_swordsman_skill_2_1_4": {
-    "x": 234.8,
-    "y": -438.4,
+    "x": 305.2,
+    "y": -569.9,
     "definition": "warrior_swordsman_skill_2_1_4"
   },
   "warrior_swordsman_skill_2_1_5": {
-    "x": 298.4,
-    "y": -468.1,
+    "x": 387.9,
+    "y": -608.5,
     "definition": "warrior_swordsman_skill_2_1_5"
   },
   "warrior_swordsman_skill_2_1_6": {
-    "x": 302.6,
-    "y": -506.3,
+    "x": 393.4,
+    "y": -658.2,
     "definition": "warrior_swordsman_skill_2_1_6"
   },
   "warrior_swordsman_skill_2_1_7": {
-    "x": 319.6,
-    "y": -540.2,
+    "x": 415.5,
+    "y": -702.3,
     "definition": "warrior_swordsman_skill_2_1_7"
   },
   "warrior_swordsman_skill_2_1_8": {
-    "x": 336.6,
-    "y": -574.2,
+    "x": 437.6,
+    "y": -746.5,
     "definition": "warrior_swordsman_skill_2_1_8"
   },
   "warrior_swordsman_skill_2_1_8_1": {
-    "x": 345.1,
-    "y": -616.6,
+    "x": 448.6,
+    "y": -801.6,
     "definition": "warrior_swordsman_skill_2_1_8_1"
   },
   "warrior_swordsman_skill_2_1_9": {
-    "x": 374.8,
-    "y": -578.4,
+    "x": 487.2,
+    "y": -751.9,
     "definition": "warrior_swordsman_skill_2_1_9"
   },
   "warrior_swordsman_skill_2_2_1": {
-    "x": 311.1,
-    "y": -413.0,
+    "x": 407.9,
+    "y": -535.3,
     "definition": "warrior_swordsman_skill_2_2_1"
   },
   "warrior_swordsman_skill_2_2_2": {
-    "x": 323.9,
-    "y": -442.6,
+    "x": 418.4,
+    "y": -573.9,
     "definition": "warrior_swordsman_skill_2_2_2"
   },
   "warrior_swordsman_skill_2_2_3": {
-    "x": 345.1,
-    "y": -463.9,
+    "x": 451.8,
+    "y": -606.2,
     "definition": "warrior_swordsman_skill_2_2_3"
   },
   "warrior_swordsman_skill_2_2_4": {
-    "x": 383.3,
-    "y": -476.6,
+    "x": 497.9,
+    "y": -619.2,
     "definition": "warrior_swordsman_skill_2_2_4"
   },
   "warrior_swordsman_skill_2_2_5": {
-    "x": 357.8,
-    "y": -502.0,
+    "x": 464.8,
+    "y": -652.3,
     "definition": "warrior_swordsman_skill_2_2_5"
   },
   "warrior_swordsman_skill_2_2_6": {
-    "x": 404.5,
-    "y": -497.8,
+    "x": 526.2,
+    "y": -647.5,
     "definition": "warrior_swordsman_skill_2_2_6"
   },
   "warrior_swordsman_skill_2_2_7": {
-    "x": 379.0,
-    "y": -523.3,
+    "x": 493.0,
+    "y": -680.6,
     "definition": "warrior_swordsman_skill_2_2_7"
   },
   "warrior_swordsman_skill_2_2_8": {
-    "x": 413.0,
-    "y": -531.7,
+    "x": 534.0,
+    "y": -688.4,
     "definition": "warrior_swordsman_skill_2_2_8"
   },
   "warrior_swordsman_skill_2_2_9": {
-    "x": 434.2,
-    "y": -553.0,
+    "x": 568.6,
+    "y": -719.5,
     "definition": "warrior_swordsman_skill_2_2_9"
   },
   "warrior_swordsman_skill_3": {
-    "x": 417.2,
-    "y": -586.9,
+    "x": 539.4,
+    "y": -763.7,
     "definition": "warrior_swordsman_skill_3"
   },
   "warrior_swordsman_skill_4": {
-    "x": 442.6,
-    "y": -612.4,
+    "x": 574.0,
+    "y": -794.7,
     "definition": "warrior_swordsman_skill_4"
   },
   "warrior_swordsman_subclass": {
-    "x": 298.4,
-    "y": -340.8,
+    "x": 361.9,
+    "y": -453.8,
     "definition": "warrior_swordsman_subclass"
   },
   "warrior_tank_final": {
-    "x": 782.0,
-    "y": 120.0,
+    "x": 1016.6,
+    "y": 156.0,
     "definition": "warrior_tank_final"
   },
   "warrior_tank_skill_2": {
-    "x": 476.0,
-    "y": 54.0,
+    "x": 626.5,
+    "y": 74.5,
     "definition": "warrior_tank_skill_2"
   },
   "warrior_tank_skill_2_1_1": {
-    "x": 494.0,
-    "y": 90.0,
+    "x": 638.9,
+    "y": 118.6,
     "definition": "warrior_tank_skill_2_1_1"
   },
   "warrior_tank_skill_2_1_2": {
-    "x": 506.0,
-    "y": 120.0,
+    "x": 656.9,
+    "y": 154.3,
     "definition": "warrior_tank_skill_2_1_2"
   },
   "warrior_tank_skill_2_1_3": {
-    "x": 518.0,
-    "y": 144.0,
+    "x": 674.8,
+    "y": 190.1,
     "definition": "warrior_tank_skill_2_1_3"
   },
   "warrior_tank_skill_2_1_4": {
-    "x": 476.0,
-    "y": 144.0,
+    "x": 618.8,
+    "y": 187.2,
     "definition": "warrior_tank_skill_2_1_4"
   },
   "warrior_tank_skill_2_1_5": {
-    "x": 542.0,
-    "y": 120.0,
+    "x": 704.6,
+    "y": 156.0,
     "definition": "warrior_tank_skill_2_1_5"
   },
   "warrior_tank_skill_2_1_6": {
-    "x": 572.0,
-    "y": 144.0,
+    "x": 743.6,
+    "y": 187.2,
     "definition": "warrior_tank_skill_2_1_6"
   },
   "warrior_tank_skill_2_1_7": {
-    "x": 608.0,
-    "y": 156.0,
+    "x": 790.4,
+    "y": 202.8,
     "definition": "warrior_tank_skill_2_1_7"
   },
   "warrior_tank_skill_2_1_8": {
-    "x": 644.0,
-    "y": 168.0,
+    "x": 837.2,
+    "y": 218.4,
     "definition": "warrior_tank_skill_2_1_8"
   },
   "warrior_tank_skill_2_1_8_1": {
-    "x": 680.0,
-    "y": 192.0,
+    "x": 884.0,
+    "y": 249.6,
     "definition": "warrior_tank_skill_2_1_8_1"
   },
   "warrior_tank_skill_2_1_9": {
-    "x": 674.0,
-    "y": 144.0,
+    "x": 876.2,
+    "y": 187.2,
     "definition": "warrior_tank_skill_2_1_9"
   },
   "warrior_tank_skill_2_2_1": {
-    "x": 512.0,
-    "y": 72.0,
+    "x": 666.9,
+    "y": 90.1,
     "definition": "warrior_tank_skill_2_2_1"
   },
   "warrior_tank_skill_2_2_2": {
-    "x": 542.0,
-    "y": 84.0,
+    "x": 701.6,
+    "y": 110.0,
     "definition": "warrior_tank_skill_2_2_2"
   },
   "warrior_tank_skill_2_2_3": {
-    "x": 572.0,
-    "y": 84.0,
+    "x": 748.1,
+    "y": 109.2,
     "definition": "warrior_tank_skill_2_2_3"
   },
   "warrior_tank_skill_2_2_4": {
-    "x": 608.0,
-    "y": 66.0,
+    "x": 789.9,
+    "y": 85.8,
     "definition": "warrior_tank_skill_2_2_4"
   },
   "warrior_tank_skill_2_2_5": {
-    "x": 608.0,
-    "y": 102.0,
+    "x": 789.9,
+    "y": 132.6,
     "definition": "warrior_tank_skill_2_2_5"
   },
   "warrior_tank_skill_2_2_6": {
-    "x": 638.0,
-    "y": 66.0,
+    "x": 829.9,
+    "y": 85.8,
     "definition": "warrior_tank_skill_2_2_6"
   },
   "warrior_tank_skill_2_2_7": {
-    "x": 638.0,
-    "y": 102.0,
+    "x": 829.9,
+    "y": 132.6,
     "definition": "warrior_tank_skill_2_2_7"
   },
   "warrior_tank_skill_2_2_8": {
-    "x": 668.0,
-    "y": 84.0,
+    "x": 864.7,
+    "y": 109.2,
     "definition": "warrior_tank_skill_2_2_8"
   },
   "warrior_tank_skill_2_2_9": {
-    "x": 698.0,
-    "y": 84.0,
+    "x": 911.1,
+    "y": 109.2,
     "definition": "warrior_tank_skill_2_2_9"
   },
   "warrior_tank_skill_3": {
-    "x": 710.0,
-    "y": 120.0,
+    "x": 922.5,
+    "y": 156.0,
     "definition": "warrior_tank_skill_3"
   },
   "warrior_tank_skill_4": {
-    "x": 740.0,
-    "y": 120.0,
+    "x": 962.5,
+    "y": 156.0,
     "definition": "warrior_tank_skill_4"
   },
   "warrior_tank_subclass": {
-    "x": 452.0,
-    "y": 30.0,
+    "x": 575.6,
+    "y": 59.9,
     "definition": "warrior_tank_subclass"
   },
   "wizard_blood_final": {
-    "x": 637.8,
-    "y": 468.1,
+    "x": 830.3,
+    "y": 609.7,
     "definition": "wizard_blood_final"
   },
   "wizard_blood_skill_2": {
-    "x": 374.8,
-    "y": 298.4,
+    "x": 498.3,
+    "y": 390.8,
     "definition": "wizard_blood_skill_2"
   },
   "wizard_blood_skill_2_1_1": {
-    "x": 413.0,
-    "y": 285.7,
+    "x": 535.6,
+    "y": 367.9,
     "definition": "wizard_blood_skill_2_1_1"
   },
   "wizard_blood_skill_2_1_2": {
-    "x": 442.6,
-    "y": 272.9,
+    "x": 573.6,
+    "y": 355.3,
     "definition": "wizard_blood_skill_2_1_2"
   },
   "wizard_blood_skill_2_1_3": {
-    "x": 468.1,
-    "y": 264.5,
+    "x": 611.6,
+    "y": 342.8,
     "definition": "wizard_blood_skill_2_1_3"
   },
   "wizard_blood_skill_2_1_4": {
-    "x": 438.4,
-    "y": 234.8,
+    "x": 569.9,
+    "y": 305.2,
     "definition": "wizard_blood_skill_2_1_4"
   },
   "wizard_blood_skill_2_1_5": {
-    "x": 468.1,
-    "y": 298.4,
+    "x": 608.5,
+    "y": 387.9,
     "definition": "wizard_blood_skill_2_1_5"
   },
   "wizard_blood_skill_2_1_6": {
-    "x": 506.3,
-    "y": 302.6,
+    "x": 658.2,
+    "y": 393.4,
     "definition": "wizard_blood_skill_2_1_6"
   },
   "wizard_blood_skill_2_1_7": {
-    "x": 540.2,
-    "y": 319.6,
+    "x": 702.3,
+    "y": 415.5,
     "definition": "wizard_blood_skill_2_1_7"
   },
   "wizard_blood_skill_2_1_8": {
-    "x": 574.2,
-    "y": 336.6,
+    "x": 746.5,
+    "y": 437.6,
     "definition": "wizard_blood_skill_2_1_8"
   },
   "wizard_blood_skill_2_1_8_1": {
-    "x": 616.6,
-    "y": 345.1,
+    "x": 801.6,
+    "y": 448.6,
     "definition": "wizard_blood_skill_2_1_8_1"
   },
   "wizard_blood_skill_2_1_9": {
-    "x": 578.4,
-    "y": 374.8,
+    "x": 751.9,
+    "y": 487.2,
     "definition": "wizard_blood_skill_2_1_9"
   },
   "wizard_blood_skill_2_2_1": {
-    "x": 413.0,
-    "y": 311.1,
+    "x": 535.3,
+    "y": 407.9,
     "definition": "wizard_blood_skill_2_2_1"
   },
   "wizard_blood_skill_2_2_2": {
-    "x": 442.6,
-    "y": 323.9,
+    "x": 573.9,
+    "y": 418.4,
     "definition": "wizard_blood_skill_2_2_2"
   },
   "wizard_blood_skill_2_2_3": {
-    "x": 463.9,
-    "y": 345.1,
+    "x": 606.2,
+    "y": 451.8,
     "definition": "wizard_blood_skill_2_2_3"
   },
   "wizard_blood_skill_2_2_4": {
-    "x": 476.6,
-    "y": 383.3,
+    "x": 619.2,
+    "y": 497.9,
     "definition": "wizard_blood_skill_2_2_4"
   },
   "wizard_blood_skill_2_2_5": {
-    "x": 502.0,
-    "y": 357.8,
+    "x": 652.3,
+    "y": 464.8,
     "definition": "wizard_blood_skill_2_2_5"
   },
   "wizard_blood_skill_2_2_6": {
-    "x": 497.8,
-    "y": 404.5,
+    "x": 647.5,
+    "y": 526.2,
     "definition": "wizard_blood_skill_2_2_6"
   },
   "wizard_blood_skill_2_2_7": {
-    "x": 523.3,
-    "y": 379.0,
+    "x": 680.6,
+    "y": 493.0,
     "definition": "wizard_blood_skill_2_2_7"
   },
   "wizard_blood_skill_2_2_8": {
-    "x": 531.7,
-    "y": 413.0,
+    "x": 688.4,
+    "y": 534.0,
     "definition": "wizard_blood_skill_2_2_8"
   },
   "wizard_blood_skill_2_2_9": {
-    "x": 553.0,
-    "y": 434.2,
+    "x": 719.3,
+    "y": 568.8,
     "definition": "wizard_blood_skill_2_2_9"
   },
   "wizard_blood_skill_3": {
-    "x": 586.9,
-    "y": 417.2,
+    "x": 762.0,
+    "y": 537.4,
     "definition": "wizard_blood_skill_3"
   },
   "wizard_blood_skill_4": {
-    "x": 608.1,
-    "y": 438.4,
+    "x": 792.7,
+    "y": 572.3,
     "definition": "wizard_blood_skill_4"
   },
   "wizard_blood_subclass": {
-    "x": 340.8,
-    "y": 298.4,
+    "x": 455.3,
+    "y": 359.8,
     "definition": "wizard_blood_subclass"
   },
   "wizard_ender_final": {
-    "x": -468.1,
-    "y": 637.8,
+    "x": -609.7,
+    "y": 830.3,
     "definition": "wizard_ender_final"
   },
   "wizard_ender_skill_2": {
-    "x": -298.4,
-    "y": 374.8,
+    "x": -390.8,
+    "y": 498.3,
     "definition": "wizard_ender_skill_2"
   },
   "wizard_ender_skill_2_1_1": {
-    "x": -285.7,
-    "y": 413.0,
+    "x": -367.9,
+    "y": 535.6,
     "definition": "wizard_ender_skill_2_1_1"
   },
   "wizard_ender_skill_2_1_2": {
-    "x": -272.9,
-    "y": 442.6,
+    "x": -355.3,
+    "y": 573.6,
     "definition": "wizard_ender_skill_2_1_2"
   },
   "wizard_ender_skill_2_1_3": {
-    "x": -264.5,
-    "y": 468.1,
+    "x": -342.8,
+    "y": 611.6,
     "definition": "wizard_ender_skill_2_1_3"
   },
   "wizard_ender_skill_2_1_4": {
-    "x": -234.8,
-    "y": 438.4,
+    "x": -305.2,
+    "y": 569.9,
     "definition": "wizard_ender_skill_2_1_4"
   },
   "wizard_ender_skill_2_1_5": {
-    "x": -298.4,
-    "y": 468.1,
+    "x": -387.9,
+    "y": 608.5,
     "definition": "wizard_ender_skill_2_1_5"
   },
   "wizard_ender_skill_2_1_6": {
-    "x": -302.6,
-    "y": 506.3,
+    "x": -393.4,
+    "y": 658.2,
     "definition": "wizard_ender_skill_2_1_6"
   },
   "wizard_ender_skill_2_1_7": {
-    "x": -319.6,
-    "y": 540.2,
+    "x": -415.5,
+    "y": 702.3,
     "definition": "wizard_ender_skill_2_1_7"
   },
   "wizard_ender_skill_2_1_8": {
-    "x": -336.6,
-    "y": 574.2,
+    "x": -437.6,
+    "y": 746.5,
     "definition": "wizard_ender_skill_2_1_8"
   },
   "wizard_ender_skill_2_1_8_1": {
-    "x": -345.1,
-    "y": 616.6,
+    "x": -448.6,
+    "y": 801.6,
     "definition": "wizard_ender_skill_2_1_8_1"
   },
   "wizard_ender_skill_2_1_9": {
-    "x": -374.8,
-    "y": 578.4,
+    "x": -487.2,
+    "y": 751.9,
     "definition": "wizard_ender_skill_2_1_9"
   },
   "wizard_ender_skill_2_2_1": {
-    "x": -311.1,
-    "y": 413.0,
+    "x": -407.9,
+    "y": 535.3,
     "definition": "wizard_ender_skill_2_2_1"
   },
   "wizard_ender_skill_2_2_2": {
-    "x": -323.9,
-    "y": 442.6,
+    "x": -418.4,
+    "y": 573.9,
     "definition": "wizard_ender_skill_2_2_2"
   },
   "wizard_ender_skill_2_2_3": {
-    "x": -345.1,
-    "y": 463.9,
+    "x": -451.8,
+    "y": 606.2,
     "definition": "wizard_ender_skill_2_2_3"
   },
   "wizard_ender_skill_2_2_4": {
-    "x": -383.3,
-    "y": 476.6,
+    "x": -497.9,
+    "y": 619.2,
     "definition": "wizard_ender_skill_2_2_4"
   },
   "wizard_ender_skill_2_2_5": {
-    "x": -357.8,
-    "y": 502.0,
+    "x": -464.8,
+    "y": 652.3,
     "definition": "wizard_ender_skill_2_2_5"
   },
   "wizard_ender_skill_2_2_6": {
-    "x": -404.5,
-    "y": 497.8,
+    "x": -526.2,
+    "y": 647.5,
     "definition": "wizard_ender_skill_2_2_6"
   },
   "wizard_ender_skill_2_2_7": {
-    "x": -379.0,
-    "y": 523.3,
+    "x": -493.0,
+    "y": 680.6,
     "definition": "wizard_ender_skill_2_2_7"
   },
   "wizard_ender_skill_2_2_8": {
-    "x": -413.0,
-    "y": 531.7,
+    "x": -534.0,
+    "y": 688.4,
     "definition": "wizard_ender_skill_2_2_8"
   },
   "wizard_ender_skill_2_2_9": {
-    "x": -434.2,
-    "y": 553.0,
+    "x": -568.8,
+    "y": 719.3,
     "definition": "wizard_ender_skill_2_2_9"
   },
   "wizard_ender_skill_3": {
-    "x": -417.2,
-    "y": 586.9,
+    "x": -537.4,
+    "y": 762.0,
     "definition": "wizard_ender_skill_3"
   },
   "wizard_ender_skill_4": {
-    "x": -438.4,
-    "y": 608.1,
+    "x": -572.3,
+    "y": 792.7,
     "definition": "wizard_ender_skill_4"
   },
   "wizard_ender_subclass": {
-    "x": -298.4,
-    "y": 340.8,
+    "x": -359.8,
+    "y": 455.3,
     "definition": "wizard_ender_subclass"
   },
   "wizard_holiness_final": {
-    "x": 468.1,
-    "y": 637.8,
+    "x": 609.7,
+    "y": 830.3,
     "definition": "wizard_holiness_final"
   },
   "wizard_holiness_skill_2": {
-    "x": 298.4,
-    "y": 374.8,
+    "x": 390.4,
+    "y": 497.5,
     "definition": "wizard_holiness_skill_2"
   },
   "wizard_holiness_skill_2_1_1": {
-    "x": 285.7,
-    "y": 413.0,
+    "x": 367.9,
+    "y": 535.6,
     "definition": "wizard_holiness_skill_2_1_1"
   },
   "wizard_holiness_skill_2_1_2": {
-    "x": 272.9,
-    "y": 442.6,
+    "x": 355.3,
+    "y": 573.6,
     "definition": "wizard_holiness_skill_2_1_2"
   },
   "wizard_holiness_skill_2_1_3": {
-    "x": 264.5,
-    "y": 468.1,
+    "x": 342.8,
+    "y": 611.6,
     "definition": "wizard_holiness_skill_2_1_3"
   },
   "wizard_holiness_skill_2_1_4": {
-    "x": 234.8,
-    "y": 438.4,
+    "x": 305.2,
+    "y": 569.9,
     "definition": "wizard_holiness_skill_2_1_4"
   },
   "wizard_holiness_skill_2_1_5": {
-    "x": 298.4,
-    "y": 468.1,
+    "x": 387.9,
+    "y": 608.5,
     "definition": "wizard_holiness_skill_2_1_5"
   },
   "wizard_holiness_skill_2_1_6": {
-    "x": 302.6,
-    "y": 506.3,
+    "x": 393.4,
+    "y": 658.2,
     "definition": "wizard_holiness_skill_2_1_6"
   },
   "wizard_holiness_skill_2_1_7": {
-    "x": 319.6,
-    "y": 540.2,
+    "x": 415.5,
+    "y": 702.3,
     "definition": "wizard_holiness_skill_2_1_7"
   },
   "wizard_holiness_skill_2_1_8": {
-    "x": 336.6,
-    "y": 574.2,
+    "x": 437.6,
+    "y": 746.5,
     "definition": "wizard_holiness_skill_2_1_8"
   },
   "wizard_holiness_skill_2_1_8_1": {
-    "x": 345.1,
-    "y": 616.6,
+    "x": 448.6,
+    "y": 801.6,
     "definition": "wizard_holiness_skill_2_1_8_1"
   },
   "wizard_holiness_skill_2_1_9": {
-    "x": 374.8,
-    "y": 578.4,
+    "x": 487.2,
+    "y": 751.9,
     "definition": "wizard_holiness_skill_2_1_9"
   },
   "wizard_holiness_skill_2_2_1": {
-    "x": 311.1,
-    "y": 413.0,
+    "x": 407.9,
+    "y": 535.3,
     "definition": "wizard_holiness_skill_2_2_1"
   },
   "wizard_holiness_skill_2_2_2": {
-    "x": 323.9,
-    "y": 442.6,
+    "x": 418.4,
+    "y": 573.9,
     "definition": "wizard_holiness_skill_2_2_2"
   },
   "wizard_holiness_skill_2_2_3": {
-    "x": 345.1,
-    "y": 463.9,
+    "x": 451.8,
+    "y": 606.2,
     "definition": "wizard_holiness_skill_2_2_3"
   },
   "wizard_holiness_skill_2_2_4": {
-    "x": 383.3,
-    "y": 476.6,
+    "x": 497.9,
+    "y": 619.2,
     "definition": "wizard_holiness_skill_2_2_4"
   },
   "wizard_holiness_skill_2_2_5": {
-    "x": 357.8,
-    "y": 502.0,
+    "x": 464.8,
+    "y": 652.3,
     "definition": "wizard_holiness_skill_2_2_5"
   },
   "wizard_holiness_skill_2_2_6": {
-    "x": 404.5,
-    "y": 497.8,
+    "x": 526.2,
+    "y": 647.5,
     "definition": "wizard_holiness_skill_2_2_6"
   },
   "wizard_holiness_skill_2_2_7": {
-    "x": 379.0,
-    "y": 523.3,
+    "x": 493.0,
+    "y": 680.6,
     "definition": "wizard_holiness_skill_2_2_7"
   },
   "wizard_holiness_skill_2_2_8": {
-    "x": 413.0,
-    "y": 531.7,
+    "x": 534.0,
+    "y": 688.4,
     "definition": "wizard_holiness_skill_2_2_8"
   },
   "wizard_holiness_skill_2_2_9": {
-    "x": 434.2,
-    "y": 553.0,
+    "x": 568.8,
+    "y": 719.3,
     "definition": "wizard_holiness_skill_2_2_9"
   },
   "wizard_holiness_skill_3": {
-    "x": 417.2,
-    "y": 586.9,
+    "x": 537.4,
+    "y": 762.0,
     "definition": "wizard_holiness_skill_3"
   },
   "wizard_holiness_skill_4": {
-    "x": 438.4,
-    "y": 608.1,
+    "x": 572.3,
+    "y": 792.7,
     "definition": "wizard_holiness_skill_4"
   },
   "wizard_holiness_subclass": {
-    "x": 298.4,
-    "y": 340.8,
+    "x": 364.5,
+    "y": 451.3,
     "definition": "wizard_holiness_subclass"
   },
   "wizard_ice_final": {
-    "x": -120.0,
-    "y": 782.0,
+    "x": -156.0,
+    "y": 1018.2,
     "definition": "wizard_ice_final"
   },
   "wizard_ice_skill_2": {
-    "x": -54.0,
-    "y": 476.0,
+    "x": -76.0,
+    "y": 628.7,
     "definition": "wizard_ice_skill_2"
   },
   "wizard_ice_skill_2_1_1": {
-    "x": -90.0,
-    "y": 494.0,
+    "x": -118.6,
+    "y": 638.9,
     "definition": "wizard_ice_skill_2_1_1"
   },
   "wizard_ice_skill_2_1_2": {
-    "x": -120.0,
-    "y": 506.0,
+    "x": -154.3,
+    "y": 656.9,
     "definition": "wizard_ice_skill_2_1_2"
   },
   "wizard_ice_skill_2_1_3": {
-    "x": -144.0,
-    "y": 518.0,
+    "x": -190.1,
+    "y": 674.8,
     "definition": "wizard_ice_skill_2_1_3"
   },
   "wizard_ice_skill_2_1_4": {
-    "x": -144.0,
-    "y": 476.0,
+    "x": -187.2,
+    "y": 618.8,
     "definition": "wizard_ice_skill_2_1_4"
   },
   "wizard_ice_skill_2_1_5": {
-    "x": -120.0,
-    "y": 542.0,
+    "x": -156.0,
+    "y": 704.6,
     "definition": "wizard_ice_skill_2_1_5"
   },
   "wizard_ice_skill_2_1_6": {
-    "x": -144.0,
-    "y": 572.0,
+    "x": -187.2,
+    "y": 743.6,
     "definition": "wizard_ice_skill_2_1_6"
   },
   "wizard_ice_skill_2_1_7": {
-    "x": -156.0,
-    "y": 608.0,
+    "x": -202.8,
+    "y": 790.4,
     "definition": "wizard_ice_skill_2_1_7"
   },
   "wizard_ice_skill_2_1_8": {
-    "x": -168.0,
-    "y": 644.0,
+    "x": -218.4,
+    "y": 837.2,
     "definition": "wizard_ice_skill_2_1_8"
   },
   "wizard_ice_skill_2_1_8_1": {
-    "x": -192.0,
-    "y": 680.0,
+    "x": -249.6,
+    "y": 884.0,
     "definition": "wizard_ice_skill_2_1_8_1"
   },
   "wizard_ice_skill_2_1_9": {
-    "x": -144.0,
-    "y": 674.0,
+    "x": -187.2,
+    "y": 876.2,
     "definition": "wizard_ice_skill_2_1_9"
   },
   "wizard_ice_skill_2_2_1": {
-    "x": -72.0,
-    "y": 512.0,
+    "x": -90.1,
+    "y": 666.9,
     "definition": "wizard_ice_skill_2_2_1"
   },
   "wizard_ice_skill_2_2_2": {
-    "x": -84.0,
-    "y": 542.0,
+    "x": -110.0,
+    "y": 701.6,
     "definition": "wizard_ice_skill_2_2_2"
   },
   "wizard_ice_skill_2_2_3": {
-    "x": -84.0,
-    "y": 572.0,
+    "x": -109.2,
+    "y": 748.1,
     "definition": "wizard_ice_skill_2_2_3"
   },
   "wizard_ice_skill_2_2_4": {
-    "x": -66.0,
-    "y": 608.0,
+    "x": -85.8,
+    "y": 789.9,
     "definition": "wizard_ice_skill_2_2_4"
   },
   "wizard_ice_skill_2_2_5": {
-    "x": -102.0,
-    "y": 608.0,
+    "x": -132.6,
+    "y": 789.9,
     "definition": "wizard_ice_skill_2_2_5"
   },
   "wizard_ice_skill_2_2_6": {
-    "x": -66.0,
-    "y": 638.0,
+    "x": -85.8,
+    "y": 829.9,
     "definition": "wizard_ice_skill_2_2_6"
   },
   "wizard_ice_skill_2_2_7": {
-    "x": -102.0,
-    "y": 638.0,
+    "x": -132.6,
+    "y": 829.9,
     "definition": "wizard_ice_skill_2_2_7"
   },
   "wizard_ice_skill_2_2_8": {
-    "x": -84.0,
-    "y": 668.0,
+    "x": -109.3,
+    "y": 864.4,
     "definition": "wizard_ice_skill_2_2_8"
   },
   "wizard_ice_skill_2_2_9": {
-    "x": -84.0,
-    "y": 698.0,
+    "x": -106.5,
+    "y": 910.8,
     "definition": "wizard_ice_skill_2_2_9"
   },
   "wizard_ice_skill_3": {
-    "x": -120.0,
-    "y": 710.0,
+    "x": -158.9,
+    "y": 918.8,
     "definition": "wizard_ice_skill_3"
   },
   "wizard_ice_skill_4": {
-    "x": -120.0,
-    "y": 740.0,
+    "x": -155.8,
+    "y": 965.2,
     "definition": "wizard_ice_skill_4"
   },
   "wizard_ice_subclass": {
-    "x": -30.0,
-    "y": 452.0,
+    "x": -67.5,
+    "y": 576.3,
     "definition": "wizard_ice_subclass"
   },
   "wizard_lightning_final": {
-    "x": 120.0,
-    "y": 782.0,
+    "x": 156.0,
+    "y": 1018.2,
     "definition": "wizard_lightning_final"
   },
   "wizard_lightning_skill_2": {
-    "x": 54.0,
-    "y": 476.0,
+    "x": 75.8,
+    "y": 627.9,
     "definition": "wizard_lightning_skill_2"
   },
   "wizard_lightning_skill_2_1_1": {
-    "x": 90.0,
-    "y": 494.0,
+    "x": 118.6,
+    "y": 638.9,
     "definition": "wizard_lightning_skill_2_1_1"
   },
   "wizard_lightning_skill_2_1_2": {
-    "x": 120.0,
-    "y": 506.0,
+    "x": 154.3,
+    "y": 656.9,
     "definition": "wizard_lightning_skill_2_1_2"
   },
   "wizard_lightning_skill_2_1_3": {
-    "x": 144.0,
-    "y": 518.0,
+    "x": 190.1,
+    "y": 674.8,
     "definition": "wizard_lightning_skill_2_1_3"
   },
   "wizard_lightning_skill_2_1_4": {
-    "x": 144.0,
-    "y": 476.0,
+    "x": 187.2,
+    "y": 618.8,
     "definition": "wizard_lightning_skill_2_1_4"
   },
   "wizard_lightning_skill_2_1_5": {
-    "x": 120.0,
-    "y": 542.0,
+    "x": 156.0,
+    "y": 704.6,
     "definition": "wizard_lightning_skill_2_1_5"
   },
   "wizard_lightning_skill_2_1_6": {
-    "x": 144.0,
-    "y": 572.0,
+    "x": 187.2,
+    "y": 743.6,
     "definition": "wizard_lightning_skill_2_1_6"
   },
   "wizard_lightning_skill_2_1_7": {
-    "x": 156.0,
-    "y": 608.0,
+    "x": 202.8,
+    "y": 790.4,
     "definition": "wizard_lightning_skill_2_1_7"
   },
   "wizard_lightning_skill_2_1_8": {
-    "x": 168.0,
-    "y": 644.0,
+    "x": 218.4,
+    "y": 837.2,
     "definition": "wizard_lightning_skill_2_1_8"
   },
   "wizard_lightning_skill_2_1_8_1": {
-    "x": 192.0,
-    "y": 680.0,
+    "x": 249.6,
+    "y": 884.0,
     "definition": "wizard_lightning_skill_2_1_8_1"
   },
   "wizard_lightning_skill_2_1_9": {
-    "x": 144.0,
-    "y": 674.0,
+    "x": 187.2,
+    "y": 876.2,
     "definition": "wizard_lightning_skill_2_1_9"
   },
   "wizard_lightning_skill_2_2_1": {
-    "x": 72.0,
-    "y": 512.0,
+    "x": 90.1,
+    "y": 666.9,
     "definition": "wizard_lightning_skill_2_2_1"
   },
   "wizard_lightning_skill_2_2_2": {
-    "x": 84.0,
-    "y": 542.0,
+    "x": 110.0,
+    "y": 701.6,
     "definition": "wizard_lightning_skill_2_2_2"
   },
   "wizard_lightning_skill_2_2_3": {
-    "x": 84.0,
-    "y": 572.0,
+    "x": 109.2,
+    "y": 748.1,
     "definition": "wizard_lightning_skill_2_2_3"
   },
   "wizard_lightning_skill_2_2_4": {
-    "x": 66.0,
-    "y": 608.0,
+    "x": 85.8,
+    "y": 789.9,
     "definition": "wizard_lightning_skill_2_2_4"
   },
   "wizard_lightning_skill_2_2_5": {
-    "x": 102.0,
-    "y": 608.0,
+    "x": 132.6,
+    "y": 789.9,
     "definition": "wizard_lightning_skill_2_2_5"
   },
   "wizard_lightning_skill_2_2_6": {
-    "x": 66.0,
-    "y": 638.0,
+    "x": 85.8,
+    "y": 829.9,
     "definition": "wizard_lightning_skill_2_2_6"
   },
   "wizard_lightning_skill_2_2_7": {
-    "x": 102.0,
-    "y": 638.0,
+    "x": 132.6,
+    "y": 829.9,
     "definition": "wizard_lightning_skill_2_2_7"
   },
   "wizard_lightning_skill_2_2_8": {
-    "x": 84.0,
-    "y": 668.0,
+    "x": 109.3,
+    "y": 864.4,
     "definition": "wizard_lightning_skill_2_2_8"
   },
   "wizard_lightning_skill_2_2_9": {
-    "x": 84.0,
-    "y": 698.0,
+    "x": 106.5,
+    "y": 910.8,
     "definition": "wizard_lightning_skill_2_2_9"
   },
   "wizard_lightning_skill_3": {
-    "x": 120.0,
-    "y": 710.0,
+    "x": 158.9,
+    "y": 918.8,
     "definition": "wizard_lightning_skill_3"
   },
   "wizard_lightning_skill_4": {
-    "x": 120.0,
-    "y": 740.0,
+    "x": 155.8,
+    "y": 965.2,
     "definition": "wizard_lightning_skill_4"
   },
   "wizard_lightning_subclass": {
-    "x": 30.0,
-    "y": 452.0,
+    "x": 61.4,
+    "y": 576.8,
     "definition": "wizard_lightning_subclass"
   },
   "wizard_summon_final": {
-    "x": -637.8,
-    "y": 468.1,
+    "x": -830.3,
+    "y": 609.7,
     "definition": "wizard_summon_final"
   },
   "wizard_summon_skill_2": {
-    "x": -374.8,
-    "y": 298.4,
+    "x": -497.5,
+    "y": 390.4,
     "definition": "wizard_summon_skill_2"
   },
   "wizard_summon_skill_2_1_1": {
-    "x": -413.0,
-    "y": 285.7,
+    "x": -535.6,
+    "y": 367.9,
     "definition": "wizard_summon_skill_2_1_1"
   },
   "wizard_summon_skill_2_1_2": {
-    "x": -442.6,
-    "y": 272.9,
+    "x": -573.6,
+    "y": 355.3,
     "definition": "wizard_summon_skill_2_1_2"
   },
   "wizard_summon_skill_2_1_3": {
-    "x": -468.1,
-    "y": 264.5,
+    "x": -611.6,
+    "y": 342.8,
     "definition": "wizard_summon_skill_2_1_3"
   },
   "wizard_summon_skill_2_1_4": {
-    "x": -438.4,
-    "y": 234.8,
+    "x": -569.9,
+    "y": 305.2,
     "definition": "wizard_summon_skill_2_1_4"
   },
   "wizard_summon_skill_2_1_5": {
-    "x": -468.1,
-    "y": 298.4,
+    "x": -608.5,
+    "y": 387.9,
     "definition": "wizard_summon_skill_2_1_5"
   },
   "wizard_summon_skill_2_1_6": {
-    "x": -506.3,
-    "y": 302.6,
+    "x": -658.2,
+    "y": 393.4,
     "definition": "wizard_summon_skill_2_1_6"
   },
   "wizard_summon_skill_2_1_7": {
-    "x": -540.2,
-    "y": 319.6,
+    "x": -702.3,
+    "y": 415.5,
     "definition": "wizard_summon_skill_2_1_7"
   },
   "wizard_summon_skill_2_1_8": {
-    "x": -574.2,
-    "y": 336.6,
+    "x": -746.5,
+    "y": 437.6,
     "definition": "wizard_summon_skill_2_1_8"
   },
   "wizard_summon_skill_2_1_8_1": {
-    "x": -616.6,
-    "y": 345.1,
+    "x": -801.6,
+    "y": 448.6,
     "definition": "wizard_summon_skill_2_1_8_1"
   },
   "wizard_summon_skill_2_1_9": {
-    "x": -578.4,
-    "y": 374.8,
+    "x": -751.9,
+    "y": 487.2,
     "definition": "wizard_summon_skill_2_1_9"
   },
   "wizard_summon_skill_2_2_1": {
-    "x": -413.0,
-    "y": 311.1,
+    "x": -535.3,
+    "y": 407.9,
     "definition": "wizard_summon_skill_2_2_1"
   },
   "wizard_summon_skill_2_2_2": {
-    "x": -442.6,
-    "y": 323.9,
+    "x": -573.9,
+    "y": 418.4,
     "definition": "wizard_summon_skill_2_2_2"
   },
   "wizard_summon_skill_2_2_3": {
-    "x": -463.9,
-    "y": 345.1,
+    "x": -606.2,
+    "y": 451.8,
     "definition": "wizard_summon_skill_2_2_3"
   },
   "wizard_summon_skill_2_2_4": {
-    "x": -476.6,
-    "y": 383.3,
+    "x": -619.2,
+    "y": 497.9,
     "definition": "wizard_summon_skill_2_2_4"
   },
   "wizard_summon_skill_2_2_5": {
-    "x": -502.0,
-    "y": 357.8,
+    "x": -652.3,
+    "y": 464.8,
     "definition": "wizard_summon_skill_2_2_5"
   },
   "wizard_summon_skill_2_2_6": {
-    "x": -497.8,
-    "y": 404.5,
+    "x": -647.5,
+    "y": 526.2,
     "definition": "wizard_summon_skill_2_2_6"
   },
   "wizard_summon_skill_2_2_7": {
-    "x": -523.3,
-    "y": 379.0,
+    "x": -680.6,
+    "y": 493.0,
     "definition": "wizard_summon_skill_2_2_7"
   },
   "wizard_summon_skill_2_2_8": {
-    "x": -531.7,
-    "y": 413.0,
+    "x": -688.4,
+    "y": 534.0,
     "definition": "wizard_summon_skill_2_2_8"
   },
   "wizard_summon_skill_2_2_9": {
-    "x": -553.0,
-    "y": 434.2,
+    "x": -719.3,
+    "y": 568.8,
     "definition": "wizard_summon_skill_2_2_9"
   },
   "wizard_summon_skill_3": {
-    "x": -586.9,
-    "y": 417.2,
+    "x": -762.0,
+    "y": 537.4,
     "definition": "wizard_summon_skill_3"
   },
   "wizard_summon_skill_4": {
-    "x": -608.1,
-    "y": 438.4,
+    "x": -792.7,
+    "y": 572.3,
     "definition": "wizard_summon_skill_4"
   },
   "wizard_summon_subclass": {
-    "x": -340.8,
-    "y": 298.4,
+    "x": -451.3,
+    "y": 364.5,
     "definition": "wizard_summon_subclass"
   },
   "wizard_wizardone_class": {
-    "x": 120.2,
-    "y": 120.2,
+    "x": 151.2,
+    "y": 157.7,
     "definition": "wizard_wizardone_class"
   },
   "wizard_wizardone_final": {
-    "x": 654.8,
-    "y": 654.8,
+    "x": 851.2,
+    "y": 851.2,
     "definition": "wizard_wizardone_final"
   },
   "wizard_wizardone_skill_1": {
-    "x": 141.4,
-    "y": 141.4,
+    "x": 197.0,
+    "y": 189.9,
     "definition": "wizard_wizardone_skill_1"
   },
   "wizard_wizardone_skill_10": {
-    "x": 425.7,
-    "y": 425.7,
+    "x": 552.9,
+    "y": 554.5,
     "definition": "wizard_wizardone_skill_10"
   },
   "wizard_wizardone_skill_11": {
-    "x": 446.9,
-    "y": 446.9,
+    "x": 586.6,
+    "y": 586.5,
     "definition": "wizard_wizardone_skill_11"
   },
   "wizard_wizardone_skill_11_1": {
-    "x": 459.6,
-    "y": 476.6,
+    "x": 588.5,
+    "y": 626.5,
     "definition": "wizard_wizardone_skill_11_1"
   },
   "wizard_wizardone_skill_11_10": {
-    "x": 527.5,
-    "y": 485.1,
+    "x": 687.6,
+    "y": 633.4,
     "definition": "wizard_wizardone_skill_11_10"
   },
   "wizard_wizardone_skill_11_11": {
-    "x": 557.2,
-    "y": 489.3,
+    "x": 734.1,
+    "y": 632.9,
     "definition": "wizard_wizardone_skill_11_11"
   },
   "wizard_wizardone_skill_11_12": {
-    "x": 569.9,
-    "y": 519.0,
+    "x": 742.2,
+    "y": 678.7,
     "definition": "wizard_wizardone_skill_11_12"
   },
   "wizard_wizardone_skill_11_13": {
-    "x": 582.7,
-    "y": 557.2,
+    "x": 757.5,
+    "y": 724.4,
     "definition": "wizard_wizardone_skill_11_13"
   },
   "wizard_wizardone_skill_11_2": {
-    "x": 480.8,
-    "y": 497.8,
+    "x": 621.2,
+    "y": 649.5,
     "definition": "wizard_wizardone_skill_11_2"
   },
   "wizard_wizardone_skill_11_3": {
-    "x": 485.1,
-    "y": 527.5,
+    "x": 633.4,
+    "y": 687.6,
     "definition": "wizard_wizardone_skill_11_3"
   },
   "wizard_wizardone_skill_11_4": {
-    "x": 489.3,
-    "y": 557.2,
+    "x": 632.9,
+    "y": 734.1,
     "definition": "wizard_wizardone_skill_11_4"
   },
   "wizard_wizardone_skill_11_5": {
-    "x": 519.0,
-    "y": 569.9,
+    "x": 678.7,
+    "y": 742.2,
     "definition": "wizard_wizardone_skill_11_5"
   },
   "wizard_wizardone_skill_11_6": {
-    "x": 557.2,
-    "y": 582.7,
+    "x": 724.4,
+    "y": 757.5,
     "definition": "wizard_wizardone_skill_11_6"
   },
   "wizard_wizardone_skill_11_8": {
-    "x": 476.6,
-    "y": 459.6,
+    "x": 626.5,
+    "y": 588.5,
     "definition": "wizard_wizardone_skill_11_8"
   },
   "wizard_wizardone_skill_11_9": {
-    "x": 497.8,
-    "y": 480.8,
+    "x": 649.5,
+    "y": 621.2,
     "definition": "wizard_wizardone_skill_11_9"
   },
   "wizard_wizardone_skill_12": {
-    "x": 595.4,
-    "y": 595.4,
+    "x": 774.0,
+    "y": 774.0,
     "definition": "wizard_wizardone_skill_12"
   },
   "wizard_wizardone_skill_13": {
-    "x": 625.1,
-    "y": 625.1,
+    "x": 812.6,
+    "y": 812.6,
     "definition": "wizard_wizardone_skill_13"
   },
   "wizard_wizardone_skill_2": {
-    "x": 162.6,
-    "y": 162.6,
+    "x": 220.7,
+    "y": 222.0,
     "definition": "wizard_wizardone_skill_2"
   },
   "wizard_wizardone_skill_3": {
-    "x": 183.8,
-    "y": 183.8,
+    "x": 249.3,
+    "y": 249.8,
     "definition": "wizard_wizardone_skill_3"
   },
   "wizard_wizardone_skill_4": {
-    "x": 205.1,
-    "y": 205.1,
+    "x": 277.8,
+    "y": 277.8,
     "definition": "wizard_wizardone_skill_4"
   },
   "wizard_wizardone_skill_4_1": {
-    "x": 200.8,
-    "y": 234.8,
+    "x": 258.2,
+    "y": 312.7,
     "definition": "wizard_wizardone_skill_4_1"
   },
   "wizard_wizardone_skill_4_2": {
-    "x": 196.6,
-    "y": 264.5,
+    "x": 247.0,
+    "y": 351.1,
     "definition": "wizard_wizardone_skill_4_2"
   },
   "wizard_wizardone_skill_4_3": {
-    "x": 226.3,
-    "y": 260.2,
+    "x": 286.7,
+    "y": 342.7,
     "definition": "wizard_wizardone_skill_4_3"
   },
   "wizard_wizardone_skill_4_4": {
-    "x": 234.8,
-    "y": 200.8,
+    "x": 312.7,
+    "y": 258.3,
     "definition": "wizard_wizardone_skill_4_4"
   },
   "wizard_wizardone_skill_4_5": {
-    "x": 264.5,
-    "y": 196.6,
+    "x": 351.2,
+    "y": 247.4,
     "definition": "wizard_wizardone_skill_4_5"
   },
   "wizard_wizardone_skill_4_6": {
-    "x": 260.2,
-    "y": 226.3,
+    "x": 342.2,
+    "y": 287.0,
     "definition": "wizard_wizardone_skill_4_6"
   },
   "wizard_wizardone_skill_5": {
-    "x": 256.0,
-    "y": 256.0,
+    "x": 319.8,
+    "y": 320.2,
     "definition": "wizard_wizardone_skill_5"
   },
   "wizard_wizardone_skill_6": {
-    "x": 277.2,
-    "y": 277.2,
+    "x": 350.9,
+    "y": 345.2,
     "definition": "wizard_wizardone_skill_6"
   },
   "wizard_wizardone_skill_6_1": {
-    "x": 260.2,
-    "y": 302.6,
+    "x": 333.8,
+    "y": 393.7,
     "definition": "wizard_wizardone_skill_6_1"
   },
   "wizard_wizardone_skill_6_2": {
-    "x": 239.0,
-    "y": 332.3,
+    "x": 307.8,
+    "y": 432.2,
     "definition": "wizard_wizardone_skill_6_2"
   },
   "wizard_wizardone_skill_6_3": {
-    "x": 302.6,
-    "y": 260.2,
+    "x": 393.5,
+    "y": 338.2,
     "definition": "wizard_wizardone_skill_6_3"
   },
   "wizard_wizardone_skill_6_4": {
-    "x": 332.3,
-    "y": 239.0,
+    "x": 430.1,
+    "y": 305.9,
     "definition": "wizard_wizardone_skill_6_4"
   },
   "wizard_wizardone_skill_8": {
-    "x": 340.8,
-    "y": 340.8,
+    "x": 445.5,
+    "y": 468.1,
     "definition": "wizard_wizardone_skill_8"
   },
   "wizard_wizardone_skill_9": {
-    "x": 362.0,
-    "y": 362.0,
+    "x": 484.0,
+    "y": 479.2,
     "definition": "wizard_wizardone_skill_9"
   },
   "wizard_wizardone_skill_9_1": {
-    "x": 374.8,
-    "y": 391.7,
+    "x": 476.2,
+    "y": 518.4,
     "definition": "wizard_wizardone_skill_9_1"
   },
   "wizard_wizardone_skill_9_2": {
-    "x": 396.0,
-    "y": 413.0,
+    "x": 507.9,
+    "y": 542.7,
     "definition": "wizard_wizardone_skill_9_2"
   },
   "wizard_wizardone_skill_9_3": {
-    "x": 391.7,
-    "y": 374.8,
+    "x": 523.7,
+    "y": 474.4,
     "definition": "wizard_wizardone_skill_9_3"
   },
   "wizard_wizardone_skill_9_4": {
-    "x": 413.0,
-    "y": 396.0,
+    "x": 543.9,
+    "y": 508.8,
     "definition": "wizard_wizardone_skill_9_4"
   },
   "wizard_wizardone_skill_split": {
-    "x": 298.4,
-    "y": 298.4,
+    "x": 378.9,
+    "y": 382.4,
     "definition": "wizard_wizardone_skill_split"
   },
   "wizard_wizardone_subclass": {
-    "x": 319.6,
-    "y": 319.6,
+    "x": 425.9,
+    "y": 418.9,
     "definition": "wizard_wizardone_subclass"
   },
   "wizard_wizardthree_class": {
-    "x": -120.2,
-    "y": 120.2,
+    "x": -157.8,
+    "y": 151.3,
     "definition": "wizard_wizardthree_class"
   },
   "wizard_wizardthree_final": {
-    "x": -654.8,
-    "y": 654.8,
+    "x": -851.2,
+    "y": 851.2,
     "definition": "wizard_wizardthree_final"
   },
   "wizard_wizardthree_skill_1": {
-    "x": -141.4,
-    "y": 141.4,
+    "x": -190.2,
+    "y": 197.0,
     "definition": "wizard_wizardthree_skill_1"
   },
   "wizard_wizardthree_skill_10": {
-    "x": -425.7,
-    "y": 425.7,
+    "x": -554.5,
+    "y": 552.9,
     "definition": "wizard_wizardthree_skill_10"
   },
   "wizard_wizardthree_skill_11": {
-    "x": -446.9,
-    "y": 446.9,
+    "x": -586.5,
+    "y": 586.6,
     "definition": "wizard_wizardthree_skill_11"
   },
   "wizard_wizardthree_skill_11_1": {
-    "x": -476.6,
-    "y": 459.6,
+    "x": -626.5,
+    "y": 588.5,
     "definition": "wizard_wizardthree_skill_11_1"
   },
   "wizard_wizardthree_skill_11_10": {
-    "x": -485.1,
-    "y": 527.5,
+    "x": -633.4,
+    "y": 687.6,
     "definition": "wizard_wizardthree_skill_11_10"
   },
   "wizard_wizardthree_skill_11_11": {
-    "x": -489.3,
-    "y": 557.2,
+    "x": -632.9,
+    "y": 734.1,
     "definition": "wizard_wizardthree_skill_11_11"
   },
   "wizard_wizardthree_skill_11_12": {
-    "x": -519.0,
-    "y": 569.9,
+    "x": -678.7,
+    "y": 742.2,
     "definition": "wizard_wizardthree_skill_11_12"
   },
   "wizard_wizardthree_skill_11_13": {
-    "x": -557.2,
-    "y": 582.7,
+    "x": -724.4,
+    "y": 757.5,
     "definition": "wizard_wizardthree_skill_11_13"
   },
   "wizard_wizardthree_skill_11_2": {
-    "x": -497.8,
-    "y": 480.8,
+    "x": -649.5,
+    "y": 621.2,
     "definition": "wizard_wizardthree_skill_11_2"
   },
   "wizard_wizardthree_skill_11_3": {
-    "x": -527.5,
-    "y": 485.1,
+    "x": -687.6,
+    "y": 633.4,
     "definition": "wizard_wizardthree_skill_11_3"
   },
   "wizard_wizardthree_skill_11_4": {
-    "x": -557.2,
-    "y": 489.3,
+    "x": -734.1,
+    "y": 632.9,
     "definition": "wizard_wizardthree_skill_11_4"
   },
   "wizard_wizardthree_skill_11_5": {
-    "x": -569.9,
-    "y": 519.0,
+    "x": -742.2,
+    "y": 678.7,
     "definition": "wizard_wizardthree_skill_11_5"
   },
   "wizard_wizardthree_skill_11_6": {
-    "x": -582.7,
-    "y": 557.2,
+    "x": -757.5,
+    "y": 724.4,
     "definition": "wizard_wizardthree_skill_11_6"
   },
   "wizard_wizardthree_skill_11_8": {
-    "x": -459.6,
-    "y": 476.6,
+    "x": -588.5,
+    "y": 626.5,
     "definition": "wizard_wizardthree_skill_11_8"
   },
   "wizard_wizardthree_skill_11_9": {
-    "x": -480.8,
-    "y": 497.8,
+    "x": -621.2,
+    "y": 649.5,
     "definition": "wizard_wizardthree_skill_11_9"
   },
   "wizard_wizardthree_skill_12": {
-    "x": -595.4,
-    "y": 595.4,
+    "x": -774.0,
+    "y": 774.0,
     "definition": "wizard_wizardthree_skill_12"
   },
   "wizard_wizardthree_skill_13": {
-    "x": -625.1,
-    "y": 625.1,
+    "x": -812.6,
+    "y": 812.6,
     "definition": "wizard_wizardthree_skill_13"
   },
   "wizard_wizardthree_skill_2": {
-    "x": -162.6,
-    "y": 162.6,
+    "x": -222.0,
+    "y": 221.0,
     "definition": "wizard_wizardthree_skill_2"
   },
   "wizard_wizardthree_skill_3": {
-    "x": -183.8,
-    "y": 183.8,
+    "x": -250.0,
+    "y": 249.4,
     "definition": "wizard_wizardthree_skill_3"
   },
   "wizard_wizardthree_skill_4": {
-    "x": -205.1,
-    "y": 205.1,
+    "x": -278.0,
+    "y": 277.9,
     "definition": "wizard_wizardthree_skill_4"
   },
   "wizard_wizardthree_skill_4_1": {
-    "x": -234.8,
-    "y": 200.8,
+    "x": -312.7,
+    "y": 258.2,
     "definition": "wizard_wizardthree_skill_4_1"
   },
   "wizard_wizardthree_skill_4_2": {
-    "x": -264.5,
-    "y": 196.6,
+    "x": -351.1,
+    "y": 246.9,
     "definition": "wizard_wizardthree_skill_4_2"
   },
   "wizard_wizardthree_skill_4_3": {
-    "x": -260.2,
-    "y": 226.3,
+    "x": -342.7,
+    "y": 286.7,
     "definition": "wizard_wizardthree_skill_4_3"
   },
   "wizard_wizardthree_skill_4_4": {
-    "x": -200.8,
-    "y": 234.8,
+    "x": -258.2,
+    "y": 312.7,
     "definition": "wizard_wizardthree_skill_4_4"
   },
   "wizard_wizardthree_skill_4_5": {
-    "x": -196.6,
-    "y": 264.5,
+    "x": -247.3,
+    "y": 351.2,
     "definition": "wizard_wizardthree_skill_4_5"
   },
   "wizard_wizardthree_skill_4_6": {
-    "x": -226.3,
-    "y": 260.2,
+    "x": -287.0,
+    "y": 342.2,
     "definition": "wizard_wizardthree_skill_4_6"
   },
   "wizard_wizardthree_skill_5": {
-    "x": -256.0,
-    "y": 256.0,
+    "x": -320.2,
+    "y": 319.8,
     "definition": "wizard_wizardthree_skill_5"
   },
   "wizard_wizardthree_skill_6": {
-    "x": -277.2,
-    "y": 277.2,
+    "x": -345.2,
+    "y": 351.0,
     "definition": "wizard_wizardthree_skill_6"
   },
   "wizard_wizardthree_skill_6_1": {
-    "x": -302.6,
-    "y": 260.2,
+    "x": -393.7,
+    "y": 333.8,
     "definition": "wizard_wizardthree_skill_6_1"
   },
   "wizard_wizardthree_skill_6_2": {
-    "x": -332.3,
-    "y": 239.0,
+    "x": -432.2,
+    "y": 307.8,
     "definition": "wizard_wizardthree_skill_6_2"
   },
   "wizard_wizardthree_skill_6_3": {
-    "x": -260.2,
-    "y": 302.6,
+    "x": -338.2,
+    "y": 393.5,
     "definition": "wizard_wizardthree_skill_6_3"
   },
   "wizard_wizardthree_skill_6_4": {
-    "x": -239.0,
-    "y": 332.3,
+    "x": -305.9,
+    "y": 430.1,
     "definition": "wizard_wizardthree_skill_6_4"
   },
   "wizard_wizardthree_skill_8": {
-    "x": -340.8,
-    "y": 340.8,
+    "x": -468.1,
+    "y": 445.5,
     "definition": "wizard_wizardthree_skill_8"
   },
   "wizard_wizardthree_skill_9": {
-    "x": -362.0,
-    "y": 362.0,
+    "x": -479.2,
+    "y": 484.0,
     "definition": "wizard_wizardthree_skill_9"
   },
   "wizard_wizardthree_skill_9_1": {
-    "x": -391.7,
-    "y": 374.8,
+    "x": -518.4,
+    "y": 476.2,
     "definition": "wizard_wizardthree_skill_9_1"
   },
   "wizard_wizardthree_skill_9_2": {
-    "x": -413.0,
-    "y": 396.0,
+    "x": -542.7,
+    "y": 507.9,
     "definition": "wizard_wizardthree_skill_9_2"
   },
   "wizard_wizardthree_skill_9_3": {
-    "x": -374.8,
-    "y": 391.7,
+    "x": -474.4,
+    "y": 523.7,
     "definition": "wizard_wizardthree_skill_9_3"
   },
   "wizard_wizardthree_skill_9_4": {
-    "x": -396.0,
-    "y": 413.0,
+    "x": -508.8,
+    "y": 543.9,
     "definition": "wizard_wizardthree_skill_9_4"
   },
   "wizard_wizardthree_skill_split": {
-    "x": -298.4,
-    "y": 298.4,
+    "x": -382.4,
+    "y": 378.9,
     "definition": "wizard_wizardthree_skill_split"
   },
   "wizard_wizardthree_subclass": {
-    "x": -319.6,
-    "y": 319.6,
+    "x": -418.9,
+    "y": 425.9,
     "definition": "wizard_wizardthree_subclass"
   },
   "wizard_wizardtwo_class": {
-    "x": -0.0,
-    "y": 170.0,
+    "x": -5.7,
+    "y": 226.3,
     "definition": "wizard_wizardtwo_class"
   },
   "wizard_wizardtwo_final": {
     "x": -0.0,
-    "y": 926.0,
+    "y": 1203.8,
     "definition": "wizard_wizardtwo_final"
   },
   "wizard_wizardtwo_skill_1": {
-    "x": -0.0,
-    "y": 200.0,
+    "x": 14.8,
+    "y": 278.5,
     "definition": "wizard_wizardtwo_skill_1"
   },
   "wizard_wizardtwo_skill_10": {
-    "x": -0.0,
-    "y": 602.0,
+    "x": 1.0,
+    "y": 783.0,
     "definition": "wizard_wizardtwo_skill_10"
   },
   "wizard_wizardtwo_skill_11": {
-    "x": -0.0,
-    "y": 632.0,
+    "x": -0.1,
+    "y": 829.5,
     "definition": "wizard_wizardtwo_skill_11"
   },
   "wizard_wizardtwo_skill_11_1": {
-    "x": -12.0,
-    "y": 662.0,
+    "x": -26.9,
+    "y": 859.2,
     "definition": "wizard_wizardtwo_skill_11_1"
   },
   "wizard_wizardtwo_skill_11_10": {
-    "x": 30.0,
-    "y": 716.0,
+    "x": 38.4,
+    "y": 934.0,
     "definition": "wizard_wizardtwo_skill_11_10"
   },
   "wizard_wizardtwo_skill_11_11": {
-    "x": 48.0,
-    "y": 740.0,
+    "x": 71.6,
+    "y": 966.6,
     "definition": "wizard_wizardtwo_skill_11_11"
   },
   "wizard_wizardtwo_skill_11_12": {
-    "x": 36.0,
-    "y": 770.0,
+    "x": 44.9,
+    "y": 1004.7,
     "definition": "wizard_wizardtwo_skill_11_12"
   },
   "wizard_wizardtwo_skill_11_13": {
-    "x": 18.0,
-    "y": 806.0,
+    "x": 23.4,
+    "y": 1047.8,
     "definition": "wizard_wizardtwo_skill_11_13"
   },
   "wizard_wizardtwo_skill_11_2": {
-    "x": -12.0,
-    "y": 692.0,
+    "x": -20.0,
+    "y": 898.6,
     "definition": "wizard_wizardtwo_skill_11_2"
   },
   "wizard_wizardtwo_skill_11_3": {
-    "x": -30.0,
-    "y": 716.0,
+    "x": -38.4,
+    "y": 934.1,
     "definition": "wizard_wizardtwo_skill_11_3"
   },
   "wizard_wizardtwo_skill_11_4": {
-    "x": -48.0,
-    "y": 740.0,
+    "x": -71.6,
+    "y": 966.7,
     "definition": "wizard_wizardtwo_skill_11_4"
   },
   "wizard_wizardtwo_skill_11_5": {
-    "x": -36.0,
-    "y": 770.0,
+    "x": -44.9,
+    "y": 1004.7,
     "definition": "wizard_wizardtwo_skill_11_5"
   },
   "wizard_wizardtwo_skill_11_6": {
-    "x": -18.0,
-    "y": 806.0,
+    "x": -23.4,
+    "y": 1047.8,
     "definition": "wizard_wizardtwo_skill_11_6"
   },
   "wizard_wizardtwo_skill_11_8": {
-    "x": 12.0,
-    "y": 662.0,
+    "x": 26.8,
+    "y": 859.1,
     "definition": "wizard_wizardtwo_skill_11_8"
   },
   "wizard_wizardtwo_skill_11_9": {
-    "x": 12.0,
-    "y": 692.0,
+    "x": 20.0,
+    "y": 898.5,
     "definition": "wizard_wizardtwo_skill_11_9"
   },
   "wizard_wizardtwo_skill_12": {
     "x": -0.0,
-    "y": 842.0,
+    "y": 1094.6,
     "definition": "wizard_wizardtwo_skill_12"
   },
   "wizard_wizardtwo_skill_13": {
     "x": -0.0,
-    "y": 884.0,
+    "y": 1149.2,
     "definition": "wizard_wizardtwo_skill_13"
   },
   "wizard_wizardtwo_skill_2": {
-    "x": -0.0,
-    "y": 230.0,
+    "x": -8.1,
+    "y": 311.2,
     "definition": "wizard_wizardtwo_skill_2"
   },
   "wizard_wizardtwo_skill_3": {
-    "x": -0.0,
-    "y": 260.0,
+    "x": 2.1,
+    "y": 349.9,
     "definition": "wizard_wizardtwo_skill_3"
   },
   "wizard_wizardtwo_skill_4": {
     "x": -0.0,
-    "y": 290.0,
+    "y": 389.8,
     "definition": "wizard_wizardtwo_skill_4"
   },
   "wizard_wizardtwo_skill_4_1": {
-    "x": -24.0,
-    "y": 308.0,
+    "x": -37.6,
+    "y": 403.6,
     "definition": "wizard_wizardtwo_skill_4_1"
   },
   "wizard_wizardtwo_skill_4_2": {
-    "x": -48.0,
-    "y": 326.0,
+    "x": -72.7,
+    "y": 422.8,
     "definition": "wizard_wizardtwo_skill_4_2"
   },
   "wizard_wizardtwo_skill_4_3": {
-    "x": -24.0,
-    "y": 344.0,
+    "x": -39.1,
+    "y": 445.1,
     "definition": "wizard_wizardtwo_skill_4_3"
   },
   "wizard_wizardtwo_skill_4_4": {
-    "x": 24.0,
-    "y": 308.0,
+    "x": 37.5,
+    "y": 403.7,
     "definition": "wizard_wizardtwo_skill_4_4"
   },
   "wizard_wizardtwo_skill_4_5": {
-    "x": 48.0,
-    "y": 326.0,
+    "x": 72.9,
+    "y": 422.4,
     "definition": "wizard_wizardtwo_skill_4_5"
   },
   "wizard_wizardtwo_skill_4_6": {
-    "x": 24.0,
-    "y": 344.0,
+    "x": 39.6,
+    "y": 444.9,
     "definition": "wizard_wizardtwo_skill_4_6"
   },
   "wizard_wizardtwo_skill_5": {
-    "x": -0.0,
-    "y": 362.0,
+    "x": 0.2,
+    "y": 452.2,
     "definition": "wizard_wizardtwo_skill_5"
   },
   "wizard_wizardtwo_skill_6": {
-    "x": -0.0,
-    "y": 392.0,
+    "x": -4.0,
+    "y": 492.0,
     "definition": "wizard_wizardtwo_skill_6"
   },
   "wizard_wizardtwo_skill_6_1": {
-    "x": -30.0,
-    "y": 398.0,
+    "x": -39.2,
+    "y": 517.3,
     "definition": "wizard_wizardtwo_skill_6_1"
   },
   "wizard_wizardtwo_skill_6_2": {
-    "x": -66.0,
-    "y": 404.0,
+    "x": -87.9,
+    "y": 520.4,
     "definition": "wizard_wizardtwo_skill_6_2"
   },
   "wizard_wizardtwo_skill_6_3": {
-    "x": 30.0,
-    "y": 398.0,
+    "x": 42.5,
+    "y": 514.3,
     "definition": "wizard_wizardtwo_skill_6_3"
   },
   "wizard_wizardtwo_skill_6_4": {
-    "x": 66.0,
-    "y": 404.0,
+    "x": 88.1,
+    "y": 523.3,
     "definition": "wizard_wizardtwo_skill_6_4"
   },
   "wizard_wizardtwo_skill_8": {
-    "x": -0.0,
-    "y": 482.0,
+    "x": 15.2,
+    "y": 646.1,
     "definition": "wizard_wizardtwo_skill_8"
   },
   "wizard_wizardtwo_skill_9": {
-    "x": -0.0,
-    "y": 512.0,
+    "x": -3.0,
+    "y": 681.8,
     "definition": "wizard_wizardtwo_skill_9"
   },
   "wizard_wizardtwo_skill_9_1": {
-    "x": -12.0,
-    "y": 542.0,
+    "x": -35.1,
+    "y": 705.7,
     "definition": "wizard_wizardtwo_skill_9_1"
   },
   "wizard_wizardtwo_skill_9_2": {
-    "x": -12.0,
-    "y": 572.0,
+    "x": -24.8,
+    "y": 744.3,
     "definition": "wizard_wizardtwo_skill_9_2"
   },
   "wizard_wizardtwo_skill_9_3": {
-    "x": 12.0,
-    "y": 542.0,
+    "x": 30.6,
+    "y": 703.4,
     "definition": "wizard_wizardtwo_skill_9_3"
   },
   "wizard_wizardtwo_skill_9_4": {
-    "x": 12.0,
-    "y": 572.0,
+    "x": 24.6,
+    "y": 743.0,
     "definition": "wizard_wizardtwo_skill_9_4"
   },
   "wizard_wizardtwo_skill_split": {
-    "x": -0.0,
-    "y": 422.0,
+    "x": 2.4,
+    "y": 538.0,
     "definition": "wizard_wizardtwo_skill_split"
   },
   "wizard_wizardtwo_subclass": {
-    "x": -0.0,
-    "y": 452.0,
+    "x": -4.9,
+    "y": 597.1,
     "definition": "wizard_wizardtwo_subclass"
   }
 }

@@ -1,8 +1,8 @@
 {
-  "version": "0.4.56",
+  "version": "0.4.57",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-26T17:39:55.494753+00:00",
+  "generated_at": "2026-10-26T22:03:54.677418+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -3872,8 +3872,8 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "e02065527889b3011b565665b0b626fe1b0d7785d4bc70c256044e1c61a5e739",
-      "size": 275
+      "sha256": "02412e4bead1914192bf929d8c2a687e877615fb6ee49f6635c412d2d40e9ec1",
+      "size": 268
     },
     {
       "path": "config/openloader/advanced_options.json",
@@ -6607,8 +6607,8 @@
     },
     {
       "path": "default_options.txt",
-      "sha256": "a706a399f62901c407d864c2b7dc03f561822fa168aca2946c554e74b1868523",
-      "size": 15927
+      "sha256": "6b0987675c77731f4d507199605816046fc0d918ca6d79d5b05dbea03d2cda0d",
+      "size": 16315
     },
     {
       "path": "default_servers.dat",
@@ -7034,6 +7034,51 @@
       "path": "kubejs/assets/elyrium/textures/gui/celestial_constellation_bg.png",
       "sha256": "377bdb134a3f43017c56f63020fc460bbbb133132a1c27c98c1235e7605ed6a5",
       "size": 202236
+    },
+    {
+      "path": "kubejs/assets/elyrium/textures/gui/skills/frame_keystone_available.png",
+      "sha256": "24e543fd0024b24658260d6e0aaac90079006758bcaef056db7583b4e73f82c9",
+      "size": 1484
+    },
+    {
+      "path": "kubejs/assets/elyrium/textures/gui/skills/frame_keystone_locked.png",
+      "sha256": "e6c64710a6079943f8f3f71300e19aea950e8363383b9b78a476c93a10ba4f7c",
+      "size": 703
+    },
+    {
+      "path": "kubejs/assets/elyrium/textures/gui/skills/frame_keystone_unlocked.png",
+      "sha256": "342ca0a77e0d3fd493de1978b5da78e83bbd6709179fe91567e3640a20c64295",
+      "size": 1601
+    },
+    {
+      "path": "kubejs/assets/elyrium/textures/gui/skills/frame_minor_available.png",
+      "sha256": "46d7e9fc0646d93ce2088b179ca24f717c18e31dedcdbc7279bfe964fa4d3768",
+      "size": 562
+    },
+    {
+      "path": "kubejs/assets/elyrium/textures/gui/skills/frame_minor_locked.png",
+      "sha256": "5a77161e0449df91d1c0c0472fd342adabe92398a4c2041dabb79a82c350d63c",
+      "size": 773
+    },
+    {
+      "path": "kubejs/assets/elyrium/textures/gui/skills/frame_minor_unlocked.png",
+      "sha256": "a9769f1c1e7c82ff747f495f04f32ff02281ad5f140511799cd9eec9b9977f62",
+      "size": 587
+    },
+    {
+      "path": "kubejs/assets/elyrium/textures/gui/skills/frame_notable_available.png",
+      "sha256": "52d6a6d36a030400e3b99b1ab3839bddb8fae42f08419123e96578c99bac920c",
+      "size": 633
+    },
+    {
+      "path": "kubejs/assets/elyrium/textures/gui/skills/frame_notable_locked.png",
+      "sha256": "90c75f83ee2daaaf274922f5d8859aa8cddf2856af49a3186bd8a253222676a6",
+      "size": 554
+    },
+    {
+      "path": "kubejs/assets/elyrium/textures/gui/skills/frame_notable_unlocked.png",
+      "sha256": "a5edaf0987e173a1bac29b352715968c52fe9837d6df93f1f8dbbe8c19cf9dbc",
+      "size": 612
     },
     {
       "path": "kubejs/assets/elyrium/textures/skills/alchemist_class.png",
@@ -13922,8 +13967,8 @@
     },
     {
       "path": "kubejs/client_scripts/canonical_equipment_names_and_lore.js",
-      "sha256": "70ddd670c8ce5487130259596db8ce9727456f673ae1af4d90a763b2944850a0",
-      "size": 48145
+      "sha256": "b6a3fd43261e1ccbceb53041d2813dbb5b8ed6fbb1729abcb96a5eb42718d433",
+      "size": 48152
     },
     {
       "path": "kubejs/client_scripts/dodge_camera_fx.js",
@@ -16996,6 +17041,51 @@
       "size": 202236
     },
     {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/gui/skills/frame_keystone_available.png",
+      "sha256": "24e543fd0024b24658260d6e0aaac90079006758bcaef056db7583b4e73f82c9",
+      "size": 1484
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/gui/skills/frame_keystone_locked.png",
+      "sha256": "e6c64710a6079943f8f3f71300e19aea950e8363383b9b78a476c93a10ba4f7c",
+      "size": 703
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/gui/skills/frame_keystone_unlocked.png",
+      "sha256": "342ca0a77e0d3fd493de1978b5da78e83bbd6709179fe91567e3640a20c64295",
+      "size": 1601
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/gui/skills/frame_minor_available.png",
+      "sha256": "46d7e9fc0646d93ce2088b179ca24f717c18e31dedcdbc7279bfe964fa4d3768",
+      "size": 562
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/gui/skills/frame_minor_locked.png",
+      "sha256": "5a77161e0449df91d1c0c0472fd342adabe92398a4c2041dabb79a82c350d63c",
+      "size": 773
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/gui/skills/frame_minor_unlocked.png",
+      "sha256": "a9769f1c1e7c82ff747f495f04f32ff02281ad5f140511799cd9eec9b9977f62",
+      "size": 587
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/gui/skills/frame_notable_available.png",
+      "sha256": "52d6a6d36a030400e3b99b1ab3839bddb8fae42f08419123e96578c99bac920c",
+      "size": 633
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/gui/skills/frame_notable_locked.png",
+      "sha256": "90c75f83ee2daaaf274922f5d8859aa8cddf2856af49a3186bd8a253222676a6",
+      "size": 554
+    },
+    {
+      "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/gui/skills/frame_notable_unlocked.png",
+      "sha256": "a5edaf0987e173a1bac29b352715968c52fe9837d6df93f1f8dbbe8c19cf9dbc",
+      "size": 612
+    },
+    {
       "path": "moonlight-global-datapacks/elyrium_skills/assets/elyrium/textures/skills/alchemist_class.png",
       "sha256": "b28e192bd4a146f7c8526e7deb7dc5a3d512afbcfdfa4af0088e14e2463db858",
       "size": 319
@@ -18467,8 +18557,8 @@
     },
     {
       "path": "moonlight-global-datapacks/elyrium_skills/data/elyrium/puffish_skills/categories/celestial_tree/definitions.json",
-      "sha256": "f52af839dd43d589657b59ac18f6b965bffcf4da9ea15aac51670fa90d5a5075",
-      "size": 788898
+      "sha256": "65259aaa098a5152a9601829f356e7317eca9ad9f1ca0f3f1bfbc2d3f73e009a",
+      "size": 995473
     },
     {
       "path": "moonlight-global-datapacks/elyrium_skills/data/elyrium/puffish_skills/categories/celestial_tree/experience.json",
@@ -18477,8 +18567,8 @@
     },
     {
       "path": "moonlight-global-datapacks/elyrium_skills/data/elyrium/puffish_skills/categories/celestial_tree/skills.json",
-      "sha256": "fea821ce346bc9446f1abfb4d1d4cb908871465fb994d92c9864bedd1bf69f8e",
-      "size": 102456
+      "sha256": "9fe52bc0ebd3cc033b62537164833742f20c776492e10e60f80d76b3f8ed9546",
+      "size": 107006
     },
     {
       "path": "moonlight-global-datapacks/elyrium_skills/data/elyrium/puffish_skills/config.json",
@@ -20871,6 +20961,51 @@
       "size": 50289
     },
     {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/skills/frame_keystone_available.png",
+      "sha256": "24e543fd0024b24658260d6e0aaac90079006758bcaef056db7583b4e73f82c9",
+      "size": 1484
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/skills/frame_keystone_locked.png",
+      "sha256": "e6c64710a6079943f8f3f71300e19aea950e8363383b9b78a476c93a10ba4f7c",
+      "size": 703
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/skills/frame_keystone_unlocked.png",
+      "sha256": "342ca0a77e0d3fd493de1978b5da78e83bbd6709179fe91567e3640a20c64295",
+      "size": 1601
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/skills/frame_minor_available.png",
+      "sha256": "46d7e9fc0646d93ce2088b179ca24f717c18e31dedcdbc7279bfe964fa4d3768",
+      "size": 562
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/skills/frame_minor_locked.png",
+      "sha256": "5a77161e0449df91d1c0c0472fd342adabe92398a4c2041dabb79a82c350d63c",
+      "size": 773
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/skills/frame_minor_unlocked.png",
+      "sha256": "a9769f1c1e7c82ff747f495f04f32ff02281ad5f140511799cd9eec9b9977f62",
+      "size": 587
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/skills/frame_notable_available.png",
+      "sha256": "52d6a6d36a030400e3b99b1ab3839bddb8fae42f08419123e96578c99bac920c",
+      "size": 633
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/skills/frame_notable_locked.png",
+      "sha256": "90c75f83ee2daaaf274922f5d8859aa8cddf2856af49a3186bd8a253222676a6",
+      "size": 554
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/skills/frame_notable_unlocked.png",
+      "sha256": "a5edaf0987e173a1bac29b352715968c52fe9837d6df93f1f8dbbe8c19cf9dbc",
+      "size": 612
+    },
+    {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/void_anvil_overlay.png",
       "sha256": "ce748084e221614066c16df58300843df42cadb978ad8d9868683ad815d801e7",
       "size": 50893
@@ -22517,7 +22652,7 @@
     },
     {
       "path": "shaderpacks/superDuperVanilla.zip.txt",
-      "sha256": "89cfd253fd5a7e8cb75e6aa276aa5b3b07fef20180013fe45d019ec5683b50a9",
+      "sha256": "07f890226395a3d65b941e330f31823533790aae5ba6868445e7b24fdb65b5a0",
       "size": 231
     }
   ]
