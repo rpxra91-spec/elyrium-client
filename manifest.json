@@ -2,7 +2,7 @@
   "version": "0.4.56",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-26T13:28:45.951479+00:00",
+  "generated_at": "2026-10-26T14:06:55.266668+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -20837,8 +20837,8 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/blacksmith_workbench_overlay.png",
-      "sha256": "0941844793c83e46c5caf53ac2b467fc9ebb7e2850747ce16a9ff03c6cbc1e80",
-      "size": 38310
+      "sha256": "14e85909f14904fb9b3b8429a1460a12d55772d55c83300d6d3a9f4f05a93f92",
+      "size": 40541
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/celestial_constellation_bg.png",
@@ -20852,8 +20852,8 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/hearth_smeltery_overlay.png",
-      "sha256": "039ecfa879665b0cce1a5b06ed9d55dce02f8516c72e253def2bd5aeafdb1f34",
-      "size": 37479
+      "sha256": "5a2c70a08838a6ba6ad601772d2366ebf813c232cfd46834d6192bde0cb55127",
+      "size": 37631
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/hud/hud_bars.png",
@@ -20862,23 +20862,23 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/infernal_crucible_overlay.png",
-      "sha256": "15307f67f63c28c6d17540f29640a0ff7004aaaacebba1cae58c340117d9a1b6",
-      "size": 44270
+      "sha256": "88314f69e046fb54739273d7ab99d8fc1b59e907b8f081ce6a80b7b3530930ba",
+      "size": 46215
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/runic_table_overlay.png",
-      "sha256": "4d62b4328c7d7ee24fc7a423792e991c6d1dc420518b3fbf1c2b55a936fa1da8",
-      "size": 44872
+      "sha256": "def1261be9bcd92916ed256efaa36a3add0871aa3f4722630f705a98a24c04ca",
+      "size": 46945
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/void_anvil_overlay.png",
-      "sha256": "dd6d4035b2e1f8323d51c311a39a82b7f4be2598df0302e98ea33b90fea6b89e",
-      "size": 44269
+      "sha256": "6d57a2fffdb45a4c85070e6a9df49d93ee8701603ebad624ce6463d868cdb89f",
+      "size": 46453
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/weapon_bench_overlay.png",
-      "sha256": "05afa9be72f96c59ab2f783ecc657aed047bd254f4823646960decd84ada4a5e",
-      "size": 38491
+      "sha256": "3307a454de43aabb9d06def67e5ce8bd71f2743ad2e4f20825cb445ae858e02d",
+      "size": 41573
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/skills/alchemist_class.png",
