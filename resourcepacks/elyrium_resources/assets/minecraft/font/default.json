@@ -19,6 +19,15 @@
       ]
     },
     {
+      "type": "bitmap",
+      "file": "elyrium:gui/hearth_smeltery_overlay.png",
+      "ascent": 13,
+      "height": 166,
+      "chars": [
+        ""
+      ]
+    },
+    {
       "type": "space",
       "advances": {
         "": -8

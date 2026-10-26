@@ -1,8 +1,8 @@
 {
-  "version": "0.4.54",
+  "version": "0.4.55",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-26T00:27:33.419400+00:00",
+  "generated_at": "2026-10-26T00:43:01.779046+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -14862,13 +14862,18 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_crafting_gui.js",
-      "sha256": "57f5d9dfe831f3a1a06babff04055b1b8e18565673c900b29f68ed39b475e35f",
-      "size": 117953
+      "sha256": "0599aafef23c79e6e0b53a0c902bbe18f3b0b0b69aa09575d172e96b4e2d91c3",
+      "size": 117622
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_multiblock_engine.js",
       "sha256": "1dce057f7ecac002fd8815896249981d352c585326e263cf2984b494ab352548",
       "size": 9723
+    },
+    {
+      "path": "kubejs/server_scripts/02_crafting/hearth_smeltery_gui.js",
+      "sha256": "c089e132ac1a1c5c56c2bd93d7038307254121408e253a0dadd72120746e7105",
+      "size": 16861
     },
     {
       "path": "kubejs/server_scripts/02_crafting/steel_metallurgy_recipes.js",
@@ -20826,6 +20831,11 @@
       "size": 3657
     },
     {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/hearth_smeltery_overlay.png",
+      "sha256": "66217be59212f9067a6cef811fec356e2ebed1ddd88826195069b82ccf24cdc2",
+      "size": 2646
+    },
+    {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/hud/hud_bars.png",
       "sha256": "7f644642b657f06b1f55ed7c4145bd14bbd899c3b5a7fbc20462d486818c3785",
       "size": 3008
@@ -22442,8 +22452,8 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/minecraft/font/default.json",
-      "sha256": "b103900759f13284d643d63dddf8495a8243cc2e2437fdac3bcce5c13984f04a",
-      "size": 475
+      "sha256": "1f55d60425bc451c872294359db4833d57ef6929c983926226fef0c94485a675",
+      "size": 658
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/simplestats/lang/ru_ru.json",

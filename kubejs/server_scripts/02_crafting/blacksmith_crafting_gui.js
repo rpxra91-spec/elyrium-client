@@ -1714,17 +1714,8 @@ BlockEvents.rightClicked('kubejs:blacksmith_workbench', event => {
     player.server.runCommandSilent(`playsound minecraft:block.wood.hit player ${player.username} ~ ~ ~ 0.8 1.0`);
 });
 
-// 2. Кузнечный Очаг -> Таб 2 (Очаг - Smelter)
-BlockEvents.rightClicked('kubejs:blacksmith_hearth', event => {
-    let player = event.player;
-    if (!player || player.level.isClientSide()) return;
-    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
-    if (!handStr.includes('MAIN')) return;
-
-    event.cancel();
-    openUnifiedWorkshopGUI(player, 2, event.block.pos);
-    player.server.runCommandSilent(`playsound minecraft:block.blastfurnace.fire_crackle player ${player.username} ~ ~ ~ 0.8 1.0`);
-});
+// 2. Кузнечный Очаг -> Вынесен в отдельный не-сундучный станок hearth_smeltery_gui.js (v1.0)
+// BlockEvents.rightClicked handled autonomously in hearth_smeltery_gui.js
 
 // 3. Адский Горн -> Таб 3 (Горн - Возвышение)
 BlockEvents.rightClicked('kubejs:infernal_crucible', event => {
