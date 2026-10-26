@@ -1,8 +1,8 @@
 {
-  "version": "0.4.52",
+  "version": "0.4.53",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-25T18:49:02.005930+00:00",
+  "generated_at": "2026-10-26T00:03:51.870951+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -9051,6 +9051,11 @@
       "size": 62
     },
     {
+      "path": "kubejs/assets/kubejs/models/item/blank_runic_slate.json",
+      "sha256": "52d66c7073b649a536e1d9d499411537dd6e70f076dc19322e75b4ee7aaf4ba2",
+      "size": 114
+    },
+    {
       "path": "kubejs/assets/kubejs/models/item/cinder_brigandine_boots.json",
       "sha256": "2b526a4783a4b1581e3f6ab1f30bf2ef803c0de22f3f6563d3b5aeffeacd0f88",
       "size": 110
@@ -9284,6 +9289,301 @@
       "path": "kubejs/assets/kubejs/models/item/froststeel_ring.json",
       "sha256": "164dc6705e28287361c6d6ebcf11ab4c604c8360b50e3c47d6c6804594b7ffa0",
       "size": 111
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_bastion.json",
+      "sha256": "9a1577498185ed7ecf15af67c3f90f1b103e18ff336fbf3a4f8e033352996f9b",
+      "size": 110
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_bastion_t2.json",
+      "sha256": "9a1577498185ed7ecf15af67c3f90f1b103e18ff336fbf3a4f8e033352996f9b",
+      "size": 110
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_bastion_t4.json",
+      "sha256": "9a1577498185ed7ecf15af67c3f90f1b103e18ff336fbf3a4f8e033352996f9b",
+      "size": 110
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_bastion_t6.json",
+      "sha256": "9a1577498185ed7ecf15af67c3f90f1b103e18ff336fbf3a4f8e033352996f9b",
+      "size": 110
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_bastion_t8.json",
+      "sha256": "9a1577498185ed7ecf15af67c3f90f1b103e18ff336fbf3a4f8e033352996f9b",
+      "size": 110
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_elemental.json",
+      "sha256": "513c92ccbd1e51684c637b69cfd4e548d96cdaae14f846d37c8990b4027f5687",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_elemental_t1.json",
+      "sha256": "513c92ccbd1e51684c637b69cfd4e548d96cdaae14f846d37c8990b4027f5687",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_elemental_t2.json",
+      "sha256": "513c92ccbd1e51684c637b69cfd4e548d96cdaae14f846d37c8990b4027f5687",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_elemental_t3.json",
+      "sha256": "513c92ccbd1e51684c637b69cfd4e548d96cdaae14f846d37c8990b4027f5687",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_elemental_t4.json",
+      "sha256": "513c92ccbd1e51684c637b69cfd4e548d96cdaae14f846d37c8990b4027f5687",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_elemental_t5.json",
+      "sha256": "513c92ccbd1e51684c637b69cfd4e548d96cdaae14f846d37c8990b4027f5687",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_elemental_t6.json",
+      "sha256": "513c92ccbd1e51684c637b69cfd4e548d96cdaae14f846d37c8990b4027f5687",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_elemental_t7.json",
+      "sha256": "513c92ccbd1e51684c637b69cfd4e548d96cdaae14f846d37c8990b4027f5687",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_elemental_t8.json",
+      "sha256": "513c92ccbd1e51684c637b69cfd4e548d96cdaae14f846d37c8990b4027f5687",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_executioner.json",
+      "sha256": "37d3025e3f238f35d9da60d4dd77e4d3777d5d4125c9601f3cb31cd0c10c7c74",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_executioner_t1.json",
+      "sha256": "37d3025e3f238f35d9da60d4dd77e4d3777d5d4125c9601f3cb31cd0c10c7c74",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_executioner_t3.json",
+      "sha256": "37d3025e3f238f35d9da60d4dd77e4d3777d5d4125c9601f3cb31cd0c10c7c74",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_executioner_t5.json",
+      "sha256": "37d3025e3f238f35d9da60d4dd77e4d3777d5d4125c9601f3cb31cd0c10c7c74",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_executioner_t7.json",
+      "sha256": "37d3025e3f238f35d9da60d4dd77e4d3777d5d4125c9601f3cb31cd0c10c7c74",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_mystic_flow.json",
+      "sha256": "5ff90f2fae1df133e8d0c5845743c29e3f69c69e66ddb3fcfe5b045d70329498",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_mystic_flow_t1.json",
+      "sha256": "5ff90f2fae1df133e8d0c5845743c29e3f69c69e66ddb3fcfe5b045d70329498",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_mystic_flow_t3.json",
+      "sha256": "5ff90f2fae1df133e8d0c5845743c29e3f69c69e66ddb3fcfe5b045d70329498",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_mystic_flow_t5.json",
+      "sha256": "5ff90f2fae1df133e8d0c5845743c29e3f69c69e66ddb3fcfe5b045d70329498",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_mystic_flow_t7.json",
+      "sha256": "5ff90f2fae1df133e8d0c5845743c29e3f69c69e66ddb3fcfe5b045d70329498",
+      "size": 114
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_protection.json",
+      "sha256": "16188dcfec1f8ea714252a2f3a5d77b8b5aa740c0f5bc948df18a9b05288ce4f",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_protection_t1.json",
+      "sha256": "16188dcfec1f8ea714252a2f3a5d77b8b5aa740c0f5bc948df18a9b05288ce4f",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_protection_t2.json",
+      "sha256": "16188dcfec1f8ea714252a2f3a5d77b8b5aa740c0f5bc948df18a9b05288ce4f",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_protection_t3.json",
+      "sha256": "16188dcfec1f8ea714252a2f3a5d77b8b5aa740c0f5bc948df18a9b05288ce4f",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_protection_t4.json",
+      "sha256": "16188dcfec1f8ea714252a2f3a5d77b8b5aa740c0f5bc948df18a9b05288ce4f",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_protection_t5.json",
+      "sha256": "16188dcfec1f8ea714252a2f3a5d77b8b5aa740c0f5bc948df18a9b05288ce4f",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_protection_t6.json",
+      "sha256": "16188dcfec1f8ea714252a2f3a5d77b8b5aa740c0f5bc948df18a9b05288ce4f",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_protection_t7.json",
+      "sha256": "16188dcfec1f8ea714252a2f3a5d77b8b5aa740c0f5bc948df18a9b05288ce4f",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_protection_t8.json",
+      "sha256": "16188dcfec1f8ea714252a2f3a5d77b8b5aa740c0f5bc948df18a9b05288ce4f",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_sharpness.json",
+      "sha256": "2fe3c70709d027e44f31cdf2f124e925b5bc5dc947a2e42fc20ef3758be678e2",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_sharpness_t1.json",
+      "sha256": "2fe3c70709d027e44f31cdf2f124e925b5bc5dc947a2e42fc20ef3758be678e2",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_sharpness_t2.json",
+      "sha256": "2fe3c70709d027e44f31cdf2f124e925b5bc5dc947a2e42fc20ef3758be678e2",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_sharpness_t3.json",
+      "sha256": "2fe3c70709d027e44f31cdf2f124e925b5bc5dc947a2e42fc20ef3758be678e2",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_sharpness_t4.json",
+      "sha256": "2fe3c70709d027e44f31cdf2f124e925b5bc5dc947a2e42fc20ef3758be678e2",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_sharpness_t5.json",
+      "sha256": "2fe3c70709d027e44f31cdf2f124e925b5bc5dc947a2e42fc20ef3758be678e2",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_sharpness_t6.json",
+      "sha256": "2fe3c70709d027e44f31cdf2f124e925b5bc5dc947a2e42fc20ef3758be678e2",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_sharpness_t7.json",
+      "sha256": "2fe3c70709d027e44f31cdf2f124e925b5bc5dc947a2e42fc20ef3758be678e2",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_sharpness_t8.json",
+      "sha256": "2fe3c70709d027e44f31cdf2f124e925b5bc5dc947a2e42fc20ef3758be678e2",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_swiftness.json",
+      "sha256": "b33f7c881d9695fec496b043f48c45256cd3bb97310080851fac1b82f5fd48d3",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_swiftness_t1.json",
+      "sha256": "b33f7c881d9695fec496b043f48c45256cd3bb97310080851fac1b82f5fd48d3",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_swiftness_t3.json",
+      "sha256": "b33f7c881d9695fec496b043f48c45256cd3bb97310080851fac1b82f5fd48d3",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_swiftness_t5.json",
+      "sha256": "b33f7c881d9695fec496b043f48c45256cd3bb97310080851fac1b82f5fd48d3",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_swiftness_t7.json",
+      "sha256": "b33f7c881d9695fec496b043f48c45256cd3bb97310080851fac1b82f5fd48d3",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_unbreaking.json",
+      "sha256": "07fec0b0d0e5469e76c2ee8c7057c38bfdede584e032f6cf280781d3497a8d89",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_unbreaking_t1.json",
+      "sha256": "07fec0b0d0e5469e76c2ee8c7057c38bfdede584e032f6cf280781d3497a8d89",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_unbreaking_t2.json",
+      "sha256": "07fec0b0d0e5469e76c2ee8c7057c38bfdede584e032f6cf280781d3497a8d89",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_unbreaking_t3.json",
+      "sha256": "07fec0b0d0e5469e76c2ee8c7057c38bfdede584e032f6cf280781d3497a8d89",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_unbreaking_t5.json",
+      "sha256": "07fec0b0d0e5469e76c2ee8c7057c38bfdede584e032f6cf280781d3497a8d89",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_unbreaking_t6.json",
+      "sha256": "07fec0b0d0e5469e76c2ee8c7057c38bfdede584e032f6cf280781d3497a8d89",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_unbreaking_t8.json",
+      "sha256": "07fec0b0d0e5469e76c2ee8c7057c38bfdede584e032f6cf280781d3497a8d89",
+      "size": 113
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_vampirism.json",
+      "sha256": "23081b15a115f47e0c410390f584cf62e9497f01e3066d944d2cfb902c282d18",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_vampirism_t2.json",
+      "sha256": "23081b15a115f47e0c410390f584cf62e9497f01e3066d944d2cfb902c282d18",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_vampirism_t4.json",
+      "sha256": "23081b15a115f47e0c410390f584cf62e9497f01e3066d944d2cfb902c282d18",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_vampirism_t6.json",
+      "sha256": "23081b15a115f47e0c410390f584cf62e9497f01e3066d944d2cfb902c282d18",
+      "size": 112
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/glyph_vampirism_t8.json",
+      "sha256": "23081b15a115f47e0c410390f584cf62e9497f01e3066d944d2cfb902c282d18",
+      "size": 112
     },
     {
       "path": "kubejs/assets/kubejs/models/item/halite_demigod_spear.json",
@@ -9609,6 +9909,11 @@
       "path": "kubejs/assets/kubejs/models/item/root_belt.json",
       "sha256": "db920e532e629180fa12cd0205768659618c681e648dabae46e7cc69a39ebd89",
       "size": 107
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/runic_ink.json",
+      "sha256": "452969462caa725f8a9ea142811dfa8abf2d3dbb44785c481a23d86ac3c52de5",
+      "size": 106
     },
     {
       "path": "kubejs/assets/kubejs/models/item/scout_leather_boots.json",
@@ -10256,6 +10561,11 @@
       "size": 273
     },
     {
+      "path": "kubejs/assets/kubejs/textures/item/blank_runic_slate.png",
+      "sha256": "289024934946b479f7fcb51f270027466965602ba7eb89310c681fc44e1173c8",
+      "size": 176
+    },
+    {
       "path": "kubejs/assets/kubejs/textures/item/celestial_astralyte_ingot.png",
       "sha256": "8999a877536e63295429253f82c050bd7d3d7fd504ea2c08e77dcd8e29c1e4bd",
       "size": 246
@@ -10296,9 +10606,24 @@
       "size": 191
     },
     {
+      "path": "kubejs/assets/kubejs/textures/item/glyph_bastion.png",
+      "sha256": "f6813e9ca6b8bbf901d58e4b5b16ef3f98b6e1a77fad357e0512b804e42f1a09",
+      "size": 216
+    },
+    {
       "path": "kubejs/assets/kubejs/textures/item/glyph_elemental.png",
       "sha256": "e9054efbfb895b6f8c05df5e27bb508064dc89f47388cd1ec0726094aa41c738",
       "size": 245
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/glyph_executioner.png",
+      "sha256": "2977515d07249bf8a94049b2ec3aeabab63b0427fc8e9fc0587a7d98118b41d1",
+      "size": 219
+    },
+    {
+      "path": "kubejs/assets/kubejs/textures/item/glyph_mystic_flow.png",
+      "sha256": "e0a82c5609c4cdbe0c21975873f19e6647515a2189313d653b2d819ce79d769b",
+      "size": 216
     },
     {
       "path": "kubejs/assets/kubejs/textures/item/glyph_protection.png",
@@ -13636,6 +13961,11 @@
       "size": 12665
     },
     {
+      "path": "kubejs/client_scripts/runic_glyphs_tooltips.js",
+      "sha256": "c689cbc0f6518faef02a036156b1ef5abce3482d00916fa359e6c866447d5ef9",
+      "size": 4040
+    },
+    {
       "path": "kubejs/client_scripts/simplestats_anti_exploit.js",
       "sha256": "090f27da3d7bb0b3e34fdf8b4350477c7a2ccad8b3481f81af47af06e632aa37",
       "size": 3455
@@ -14496,6 +14826,11 @@
       "size": 6790
     },
     {
+      "path": "kubejs/server_scripts/01_progression/runic_glyphs_loot_and_recipes.js",
+      "sha256": "e5a25b6d826456e521b6b6fd07aab430199c79f4d958dd1b45eb389281835c23",
+      "size": 10454
+    },
+    {
       "path": "kubejs/server_scripts/01_progression/sector_wall_generator.js",
       "sha256": "c7d5820457570f6b2e7dc4873d4fcc99fbd5746696a79d7e62d6d80aab1fcf96",
       "size": 31975
@@ -14642,8 +14977,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/runic_enchanting_engine.js",
-      "sha256": "7dc623cefc32f3174c315dbb9a85cbbc89f2fa098c9baf1ea794490292def903",
-      "size": 9187
+      "sha256": "0033052c4f586e0b89d654bbbbbbc156a0427a5c5ea551b7ec50c7d6b492b932",
+      "size": 17167
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
@@ -15017,8 +15352,8 @@
     },
     {
       "path": "kubejs/startup_scripts/runic_glyphs_registry.js",
-      "sha256": "1f3f790cdfd6af1ed5c854d4157251bd3ea9af19da4f9d09224d671043a4adcd",
-      "size": 5853
+      "sha256": "f1e68e28eb8f3277a5e0fad1d0ae04ebe89c183b5afc2a1b2005792c8d69d64b",
+      "size": 7764
     },
     {
       "path": "kubejs/startup_scripts/smithing_reinforcement_items.js",
