@@ -6,13 +6,22 @@
       "ascent": 13,
       "height": 222,
       "chars": [
-        "\uE001"
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "elyrium:gui/runic_table_overlay.png",
+      "ascent": 13,
+      "height": 166,
+      "chars": [
+        ""
       ]
     },
     {
       "type": "space",
       "advances": {
-        "\uF808": -8
+        "": -8
       }
     }
   ]

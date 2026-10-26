@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "kubejs:block/runic_table"
+    },
+    "facing=south": {
+      "model": "kubejs:block/runic_table",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "kubejs:block/runic_table",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "kubejs:block/runic_table",
+      "y": 90
+    }
+  }
+}

@@ -11,6 +11,18 @@ ServerEvents.recipes(event => {
 
     // --------------------------------------------------------------------------
     // 1. БАЗОВЫЕ МАТЕРИАЛЫ
+
+    // Стол Рунного Начертания (Физический станок начертания)
+    event.shaped('kubejs:runic_table', [
+        ' I ',
+        'ASA',
+        'DDD'
+    ], {
+        I: 'kubejs:runic_ink',
+        A: 'minecraft:amethyst_shard',
+        S: 'kubejs:blank_runic_slate',
+        D: 'minecraft:polished_deepslate'
+    });
     // --------------------------------------------------------------------------
 
     // Пустая Рунная Плита (2 шт)

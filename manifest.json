@@ -1,8 +1,8 @@
 {
-  "version": "0.4.53",
+  "version": "0.4.54",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-26T00:03:51.870951+00:00",
+  "generated_at": "2026-10-26T00:27:33.419400+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8721,6 +8721,11 @@
       "size": 103
     },
     {
+      "path": "kubejs/assets/kubejs/blockstates/runic_table.json",
+      "sha256": "0b0cd5dbc0c08fb06bb1159d976938432ca7df68803226179c8acdb4847be6d0",
+      "size": 369
+    },
+    {
       "path": "kubejs/assets/kubejs/blockstates/smithing_bench.json",
       "sha256": "6a5513bdab54f537a4980bb0659b49e35e34a34bd77c6b2c5b77e65a89212892",
       "size": 306
@@ -8929,6 +8934,11 @@
       "path": "kubejs/assets/kubejs/models/block/infernal_portal_threshold_dormant.json",
       "sha256": "baaac1f798c4c3ffd0df6b9a6c9d18d7cc3a127da47518ee483853f676f64681",
       "size": 1525
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/block/runic_table.json",
+      "sha256": "cce72abcdc3872b10004be483a91b3532e4ed39e31b17b976b00b58fe143e587",
+      "size": 2402
     },
     {
       "path": "kubejs/assets/kubejs/models/block/smithing_bench.json",
@@ -9914,6 +9924,11 @@
       "path": "kubejs/assets/kubejs/models/item/runic_ink.json",
       "sha256": "452969462caa725f8a9ea142811dfa8abf2d3dbb44785c481a23d86ac3c52de5",
       "size": 106
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/runic_table.json",
+      "sha256": "8f380fdf799cbea3031b055e77425b643d2c288dfb3a48892a55a2b1eae38597",
+      "size": 44
     },
     {
       "path": "kubejs/assets/kubejs/models/item/scout_leather_boots.json",
@@ -14827,8 +14842,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/runic_glyphs_loot_and_recipes.js",
-      "sha256": "e5a25b6d826456e521b6b6fd07aab430199c79f4d958dd1b45eb389281835c23",
-      "size": 10454
+      "sha256": "c63942684c419276de429c03a9370c84110a9fe209b15730ce769695764989b1",
+      "size": 11116
     },
     {
       "path": "kubejs/server_scripts/01_progression/sector_wall_generator.js",
@@ -14979,6 +14994,11 @@
       "path": "kubejs/server_scripts/03_combat/runic_enchanting_engine.js",
       "sha256": "0033052c4f586e0b89d654bbbbbbc156a0427a5c5ea551b7ec50c7d6b492b932",
       "size": 17167
+    },
+    {
+      "path": "kubejs/server_scripts/03_combat/runic_table_gui.js",
+      "sha256": "5b92585d5302e9a45ecb613cbbcddc3ded35296ff5d7fee789d4036d8aaae61c",
+      "size": 12026
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
@@ -15354,6 +15374,11 @@
       "path": "kubejs/startup_scripts/runic_glyphs_registry.js",
       "sha256": "f1e68e28eb8f3277a5e0fad1d0ae04ebe89c183b5afc2a1b2005792c8d69d64b",
       "size": 7764
+    },
+    {
+      "path": "kubejs/startup_scripts/runic_table_block.js",
+      "sha256": "27cdaa15855270dabbbffa66f196ba1d907e549fde76b4798746da5f16fc6898",
+      "size": 1707
     },
     {
       "path": "kubejs/startup_scripts/smithing_reinforcement_items.js",
@@ -20806,6 +20831,11 @@
       "size": 3008
     },
     {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/runic_table_overlay.png",
+      "sha256": "f9368b7039d649b2fcd93e5b5feb237d0680eec39a29d7242541bd74a926372b",
+      "size": 2458
+    },
+    {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/skills/alchemist_class.png",
       "sha256": "b28e192bd4a146f7c8526e7deb7dc5a3d512afbcfdfa4af0088e14e2463db858",
       "size": 319
@@ -22412,8 +22442,8 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/minecraft/font/default.json",
-      "sha256": "dfe5742ae179f0f313777a895205b2cf59ac4ad078bfc535e4b95383c3745964",
-      "size": 285
+      "sha256": "b103900759f13284d643d63dddf8495a8243cc2e2437fdac3bcce5c13984f04a",
+      "size": 475
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/simplestats/lang/ru_ru.json",
