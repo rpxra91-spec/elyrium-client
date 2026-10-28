@@ -2,7 +2,7 @@
   "version": "0.4.59",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-26T22:28:28.538702+00:00",
+  "generated_at": "2026-10-28T06:51:21.979450+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -3872,7 +3872,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "b27fffdfba66bccb5d96ab43b115592a4b8b2fc3b3ad4d37802c115b502a7623",
+      "sha256": "1477db8ff8952e1392e95dddac4acdffc5fd36148ab13a42b086fb2c90b5fc13",
       "size": 276
     },
     {
