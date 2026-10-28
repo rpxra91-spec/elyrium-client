@@ -45,7 +45,7 @@ function isEligibleAscensionGear(item) {
 }
 
 function openInfernalCrucibleGUI(player, stationPos) {
-    if (!player || player.level.isClientSide()) return;
+    if (!player || player.isFake()) return;
 
     let sess = getOrCreateCrucibleSession(player);
     if (stationPos) sess.stationPos = stationPos;
@@ -292,17 +292,15 @@ function openInfernalCrucibleGUI(player, stationPos) {
 // ------------------------------------------------------------------------------
 BlockEvents.rightClicked('kubejs:infernal_crucible', event => {
     let player = event.player;
-    if (!player || player.level.isClientSide()) return;
-    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
-    if (!handStr.includes('MAIN')) return;
+    if (!player || player.isFake()) return;
+    if (event.hand != 'MAIN_HAND') return;
 
-    event.cancel();
     let cx = event.block.x + 0.5;
     let cy = event.block.y + 0.5;
     let cz = event.block.z + 0.5;
     player.server.runCommandSilent(`playsound minecraft:block.lava.ambient player ${player.username} ${cx} ${cy} ${cz} 0.8 1.0`);
     player.server.runCommandSilent(`particle minecraft:lava ${cx} ${cy + 0.6} ${cz} 0.2 0.2 0.2 0.05 10`);
-    openInfernalCrucibleGUI(player, event.block.pos);
+    openInfernalCrucibleGUI(player, event.block);
 });
 
 // Глобальная очистка при выходе

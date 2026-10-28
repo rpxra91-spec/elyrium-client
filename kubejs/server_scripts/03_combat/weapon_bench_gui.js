@@ -1893,10 +1893,8 @@ function refreshWeaponBenchGUI(player, blockPos) {
 // 1. Клик ПКМ по блоку Оружейного Стола
 BlockEvents.rightClicked('kubejs:weapon_bench', event => {
     let player = event.player;
-    if (!player || player.level.isClientSide()) return;
-
-    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
-    if (!handStr.includes('MAIN')) return;
+    if (!player || player.isFake()) return;
+    if (event.hand != 'MAIN_HAND') return;
 
     let block = event.block;
     let facingStr = 'NORTH';
@@ -1912,41 +1910,34 @@ BlockEvents.rightClicked('kubejs:weapon_bench', event => {
         facing: facingStr
     };
 
-    // Если игрок приседает (Shift+ПКМ):
+    // If player is crouching (Shift+RMB):
     if (player.isCrouching()) {
         let stored = getStoredBenchWeapon(player.level, blockPos);
         let main = player.mainHandItem;
 
-        // Если в руке оружие, а стол пуст — моментальная установка на верстак
+        // Quick weapon equip
         if ((!stored || stored.isEmpty()) && main && !main.isEmpty() && isWeaponItem(main)) {
-            event.cancel();
             let equipped = main.split(1);
             setStoredBenchWeapon(player.level, blockPos, equipped);
             updateBenchWorldDisplay(player.level, blockPos, equipped);
-            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+            player.server.runCommandSilent(playsound minecraft:item.armor.equip_iron player  ~ ~ ~ 0.8 1.2);
             player.tell(Text.of('§6⚔ Оружие установлено на Оружейный Стол.'));
             return;
         }
 
-        // Если рука пуста, а на столе лежит оружие — моментальное снятие со стола
+        // Quick weapon take off
         if (stored && !stored.isEmpty() && (!main || main.isEmpty() || main.id === 'minecraft:air')) {
-            event.cancel();
             player.give(stored);
             setStoredBenchWeapon(player.level, blockPos, null);
             clearBenchWorldDisplay(player.level, blockPos);
-            player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+            player.server.runCommandSilent(playsound minecraft:entity.item.pickup player  ~ ~ ~ 0.8 1.0);
             player.tell(Text.of('§6⚔ Оружие снято с Оружейного Стола в сумку.'));
             return;
         }
     }
 
-    event.cancel();
-    if (typeof openUnifiedWorkshopGUI === 'function') {
-        openUnifiedWorkshopGUI(player, 5, blockPos);
-    } else {
-        openWeaponBenchGUI(player, block);
-    }
-    player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
+    openWeaponBenchGUI(player, block);
+    player.server.runCommandSilent(playsound minecraft:block.anvil.use player  ~ ~ ~ 0.8 1.0);
 });
 
 // 2. Перехват клика ПКМ с предметом в руке

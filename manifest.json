@@ -1,8 +1,8 @@
 {
-  "version": "0.4.59",
+  "version": "0.4.60",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-28T06:52:14.054481+00:00",
+  "generated_at": "2026-10-28T16:31:36.460861+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -3872,7 +3872,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "1477db8ff8952e1392e95dddac4acdffc5fd36148ab13a42b086fb2c90b5fc13",
+      "sha256": "f4e1b50aeb045364a1741ac2c6a77b80453dbf6cd38d6db1bfbec1de95eb276f",
       "size": 276
     },
     {
@@ -14917,18 +14917,18 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_workbench_gui.js",
-      "sha256": "f81f3c2a6b20465a7b52fb911bbb6383554db36c2350408c6ce47b7e205cb481",
-      "size": 25115
+      "sha256": "192a92c3a9599c1cf0624a5f1f0a5a918c1d1935e20f843a6c7f8156a2ac36a7",
+      "size": 25184
     },
     {
       "path": "kubejs/server_scripts/02_crafting/hearth_smeltery_gui.js",
-      "sha256": "c089e132ac1a1c5c56c2bd93d7038307254121408e253a0dadd72120746e7105",
-      "size": 16861
+      "sha256": "820531af6c4b8026278a79439d784c788a71ad996dfd10a8bf6fe0238ae580db",
+      "size": 22689
     },
     {
       "path": "kubejs/server_scripts/02_crafting/infernal_crucible_gui.js",
-      "sha256": "729c1fd3c41011587fcf4d0852364d8c7b14403898aaa7c9004e22fdf0c7b3f2",
-      "size": 17673
+      "sha256": "631870a22d6520d0cfdcd881b676b30c0c6e5a9ef95f2bc5c01869fb85cb684a",
+      "size": 17560
     },
     {
       "path": "kubejs/server_scripts/02_crafting/steel_metallurgy_recipes.js",
@@ -15022,8 +15022,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/infernal_anvil_gui.js",
-      "sha256": "7f151c1944d95a45eaf37bad34ececb499d5d085709e94c6caf5e6d8c53351f5",
-      "size": 61635
+      "sha256": "e18499364d0f9d2ade91b5dccf066452a3f3f9ca8c3a0398cd59ba5b1d8ae993",
+      "size": 61022
     },
     {
       "path": "kubejs/server_scripts/03_combat/martial_arts_inscription.js",
@@ -15097,8 +15097,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/void_anvil_gui.js",
-      "sha256": "e97234f505d74c5cbd4f0bda404124cd7c133df302cefb7fa5681c72bfe655c1",
-      "size": 18453
+      "sha256": "fc11e16f009420a7a2a7082b996b8814fb4301e7efdcbf1bf1177daef30bad97",
+      "size": 18340
     },
     {
       "path": "kubejs/server_scripts/03_combat/wave_defense_arena.js",
@@ -15107,8 +15107,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_gui.js",
-      "sha256": "6e937c32ccb5b3e97fa65da838a1e2b67bef1864a57617c4b0a875b208e34a12",
-      "size": 114648
+      "sha256": "4216f3691304d8132e1f77b29af97f54897554ff22a489d2a2e11fdfd1cccaa0",
+      "size": 114013
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",
@@ -20927,8 +20927,8 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/blacksmith_workbench_overlay.png",
-      "sha256": "c9e37b905f1bf6e74c82901d5cbad245c6a3e6bfff362b05c9c0ff7dd600e091",
-      "size": 45409
+      "sha256": "4c0cf060aae356e6ee2552fdc3b4aff3d9fd27fdc288eca23b24697537a46093",
+      "size": 40311
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/celestial_constellation_bg.png",
@@ -20942,8 +20942,8 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/hearth_smeltery_overlay.png",
-      "sha256": "06a93dc00a9a43076f28b3e4d4c16df5514cc6db1fd844ae331fa683db7a6139",
-      "size": 41526
+      "sha256": "fb85038571d464f953ec38e457f306208b0c7ead6c807b40140185e9c0b95e96",
+      "size": 38693
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/hud/hud_bars.png",
@@ -20952,13 +20952,13 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/infernal_crucible_overlay.png",
-      "sha256": "2908a4fcf17e68020560e269ec3effa02231bdce772ed39ae65317e35b4e25e4",
-      "size": 50182
+      "sha256": "0a4b709d7707033016f72340c883515a8043b1f852d72d69e4d7dd5055b347a7",
+      "size": 48791
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/runic_table_overlay.png",
-      "sha256": "a7aa303e76f0ee24c72ae79220bd5d8ec08431b9278787b6b4f9c517d69e4094",
-      "size": 50289
+      "sha256": "1da24ec8731e98c176271ec1f6da2d220a54adc4c80baf07c7dd5f79eb311083",
+      "size": 47382
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/skills/frame_keystone_available.png",
@@ -21007,13 +21007,13 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/void_anvil_overlay.png",
-      "sha256": "ce748084e221614066c16df58300843df42cadb978ad8d9868683ad815d801e7",
-      "size": 50893
+      "sha256": "33b1927f459532abaaf93e3a29834462f0d088255285a2f5fc9caa845daabe4a",
+      "size": 46939
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/weapon_bench_overlay.png",
-      "sha256": "2084be685cd4a423f73e02344cdc2c81f72357bb8e9ac1bf8b482a654bbe43b9",
-      "size": 46731
+      "sha256": "8e70d6bbe4559eb4fb784030ccdb9bb30c3c1a8c623c34eb71c2cc274f29c087",
+      "size": 46838
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/skills/alchemist_class.png",

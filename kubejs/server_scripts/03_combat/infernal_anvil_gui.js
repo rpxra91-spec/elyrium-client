@@ -998,33 +998,15 @@ function openInfernalAnvilGUI(player) {
 // ИНТЕГРАЦИЯ С МИРОМ: ОТКРЫТИЕ АДСКОЙ НАКОВАЛЬНИ
 // ------------------------------------------------------------------------------
 
-// 1. Таргетированный клик по блоку Наковальни (void_anvil & legacy infernal_anvil)
-BlockEvents.rightClicked('kubejs:void_anvil', event => {
-    let player = event.player;
-    if (!player || player.level.isClientSide()) return;
-
-    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
-    if (!handStr.includes('MAIN')) return;
-
-    event.cancel();
-    if (typeof openUnifiedWorkshopGUI === 'function') {
-        openUnifiedWorkshopGUI(player, 4, event.block.pos);
-    } else {
-        openInfernalAnvilGUI(player);
-    }
-    player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
-});
-
+// 1. Таргетированный клик по legacy блоку infernal_anvil
+// (kubejs:void_anvil обрабатывается автономно в void_anvil_gui.js)
 BlockEvents.rightClicked('kubejs:infernal_anvil', event => {
     let player = event.player;
-    if (!player || player.level.isClientSide()) return;
+    if (!player || player.isFake()) return;
+    if (event.hand != 'MAIN_HAND') return;
 
-    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
-    if (!handStr.includes('MAIN')) return;
-
-    event.cancel();
     if (typeof openUnifiedWorkshopGUI === 'function') {
-        openUnifiedWorkshopGUI(player, 4, event.block.pos);
+        openUnifiedWorkshopGUI(player, 4, event.block);
     } else {
         openInfernalAnvilGUI(player);
     }

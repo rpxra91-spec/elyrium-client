@@ -74,7 +74,7 @@ function deductWorkbenchIngredients(ingredients, targetIdOrTag, needed) {
 }
 
 function openBlacksmithWorkbenchGUI(player, stationPos) {
-    if (!player || player.level.isClientSide()) return;
+    if (!player || player.isFake()) return;
 
     let sess = getOrCreateWorkbenchSession(player);
     if (stationPos) sess.stationPos = stationPos;
@@ -173,7 +173,7 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
             gui.slot(5, 0, s => {
                 s.setItem(Item.of('minecraft:arrow').withCustomName(Text.of('§e◀ Предыдущий Чертеж')));
                 s.leftClicked = () => {
-                    let len = WORKSHOP_FORGE_RECIPES.length;
+                    let len = (typeof WORKSHOP_FORGE_RECIPES !== 'undefined' && WORKSHOP_FORGE_RECIPES.length > 0) ? WORKSHOP_FORGE_RECIPES.length : 1;
                     sess.recipeIdx = (sess.recipeIdx - 1 + len) % len;
                     player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.6 1.4`);
                     openBlacksmithWorkbenchGUI(player, sess.stationPos);
@@ -199,7 +199,7 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
             gui.slot(7, 0, s => {
                 s.setItem(Item.of('minecraft:arrow').withCustomName(Text.of('§eСледующий Чертеж ▶')));
                 s.leftClicked = () => {
-                    let len = WORKSHOP_FORGE_RECIPES.length;
+                    let len = (typeof WORKSHOP_FORGE_RECIPES !== 'undefined' && WORKSHOP_FORGE_RECIPES.length > 0) ? WORKSHOP_FORGE_RECIPES.length : 1;
                     sess.recipeIdx = (sess.recipeIdx + 1) % len;
                     player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.6 1.4`);
                     openBlacksmithWorkbenchGUI(player, sess.stationPos);
@@ -422,12 +422,10 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
 // ------------------------------------------------------------------------------
 BlockEvents.rightClicked('kubejs:blacksmith_workbench', event => {
     let player = event.player;
-    if (!player || player.level.isClientSide()) return;
-    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
-    if (!handStr.includes('MAIN')) return;
+    if (!player || player.isFake()) return;
+    if (event.hand != 'MAIN_HAND') return;
 
-    event.cancel();
-    openBlacksmithWorkbenchGUI(player, event.block.pos);
+    openBlacksmithWorkbenchGUI(player, event.block);
     player.server.runCommandSilent(`playsound minecraft:block.wood.hit player ${player.username} ~ ~ ~ 0.8 1.0`);
 });
 

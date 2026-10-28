@@ -47,7 +47,7 @@ function isEligibleVoidGear(item) {
 }
 
 function openVoidAnvilGUI(player, stationPos) {
-    if (!player || player.level.isClientSide()) return;
+    if (!player || player.isFake()) return;
 
     let sess = getOrCreateVoidAnvilSession(player);
     if (stationPos) sess.stationPos = stationPos;
@@ -323,12 +323,10 @@ function openVoidAnvilGUI(player, stationPos) {
 // ------------------------------------------------------------------------------
 BlockEvents.rightClicked('kubejs:void_anvil', event => {
     let player = event.player;
-    if (!player || player.level.isClientSide()) return;
-    let handStr = event.hand ? String(event.hand) : 'MAIN_HAND';
-    if (!handStr.includes('MAIN')) return;
+    if (!player || player.isFake()) return;
+    if (event.hand != 'MAIN_HAND') return;
 
-    event.cancel();
-    openVoidAnvilGUI(player, event.block.pos);
+    openVoidAnvilGUI(player, event.block);
     player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 0.8 1.0`);
 });
 
