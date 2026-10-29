@@ -357,7 +357,7 @@ function deductPlayerItems(player, itemIdOrTag, needed) {
 // ------------------------------------------------------------------------------
 // 8. NAMESPACE EXPORT
 // ------------------------------------------------------------------------------
-global.ElyriumCore = {
+var ElyriumCore = {
     getReinforceLevel: getReinforceLevel,
     getWeaponProgressionTier: getWeaponProgressionTier,
     getPlayerLevel: getPlayerLevel,

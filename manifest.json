@@ -1,8 +1,8 @@
 {
-  "version": "0.4.62",
+  "version": "0.4.63",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-29T20:03:49.000190+00:00",
+  "generated_at": "2026-10-29T22:50:16.704952+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -3872,7 +3872,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "a900d065000a65d0f5e3a6feda87ee52de47bf165a997521c0b94538f0f0dd83",
+      "sha256": "659af253693462f55cd94be782811dab68f4f4f64a3bddf14f6d9dd5804a5b5f",
       "size": 276
     },
     {
@@ -13972,8 +13972,8 @@
     },
     {
       "path": "kubejs/client_scripts/character_hub_navigation.js",
-      "sha256": "c7abfa51fc14581957078c04acb521337437920b18345488ebbb598fdee26c2f",
-      "size": 9058
+      "sha256": "7f6ac5475120cacf7a1ddee0cfd9640365a2b83c93096a422625f558d8a85bda",
+      "size": 8890
     },
     {
       "path": "kubejs/client_scripts/dodge_camera_fx.js",
@@ -14837,8 +14837,8 @@
     },
     {
       "path": "kubejs/server_scripts/00_core/elyrium_core_lib.js",
-      "sha256": "8d879b0ec8d890bee4752d2de18d23ade4aa1dc36741a1839c37890a94f46490",
-      "size": 17015
+      "sha256": "754f0bf74b62a8c45cd51c5bd0773c72291c83469afa5228485d40c85fd618f4",
+      "size": 17386
     },
     {
       "path": "kubejs/server_scripts/01_progression/anti_elytra_skip.js",
@@ -14927,8 +14927,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/hearth_smeltery_gui.js",
-      "sha256": "368c1b4ff38fa564b56a924d0668d3734bac371345b6d7f78ad424dae1237a86",
-      "size": 36973
+      "sha256": "c2941883d9684397b596736291d8090bcdfc6361187f4c7ef121fdb56ce61ac2",
+      "size": 37265
     },
     {
       "path": "kubejs/server_scripts/02_crafting/infernal_crucible_gui.js",
@@ -15042,8 +15042,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/nomadic_world_bosses_engine.js",
-      "sha256": "38384ed73f16987c03e423434a0d5c2c240a9e1876b8cce0cdd3eef5f4362428",
-      "size": 97839
+      "sha256": "236e5fdb6a4ba8b4fd3281b9b751b77a6f1a492a7cf3541cab39fa5130118868",
+      "size": 99592
     },
     {
       "path": "kubejs/server_scripts/03_combat/party_xp_share.js",
@@ -15057,8 +15057,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/runic_enchanting_engine.js",
-      "sha256": "0033052c4f586e0b89d654bbbbbbc156a0427a5c5ea551b7ec50c7d6b492b932",
-      "size": 17167
+      "sha256": "3627316c97cbfcb850ecad01940f3c074c25814648b33412d00af133c3de6307",
+      "size": 17623
     },
     {
       "path": "kubejs/server_scripts/03_combat/runic_table_gui.js",
@@ -15112,8 +15112,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_gui.js",
-      "sha256": "e31764317bc1a4a772c40ff566b685ce296bb9035c72406f881c1b01ba60ffa4",
-      "size": 117707
+      "sha256": "3525bdf46cde1042d53e87d13d488c33562c27c187b19c3c120b2dc0e8299fac",
+      "size": 117782
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",

@@ -1987,7 +1987,7 @@ BlockEvents.rightClicked('kubejs:weapon_bench', event => {
             let equipped = main.split(1);
             setStoredBenchWeapon(player.level, blockPos, equipped);
             updateBenchWorldDisplay(player.level, blockPos, equipped);
-            player.server.runCommandSilent(playsound minecraft:item.armor.equip_iron player  ~ ~ ~ 0.8 1.2);
+            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
             player.tell(Text.of('§6⚔ Оружие установлено на Оружейный Стол.'));
             return;
         }
@@ -1997,14 +1997,14 @@ BlockEvents.rightClicked('kubejs:weapon_bench', event => {
             player.give(stored);
             setStoredBenchWeapon(player.level, blockPos, null);
             clearBenchWorldDisplay(player.level, blockPos);
-            player.server.runCommandSilent(playsound minecraft:entity.item.pickup player  ~ ~ ~ 0.8 1.0);
+            player.server.runCommandSilent('playsound minecraft:entity.item.pickup player ' + player.username + ' ~ ~ ~ 0.8 1.0');
             player.tell(Text.of('§6⚔ Оружие снято с Оружейного Стола в сумку.'));
             return;
         }
     }
 
     openWeaponBenchGUI(player, block);
-    player.server.runCommandSilent(playsound minecraft:block.anvil.use player  ~ ~ ~ 0.8 1.0);
+    player.server.runCommandSilent('playsound minecraft:block.anvil.use player ' + player.username + ' ~ ~ ~ 0.8 1.0');
 });
 
 // 2. Перехват клика ПКМ с предметом в руке

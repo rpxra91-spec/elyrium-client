@@ -373,7 +373,7 @@ function consumeInk(inv) {
 // ------------------------------------------------------------------------------
 // COMBAT MATRIX HOOKS: GLYPH SPECIAL EFFECTS
 // ------------------------------------------------------------------------------
-EntityEvents.hurt(event => {
+EntityEvents.beforeHurt(event => {
     let source = event.source;
     let victim = event.entity;
     if (!source || !victim) return;

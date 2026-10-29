@@ -65,13 +65,13 @@ function openQuestsScreen() {
 try {
     let NeoForge = Java.loadClass('net.neoforged.neoforge.common.NeoForge');
     let Consumer = Java.loadClass('java.util.function.Consumer');
-    let ScreenEventInitPost = Java.loadClass('net.neoforged.neoforge.client.event.ScreenEvent');
-    let ScreenEventRenderPre = Java.loadClass('net.neoforged.neoforge.client.event.ScreenEvent');
-    let ScreenEventKeyPressedPre = Java.loadClass('net.neoforged.neoforge.client.event.ScreenEvent');
+    let ScreenEventInitPost = Java.loadClass('net.neoforged.neoforge.client.event.ScreenEvent$Init$Post');
+    let ScreenEventRenderPre = Java.loadClass('net.neoforged.neoforge.client.event.ScreenEvent$Render$Pre');
+    let ScreenEventKeyPressedPre = Java.loadClass('net.neoforged.neoforge.client.event.ScreenEvent$KeyPressed$Pre');
 
     let Button = Java.loadClass('net.minecraft.client.gui.components.Button');
     let Component = Java.loadClass('net.minecraft.network.chat.Component');
-    let OnPress = Java.loadClass('net.minecraft.client.gui.components.Button');
+    let OnPress = Java.loadClass('net.minecraft.client.gui.components.Button$OnPress');
 
     // 1. Screen Init: Add Navigation Tabs & Enforce Anti-Exploit
     let initListener = new Consumer({
@@ -95,7 +95,7 @@ try {
                     let btnStats = Button.builder(Component.literal('§6📊 Статы'), new OnPress({
                         onPress: function(btn) {}
                     })).bounds(centerX - 110, topY, 65, 20).build();
-                    btnStats.active = false; // already on stats
+                    btnStats.active = false;
                     event.addListener(btnStats);
 
                     // Tab: Constellations (Switch to N)

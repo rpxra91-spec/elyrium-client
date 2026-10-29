@@ -223,7 +223,7 @@ function updateHearthSlots(gui, session) {
             ]));
         } else {
             slot.setItem(Item.of('minecraft:light_gray_stained_glass_pane')
-                .withCustomName(Text.of(§e[ Слот Сырья # ]))
+                .withCustomName(Text.of('§e[ Слот Сырья #' + (i + 1) + ' ]'))
                 .withLore([
                     Text.of('§7Пусто. Положите руду/сырье курсором или через Shift+ЛКМ.'),
                     Text.of('§8Поддерживает параллельную плавку до 3 слотов!')
@@ -239,11 +239,11 @@ function updateHearthSlots(gui, session) {
             slot.setItem(fuel.copy().withLore([
                 Text.of('§8────────────────────────────────'),
                 Text.of('§e▶ Нажмите ЛКМ: §fЗабрать топливо в руку'),
-                Text.of(§7Текущий запас жара: §e ед.)
+                Text.of('§7Текущий запас жара: §e' + (session.burnTime || 0) + ' ед.')
             ]));
         } else {
             slot.setItem(Item.of('minecraft:orange_stained_glass_pane')
-                .withCustomName(Text.of(§6[ Слот Топлива # ]))
+                .withCustomName(Text.of('§6[ Слот Топлива #' + (f + 1) + ' ]'))
                 .withLore([
                     Text.of('§7Пусто. Положите уголь/лаву курсором или через Shift+ЛКМ.'),
                     Text.of('§8Уголь, древесный уголь, лава, блоки угля, стержни ифрита')
@@ -255,7 +255,7 @@ function updateHearthSlots(gui, session) {
     let centerSlot = gui.getSlot(4, 1);
     let fireIcon = session.fuelCharges > 0 ? 'minecraft:campfire' : 'minecraft:coal';
     centerSlot.setItem(Item.of(fireIcon).withCustomName(Text.of('§6🔥 [ ГОРН ПЛАВИЛЬНИ ]')).withLore([
-        Text.of(§eЖар очага: §f ед. плавки),
+        Text.of('§eЖар очага: §f' + (session.burnTime || 0) + ' ед. плавки'),
         Text.of('§8────────────────────────────────'),
         Text.of('§e▶ Нажмите ЛКМ: §fРаздуть мехи (Ускорить цикл переплавки)'),
         Text.of('§7Параллельная переплавка всех 3 слотов сырья!')
@@ -275,7 +275,7 @@ function updateHearthSlots(gui, session) {
             ]));
         } else {
             slot.setItem(Item.of('minecraft:gray_stained_glass_pane')
-                .withCustomName(Text.of(§8[ Лоток Продукции # ]))
+                .withCustomName(Text.of('§8[ Лоток Продукции #' + (p + 1) + ' ]'))
                 .withLore([
                     Text.of('§7Пусто. Сюда поступают выплавленные слитки и материалы.')
                 ]));
@@ -337,7 +337,7 @@ function openHearthSmelteryGUI(player, block) {
                     if (carried && !carried.isEmpty()) {
                         if (isFoodItem(carried)) {
                             player.tell(Text.of('§c⛔ [Очаг] Кузнечный Очаг предназначен только для металлургии! Пища сгорит в пепел.'));
-                            player.server.runCommandSilent(playsound minecraft:block.fire.extinguish player  ~ ~ ~ 1.0 1.5);
+            player.server.runCommandSilent('playsound minecraft:block.fire.extinguish player ' + player.username + ' ~ ~ ~ 1.0 1.5');
                             return;
                         }
                         let smeltResult = getSmelteryResult(carried);
@@ -349,26 +349,26 @@ function openHearthSmelteryGUI(player, block) {
                         if (!current || current.isEmpty()) {
                             session.inputs[slotIdx] = carried.copy();
                             player.containerMenu.setCarried(Item.of('minecraft:air'));
-                            player.server.runCommandSilent(playsound minecraft:item.armor.equip_iron player  ~ ~ ~ 0.8 1.2);
+            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
                         } else if (current.id === carried.id) {
                             let space = current.maxStackSize - current.count;
                             let move = Math.min(space, carried.count);
                             current.grow(move);
                             carried.shrink(move);
                             if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
-                            player.server.runCommandSilent(playsound minecraft:item.armor.equip_iron player  ~ ~ ~ 0.8 1.2);
+            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
                         } else {
                             let temp = current.copy();
                             session.inputs[slotIdx] = carried.copy();
                             player.containerMenu.setCarried(temp);
-                            player.server.runCommandSilent(playsound minecraft:item.armor.equip_iron player  ~ ~ ~ 0.8 1.2);
+            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
                         }
                         processSmelteryCycle(player, session, false);
                         updateHearthSlots(gui, session);
                     } else if (current && !current.isEmpty()) {
                         player.containerMenu.setCarried(current.copy());
                         session.inputs[slotIdx] = null;
-                        player.server.runCommandSilent(playsound minecraft:entity.item.pickup player  ~ ~ ~ 0.8 1.0);
+            player.server.runCommandSilent('playsound minecraft:entity.item.pickup player ' + player.username + ' ~ ~ ~ 0.8 1.0');
                         updateHearthSlots(gui, session);
                     }
                 };
@@ -425,26 +425,26 @@ function openHearthSmelteryGUI(player, block) {
                         if (!current || current.isEmpty()) {
                             session.fuels[fuelIdx] = carried.copy();
                             player.containerMenu.setCarried(Item.of('minecraft:air'));
-                            player.server.runCommandSilent(playsound minecraft:item.armor.equip_iron player  ~ ~ ~ 0.8 1.2);
+            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
                         } else if (current.id === carried.id) {
                             let space = current.maxStackSize - current.count;
                             let move = Math.min(space, carried.count);
                             current.grow(move);
                             carried.shrink(move);
                             if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
-                            player.server.runCommandSilent(playsound minecraft:item.armor.equip_iron player  ~ ~ ~ 0.8 1.2);
+            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
                         } else {
                             let temp = current.copy();
                             session.fuels[fuelIdx] = carried.copy();
                             player.containerMenu.setCarried(temp);
-                            player.server.runCommandSilent(playsound minecraft:item.armor.equip_iron player  ~ ~ ~ 0.8 1.2);
+            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
                         }
                         processSmelteryCycle(player, session, false);
                         updateHearthSlots(gui, session);
                     } else if (current && !current.isEmpty()) {
                         player.containerMenu.setCarried(current.copy());
                         session.fuels[fuelIdx] = null;
-                        player.server.runCommandSilent(playsound minecraft:entity.item.pickup player  ~ ~ ~ 0.8 1.0);
+            player.server.runCommandSilent('playsound minecraft:entity.item.pickup player ' + player.username + ' ~ ~ ~ 0.8 1.0');
                         updateHearthSlots(gui, session);
                     }
                 };
@@ -509,7 +509,7 @@ function openHearthSmelteryGUI(player, block) {
                     if (!carried || carried.isEmpty()) {
                         player.containerMenu.setCarried(outSt.copy());
                         session.outputs[outIdx] = null;
-                        player.server.runCommandSilent(playsound minecraft:entity.item.pickup player  ~ ~ ~ 0.8 1.0);
+            player.server.runCommandSilent('playsound minecraft:entity.item.pickup player ' + player.username + ' ~ ~ ~ 0.8 1.0');
                         updateHearthSlots(gui, session);
                     } else if (carried.id === outSt.id && carried.count < carried.maxStackSize) {
                         let space = carried.maxStackSize - carried.count;
@@ -517,7 +517,7 @@ function openHearthSmelteryGUI(player, block) {
                         carried.grow(move);
                         outSt.shrink(move);
                         if (outSt.count <= 0) session.outputs[outIdx] = null;
-                        player.server.runCommandSilent(playsound minecraft:entity.item.pickup player  ~ ~ ~ 0.8 1.0);
+            player.server.runCommandSilent('playsound minecraft:entity.item.pickup player ' + player.username + ' ~ ~ ~ 0.8 1.0');
                         updateHearthSlots(gui, session);
                     }
                 };
@@ -534,7 +534,7 @@ function openHearthSmelteryGUI(player, block) {
                         outSt.shrink(half);
                         if (outSt.count <= 0) session.outputs[outIdx] = null;
                         player.containerMenu.setCarried(picked);
-                        player.server.runCommandSilent(playsound minecraft:entity.item.pickup player  ~ ~ ~ 0.8 1.0);
+            player.server.runCommandSilent('playsound minecraft:entity.item.pickup player ' + player.username + ' ~ ~ ~ 0.8 1.0');
                         updateHearthSlots(gui, session);
                     }
                 };
@@ -580,8 +580,8 @@ function openHearthSmelteryGUI(player, block) {
 
                 // STRICT FOOD BAN
                 if (isFoodItem(invItem)) {
-                    player.server.runCommandSilent(playsound minecraft:block.fire.extinguish player  ~ ~ ~ 1.0 1.5);
-                    player.server.runCommandSilent(particle minecraft:smoke ~ ~1.2 ~ 0.3 0.3 0.3 0.05 20);
+            player.server.runCommandSilent('playsound minecraft:block.fire.extinguish player ' + player.username + ' ~ ~ ~ 1.0 1.5');
+            player.server.runCommandSilent('particle minecraft:smoke ~ ~1.2 ~ 0.3 0.3 0.3 0.05 20');
                     player.tell(Text.of('§c⛔ [Очаг] Кузнечный Очаг предназначен только для металлургии! Пища сгорит в пепел.'));
                     return;
                 }
@@ -597,7 +597,7 @@ function openHearthSmelteryGUI(player, block) {
                             curF.grow(move);
                             invItem.shrink(move);
                             event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
-                            player.server.runCommandSilent(playsound minecraft:item.armor.equip_iron player  ~ ~ ~ 0.8 1.2);
+            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
                             processSmelteryCycle(player, session, false);
                             updateHearthSlots(gui, session);
                             return;
@@ -607,7 +607,7 @@ function openHearthSmelteryGUI(player, block) {
                         if (!session.fuels[f] || session.fuels[f].isEmpty()) {
                             session.fuels[f] = invItem.copy();
                             event.setItem(Item.of('minecraft:air'));
-                            player.server.runCommandSilent(playsound minecraft:item.armor.equip_iron player  ~ ~ ~ 0.8 1.2);
+            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
                             processSmelteryCycle(player, session, false);
                             updateHearthSlots(gui, session);
                             return;
@@ -628,7 +628,7 @@ function openHearthSmelteryGUI(player, block) {
                             curIn.grow(move);
                             invItem.shrink(move);
                             event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
-                            player.server.runCommandSilent(playsound minecraft:item.armor.equip_iron player  ~ ~ ~ 0.8 1.2);
+            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
                             processSmelteryCycle(player, session, false);
                             updateHearthSlots(gui, session);
                             return;
@@ -638,7 +638,7 @@ function openHearthSmelteryGUI(player, block) {
                         if (!session.inputs[i] || session.inputs[i].isEmpty()) {
                             session.inputs[i] = invItem.copy();
                             event.setItem(Item.of('minecraft:air'));
-                            player.server.runCommandSilent(playsound minecraft:item.armor.equip_iron player  ~ ~ ~ 0.8 1.2);
+            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
                             processSmelteryCycle(player, session, false);
                             updateHearthSlots(gui, session);
                             return;

@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.4.63",
+    "title": "Hotfix 5 ошибок KubeJS и запуск Character Hub",
+    "date": "2026-10-30",
+    "changes": [
+      "Исправлена ошибка elyrium_core_lib.js: устранена попытка присвоения global.",
+      "Исправлена синтаксическая ошибка hearth_smeltery_gui.js: восстановлены кавычки Text.of и runCommandSilent.",
+      "Исправлена ошибка nomadic_world_bosses_engine.js: устранено обращение к global.ElyriumNomadBosses.",
+      "Исправлено событие runic_enchanting_engine.js: переход с неизвестного EntityEvents.hurt на EntityEvents.beforeHurt.",
+      "Исправлена синтаксическая ошибка weapon_bench_gui.js в командах звука playsound.",
+      "Починена регистрация навигационных вкладок Character Hub: Статы [C], Созвездия [N], Квесты [J]."
+    ]
+  },
+  {
     "version": "0.4.62",
     "title": "Капитальный ремонт созвездий Puffish Skills, ликвидация конфликтов клавиш и Единый Character Hub",
     "date": "2026-10-29",
