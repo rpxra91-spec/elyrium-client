@@ -56,7 +56,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "adventurer_final": {
     "title": "Незримый мастер",
@@ -107,7 +107,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "adventurer_skill_1": {
     "title": "Рефлексы авантюриста I",
@@ -185,7 +185,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "adventurer_skill_11": {
     "title": "Быстрая стрельба",
@@ -731,7 +731,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "adventurer_skill_13": {
     "title": "Критическая подготовка",
@@ -1221,7 +1221,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "adventurer_skill_6_3": {
     "title": "Обостренные инстинкты",
@@ -1291,7 +1291,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "adventurer_skill_8": {
     "title": "Ловкость I",
@@ -1584,7 +1584,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "adventurer_subclass": {
     "title": "Подкласс \"Наёмник\"",
@@ -1643,7 +1643,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "archer_final": {
     "title": "Абсолютное стрелковое мастерство",
@@ -1694,7 +1694,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "archer_skill_2": {
     "title": "Уклонение I",
@@ -1869,7 +1869,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "archer_skill_2_1_5": {
     "title": "Точный выстрел I",
@@ -2044,7 +2044,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "archer_skill_2_1_9": {
     "title": "Точный выстрел V",
@@ -2184,7 +2184,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "archer_skill_2_2_4": {
     "title": "Ускоренный выстрел III",
@@ -2394,7 +2394,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "archer_skill_3": {
     "title": "Убийственный выстрел",
@@ -2437,7 +2437,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "archer_skill_4": {
     "title": "Уклонение V",
@@ -2515,7 +2515,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "assassin_final": {
     "title": "Абсолютная тень",
@@ -2558,7 +2558,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "assassin_skill_2": {
     "title": "Тень I",
@@ -2733,7 +2733,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "assassin_skill_2_1_5": {
     "title": "Смертельный удар I",
@@ -2948,7 +2948,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "assassin_skill_2_1_9": {
     "title": "Смертельный удар V",
@@ -3120,7 +3120,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "assassin_skill_2_2_4": {
     "title": "Скорость теней III",
@@ -3378,7 +3378,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "assassin_skill_3": {
     "title": "Отравляющие шаги",
@@ -3413,7 +3413,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "assassin_skill_4": {
     "title": "Тень V",
@@ -3499,7 +3499,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "basic_start": {
     "title": "Lost Souls",
@@ -3576,7 +3576,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "basic_start_1": {
     "title": "Насыщение от создаваемой еды I",
@@ -4107,7 +4107,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_alchemist_final_2": {
     "title": "Архимиксатор",
@@ -4170,7 +4170,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_alchemist_skill_2": {
     "title": "Мастерство зелий I",
@@ -4353,7 +4353,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_alchemist_skill_2_1_5": {
     "title": "Продолжительное варево I",
@@ -4536,7 +4536,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_alchemist_skill_2_1_9": {
     "title": "Продолжительное варево V",
@@ -4894,7 +4894,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_alchemist_skill_3": {
     "title": "Секреты Варки I",
@@ -4929,7 +4929,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_alchemist_skill_4": {
     "title": "Продолжительное варево VI",
@@ -5013,7 +5013,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_arcansmith_class": {
     "title": "Класс \"Ремесленник\"",
@@ -5062,7 +5062,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "craftsman_arcansmith_final": {
     "title": "Абсолютная закалка Арканы",
@@ -5113,7 +5113,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_arcansmith_skill_1": {
     "title": "Закалённые инструменты",
@@ -5191,7 +5191,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_arcansmith_skill_11": {
     "title": "Арканизм VII",
@@ -5681,7 +5681,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_arcansmith_skill_13": {
     "title": "Закалка Арканы",
@@ -6179,7 +6179,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_arcansmith_skill_6_3": {
     "title": "Оружейная ковка",
@@ -6257,7 +6257,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_arcansmith_skill_8": {
     "title": "Арканизм I",
@@ -6502,7 +6502,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_arcansmith_subclass": {
     "title": "Подкласс \"Кузнец Арканы\"",
@@ -6545,7 +6545,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_blacksmith_final_1": {
     "title": "Мастер-кузнец: Высшее искусство",
@@ -6588,7 +6588,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_blacksmith_final_2": {
     "title": "Заклинательная кузня",
@@ -6631,7 +6631,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_blacksmith_final_3": {
     "title": "Оружейное совершенство",
@@ -6674,7 +6674,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_blacksmith_final_4": {
     "title": "Кузнечный инстинкт",
@@ -6717,7 +6717,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_blacksmith_final_5": {
     "title": "Броня исцеления",
@@ -6760,7 +6760,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_blacksmith_final_6": {
     "title": "Титаническая броня",
@@ -6811,7 +6811,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_blacksmith_final_7": {
     "title": "Меткость стрелка",
@@ -6854,7 +6854,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_blacksmith_final_8": {
     "title": "Кузня отчаянного воина",
@@ -6897,7 +6897,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_blacksmith_final_9": {
     "title": "Теневой мастер",
@@ -6940,7 +6940,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_blacksmith_skill_2": {
     "title": "Прочные основы I",
@@ -7115,7 +7115,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_blacksmith_skill_2_1_5": {
     "title": "Критический урон оружейника I",
@@ -7290,7 +7290,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_blacksmith_skill_2_1_9": {
     "title": "Кузнечная скорость",
@@ -7648,7 +7648,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_blacksmith_skill_3": {
     "title": "Легкая броня кузнеца",
@@ -7683,7 +7683,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_blacksmith_skill_4": {
     "title": "Прочные основы II",
@@ -7839,7 +7839,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_cook_final_1": {
     "title": "Абсолютный гурман",
@@ -7902,7 +7902,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_cook_final_2": {
     "title": "Мастер восстановления",
@@ -7951,7 +7951,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_cook_skill_2": {
     "title": "Эксперт кулинарии I",
@@ -8146,7 +8146,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_cook_skill_2_1_5": {
     "title": "Целебная кухня I",
@@ -8329,7 +8329,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_cook_skill_2_1_9": {
     "title": "Целебная кухня V",
@@ -8687,7 +8687,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_cook_skill_3": {
     "title": "Кулинар-воин",
@@ -8730,7 +8730,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_cook_skill_4": {
     "title": "Эксперт кулинарии V",
@@ -8826,7 +8826,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_deli_alchemist_class": {
     "title": "Класс \"Алхимик\"",
@@ -8875,7 +8875,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "craftsman_deli_alchemist_final": {
     "title": "Абсолютный эффект",
@@ -8926,7 +8926,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_deli_alchemist_skill_1": {
     "title": "Алхимическая точность I",
@@ -8996,7 +8996,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_deli_alchemist_skill_11": {
     "title": "Мастер эффектов VII",
@@ -9486,7 +9486,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_deli_alchemist_skill_13": {
     "title": "Ударное зелье",
@@ -9976,7 +9976,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_deli_alchemist_skill_6_3": {
     "title": "Питательный состав V",
@@ -10046,7 +10046,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_deli_alchemist_skill_8": {
     "title": "Мастер эффектов I",
@@ -10291,7 +10291,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_deli_alchemist_subclass": {
     "title": "Подкласс \"Гурман-алхимик\"",
@@ -10334,7 +10334,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_enchanter_final_1": {
     "title": "Абсолютное Чарование",
@@ -10377,7 +10377,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_enchanter_final_2": {
     "title": "Опытный Чародей",
@@ -10428,7 +10428,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "craftsman_enchanter_skill_2": {
     "title": "Превосходное Чарование",
@@ -10611,7 +10611,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_enchanter_skill_2_1_5": {
     "title": "Экономия Чар IV",
@@ -10794,7 +10794,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_enchanter_skill_2_1_9": {
     "title": "Улучшенная экономия Чар",
@@ -11160,7 +11160,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_enchanter_skill_3": {
     "title": "Чародейская Удача",
@@ -11203,7 +11203,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "craftsman_enchanter_skill_4": {
     "title": "Легкость Чар",
@@ -11281,7 +11281,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "side_bagger_class": {
     "title": "Класс \"Землекоп\"",
@@ -11346,7 +11346,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "side_bagger_skill_1": {
     "title": "Тренированная рука I",
@@ -11463,7 +11463,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_bagger_skill_3_1": {
     "title": "Тренированная рука III",
@@ -11654,7 +11654,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_bagger_skill_4_1": {
     "title": "Тренированная рука VII",
@@ -11851,7 +11851,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_bagger_skill_4_6": {
     "title": "Мастер копки II",
@@ -11894,7 +11894,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_bagger_skill_5": {
     "title": "Дальнобойный землекоп I",
@@ -11959,7 +11959,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "side_builder_class": {
     "title": "Класс \"Строитель\"",
@@ -12010,7 +12010,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "side_builder_skill_1": {
     "title": "Пружинящие ноги I",
@@ -12119,7 +12119,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_builder_skill_3_1": {
     "title": "Пружинящие ноги II",
@@ -12302,7 +12302,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_builder_skill_4_1": {
     "title": "Пружинящие ноги IV",
@@ -12485,7 +12485,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_builder_skill_4_6": {
     "title": "Рука титана II",
@@ -12536,7 +12536,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_builder_skill_5": {
     "title": "Крылья без перьев",
@@ -12593,7 +12593,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "side_farmer_class": {
     "title": "Класс \"Мастер Земледелия\"",
@@ -12648,7 +12648,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "side_farmer_skill_1": {
     "title": "Забота о всходах I",
@@ -12765,7 +12765,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_farmer_skill_3_1": {
     "title": "Сочная морковь I",
@@ -12942,7 +12942,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_farmer_skill_4_1": {
     "title": "Сладкая бахча I",
@@ -13119,7 +13119,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_farmer_skill_4_6": {
     "title": "Чудотворное Удобрение",
@@ -13154,7 +13154,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_farmer_skill_5": {
     "title": "Владыка Плодородия",
@@ -13213,7 +13213,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "side_fisherman_class": {
     "title": "Класс \"Морской Волк\"",
@@ -13268,7 +13268,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "side_fisherman_skill_1": {
     "title": "Простая снасть I",
@@ -13383,7 +13383,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_fisherman_skill_3_1": {
     "title": "Иглобрюх I",
@@ -13566,7 +13566,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_fisherman_skill_4_1": {
     "title": "Океанический улов I",
@@ -13743,7 +13743,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_fisherman_skill_4_6": {
     "title": "Ловец Реликвий",
@@ -13778,7 +13778,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_fisherman_skill_5": {
     "title": "Благословение Океана",
@@ -13837,7 +13837,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "side_hunter_class": {
     "title": "Класс \"Охотник\"",
@@ -13894,7 +13894,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "side_hunter_skill_1": {
     "title": "Знаток трофеев I",
@@ -14003,7 +14003,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_hunter_skill_3_1": {
     "title": "Знаток трофеев II",
@@ -14184,7 +14184,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_hunter_skill_4_1": {
     "title": "Знаток трофеев IV",
@@ -14383,7 +14383,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_hunter_skill_4_6": {
     "title": "Царь трофеев",
@@ -14426,7 +14426,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_hunter_skill_5": {
     "title": "Грозный бегун",
@@ -14483,7 +14483,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "side_miner_class": {
     "title": "Класс \"Горный Мастер\"",
@@ -14532,7 +14532,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "side_miner_skill_1": {
     "title": "Отточенный замах I",
@@ -14643,7 +14643,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_miner_skill_3_1": {
     "title": "Медный бур I",
@@ -14832,7 +14832,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_miner_skill_4_1": {
     "title": "Аметистовый срез I",
@@ -15015,7 +15015,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_miner_skill_4_6": {
     "title": "Геммологическое Чутьё",
@@ -15058,7 +15058,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_miner_skill_5": {
     "title": "Властелин Недр",
@@ -15115,7 +15115,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "side_traveler_class": {
     "title": "Класс \"Путешественник\"",
@@ -15174,7 +15174,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "side_traveler_skill_1": {
     "title": "Голодный марш",
@@ -15285,7 +15285,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_traveler_skill_3_1": {
     "title": "Ловкость разведчика I",
@@ -15478,7 +15478,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_traveler_skill_4_1": {
     "title": "Голодный учёный I",
@@ -15669,7 +15669,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_traveler_skill_4_6": {
     "title": "Мастерство разрушении II",
@@ -15720,7 +15720,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_traveler_skill_5": {
     "title": "Путешественник миров",
@@ -15785,7 +15785,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "side_woodcutter_class": {
     "title": "Класс \"Лесоруб\"",
@@ -15834,7 +15834,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "side_woodcutter_skill_1": {
     "title": "Ровный срез I",
@@ -15953,7 +15953,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_woodcutter_skill_3_1": {
     "title": "Тяжелый замах I",
@@ -16142,7 +16142,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_woodcutter_skill_4_1": {
     "title": "Лесная щепа I",
@@ -16325,7 +16325,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_woodcutter_skill_4_6": {
     "title": "Щедрость Древней Чащи",
@@ -16368,7 +16368,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "side_woodcutter_skill_5": {
     "title": "Буря Просек",
@@ -16425,7 +16425,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "warrior_attackers_class": {
     "title": "Класс \"Атаки\"",
@@ -16502,7 +16502,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "warrior_attackers_final": {
     "title": "Крушитель защиты",
@@ -16553,7 +16553,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "warrior_attackers_skill_1": {
     "title": "Базовый урон I",
@@ -16609,7 +16609,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_attackers_skill_11": {
     "title": "Сокрушающий урон III",
@@ -16741,7 +16741,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_attackers_skill_11_12": {
     "title": "Тень сокрушителя I",
@@ -16908,7 +16908,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_attackers_skill_11_5": {
     "title": "Блокирование I",
@@ -17091,7 +17091,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_attackers_skill_13": {
     "title": "Хватка мастера",
@@ -17503,7 +17503,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_attackers_skill_6_3": {
     "title": "Базовое уклонение мечника I",
@@ -17561,7 +17561,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_attackers_skill_8": {
     "title": "Сокрушающий урон I",
@@ -17800,7 +17800,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_attackers_subclass": {
     "title": "Подкласс \"Сокрушитель\"",
@@ -17867,7 +17867,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "warrior_berserk_final": {
     "title": "Мастер ауры",
@@ -17958,7 +17958,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "warrior_berserk_skill_2": {
     "title": "Урон берсерка I",
@@ -18133,7 +18133,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_berserk_skill_2_1_5": {
     "title": "Скорость атаки берсерка I",
@@ -18300,7 +18300,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_berserk_skill_2_1_9": {
     "title": "Скорость атаки берсерка V",
@@ -18432,7 +18432,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_berserk_skill_2_2_4": {
     "title": "Шанс критического удара берсерка I",
@@ -18634,7 +18634,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_berserk_skill_3": {
     "title": "Кровавое ускорение",
@@ -18661,7 +18661,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_berserk_skill_4": {
     "title": "Мастерская хватка",
@@ -18787,7 +18787,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "warrior_defenders_class": {
     "title": "Класс \"Защиты\"",
@@ -18864,7 +18864,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "warrior_defenders_final": {
     "title": "Мастер Авангарда",
@@ -18931,7 +18931,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "warrior_defenders_skill_1": {
     "title": "Стойкость стража I",
@@ -19025,7 +19025,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_defenders_skill_11": {
     "title": "Мастерство клинка",
@@ -19189,7 +19189,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_defenders_skill_11_12": {
     "title": "Сокрушительный выпад I",
@@ -19380,7 +19380,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_defenders_skill_11_5": {
     "title": "Острие копья I",
@@ -19587,7 +19587,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_defenders_skill_13": {
     "title": "Безупречный выпад",
@@ -19759,7 +19759,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_defenders_skill_4_1": {
     "title": "Второе дыхание I",
@@ -20095,7 +20095,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_defenders_skill_6_1": {
     "title": "Кованый панцирь I",
@@ -20173,7 +20173,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_defenders_skill_6_3": {
     "title": "Тяжелая закалка I",
@@ -20251,7 +20251,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_defenders_skill_8": {
     "title": "Шаг авангарда",
@@ -20560,7 +20560,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_defenders_subclass": {
     "title": "Подкласс \"Рыцарь\"",
@@ -20627,7 +20627,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "warrior_paladin_final": {
     "title": "Длань Света",
@@ -20702,7 +20702,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "warrior_paladin_skill_2": {
     "title": "Обет Света",
@@ -20917,7 +20917,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_paladin_skill_2_1_5": {
     "title": "Латы праведника",
@@ -21140,7 +21140,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_paladin_skill_2_1_9": {
     "title": "Благодать исцеления",
@@ -21320,7 +21320,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_paladin_skill_2_2_4": {
     "title": "Нерушимая вера",
@@ -21586,7 +21586,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_paladin_skill_3": {
     "title": "Аура праведности",
@@ -21763,7 +21763,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "warrior_swordsman_final": {
     "title": "Мастер меча",
@@ -21844,7 +21844,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "warrior_swordsman_skill_2": {
     "title": "Урон мечника I",
@@ -21997,7 +21997,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_swordsman_skill_2_1_5": {
     "title": "Скорость атаки мечника I",
@@ -22148,7 +22148,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_swordsman_skill_2_1_9": {
     "title": "Скорость атаки мечника V",
@@ -22262,7 +22262,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_swordsman_skill_2_2_4": {
     "title": "Шанс критического удара мечника I",
@@ -22434,7 +22434,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_swordsman_skill_3": {
     "title": "Рваная рана",
@@ -22461,7 +22461,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_swordsman_skill_4": {
     "title": "Мастерская хватка",
@@ -22549,7 +22549,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_tank_final": {
     "title": "Живая Цитадель",
@@ -22616,7 +22616,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "warrior_tank_skill_2": {
     "title": "Основы бастиона",
@@ -22815,7 +22815,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_tank_skill_2_1_5": {
     "title": "Железная поступь",
@@ -23038,7 +23038,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_tank_skill_2_1_9": {
     "title": "Впитывание ударов",
@@ -23210,7 +23210,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_tank_skill_2_2_4": {
     "title": "Блокирование II",
@@ -23460,7 +23460,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "warrior_tank_skill_3": {
     "title": "Несгибаемый колосс",
@@ -23629,7 +23629,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_blood_final": {
     "title": "Архимаг кровавой магии",
@@ -23680,7 +23680,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_blood_skill_2": {
     "title": "Сопротивление магии крови I",
@@ -23825,7 +23825,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_blood_skill_2_1_5": {
     "title": "Сопротивление заклинаниям I",
@@ -23978,7 +23978,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_blood_skill_2_1_9": {
     "title": "Восстановление маны II",
@@ -24102,7 +24102,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_blood_skill_2_2_4": {
     "title": "Продвинутая мана III",
@@ -24284,7 +24284,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_blood_skill_3": {
     "title": "Эфирный поток",
@@ -24321,7 +24321,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_blood_skill_4": {
     "title": "Регенерация здоровье мага",
@@ -24409,7 +24409,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_ender_final": {
     "title": "Архимаг магии Края",
@@ -24460,7 +24460,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_ender_skill_2": {
     "title": "Сопротивление магии Края I",
@@ -24605,7 +24605,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_ender_skill_2_1_5": {
     "title": "Сопротивление заклинаниям I",
@@ -24758,7 +24758,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_ender_skill_2_1_9": {
     "title": "Восстановление маны II",
@@ -24882,7 +24882,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_ender_skill_2_2_4": {
     "title": "Продвинутая мана III",
@@ -25064,7 +25064,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_ender_skill_3": {
     "title": "Эфирный поток",
@@ -25101,7 +25101,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_ender_skill_4": {
     "title": "Регенерация здоровье мага",
@@ -25189,7 +25189,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_holiness_final": {
     "title": "Архимаг святой магии",
@@ -25240,7 +25240,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_holiness_skill_2": {
     "title": "Сопротивление святой магии I",
@@ -25385,7 +25385,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_holiness_skill_2_1_5": {
     "title": "Сопротивление заклинаниям I",
@@ -25538,7 +25538,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_holiness_skill_2_1_9": {
     "title": "Восстановление маны II",
@@ -25662,7 +25662,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_holiness_skill_2_2_4": {
     "title": "Продвинутая мана III",
@@ -25844,7 +25844,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_holiness_skill_3": {
     "title": "Эфирный поток",
@@ -25881,7 +25881,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_holiness_skill_4": {
     "title": "Регенерация здоровье мага",
@@ -25961,7 +25961,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_ice_final": {
     "title": "Архимаг магии Льда",
@@ -26012,7 +26012,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_ice_skill_2": {
     "title": "Сопротивление магии льда I",
@@ -26157,7 +26157,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_ice_skill_2_1_5": {
     "title": "Сопротивление заклинаниям I",
@@ -26310,7 +26310,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_ice_skill_2_1_9": {
     "title": "Восстановление маны II",
@@ -26434,7 +26434,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_ice_skill_2_2_4": {
     "title": "Продвинутая мана III",
@@ -26616,7 +26616,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_ice_skill_3": {
     "title": "Эфирный поток",
@@ -26653,7 +26653,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_ice_skill_4": {
     "title": "Регенерация здоровье мага",
@@ -26741,7 +26741,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_lightning_final": {
     "title": "Архимаг магии молнии",
@@ -26792,7 +26792,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_lightning_skill_2": {
     "title": "Сопротивление магии молнии I",
@@ -26937,7 +26937,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_lightning_skill_2_1_5": {
     "title": "Сопротивление заклинаниям I",
@@ -27090,7 +27090,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_lightning_skill_2_1_9": {
     "title": "Восстановление маны II",
@@ -27214,7 +27214,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_lightning_skill_2_2_4": {
     "title": "Продвинутая мана III",
@@ -27396,7 +27396,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_lightning_skill_3": {
     "title": "Эфирный поток",
@@ -27433,7 +27433,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_lightning_skill_4": {
     "title": "Регенерация здоровье мага",
@@ -27521,7 +27521,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_summon_final": {
     "title": "Архимаг магии призыва",
@@ -27572,7 +27572,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_summon_skill_2": {
     "title": "Сопротивление магии призыва I",
@@ -27725,7 +27725,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_summon_skill_2_1_5": {
     "title": "Сопротивление заклинаниям I",
@@ -27878,7 +27878,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_summon_skill_2_1_9": {
     "title": "Восстановление маны II",
@@ -28018,7 +28018,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_summon_skill_2_2_4": {
     "title": "Продвинутая мана III",
@@ -28208,7 +28208,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_summon_skill_3": {
     "title": "Эфирный поток",
@@ -28245,7 +28245,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_summon_skill_4": {
     "title": "Регенерация здоровье мага",
@@ -28333,7 +28333,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_wizardone_class": {
     "title": "Путь \"Жизни и крови\"",
@@ -28394,7 +28394,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "wizard_wizardone_final": {
     "title": "Архимаг магии огня",
@@ -28445,7 +28445,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_wizardone_skill_1": {
     "title": "Базовая мана I",
@@ -28511,7 +28511,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardone_skill_11": {
     "title": "Сопротивление заклинаниям III",
@@ -28635,7 +28635,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardone_skill_11_12": {
     "title": "Восстановление маны III",
@@ -28788,7 +28788,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardone_skill_11_5": {
     "title": "Продвинутая мана III",
@@ -28941,7 +28941,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardone_skill_13": {
     "title": "Регенерация здоровья мага",
@@ -29347,7 +29347,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardone_skill_6_3": {
     "title": "Базовое уклонение мага",
@@ -29405,7 +29405,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardone_skill_8": {
     "title": "Сила заклинаний огня I",
@@ -29608,7 +29608,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardone_subclass": {
     "title": "Школа \"Магии огня\"",
@@ -29659,7 +29659,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_wizardthree_class": {
     "title": "Путь \"Древний арканист\"",
@@ -29728,7 +29728,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "wizard_wizardthree_final": {
     "title": "Мистический архимаг",
@@ -29779,7 +29779,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_wizardthree_skill_1": {
     "title": "Базовая мана I",
@@ -29845,7 +29845,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardthree_skill_11": {
     "title": "Сопротивление заклинаниям III",
@@ -29969,7 +29969,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardthree_skill_11_12": {
     "title": "Восстановление маны III",
@@ -30122,7 +30122,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardthree_skill_11_5": {
     "title": "Продвинутая мана III",
@@ -30275,7 +30275,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardthree_skill_13": {
     "title": "Регенерация здоровья мага",
@@ -30681,7 +30681,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardthree_skill_6_3": {
     "title": "Базовое уклонение мага",
@@ -30739,7 +30739,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardthree_skill_8": {
     "title": "Сила мистических заклинаний I",
@@ -30942,7 +30942,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardthree_subclass": {
     "title": "Школа \"Мистической магии\"",
@@ -30993,7 +30993,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_wizardtwo_class": {
     "title": "Путь \"Заклинатель стихии\"",
@@ -31054,7 +31054,7 @@
         }
       }
     ],
-    "size": 2.25
+    "size": 1.6
   },
   "wizard_wizardtwo_final": {
     "title": "Архимаг природной магии",
@@ -31105,7 +31105,7 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   },
   "wizard_wizardtwo_skill_1": {
     "title": "Базовая мана I",
@@ -31171,7 +31171,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardtwo_skill_11": {
     "title": "Сопротивление заклинаниям III",
@@ -31295,7 +31295,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardtwo_skill_11_12": {
     "title": "Восстановление маны III",
@@ -31448,7 +31448,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardtwo_skill_11_5": {
     "title": "Продвинутая мана III",
@@ -31601,7 +31601,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardtwo_skill_13": {
     "title": "Регенерация здоровья мага",
@@ -32007,7 +32007,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardtwo_skill_6_3": {
     "title": "Базовое уклонение мага",
@@ -32065,7 +32065,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardtwo_skill_8": {
     "title": "Сила заклинаний природы I",
@@ -32268,7 +32268,7 @@
         }
       }
     ],
-    "size": 1.5
+    "size": 1.3
   },
   "wizard_wizardtwo_subclass": {
     "title": "Школа \"Природной магии\"",
@@ -32319,6 +32319,6 @@
         }
       }
     ],
-    "size": 2.0
+    "size": 1.6
   }
 }
