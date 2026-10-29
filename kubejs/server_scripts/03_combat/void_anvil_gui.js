@@ -53,13 +53,22 @@ function openVoidAnvilGUI(player, stationPos) {
     if (stationPos) sess.stationPos = stationPos;
 
     // \uF808 = -8px horizontal offset, \uE004 = 176x166 custom void anvil overlay
-    let title = '\uF808\uE004§r§5§lНАКОВАЛЬНЯ БЕЗДНЫ';
+    let title = '§f\uF808\uE004\uF80A§r§5§lНАКОВАЛЬНЯ БЕЗДНЫ';
 
     player.openChestGUI(Text.of(title), 3, gui => {
         gui.playerSlots = true;
 
         gui.closed = () => {
-            // 100% Guaranteed safety: refund all items left in workstation
+            // 100% Guaranteed safety: refund carried item if any
+            try {
+                let carried = player.containerMenu.getCarried();
+                if (carried && !carried.isEmpty()) {
+                    player.give(carried);
+                    player.containerMenu.setCarried(Item.of('minecraft:air'));
+                }
+            } catch (e) {}
+
+            // Refund all items left in workstation
             let refundList = [sess.gear, sess.reagent, sess.aegis, sess.result];
             sess.gear = null;
             sess.reagent = null;
@@ -87,26 +96,34 @@ function openVoidAnvilGUI(player, stationPos) {
             if (sess.gear && !sess.gear.isEmpty()) {
                 s.setItem(sess.gear.copy().withLore([
                     Text.of('§8────────────────────────────────'),
-                    Text.of('§e▶ Нажмите ЛКМ, чтобы вернуть в инвентарь')
+                    Text.of('§e▶ Нажмите ЛКМ: §fЗабрать в руку / поменять')
                 ]));
-                s.leftClicked = () => {
-                    let old = sess.gear;
-                    sess.gear = null;
-                    player.give(old);
-                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
-                    openVoidAnvilGUI(player, sess.stationPos);
-                };
             } else {
                 s.setItem(Item.of('minecraft:air'));
-                s.leftClicked = () => {
-                    let cursor = player.cursorItem;
-                    if (cursor && !cursor.isEmpty() && isEligibleVoidGear(cursor)) {
-                        sess.gear = cursor.split(1);
-                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                        openVoidAnvilGUI(player, sess.stationPos);
-                    }
-                };
             }
+
+            s.leftClicked = () => {
+                let carried = player.containerMenu.getCarried();
+                let current = sess.gear;
+
+                if (carried && !carried.isEmpty() && isEligibleVoidGear(carried)) {
+                    if (!current || current.isEmpty()) {
+                        sess.gear = carried.split(1);
+                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    } else {
+                        let temp = current.copy();
+                        sess.gear = carried.split(1);
+                        player.give(temp);
+                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    }
+                    openVoidAnvilGUI(player, sess.stationPos);
+                } else if (current && !current.isEmpty()) {
+                    player.containerMenu.setCarried(current.copy());
+                    sess.gear = null;
+                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                    openVoidAnvilGUI(player, sess.stationPos);
+                }
+            };
         });
 
         // ----------------------------------------------------------------------
@@ -116,27 +133,71 @@ function openVoidAnvilGUI(player, stationPos) {
             if (sess.reagent && !sess.reagent.isEmpty()) {
                 s.setItem(sess.reagent.copy().withLore([
                     Text.of('§8────────────────────────────────'),
-                    Text.of('§e▶ Нажмите ЛКМ, чтобы вернуть оселок в инвентарь')
+                    Text.of('§e▶ ЛКМ: §fЗабрать в руку / поменять'),
+                    Text.of('§e▶ ПКМ: §fЗабрать половину')
                 ]));
-                s.leftClicked = () => {
-                    let old = sess.reagent;
-                    sess.reagent = null;
-                    player.give(old);
-                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
-                    openVoidAnvilGUI(player, sess.stationPos);
-                };
             } else {
                 s.setItem(Item.of('minecraft:air'));
-                s.leftClicked = () => {
-                    let cursor = player.cursorItem;
-                    if (cursor && !cursor.isEmpty() && String(cursor.id).startsWith('kubejs:smithing_stone_')) {
-                        sess.reagent = cursor.copy();
-                        player.setCursorItem(Item.of('minecraft:air'));
-                        player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
-                        openVoidAnvilGUI(player, sess.stationPos);
-                    }
-                };
             }
+
+            s.leftClicked = () => {
+                let carried = player.containerMenu.getCarried();
+                let current = sess.reagent;
+
+                if (carried && !carried.isEmpty() && String(carried.id).startsWith('kubejs:smithing_stone_')) {
+                    if (!current || current.isEmpty()) {
+                        sess.reagent = carried.copy();
+                        player.containerMenu.setCarried(Item.of('minecraft:air'));
+                        player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    } else if (current.id === carried.id) {
+                        let space = current.maxStackSize - current.count;
+                        let move = Math.min(space, carried.count);
+                        current.grow(move);
+                        carried.shrink(move);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                        player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    } else {
+                        let temp = current.copy();
+                        sess.reagent = carried.copy();
+                        player.containerMenu.setCarried(temp);
+                        player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    }
+                    openVoidAnvilGUI(player, sess.stationPos);
+                } else if (current && !current.isEmpty()) {
+                    player.containerMenu.setCarried(current.copy());
+                    sess.reagent = null;
+                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                    openVoidAnvilGUI(player, sess.stationPos);
+                }
+            };
+
+            s.rightClicked = () => {
+                let carried = player.containerMenu.getCarried();
+                let current = sess.reagent;
+
+                if (carried && !carried.isEmpty() && String(carried.id).startsWith('kubejs:smithing_stone_')) {
+                    if (!current || current.isEmpty()) {
+                        let one = carried.copy();
+                        one.setCount(1);
+                        carried.shrink(1);
+                        sess.reagent = one;
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    } else if (current.id === carried.id && current.count < current.maxStackSize) {
+                        current.grow(1);
+                        carried.shrink(1);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    }
+                    openVoidAnvilGUI(player, sess.stationPos);
+                } else if (current && !current.isEmpty()) {
+                    let half = Math.ceil(current.count / 2);
+                    let picked = current.copy();
+                    picked.setCount(half);
+                    current.shrink(half);
+                    if (current.count <= 0) sess.reagent = null;
+                    player.containerMenu.setCarried(picked);
+                    openVoidAnvilGUI(player, sess.stationPos);
+                }
+            };
         });
 
         // ----------------------------------------------------------------------
@@ -147,27 +208,71 @@ function openVoidAnvilGUI(player, stationPos) {
                 s.setItem(sess.aegis.copy().withLore([
                     Text.of('§6🛡 ЗАЩИТА АКТИВНА: Откат уровня предотвращен!'),
                     Text.of('§8────────────────────────────────'),
-                    Text.of('§e▶ Нажмите ЛКМ, чтобы вернуть Эгиду в сумку')
+                    Text.of('§e▶ ЛКМ: §fЗабрать в руку / поменять'),
+                    Text.of('§e▶ ПКМ: §fЗабрать половину')
                 ]));
-                s.leftClicked = () => {
-                    let old = sess.aegis;
-                    sess.aegis = null;
-                    player.give(old);
-                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
-                    openVoidAnvilGUI(player, sess.stationPos);
-                };
             } else {
                 s.setItem(Item.of('minecraft:air'));
-                s.leftClicked = () => {
-                    let cursor = player.cursorItem;
-                    if (cursor && !cursor.isEmpty() && String(cursor.id) === 'kubejs:smithing_aegis') {
-                        sess.aegis = cursor.copy();
-                        player.setCursorItem(Item.of('minecraft:air'));
-                        player.server.runCommandSilent(`playsound minecraft:item.shield.block player ${player.username} ~ ~ ~ 0.8 1.4`);
-                        openVoidAnvilGUI(player, sess.stationPos);
-                    }
-                };
             }
+
+            s.leftClicked = () => {
+                let carried = player.containerMenu.getCarried();
+                let current = sess.aegis;
+
+                if (carried && !carried.isEmpty() && String(carried.id) === 'kubejs:smithing_aegis') {
+                    if (!current || current.isEmpty()) {
+                        sess.aegis = carried.copy();
+                        player.containerMenu.setCarried(Item.of('minecraft:air'));
+                        player.server.runCommandSilent(`playsound minecraft:item.shield.block player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    } else if (current.id === carried.id) {
+                        let space = current.maxStackSize - current.count;
+                        let move = Math.min(space, carried.count);
+                        current.grow(move);
+                        carried.shrink(move);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                        player.server.runCommandSilent(`playsound minecraft:item.shield.block player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    } else {
+                        let temp = current.copy();
+                        sess.aegis = carried.copy();
+                        player.containerMenu.setCarried(temp);
+                        player.server.runCommandSilent(`playsound minecraft:item.shield.block player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    }
+                    openVoidAnvilGUI(player, sess.stationPos);
+                } else if (current && !current.isEmpty()) {
+                    player.containerMenu.setCarried(current.copy());
+                    sess.aegis = null;
+                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                    openVoidAnvilGUI(player, sess.stationPos);
+                }
+            };
+
+            s.rightClicked = () => {
+                let carried = player.containerMenu.getCarried();
+                let current = sess.aegis;
+
+                if (carried && !carried.isEmpty() && String(carried.id) === 'kubejs:smithing_aegis') {
+                    if (!current || current.isEmpty()) {
+                        let one = carried.copy();
+                        one.setCount(1);
+                        carried.shrink(1);
+                        sess.aegis = one;
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    } else if (current.id === carried.id && current.count < current.maxStackSize) {
+                        current.grow(1);
+                        carried.shrink(1);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    }
+                    openVoidAnvilGUI(player, sess.stationPos);
+                } else if (current && !current.isEmpty()) {
+                    let half = Math.ceil(current.count / 2);
+                    let picked = current.copy();
+                    picked.setCount(half);
+                    current.shrink(half);
+                    if (current.count <= 0) sess.aegis = null;
+                    player.containerMenu.setCarried(picked);
+                    openVoidAnvilGUI(player, sess.stationPos);
+                }
+            };
         });
 
         // ----------------------------------------------------------------------
@@ -184,7 +289,12 @@ function openVoidAnvilGUI(player, stationPos) {
                 let takeAction = () => {
                     let resItem = sess.result;
                     sess.result = null;
-                    player.give(resItem);
+                    let carried = player.containerMenu.getCarried();
+                    if (!carried || carried.isEmpty()) {
+                        player.containerMenu.setCarried(resItem);
+                    } else {
+                        player.give(resItem);
+                    }
                     player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
                     openVoidAnvilGUI(player, sess.stationPos);
                 };
@@ -282,36 +392,127 @@ function openVoidAnvilGUI(player, stationPos) {
         // ----------------------------------------------------------------------
         // ОБРАБОТКА КЛИКОВ ПО ИНВЕНТАРЮ ИГРОКА (Быстрая загрузка)
         // ----------------------------------------------------------------------
-        gui.inventoryClicked = (invSlot, itemStack) => {
-            if (!itemStack || itemStack.isEmpty()) return;
-            let id = String(itemStack.id);
+        gui.inventoryClicked = (event) => {
+            if (!event) return;
+            let invItem = event.getItem();
+            let carried = player.containerMenu.getCarried();
+            let clickTypeStr = event.type ? String(event.type) : 'PICKUP';
 
-            // Эгида
-            if (id === 'kubejs:smithing_aegis') {
-                if (sess.aegis && !sess.aegis.isEmpty()) player.give(sess.aegis);
-                sess.aegis = itemStack.copy();
-                itemStack.setCount(0);
-                player.server.runCommandSilent(`playsound minecraft:item.shield.block player ${player.username} ~ ~ ~ 0.8 1.4`);
-                openVoidAnvilGUI(player, sess.stationPos);
+            // Quick Move (Shift + Click)
+            if (clickTypeStr === 'QUICK_MOVE') {
+                if (!invItem || invItem.isEmpty()) return;
+                let id = String(invItem.id);
+
+                // Эгида
+                if (id === 'kubejs:smithing_aegis') {
+                    if (sess.aegis && !sess.aegis.isEmpty()) {
+                        if (sess.aegis.id === invItem.id && sess.aegis.count < sess.aegis.maxStackSize) {
+                            let space = sess.aegis.maxStackSize - sess.aegis.count;
+                            let move = Math.min(space, invItem.count);
+                            sess.aegis.grow(move);
+                            invItem.shrink(move);
+                            event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                        } else {
+                            player.give(sess.aegis);
+                            sess.aegis = invItem.copy();
+                            event.setItem(Item.of('minecraft:air'));
+                        }
+                    } else {
+                        sess.aegis = invItem.copy();
+                        event.setItem(Item.of('minecraft:air'));
+                    }
+                    player.server.runCommandSilent(`playsound minecraft:item.shield.block player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    openVoidAnvilGUI(player, sess.stationPos);
+                    return;
+                }
+
+                // Точильный камень
+                if (id.startsWith('kubejs:smithing_stone_')) {
+                    if (sess.reagent && !sess.reagent.isEmpty()) {
+                        if (sess.reagent.id === invItem.id && sess.reagent.count < sess.reagent.maxStackSize) {
+                            let space = sess.reagent.maxStackSize - sess.reagent.count;
+                            let move = Math.min(space, invItem.count);
+                            sess.reagent.grow(move);
+                            invItem.shrink(move);
+                            event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                        } else {
+                            player.give(sess.reagent);
+                            sess.reagent = invItem.copy();
+                            event.setItem(Item.of('minecraft:air'));
+                        }
+                    } else {
+                        sess.reagent = invItem.copy();
+                        event.setItem(Item.of('minecraft:air'));
+                    }
+                    player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    openVoidAnvilGUI(player, sess.stationPos);
+                    return;
+                }
+
+                // Экипировка
+                if (isEligibleVoidGear(invItem)) {
+                    if (sess.gear && !sess.gear.isEmpty()) player.give(sess.gear);
+                    sess.gear = invItem.split(1);
+                    event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    openVoidAnvilGUI(player, sess.stationPos);
+                    return;
+                }
                 return;
             }
 
-            // Точильный камень
-            if (id.startsWith('kubejs:smithing_stone_')) {
-                if (sess.reagent && !sess.reagent.isEmpty()) player.give(sess.reagent);
-                sess.reagent = itemStack.copy();
-                itemStack.setCount(0);
-                player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
-                openVoidAnvilGUI(player, sess.stationPos);
+            // Normal Left Click
+            if (event.button === 0) {
+                if (!carried || carried.isEmpty()) {
+                    if (invItem && !invItem.isEmpty()) {
+                        player.containerMenu.setCarried(invItem.copy());
+                        event.setItem(Item.of('minecraft:air'));
+                    }
+                } else {
+                    if (!invItem || invItem.isEmpty()) {
+                        event.setItem(carried.copy());
+                        player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    } else if (invItem.id === carried.id) {
+                        let space = invItem.maxStackSize - invItem.count;
+                        let move = Math.min(space, carried.count);
+                        invItem.grow(move);
+                        carried.shrink(move);
+                        event.setItem(invItem);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    } else {
+                        let temp = invItem.copy();
+                        event.setItem(carried.copy());
+                        player.containerMenu.setCarried(temp);
+                    }
+                }
                 return;
             }
 
-            // Экипировка
-            if (isEligibleVoidGear(itemStack)) {
-                if (sess.gear && !sess.gear.isEmpty()) player.give(sess.gear);
-                sess.gear = itemStack.split(1);
-                player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                openVoidAnvilGUI(player, sess.stationPos);
+            // Normal Right Click
+            if (event.button === 1) {
+                if (!carried || carried.isEmpty()) {
+                    if (invItem && !invItem.isEmpty()) {
+                        let half = Math.ceil(invItem.count / 2);
+                        let picked = invItem.copy();
+                        picked.setCount(half);
+                        invItem.shrink(half);
+                        event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                        player.containerMenu.setCarried(picked);
+                    }
+                } else {
+                    if (!invItem || invItem.isEmpty()) {
+                        let one = carried.copy();
+                        one.setCount(1);
+                        carried.shrink(1);
+                        event.setItem(one);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    } else if (invItem.id === carried.id && invItem.count < invItem.maxStackSize) {
+                        invItem.grow(1);
+                        carried.shrink(1);
+                        event.setItem(invItem);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    }
+                }
                 return;
             }
         };

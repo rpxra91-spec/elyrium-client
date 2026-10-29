@@ -139,12 +139,21 @@ function openRunicTableGUI(player) {
     session.updating = true;
 
     // \uF808 = -8px horizontal offset, \uE002 = 176x166 custom scriptorium overlay
-    let fullTitle = '\uF808\uE002§r§5§lСТОЛ РУННОГО НАЧЕРТАНИЯ';
+    let fullTitle = '§f\uF808\uE002\uF80A§r§5§lСТОЛ РУННОГО НАЧЕРТАНИЯ';
 
     player.openChestGUI(Text.of(fullTitle), 3, gui => {
         gui.playerSlots = true;
 
         gui.closed = () => {
+            // Safe refund of carried item
+            try {
+                let carried = player.containerMenu.getCarried();
+                if (carried && !carried.isEmpty()) {
+                    player.give(carried);
+                    player.containerMenu.setCarried(Item.of('minecraft:air'));
+                }
+            } catch (e) {}
+
             // Refund all items left in workstation slots safely
             let refundList = [session.gear, session.glyph, session.ink];
             session.gear = null;
@@ -181,27 +190,29 @@ function openRunicTableGUI(player) {
         gui.slot(1, 1, s => {
             if (session.gear) s.setItem(session.gear);
             s.leftClicked = () => {
-                let cursor = player.cursorItem;
-                if (!cursor || cursor.isEmpty()) {
-                    if (session.gear) {
-                        player.setCursorItem(session.gear);
-                        session.gear = null;
-                        s.setItem(Item.of('minecraft:air'));
-                        updateResultSlot();
-                    }
-                } else {
-                    let id = String(cursor.id).toLowerCase();
-                    let isGear = cursor.hasTag('minecraft:swords') || cursor.hasTag('c:weapons') || 
-                                 cursor.hasTag('minecraft:armors') || cursor.hasTag('c:armors') || 
+                let carried = player.containerMenu.getCarried();
+                if (carried && !carried.isEmpty()) {
+                    let id = String(carried.id).toLowerCase();
+                    let isGear = carried.hasTag('minecraft:swords') || carried.hasTag('c:weapons') || 
+                                 carried.hasTag('minecraft:armors') || carried.hasTag('c:armors') || 
                                  id.includes('sword') || id.includes('blade') || id.includes('axe') || 
                                  id.includes('helmet') || id.includes('chestplate') || id.includes('leggings') || id.includes('boots');
                     if (isGear) {
                         let old = session.gear;
-                        session.gear = cursor.copy();
-                        player.setCursorItem(old ? old : Item.of('minecraft:air'));
+                        session.gear = carried.split(1);
+                        if (old && !old.isEmpty()) {
+                            player.give(old);
+                        }
                         s.setItem(session.gear);
+                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
                         updateResultSlot();
                     }
+                } else if (session.gear && !session.gear.isEmpty()) {
+                    player.containerMenu.setCarried(session.gear);
+                    session.gear = null;
+                    s.setItem(Item.of('minecraft:air'));
+                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                    updateResultSlot();
                 }
             };
         });
@@ -210,22 +221,22 @@ function openRunicTableGUI(player) {
         gui.slot(3, 1, s => {
             if (session.glyph) s.setItem(session.glyph);
             s.leftClicked = () => {
-                let cursor = player.cursorItem;
-                if (!cursor || cursor.isEmpty()) {
-                    if (session.glyph) {
-                        player.setCursorItem(session.glyph);
-                        session.glyph = null;
-                        s.setItem(Item.of('minecraft:air'));
-                        updateResultSlot();
-                    }
-                } else {
-                    if (parseGlyphItemId(cursor.id)) {
-                        let singleGlyph = cursor.split(1);
+                let carried = player.containerMenu.getCarried();
+                if (carried && !carried.isEmpty()) {
+                    if (parseGlyphItemId(carried.id)) {
+                        let singleGlyph = carried.split(1);
                         if (session.glyph) player.give(session.glyph);
                         session.glyph = singleGlyph;
                         s.setItem(session.glyph);
+                        player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                         updateResultSlot();
                     }
+                } else if (session.glyph && !session.glyph.isEmpty()) {
+                    player.containerMenu.setCarried(session.glyph);
+                    session.glyph = null;
+                    s.setItem(Item.of('minecraft:air'));
+                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                    updateResultSlot();
                 }
             };
         });
@@ -234,22 +245,22 @@ function openRunicTableGUI(player) {
         gui.slot(5, 1, s => {
             if (session.ink) s.setItem(session.ink);
             s.leftClicked = () => {
-                let cursor = player.cursorItem;
-                if (!cursor || cursor.isEmpty()) {
-                    if (session.ink) {
-                        player.setCursorItem(session.ink);
-                        session.ink = null;
-                        s.setItem(Item.of('minecraft:air'));
-                        updateResultSlot();
-                    }
-                } else {
-                    if (cursor.id === 'kubejs:runic_ink') {
-                        let singleInk = cursor.split(1);
+                let carried = player.containerMenu.getCarried();
+                if (carried && !carried.isEmpty()) {
+                    if (carried.id === 'kubejs:runic_ink') {
+                        let singleInk = carried.split(1);
                         if (session.ink) player.give(session.ink);
                         session.ink = singleInk;
                         s.setItem(session.ink);
+                        player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                         updateResultSlot();
                     }
+                } else if (session.ink && !session.ink.isEmpty()) {
+                    player.containerMenu.setCarried(session.ink);
+                    session.ink = null;
+                    s.setItem(Item.of('minecraft:air'));
+                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                    updateResultSlot();
                 }
             };
         });
@@ -283,8 +294,13 @@ function openRunicTableGUI(player) {
                 session.result = null;
                 s.setItem(Item.of('minecraft:air'));
 
-                // Give result to player
-                player.give(output);
+                // Give result to player cursor or inventory
+                let carried = player.containerMenu.getCarried();
+                if (!carried || carried.isEmpty()) {
+                    player.containerMenu.setCarried(output);
+                } else {
+                    player.give(output);
+                }
 
                 // Audio & visual effects
                 let server = player.server;
@@ -300,5 +316,109 @@ function openRunicTableGUI(player) {
         // Initialize state
         updateResultSlot();
         session.updating = false;
+
+        // Inventory Click Handler (Drag & Drop + Quick Move)
+        gui.inventoryClicked = (event) => {
+            if (!event) return;
+            let invItem = event.getItem();
+            let carried = player.containerMenu.getCarried();
+            let clickTypeStr = event.type ? String(event.type) : 'PICKUP';
+
+            // Quick Move (Shift + Click)
+            if (clickTypeStr === 'QUICK_MOVE') {
+                if (!invItem || invItem.isEmpty()) return;
+                let id = String(invItem.id).toLowerCase();
+
+                if (invItem.id === 'kubejs:runic_ink') {
+                    if (session.ink) player.give(session.ink);
+                    session.ink = invItem.split(1);
+                    event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                    gui.slot(5, 1, st => st.setItem(session.ink));
+                    updateResultSlot();
+                    player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    return;
+                }
+
+                if (parseGlyphItemId(invItem.id)) {
+                    if (session.glyph) player.give(session.glyph);
+                    session.glyph = invItem.split(1);
+                    event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                    gui.slot(3, 1, st => st.setItem(session.glyph));
+                    updateResultSlot();
+                    player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    return;
+                }
+
+                let isGear = invItem.hasTag('minecraft:swords') || invItem.hasTag('c:weapons') || 
+                             invItem.hasTag('minecraft:armors') || invItem.hasTag('c:armors') || 
+                             id.includes('sword') || id.includes('blade') || id.includes('axe') || 
+                             id.includes('helmet') || id.includes('chestplate') || id.includes('leggings') || id.includes('boots');
+                if (isGear) {
+                    if (session.gear) player.give(session.gear);
+                    session.gear = invItem.split(1);
+                    event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                    gui.slot(1, 1, st => st.setItem(session.gear));
+                    updateResultSlot();
+                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    return;
+                }
+                return;
+            }
+
+            // Normal Left Click
+            if (event.button === 0) {
+                if (!carried || carried.isEmpty()) {
+                    if (invItem && !invItem.isEmpty()) {
+                        player.containerMenu.setCarried(invItem.copy());
+                        event.setItem(Item.of('minecraft:air'));
+                    }
+                } else {
+                    if (!invItem || invItem.isEmpty()) {
+                        event.setItem(carried.copy());
+                        player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    } else if (invItem.id === carried.id) {
+                        let space = invItem.maxStackSize - invItem.count;
+                        let move = Math.min(space, carried.count);
+                        invItem.grow(move);
+                        carried.shrink(move);
+                        event.setItem(invItem);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    } else {
+                        let temp = invItem.copy();
+                        event.setItem(carried.copy());
+                        player.containerMenu.setCarried(temp);
+                    }
+                }
+                return;
+            }
+
+            // Normal Right Click
+            if (event.button === 1) {
+                if (!carried || carried.isEmpty()) {
+                    if (invItem && !invItem.isEmpty()) {
+                        let half = Math.ceil(invItem.count / 2);
+                        let picked = invItem.copy();
+                        picked.setCount(half);
+                        invItem.shrink(half);
+                        event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                        player.containerMenu.setCarried(picked);
+                    }
+                } else {
+                    if (!invItem || invItem.isEmpty()) {
+                        let one = carried.copy();
+                        one.setCount(1);
+                        carried.shrink(1);
+                        event.setItem(one);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    } else if (invItem.id === carried.id && invItem.count < invItem.maxStackSize) {
+                        clickedItem.grow(1);
+                        carried.shrink(1);
+                        event.setItem(clickedItem);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    }
+                }
+                return;
+            }
+        };
     });
 }

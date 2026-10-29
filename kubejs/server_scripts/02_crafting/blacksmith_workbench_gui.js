@@ -80,12 +80,21 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
     if (stationPos) sess.stationPos = stationPos;
 
     // \uF808 = -8px horizontal offset, \uE007 = 176x166 custom workbench overlay
-    let title = '\uF808\uE007§r§8§lВЕРСТАК ОРУЖЕЙНИКА';
+    let title = '§f\uF808\uE007\uF80A§r§8§lВЕРСТАК ОРУЖЕЙНИКА';
 
     player.openChestGUI(Text.of(title), 3, gui => {
         gui.playerSlots = true;
 
         gui.closed = () => {
+            // Safe refund of carried item
+            try {
+                let carried = player.containerMenu.getCarried();
+                if (carried && !carried.isEmpty()) {
+                    player.give(carried);
+                    player.containerMenu.setCarried(Item.of('minecraft:air'));
+                }
+            } catch (e) {}
+
             // Safe refund of all 6 forge slots
             for (let i = 0; i < sess.forgeIngredients.length; i++) {
                 let st = sess.forgeIngredients[i];
@@ -145,27 +154,72 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
                     if (st && !st.isEmpty()) {
                         s.setItem(st.copy().withLore([
                             Text.of(`§7Количество: §f${st.count} шт.`),
-                            Text.of('§e▶ Нажмите ЛКМ, чтобы вернуть в инвентарь')
+                            Text.of('§8────────────────────────────────'),
+                            Text.of('§e▶ ЛКМ: §fЗабрать в руку / поменять'),
+                            Text.of('§e▶ ПКМ: §fЗабрать половину')
                         ]));
-                        s.leftClicked = () => {
-                            let old = sess.forgeIngredients[pos.idx];
-                            sess.forgeIngredients[pos.idx] = null;
-                            player.give(old);
-                            player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
-                            openBlacksmithWorkbenchGUI(player, sess.stationPos);
-                        };
                     } else {
                         s.setItem(Item.of('minecraft:air'));
-                        s.leftClicked = () => {
-                            let cursor = player.cursorItem;
-                            if (cursor && !cursor.isEmpty()) {
-                                sess.forgeIngredients[pos.idx] = cursor.copy();
-                                player.setCursorItem(Item.of('minecraft:air'));
-                                player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                                openBlacksmithWorkbenchGUI(player, sess.stationPos);
-                            }
-                        };
                     }
+
+                    s.leftClicked = () => {
+                        let carried = player.containerMenu.getCarried();
+                        let current = sess.forgeIngredients[pos.idx];
+
+                        if (carried && !carried.isEmpty()) {
+                            if (!current || current.isEmpty()) {
+                                sess.forgeIngredients[pos.idx] = carried.copy();
+                                player.containerMenu.setCarried(Item.of('minecraft:air'));
+                                player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                            } else if (current.id === carried.id) {
+                                let space = current.maxStackSize - current.count;
+                                let move = Math.min(space, carried.count);
+                                current.grow(move);
+                                carried.shrink(move);
+                                if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                                player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                            } else {
+                                let temp = current.copy();
+                                sess.forgeIngredients[pos.idx] = carried.copy();
+                                player.containerMenu.setCarried(temp);
+                                player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                            }
+                            openBlacksmithWorkbenchGUI(player, sess.stationPos);
+                        } else if (current && !current.isEmpty()) {
+                            player.containerMenu.setCarried(current.copy());
+                            sess.forgeIngredients[pos.idx] = null;
+                            player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                            openBlacksmithWorkbenchGUI(player, sess.stationPos);
+                        }
+                    };
+
+                    s.rightClicked = () => {
+                        let carried = player.containerMenu.getCarried();
+                        let current = sess.forgeIngredients[pos.idx];
+
+                        if (carried && !carried.isEmpty()) {
+                            if (!current || current.isEmpty()) {
+                                let one = carried.copy();
+                                one.setCount(1);
+                                carried.shrink(1);
+                                sess.forgeIngredients[pos.idx] = one;
+                                if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                            } else if (current.id === carried.id && current.count < current.maxStackSize) {
+                                current.grow(1);
+                                carried.shrink(1);
+                                if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                            }
+                            openBlacksmithWorkbenchGUI(player, sess.stationPos);
+                        } else if (current && !current.isEmpty()) {
+                            let half = Math.ceil(current.count / 2);
+                            let picked = current.copy();
+                            picked.setCount(half);
+                            current.shrink(half);
+                            if (current.count <= 0) sess.forgeIngredients[pos.idx] = null;
+                            player.containerMenu.setCarried(picked);
+                            openBlacksmithWorkbenchGUI(player, sess.stationPos);
+                        }
+                    };
                 });
             });
 
@@ -277,26 +331,34 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
                         Text.of(`§7Прочность: §c${gear.maxDamage - gear.damageValue} / ${gear.maxDamage}`),
                         Text.of(`§7Требуется для починки: §6${neededCost}x ${repMat.name}`),
                         Text.of('§8────────────────────────────────'),
-                        Text.of('§e▶ Нажмите ЛКМ для возврата в инвентарь')
+                        Text.of('§e▶ Нажмите ЛКМ: §fЗабрать в руку / поменять')
                     ]));
-                    s.leftClicked = () => {
-                        let old = sess.repairGear;
-                        sess.repairGear = null;
-                        player.give(old);
-                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
-                        openBlacksmithWorkbenchGUI(player, sess.stationPos);
-                    };
                 } else {
                     s.setItem(Item.of('minecraft:air'));
-                    s.leftClicked = () => {
-                        let cursor = player.cursorItem;
-                        if (cursor && !cursor.isEmpty() && cursor.isDamageableItem()) {
-                            sess.repairGear = cursor.split(1);
-                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                            openBlacksmithWorkbenchGUI(player, sess.stationPos);
-                        }
-                    };
                 }
+
+                s.leftClicked = () => {
+                    let carried = player.containerMenu.getCarried();
+                    let current = sess.repairGear;
+
+                    if (carried && !carried.isEmpty() && carried.isDamageableItem()) {
+                        if (!current || current.isEmpty()) {
+                            sess.repairGear = carried.split(1);
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                        } else {
+                            let temp = current.copy();
+                            sess.repairGear = carried.split(1);
+                            player.give(temp);
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                        }
+                        openBlacksmithWorkbenchGUI(player, sess.stationPos);
+                    } else if (current && !current.isEmpty()) {
+                        player.containerMenu.setCarried(current.copy());
+                        sess.repairGear = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        openBlacksmithWorkbenchGUI(player, sess.stationPos);
+                    }
+                };
             });
 
             // СЛОТ 12: СЛИТКИ ДЛЯ РЕМОНТА (Col 3, Row 1)
@@ -305,27 +367,71 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
                     s.setItem(ingots.copy().withLore([
                         Text.of(`§7Количество: §f${ingots.count} шт.`),
                         Text.of('§8────────────────────────────────'),
-                        Text.of('§e▶ Нажмите ЛКМ для возврата в инвентарь')
+                        Text.of('§e▶ ЛКМ: §fЗабрать в руку / поменять'),
+                        Text.of('§e▶ ПКМ: §fЗабрать половину')
                     ]));
-                    s.leftClicked = () => {
-                        let old = sess.repairIngots;
-                        sess.repairIngots = null;
-                        player.give(old);
-                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
-                        openBlacksmithWorkbenchGUI(player, sess.stationPos);
-                    };
                 } else {
                     s.setItem(Item.of('minecraft:air'));
-                    s.leftClicked = () => {
-                        let cursor = player.cursorItem;
-                        if (cursor && !cursor.isEmpty()) {
-                            sess.repairIngots = cursor.copy();
-                            player.setCursorItem(Item.of('minecraft:air'));
-                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                            openBlacksmithWorkbenchGUI(player, sess.stationPos);
-                        }
-                    };
                 }
+
+                s.leftClicked = () => {
+                    let carried = player.containerMenu.getCarried();
+                    let current = sess.repairIngots;
+
+                    if (carried && !carried.isEmpty()) {
+                        if (!current || current.isEmpty()) {
+                            sess.repairIngots = carried.copy();
+                            player.containerMenu.setCarried(Item.of('minecraft:air'));
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                        } else if (current.id === carried.id) {
+                            let space = current.maxStackSize - current.count;
+                            let move = Math.min(space, carried.count);
+                            current.grow(move);
+                            carried.shrink(move);
+                            if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                        } else {
+                            let temp = current.copy();
+                            sess.repairIngots = carried.copy();
+                            player.containerMenu.setCarried(temp);
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                        }
+                        openBlacksmithWorkbenchGUI(player, sess.stationPos);
+                    } else if (current && !current.isEmpty()) {
+                        player.containerMenu.setCarried(current.copy());
+                        sess.repairIngots = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        openBlacksmithWorkbenchGUI(player, sess.stationPos);
+                    }
+                };
+
+                s.rightClicked = () => {
+                    let carried = player.containerMenu.getCarried();
+                    let current = sess.repairIngots;
+
+                    if (carried && !carried.isEmpty()) {
+                        if (!current || current.isEmpty()) {
+                            let one = carried.copy();
+                            one.setCount(1);
+                            carried.shrink(1);
+                            sess.repairIngots = one;
+                            if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                        } else if (current.id === carried.id && current.count < current.maxStackSize) {
+                            current.grow(1);
+                            carried.shrink(1);
+                            if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                        }
+                        openBlacksmithWorkbenchGUI(player, sess.stationPos);
+                    } else if (current && !current.isEmpty()) {
+                        let half = Math.ceil(current.count / 2);
+                        let picked = current.copy();
+                        picked.setCount(half);
+                        current.shrink(half);
+                        if (current.count <= 0) sess.repairIngots = null;
+                        player.containerMenu.setCarried(picked);
+                        openBlacksmithWorkbenchGUI(player, sess.stationPos);
+                    }
+                };
             });
 
             // ЦЕНТРАЛЬНЫЙ МОЛОТ РЕМОНТА (Col 4, Row 1)
@@ -384,34 +490,127 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
         // ----------------------------------------------------------------------
         // БЫСТРАЯ ЗАГРУЗКА ИЗ ИНВЕНТАРЯ ИГРОКА
         // ----------------------------------------------------------------------
-        gui.inventoryClicked = (invSlot, itemStack) => {
-            if (!itemStack || itemStack.isEmpty()) return;
+        gui.inventoryClicked = (event) => {
+            if (!event) return;
+            let invItem = event.getItem();
+            let carried = player.containerMenu.getCarried();
+            let clickTypeStr = event.type ? String(event.type) : 'PICKUP';
 
-            if (sess.mode === 'FORGE') {
-                for (let i = 0; i < sess.forgeIngredients.length; i++) {
-                    if (!sess.forgeIngredients[i] || sess.forgeIngredients[i].isEmpty()) {
-                        sess.forgeIngredients[i] = itemStack.copy();
-                        itemStack.setCount(0);
+            // Quick Move (Shift + Click)
+            if (clickTypeStr === 'QUICK_MOVE') {
+                if (!invItem || invItem.isEmpty()) return;
+
+                if (sess.mode === 'FORGE') {
+                    // Try stacking into matching slot first
+                    for (let i = 0; i < sess.forgeIngredients.length; i++) {
+                        let curSt = sess.forgeIngredients[i];
+                        if (curSt && curSt.id === invItem.id && curSt.count < curSt.maxStackSize) {
+                            let space = curSt.maxStackSize - curSt.count;
+                            let move = Math.min(space, invItem.count);
+                            curSt.grow(move);
+                            invItem.shrink(move);
+                            event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                            openBlacksmithWorkbenchGUI(player, sess.stationPos);
+                            return;
+                        }
+                    }
+                    // Try empty slot
+                    for (let i = 0; i < sess.forgeIngredients.length; i++) {
+                        if (!sess.forgeIngredients[i] || sess.forgeIngredients[i].isEmpty()) {
+                            sess.forgeIngredients[i] = invItem.copy();
+                            event.setItem(Item.of('minecraft:air'));
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                            openBlacksmithWorkbenchGUI(player, sess.stationPos);
+                            return;
+                        }
+                    }
+                    return;
+                } else if (sess.mode === 'REPAIR') {
+                    if (invItem.isDamageableItem()) {
+                        if (sess.repairGear && !sess.repairGear.isEmpty()) player.give(sess.repairGear);
+                        sess.repairGear = invItem.split(1);
+                        event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                        openBlacksmithWorkbenchGUI(player, sess.stationPos);
+                        return;
+                    } else {
+                        if (sess.repairIngots && !sess.repairIngots.isEmpty()) {
+                            if (sess.repairIngots.id === invItem.id && sess.repairIngots.count < sess.repairIngots.maxStackSize) {
+                                let space = sess.repairIngots.maxStackSize - sess.repairIngots.count;
+                                let move = Math.min(space, invItem.count);
+                                sess.repairIngots.grow(move);
+                                invItem.shrink(move);
+                                event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                            } else {
+                                player.give(sess.repairIngots);
+                                sess.repairIngots = invItem.copy();
+                                event.setItem(Item.of('minecraft:air'));
+                            }
+                        } else {
+                            sess.repairIngots = invItem.copy();
+                            event.setItem(Item.of('minecraft:air'));
+                        }
                         player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
                         openBlacksmithWorkbenchGUI(player, sess.stationPos);
                         return;
                     }
                 }
-            } else if (sess.mode === 'REPAIR') {
-                if (itemStack.isDamageableItem()) {
-                    if (sess.repairGear && !sess.repairGear.isEmpty()) player.give(sess.repairGear);
-                    sess.repairGear = itemStack.split(1);
-                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                    openBlacksmithWorkbenchGUI(player, sess.stationPos);
-                    return;
+            }
+
+            // Normal Left Click
+            if (event.button === 0) {
+                if (!carried || carried.isEmpty()) {
+                    if (invItem && !invItem.isEmpty()) {
+                        player.containerMenu.setCarried(invItem.copy());
+                        event.setItem(Item.of('minecraft:air'));
+                    }
                 } else {
-                    if (sess.repairIngots && !sess.repairIngots.isEmpty()) player.give(sess.repairIngots);
-                    sess.repairIngots = itemStack.copy();
-                    itemStack.setCount(0);
-                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                    openBlacksmithWorkbenchGUI(player, sess.stationPos);
-                    return;
+                    if (!invItem || invItem.isEmpty()) {
+                        event.setItem(carried.copy());
+                        player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    } else if (invItem.id === carried.id) {
+                        let space = invItem.maxStackSize - invItem.count;
+                        let move = Math.min(space, carried.count);
+                        invItem.grow(move);
+                        carried.shrink(move);
+                        event.setItem(invItem);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    } else {
+                        let temp = invItem.copy();
+                        event.setItem(carried.copy());
+                        player.containerMenu.setCarried(temp);
+                    }
                 }
+                return;
+            }
+
+            // Normal Right Click
+            if (event.button === 1) {
+                if (!carried || carried.isEmpty()) {
+                    if (invItem && !invItem.isEmpty()) {
+                        let half = Math.ceil(invItem.count / 2);
+                        let picked = invItem.copy();
+                        picked.setCount(half);
+                        invItem.shrink(half);
+                        event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                        player.containerMenu.setCarried(picked);
+                    }
+                } else {
+                    if (!invItem || invItem.isEmpty()) {
+                        let one = carried.copy();
+                        one.setCount(1);
+                        carried.shrink(1);
+                        event.setItem(one);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    } else if (invItem.id === carried.id && invItem.count < invItem.maxStackSize) {
+                        invItem.grow(1);
+                        carried.shrink(1);
+                        event.setItem(invItem);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    }
+                }
+                return;
             }
         };
     });

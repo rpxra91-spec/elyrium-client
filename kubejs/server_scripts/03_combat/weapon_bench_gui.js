@@ -893,9 +893,16 @@ function openWeaponBenchGUI(player, block) {
         }
     }
 
-    player.openChestGUI(Text.of('\uF808\uE006§r§6§lОРУЖЕЙНЫЙ СТОЛ'), 3, gui => {
+    player.openChestGUI(Text.of('§f\uF808\uE006\uF80A§r§6§lОРУЖЕЙНЫЙ СТОЛ'), 3, gui => {
         gui.playerSlots = true;
         gui.closed = () => {
+            try {
+                let carried = player.containerMenu.getCarried();
+                if (carried && !carried.isEmpty()) {
+                    player.give(carried);
+                    player.containerMenu.setCarried(Item.of('minecraft:air'));
+                }
+            } catch (e) {}
             clearAndRefundBenchSession(player, false);
         };
 
@@ -935,8 +942,27 @@ function openWeaponBenchGUI(player, block) {
             s.setItem(getSlotWeaponItem(session));
             let clickHandler = () => {
                 let sess = getOrCreateBenchSession(player, blockPos);
-                if (sess.equipment && !sess.equipment.isEmpty()) {
-                    player.give(sess.equipment);
+                let carried = player.containerMenu.getCarried();
+
+                if (carried && !carried.isEmpty() && isWeaponItem(carried)) {
+                    if (sess.equipment && !sess.equipment.isEmpty()) {
+                        let old = sess.equipment;
+                        sess.equipment = carried.split(1);
+                        player.containerMenu.setCarried(old);
+                    } else {
+                        sess.equipment = carried.split(1);
+                    }
+                    if (sess.benchPos) {
+                        setStoredBenchWeapon(player.level, sess.benchPos, sess.equipment);
+                        updateBenchWorldDisplay(player.level, sess.benchPos, sess.equipment);
+                    }
+                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                } else if (sess.equipment && !sess.equipment.isEmpty()) {
+                    if (!carried || carried.isEmpty()) {
+                        player.containerMenu.setCarried(sess.equipment);
+                    } else {
+                        player.give(sess.equipment);
+                    }
                     sess.equipment = null;
                     if (sess.benchPos) {
                         setStoredBenchWeapon(player.level, sess.benchPos, null);
@@ -953,25 +979,8 @@ function openWeaponBenchGUI(player, block) {
                         }
                         player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
                     } else {
-                        let inv = player.inventory;
-                        let found = false;
-                        for (let i = 0; i < inv.size; i++) {
-                            let st = inv.getItem(i);
-                            if (st && !st.isEmpty() && isWeaponItem(st)) {
-                                sess.equipment = st.split(1);
-                                if (sess.benchPos) {
-                                    setStoredBenchWeapon(player.level, sess.benchPos, sess.equipment);
-                                    updateBenchWorldDisplay(player.level, sess.benchPos, sess.equipment);
-                                }
-                                player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                                found = true;
-                                break;
-                            }
-                        }
-                        if (!found) {
-                            player.tell(Text.of('§eℹ В инвентаре не найдено боевого оружия.'));
-                            player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
-                        }
+                        player.tell(Text.of('§eℹ Положите оружие в слот курсором или через Shift+ЛКМ.'));
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
                     }
                 }
                 refreshWeaponBenchGUI(player, blockPos);
@@ -1748,7 +1757,65 @@ function openWeaponBenchGUI(player, block) {
         // ИНТЕЛЛЕКТУАЛЬНЫЙ 1-КЛИК РОУТИНГ ИЗ ИНВЕНТАРЯ ИГРОКА (gui.inventoryClicked)
         // ======================================================================
         gui.inventoryClicked = event => {
-            let clickedItem = event.item;
+            if (!event) return;
+            let clickedItem = event.getItem();
+            let carried = player.containerMenu.getCarried();
+            let clickTypeStr = event.type ? String(event.type) : 'PICKUP';
+
+            // Normal Left Click / Right Click on player inventory slots
+            if (clickTypeStr !== 'QUICK_MOVE') {
+                if (event.button === 0) {
+                    if (!carried || carried.isEmpty()) {
+                        if (clickedItem && !clickedItem.isEmpty()) {
+                            player.containerMenu.setCarried(clickedItem.copy());
+                            event.setItem(Item.of('minecraft:air'));
+                        }
+                    } else {
+                        if (!clickedItem || clickedItem.isEmpty()) {
+                            event.setItem(carried.copy());
+                            player.containerMenu.setCarried(Item.of('minecraft:air'));
+                        } else if (clickedItem.id === carried.id) {
+                            let space = clickedItem.maxStackSize - clickedItem.count;
+                            let move = Math.min(space, carried.count);
+                            clickedItem.grow(move);
+                            carried.shrink(move);
+                            event.setItem(clickedItem);
+                            if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                        } else {
+                            let temp = clickedItem.copy();
+                            event.setItem(carried.copy());
+                            player.containerMenu.setCarried(temp);
+                        }
+                    }
+                    return;
+                } else if (event.button === 1) {
+                    if (!carried || carried.isEmpty()) {
+                        if (clickedItem && !clickedItem.isEmpty()) {
+                            let half = Math.ceil(clickedItem.count / 2);
+                            let picked = clickedItem.copy();
+                            picked.setCount(half);
+                            clickedItem.shrink(half);
+                            event.setItem(clickedItem.count <= 0 ? Item.of('minecraft:air') : clickedItem);
+                            player.containerMenu.setCarried(picked);
+                        }
+                    } else {
+                        if (!clickedItem || clickedItem.isEmpty()) {
+                            let one = carried.copy();
+                            one.setCount(1);
+                            carried.shrink(1);
+                            event.setItem(one);
+                            if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                        } else if (clickedItem.id === carried.id && clickedItem.count < clickedItem.maxStackSize) {
+                            clickedItem.grow(1);
+                            carried.shrink(1);
+                            event.setItem(clickedItem);
+                            if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                        }
+                    }
+                    return;
+                }
+            }
+
             if (!clickedItem || clickedItem.isEmpty() || clickedItem.id === 'minecraft:air') return;
 
             // 1. Оружие ➔ Слот I

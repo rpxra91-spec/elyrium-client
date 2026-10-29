@@ -51,12 +51,20 @@ function openInfernalCrucibleGUI(player, stationPos) {
     if (stationPos) sess.stationPos = stationPos;
 
     // \uF808 = -8px horizontal offset, \uE005 = 176x166 custom crucible overlay
-    let title = '\uF808\uE005§r§4§lАДСКИЙ ГОРН ВОЗВЫШЕНИЯ';
+    let title = '§f\uF808\uE005\uF80A§r§4§lАДСКИЙ ГОРН ВОЗВЫШЕНИЯ';
 
     player.openChestGUI(Text.of(title), 3, gui => {
         gui.playerSlots = true;
 
         gui.closed = () => {
+            try {
+                let carried = player.containerMenu.getCarried();
+                if (carried && !carried.isEmpty()) {
+                    player.give(carried);
+                    player.containerMenu.setCarried(Item.of('minecraft:air'));
+                }
+            } catch (e) {}
+
             let refundList = [sess.gear, sess.catalyst, sess.result];
             sess.gear = null;
             sess.catalyst = null;
@@ -83,28 +91,37 @@ function openInfernalCrucibleGUI(player, stationPos) {
             if (sess.gear && !sess.gear.isEmpty()) {
                 s.setItem(sess.gear.copy().withLore([
                     Text.of('§8────────────────────────────────'),
-                    Text.of('§e▶ Нажмите ЛКМ, чтобы вернуть в инвентарь')
+                    Text.of('§e▶ Нажмите ЛКМ: §fЗабрать в руку / поменять')
                 ]));
-                s.leftClicked = () => {
-                    let old = sess.gear;
-                    sess.gear = null;
-                    sess.result = null;
-                    player.give(old);
-                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
-                    openInfernalCrucibleGUI(player, sess.stationPos);
-                };
             } else {
                 s.setItem(Item.of('minecraft:air'));
-                s.leftClicked = () => {
-                    let cursor = player.cursorItem;
-                    if (cursor && !cursor.isEmpty() && isEligibleAscensionGear(cursor)) {
-                        sess.gear = cursor.split(1);
+            }
+
+            s.leftClicked = () => {
+                let carried = player.containerMenu.getCarried();
+                let current = sess.gear;
+
+                if (carried && !carried.isEmpty() && isEligibleAscensionGear(carried)) {
+                    if (!current || current.isEmpty()) {
+                        sess.gear = carried.split(1);
                         sess.result = null;
                         player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                        openInfernalCrucibleGUI(player, sess.stationPos);
+                    } else {
+                        let temp = current.copy();
+                        sess.gear = carried.split(1);
+                        sess.result = null;
+                        player.give(temp);
+                        player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
                     }
-                };
-            }
+                    openInfernalCrucibleGUI(player, sess.stationPos);
+                } else if (current && !current.isEmpty()) {
+                    player.containerMenu.setCarried(current.copy());
+                    sess.gear = null;
+                    sess.result = null;
+                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                    openInfernalCrucibleGUI(player, sess.stationPos);
+                }
+            };
         });
 
         // ----------------------------------------------------------------------
@@ -114,32 +131,84 @@ function openInfernalCrucibleGUI(player, stationPos) {
             if (sess.catalyst && !sess.catalyst.isEmpty()) {
                 s.setItem(sess.catalyst.copy().withLore([
                     Text.of('§8────────────────────────────────'),
-                    Text.of('§e▶ Нажмите ЛКМ, чтобы вернуть катализатор в инвентарь')
+                    Text.of('§e▶ ЛКМ: §fЗабрать в руку / поменять'),
+                    Text.of('§e▶ ПКМ: §fЗабрать половину')
                 ]));
-                s.leftClicked = () => {
-                    let old = sess.catalyst;
-                    sess.catalyst = null;
-                    sess.result = null;
-                    player.give(old);
-                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
-                    openInfernalCrucibleGUI(player, sess.stationPos);
-                };
             } else {
                 s.setItem(Item.of('minecraft:air'));
-                s.leftClicked = () => {
-                    let cursor = player.cursorItem;
-                    if (cursor && !cursor.isEmpty()) {
-                        let id = String(cursor.id);
-                        if (id.startsWith('kubejs:ascension_catalyst_t') || id === 'kubejs:tier_upgrade_template') {
-                            sess.catalyst = cursor.copy();
-                            player.setCursorItem(Item.of('minecraft:air'));
+            }
+
+            s.leftClicked = () => {
+                let carried = player.containerMenu.getCarried();
+                let current = sess.catalyst;
+
+                if (carried && !carried.isEmpty()) {
+                    let id = String(carried.id);
+                    if (id.startsWith('kubejs:ascension_catalyst_t') || id === 'kubejs:tier_upgrade_template') {
+                        if (!current || current.isEmpty()) {
+                            sess.catalyst = carried.copy();
+                            player.containerMenu.setCarried(Item.of('minecraft:air'));
                             sess.result = null;
                             player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
-                            openInfernalCrucibleGUI(player, sess.stationPos);
+                        } else if (current.id === carried.id) {
+                            let space = current.maxStackSize - current.count;
+                            let move = Math.min(space, carried.count);
+                            current.grow(move);
+                            carried.shrink(move);
+                            if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                            sess.result = null;
+                            player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
+                        } else {
+                            let temp = current.copy();
+                            sess.catalyst = carried.copy();
+                            player.containerMenu.setCarried(temp);
+                            sess.result = null;
+                            player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                         }
+                        openInfernalCrucibleGUI(player, sess.stationPos);
                     }
-                };
-            }
+                } else if (current && !current.isEmpty()) {
+                    player.containerMenu.setCarried(current.copy());
+                    sess.catalyst = null;
+                    sess.result = null;
+                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                    openInfernalCrucibleGUI(player, sess.stationPos);
+                }
+            };
+
+            s.rightClicked = () => {
+                let carried = player.containerMenu.getCarried();
+                let current = sess.catalyst;
+
+                if (carried && !carried.isEmpty()) {
+                    let id = String(carried.id);
+                    if (id.startsWith('kubejs:ascension_catalyst_t') || id === 'kubejs:tier_upgrade_template') {
+                        if (!current || current.isEmpty()) {
+                            let one = carried.copy();
+                            one.setCount(1);
+                            carried.shrink(1);
+                            sess.catalyst = one;
+                            if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                            sess.result = null;
+                        } else if (current.id === carried.id && current.count < current.maxStackSize) {
+                            current.grow(1);
+                            carried.shrink(1);
+                            if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                            sess.result = null;
+                        }
+                        openInfernalCrucibleGUI(player, sess.stationPos);
+                    }
+                } else if (current && !current.isEmpty()) {
+                    let half = Math.ceil(current.count / 2);
+                    let picked = current.copy();
+                    picked.setCount(half);
+                    current.shrink(half);
+                    if (current.count <= 0) sess.catalyst = null;
+                    player.containerMenu.setCarried(picked);
+                    sess.result = null;
+                    openInfernalCrucibleGUI(player, sess.stationPos);
+                }
+            };
         });
 
         // ----------------------------------------------------------------------
@@ -184,7 +253,12 @@ function openInfernalCrucibleGUI(player, stationPos) {
                 s.leftClicked = () => {
                     let res = sess.result;
                     sess.result = null;
-                    player.give(res);
+                    let carried = player.containerMenu.getCarried();
+                    if (!carried || carried.isEmpty()) {
+                        player.containerMenu.setCarried(res);
+                    } else {
+                        player.give(res);
+                    }
                     player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
                     openInfernalCrucibleGUI(player, sess.stationPos);
                 };
@@ -259,28 +333,104 @@ function openInfernalCrucibleGUI(player, stationPos) {
         // ----------------------------------------------------------------------
         // БЫСТРАЯ ЗАГРУЗКА ИЗ ИНВЕНТАРЯ
         // ----------------------------------------------------------------------
-        gui.inventoryClicked = (invSlot, itemStack) => {
-            if (!itemStack || itemStack.isEmpty()) return;
-            let id = String(itemStack.id);
+        gui.inventoryClicked = (event) => {
+            if (!event) return;
+            let invItem = event.getItem();
+            let carried = player.containerMenu.getCarried();
+            let clickTypeStr = event.type ? String(event.type) : 'PICKUP';
 
-            // Катализатор
-            if (id.startsWith('kubejs:ascension_catalyst_t') || id === 'kubejs:tier_upgrade_template') {
-                if (sess.catalyst && !sess.catalyst.isEmpty()) player.give(sess.catalyst);
-                sess.catalyst = itemStack.copy();
-                itemStack.setCount(0);
-                sess.result = null;
-                player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
-                openInfernalCrucibleGUI(player, sess.stationPos);
+            // Quick Move (Shift + Click)
+            if (clickTypeStr === 'QUICK_MOVE') {
+                if (!invItem || invItem.isEmpty()) return;
+                let id = String(invItem.id);
+
+                if (id.startsWith('kubejs:ascension_catalyst_t') || id === 'kubejs:tier_upgrade_template') {
+                    if (sess.catalyst && !sess.catalyst.isEmpty()) {
+                        if (sess.catalyst.id === invItem.id && sess.catalyst.count < sess.catalyst.maxStackSize) {
+                            let space = sess.catalyst.maxStackSize - sess.catalyst.count;
+                            let move = Math.min(space, invItem.count);
+                            sess.catalyst.grow(move);
+                            invItem.shrink(move);
+                            event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                        } else {
+                            player.give(sess.catalyst);
+                            sess.catalyst = invItem.copy();
+                            event.setItem(Item.of('minecraft:air'));
+                        }
+                    } else {
+                        sess.catalyst = invItem.copy();
+                        event.setItem(Item.of('minecraft:air'));
+                    }
+                    sess.result = null;
+                    player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    openInfernalCrucibleGUI(player, sess.stationPos);
+                    return;
+                }
+
+                if (isEligibleAscensionGear(invItem)) {
+                    if (sess.gear && !sess.gear.isEmpty()) player.give(sess.gear);
+                    sess.gear = invItem.split(1);
+                    event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                    sess.result = null;
+                    player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                    openInfernalCrucibleGUI(player, sess.stationPos);
+                    return;
+                }
                 return;
             }
 
-            // Экипировка
-            if (isEligibleAscensionGear(itemStack)) {
-                if (sess.gear && !sess.gear.isEmpty()) player.give(sess.gear);
-                sess.gear = itemStack.split(1);
-                sess.result = null;
-                player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
-                openInfernalCrucibleGUI(player, sess.stationPos);
+            // Normal Left Click
+            if (event.button === 0) {
+                if (!carried || carried.isEmpty()) {
+                    if (invItem && !invItem.isEmpty()) {
+                        player.containerMenu.setCarried(invItem.copy());
+                        event.setItem(Item.of('minecraft:air'));
+                    }
+                } else {
+                    if (!invItem || invItem.isEmpty()) {
+                        event.setItem(carried.copy());
+                        player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    } else if (invItem.id === carried.id) {
+                        let space = invItem.maxStackSize - invItem.count;
+                        let move = Math.min(space, carried.count);
+                        invItem.grow(move);
+                        carried.shrink(move);
+                        event.setItem(invItem);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    } else {
+                        let temp = invItem.copy();
+                        event.setItem(carried.copy());
+                        player.containerMenu.setCarried(temp);
+                    }
+                }
+                return;
+            }
+
+            // Normal Right Click
+            if (event.button === 1) {
+                if (!carried || carried.isEmpty()) {
+                    if (invItem && !invItem.isEmpty()) {
+                        let half = Math.ceil(invItem.count / 2);
+                        let picked = invItem.copy();
+                        picked.setCount(half);
+                        invItem.shrink(half);
+                        event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
+                        player.containerMenu.setCarried(picked);
+                    }
+                } else {
+                    if (!invItem || invItem.isEmpty()) {
+                        let one = carried.copy();
+                        one.setCount(1);
+                        carried.shrink(1);
+                        event.setItem(one);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    } else if (invItem.id === carried.id && invItem.count < invItem.maxStackSize) {
+                        invItem.grow(1);
+                        carried.shrink(1);
+                        event.setItem(invItem);
+                        if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
+                    }
+                }
                 return;
             }
         };
