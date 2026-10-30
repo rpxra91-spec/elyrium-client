@@ -1,8 +1,8 @@
 {
-  "version": "0.4.69",
+  "version": "0.4.70",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-30T11:34:36.791849+00:00",
+  "generated_at": "2026-10-30T15:33:44.768686+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -3872,7 +3872,7 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "659af253693462f55cd94be782811dab68f4f4f64a3bddf14f6d9dd5804a5b5f",
+      "sha256": "dd739d23bb14fef43e9ab0dce36b80c8a9fd6094d77d3a463691ecce4aea0166",
       "size": 276
     },
     {
@@ -15282,8 +15282,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_room_stitcher.js",
-      "sha256": "b864dcf860b381183aa77e873f6093dd46c75698d8c4506574bcf941bc0be8b2",
-      "size": 82711
+      "sha256": "13f0d6a57c326143901b6bd8e2ac37de34c35006dc60b483ace8ef2dea78f370",
+      "size": 71252
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/endless_fringe_engine.js",
