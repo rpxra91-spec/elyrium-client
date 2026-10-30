@@ -1,9 +1,9 @@
 // ==============================================================================
-// 🏰 ELYRIUM: ANTI-GRIEF & DUNGEON LOCKDOWN SYSTEM (SUBPHASE 3.2)
+// 🏰 ELYRIUM: ANTI-GRIEF & DUNGEON LOCKDOWN SYSTEM (v2.0)
 // ==============================================================================
-// 1. Blocks breaking walls/ceilings in major story dungeons & Cataclysm citadels.
+// 1. Blocks breaking walls/ceilings in major story dungeons, citadels & elyrium:dungeons.
 // 2. Prevents cheese exploits: barricading doors with dirt/cobblestone, flooding with water/lava.
-// 3. Whitelist: Allows breaking cobwebs, torches, spawners, vines, pots.
+// 3. Whitelist: Allows breaking cobwebs, torches, spawners, vines, decorated pots.
 // 4. Creative/OP players bypass restrictions.
 // ==============================================================================
 
@@ -39,6 +39,13 @@ const ALLOWED_PLACED_BLOCKS = new Set([
 ]);
 
 function isInsideProtectedDungeon(level, pos) {
+    if (!level) return false;
+
+    // 1. Dedicated Instance Dimension: ALWAYS PROTECTED
+    if (level.dimension === 'elyrium:dungeons') {
+        return true;
+    }
+
     try {
         let structureManager = level.asKubeJS().minecraftLevel.structureManager();
         if (!structureManager) return false;
@@ -69,7 +76,7 @@ function isInsideProtectedDungeon(level, pos) {
     return false;
 }
 
-// 1. BLOCK BREAKING PROTECTION
+// 1. BLOCK BREAKING PROTECTION (NO DIGGING WALLS)
 BlockEvents.broken(event => {
     let player = event.player;
     if (!player || player.isCreative()) return;
@@ -77,7 +84,7 @@ BlockEvents.broken(event => {
     let block = event.block;
     let blockId = block.id;
 
-    // Allow whitelisted interactive blocks
+    // Allow whitelisted interactive blocks (pots, cobwebs, torches)
     if (ALLOWED_BREAKABLE_BLOCKS.has(blockId)) return;
 
     let level = event.level;
@@ -85,12 +92,12 @@ BlockEvents.broken(event => {
 
     if (isInsideProtectedDungeon(level, pos)) {
         event.cancel();
-        player.displayClientMessage(Text.of('§c🛡 Древняя цитадель защищена чарами несокрушимости!'), true);
+        player.displayClientMessage(Text.of('§c🛡 Древние стены катакомб защищены чарами несокрушимости!'), true);
         player.server.runCommandSilent(`playsound minecraft:block.anvil.land player ${player.username} ${block.x} ${block.y} ${block.z} 0.5 1.5`);
     }
 });
 
-// 2. CHEESE PLACEMENT PROTECTION (DIRT, COBBLESTONE, LAVA, WATER)
+// 2. CHEESE PLACEMENT PROTECTION (NO DIRT, COBBLESTONE, OBSIDIAN)
 BlockEvents.placed(event => {
     let player = event.player;
     if (!player || player.isCreative()) return;
@@ -108,5 +115,22 @@ BlockEvents.placed(event => {
         event.cancel();
         player.displayClientMessage(Text.of('§c⚠ Древние чары подземелья отторгают чужеродные блоки!'), true);
         player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ${block.x} ${block.y} ${block.z} 0.6 1.2`);
+    }
+});
+
+// 3. FLUID & FIRE GRIEF PROTECTION (NO WATER/LAVA BUCKET DUMPING)
+ItemEvents.rightClicked(event => {
+    let player = event.player;
+    if (!player || player.isCreative()) return;
+    let level = player.level;
+    let item = event.item ? event.item.id : '';
+
+    if (item.includes('water_bucket') || item.includes('lava_bucket') || item === 'minecraft:flint_and_steel') {
+        let hit = player.rayTrace(5.0);
+        let pos = hit ? hit.blockPos : player.blockPosition();
+        if (isInsideProtectedDungeon(level, pos)) {
+            event.cancel();
+            player.displayClientMessage(Text.of('§c⚠ Древняя магия подземелья поглощает стихийные жидкости!'), true);
+        }
     }
 });

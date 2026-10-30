@@ -1,8 +1,8 @@
 {
-  "version": "0.4.65",
+  "version": "0.4.66",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-30T08:13:18.859466+00:00",
+  "generated_at": "2026-10-30T08:36:25.090357+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -15217,8 +15217,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/anti_grief_dungeon_lockdown.js",
-      "sha256": "3fbab938a808d98d1d14ddd730077836c9dc36f4494c7658a569f67b24e239b6",
-      "size": 4231
+      "sha256": "d0bca35b181e377b99a89dc9c10cb9ddf91b26540e756dd867a542ae2d30d38a",
+      "size": 5208
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/capital_housing_engine.js",
@@ -15257,8 +15257,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/darkness_spawn_suppressor.js",
-      "sha256": "ff1fc3ea4cfda45e708f9d6b287e9722f25f15691fe028adeedac474e8531fde",
-      "size": 2291
+      "sha256": "b3e0ecc85d8fbbaf6a562c33bd1b7fccdcdc59e9248f5efcb3af25cb64f222b0",
+      "size": 2848
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_crafting_recipes.js",
@@ -15282,8 +15282,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_room_stitcher.js",
-      "sha256": "009771dc0a851c431ca64e9e44411003c2146356a31a7c8fe09b13e72f81997b",
-      "size": 68271
+      "sha256": "16fab2a52df66854da86b99667116e47497376ea822b49d8f4d4e95e419829f3",
+      "size": 82600
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/endless_fringe_engine.js",
