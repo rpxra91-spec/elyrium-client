@@ -1293,7 +1293,7 @@ ServerEvents.commandRegistry(event => {
                         let text = Component.literal(`§a[DUNGEON] 3-ярусный процедурный лабиринт #${nextId} (Сектор ${sector}) сгенерирован!\n`)
                             .append(Component.literal(`§6▶ §e§l[ НАЖМИТЕ ЗДЕСЬ ДЛЯ ВХОДА В ПОДЗЕМЕЛЬЕ #${nextId} ]`)
                                 .clickRunCommand(`/dungeon_enter ${nextId}`)
-                                .hoverText(Component.literal(`§aНажмите, чтобы войти в Подземелье #${nextId}`)));
+                                );
                         player.displayClientMessage(text, false);
                     }
                     return 1;

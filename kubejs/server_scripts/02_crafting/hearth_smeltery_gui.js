@@ -1,44 +1,89 @@
 // ==============================================================================
-// 🔥 ELYRIUM RPG: ADVANCED HEARTH SMELTERY GUI ENGINE (v2.0)
+// 🔥 ELYRIUM RPG: AUTONOMOUS WORLD HEARTH SMELTERY & METALLURGY ENGINE (v3.0)
 // Minecraft 1.21.1 NeoForge | KubeJS Server Script
 // File: server_scripts/02_crafting/hearth_smeltery_gui.js
 // ==============================================================================
-// Industrial Smeltery & Advanced Metallurgy:
+// 100% Autonomous In-World Industrial Smeltery:
 // - Non-chest custom Cast-Iron Smeltery overlay (`\uF808\uE003`).
-// - Layout:
-//   * Left: 3 horizontal Raw Input Slots (ores, metals, stone, sand, clay, steel charge).
-//   * Bottom Left: 3 horizontal Fuel Slots (coal, charcoal, blaze rods, lava, coal blocks).
-//   * Right: 6 horizontal Output Slots (2 rows of 3 slots).
-//   * Center: Smeltery Fire Chamber & Bellows Action Button.
-// - Strict Rule: NO FOOD ALLOWED (strictly prohibited, extinguishes with smoke).
-// - Multi-Smelting: smelts in parallel across the 3 raw input slots!
-// - Full Inventory Routing: 1-click loading from player inventory into fuels/inputs!
-// - 100% item safety on close.
+// - Zero Title Collision: Uses clean bitmap glyph, preserving hand-drawn overlay title.
+// - Real World Persistence: Items stay stored inside the physical block!
+// - Autonomous Background Smelting: Continues smelting in the world even when closed!
+// - Visual Cooking Animation: Dynamic progress bar, animated flame phases & smoke.
+// - Full 2-Way Resource Movement: Free pickup, placement & Shift-click for inputs/fuels/outputs.
+// - Multi-Smelting: Smelts up to 3 raw ore inputs simultaneously!
+// - Bellows Action: Left-clicking bellows provides +30% instant cooking boost!
+// - Drops all contents if broken in the world.
+// - Strict Rule: NO FOOD ALLOWED (strictly industrial metallurgy).
 // ==============================================================================
 
-let activeHearthSessions = new Map();
+global.ElyriumHearthData = global.ElyriumHearthData || {};
+let openHearthViewers = new Map(); // uuid -> { blockKey, gui }
 
-function getOrCreateHearthSession(player) {
-    let uuid = player.uuid.toString();
-    if (!activeHearthSessions.has(uuid)) {
-        activeHearthSessions.set(uuid, {
-            inputs: [null, null, null],
-            fuels: [null, null, null],
-            outputs: [null, null, null, null, null, null],
-            fuelCharges: 0,
-            stationBlock: null
-        });
-    }
-    return activeHearthSessions.get(uuid);
+function getHearthKey(level, x, y, z) {
+    let dim = String(level.dimension);
+    return `${dim}_${x}_${y}_${z}`;
 }
 
-function clearHearthSession(player) {
-    let uuid = player.uuid.toString();
-    activeHearthSessions.delete(uuid);
+function makeDefaultHearthState() {
+    return {
+        inputs: [null, null, null],
+        fuels: [null, null, null],
+        outputs: [null, null, null, null, null, null],
+        fuelUnits: 0,
+        cookProgress: 0,
+        lastActiveTick: 0
+    };
+}
+
+function getHearthState(level, x, y, z) {
+    let key = getHearthKey(level, x, y, z);
+    if (!global.ElyriumHearthData[key]) {
+        let server = level.server;
+        let pData = server.persistentData;
+        let hearthCompound = pData.getCompound('elyrium_hearth_data');
+        if (hearthCompound && hearthCompound.contains(key)) {
+            try {
+                let jsonStr = hearthCompound.getString(key);
+                let parsed = JSON.parse(jsonStr);
+                let state = makeDefaultHearthState();
+                state.fuelUnits = parsed.fuelUnits || 0;
+                state.cookProgress = parsed.cookProgress || 0;
+                for (let i = 0; i < 3; i++) {
+                    if (parsed.inputs && parsed.inputs[i]) state.inputs[i] = Item.of(parsed.inputs[i].id, parsed.inputs[i].count);
+                    if (parsed.fuels && parsed.fuels[i]) state.fuels[i] = Item.of(parsed.fuels[i].id, parsed.fuels[i].count);
+                }
+                for (let o = 0; o < 6; o++) {
+                    if (parsed.outputs && parsed.outputs[o]) state.outputs[o] = Item.of(parsed.outputs[o].id, parsed.outputs[o].count);
+                }
+                global.ElyriumHearthData[key] = state;
+            } catch (e) {
+                global.ElyriumHearthData[key] = makeDefaultHearthState();
+            }
+        } else {
+            global.ElyriumHearthData[key] = makeDefaultHearthState();
+        }
+    }
+    return global.ElyriumHearthData[key];
+}
+
+function saveHearthState(server, key, state) {
+    try {
+        let pData = server.persistentData;
+        let hearthCompound = pData.getCompound('elyrium_hearth_data');
+        let toSave = {
+            fuelUnits: state.fuelUnits || 0,
+            cookProgress: state.cookProgress || 0,
+            inputs: state.inputs.map(it => (it && !it.isEmpty()) ? { id: String(it.id), count: it.count } : null),
+            fuels: state.fuels.map(it => (it && !it.isEmpty()) ? { id: String(it.id), count: it.count } : null),
+            outputs: state.outputs.map(it => (it && !it.isEmpty()) ? { id: String(it.id), count: it.count } : null)
+        };
+        hearthCompound.putString(key, JSON.stringify(toSave));
+        pData.put('elyrium_hearth_data', hearthCompound);
+    } catch (e) {}
 }
 
 // ------------------------------------------------------------------------------
-// FOOD CHECK (STRICT PROHIBITION)
+// RECIPES & FUEL SPECIFICATION
 // ------------------------------------------------------------------------------
 function isFoodItem(item) {
     if (!item || item.isEmpty()) return false;
@@ -53,18 +98,9 @@ function isFoodItem(item) {
     for (let i = 0; i < foodWords.length; i++) {
         if (id.includes(foodWords[i])) return true;
     }
-
-    try {
-        let DataComponents = Java.loadClass('net.minecraft.core.component.DataComponents');
-        if (item.has(DataComponents.FOOD)) return true;
-    } catch (e) {}
-
     return false;
 }
 
-// ------------------------------------------------------------------------------
-// SMELTING RECIPES RESOLUTION
-// ------------------------------------------------------------------------------
 function getSmelteryResult(item) {
     if (!item || item.isEmpty()) return null;
     let id = String(item.id);
@@ -97,12 +133,10 @@ function getSmelteryResult(item) {
     if (item.hasTag('c:raw_materials/copper') || item.hasTag('forge:raw_materials/copper')) return Item.of('minecraft:copper_ingot');
     if (item.hasTag('c:raw_materials/gold') || item.hasTag('forge:raw_materials/gold')) return Item.of('minecraft:gold_ingot');
 
-    // Dynamic fallback for modded raw ores
     if (id.includes('raw_')) {
         let candidate = id.replace('raw_', '') + '_ingot';
         if (Item.exists(candidate)) return Item.of(candidate);
     }
-
     return null;
 }
 
@@ -112,190 +146,273 @@ function getFuelBurnUnits(fuelItem) {
 
     if (id === 'minecraft:lava_bucket') return 100;
     if (id === 'minecraft:coal_block') return 80;
-    if (id === 'minecraft:blaze_rod') return 12;
+    if (id === 'minecraft:blaze_rod') return 16;
     if (id === 'minecraft:coal' || id === 'minecraft:charcoal') return 8;
     if (fuelItem.hasTag('minecraft:logs') || fuelItem.hasTag('minecraft:planks')) return 2;
     if (id === 'minecraft:stick') return 1;
     return 0;
 }
 
+function makeProgressBar(percent) {
+    let total = 10;
+    let filled = Math.min(total, Math.max(0, Math.floor(percent / 10)));
+    let bar = '';
+    for (let i = 0; i < filled; i++) bar += '█';
+    for (let i = filled; i < total; i++) bar += '░';
+    return bar;
+}
+
 // ------------------------------------------------------------------------------
-// HELPER: PROCESS SMELTING CYCLE (UP TO 3 PARALLEL INPUT SLOTS)
+// AUTONOMOUS BACKGROUND TICK ENGINE (ServerEvents.tick)
 // ------------------------------------------------------------------------------
-function processSmelteryCycle(player, session, manualBoost) {
-    let anySmelted = false;
+ServerEvents.tick(event => {
+    let server = event.server;
+    // Тикаем каждые 10 тиков (0.5 сек)
+    if (server.tickCount % 10 !== 0) return;
 
-    for (let i = 0; i < 3; i++) {
-        let raw = session.inputs[i];
-        if (!raw || raw.isEmpty()) continue;
+    for (let key in global.ElyriumHearthData) {
+        let state = global.ElyriumHearthData[key];
+        if (!state) continue;
 
-        let result = getSmelteryResult(raw);
-        if (!result) continue;
+        let parts = key.split('_');
+        if (parts.length < 4) continue;
+        let dim = parts[0];
+        let bx = parseInt(parts[1]);
+        let by = parseInt(parts[2]);
+        let bz = parseInt(parts[3]);
 
-        // Ensure fuel availability
-        if (session.fuelCharges <= 0) {
-            for (let f = 0; f < 3; f++) {
-                let fuelSt = session.fuels[f];
-                if (fuelSt && !fuelSt.isEmpty()) {
-                    let units = getFuelBurnUnits(fuelSt);
-                    if (units > 0) {
-                        session.fuelCharges += units;
-                        if (fuelSt.id === 'minecraft:lava_bucket') {
-                            session.fuels[f] = Item.of('minecraft:bucket');
-                        } else {
-                            fuelSt.shrink(1);
-                            if (fuelSt.count <= 0) session.fuels[f] = null;
+        let level = server.getLevel(dim);
+        if (!level || !level.isLoaded(new BlockPos(bx, by, bz))) continue;
+
+        // 1. Проверяем, есть ли что плавить
+        let canSmeltAny = false;
+        for (let i = 0; i < 3; i++) {
+            let inSt = state.inputs[i];
+            if (inSt && !inSt.isEmpty()) {
+                let res = getSmelteryResult(inSt);
+                if (res) {
+                    // Проверяем, есть ли место в лотках
+                    for (let o = 0; o < 6; o++) {
+                        let outSt = state.outputs[o];
+                        if (!outSt || outSt.isEmpty() || (outSt.id === res.id && outSt.count < outSt.maxStackSize)) {
+                            canSmeltAny = true;
+                            break;
                         }
+                    }
+                }
+            }
+            if (canSmeltAny) break;
+        }
+
+        // 2. Если нечего плавить, сбрасываем прогресс
+        if (!canSmeltAny) {
+            if (state.cookProgress > 0) state.cookProgress = Math.max(0, state.cookProgress - 10);
+            continue;
+        }
+
+        // 3. Если есть что плавить, но кончилось топливо — пытаемся подбросить
+        if (state.fuelUnits <= 0) {
+            for (let f = 0; f < 3; f++) {
+                let fSt = state.fuels[f];
+                if (fSt && !fSt.isEmpty()) {
+                    let units = getFuelBurnUnits(fSt);
+                    if (units > 0) {
+                        state.fuelUnits += units;
+                        if (fSt.id === 'minecraft:lava_bucket') {
+                            state.fuels[f] = Item.of('minecraft:bucket');
+                        } else {
+                            fSt.shrink(1);
+                            if (fSt.count <= 0) state.fuels[f] = null;
+                        }
+                        server.runCommandSilent(`execute in ${dim} run playsound minecraft:item.firecharge.use block @a[distance=..10] ${bx} ${by} ${bz} 0.6 1.2`);
                         break;
                     }
                 }
             }
         }
 
-        if (session.fuelCharges <= 0) break; // Out of fuel charges
+        // 4. Если есть топливо — плавим!
+        if (state.fuelUnits > 0) {
+            // За 10 тиков прибавляем 12.5% (полный цикл 80 тиков = 4 секунды)
+            state.cookProgress += 12.5;
 
-        // Find destination in 6 output slots
-        let placed = false;
-        // 1. Try stacking into matching item
-        for (let o = 0; o < 6; o++) {
-            let outSt = session.outputs[o];
-            if (outSt && outSt.id === result.id && outSt.count < outSt.maxStackSize) {
-                outSt.grow(1);
-                placed = true;
-                break;
+            // Частицы пламени и дыма в мире
+            if (server.tickCount % 20 === 0) {
+                server.runCommandSilent(`execute in ${dim} run particle minecraft:flame ${bx + 0.5} ${by + 0.9} ${bz + 0.5} 0.2 0.1 0.2 0.02 4`);
+                server.runCommandSilent(`execute in ${dim} run particle minecraft:smoke ${bx + 0.5} ${by + 1.2} ${bz + 0.5} 0.1 0.2 0.1 0.01 3`);
             }
-        }
-        // 2. Try empty slot
-        if (!placed) {
-            for (let o = 0; o < 6; o++) {
-                if (!session.outputs[o] || session.outputs[o].isEmpty()) {
-                    session.outputs[o] = result.copy();
-                    placed = true;
-                    break;
+
+            // Завершение цикла плавки
+            if (state.cookProgress >= 100) {
+                state.cookProgress = 0;
+                let smeltedCount = 0;
+
+                // Параллельная плавка всех 3 слотов сырья
+                for (let i = 0; i < 3; i++) {
+                    let inSt = state.inputs[i];
+                    if (!inSt || inSt.isEmpty()) continue;
+
+                    let res = getSmelteryResult(inSt);
+                    if (!res) continue;
+
+                    let placed = false;
+                    for (let o = 0; o < 6; o++) {
+                        let outSt = state.outputs[o];
+                        if (outSt && outSt.id === res.id && outSt.count < outSt.maxStackSize) {
+                            outSt.grow(1);
+                            placed = true;
+                            break;
+                        }
+                    }
+                    if (!placed) {
+                        for (let o = 0; o < 6; o++) {
+                            if (!state.outputs[o] || state.outputs[o].isEmpty()) {
+                                state.outputs[o] = res.copy();
+                                placed = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (placed) {
+                        inSt.shrink(1);
+                        if (inSt.count <= 0) state.inputs[i] = null;
+                        smeltedCount++;
+                    }
+                }
+
+                if (smeltedCount > 0) {
+                    state.fuelUnits = Math.max(0, state.fuelUnits - 1);
+                    server.runCommandSilent(`execute in ${dim} run playsound minecraft:block.furnace.fire_crackle block @a[distance=..12] ${bx} ${by} ${bz} 0.8 1.1`);
                 }
             }
-        }
 
-        if (placed) {
-            session.fuelCharges = Math.max(0, session.fuelCharges - 1);
-            raw.shrink(1);
-            if (raw.count <= 0) session.inputs[i] = null;
-            anySmelted = true;
+            // Синхронизация в persistentData раз в 100 тиков (5 сек)
+            if (server.tickCount % 100 === 0) {
+                saveHearthState(server, key, state);
+            }
         }
     }
 
-    if (anySmelted) {
-        let server = player.server;
-        server.runCommandSilent(`playsound minecraft:block.furnace.fire_crackle player ${player.username} ~ ~ ~ 0.9 1.2`);
-        server.runCommandSilent(`particle minecraft:flame ~ ~1.0 ~ 0.3 0.2 0.3 0.05 15`);
-        server.runCommandSilent(`particle minecraft:smoke ~ ~1.2 ~ 0.2 0.4 0.2 0.02 10`);
-    } else if (manualBoost) {
-        player.server.runCommandSilent(`playsound minecraft:entity.blaze.shoot player ${player.username} ~ ~ ~ 0.7 1.4`);
-    }
-
-    return anySmelted;
-}
-
-// ------------------------------------------------------------------------------
-// BLOCK RIGHT-CLICK INTERACTION
-// ------------------------------------------------------------------------------
-BlockEvents.rightClicked('kubejs:blacksmith_hearth', event => {
-    let player = event.player;
-    if (!player || player.isFake()) return;
-    if (event.hand != 'MAIN_HAND') return;
-
-    openHearthSmelteryGUI(player, event.block);
+    // Обновление GUI для всех смотрящих игроков
+    openHearthViewers.forEach((vInfo, uuid) => {
+        let player = server.getPlayerByUUID(uuid);
+        if (player && vInfo && vInfo.gui) {
+            let state = global.ElyriumHearthData[vInfo.blockKey];
+            if (state) {
+                renderHearthSlots(vInfo.gui, state, player);
+            }
+        }
+    });
 });
 
 // ------------------------------------------------------------------------------
-// ADVANCED SMELTERY GUI (3-ROW CONTAINER WITH FONT OVERLAY \uF808\uE003)
+// RENDER SLOTS IN CHEST CONTAINER
 // ------------------------------------------------------------------------------
-function updateHearthSlots(gui, session) {
-    // 1. Raw Input Slots (cols 0, 1, 2; row 0)
+function renderHearthSlots(gui, state, player) {
+    // 1. Raw Input Slots (Cols 0, 1, 2; Row 0)
     for (let i = 0; i < 3; i++) {
         let slot = gui.getSlot(i, 0);
-        let item = session.inputs[i];
+        let item = state.inputs[i];
         if (item && !item.isEmpty()) {
             slot.setItem(item.copy().withLore([
                 Text.of('§8────────────────────────────────'),
-                Text.of('§e▶ Нажмите ЛКМ: §fЗабрать сырье в руку'),
-                Text.of('§7Параллельная переплавка в горне')
+                Text.of('§7Количество сырья: §f' + item.count + ' шт.'),
+                Text.of('§e▶ ЛКМ: §fЗабрать весь стак в руку'),
+                Text.of('§e▶ ПКМ: §fЗабрать половину стака'),
+                Text.of('§a⚡ Автоматическая плавка в мире!')
             ]));
         } else {
-            slot.setItem(Item.of('minecraft:light_gray_stained_glass_pane')
-                .withCustomName(Text.of('§e[ Слот Сырья #' + (i + 1) + ' ]'))
-                .withLore([
-                    Text.of('§7Пусто. Положите руду/сырье курсором или через Shift+ЛКМ.'),
-                    Text.of('§8Поддерживает параллельную плавку до 3 слотов!')
-                ]));
+            slot.setItem(Item.of('minecraft:air'));
         }
     }
 
-    // 2. Fuel Slots (cols 0, 1, 2; row 2)
+    // 2. Fuel Slots (Cols 0, 1, 2; Row 2)
     for (let f = 0; f < 3; f++) {
         let slot = gui.getSlot(f, 2);
-        let fuel = session.fuels[f];
+        let fuel = state.fuels[f];
         if (fuel && !fuel.isEmpty()) {
             slot.setItem(fuel.copy().withLore([
                 Text.of('§8────────────────────────────────'),
-                Text.of('§e▶ Нажмите ЛКМ: §fЗабрать топливо в руку'),
-                Text.of('§7Текущий запас жара: §e' + (session.burnTime || 0) + ' ед.')
+                Text.of('§7Запас топлива: §f' + fuel.count + ' шт.'),
+                Text.of('§e▶ ЛКМ: §fЗабрать всё топливо в руку'),
+                Text.of('§e▶ ПКМ: §fЗабрать половину топлива'),
+                Text.of('§6🔥 Автоматически сгорает по мере плавки')
             ]));
         } else {
-            slot.setItem(Item.of('minecraft:orange_stained_glass_pane')
-                .withCustomName(Text.of('§6[ Слот Топлива #' + (f + 1) + ' ]'))
-                .withLore([
-                    Text.of('§7Пусто. Положите уголь/лаву курсором или через Shift+ЛКМ.'),
-                    Text.of('§8Уголь, древесный уголь, лава, блоки угля, стержни ифрита')
-                ]));
+            slot.setItem(Item.of('minecraft:air'));
         }
     }
 
-    // 3. Center Bellows / Flame status (col 4, row 1)
+    // 3. Central Flame & Bellows (Col 4, Row 1)
     let centerSlot = gui.getSlot(4, 1);
-    let fireIcon = session.fuelCharges > 0 ? 'minecraft:campfire' : 'minecraft:coal';
-    centerSlot.setItem(Item.of(fireIcon).withCustomName(Text.of('§6🔥 [ ГОРН ПЛАВИЛЬНИ ]')).withLore([
-        Text.of('§eЖар очага: §f' + (session.burnTime || 0) + ' ед. плавки'),
-        Text.of('§8────────────────────────────────'),
-        Text.of('§e▶ Нажмите ЛКМ: §fРаздуть мехи (Ускорить цикл переплавки)'),
-        Text.of('§7Параллельная переплавка всех 3 слотов сырья!')
-    ]));
+    let isBurning = state.fuelUnits > 0;
+    let prog = state.cookProgress || 0;
 
-    // 4. Output Slots (cols 6, 7, 8; rows 0 and 1)
+    // Анимация иконки огня
+    let fireIcon = 'minecraft:coal';
+    if (isBurning) {
+        if (prog < 33) fireIcon = 'minecraft:campfire';
+        else if (prog < 66) fireIcon = 'minecraft:fire_charge';
+        else fireIcon = 'minecraft:blaze_powder';
+    }
+
+    let flameItem = Item.of(fireIcon);
+    if (isBurning) flameItem.enchant('minecraft:fire_aspect', 1);
+
+    let lore = [
+        Text.of(isBurning ? '§6🔥 [ КУЗНЕЧНЫЙ ГОРН: АКТИВЕН ]' : '§8[ ❄ Горн остыл. Загрузите топливо ]'),
+        Text.of('§8────────────────────────────────'),
+        Text.of(`§7Прогресс плавки: §f[${makeProgressBar(prog)}] §e${Math.floor(prog)}%`),
+        Text.of(`§eЖар очага: §6${state.fuelUnits} ед. горения`),
+        Text.of('§a⚡ Параллельная плавка всех 3 лотков сырья!'),
+        Text.of('§8────────────────────────────────'),
+        Text.of('§e▶ Нажмите ЛКМ: §fРаздуть мехи (+30% ускорение цикла)'),
+        Text.of('§7Плавление продолжается автономно даже при закрытии!')
+    ];
+    centerSlot.setItem(flameItem.withCustomName(Text.of(isBurning ? '§c🔥 РАЗДУТЬ МЕХИ ОЧАГА 🔥' : '§8[ Очаг без топлива ]')).withLore(lore));
+
+    // 4. Output Slots (Cols 6, 7, 8; Rows 0 and 1)
     for (let o = 0; o < 6; o++) {
         let col = 6 + (o % 3);
         let row = Math.floor(o / 3);
         let slot = gui.getSlot(col, row);
-        let out = session.outputs[o];
+        let out = state.outputs[o];
         if (out && !out.isEmpty()) {
             slot.setItem(out.copy().withLore([
                 Text.of('§8────────────────────────────────'),
-                Text.of('§a★ ГОТОВАЯ ПРОДУКЦИЯ ★'),
-                Text.of('§e▶ Нажмите ЛКМ: §fЗабрать в руку / инвентарь')
+                Text.of('§a★ ГОТОВЫЙ МЕТАЛЛ ★'),
+                Text.of('§e▶ Нажмите ЛКМ: §fЗабрать слитки в инвентарь')
             ]));
         } else {
-            slot.setItem(Item.of('minecraft:gray_stained_glass_pane')
-                .withCustomName(Text.of('§8[ Лоток Продукции #' + (o + 1) + ' ]'))
-                .withLore([
-                    Text.of('§7Пусто. Сюда поступают выплавленные слитки и материалы.')
-                ]));
+            slot.setItem(Item.of('minecraft:air'));
         }
     }
 }
 
+// ------------------------------------------------------------------------------
+// OPEN HEARTH SMELTERY GUI
+// ------------------------------------------------------------------------------
 function openHearthSmelteryGUI(player, block) {
     if (!player || player.isFake()) return;
 
-    let session = getOrCreateHearthSession(player);
-    if (block) session.stationBlock = block;
+    let bx = block.x;
+    let by = block.y;
+    let bz = block.z;
+    let level = player.level;
+    let key = getHearthKey(level, bx, by, bz);
+    let state = getHearthState(level, bx, by, bz);
 
-    let fullTitle = '§f\uF808\uE003\uF80A§r§6§lКУЗНЕЧНЫЙ ОЧАГ §7✦ §cПЛАВИЛЬНЯ';
+    // \uF808 = -8px horizontal offset, \uE003 = custom overlay. No text collision!
+    let title = '§f\uF808\uE003\uF80A';
 
-    player.openChestGUI(Text.of(fullTitle), 3, gui => {
+    player.openChestGUI(Text.of(title), 3, gui => {
         gui.playerSlots = true;
+        let uuid = player.uuid.toString();
+        openHearthViewers.set(uuid, { blockKey: key, gui: gui });
 
+        // On Closed: Return carried item to player, keep internal items in block!
         gui.closed = () => {
-            // 1. Safe refund of carried item if holding something when closed
             try {
                 let carried = player.containerMenu.getCarried();
                 if (carried && !carried.isEmpty()) {
@@ -304,78 +421,63 @@ function openHearthSmelteryGUI(player, block) {
                 }
             } catch (e) {}
 
-            // 2. Safe refund of all items from input, fuel, and output slots
-            let toRefund = [];
-            for (let i = 0; i < 3; i++) {
-                if (session.inputs[i] && !session.inputs[i].isEmpty()) toRefund.push(session.inputs[i]);
-                if (session.fuels[i] && !session.fuels[i].isEmpty()) toRefund.push(session.fuels[i]);
-                session.inputs[i] = null;
-                session.fuels[i] = null;
-            }
-            for (let i = 0; i < 6; i++) {
-                if (session.outputs[i] && !session.outputs[i].isEmpty()) toRefund.push(session.outputs[i]);
-                session.outputs[i] = null;
-            }
-
-            toRefund.forEach(st => {
-                if (st && !st.isEmpty()) player.give(st);
-            });
-
-            clearHearthSession(player);
+            openHearthViewers.delete(uuid);
+            saveHearthState(player.server, key, state);
         };
 
         // ----------------------------------------------------------------------
-        // 1. RAW INPUT SLOTS (Cols 0, 1, 2; Row 0)
+        // 1. INPUT SLOTS CLICK HANDLERS (Cols 0, 1, 2; Row 0)
         // ----------------------------------------------------------------------
         for (let i = 0; i < 3; i++) {
             let slotIdx = i;
             gui.slot(slotIdx, 0, s => {
                 s.leftClicked = () => {
                     let carried = player.containerMenu.getCarried();
-                    let current = session.inputs[slotIdx];
+                    let current = state.inputs[slotIdx];
 
                     if (carried && !carried.isEmpty()) {
                         if (isFoodItem(carried)) {
                             player.tell(Text.of('§c⛔ [Очаг] Кузнечный Очаг предназначен только для металлургии! Пища сгорит в пепел.'));
-            player.server.runCommandSilent('playsound minecraft:block.fire.extinguish player ' + player.username + ' ~ ~ ~ 1.0 1.5');
+                            player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 1.0 1.5`);
                             return;
                         }
-                        let smeltResult = getSmelteryResult(carried);
-                        if (!smeltResult) {
+                        if (!getSmelteryResult(carried)) {
                             player.tell(Text.of('§e[Очаг] Этот предмет не подходит для переплавки в кузнечном очаге.'));
                             return;
                         }
 
                         if (!current || current.isEmpty()) {
-                            session.inputs[slotIdx] = carried.copy();
+                            state.inputs[slotIdx] = carried.copy();
                             player.containerMenu.setCarried(Item.of('minecraft:air'));
-            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
                         } else if (current.id === carried.id) {
                             let space = current.maxStackSize - current.count;
                             let move = Math.min(space, carried.count);
                             current.grow(move);
                             carried.shrink(move);
                             if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
-            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
                         } else {
                             let temp = current.copy();
-                            session.inputs[slotIdx] = carried.copy();
+                            state.inputs[slotIdx] = carried.copy();
                             player.containerMenu.setCarried(temp);
-            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
                         }
-                        processSmelteryCycle(player, session, false);
-                        updateHearthSlots(gui, session);
+                        renderHearthSlots(gui, state, player);
+                        saveHearthState(player.server, key, state);
                     } else if (current && !current.isEmpty()) {
+                        // Pick up entire stack
                         player.containerMenu.setCarried(current.copy());
-                        session.inputs[slotIdx] = null;
-            player.server.runCommandSilent('playsound minecraft:entity.item.pickup player ' + player.username + ' ~ ~ ~ 0.8 1.0');
-                        updateHearthSlots(gui, session);
+                        state.inputs[slotIdx] = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        renderHearthSlots(gui, state, player);
+                        saveHearthState(player.server, key, state);
                     }
                 };
 
                 s.rightClicked = () => {
                     let carried = player.containerMenu.getCarried();
-                    let current = session.inputs[slotIdx];
+                    let current = state.inputs[slotIdx];
 
                     if (carried && !carried.isEmpty()) {
                         if (isFoodItem(carried) || !getSmelteryResult(carried)) return;
@@ -383,37 +485,39 @@ function openHearthSmelteryGUI(player, block) {
                             let one = carried.copy();
                             one.setCount(1);
                             carried.shrink(1);
-                            session.inputs[slotIdx] = one;
+                            state.inputs[slotIdx] = one;
                             if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
                         } else if (current.id === carried.id && current.count < current.maxStackSize) {
                             current.grow(1);
                             carried.shrink(1);
                             if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
                         }
-                        processSmelteryCycle(player, session, false);
-                        updateHearthSlots(gui, session);
+                        renderHearthSlots(gui, state, player);
+                        saveHearthState(player.server, key, state);
                     } else if (current && !current.isEmpty()) {
+                        // Pick up half stack
                         let half = Math.ceil(current.count / 2);
                         let picked = current.copy();
                         picked.setCount(half);
                         current.shrink(half);
-                        if (current.count <= 0) session.inputs[slotIdx] = null;
+                        if (current.count <= 0) state.inputs[slotIdx] = null;
                         player.containerMenu.setCarried(picked);
-                        updateHearthSlots(gui, session);
+                        renderHearthSlots(gui, state, player);
+                        saveHearthState(player.server, key, state);
                     }
                 };
             });
         }
 
         // ----------------------------------------------------------------------
-        // 2. FUEL SLOTS (Cols 0, 1, 2; Row 2)
+        // 2. FUEL SLOTS CLICK HANDLERS (Cols 0, 1, 2; Row 2)
         // ----------------------------------------------------------------------
         for (let f = 0; f < 3; f++) {
             let fuelIdx = f;
             gui.slot(fuelIdx, 2, s => {
                 s.leftClicked = () => {
                     let carried = player.containerMenu.getCarried();
-                    let current = session.fuels[fuelIdx];
+                    let current = state.fuels[fuelIdx];
 
                     if (carried && !carried.isEmpty()) {
                         let burn = getFuelBurnUnits(carried);
@@ -423,238 +527,220 @@ function openHearthSmelteryGUI(player, block) {
                         }
 
                         if (!current || current.isEmpty()) {
-                            session.fuels[fuelIdx] = carried.copy();
+                            state.fuels[fuelIdx] = carried.copy();
                             player.containerMenu.setCarried(Item.of('minecraft:air'));
-            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
                         } else if (current.id === carried.id) {
                             let space = current.maxStackSize - current.count;
                             let move = Math.min(space, carried.count);
                             current.grow(move);
                             carried.shrink(move);
                             if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
-            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
                         } else {
                             let temp = current.copy();
-                            session.fuels[fuelIdx] = carried.copy();
+                            state.fuels[fuelIdx] = carried.copy();
                             player.containerMenu.setCarried(temp);
-            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
                         }
-                        processSmelteryCycle(player, session, false);
-                        updateHearthSlots(gui, session);
+                        renderHearthSlots(gui, state, player);
+                        saveHearthState(player.server, key, state);
                     } else if (current && !current.isEmpty()) {
                         player.containerMenu.setCarried(current.copy());
-                        session.fuels[fuelIdx] = null;
-            player.server.runCommandSilent('playsound minecraft:entity.item.pickup player ' + player.username + ' ~ ~ ~ 0.8 1.0');
-                        updateHearthSlots(gui, session);
+                        state.fuels[fuelIdx] = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        renderHearthSlots(gui, state, player);
+                        saveHearthState(player.server, key, state);
                     }
                 };
 
                 s.rightClicked = () => {
                     let carried = player.containerMenu.getCarried();
-                    let current = session.fuels[fuelIdx];
+                    let current = state.fuels[fuelIdx];
 
                     if (carried && !carried.isEmpty()) {
-                        if (getFuelBurnUnits(carried) <= 0) return;
+                        let burn = getFuelBurnUnits(carried);
+                        if (burn <= 0) return;
+
                         if (!current || current.isEmpty()) {
                             let one = carried.copy();
                             one.setCount(1);
                             carried.shrink(1);
-                            session.fuels[fuelIdx] = one;
+                            state.fuels[fuelIdx] = one;
                             if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
                         } else if (current.id === carried.id && current.count < current.maxStackSize) {
                             current.grow(1);
                             carried.shrink(1);
                             if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
                         }
-                        processSmelteryCycle(player, session, false);
-                        updateHearthSlots(gui, session);
+                        renderHearthSlots(gui, state, player);
+                        saveHearthState(player.server, key, state);
                     } else if (current && !current.isEmpty()) {
                         let half = Math.ceil(current.count / 2);
                         let picked = current.copy();
                         picked.setCount(half);
                         current.shrink(half);
-                        if (current.count <= 0) session.fuels[fuelIdx] = null;
+                        if (current.count <= 0) state.fuels[fuelIdx] = null;
                         player.containerMenu.setCarried(picked);
-                        updateHearthSlots(gui, session);
+                        renderHearthSlots(gui, state, player);
+                        saveHearthState(player.server, key, state);
                     }
                 };
             });
         }
 
         // ----------------------------------------------------------------------
-        // 3. CENTER: SMELTERY BELLOWS & FLAME STATUS BUTTON (Col 4, Row 1 = Slot 13)
+        // 3. BELLOWS FLAME BOOST (Col 4, Row 1)
         // ----------------------------------------------------------------------
         gui.slot(4, 1, s => {
             s.leftClicked = () => {
-                processSmelteryCycle(player, session, true);
-                updateHearthSlots(gui, session);
+                if (state.fuelUnits > 0) {
+                    state.cookProgress = Math.min(100, state.cookProgress + 30);
+                    player.server.runCommandSilent(`playsound minecraft:entity.blaze.shoot player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    player.server.runCommandSilent(`particle minecraft:flame ${bx + 0.5} ${by + 0.9} ${bz + 0.5} 0.3 0.1 0.3 0.05 10`);
+                    renderHearthSlots(gui, state, player);
+                    saveHearthState(player.server, key, state);
+                } else {
+                    player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.6 1.0`);
+                    player.tell(Text.of('§e[Очаг] Горн остыл! Загрузите топливо снизу, чтобы раздуть огонь.'));
+                }
             };
         });
 
         // ----------------------------------------------------------------------
-        // 4. RIGHT: 6 FINISHED OUTPUT SLOTS (2 rows of 3 horizontal slots)
-        // Row 0: Cols 6, 7, 8 | Row 1: Cols 6, 7, 8
+        // 4. OUTPUT TRAYS CLICK HANDLERS (Cols 6, 7, 8; Rows 0 and 1)
         // ----------------------------------------------------------------------
         for (let o = 0; o < 6; o++) {
             let outIdx = o;
-            let col = 6 + (outIdx % 3);
-            let row = Math.floor(outIdx / 3);
-
+            let col = 6 + (o % 3);
+            let row = Math.floor(o / 3);
             gui.slot(col, row, s => {
                 s.leftClicked = () => {
-                    let carried = player.containerMenu.getCarried();
-                    let outSt = session.outputs[outIdx];
-                    if (!outSt || outSt.isEmpty()) return;
+                    let out = state.outputs[outIdx];
+                    if (!out || out.isEmpty()) return;
 
+                    let carried = player.containerMenu.getCarried();
                     if (!carried || carried.isEmpty()) {
-                        player.containerMenu.setCarried(outSt.copy());
-                        session.outputs[outIdx] = null;
-            player.server.runCommandSilent('playsound minecraft:entity.item.pickup player ' + player.username + ' ~ ~ ~ 0.8 1.0');
-                        updateHearthSlots(gui, session);
-                    } else if (carried.id === outSt.id && carried.count < carried.maxStackSize) {
+                        player.containerMenu.setCarried(out.copy());
+                        state.outputs[outIdx] = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
+                    } else if (carried.id === out.id) {
                         let space = carried.maxStackSize - carried.count;
-                        let move = Math.min(space, outSt.count);
+                        let move = Math.min(space, out.count);
                         carried.grow(move);
-                        outSt.shrink(move);
-                        if (outSt.count <= 0) session.outputs[outIdx] = null;
-            player.server.runCommandSilent('playsound minecraft:entity.item.pickup player ' + player.username + ' ~ ~ ~ 0.8 1.0');
-                        updateHearthSlots(gui, session);
+                        out.shrink(move);
+                        if (out.count <= 0) state.outputs[outIdx] = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
                     }
+                    renderHearthSlots(gui, state, player);
+                    saveHearthState(player.server, key, state);
                 };
 
                 s.rightClicked = () => {
-                    let carried = player.containerMenu.getCarried();
-                    let outSt = session.outputs[outIdx];
-                    if (!outSt || outSt.isEmpty()) return;
+                    let out = state.outputs[outIdx];
+                    if (!out || out.isEmpty()) return;
 
+                    let carried = player.containerMenu.getCarried();
                     if (!carried || carried.isEmpty()) {
-                        let half = Math.ceil(outSt.count / 2);
-                        let picked = outSt.copy();
+                        let half = Math.ceil(out.count / 2);
+                        let picked = out.copy();
                         picked.setCount(half);
-                        outSt.shrink(half);
-                        if (outSt.count <= 0) session.outputs[outIdx] = null;
+                        out.shrink(half);
+                        if (out.count <= 0) state.outputs[outIdx] = null;
                         player.containerMenu.setCarried(picked);
-            player.server.runCommandSilent('playsound minecraft:entity.item.pickup player ' + player.username + ' ~ ~ ~ 0.8 1.0');
-                        updateHearthSlots(gui, session);
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
+                    } else if (carried.id === out.id && carried.count < carried.maxStackSize) {
+                        carried.grow(1);
+                        out.shrink(1);
+                        if (out.count <= 0) state.outputs[outIdx] = null;
+                        player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
                     }
+                    renderHearthSlots(gui, state, player);
+                    saveHearthState(player.server, key, state);
                 };
             });
         }
 
         // ----------------------------------------------------------------------
-        // 5. FILLER / DECORATIVE SLOTS (LOCK OUT EMPTY CONTAINER SLOTS)
+        // 5. INVENTORY ROUTING (Shift + Click & Direct Clicks)
         // ----------------------------------------------------------------------
-        let fillerSlots = [
-            { col: 3, row: 0 }, { col: 4, row: 0 }, { col: 5, row: 0 },
-            { col: 0, row: 1 }, { col: 1, row: 1 }, { col: 2, row: 1 }, { col: 3, row: 1 }, { col: 5, row: 1 },
-            { col: 3, row: 2 }, { col: 4, row: 2 }, { col: 5, row: 2 }, { col: 6, row: 2 }, { col: 7, row: 2 }, { col: 8, row: 2 }
-        ];
-
-        fillerSlots.forEach(pos => {
-            gui.slot(pos.col, pos.row, s => {
-                s.setItem(Item.of('minecraft:air'));
-                s.leftClicked = () => {};
-            });
-        });
-
-        // ======================================================================
-        // 6. INITIAL POPULATION OF SLOTS
-        // ======================================================================
-        updateHearthSlots(gui, session);
-
-        // ======================================================================
-        // 7. INTELLIGENT INVENTORY ROUTING (gui.inventoryClicked)
-        // Supports normal Left-click pick/place, Right-click half/1, and Shift-click
-        // ======================================================================
         gui.inventoryClicked = (event) => {
             if (!event) return;
             let invItem = event.getItem();
             let carried = player.containerMenu.getCarried();
             let clickTypeStr = event.type ? String(event.type) : 'PICKUP';
 
-            // ------------------------------------------------------------------
-            // A. QUICK MOVE (Shift + Click): Auto-route into station
-            // ------------------------------------------------------------------
+            // QUICK MOVE (Shift + Click from player inventory into hearth)
             if (clickTypeStr === 'QUICK_MOVE') {
                 if (!invItem || invItem.isEmpty()) return;
 
-                // STRICT FOOD BAN
                 if (isFoodItem(invItem)) {
-            player.server.runCommandSilent('playsound minecraft:block.fire.extinguish player ' + player.username + ' ~ ~ ~ 1.0 1.5');
-            player.server.runCommandSilent('particle minecraft:smoke ~ ~1.2 ~ 0.3 0.3 0.3 0.05 20');
-                    player.tell(Text.of('§c⛔ [Очаг] Кузнечный Очаг предназначен только для металлургии! Пища сгорит в пепел.'));
+                    player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 1.0 1.5`);
+                    player.tell(Text.of('§c⛔ [Очаг] Кузнечный Очаг предназначен только для металлургии!'));
                     return;
                 }
 
-                // ROUTE 1: FUEL ITEM
+                // Try Fuel
                 let fuelUnits = getFuelBurnUnits(invItem);
                 if (fuelUnits > 0) {
                     for (let f = 0; f < 3; f++) {
-                        let curF = session.fuels[f];
+                        let curF = state.fuels[f];
                         if (curF && curF.id === invItem.id && curF.count < curF.maxStackSize) {
                             let space = curF.maxStackSize - curF.count;
                             let move = Math.min(space, invItem.count);
                             curF.grow(move);
                             invItem.shrink(move);
                             event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
-            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
-                            processSmelteryCycle(player, session, false);
-                            updateHearthSlots(gui, session);
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                            renderHearthSlots(gui, state, player);
+                            saveHearthState(player.server, key, state);
                             return;
                         }
                     }
                     for (let f = 0; f < 3; f++) {
-                        if (!session.fuels[f] || session.fuels[f].isEmpty()) {
-                            session.fuels[f] = invItem.copy();
+                        if (!state.fuels[f] || state.fuels[f].isEmpty()) {
+                            state.fuels[f] = invItem.copy();
                             event.setItem(Item.of('minecraft:air'));
-            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
-                            processSmelteryCycle(player, session, false);
-                            updateHearthSlots(gui, session);
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                            renderHearthSlots(gui, state, player);
+                            saveHearthState(player.server, key, state);
                             return;
                         }
                     }
-                    player.tell(Text.of('§e[Очаг] Все 3 слота топлива заняты! Извлеките лишнее.'));
-                    return;
                 }
 
-                // ROUTE 2: SMELTABLE RAW MATERIAL
+                // Try Ore Input
                 let smeltResult = getSmelteryResult(invItem);
                 if (smeltResult) {
                     for (let i = 0; i < 3; i++) {
-                        let curIn = session.inputs[i];
+                        let curIn = state.inputs[i];
                         if (curIn && curIn.id === invItem.id && curIn.count < curIn.maxStackSize) {
                             let space = curIn.maxStackSize - curIn.count;
                             let move = Math.min(space, invItem.count);
                             curIn.grow(move);
                             invItem.shrink(move);
                             event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
-            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
-                            processSmelteryCycle(player, session, false);
-                            updateHearthSlots(gui, session);
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                            renderHearthSlots(gui, state, player);
+                            saveHearthState(player.server, key, state);
                             return;
                         }
                     }
                     for (let i = 0; i < 3; i++) {
-                        if (!session.inputs[i] || session.inputs[i].isEmpty()) {
-                            session.inputs[i] = invItem.copy();
+                        if (!state.inputs[i] || state.inputs[i].isEmpty()) {
+                            state.inputs[i] = invItem.copy();
                             event.setItem(Item.of('minecraft:air'));
-            player.server.runCommandSilent('playsound minecraft:item.armor.equip_iron player ' + player.username + ' ~ ~ ~ 0.8 1.2');
-                            processSmelteryCycle(player, session, false);
-                            updateHearthSlots(gui, session);
+                            player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
+                            renderHearthSlots(gui, state, player);
+                            saveHearthState(player.server, key, state);
                             return;
                         }
                     }
-                    player.tell(Text.of('§e[Очаг] Все 3 слота сырья заняты! Дождитесь окончания плавки.'));
-                    return;
                 }
-
-                player.tell(Text.of('§e[Очаг] Этот предмет не подходит для переплавки в кузнечном очаге.'));
                 return;
             }
 
-            // ------------------------------------------------------------------
-            // B. NORMAL LEFT CLICK (button == 0)
-            // ------------------------------------------------------------------
+            // Normal Left Click
             if (event.button === 0) {
                 if (!carried || carried.isEmpty()) {
                     if (invItem && !invItem.isEmpty()) {
@@ -681,9 +767,7 @@ function openHearthSmelteryGUI(player, block) {
                 return;
             }
 
-            // ------------------------------------------------------------------
-            // C. NORMAL RIGHT CLICK (button == 1)
-            // ------------------------------------------------------------------
+            // Normal Right Click
             if (event.button === 1) {
                 if (!carried || carried.isEmpty()) {
                     if (invItem && !invItem.isEmpty()) {
@@ -711,5 +795,52 @@ function openHearthSmelteryGUI(player, block) {
                 return;
             }
         };
+
+        // Начальная отрисовка слотов
+        renderHearthSlots(gui, state, player);
     });
 }
+
+// ------------------------------------------------------------------------------
+// BLOCK INTERACTION & BREAKING HANDLERS
+// ------------------------------------------------------------------------------
+BlockEvents.rightClicked('kubejs:blacksmith_hearth', event => {
+    let player = event.player;
+    if (!player || player.isFake()) return;
+    if (event.hand != 'MAIN_HAND') return;
+
+    openHearthSmelteryGUI(player, event.block);
+});
+
+// Выпадение предметов при разрушении блока
+BlockEvents.broken('kubejs:blacksmith_hearth', event => {
+    let block = event.block;
+    let level = block.level;
+    let key = getHearthKey(level, block.x, block.y, block.z);
+    let state = global.ElyriumHearthData[key];
+
+    if (state) {
+        let toDrop = [];
+        for (let i = 0; i < 3; i++) {
+            if (state.inputs[i] && !state.inputs[i].isEmpty()) toDrop.push(state.inputs[i]);
+            if (state.fuels[i] && !state.fuels[i].isEmpty()) toDrop.push(state.fuels[i]);
+        }
+        for (let o = 0; o < 6; o++) {
+            if (state.outputs[o] && !state.outputs[o].isEmpty()) toDrop.push(state.outputs[o]);
+        }
+
+        toDrop.forEach(st => {
+            block.popItem(st);
+        });
+
+        delete global.ElyriumHearthData[key];
+        try {
+            let pData = level.server.persistentData;
+            let hearthCompound = pData.getCompound('elyrium_hearth_data');
+            if (hearthCompound) {
+                hearthCompound.remove(key);
+                pData.put('elyrium_hearth_data', hearthCompound);
+            }
+        } catch (e) {}
+    }
+});

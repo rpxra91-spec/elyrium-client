@@ -1,8 +1,8 @@
 {
-  "version": "0.4.71",
+  "version": "0.4.72",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-30T20:18:06.037797+00:00",
+  "generated_at": "2026-10-30T21:06:35.741106+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -14927,8 +14927,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/hearth_smeltery_gui.js",
-      "sha256": "29c5796c1f088707c2105a484b7ae84361bfae9da73b2fb2625c7b5373df4ad3",
-      "size": 37265
+      "sha256": "2d6a30c2a270f07eece39708336cde77ee701b1e417a5f63ec1f0681443be7b8",
+      "size": 43098
     },
     {
       "path": "kubejs/server_scripts/02_crafting/infernal_crucible_gui.js",
@@ -15282,8 +15282,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_room_stitcher.js",
-      "sha256": "0ea8b77fd24ff9d1e7f2983725966b532359473da976e18829828a1c82f0fa85",
-      "size": 76183
+      "sha256": "f59e25c98648bd2a4357c339a236e23f53d296f4b988367a99ba97016be21c48",
+      "size": 76075
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/endless_fringe_engine.js",
