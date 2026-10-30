@@ -1,21 +1,20 @@
 // ==============================================================================
-// 🏰 ELYRIUM RPG: MULTI-TIER PROCEDURAL 28-ROOM WINDING LABYRINTH ENGINE (v5.1)
+// 🏰 ELYRIUM RPG: 3-TIER VERTICAL MEGA-DUNGEON ENGINE (v6.0)
 // Dimension: elyrium:dungeons | Isolation Grid: X = ID * 1500, Z = 0
 // ==============================================================================
-// - ZERO Straight Highways: Direct North sprint from entrance is permanently BLOCKED
-//   by an ancient Monolithic Sealed Shrine. Players MUST turn into the wings!
-// - 28 Interconnected Rooms: 5x5 Upper Labyrinth (25 rooms) + 3 Lower Abyss Sanctum zones.
-// - Authentic Winding Navigation (6-7 turns): The optimal progression route snake-coils
-//   through crypts, crossroads, and across high-risk Chasm Bridges over lava/void!
-// - Subtle Architectural Cues: Inlaid stone procession floors and soul lanterns guide
-//   observant players along the critical path (~7 rooms), skipping 21 side rooms (75%),
-//   while cobwebbed archways and cracked stone lead to side wings, ambushes and vaults!
-// - Sprawling Labyrinth Wings: 3 Guarded Treasury Vaults, 4 Ambush Crypts, 4 Sarcophagus
-//   Catacombs, 2 Chasm Bridges, 2 Ancient Shrines, 5 Dead End Urn Crypts.
-// - Sealed Airtight Sarcophagus Hull: 100% enclosure, zero void exposure.
-// - Authentic 8-Tier + Tier 1.5 Undergarden data: dedicated palettes, rich mob & boss pools.
-// - Mini-Boss Gatekeeper & Mechanical Portcullis Progression Gate.
-// - Final Boss Sanctum with Imperial Dais, Triumph Portal & Golden Victory Chest.
+// - 3-Tier Multi-Floor Verticality:
+//     * Floor 1 (Y = 64): Upper Ancient Crypts, Sarcophagus Halls & Colonnades
+//     * Floor 2 (Y = 48): Deep Chasm Bridge (over lava/void), Snipers & Mini-Boss Arena
+//     * Floor 3 (Y = 32): Abyssal Underworld, Hall of Titans, Gauntlet & Grand Boss Sanctum
+// - Substantive 14-Room Main Progression Path connected by real enclosed stone staircases!
+// - 3 Deceptive Dead-End Branches across the journey:
+//     * Branch 1 (Floor 1, West): False Trail -> Upper Treasury Vault (DEAD END with Golden Chest)
+//     * Branch 2 (Floor 2, East): Plagued Aqueduct -> Crypt of Martyrs (DEAD END with Ambush & Pots)
+//     * Branch 3 (Floor 3, West): Sacrificial Altar -> Abyssal Reliquary (DEAD END with High-Tier Loot)
+// - Architectural Navigation Cues: Inlaid stone runners & soul lanterns mark the main path,
+//   while cobwebs and cracked stone mark the dead-end side wings.
+// - Authentic 8 Tiers + Tier 1.5 Undergarden palettes, mobs, mini-bosses and overlords.
+// - Sealed Airtight Sarcophagus Hull: Covers all 3 vertical tiers, 100% void-safe.
 // ==============================================================================
 
 function makePRNG(seed) {
@@ -417,22 +416,21 @@ var ElyriumDungeonStitcher = {
         return TIER_DATA[sector] || TIER_DATA[1];
     },
 
-    // 1. Sealed Subterranean Sarcophagus Hull (100% Void Protection)
+    // 1. Sealed Subterranean Sarcophagus Hull (Covers 3 vertical tiers from Y=24 to Y=78, Z: -16 to 365)
     buildSarcophagus: function(server, originX, pal) {
         let floorBlock = pal.sarcophagus || pal.wall;
         let wallBlock = pal.wall;
         let ceilBlock = pal.ceiling || pal.wall;
 
-        // Covers X: originX - 78 .. originX + 78, Z: -22 .. 220, Y: 28 .. 78
-        safeFill(server, originX - 78, 28, -22, originX + 78, 32, 220, floorBlock);
-        safeFill(server, originX - 78, 28, -22, originX - 77, 78, 220, wallBlock);
-        safeFill(server, originX + 77, 28, -22, originX + 78, 78, 220, wallBlock);
-        safeFill(server, originX - 78, 28, -22, originX + 78, 78, -21, wallBlock);
-        safeFill(server, originX - 78, 28, 219, originX + 78, 78, 220, wallBlock);
-        safeFill(server, originX - 78, 76, -22, originX + 78, 78, 220, ceilBlock);
+        safeFill(server, originX - 60, 24, -16, originX + 60, 28, 365, floorBlock);
+        safeFill(server, originX - 60, 24, -16, originX - 59, 78, 365, wallBlock);
+        safeFill(server, originX + 59, 24, -16, originX + 60, 78, 365, wallBlock);
+        safeFill(server, originX - 60, 24, -16, originX + 60, 78, -15, wallBlock);
+        safeFill(server, originX - 60, 24, 364, originX + 60, 78, 365, wallBlock);
+        safeFill(server, originX - 60, 76, -16, originX + 60, 78, 365, ceilBlock);
     },
 
-    // 2. Entrance Hall (Col 2, Row 0) - FORCED TURN: North is sealed by Monolithic Shrine!
+    // 2. Room Builders with Aesthetic Symmetrical Architecture
     buildEntranceHall: function(server, cx, cy, cz, pal, sector, instanceId, rng) {
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
         let r = 6;
@@ -441,13 +439,13 @@ var ElyriumDungeonStitcher = {
         safeFill(server, cx - r, cy - 3, cz - r, cx + r, cy - 1, cz + r, pal.wall);
         safeFill(server, cx - r, cy, cz - r, cx + r, cy, cz + r, pal.floor);
         safeFill(server, cx - r, cy + 1, cz - r, cx + r, cy + h, cz - r, pal.wall);
-        safeFill(server, cx - r, cy + 1, cz + r, cx + r, cy + h, cz + r, pal.wall); // Solid North Wall!
+        safeFill(server, cx - r, cy + 1, cz + r, cx + r, cy + h, cz + r, pal.wall);
         safeFill(server, cx - r, cy + 1, cz - r, cx - r, cy + h, cz + r, pal.wall);
         safeFill(server, cx + r, cy + 1, cz - r, cx + r, cy + h, cz + r, pal.wall);
         safeFill(server, cx - r, cy + h + 1, cz - r, cx + r, cy + h + 1, cz + r, pal.ceiling);
         safeFill(server, cx - (r - 1), cy + 1, cz - (r - 1), cx + (r - 1), cy + h, cz + (r - 1), 'minecraft:air');
 
-        // Central Preparation Dais & Runes
+        // Central Preparation Dais
         cmd(`fill ${cx - 1} ${cy} ${cz - 1} ${cx + 1} ${cy} ${cz + 1} ${pal.wall_detail}`);
         cmd(`setblock ${cx} ${cy} ${cz} ${pal.accent}`);
 
@@ -460,166 +458,8 @@ var ElyriumDungeonStitcher = {
         cmd(`setblock ${cx - 4} ${cy + 2} ${cz + 4} ${pal.light}`);
         cmd(`setblock ${cx + 4} ${cy + 1} ${cz + 4} ${pal.pillar}`);
         cmd(`setblock ${cx + 4} ${cy + 2} ${cz + 4} ${pal.light}`);
-
-        // MONOLITHIC SEALED NORTH SHRINE (Blocks straight sprint - forces Left/Right exploration!)
-        safeFill(server, cx - 2, cy + 1, cz + r - 1, cx + 2, cy + 4, cz + r - 1, pal.wall_detail);
-        cmd(`setblock ${cx} ${cy + 2} ${cz + r - 2} ${pal.accent}`);
-        cmd(`setblock ${cx - 2} ${cy + 3} ${cz + r - 2} ${pal.pillar}`);
-        cmd(`setblock ${cx + 2} ${cy + 3} ${cz + r - 2} ${pal.pillar}`);
-        cmd(`setblock ${cx} ${cy + 3} ${cz + r - 2} minecraft:skeleton_skull`);
-        cmd(`setblock ${cx - 2} ${cy + 4} ${cz + r - 2} ${pal.golden_light || pal.light}`);
-        cmd(`setblock ${cx + 2} ${cy + 4} ${cz + r - 2} ${pal.golden_light || pal.light}`);
     },
 
-    // 3. Grand Central Crossroads (Col 2, Row 1) - North is a Collapsed Rubble Wall!
-    buildCrossroadsRoom: function(server, cx, cy, cz, pal, rng) {
-        let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
-        let r = 7;
-        let h = 6;
-
-        safeFill(server, cx - r, cy - 3, cz - r, cx + r, cy - 1, cz + r, pal.wall);
-        safeFill(server, cx - r, cy, cz - r, cx + r, cy, cz + r, pal.floor);
-        safeFill(server, cx - r, cy + 1, cz - r, cx + r, cy + h, cz - r, pal.wall); // Solid South face
-        safeFill(server, cx - r, cy + 1, cz + r, cx + r, cy + h, cz + r, pal.wall); // Solid North face
-        safeFill(server, cx - r, cy + 1, cz - r, cx - r, cy + h, cz + r, pal.wall);
-        safeFill(server, cx + r, cy + 1, cz - r, cx + r, cy + h, cz + r, pal.wall);
-        safeFill(server, cx - r, cy + h + 1, cz - r, cx + r, cy + h + 1, cz + r, pal.ceiling);
-        safeFill(server, cx - (r - 1), cy + 1, cz - (r - 1), cx + (r - 1), cy + h, cz + (r - 1), 'minecraft:air');
-
-        // Central Obelisk with Braziers
-        safeFill(server, cx - 1, cy + 1, cz - 1, cx + 1, cy + 1, cz + 1, pal.wall_detail);
-        cmd(`setblock ${cx} ${cy + 2} ${cz} ${pal.pillar}`);
-        cmd(`setblock ${cx} ${cy + 3} ${cz} ${pal.accent}`);
-
-        // Corner Light Pillars
-        cmd(`setblock ${cx - 5} ${cy + 1} ${cz - 5} ${pal.pillar}`);
-        cmd(`setblock ${cx - 5} ${cy + 2} ${cz - 5} ${pal.light}`);
-        cmd(`setblock ${cx + 5} ${cy + 1} ${cz - 5} ${pal.pillar}`);
-        cmd(`setblock ${cx + 5} ${cy + 2} ${cz - 5} ${pal.light}`);
-        cmd(`setblock ${cx - 5} ${cy + 1} ${cz + 5} ${pal.pillar}`);
-        cmd(`setblock ${cx - 5} ${cy + 2} ${cz + 5} ${pal.light}`);
-        cmd(`setblock ${cx + 5} ${cy + 1} ${cz + 5} ${pal.pillar}`);
-        cmd(`setblock ${cx + 5} ${cy + 2} ${cz + 5} ${pal.light}`);
-
-        // COLLAPSED RUBBLE ARCH ON NORTH FACE (Visualizes the collapsed passage to the center)
-        safeFill(server, cx - 2, cy + 1, cz + r - 1, cx + 2, cy + 4, cz + r - 1, pal.floor_cracked);
-        cmd(`setblock ${cx - 1} ${cy + 1} ${cz + r - 2} minecraft:cobweb`);
-        cmd(`setblock ${cx + 1} ${cy + 1} ${cz + r - 2} minecraft:cobweb`);
-        cmd(`setblock ${cx} ${cy + 2} ${cz + r - 2} ${pal.pillar}`);
-    },
-
-    // 4. Pillared Hall with organic texturing
-    buildPillaredHall: function(server, cx, cy, cz, radX, radZ, height, pal, isLower, rng) {
-        let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
-        let floorB = isLower ? pal.abyss_floor : pal.floor;
-        let wallB = isLower ? pal.abyss_wall : pal.wall;
-        let ceilB = isLower ? pal.abyss_floor : pal.ceiling;
-
-        safeFill(server, cx - radX, cy - 3, cz - radZ, cx + radX, cy - 1, cz + radZ, wallB);
-        safeFill(server, cx - radX, cy, cz - radZ, cx + radX, cy, cz + radZ, floorB);
-
-        // Organic cracked/mossy floor texture patches
-        cmd(`fill ${cx - Math.floor(radX / 2)} ${cy} ${cz - Math.floor(radZ / 2)} ${cx} ${cy} ${cz} ${pal.floor_cracked} replace ${floorB}`);
-        cmd(`fill ${cx + 1} ${cy} ${cz + 1} ${cx + Math.floor(radX / 2)} ${cy} ${cz + Math.floor(radZ / 2)} ${pal.floor_mossy} replace ${floorB}`);
-
-        safeFill(server, cx - radX, cy + 1, cz - radZ, cx + radX, cy + height, cz - radZ, wallB);
-        safeFill(server, cx - radX, cy + 1, cz + radZ, cx + radX, cy + height, cz + radZ, wallB);
-        safeFill(server, cx - radX, cy + 1, cz - radZ, cx - radX, cy + height, cz + radZ, wallB);
-        safeFill(server, cx + radX, cy + 1, cz - radZ, cx + radX, cy + height, cz + radZ, wallB);
-        safeFill(server, cx - radX, cy + height + 1, cz - radZ, cx + radX, cy + height + 1, cz + radZ, ceilB);
-        safeFill(server, cx - (radX - 1), cy + 1, cz - (radZ - 1), cx + (radX - 1), cy + height, cz + (radZ - 1), 'minecraft:air');
-
-        // 4 Columns
-        let px = Math.max(3, Math.floor(radX * 0.55));
-        let pz = Math.max(3, Math.floor(radZ * 0.55));
-        let pillars = [[-px, -pz], [px, -pz], [-px, pz], [px, pz]];
-        pillars.forEach(p => {
-            let colX = cx + p[0];
-            let colZ = cz + p[1];
-            safeFill(server, colX, cy + 1, colZ, colX + 1, cy + height - 1, colZ + 1, pal.pillar);
-            cmd(`setblock ${colX} ${cy + 3} ${colZ - 1} ${pal.light}`);
-            cmd(`setblock ${colX + 1} ${cy + 3} ${colZ + 2} ${pal.light}`);
-        });
-
-        // Atmosphere props
-        cmd(`setblock ${cx - radX + 1} ${cy + 1} ${cz - radZ + 1} minecraft:decorated_pot`);
-        cmd(`setblock ${cx + radX - 1} ${cy + 1} ${cz + radZ - 1} minecraft:decorated_pot`);
-        cmd(`setblock ${cx - radX + 1} ${cy + height} ${cz - radZ + 1} minecraft:cobweb`);
-    },
-
-    // 5. Treasury Vault (Golden Chest, Sarcophagi & Elite Vanguard Guardians)
-    buildTreasuryVault: function(server, cx, cy, cz, pal, sector, instanceId, rng) {
-        let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
-        let r = 7;
-        let h = 6;
-
-        safeFill(server, cx - r, cy - 3, cz - r, cx + r, cy - 1, cz + r, pal.wall);
-        safeFill(server, cx - r, cy, cz - r, cx + r, cy, cz + r, pal.floor);
-        safeFill(server, cx - r, cy + 1, cz - r, cx + r, cy + h, cz - r, pal.wall);
-        safeFill(server, cx - r, cy + 1, cz + r, cx + r, cy + h, cz + r, pal.wall);
-        safeFill(server, cx - r, cy + 1, cz - r, cx - r, cy + h, cz + r, pal.wall);
-        safeFill(server, cx + r, cy + 1, cz - r, cx + r, cy + h, cz + r, pal.wall);
-        safeFill(server, cx - r, cy + h + 1, cz - r, cx + r, cy + h + 1, cz + r, pal.ceiling);
-        safeFill(server, cx - (r - 1), cy + 1, cz - (r - 1), cx + (r - 1), cy + h, cz + (r - 1), 'minecraft:air');
-
-        // Center Dais for the Treasury Chest
-        cmd(`fill ${cx - 2} ${cy + 1} ${cz - 2} ${cx + 2} ${cy + 1} ${cz + 2} ${pal.wall_detail}`);
-        cmd(`setblock ${cx} ${cy + 2} ${cz} minecraft:chest[facing=south]{CustomName:'{"text":"Сокровищница Подземелья","color":"gold"}'}`);
-        this.populateTreasuryChest(server, cx, cy + 2, cz, sector, instanceId, rng);
-
-        // 4 Flanking Sarcophagi with candles & skulls
-        cmd(`fill ${cx - 5} ${cy + 1} ${cz - 1} ${cx - 5} ${cy + 1} ${cz + 1} ${pal.sarcophagus}`);
-        cmd(`setblock ${cx - 5} ${cy + 2} ${cz - 1} minecraft:soul_candle[lit=true]`);
-        cmd(`setblock ${cx - 5} ${cy + 2} ${cz + 1} minecraft:skeleton_skull`);
-
-        cmd(`fill ${cx + 5} ${cy + 1} ${cz - 1} ${cx + 5} ${cy + 1} ${cz + 1} ${pal.sarcophagus}`);
-        cmd(`setblock ${cx + 5} ${cy + 2} ${cz - 1} minecraft:soul_candle[lit=true]`);
-        cmd(`setblock ${cx + 5} ${cy + 2} ${cz + 1} minecraft:skeleton_skull`);
-
-        cmd(`fill ${cx - 2} ${cy + 1} ${cz - 5} ${cx + 2} ${cy + 1} ${cz - 5} ${pal.sarcophagus}`);
-        cmd(`setblock ${cx} ${cy + 2} ${cz - 5} minecraft:skeleton_skull`);
-
-        // Lighting
-        cmd(`setblock ${cx - 4} ${cy + 4} ${cz - 4} ${pal.light}`);
-        cmd(`setblock ${cx + 4} ${cy + 4} ${cz - 4} ${pal.light}`);
-        cmd(`setblock ${cx - 4} ${cy + 4} ${cz + 4} ${pal.light}`);
-        cmd(`setblock ${cx + 4} ${cy + 4} ${cz + 4} ${pal.light}`);
-
-        // Elite Guardians
-        this.spawnVanguardPack(server, cx, cy + 1, cz - 3, sector, instanceId, 'treasury_guard', rng);
-    },
-
-    // 6. Ambush Crypt (Monster Nest with Vanguards & Snipers)
-    buildAmbushCrypt: function(server, cx, cy, cz, pal, sector, instanceId, rng) {
-        let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
-        let r = 6;
-        let h = 6;
-
-        safeFill(server, cx - r, cy - 3, cz - r, cx + r, cy - 1, cz + r, pal.wall);
-        safeFill(server, cx - r, cy, cz - r, cx + r, cy, cz + r, pal.floor_cracked || pal.floor);
-        safeFill(server, cx - r, cy + 1, cz - r, cx + r, cy + h, cz - r, pal.wall);
-        safeFill(server, cx - r, cy + 1, cz + r, cx + r, cy + h, cz + r, pal.wall);
-        safeFill(server, cx - r, cy + 1, cz - r, cx - r, cy + h, cz + r, pal.wall);
-        safeFill(server, cx + r, cy + 1, cz - r, cx + r, cy + h, cz + r, pal.wall);
-        safeFill(server, cx - r, cy + h + 1, cz - r, cx + r, cy + h + 1, cz + r, pal.ceiling);
-        safeFill(server, cx - (r - 1), cy + 1, cz - (r - 1), cx + (r - 1), cy + h, cz + (r - 1), 'minecraft:air');
-
-        // Central distress debris & webs
-        cmd(`setblock ${cx - 1} ${cy + 1} ${cz - 1} minecraft:cobweb`);
-        cmd(`setblock ${cx + 1} ${cy + 1} ${cz + 1} minecraft:cobweb`);
-        cmd(`setblock ${cx} ${cy + 1} ${cz} ${pal.floor_mossy}`);
-        cmd(`setblock ${cx - 3} ${cy + 1} ${cz + 3} minecraft:decorated_pot`);
-        cmd(`setblock ${cx + 3} ${cy + 1} ${cz - 3} minecraft:decorated_pot`);
-
-        // Dim moody lighting
-        cmd(`setblock ${cx - 3} ${cy + 3} ${cz - 3} ${pal.light}`);
-        cmd(`setblock ${cx + 3} ${cy + 3} ${cz + 3} ${pal.light}`);
-
-        // Ambush Mob Pack
-        this.spawnVanguardPack(server, cx, cy + 1, cz, sector, instanceId, 'ambush_pack', rng);
-    },
-
-    // 7. Sarcophagus Catacomb (Burial Crypt with rows of tombs)
     buildSarcophagusCrypt: function(server, cx, cy, cz, pal, rng) {
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
         let r = 6;
@@ -657,8 +497,42 @@ var ElyriumDungeonStitcher = {
         cmd(`setblock ${cx + 4} ${cy + 1} ${cz} minecraft:decorated_pot`);
     },
 
-    // 8. Ancient Shrine Sanctum
-    buildShrineSanctum: function(server, cx, cy, cz, pal, rng) {
+    buildPillaredHall: function(server, cx, cy, cz, radX, radZ, height, pal, isLower, rng) {
+        let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
+        let floorB = isLower ? pal.abyss_floor : pal.floor;
+        let wallB = isLower ? pal.abyss_wall : pal.wall;
+        let ceilB = isLower ? pal.abyss_floor : pal.ceiling;
+
+        safeFill(server, cx - radX, cy - 3, cz - radZ, cx + radX, cy - 1, cz + radZ, wallB);
+        safeFill(server, cx - radX, cy, cz - radZ, cx + radX, cy, cz + radZ, floorB);
+
+        cmd(`fill ${cx - Math.floor(radX / 2)} ${cy} ${cz - Math.floor(radZ / 2)} ${cx} ${cy} ${cz} ${pal.floor_cracked} replace ${floorB}`);
+        cmd(`fill ${cx + 1} ${cy} ${cz + 1} ${cx + Math.floor(radX / 2)} ${cy} ${cz + Math.floor(radZ / 2)} ${pal.floor_mossy} replace ${floorB}`);
+
+        safeFill(server, cx - radX, cy + 1, cz - radZ, cx + radX, cy + height, cz - radZ, wallB);
+        safeFill(server, cx - radX, cy + 1, cz + radZ, cx + radX, cy + height, cz + radZ, wallB);
+        safeFill(server, cx - radX, cy + 1, cz - radZ, cx - radX, cy + height, cz + radZ, wallB);
+        safeFill(server, cx + radX, cy + 1, cz - radZ, cx + radX, cy + height, cz + radZ, wallB);
+        safeFill(server, cx - radX, cy + height + 1, cz - radZ, cx + radX, cy + height + 1, cz + radZ, ceilB);
+        safeFill(server, cx - (radX - 1), cy + 1, cz - (radZ - 1), cx + (radX - 1), cy + height, cz + (radZ - 1), 'minecraft:air');
+
+        // 4 Columns with torches
+        let px = Math.max(3, Math.floor(radX * 0.55));
+        let pz = Math.max(3, Math.floor(radZ * 0.55));
+        let pillars = [[-px, -pz], [px, -pz], [-px, pz], [px, pz]];
+        pillars.forEach(p => {
+            let colX = cx + p[0];
+            let colZ = cz + p[1];
+            safeFill(server, colX, cy + 1, colZ, colX + 1, cy + height - 1, colZ + 1, pal.pillar);
+            cmd(`setblock ${colX} ${cy + 3} ${colZ - 1} ${pal.light}`);
+            cmd(`setblock ${colX + 1} ${cy + 3} ${colZ + 2} ${pal.light}`);
+        });
+
+        cmd(`setblock ${cx - radX + 1} ${cy + 1} ${cz - radZ + 1} minecraft:decorated_pot`);
+        cmd(`setblock ${cx + radX - 1} ${cy + 1} ${cz + radZ - 1} minecraft:decorated_pot`);
+    },
+
+    buildTreasuryVault: function(server, cx, cy, cz, pal, sector, instanceId, rng) {
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
         let r = 6;
         let h = 6;
@@ -672,22 +546,54 @@ var ElyriumDungeonStitcher = {
         safeFill(server, cx - r, cy + h + 1, cz - r, cx + r, cy + h + 1, cz + r, pal.ceiling);
         safeFill(server, cx - (r - 1), cy + 1, cz - (r - 1), cx + (r - 1), cy + h, cz + (r - 1), 'minecraft:air');
 
-        // Central Altar Dais
+        // Raised Center Dais for the Treasury Chest
         cmd(`fill ${cx - 2} ${cy + 1} ${cz - 2} ${cx + 2} ${cy + 1} ${cz + 2} ${pal.wall_detail}`);
-        cmd(`setblock ${cx} ${cy + 2} ${cz} ${pal.accent}`);
+        cmd(`setblock ${cx} ${cy + 2} ${cz} minecraft:chest[facing=south]{CustomName:'{"text":"Сокровищница Подземелья","color":"gold"}'}`);
+        this.populateTreasuryChest(server, cx, cy + 2, cz, sector, instanceId, rng);
 
-        // Flanking Burning Braziers
-        cmd(`setblock ${cx - 2} ${cy + 2} ${cz} minecraft:netherrack`);
-        cmd(`setblock ${cx - 2} ${cy + 3} ${cz} ${pal.fire || 'minecraft:fire'}`);
-        cmd(`setblock ${cx + 2} ${cy + 2} ${cz} minecraft:netherrack`);
-        cmd(`setblock ${cx + 2} ${cy + 3} ${cz} ${pal.fire || 'minecraft:fire'}`);
+        // Flanking Sarcophagi with candles & skulls
+        cmd(`fill ${cx - 4} ${cy + 1} ${cz - 1} ${cx - 4} ${cy + 1} ${cz + 1} ${pal.sarcophagus}`);
+        cmd(`setblock ${cx - 4} ${cy + 2} ${cz - 1} minecraft:soul_candle[lit=true]`);
+        cmd(`setblock ${cx - 4} ${cy + 2} ${cz + 1} minecraft:skeleton_skull`);
 
-        // Hanging Center Lantern from Vault Ceiling
-        cmd(`fill ${cx} ${cy + 3} ${cz} ${cx} ${cy + h} ${cz} minecraft:chain`);
-        cmd(`setblock ${cx} ${cy + 2} ${cz} ${pal.golden_light || pal.light}`);
+        cmd(`fill ${cx + 4} ${cy + 1} ${cz - 1} ${cx + 4} ${cy + 1} ${cz + 1} ${pal.sarcophagus}`);
+        cmd(`setblock ${cx + 4} ${cy + 2} ${cz - 1} minecraft:soul_candle[lit=true]`);
+        cmd(`setblock ${cx + 4} ${cy + 2} ${cz + 1} minecraft:skeleton_skull`);
+
+        // Lighting
+        cmd(`setblock ${cx - 4} ${cy + 4} ${cz - 4} ${pal.light}`);
+        cmd(`setblock ${cx + 4} ${cy + 4} ${cz - 4} ${pal.light}`);
+        cmd(`setblock ${cx - 4} ${cy + 4} ${cz + 4} ${pal.light}`);
+        cmd(`setblock ${cx + 4} ${cy + 4} ${cz + 4} ${pal.light}`);
+
+        // Elite Guardians
+        this.spawnVanguardPack(server, cx, cy + 1, cz - 2, sector, instanceId, 'treasury_guard', rng);
     },
 
-    // 9. Chasm Bridge Room (Narrow bridge over lava/void with snipers)
+    buildDeadEndCrypt: function(server, cx, cy, cz, pal, rng) {
+        let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
+        let r = 5;
+        let h = 5;
+
+        safeFill(server, cx - r, cy - 3, cz - r, cx + r, cy - 1, cz + r, pal.wall);
+        safeFill(server, cx - r, cy, cz - r, cx + r, cy, cz + r, pal.floor);
+        safeFill(server, cx - r, cy + 1, cz - r, cx + r, cy + h, cz - r, pal.wall);
+        safeFill(server, cx - r, cy + 1, cz + r, cx + r, cy + h, cz + r, pal.wall);
+        safeFill(server, cx - r, cy + 1, cz - r, cx - r, cy + h, cz + r, pal.wall);
+        safeFill(server, cx + r, cy + 1, cz - r, cx + r, cy + h, cz + r, pal.wall);
+        safeFill(server, cx - r, cy + h + 1, cz - r, cx + r, cy + h + 1, cz + r, pal.ceiling);
+        safeFill(server, cx - (r - 1), cy + 1, cz - (r - 1), cx + (r - 1), cy + h, cz + (r - 1), 'minecraft:air');
+
+        // Rubble & Decorated Pots
+        cmd(`setblock ${cx} ${cy + 1} ${cz + 3} ${pal.floor_cracked}`);
+        cmd(`setblock ${cx - 2} ${cy + 1} ${cz - 2} minecraft:decorated_pot`);
+        cmd(`setblock ${cx + 2} ${cy + 1} ${cz - 2} minecraft:decorated_pot`);
+        cmd(`setblock ${cx} ${cy + 1} ${cz + 2} minecraft:decorated_pot`);
+        cmd(`setblock ${cx - 3} ${cy + h} ${cz - 3} minecraft:cobweb`);
+        cmd(`setblock ${cx + 3} ${cy + h} ${cz + 3} minecraft:cobweb`);
+        cmd(`setblock ${cx} ${cy + 3} ${cz} ${pal.light}`);
+    },
+
     buildChasmBridgeRoom: function(server, cx, cy, cz, pal, sector, rng) {
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
         let rx = 6;
@@ -730,61 +636,6 @@ var ElyriumDungeonStitcher = {
         this.spawnArcherSnipers(server, cx + rx - 1, cy + 3, cz, sector, 0, rng);
     },
 
-    // 10. Dead End Urn Crypt (Pots, Cobwebs, Hidden Breakables)
-    buildDeadEndCrypt: function(server, cx, cy, cz, pal, rng) {
-        let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
-        let r = 5;
-        let h = 5;
-
-        safeFill(server, cx - r, cy - 3, cz - r, cx + r, cy - 1, cz + r, pal.wall);
-        safeFill(server, cx - r, cy, cz - r, cx + r, cy, cz + r, pal.floor);
-        safeFill(server, cx - r, cy + 1, cz - r, cx + r, cy + h, cz - r, pal.wall);
-        safeFill(server, cx - r, cy + 1, cz + r, cx + r, cy + h, cz + r, pal.wall);
-        safeFill(server, cx - r, cy + 1, cz - r, cx - r, cy + h, cz + r, pal.wall);
-        safeFill(server, cx + r, cy + 1, cz - r, cx + r, cy + h, cz + r, pal.wall);
-        safeFill(server, cx - r, cy + h + 1, cz - r, cx + r, cy + h + 1, cz + r, pal.ceiling);
-        safeFill(server, cx - (r - 1), cy + 1, cz - (r - 1), cx + (r - 1), cy + h, cz + (r - 1), 'minecraft:air');
-
-        // Rubble & Pots
-        cmd(`setblock ${cx} ${cy + 1} ${cz + 3} ${pal.floor_cracked}`);
-        cmd(`setblock ${cx - 2} ${cy + 1} ${cz - 2} minecraft:decorated_pot`);
-        cmd(`setblock ${cx + 2} ${cy + 1} ${cz - 2} minecraft:decorated_pot`);
-        cmd(`setblock ${cx} ${cy + 1} ${cz + 2} minecraft:decorated_pot`);
-        cmd(`setblock ${cx - 3} ${cy + h} ${cz - 3} minecraft:cobweb`);
-        cmd(`setblock ${cx + 3} ${cy + h} ${cz + 3} minecraft:cobweb`);
-        cmd(`setblock ${cx} ${cy + 3} ${cz} ${pal.light}`);
-    },
-
-    // 11. Guardian's Antechamber (Col 2, Row 3 - Staging room before Mini-Boss)
-    buildAntechamber: function(server, cx, cy, cz, pal, rng) {
-        let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
-        let r = 7;
-        let h = 6;
-
-        safeFill(server, cx - r, cy - 3, cz - r, cx + r, cy - 1, cz + r, pal.wall);
-        safeFill(server, cx - r, cy, cz - r, cx + r, cy, cz + r, pal.floor);
-        safeFill(server, cx - r, cy + 1, cz - r, cx + r, cy + h, cz - r, pal.wall);
-        safeFill(server, cx - r, cy + 1, cz + r, cx + r, cy + h, cz + r, pal.wall);
-        safeFill(server, cx - r, cy + 1, cz - r, cx - r, cy + h, cz + r, pal.wall);
-        safeFill(server, cx + r, cy + 1, cz - r, cx + r, cy + h, cz + r, pal.wall);
-        safeFill(server, cx - r, cy + h + 1, cz - r, cx + r, cy + h + 1, cz + r, pal.ceiling);
-        safeFill(server, cx - (r - 1), cy + 1, cz - (r - 1), cx + (r - 1), cy + h, cz + (r - 1), 'minecraft:air');
-
-        // 4 Columns with Royal Banners/Soul Torches
-        cmd(`fill ${cx - 4} ${cy + 1} ${cz - 4} ${cx - 4} ${cy + 4} ${cz - 4} ${pal.pillar}`);
-        cmd(`setblock ${cx - 4} ${cy + 5} ${cz - 4} ${pal.golden_light || pal.light}`);
-        cmd(`fill ${cx + 4} ${cy + 1} ${cz - 4} ${cx + 4} ${cy + 4} ${cz - 4} ${pal.pillar}`);
-        cmd(`setblock ${cx + 4} ${cy + 5} ${cz - 4} ${pal.golden_light || pal.light}`);
-        cmd(`fill ${cx - 4} ${cy + 1} ${cz + 4} ${cx - 4} ${cy + 4} ${cz + 4} ${pal.pillar}`);
-        cmd(`setblock ${cx - 4} ${cy + 5} ${cz + 4} ${pal.golden_light || pal.light}`);
-        cmd(`fill ${cx + 4} ${cy + 1} ${cz + 4} ${cx + 4} ${cy + 4} ${cz + 4} ${pal.pillar}`);
-        cmd(`setblock ${cx + 4} ${cy + 5} ${cz + 4} ${pal.golden_light || pal.light}`);
-
-        // Central Ceremonial Walkway
-        cmd(`fill ${cx - 1} ${cy} ${cz - r} ${cx + 1} ${cy} ${cz + r} ${pal.wall_detail}`);
-    },
-
-    // 12. Mini-Boss Arena with Portcullis Progression Gate (Col 2, Row 4)
     buildMiniBossChamber: function(server, cx, cy, cz, pal, sector, instanceId, gateX, gateY, gateZ, rng) {
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
         let r = 9;
@@ -838,7 +689,7 @@ var ElyriumDungeonStitcher = {
         this.spawnMiniBoss(server, cx, cy + 1, cz, sector, instanceId, rng);
     },
 
-    // 13. Grand Descent Staircase (from Y=64 to Y=46)
+    // 3. Enclosed Descending Staircase between vertical floors
     buildDescendingStaircase: function(server, x, startY, endY, z1, z2, pal, rng) {
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
         let startZ = Math.min(z1, z2);
@@ -863,39 +714,11 @@ var ElyriumDungeonStitcher = {
         }
     },
 
-    // 14. Abyssal Vault on lower floor (Y=46)
-    buildAbyssalVault: function(server, cx, cy, cz, pal, sector, instanceId, rng) {
-        let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
-        let r = 7;
-        let h = 7;
-
-        safeFill(server, cx - r, cy - 3, cz - r, cx + r, cy - 1, cz + r, pal.abyss_wall);
-        safeFill(server, cx - r, cy, cz - r, cx + r, cy, cz + r, pal.abyss_floor);
-        safeFill(server, cx - r, cy + 1, cz - r, cx + r, cy + h, cz - r, pal.abyss_wall);
-        safeFill(server, cx - r, cy + 1, cz + r, cx + r, cy + h, cz + r, pal.abyss_wall);
-        safeFill(server, cx - r, cy + 1, cz - r, cx - r, cy + h, cz + r, pal.abyss_wall);
-        safeFill(server, cx + r, cy + 1, cz - r, cx + r, cy + h, cz + r, pal.abyss_wall);
-        safeFill(server, cx - r, cy + h + 1, cz - r, cx + r, cy + h + 1, cz + r, pal.abyss_floor);
-        safeFill(server, cx - (r - 1), cy + 1, cz - (r - 1), cx + (r - 1), cy + h, cz + (r - 1), 'minecraft:air');
-
-        // Accent pattern in center
-        cmd(`fill ${cx - 3} ${cy} ${cz - 3} ${cx + 3} ${cy} ${cz + 3} ${pal.accent} replace ${pal.abyss_floor}`);
-
-        // Hanging chains from ceiling
-        cmd(`fill ${cx - 3} ${cy + 3} ${cz - 3} ${cx - 3} ${cy + h} ${cz - 3} minecraft:chain`);
-        cmd(`setblock ${cx - 3} ${cy + 2} ${cz - 3} ${pal.light}`);
-        cmd(`fill ${cx + 3} ${cy + 3} ${cz + 3} ${cx + 3} ${cy + h} ${cz + 3} minecraft:chain`);
-        cmd(`setblock ${cx + 3} ${cy + 2} ${cz + 3} ${pal.light}`);
-
-        // Spawn Abyssal Guards
-        this.spawnAbyssGuards(server, cx, cy + 1, cz, sector, instanceId, rng);
-    },
-
-    // 15. Grand Boss Sanctum & Imperial Dais
+    // 4. Grand Boss Sanctum (Imperial Dais, Colossal Columns & Final Boss)
     buildGrandBossSanctum: function(server, cx, cy, cz, pal, sector, instanceId, rng) {
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
         let r = 12;
-        let h = 10;
+        let h = 11;
 
         safeFill(server, cx - r, cy - 3, cz - r, cx + r, cy - 1, cz + r, pal.abyss_wall);
         safeFill(server, cx - r, cy, cz - r, cx + r, cy, cz + r, pal.abyss_floor);
@@ -943,7 +766,7 @@ var ElyriumDungeonStitcher = {
         this.spawnFinalBoss(server, cx, cy + 1, cz, sector, instanceId, rng);
     },
 
-    // 16. Corridors (Z-axis & X-axis with navigation cues)
+    // 5. Corridors (with Navigation Inlays and Lights)
     buildCorridorZ: function(server, x, y, z1, z2, width, pal, isGolden, isLower, rng) {
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
         let startZ = Math.min(z1, z2);
@@ -992,7 +815,6 @@ var ElyriumDungeonStitcher = {
         safeFill(server, startX, y - 3, z - halfW - 1, endX, y - 1, z + halfW + 1, wallB);
         safeFill(server, startX, y, z - halfW, endX, y, z + halfW, floorB);
 
-        // Progression runner floor vs cobwebbed side route
         if (isGolden) {
             cmd(`fill ${startX} ${y} ${z} ${endX} ${y} ${z} ${pal.wall_detail}`);
         } else {
@@ -1016,13 +838,13 @@ var ElyriumDungeonStitcher = {
         }
     },
 
-    // 17. Dynamic Loot Populator
+    // 6. Dynamic Loot Populator
     populateTreasuryChest: function(server, x, y, z, sector, instanceId, rng) {
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
         let essSector = Math.floor(sector);
         let essenceItem = `kubejs:dungeon_essence_t${essSector}`;
 
-        let essCount = rng.nextInt(2, 3);
+        let essCount = rng.nextInt(2, 4);
         cmd(`item replace block ${x} ${y} ${z} container.0 with ${essenceItem} ${essCount}`);
 
         let ingot = essSector >= 6 ? 'minecraft:netherite_ingot' : (essSector >= 3 ? 'minecraft:diamond' : (essSector >= 2 ? 'minecraft:iron_ingot' : 'minecraft:copper_ingot'));
@@ -1037,19 +859,19 @@ var ElyriumDungeonStitcher = {
         let essSector = Math.floor(sector);
         let essenceItem = `kubejs:dungeon_essence_t${essSector}`;
 
-        cmd(`item replace block ${x} ${y} ${z} container.4 with ${essenceItem} 3`);
-        cmd(`item replace block ${x} ${y} ${z} container.0 with minecraft:diamond ${rng.nextInt(2, 4)}`);
-        cmd(`item replace block ${x} ${y} ${z} container.8 with minecraft:emerald ${rng.nextInt(4, 8)}`);
-        cmd(`item replace block ${x} ${y} ${z} container.20 with minecraft:gold_block ${rng.nextInt(1, 2)}`);
+        cmd(`item replace block ${x} ${y} ${z} container.4 with ${essenceItem} 4`);
+        cmd(`item replace block ${x} ${y} ${z} container.0 with minecraft:diamond ${rng.nextInt(3, 5)}`);
+        cmd(`item replace block ${x} ${y} ${z} container.8 with minecraft:emerald ${rng.nextInt(6, 12)}`);
+        cmd(`item replace block ${x} ${y} ${z} container.20 with minecraft:gold_block ${rng.nextInt(1, 3)}`);
         cmd(`item replace block ${x} ${y} ${z} container.24 with minecraft:potion[potion_contents={potion:"minecraft:strong_healing"}] 2`);
 
-        if (rng.next() <= 0.25) {
+        if (rng.next() <= 0.35) {
             let defiledItem = (rng.next() <= 0.5) ? `kubejs:defiled_blade_t${essSector}` : `kubejs:defiled_chestplate_t${essSector}`;
             cmd(`item replace block ${x} ${y} ${z} container.13 with ${defiledItem} 1`);
         }
     },
 
-    // 18. Multi-Mob Spawners from Tier Data Pools
+    // 7. Multi-Mob Spawners from Tier Data Pools
     spawnVanguardPack: function(server, x, y, z, sector, instanceId, packTag, rng) {
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
         let tData = this.getTierData(sector);
@@ -1120,7 +942,7 @@ var ElyriumDungeonStitcher = {
         cmd(`summon ${b.id} ${x} ${y} ${z} ${nbt}`);
     },
 
-    // 19. Portcullis Unlock
+    // 8. Portcullis Unlock
     unlockPortcullis: function(server, instanceId) {
         let pData = server.persistentData;
         let instTag = `inst_${instanceId}`;
@@ -1139,167 +961,153 @@ var ElyriumDungeonStitcher = {
                 if (p.persistentData.getInt('elyrium_active_instance') === instanceId) {
                     p.playNotifySound('minecraft:block.iron_door.open', 'players', 1.0, 0.8);
                     p.playNotifySound('minecraft:block.grindstone.use', 'players', 1.0, 0.6);
-                    p.displayClientMessage(Component.literal('§a⚔ [ЯРУС I ЗАЧИЩЕН] §fХранитель повержен! Решетка в Недра распахнута!'), false);
+                    p.displayClientMessage(Component.literal('§a⚔ [ЯРУС II ЗАЧИЩЕН] §fХранитель повержен! Решетка герсы в Недра распахнута!'), false);
                 }
             });
         }
     },
 
     // ==========================================================================
-    // 20. MASTER 28-ROOM WINDING LABYRINTH DUNGEON BUILDER
+    // 9. MASTER 3-TIER MULTI-FLOOR DUNGEON BUILDER (v6.0)
     // ==========================================================================
     buildDungeon: function(server, instanceId, sector) {
         let tData = this.getTierData(sector);
         let pal = tData.palette;
-        let originX = instanceId * 1500;
-        let originY = 64;
-        let originZ = 0;
+        let ox = instanceId * 1500;
 
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
 
-        // Forceload the complete 28-room bounding box
-        cmd(`forceload add ${originX - 96} -32 ${originX + 96} 224`);
+        // Forceload all 3 vertical floors (Y: 24 to 78, Z: -32 to 384)
+        cmd(`forceload add ${ox - 80} -32 ${ox + 80} 384`);
 
         let seed = (instanceId * 1664525 + Math.floor(sector * 10) * 1013904223 + Date.now()) >>> 0;
         let rng = makePRNG(seed);
-        let layout = rng.nextInt(0, 3);
-        console.log(`[ELYRIUM] 28-Room Winding Labyrinth Mega-Dungeon #${instanceId} (Sector ${sector}) Generating layout: ${layout} with seed: ${seed}`);
+        console.log(`[ELYRIUM] 3-Tier Multi-Floor Mega-Dungeon #${instanceId} (Sector ${sector}) Generating with seed: ${seed}`);
 
-        // 1. Build Subterranean Sarcophagus Hull (Seals all 28 rooms)
-        this.buildSarcophagus(server, originX, pal);
+        // 1. Build Airtight Sarcophagus Hull covering all 3 vertical tiers
+        this.buildSarcophagus(server, ox, pal);
 
-        // Grid Cell Coordinates:
-        // Col: 0 (originX - 56), 1 (originX - 28), 2 (originX), 3 (originX + 28), 4 (originX + 56)
-        // Row: 0 (0), 1 (28), 2 (56), 3 (84), 4 (112)
-        let getX = (col) => originX + (col - 2) * 28;
-        let getZ = (row) => row * 28;
+        // ======================================================================
+        // FLOOR 1: UPPER ANCIENT CRYPTS (Y = 64)
+        // ======================================================================
+        let y1 = 64;
 
-        // ----------------------------------------------------------------------
-        // BUILD 25 UPPER LABYRINTH ROOMS (Y = 64)
-        // ----------------------------------------------------------------------
-        // ROW 0:
-        this.buildTreasuryVault(server, getX(0), originY, getZ(0), pal, sector, instanceId, rng);      // (0,0) Treasury Vault I
-        this.buildSarcophagusCrypt(server, getX(1), originY, getZ(0), pal, rng);                        // (1,0) West Sarcophagus Crypt
-        this.buildEntranceHall(server, getX(2), originY, getZ(0), pal, sector, instanceId, rng);        // (2,0) Entrance Pavilion (North Sealed!)
-        this.buildSarcophagusCrypt(server, getX(3), originY, getZ(0), pal, rng);                        // (3,0) East Sarcophagus Crypt
-        this.buildDeadEndCrypt(server, getX(4), originY, getZ(0), pal, rng);                            // (4,0) Dead End Urn Crypt
+        // Room 1.1: Entrance Pavilion (Z = 0)
+        this.buildEntranceHall(server, ox, y1, 0, pal, sector, instanceId, rng);
+        this.buildCorridorZ(server, ox, y1, 7, 17, 4, pal, true, false, rng);
 
-        // ROW 1:
-        this.buildAmbushCrypt(server, getX(0), originY, getZ(1), pal, sector, instanceId, rng);         // (0,1) Spider Ambush Crypt
-        this.buildPillaredHall(server, getX(1), originY, getZ(1), 6, 6, 6, pal, false, rng);             // (1,1) West Crossway Colonnade
-        this.buildCrossroadsRoom(server, getX(2), originY, getZ(1), pal, rng);                          // (2,1) Grand Central Crossroads (North Rubbled!)
-        this.buildPillaredHall(server, getX(3), originY, getZ(1), 6, 6, 6, pal, false, rng);             // (3,1) East Crossway Colonnade
-        this.buildAmbushCrypt(server, getX(4), originY, getZ(1), pal, sector, instanceId, rng);         // (4,1) Ambush Crypt
+        // Room 1.2: Ancient Sarcophagi Hall (Z = 24)
+        this.buildSarcophagusCrypt(server, ox, y1, 24, pal, rng);
+        this.spawnVanguardPack(server, ox, y1 + 1, 24, sector, instanceId, 'crypt_guards', rng);
+        this.buildCorridorZ(server, ox, y1, 31, 41, 4, pal, true, false, rng);
 
-        // ROW 2:
-        this.buildDeadEndCrypt(server, getX(0), originY, getZ(2), pal, rng);                            // (0,2) Dead End Urn Crypt
-        this.buildChasmBridgeRoom(server, getX(1), originY, getZ(2), pal, sector, rng);                  // (1,2) West Chasm Bridge
-        this.buildPillaredHall(server, getX(2), originY, getZ(2), 7, 7, 7, pal, false, rng);             // (2,2) Hall of Champions (Elite room)
-        this.spawnVanguardPack(server, getX(2), originY + 1, getZ(2), sector, instanceId, 'champions', rng);
-        this.buildChasmBridgeRoom(server, getX(3), originY, getZ(2), pal, sector, rng);                  // (3,2) East Chasm Bridge
-        this.buildTreasuryVault(server, getX(4), originY, getZ(2), pal, sector, instanceId, rng);      // (4,2) Treasury Vault II
+        // Room 1.3: Upper Crossroads (Z = 48) - FORK TO BRANCH 1 (DEAD END)!
+        this.buildPillaredHall(server, ox, y1, 48, 6, 6, 6, pal, false, rng);
 
-        // ROW 3:
-        this.buildTreasuryVault(server, getX(0), originY, getZ(3), pal, sector, instanceId, rng);      // (0,3) Treasury Vault III
-        this.buildShrineSanctum(server, getX(1), originY, getZ(3), pal, rng);                           // (1,3) Shrine of Ancients
-        this.buildAntechamber(server, getX(2), originY, getZ(3), pal, rng);                             // (2,3) Guardian's Antechamber
-        this.buildShrineSanctum(server, getX(3), originY, getZ(3), pal, rng);                           // (3,3) Shrine of Elements
-        this.buildDeadEndCrypt(server, getX(4), originY, getZ(3), pal, rng);                            // (4,3) Dead End Urn Crypt
+        // ---> BRANCH 1: West Wing (Dead End with Upper Treasury Vault!)
+        // Corridor West to False Trail Crypt (Z = 48, X: ox - 7 to ox - 18)
+        this.buildCorridorX(server, 48, y1, ox - 7, ox - 18, 4, pal, false, false, rng);
+        // Room 1.3B1: False Trail Crypt (X = ox - 24, Z = 48)
+        this.buildDeadEndCrypt(server, ox - 24, y1, 48, pal, rng);
+        // Corridor deeper West (X: ox - 30 to ox - 38)
+        this.buildCorridorX(server, 48, y1, ox - 30, ox - 38, 4, pal, false, false, rng);
+        // Room 1.3B2: Upper Treasury Vault [DEAD END!] (X = ox - 45, Z = 48)
+        this.buildTreasuryVault(server, ox - 45, y1, 48, pal, sector, instanceId, rng);
 
-        // ROW 4:
-        this.buildDeadEndCrypt(server, getX(0), originY, getZ(4), pal, rng);                            // (0,4) Dead End Crypt
-        this.buildAmbushCrypt(server, getX(1), originY, getZ(4), pal, sector, instanceId, rng);         // (1,4) Elite Guard Barracks
-        let gateZ = getZ(4) + 10; // Gate at Z = 122
-        this.buildMiniBossChamber(server, getX(2), originY, getZ(4), pal, sector, instanceId, getX(2), originY, gateZ, rng); // (2,4) Mini-Boss Arena
-        this.buildAmbushCrypt(server, getX(3), originY, getZ(4), pal, sector, instanceId, rng);         // (3,4) Elite Guard Barracks
-        this.buildDeadEndCrypt(server, getX(4), originY, getZ(4), pal, rng);                            // (4,4) Dead End Crypt
+        // Main Path continues South from Crossroads (Z = 48 -> 72)
+        this.buildCorridorZ(server, ox, y1, 55, 65, 4, pal, true, false, rng);
 
-        // ----------------------------------------------------------------------
-        // CONNECTING CORRIDORS (ZERO Straight Highway — Real Winding Labyrinth!)
-        // ----------------------------------------------------------------------
-        // 1. Horizontal Corridors (Along X between adjacent columns):
-        // Row 0:
-        this.buildCorridorX(server, getZ(0), originY, getX(0) + 7, getX(1) - 6, 4, pal, false, false, rng);
-        this.buildCorridorX(server, getZ(0), originY, getX(1) + 6, getX(2) - 6, 4, pal, (layout === 1 || layout === 2), false, rng); // West entry
-        this.buildCorridorX(server, getZ(0), originY, getX(2) + 6, getX(3) - 6, 4, pal, (layout === 0 || layout === 3), false, rng); // East entry
-        this.buildCorridorX(server, getZ(0), originY, getX(3) + 6, getX(4) - 5, 4, pal, false, false, rng);
+        // Room 1.4: Warden's Colonnade (Z = 72)
+        this.buildPillaredHall(server, ox, y1, 72, 6, 6, 6, pal, false, rng);
+        this.buildCorridorZ(server, ox, y1, 79, 89, 4, pal, true, false, rng);
 
-        // Row 1:
-        this.buildCorridorX(server, getZ(1), originY, getX(0) + 6, getX(1) - 6, 4, pal, false, false, rng);
-        this.buildCorridorX(server, getZ(1), originY, getX(1) + 6, getX(2) - 7, 4, pal, false, false, rng);
-        this.buildCorridorX(server, getZ(1), originY, getX(2) + 7, getX(3) - 6, 4, pal, false, false, rng);
-        this.buildCorridorX(server, getZ(1), originY, getX(3) + 6, getX(4) - 6, 4, pal, false, false, rng);
+        // Room 1.5: Descent Hall 1 (Z = 96) - Staging for First Vertical Descent
+        this.buildEntranceHall(server, ox, y1, 96, pal, sector, instanceId, rng);
 
-        // Row 2:
-        this.buildCorridorX(server, getZ(2), originY, getX(0) + 5, getX(1) - 6, 4, pal, false, false, rng);
-        this.buildCorridorX(server, getZ(2), originY, getX(3) + 6, getX(4) - 7, 4, pal, false, false, rng);
+        // VERTICAL DESCENT 1: Stairwell from Floor 1 (Y=64) down to Floor 2 (Y=48)
+        // (Z = 103 to 123, dropping 16 blocks vertically)
+        this.buildDescendingStaircase(server, ox, 64, 48, 103, 123, pal, rng);
 
-        // Row 3:
-        this.buildCorridorX(server, getZ(3), originY, getX(0) + 7, getX(1) - 6, 4, pal, false, false, rng);
-        this.buildCorridorX(server, getZ(3), originY, getX(1) + 6, getX(2) - 7, 4, pal, (layout === 1 || layout === 2), false, rng); // West to Antechamber
-        this.buildCorridorX(server, getZ(3), originY, getX(2) + 7, getX(3) - 6, 4, pal, (layout === 0 || layout === 3), false, rng); // East to Antechamber
-        this.buildCorridorX(server, getZ(3), originY, getX(3) + 6, getX(4) - 5, 4, pal, false, false, rng);
+        // ======================================================================
+        // FLOOR 2: DEEP CHASM & MINI-BOSS LAYER (Y = 48)
+        // ======================================================================
+        let y2 = 48;
 
-        // Row 4:
-        this.buildCorridorX(server, getZ(4), originY, getX(0) + 5, getX(1) - 6, 4, pal, false, false, rng);
-        this.buildCorridorX(server, getZ(4), originY, getX(3) + 6, getX(4) - 5, 4, pal, false, false, rng);
+        // Room 2.1: Vault of Whispers (Z = 130) - Landing on Floor 2
+        this.buildPillaredHall(server, ox, y2, 130, 6, 6, 6, pal, true, rng);
+        this.buildCorridorZ(server, ox, y2, 137, 147, 4, pal, true, true, rng);
 
-        // 2. Vertical Corridors (Along Z between adjacent rows):
-        // Col 0:
-        this.buildCorridorZ(server, getX(0), originY, getZ(0) + 7, getZ(1) - 6, 4, pal, false, false, rng);
-        this.buildCorridorZ(server, getX(0), originY, getZ(3) + 7, getZ(4) - 5, 4, pal, false, false, rng);
+        // Room 2.2: Suspended Chasm Bridge over Lava/Void (Z = 154)
+        this.buildChasmBridgeRoom(server, ox, y2, 154, pal, sector, rng);
+        this.buildCorridorZ(server, ox, y2, 162, 171, 4, pal, true, true, rng);
 
-        // Col 1 (West Labyrinth Wing):
-        this.buildCorridorZ(server, getX(1), originY, getZ(0) + 6, getZ(1) - 6, 4, pal, (layout === 1 || layout === 2), false, rng);
-        // In Layout 0, (1,1)-(1,2) is a rubbled passage, forcing exploration through the East!
-        if (layout !== 0) {
-            this.buildCorridorZ(server, getX(1), originY, getZ(1) + 6, getZ(2) - 7, 4, pal, (layout === 1 || layout === 2), false, rng);
-        }
-        this.buildCorridorZ(server, getX(1), originY, getZ(2) + 7, getZ(3) - 6, 4, pal, (layout === 1 || layout === 2), false, rng);
-        this.buildCorridorZ(server, getX(1), originY, getZ(3) + 6, getZ(4) - 6, 4, pal, false, false, rng);
+        // Room 2.3: Lower Junction of Sorrows (Z = 178) - FORK TO BRANCH 2 (DEAD END)!
+        this.buildPillaredHall(server, ox, y2, 178, 6, 6, 6, pal, true, rng);
 
-        // Col 2 (CENTER AXIS):
-        // NOTE: NO corridor between (2,0) and (2,1)! Sealed by Monolithic Shrine!
-        // NOTE: NO corridor between (2,1) and (2,2)! Sealed by Collapsed Rubble Wall!
-        // (2,2) [Hall of Champions] is an optional high-reward room accessible from (2,3):
-        this.buildCorridorZ(server, getX(2), originY, getZ(2) + 7, getZ(3) - 7, 4, pal, false, false, rng);
-        // Antechamber (2,3) to Mini-Boss Arena (2,4) [The Final Royal Gate]:
-        this.buildCorridorZ(server, getX(2), originY, getZ(3) + 7, getZ(4) - 9, 4, pal, true, false, rng);
+        // ---> BRANCH 2: East Wing (Dead End with Crypt of Martyrs & Ambush!)
+        // Corridor East to Plagued Aqueduct (Z = 178, X: ox + 7 to ox + 18)
+        this.buildCorridorX(server, 178, y2, ox + 7, ox + 18, 4, pal, false, true, rng);
+        // Room 2.3B1: Plagued Aqueduct (X = ox + 24, Z = 178)
+        this.buildDeadEndCrypt(server, ox + 24, y2, 178, pal, rng);
+        // Corridor deeper East (X: ox + 30 to ox + 38)
+        this.buildCorridorX(server, 178, y2, ox + 30, ox + 38, 4, pal, false, true, rng);
+        // Room 2.3B2: Crypt of Martyrs [DEAD END!] (X = ox + 45, Z = 178)
+        this.buildSarcophagusCrypt(server, ox + 45, y2, 178, pal, rng);
+        this.spawnVanguardPack(server, ox + 45, y2 + 1, 178, sector, instanceId, 'martyrs_ambush', rng);
 
-        // Col 3 (East Labyrinth Wing):
-        this.buildCorridorZ(server, getX(3), originY, getZ(0) + 6, getZ(1) - 6, 4, pal, (layout === 0 || layout === 3), false, rng);
-        // In Layout 1, (3,1)-(3,2) is a rubbled passage, forcing exploration through the West!
-        if (layout !== 1) {
-            this.buildCorridorZ(server, getX(3), originY, getZ(1) + 6, getZ(2) - 7, 4, pal, (layout === 0 || layout === 3), false, rng);
-        }
-        this.buildCorridorZ(server, getX(3), originY, getZ(2) + 7, getZ(3) - 6, 4, pal, (layout === 0 || layout === 3), false, rng);
-        this.buildCorridorZ(server, getX(3), originY, getZ(3) + 6, getZ(4) - 6, 4, pal, false, false, rng);
+        // Main Path continues South from Junction (Z = 178 -> 202)
+        this.buildCorridorZ(server, ox, y2, 185, 195, 4, pal, true, true, rng);
 
-        // Col 4:
-        this.buildCorridorZ(server, getX(4), originY, getZ(1) + 6, getZ(2) - 7, 4, pal, false, false, rng);
-        this.buildCorridorZ(server, getX(4), originY, getZ(2) + 7, getZ(3) - 5, 4, pal, false, false, rng);
+        // Room 2.4: Guardian's Antechamber (Z = 202)
+        this.buildPillaredHall(server, ox, y2, 202, 6, 6, 7, pal, true, rng);
+        this.buildCorridorZ(server, ox, y2, 209, 217, 4, pal, true, true, rng);
 
-        // ----------------------------------------------------------------------
-        // LOWER FLOOR: DESCENT STAIRWELL, ABYSSAL VAULT & BOSS SANCTUM
-        // ----------------------------------------------------------------------
-        // Grand Descent Staircase behind Portcullis (Z: 123 -> 142, dropping from Y=64 to Y=46)
-        this.buildDescendingStaircase(server, getX(2), 64, 46, gateZ + 1, gateZ + 20, pal, rng);
+        // Room 2.5: Mini-Boss Arena & Portcullis Progression Gate (Z = 227)
+        let gateZ = 236;
+        this.buildMiniBossChamber(server, ox, y2, 227, pal, sector, instanceId, ox, y2, gateZ, rng);
 
-        // Room 26: Abyssal Vault on Lower Floor (Y = 46, Z = 152)
-        let abyssZ = gateZ + 30; // Z = 152
-        this.buildAbyssalVault(server, getX(2), 46, abyssZ, pal, sector, instanceId, rng);
+        // VERTICAL DESCENT 2: Deep Stairwell from Floor 2 (Y=48) down to Floor 3 (Y=32)
+        // (Z = 237 to 257, dropping 16 blocks vertically into the Abyss)
+        this.buildDescendingStaircase(server, ox, 48, 32, 237, 257, pal, rng);
 
-        // Corridor to Grand Boss Sanctum (Z: 159 -> 172 at Y = 46)
-        this.buildCorridorZ(server, getX(2), 46, abyssZ + 7, abyssZ + 20, 4, pal, true, true, rng);
+        // ======================================================================
+        // FLOOR 3: ABYSSAL UNDERWORLD & GRAND BOSS SANCTUM (Y = 32)
+        // ======================================================================
+        let y3 = 32;
 
-        // Room 27 & 28: Grand Boss Sanctum & Imperial Dais (Y = 46, Z = 186)
-        let bossZ = abyssZ + 34; // Z = 186
-        this.buildGrandBossSanctum(server, getX(2), 46, bossZ, pal, sector, instanceId, rng);
+        // Room 3.1: Abyssal Gatehouse (Z = 264) - Landing in the Deepest Abyss
+        this.buildPillaredHall(server, ox, y3, 264, 6, 6, 6, pal, true, rng);
+        this.spawnAbyssGuards(server, ox, y3 + 1, 264, sector, instanceId, rng);
+        this.buildCorridorZ(server, ox, y3, 271, 281, 4, pal, true, true, rng);
+
+        // Room 3.2: Hall of Damned Titans (Z = 288) - FORK TO BRANCH 3 (DEAD END)!
+        this.buildPillaredHall(server, ox, y3, 288, 7, 7, 7, pal, true, rng);
+
+        // ---> BRANCH 3: West Wing (Dead End with Abyssal Reliquary!)
+        // Corridor West to Sacrificial Altar (Z = 288, X: ox - 7 to ox - 18)
+        this.buildCorridorX(server, 288, y3, ox - 7, ox - 18, 4, pal, false, true, rng);
+        // Room 3.2B1: Sacrificial Altar (X = ox - 24, Z = 288)
+        this.buildDeadEndCrypt(server, ox - 24, y3, 288, pal, rng);
+        // Corridor deeper West (X: ox - 30 to ox - 38)
+        this.buildCorridorX(server, 288, y3, ox - 30, ox - 38, 4, pal, false, true, rng);
+        // Room 3.2B2: Abyssal Reliquary [DEAD END!] (X = ox - 45, Z = 288)
+        this.buildTreasuryVault(server, ox - 45, y3, 288, pal, sector, instanceId, rng);
+
+        // Main Path continues South from Hall of Titans (Z = 288 -> 312)
+        this.buildCorridorZ(server, ox, y3, 295, 305, 4, pal, true, true, rng);
+
+        // Room 3.3: Gauntlet of Skulls (Z = 312) - Final Ceremonial Procession
+        this.buildPillaredHall(server, ox, y3, 312, 6, 6, 7, pal, true, rng);
+        this.spawnVanguardPack(server, ox, y3 + 1, 312, sector, instanceId, 'abyssal_gauntlet', rng);
+        this.buildCorridorZ(server, ox, y3, 319, 326, 4, pal, true, true, rng);
+
+        // Room 3.4: GRAND BOSS SANCTUM & IMPERIAL DAIS (Z = 338, Y = 32)
+        this.buildGrandBossSanctum(server, ox, y3, 338, pal, sector, instanceId, rng);
     }
 };
 
 // ==============================================================================
-// 21. ENTITY DEATH EVENT LISTENERS (PROGRESSION & VICTORY)
+// 10. ENTITY DEATH EVENT LISTENERS (PROGRESSION & VICTORY)
 // ==============================================================================
 EntityEvents.death(event => {
     let entity = event.entity;
@@ -1356,7 +1164,7 @@ EntityEvents.death(event => {
 });
 
 // ==============================================================================
-// 22. ADMIN COMMANDS
+// 11. ADMIN COMMANDS
 // ==============================================================================
 ServerEvents.commandRegistry(event => {
     let { commands: Commands, arguments: Arguments } = event;
@@ -1377,7 +1185,7 @@ ServerEvents.commandRegistry(event => {
                     ElyriumDungeonStitcher.buildDungeon(server, nextId, sector);
 
                     if (player) {
-                        player.displayClientMessage(Component.literal(`§a[DUNGEON] 28-комнатный лабиринт #${nextId} (Сектор ${sector}) сгенерирован! Вход: /dungeon_enter ${nextId}`), false);
+                        player.displayClientMessage(Component.literal(`§a[DUNGEON] 3-ярусное подземелье #${nextId} (Сектор ${sector}) сгенерировано! Вход: /dungeon_enter ${nextId}`), false);
                     }
                     return 1;
                 })
@@ -1400,7 +1208,7 @@ ServerEvents.commandRegistry(event => {
                     player.persistentData.putInt('elyrium_active_instance', id);
 
                     player.teleportTo('elyrium:dungeons', cellX + 0.5, 65.0, 0.5, 0, 0);
-                    player.displayClientMessage(Component.literal(`§6⚔ [ЛАБИРИНТ ПОДЗЕМЕЛЬЯ #${id}] §fВы вошли на стартовую площадку катакомб! Путь на север запечатан монолитом — исследуйте крылья лабиринта.`), true);
+                    player.displayClientMessage(Component.literal(`§6⚔ [ПОДЗЕМЕЛЬЕ #${id}] §fВы вошли на Ярус I катакомб! Двигайтесь вглубь, остерегаясь ложных ответвлений.`), true);
                     return 1;
                 })
             )
