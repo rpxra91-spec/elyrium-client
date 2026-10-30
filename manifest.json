@@ -1,8 +1,8 @@
 {
-  "version": "0.4.68",
+  "version": "0.4.69",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-30T11:04:51.439322+00:00",
+  "generated_at": "2026-10-30T11:34:36.791849+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -15282,8 +15282,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_room_stitcher.js",
-      "sha256": "328c2c627619583e692773d91eb01ab69337cc09256a6574519b750b745f4c74",
-      "size": 70530
+      "sha256": "b864dcf860b381183aa77e873f6093dd46c75698d8c4506574bcf941bc0be8b2",
+      "size": 82711
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/endless_fringe_engine.js",
