@@ -1,13 +1,18 @@
 // ==============================================================================
-// 🏰 ELYRIUM RPG: MULTI-TIER PROCEDURAL 28-ROOM LABYRINTH DUNGEON ENGINE (v5.0)
+// 🏰 ELYRIUM RPG: MULTI-TIER PROCEDURAL 28-ROOM WINDING LABYRINTH ENGINE (v5.1)
 // Dimension: elyrium:dungeons | Isolation Grid: X = ID * 1500, Z = 0
 // ==============================================================================
+// - ZERO Straight Highways: Direct North sprint from entrance is permanently BLOCKED
+//   by an ancient Monolithic Sealed Shrine. Players MUST turn into the wings!
 // - 28 Interconnected Rooms: 5x5 Upper Labyrinth (25 rooms) + 3 Lower Abyss Sanctum zones.
-// - "Golden Path" Navigation: Direct central royal spine (6-7 rooms) allows players to
-//   skip the labyrinth if following the golden banners, soul lanterns and polished pillars.
+// - Authentic Winding Navigation (6-7 turns): The optimal progression route snake-coils
+//   through crypts, crossroads, and across high-risk Chasm Bridges over lava/void!
+// - Subtle Architectural Cues: Inlaid stone procession floors and soul lanterns guide
+//   observant players along the critical path (~7 rooms), skipping 21 side rooms (75%),
+//   while cobwebbed archways and cracked stone lead to side wings, ambushes and vaults!
 // - Sprawling Labyrinth Wings: 3 Guarded Treasury Vaults, 4 Ambush Crypts, 4 Sarcophagus
-//   Catacombs, 2 Chasm Bridges over Lava/Void, 2 Ancient Shrines, 5 Dead End Urn Crypts.
-// - Sealed Airtight Sarcophagus Hull: 100% enclosure, zero void exposure, zero fall damage.
+//   Catacombs, 2 Chasm Bridges, 2 Ancient Shrines, 5 Dead End Urn Crypts.
+// - Sealed Airtight Sarcophagus Hull: 100% enclosure, zero void exposure.
 // - Authentic 8-Tier + Tier 1.5 Undergarden data: dedicated palettes, rich mob & boss pools.
 // - Mini-Boss Gatekeeper & Mechanical Portcullis Progression Gate.
 // - Final Boss Sanctum with Imperial Dais, Triumph Portal & Golden Victory Chest.
@@ -427,7 +432,7 @@ var ElyriumDungeonStitcher = {
         safeFill(server, originX - 78, 76, -22, originX + 78, 78, 220, ceilBlock);
     },
 
-    // 2. Entrance Hall (Col 2, Row 0)
+    // 2. Entrance Hall (Col 2, Row 0) - FORCED TURN: North is sealed by Monolithic Shrine!
     buildEntranceHall: function(server, cx, cy, cz, pal, sector, instanceId, rng) {
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
         let r = 6;
@@ -436,7 +441,7 @@ var ElyriumDungeonStitcher = {
         safeFill(server, cx - r, cy - 3, cz - r, cx + r, cy - 1, cz + r, pal.wall);
         safeFill(server, cx - r, cy, cz - r, cx + r, cy, cz + r, pal.floor);
         safeFill(server, cx - r, cy + 1, cz - r, cx + r, cy + h, cz - r, pal.wall);
-        safeFill(server, cx - r, cy + 1, cz + r, cx + r, cy + h, cz + r, pal.wall);
+        safeFill(server, cx - r, cy + 1, cz + r, cx + r, cy + h, cz + r, pal.wall); // Solid North Wall!
         safeFill(server, cx - r, cy + 1, cz - r, cx - r, cy + h, cz + r, pal.wall);
         safeFill(server, cx + r, cy + 1, cz - r, cx + r, cy + h, cz + r, pal.wall);
         safeFill(server, cx - r, cy + h + 1, cz - r, cx + r, cy + h + 1, cz + r, pal.ceiling);
@@ -455,9 +460,18 @@ var ElyriumDungeonStitcher = {
         cmd(`setblock ${cx - 4} ${cy + 2} ${cz + 4} ${pal.light}`);
         cmd(`setblock ${cx + 4} ${cy + 1} ${cz + 4} ${pal.pillar}`);
         cmd(`setblock ${cx + 4} ${cy + 2} ${cz + 4} ${pal.light}`);
+
+        // MONOLITHIC SEALED NORTH SHRINE (Blocks straight sprint - forces Left/Right exploration!)
+        safeFill(server, cx - 2, cy + 1, cz + r - 1, cx + 2, cy + 4, cz + r - 1, pal.wall_detail);
+        cmd(`setblock ${cx} ${cy + 2} ${cz + r - 2} ${pal.accent}`);
+        cmd(`setblock ${cx - 2} ${cy + 3} ${cz + r - 2} ${pal.pillar}`);
+        cmd(`setblock ${cx + 2} ${cy + 3} ${cz + r - 2} ${pal.pillar}`);
+        cmd(`setblock ${cx} ${cy + 3} ${cz + r - 2} minecraft:skeleton_skull`);
+        cmd(`setblock ${cx - 2} ${cy + 4} ${cz + r - 2} ${pal.golden_light || pal.light}`);
+        cmd(`setblock ${cx + 2} ${cy + 4} ${cz + r - 2} ${pal.golden_light || pal.light}`);
     },
 
-    // 3. Grand Central Crossroads (Col 2, Row 1 - 4-Way Junction with Navigation Cue)
+    // 3. Grand Central Crossroads (Col 2, Row 1) - North is a Collapsed Rubble Wall!
     buildCrossroadsRoom: function(server, cx, cy, cz, pal, rng) {
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
         let r = 7;
@@ -465,14 +479,14 @@ var ElyriumDungeonStitcher = {
 
         safeFill(server, cx - r, cy - 3, cz - r, cx + r, cy - 1, cz + r, pal.wall);
         safeFill(server, cx - r, cy, cz - r, cx + r, cy, cz + r, pal.floor);
-        safeFill(server, cx - r, cy + 1, cz - r, cx + r, cy + h, cz - r, pal.wall);
-        safeFill(server, cx - r, cy + 1, cz + r, cx + r, cy + h, cz + r, pal.wall);
+        safeFill(server, cx - r, cy + 1, cz - r, cx + r, cy + h, cz - r, pal.wall); // Solid South face
+        safeFill(server, cx - r, cy + 1, cz + r, cx + r, cy + h, cz + r, pal.wall); // Solid North face
         safeFill(server, cx - r, cy + 1, cz - r, cx - r, cy + h, cz + r, pal.wall);
         safeFill(server, cx + r, cy + 1, cz - r, cx + r, cy + h, cz + r, pal.wall);
         safeFill(server, cx - r, cy + h + 1, cz - r, cx + r, cy + h + 1, cz + r, pal.ceiling);
         safeFill(server, cx - (r - 1), cy + 1, cz - (r - 1), cx + (r - 1), cy + h, cz + (r - 1), 'minecraft:air');
 
-        // Central Obelisk / Fountain
+        // Central Obelisk with Braziers
         safeFill(server, cx - 1, cy + 1, cz - 1, cx + 1, cy + 1, cz + 1, pal.wall_detail);
         cmd(`setblock ${cx} ${cy + 2} ${cz} ${pal.pillar}`);
         cmd(`setblock ${cx} ${cy + 3} ${cz} ${pal.accent}`);
@@ -487,11 +501,11 @@ var ElyriumDungeonStitcher = {
         cmd(`setblock ${cx + 5} ${cy + 1} ${cz + 5} ${pal.pillar}`);
         cmd(`setblock ${cx + 5} ${cy + 2} ${cz + 5} ${pal.light}`);
 
-        // North Golden Archway Header (Directional Navigation Marker for the Royal Spine)
-        cmd(`setblock ${cx - 2} ${cy + 4} ${cz + r} ${pal.accent}`);
-        cmd(`setblock ${cx + 2} ${cy + 4} ${cz + r} ${pal.accent}`);
-        cmd(`setblock ${cx - 2} ${cy + 3} ${cz + r - 1} ${pal.golden_light || pal.light}`);
-        cmd(`setblock ${cx + 2} ${cy + 3} ${cz + r - 1} ${pal.golden_light || pal.light}`);
+        // COLLAPSED RUBBLE ARCH ON NORTH FACE (Visualizes the collapsed passage to the center)
+        safeFill(server, cx - 2, cy + 1, cz + r - 1, cx + 2, cy + 4, cz + r - 1, pal.floor_cracked);
+        cmd(`setblock ${cx - 1} ${cy + 1} ${cz + r - 2} minecraft:cobweb`);
+        cmd(`setblock ${cx + 1} ${cy + 1} ${cz + r - 2} minecraft:cobweb`);
+        cmd(`setblock ${cx} ${cy + 2} ${cz + r - 2} ${pal.pillar}`);
     },
 
     // 4. Pillared Hall with organic texturing
@@ -929,7 +943,7 @@ var ElyriumDungeonStitcher = {
         this.spawnFinalBoss(server, cx, cy + 1, cz, sector, instanceId, rng);
     },
 
-    // 16. Corridors (Z-axis & X-axis)
+    // 16. Corridors (Z-axis & X-axis with navigation cues)
     buildCorridorZ: function(server, x, y, z1, z2, width, pal, isGolden, isLower, rng) {
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
         let startZ = Math.min(z1, z2);
@@ -941,6 +955,14 @@ var ElyriumDungeonStitcher = {
 
         safeFill(server, x - halfW - 1, y - 3, startZ, x + halfW + 1, y - 1, endZ, wallB);
         safeFill(server, x - halfW, y, startZ, x + halfW, y, endZ, floorB);
+
+        // Progression runner floor vs cobwebbed side route
+        if (isGolden) {
+            cmd(`fill ${x} ${y} ${startZ} ${x} ${y} ${endZ} ${pal.wall_detail}`);
+        } else {
+            cmd(`fill ${x} ${y} ${startZ + 2} ${x} ${y} ${startZ + 4} ${pal.floor_cracked}`);
+        }
+
         safeFill(server, x - halfW, y + 1, startZ, x + halfW, y + 4, endZ, 'minecraft:air');
         safeFill(server, x - halfW - 1, y + 1, startZ, x - halfW - 1, y + 4, endZ, wallB);
         safeFill(server, x + halfW + 1, y + 1, startZ, x + halfW + 1, y + 4, endZ, wallB);
@@ -951,9 +973,14 @@ var ElyriumDungeonStitcher = {
             cmd(`setblock ${x - halfW} ${y + 3} ${cz} ${lightBlock}`);
             cmd(`setblock ${x + halfW} ${y + 3} ${cz} ${lightBlock}`);
         }
+
+        if (!isGolden) {
+            cmd(`setblock ${x - halfW} ${y + 4} ${startZ + 1} minecraft:cobweb`);
+            cmd(`setblock ${x + halfW} ${y + 4} ${endZ - 1} minecraft:cobweb`);
+        }
     },
 
-    buildCorridorX: function(server, z, y, x1, x2, width, pal, isLower, rng) {
+    buildCorridorX: function(server, z, y, x1, x2, width, pal, isGolden, isLower, rng) {
         let cmd = (c) => server.runCommandSilent(`execute in elyrium:dungeons run ${c}`);
         let startX = Math.min(x1, x2);
         let endX = Math.max(x1, x2);
@@ -964,14 +991,28 @@ var ElyriumDungeonStitcher = {
 
         safeFill(server, startX, y - 3, z - halfW - 1, endX, y - 1, z + halfW + 1, wallB);
         safeFill(server, startX, y, z - halfW, endX, y, z + halfW, floorB);
+
+        // Progression runner floor vs cobwebbed side route
+        if (isGolden) {
+            cmd(`fill ${startX} ${y} ${z} ${endX} ${y} ${z} ${pal.wall_detail}`);
+        } else {
+            cmd(`fill ${startX + 2} ${y} ${z} ${startX + 4} ${y} ${z} ${pal.floor_cracked}`);
+        }
+
         safeFill(server, startX, y + 1, z - halfW, endX, y + 4, z + halfW, 'minecraft:air');
         safeFill(server, startX, y + 1, z - halfW - 1, endX, y + 4, z - halfW - 1, wallB);
         safeFill(server, startX, y + 1, z + halfW + 1, endX, y + 4, z + halfW + 1, wallB);
         safeFill(server, startX, y + 5, z - halfW - 1, endX, y + 5, z + halfW + 1, ceilB);
 
+        let lightBlock = isGolden ? (pal.golden_light || pal.light) : pal.light;
         for (let cx = startX + 1; cx <= endX - 1; cx += 4) {
-            cmd(`setblock ${cx} ${y + 3} ${z - halfW} ${pal.light}`);
-            cmd(`setblock ${cx} ${y + 3} ${z + halfW} ${pal.light}`);
+            cmd(`setblock ${cx} ${y + 3} ${z - halfW} ${lightBlock}`);
+            cmd(`setblock ${cx} ${y + 3} ${z + halfW} ${lightBlock}`);
+        }
+
+        if (!isGolden) {
+            cmd(`setblock ${startX + 1} ${y + 4} ${z - halfW} minecraft:cobweb`);
+            cmd(`setblock ${endX - 1} ${y + 4} ${z + halfW} minecraft:cobweb`);
         }
     },
 
@@ -1105,7 +1146,7 @@ var ElyriumDungeonStitcher = {
     },
 
     // ==========================================================================
-    // 20. MASTER 28-ROOM LABYRINTH DUNGEON BUILDER (Grid Architecture)
+    // 20. MASTER 28-ROOM WINDING LABYRINTH DUNGEON BUILDER
     // ==========================================================================
     buildDungeon: function(server, instanceId, sector) {
         let tData = this.getTierData(sector);
@@ -1122,7 +1163,7 @@ var ElyriumDungeonStitcher = {
         let seed = (instanceId * 1664525 + Math.floor(sector * 10) * 1013904223 + Date.now()) >>> 0;
         let rng = makePRNG(seed);
         let layout = rng.nextInt(0, 3);
-        console.log(`[ELYRIUM] 28-Room Labyrinth Mega-Dungeon #${instanceId} (Sector ${sector}) Generating layout: ${layout} with seed: ${seed}`);
+        console.log(`[ELYRIUM] 28-Room Winding Labyrinth Mega-Dungeon #${instanceId} (Sector ${sector}) Generating layout: ${layout} with seed: ${seed}`);
 
         // 1. Build Subterranean Sarcophagus Hull (Seals all 28 rooms)
         this.buildSarcophagus(server, originX, pal);
@@ -1138,22 +1179,22 @@ var ElyriumDungeonStitcher = {
         // ----------------------------------------------------------------------
         // ROW 0:
         this.buildTreasuryVault(server, getX(0), originY, getZ(0), pal, sector, instanceId, rng);      // (0,0) Treasury Vault I
-        this.buildSarcophagusCrypt(server, getX(1), originY, getZ(0), pal, rng);                        // (1,0) Sarcophagus Crypt
-        this.buildEntranceHall(server, getX(2), originY, getZ(0), pal, sector, instanceId, rng);        // (2,0) Entrance Pavilion
-        this.buildSarcophagusCrypt(server, getX(3), originY, getZ(0), pal, rng);                        // (3,0) Sarcophagus Crypt
+        this.buildSarcophagusCrypt(server, getX(1), originY, getZ(0), pal, rng);                        // (1,0) West Sarcophagus Crypt
+        this.buildEntranceHall(server, getX(2), originY, getZ(0), pal, sector, instanceId, rng);        // (2,0) Entrance Pavilion (North Sealed!)
+        this.buildSarcophagusCrypt(server, getX(3), originY, getZ(0), pal, rng);                        // (3,0) East Sarcophagus Crypt
         this.buildDeadEndCrypt(server, getX(4), originY, getZ(0), pal, rng);                            // (4,0) Dead End Urn Crypt
 
         // ROW 1:
-        this.buildAmbushCrypt(server, getX(0), originY, getZ(1), pal, sector, instanceId, rng);         // (0,1) Ambush Crypt
-        this.buildPillaredHall(server, getX(1), originY, getZ(1), 6, 6, 6, pal, false, rng);             // (1,1) West Crossway
-        this.buildCrossroadsRoom(server, getX(2), originY, getZ(1), pal, rng);                          // (2,1) Grand Central Crossroads
-        this.buildPillaredHall(server, getX(3), originY, getZ(1), 6, 6, 6, pal, false, rng);             // (3,1) East Crossway
+        this.buildAmbushCrypt(server, getX(0), originY, getZ(1), pal, sector, instanceId, rng);         // (0,1) Spider Ambush Crypt
+        this.buildPillaredHall(server, getX(1), originY, getZ(1), 6, 6, 6, pal, false, rng);             // (1,1) West Crossway Colonnade
+        this.buildCrossroadsRoom(server, getX(2), originY, getZ(1), pal, rng);                          // (2,1) Grand Central Crossroads (North Rubbled!)
+        this.buildPillaredHall(server, getX(3), originY, getZ(1), 6, 6, 6, pal, false, rng);             // (3,1) East Crossway Colonnade
         this.buildAmbushCrypt(server, getX(4), originY, getZ(1), pal, sector, instanceId, rng);         // (4,1) Ambush Crypt
 
         // ROW 2:
         this.buildDeadEndCrypt(server, getX(0), originY, getZ(2), pal, rng);                            // (0,2) Dead End Urn Crypt
         this.buildChasmBridgeRoom(server, getX(1), originY, getZ(2), pal, sector, rng);                  // (1,2) West Chasm Bridge
-        this.buildPillaredHall(server, getX(2), originY, getZ(2), 7, 7, 7, pal, false, rng);             // (2,2) Hall of Champions
+        this.buildPillaredHall(server, getX(2), originY, getZ(2), 7, 7, 7, pal, false, rng);             // (2,2) Hall of Champions (Elite room)
         this.spawnVanguardPack(server, getX(2), originY + 1, getZ(2), sector, instanceId, 'champions', rng);
         this.buildChasmBridgeRoom(server, getX(3), originY, getZ(2), pal, sector, rng);                  // (3,2) East Chasm Bridge
         this.buildTreasuryVault(server, getX(4), originY, getZ(2), pal, sector, instanceId, rng);      // (4,2) Treasury Vault II
@@ -1174,72 +1215,64 @@ var ElyriumDungeonStitcher = {
         this.buildDeadEndCrypt(server, getX(4), originY, getZ(4), pal, rng);                            // (4,4) Dead End Crypt
 
         // ----------------------------------------------------------------------
-        // CONNECTING CORRIDORS (Interconnected Labyrinth & Golden Path)
+        // CONNECTING CORRIDORS (ZERO Straight Highway — Real Winding Labyrinth!)
         // ----------------------------------------------------------------------
-        // Horizontal Corridors (Along X between adjacent columns):
+        // 1. Horizontal Corridors (Along X between adjacent columns):
         // Row 0:
-        this.buildCorridorX(server, getZ(0), originY, getX(0) + 7, getX(1) - 6, 4, pal, false, rng);
-        this.buildCorridorX(server, getZ(0), originY, getX(1) + 6, getX(2) - 6, 4, pal, false, rng);
-        this.buildCorridorX(server, getZ(0), originY, getX(2) + 6, getX(3) - 6, 4, pal, false, rng);
-        this.buildCorridorX(server, getZ(0), originY, getX(3) + 6, getX(4) - 5, 4, pal, false, rng);
+        this.buildCorridorX(server, getZ(0), originY, getX(0) + 7, getX(1) - 6, 4, pal, false, false, rng);
+        this.buildCorridorX(server, getZ(0), originY, getX(1) + 6, getX(2) - 6, 4, pal, (layout === 1 || layout === 2), false, rng); // West entry
+        this.buildCorridorX(server, getZ(0), originY, getX(2) + 6, getX(3) - 6, 4, pal, (layout === 0 || layout === 3), false, rng); // East entry
+        this.buildCorridorX(server, getZ(0), originY, getX(3) + 6, getX(4) - 5, 4, pal, false, false, rng);
 
         // Row 1:
-        this.buildCorridorX(server, getZ(1), originY, getX(0) + 6, getX(1) - 6, 4, pal, false, rng);
-        this.buildCorridorX(server, getZ(1), originY, getX(1) + 6, getX(2) - 7, 4, pal, false, rng);
-        this.buildCorridorX(server, getZ(1), originY, getX(2) + 7, getX(3) - 6, 4, pal, false, rng);
-        this.buildCorridorX(server, getZ(1), originY, getX(3) + 6, getX(4) - 6, 4, pal, false, rng);
+        this.buildCorridorX(server, getZ(1), originY, getX(0) + 6, getX(1) - 6, 4, pal, false, false, rng);
+        this.buildCorridorX(server, getZ(1), originY, getX(1) + 6, getX(2) - 7, 4, pal, false, false, rng);
+        this.buildCorridorX(server, getZ(1), originY, getX(2) + 7, getX(3) - 6, 4, pal, false, false, rng);
+        this.buildCorridorX(server, getZ(1), originY, getX(3) + 6, getX(4) - 6, 4, pal, false, false, rng);
 
         // Row 2:
-        this.buildCorridorX(server, getZ(2), originY, getX(0) + 5, getX(1) - 6, 4, pal, false, rng);
-        this.buildCorridorX(server, getZ(2), originY, getX(3) + 6, getX(4) - 7, 4, pal, false, rng);
+        this.buildCorridorX(server, getZ(2), originY, getX(0) + 5, getX(1) - 6, 4, pal, false, false, rng);
+        this.buildCorridorX(server, getZ(2), originY, getX(3) + 6, getX(4) - 7, 4, pal, false, false, rng);
 
         // Row 3:
-        this.buildCorridorX(server, getZ(3), originY, getX(0) + 7, getX(1) - 6, 4, pal, false, rng);
-        this.buildCorridorX(server, getZ(3), originY, getX(1) + 6, getX(2) - 7, 4, pal, false, rng);
-        this.buildCorridorX(server, getZ(3), originY, getX(2) + 7, getX(3) - 6, 4, pal, false, rng);
-        this.buildCorridorX(server, getZ(3), originY, getX(3) + 6, getX(4) - 5, 4, pal, false, rng);
+        this.buildCorridorX(server, getZ(3), originY, getX(0) + 7, getX(1) - 6, 4, pal, false, false, rng);
+        this.buildCorridorX(server, getZ(3), originY, getX(1) + 6, getX(2) - 7, 4, pal, (layout === 1 || layout === 2), false, rng); // West to Antechamber
+        this.buildCorridorX(server, getZ(3), originY, getX(2) + 7, getX(3) - 6, 4, pal, (layout === 0 || layout === 3), false, rng); // East to Antechamber
+        this.buildCorridorX(server, getZ(3), originY, getX(3) + 6, getX(4) - 5, 4, pal, false, false, rng);
 
         // Row 4:
-        this.buildCorridorX(server, getZ(4), originY, getX(0) + 5, getX(1) - 6, 4, pal, false, rng);
-        this.buildCorridorX(server, getZ(4), originY, getX(3) + 6, getX(4) - 5, 4, pal, false, rng);
+        this.buildCorridorX(server, getZ(4), originY, getX(0) + 5, getX(1) - 6, 4, pal, false, false, rng);
+        this.buildCorridorX(server, getZ(4), originY, getX(3) + 6, getX(4) - 5, 4, pal, false, false, rng);
 
-        // Vertical Corridors (Along Z between adjacent rows):
+        // 2. Vertical Corridors (Along Z between adjacent rows):
         // Col 0:
         this.buildCorridorZ(server, getX(0), originY, getZ(0) + 7, getZ(1) - 6, 4, pal, false, false, rng);
         this.buildCorridorZ(server, getX(0), originY, getZ(3) + 7, getZ(4) - 5, 4, pal, false, false, rng);
 
         // Col 1 (West Labyrinth Wing):
-        this.buildCorridorZ(server, getX(1), originY, getZ(0) + 6, getZ(1) - 6, 4, pal, false, false, rng);
-        this.buildCorridorZ(server, getX(1), originY, getZ(1) + 6, getZ(2) - 7, 4, pal, false, false, rng);
-        this.buildCorridorZ(server, getX(1), originY, getZ(2) + 7, getZ(3) - 6, 4, pal, false, false, rng);
+        this.buildCorridorZ(server, getX(1), originY, getZ(0) + 6, getZ(1) - 6, 4, pal, (layout === 1 || layout === 2), false, rng);
+        // In Layout 0, (1,1)-(1,2) is a rubbled passage, forcing exploration through the East!
+        if (layout !== 0) {
+            this.buildCorridorZ(server, getX(1), originY, getZ(1) + 6, getZ(2) - 7, 4, pal, (layout === 1 || layout === 2), false, rng);
+        }
+        this.buildCorridorZ(server, getX(1), originY, getZ(2) + 7, getZ(3) - 6, 4, pal, (layout === 1 || layout === 2), false, rng);
         this.buildCorridorZ(server, getX(1), originY, getZ(3) + 6, getZ(4) - 6, 4, pal, false, false, rng);
 
-        // Col 2 (THE GOLDEN PATH / ROYAL CENTRAL SPINE):
-        this.buildCorridorZ(server, getX(2), originY, getZ(0) + 6, getZ(1) - 7, 4, pal, true, false, rng); // Entrance -> Crossroads
-
-        if (layout === 0) {
-            // Direct Golden Royal Spine: All straight north!
-            this.buildCorridorZ(server, getX(2), originY, getZ(1) + 7, getZ(2) - 7, 4, pal, true, false, rng);
-            this.buildCorridorZ(server, getX(2), originY, getZ(2) + 7, getZ(3) - 7, 4, pal, true, false, rng);
-        } else if (layout === 1) {
-            // West Detour: North door blocked, loop through West Chasm
-            this.buildCorridorZ(server, getX(2), originY, getZ(2) + 7, getZ(3) - 7, 4, pal, true, false, rng);
-        } else if (layout === 2) {
-            // East Detour: North door blocked, loop through East Chasm
-            this.buildCorridorZ(server, getX(2), originY, getZ(2) + 7, getZ(3) - 7, 4, pal, true, false, rng);
-        } else {
-            // Citadel Fork: Both wings open into antechamber
-            this.buildCorridorZ(server, getX(2), originY, getZ(1) + 7, getZ(2) - 7, 4, pal, true, false, rng);
-            this.buildCorridorZ(server, getX(2), originY, getZ(2) + 7, getZ(3) - 7, 4, pal, true, false, rng);
-        }
-
-        // Antechamber into Mini-Boss Chamber:
+        // Col 2 (CENTER AXIS):
+        // NOTE: NO corridor between (2,0) and (2,1)! Sealed by Monolithic Shrine!
+        // NOTE: NO corridor between (2,1) and (2,2)! Sealed by Collapsed Rubble Wall!
+        // (2,2) [Hall of Champions] is an optional high-reward room accessible from (2,3):
+        this.buildCorridorZ(server, getX(2), originY, getZ(2) + 7, getZ(3) - 7, 4, pal, false, false, rng);
+        // Antechamber (2,3) to Mini-Boss Arena (2,4) [The Final Royal Gate]:
         this.buildCorridorZ(server, getX(2), originY, getZ(3) + 7, getZ(4) - 9, 4, pal, true, false, rng);
 
         // Col 3 (East Labyrinth Wing):
-        this.buildCorridorZ(server, getX(3), originY, getZ(0) + 6, getZ(1) - 6, 4, pal, false, false, rng);
-        this.buildCorridorZ(server, getX(3), originY, getZ(1) + 6, getZ(2) - 7, 4, pal, false, false, rng);
-        this.buildCorridorZ(server, getX(3), originY, getZ(2) + 7, getZ(3) - 6, 4, pal, false, false, rng);
+        this.buildCorridorZ(server, getX(3), originY, getZ(0) + 6, getZ(1) - 6, 4, pal, (layout === 0 || layout === 3), false, rng);
+        // In Layout 1, (3,1)-(3,2) is a rubbled passage, forcing exploration through the West!
+        if (layout !== 1) {
+            this.buildCorridorZ(server, getX(3), originY, getZ(1) + 6, getZ(2) - 7, 4, pal, (layout === 0 || layout === 3), false, rng);
+        }
+        this.buildCorridorZ(server, getX(3), originY, getZ(2) + 7, getZ(3) - 6, 4, pal, (layout === 0 || layout === 3), false, rng);
         this.buildCorridorZ(server, getX(3), originY, getZ(3) + 6, getZ(4) - 6, 4, pal, false, false, rng);
 
         // Col 4:
@@ -1367,7 +1400,7 @@ ServerEvents.commandRegistry(event => {
                     player.persistentData.putInt('elyrium_active_instance', id);
 
                     player.teleportTo('elyrium:dungeons', cellX + 0.5, 65.0, 0.5, 0, 0);
-                    player.displayClientMessage(Component.literal(`§6⚔ [ЛАБИРИНТ ПОДЗЕМЕЛЬЯ #${id}] §fВы вошли на стартовую площадку катакомб! Следуйте золотым указателям или исследуйте крылья лабиринта.`), true);
+                    player.displayClientMessage(Component.literal(`§6⚔ [ЛАБИРИНТ ПОДЗЕМЕЛЬЯ #${id}] §fВы вошли на стартовую площадку катакомб! Путь на север запечатан монолитом — исследуйте крылья лабиринта.`), true);
                     return 1;
                 })
             )
