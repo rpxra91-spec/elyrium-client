@@ -1269,7 +1269,7 @@ EntityEvents.death(event => {
 });
 
 // ==============================================================================
-// 7. ADMIN COMMANDS
+// 7. DUNGEON COMMANDS & NAVIGATION
 // ==============================================================================
 ServerEvents.commandRegistry(event => {
     let { commands: Commands, arguments: Arguments } = event;
@@ -1290,32 +1290,118 @@ ServerEvents.commandRegistry(event => {
                     ElyriumDungeonStitcher.buildDungeon(server, nextId, sector);
 
                     if (player) {
-                        player.displayClientMessage(Component.literal(`§a[DUNGEON] 3-ярусное процедурное подземелье #${nextId} (Сектор ${sector}) сгенерировано! Вход: /dungeon_enter ${nextId}`), false);
+                        let text = Component.literal(`§a[DUNGEON] 3-ярусный процедурный лабиринт #${nextId} (Сектор ${sector}) сгенерирован!\n`)
+                            .append(Component.literal(`§6▶ §e§l[ НАЖМИТЕ ЗДЕСЬ ДЛЯ ВХОДА В ПОДЗЕМЕЛЬЕ #${nextId} ]`)
+                                .clickRunCommand(`/dungeon_enter ${nextId}`)
+                                .hoverText(Component.literal(`§aНажмите, чтобы войти в Подземелье #${nextId}`)));
+                        player.displayClientMessage(text, false);
                     }
                     return 1;
                 })
             )
     );
 
+    let handleEnter = (ctx, targetId) => {
+        let player = ctx.source.player;
+        let server = ctx.source.server;
+        if (!player) return 0;
+
+        let pData = server.persistentData;
+        let maxId = pData.getInt('elyrium_instance_counter') || 0;
+
+        let id = targetId;
+        if (!id || id <= 0) {
+            id = maxId;
+        }
+
+        if (id <= 0 || id > maxId) {
+            player.displayClientMessage(Component.literal(`§c[ОШИБКА] Подземелье #${id} еще не сгенерировано! Сначала создайте его: /dungeon_generate <сектор 1..8>`), false);
+            player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.8 0.6`);
+            return 0;
+        }
+
+        let cellX = id * 1500;
+        player.persistentData.putDouble('elyrium_return_x', player.x);
+        player.persistentData.putDouble('elyrium_return_y', player.y);
+        player.persistentData.putDouble('elyrium_return_z', player.z);
+        player.persistentData.putString('elyrium_return_dim', String(player.level.dimension));
+        player.persistentData.putInt('elyrium_active_instance', id);
+
+        // Страховка: гарантируем твердый пол в точке входа
+        server.runCommandSilent(`execute in elyrium:dungeons run fill ${cellX - 1} 64 -1 ${cellX + 1} 64 1 minecraft:polished_blackstone`);
+        server.runCommandSilent(`execute in elyrium:dungeons run fill ${cellX - 1} 65 -1 ${cellX + 1} 67 1 minecraft:air`);
+
+        player.teleportTo('elyrium:dungeons', cellX + 0.5, 65.0, 0.5, 0, 0);
+        player.setDeltaMovement(0, 0, 0);
+        player.server.runCommandSilent(`playsound minecraft:entity.warden.emerge player ${player.username} ~ ~ ~ 0.7 0.9`);
+        player.displayClientMessage(Component.literal(`§6⚔ [ПОДЗЕМЕЛЬЕ #${id}] §fВы вошли в процедурный лабиринт! Двигайтесь вглубь, остерегаясь ложных развилок и пустых засад. Для выхода: /dungeon_leave`), false);
+        return 1;
+    };
+
     event.register(
         Commands.literal('dungeon_enter')
+            .executes(ctx => handleEnter(ctx, null))
             .then(Commands.argument('id', Arguments.INTEGER.create(event))
                 .executes(ctx => {
                     let id = Arguments.INTEGER.getResult(ctx, 'id');
-                    let player = ctx.source.player;
-                    if (!player) return 0;
-
-                    let cellX = id * 1500;
-                    player.persistentData.putDouble('elyrium_return_x', player.x);
-                    player.persistentData.putDouble('elyrium_return_y', player.y);
-                    player.persistentData.putDouble('elyrium_return_z', player.z);
-                    player.persistentData.putString('elyrium_return_dim', String(player.level.dimension));
-                    player.persistentData.putInt('elyrium_active_instance', id);
-
-                    player.teleportTo('elyrium:dungeons', cellX + 0.5, 65.0, 0.5, 0, 0);
-                    player.displayClientMessage(Component.literal(`§6⚔ [ПОДЗЕМЕЛЬЕ #${id}] §fВы вошли в процедурный лабиринт! Двигайтесь вглубь, остерегаясь ложных развилок и пустых засад.`), true);
-                    return 1;
+                    return handleEnter(ctx, id);
                 })
             )
     );
+
+    let handleLeave = ctx => {
+        let player = ctx.source.player;
+        if (!player) return 0;
+
+        let dim = String(player.level.dimension);
+        if (dim !== 'elyrium:dungeons') {
+            player.displayClientMessage(Component.literal(`§c[ПОДЗЕМЕЛЬЕ] Вы не находитесь внутри подземелья.`), false);
+            return 0;
+        }
+
+        let retDim = player.persistentData.getString('elyrium_return_dim') || 'minecraft:overworld';
+        let retX = player.persistentData.getDouble('elyrium_return_x') || -2.5;
+        let retY = player.persistentData.getDouble('elyrium_return_y') || 70.0;
+        let retZ = player.persistentData.getDouble('elyrium_return_z') || -36.9;
+        if (retY < 10) retY = 70.0;
+
+        player.teleportTo(retDim, retX, retY, retZ, player.yaw, player.pitch);
+        player.setDeltaMovement(0, 0, 0);
+        player.server.runCommandSilent(`playsound minecraft:entity.enderman.teleport player ${player.username} ~ ~ ~ 1.0 1.0`);
+        player.displayClientMessage(Component.literal(`§a[ПОДЗЕМЕЛЬЕ] Вы благополучно покинули лабиринт.`), false);
+        return 1;
+    };
+
+    event.register(Commands.literal('dungeon_leave').executes(handleLeave));
+    event.register(Commands.literal('dungeon_return').executes(handleLeave));
+});
+
+// ==============================================================================
+// 8. SAFETY RESCUE ENGINE (AUTO-RECOVERY FROM VOID & FALL RESCUE)
+// ==============================================================================
+ServerEvents.tick(event => {
+    let server = event.server;
+    if (server.tickCount % 10 !== 0) return; // Каждые 0.5 секунды
+
+    server.players.forEach(player => {
+        if (!player || player.isFake()) return;
+
+        let dim = String(player.level.dimension);
+        if (dim === 'elyrium:dungeons') {
+            // Если игрок провалился ниже пола Y=15 или взлетел выше саркофага Y=220
+            if (player.y < 15.0 || player.y > 220.0) {
+                let retDim = player.persistentData.getString('elyrium_return_dim') || 'minecraft:overworld';
+                let retX = player.persistentData.getDouble('elyrium_return_x') || -2.5;
+                let retY = player.persistentData.getDouble('elyrium_return_y') || 70.0;
+                let retZ = player.persistentData.getDouble('elyrium_return_z') || -36.9;
+                if (retY < 10) retY = 70.0;
+
+                player.teleportTo(retDim, retX, retY, retZ, player.yaw, player.pitch);
+                player.setDeltaMovement(0, 0, 0);
+                server.runCommandSilent(`effect give ${player.username} minecraft:slow_falling 5 1 true`);
+                server.runCommandSilent(`playsound minecraft:entity.enderman.teleport player ${player.username} ~ ~ ~ 1.0 1.0`);
+                player.displayClientMessage(Component.literal(`§c🛡 [СПАСАТЕЛЬНАЯ СИСТЕМА] §fВы выпали в пустоту лабиринта и были экстренно возвращены в безопасную зону!`), false);
+            }
+        }
+    });
 });

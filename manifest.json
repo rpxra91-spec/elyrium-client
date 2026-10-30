@@ -1,8 +1,8 @@
 {
-  "version": "0.4.70",
+  "version": "0.4.71",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-30T19:30:22.940568+00:00",
+  "generated_at": "2026-10-30T20:18:06.037797+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -2197,8 +2197,8 @@
     },
     {
       "path": "config/embeddium-options.json",
-      "sha256": "2e45fad8b1f64480f223f2c48be441d2e6d9768581fce2f247483574335b383c",
-      "size": 849
+      "sha256": "3ae541cb5000075a8487bdcaf14634c3215abbd73ffc3715fd5efd2112c9a23c",
+      "size": 848
     },
     {
       "path": "config/enchdesc.json",
@@ -3872,8 +3872,8 @@
     },
     {
       "path": "config/oculus.properties",
-      "sha256": "dd739d23bb14fef43e9ab0dce36b80c8a9fd6094d77d3a463691ecce4aea0166",
-      "size": 276
+      "sha256": "2d028f15b1d8f80f0534e5dff1f6654038977bf1e4a50daeec52e97d9b44f9d1",
+      "size": 275
     },
     {
       "path": "config/openloader/advanced_options.json",
@@ -14922,18 +14922,18 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_workbench_gui.js",
-      "sha256": "6623ea04d96d09f8c31209665ff797b64a38c8489b353c9b7796df744ce885c9",
-      "size": 37356
+      "sha256": "9fcb9cb4d0a82fc213dd32c37c09d0faf494a01777bbc8794fedc79490784c25",
+      "size": 40539
     },
     {
       "path": "kubejs/server_scripts/02_crafting/hearth_smeltery_gui.js",
-      "sha256": "c2941883d9684397b596736291d8090bcdfc6361187f4c7ef121fdb56ce61ac2",
+      "sha256": "29c5796c1f088707c2105a484b7ae84361bfae9da73b2fb2625c7b5373df4ad3",
       "size": 37265
     },
     {
       "path": "kubejs/server_scripts/02_crafting/infernal_crucible_gui.js",
-      "sha256": "67b3ba23cd015d56cbf9d910e56cd134996543a4b7cfedaa3603a08d7e2d7006",
-      "size": 25847
+      "sha256": "be8edea4bbedca795c2f38d81b9566110741711a7f981059c6f461ef4bb01b74",
+      "size": 24182
     },
     {
       "path": "kubejs/server_scripts/02_crafting/steel_metallurgy_recipes.js",
@@ -15042,8 +15042,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/nomadic_world_bosses_engine.js",
-      "sha256": "1a2eed10e0db2b6807b3cae88287acf2a0f9bb867a40887e8463443fa03cb945",
-      "size": 97891
+      "sha256": "1e0bae778b70c9469e94b35d8ce7a17480f725b28512f75623cbae39a0201e27",
+      "size": 99847
     },
     {
       "path": "kubejs/server_scripts/03_combat/party_xp_share.js",
@@ -15282,8 +15282,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_room_stitcher.js",
-      "sha256": "13f0d6a57c326143901b6bd8e2ac37de34c35006dc60b483ace8ef2dea78f370",
-      "size": 71252
+      "sha256": "0ea8b77fd24ff9d1e7f2983725966b532359473da976e18829828a1c82f0fa85",
+      "size": 76183
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/endless_fringe_engine.js",
@@ -22627,7 +22627,7 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/minecraft/font/default.json",
-      "sha256": "e3a4d91b746025c82d97ef8e8e2a5d5a0903f06afefb1f261f1b9d2a4b88a9a1",
+      "sha256": "e9044396ecdf41387683823c9fc81a1abc0b7b4657029f1b0e0ac9a7b59df281",
       "size": 1590
     },
     {
@@ -22657,7 +22657,7 @@
     },
     {
       "path": "shaderpacks/superDuperVanilla.zip.txt",
-      "sha256": "07f890226395a3d65b941e330f31823533790aae5ba6868445e7b24fdb65b5a0",
+      "sha256": "f9d6b856d872c93181f0e6034b3c385e5d5c6d71247d78f6b379130d44231c91",
       "size": 231
     }
   ]

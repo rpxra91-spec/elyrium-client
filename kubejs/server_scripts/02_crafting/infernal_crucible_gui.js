@@ -1,12 +1,13 @@
 // ==============================================================================
-// 🌋 ELYRIUM RPG: INFERNAL CRUCIBLE ASCENSION WORKSTATION GUI (v1.0)
+// 🌋 ELYRIUM RPG: INFERNAL CRUCIBLE ASCENSION WORKSTATION GUI (v2.0)
 // Minecraft 1.21.1 NeoForge | KubeJS Server Script
 // ==============================================================================
 // 100% Non-Chest Custom Workstation Experience:
 // - Full-screen custom Nether Basalt & Magma overlay (`\uF808\uE005`).
-// - Dedicated 4-slot Ascension Workflow:
-//   [Экипировка] + [Катализатор Эпохи] + [Слитки Металла] ➔ [Возвышенный Артефакт]
-// - Central Crucible Ignition Button (Col 4, Row 2) with volcanic ignition.
+// - Dedicated 3-slot Seamless Ascension Workflow:
+//   Col 1: [GEAR] + Col 4: [CATALYST] ➔ Col 7: [ASCENSION RESULT]
+// - Perfect alignment with texture borders (Ascent 15, Zero dummy item jitter).
+// - No ghost items, no F3+H tags clutter. All ingot costs integrated into result preview.
 // - 100% Stat & Gem Preservation: Sharpening (+N), Sockets, Gems, Glyphs, and
 //   Martial Arts skills are completely preserved across tiers!
 // - 100% item safety: zero loss on close.
@@ -76,7 +77,7 @@ function openInfernalCrucibleGUI(player, stationPos) {
             clearCrucibleSession(player);
         };
 
-        // Evaluation
+        // Evaluation via Forge API
         let evalAsc = null;
         if (typeof ElyriumForgeAPI !== 'undefined' && sess.gear && sess.catalyst) {
             try {
@@ -85,13 +86,13 @@ function openInfernalCrucibleGUI(player, stationPos) {
         }
 
         // ----------------------------------------------------------------------
-        // СЛОТ 10: [ЭКИПИРОВКА ТЕКУЩЕГО ТИРА] (Col 1, Row 1)
+        // СЛОТ 1: [ЭКИПИРОВКА ТЕКУЩЕГО ТИРА] (Col 1, Row 1)
         // ----------------------------------------------------------------------
         gui.slot(1, 1, s => {
             if (sess.gear && !sess.gear.isEmpty()) {
                 s.setItem(sess.gear.copy().withLore([
                     Text.of('§8────────────────────────────────'),
-                    Text.of('§e▶ Нажмите ЛКМ: §fЗабрать в руку / поменять')
+                    Text.of('§e▶ Нажмите ЛКМ: §fЗабрать экипировку в руку')
                 ]));
             } else {
                 s.setItem(Item.of('minecraft:air'));
@@ -125,13 +126,13 @@ function openInfernalCrucibleGUI(player, stationPos) {
         });
 
         // ----------------------------------------------------------------------
-        // СЛОТ 12: [КАТАЛИЗАТОР ЭПОХИ / ШАБЛОН] (Col 3, Row 1)
+        // СЛОТ 2: [КАТАЛИЗАТОР ЭПОХИ] (Col 4, Row 1) - ТОЧНО В РАМКЕ ПОД CATALYST
         // ----------------------------------------------------------------------
-        gui.slot(3, 1, s => {
+        gui.slot(4, 1, s => {
             if (sess.catalyst && !sess.catalyst.isEmpty()) {
                 s.setItem(sess.catalyst.copy().withLore([
                     Text.of('§8────────────────────────────────'),
-                    Text.of('§e▶ ЛКМ: §fЗабрать в руку / поменять'),
+                    Text.of('§e▶ ЛКМ: §fЗабрать катализатор в руку'),
                     Text.of('§e▶ ПКМ: §fЗабрать половину')
                 ]));
             } else {
@@ -212,43 +213,16 @@ function openInfernalCrucibleGUI(player, stationPos) {
         });
 
         // ----------------------------------------------------------------------
-        // СЛОТ 14: [МАТЕРИАЛЫ / СЛИТКИ ЭПОХИ] (Col 5, Row 1) - Информационный слот
-        // ----------------------------------------------------------------------
-        gui.slot(5, 1, s => {
-            if (evalAsc) {
-                let ingotCount = evalAsc.requiredIngotCount || 8;
-                let ingotName = evalAsc.requiredIngotName || 'Слитки Эпохи';
-                let hasIngots = evalAsc.hasRequiredIngots !== false;
-                let iconId = evalAsc.requiredIngotId || 'minecraft:iron_ingot';
-                let iconItem = Item.of(iconId.startsWith('#') ? 'minecraft:netherite_ingot' : iconId);
-
-                s.setItem(iconItem.withCustomName(Text.of(hasIngots ? `§a✦ [ Расход Металла: ${ingotName} ] ✦` : `§c⚠ [ Не хватает: ${ingotName} ] ✦`)).withLore([
-                    Text.of(`§7Требуется для закалки: §f${ingotCount}x ${ingotName}`),
-                    Text.of(hasIngots ? '§a✓ Слитки обнаружены в вашем инвентаре!' : '§c✗ Добавьте необходимые слитки в инвентарь.'),
-                    Text.of('§8────────────────────────────────'),
-                    Text.of('§7Металл спишется автоматически при ритуале.')
-                ]));
-            } else {
-                s.setItem(Item.of('minecraft:raw_iron')
-                    .withCustomName(Text.of('§6✦ [ Слот Металла Эпохи ] ✦'))
-                    .withLore([
-                        Text.of('§7Установите экипировку и катализатор слева,'),
-                        Text.of('§7чтобы узнать требуемый металл для закалки.')
-                    ]));
-            }
-            s.leftClicked = () => {};
-        });
-
-        // ----------------------------------------------------------------------
-        // СЛОТ 16: [РЕЗУЛЬТАТ ВОЗВЫШЕНИЯ] (Col 7, Row 1)
+        // СЛОТ 3: [РЕЗУЛЬТАТ / ПРЕДПРОСМОТР / КНОПКА ВОЗВЫШЕНИЯ] (Col 7, Row 1)
         // ----------------------------------------------------------------------
         let canAscend = (evalAsc && evalAsc.canExecute && evalAsc.actionType === 'ASCENSION');
         gui.slot(7, 1, s => {
+            // Режим 1: Результат уже получен
             if (sess.result && !sess.result.isEmpty()) {
                 s.setItem(sess.result.copy().withLore([
                     Text.of('§6★ ВОЗВЫШЕНИЕ УСПЕШНО ЗАВЕРШЕНО! ★'),
                     Text.of('§8────────────────────────────────'),
-                    Text.of('§e▶ Нажмите ЛКМ, чтобы забрать артефакт в инвентарь!')
+                    Text.of('§e▶ Нажмите ЛКМ: §fЗабрать артефакт в инвентарь')
                 ]));
                 s.leftClicked = () => {
                     let res = sess.result;
@@ -262,76 +236,78 @@ function openInfernalCrucibleGUI(player, stationPos) {
                     player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
                     openInfernalCrucibleGUI(player, sess.stationPos);
                 };
-            } else if (canAscend && evalAsc && evalAsc.targetItem) {
+                return;
+            }
+
+            // Режим 2: Есть экипировка и катализатор (Предпросмотр)
+            if (evalAsc && evalAsc.targetItem) {
                 let preview = evalAsc.targetItem.copy();
-                s.setItem(preview.withLore([
-                    Text.of('§6★ ПРЕДПРОСМОТР ВОЗВЫШЕНИЯ ★'),
+                let ingotCount = evalAsc.requiredIngotCount || 8;
+                let ingotName = evalAsc.requiredIngotName || 'Слитков Эпохи';
+                let hasIngots = evalAsc.hasRequiredIngots !== false;
+
+                let lore = [
+                    Text.of('§6★ РИТУАЛ ВОЗВЫШЕНИЯ ЭКИПИРОВКИ ★'),
                     Text.of(`§eЭволюция: §bТир ${evalAsc.currentTier} §7➔ §6Тир ${evalAsc.targetTier}`),
                     Text.of('§8────────────────────────────────'),
-                    Text.of('§a✓ Заточка (+N), сокеты и боевые искусства сохраняются 100%!'),
-                    Text.of('§e▶ Нажмите на Горн снизу для активации ритуала!')
-                ]));
-                s.leftClicked = () => {};
-            } else {
-                s.setItem(Item.of('minecraft:air'));
-                s.leftClicked = () => {};
-            }
-        });
+                    Text.of(`§7Расход металла: §f${ingotCount}x ${ingotName}`)
+                ];
 
-        // ----------------------------------------------------------------------
-        // СЛОТ 22: [ЗАЖИГАНИЕ АДСКОГО ГОРНА] (Col 4, Row 2)
-        // ----------------------------------------------------------------------
-        gui.slot(4, 2, s => {
-            let ignitionItem = Item.of(canAscend ? 'minecraft:lava_bucket' : 'minecraft:magma_block');
-            if (canAscend) ignitionItem.enchant('minecraft:fire_aspect', 1);
-
-            let lore = [
-                Text.of(canAscend ? `§6Готов к возвышению: §bТир ${evalAsc.currentTier} §7➔ §6Тир ${evalAsc.targetTier}` : `§c${evalAsc ? evalAsc.statusMessage : 'Установите экипировку и катализатор'}`),
-                Text.of('§8────────────────────────────────')
-            ];
-
-            if (canAscend) {
-                lore.push(Text.of(`§7Расход: §f${evalAsc.requiredIngotCount || 8}x ${evalAsc.requiredIngotName || 'слитков'}`));
-                lore.push(Text.of('§a✓ 100% Сохранение всех параметров и инкрустаций'));
-                lore.push(Text.of('§8────────────────────────────────'));
-                lore.push(Text.of('§e▶ Нажмите ЛКМ, чтобы разжечь Адский Горн!'));
-            }
-
-            s.setItem(ignitionItem.withCustomName(Text.of(canAscend ? '§4🌋 [ РАЗЖЕЧЬ АДСКИЙ ГОРН ]' : '§8[ 🌋 Адский Горн Остыл ]')).withLore(lore));
-
-            s.leftClicked = () => {
-                if (!canAscend || typeof ElyriumForgeAPI === 'undefined') {
-                    player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.8 1.0`);
-                    return;
-                }
-
-                let res = ElyriumForgeAPI.executeAscension(player, sess.gear, sess.catalyst);
-                if (res && res.status === 'SUCCESS') {
-                    if (sess.catalyst) {
-                        sess.catalyst.shrink(1);
-                        if (sess.catalyst.isEmpty()) sess.catalyst = null;
-                    }
-                    sess.gear = null;
-                    sess.result = res.resultGear;
-
-                    let cx = player.x, cy = player.y, cz = player.z;
-                    player.server.runCommandSilent(`playsound minecraft:ui.toast.challenge_complete player ${player.username} ~ ~ ~ 1.0 1.2`);
-                    player.server.runCommandSilent(`playsound minecraft:block.lava.ambient player ${player.username} ~ ~ ~ 1.0 0.8`);
-                    player.server.runCommandSilent(`particle minecraft:totem_of_undying ${cx} ${cy + 1.2} ${cz} 0.5 0.5 0.5 0.2 60`);
-                    player.server.runCommandSilent(`particle minecraft:flame ${cx} ${cy + 1.0} ${cz} 0.5 0.5 0.5 0.1 40`);
-                    player.server.runCommandSilent(`particle minecraft:lava ${cx} ${cy + 1.0} ${cz} 0.4 0.4 0.4 0.05 25`);
-                    player.sendSystemMessage(Text.of(`§6🌋 [Горн] §fЭкипировка успешно возвышена до §eТира ${res.targetTier || evalAsc.targetTier}§f!`));
-
-                    openInfernalCrucibleGUI(player, sess.stationPos);
+                if (canAscend) {
+                    lore.push(Text.of('§a✓ Все материалы и слитки в наличии!'));
+                    lore.push(Text.of('§a✓ Заточка (+N), сокеты и боевые искусства сохраняются!'));
+                    lore.push(Text.of('§8────────────────────────────────'));
+                    lore.push(Text.of('§e▶ Нажмите ЛКМ: §6Разжечь Адский Горн и Возвысить!'));
                 } else {
-                    player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
-                    player.sendSystemMessage(Text.of(`§c[Горн] ${res ? res.message : 'Ошибка ритуала возвышения!'}`));
+                    lore.push(Text.of('§c✗ Не хватает слитков в вашем инвентаре!'));
+                    lore.push(Text.of(`§cТребуется: ${ingotCount}x ${ingotName}`));
+                    lore.push(Text.of('§8────────────────────────────────'));
+                    lore.push(Text.of('§7Добавьте нужные слитки в инвентарь и кликните сюда.'));
                 }
-            };
+
+                s.setItem(preview.withLore(lore));
+
+                s.leftClicked = () => {
+                    if (!canAscend || typeof ElyriumForgeAPI === 'undefined') {
+                        player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.8 1.0`);
+                        player.sendSystemMessage(Text.of(`§c[Горн] Недостаточно материалов для возвышения! Требуется: ${ingotCount}x ${ingotName}`));
+                        return;
+                    }
+
+                    let res = ElyriumForgeAPI.executeAscension(player, sess.gear, sess.catalyst);
+                    if (res && res.status === 'SUCCESS') {
+                        if (sess.catalyst) {
+                            sess.catalyst.shrink(1);
+                            if (sess.catalyst.isEmpty()) sess.catalyst = null;
+                        }
+                        sess.gear = null;
+                        sess.result = res.resultGear;
+
+                        let cx = player.x, cy = player.y, cz = player.z;
+                        player.server.runCommandSilent(`playsound minecraft:ui.toast.challenge_complete player ${player.username} ~ ~ ~ 1.0 1.2`);
+                        player.server.runCommandSilent(`playsound minecraft:block.lava.ambient player ${player.username} ~ ~ ~ 1.0 0.8`);
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 1.0 1.0`);
+                        player.server.runCommandSilent(`particle minecraft:totem_of_undying ${cx} ${cy + 1.2} ${cz} 0.5 0.5 0.5 0.2 60`);
+                        player.server.runCommandSilent(`particle minecraft:flame ${cx} ${cy + 1.0} ${cz} 0.5 0.5 0.5 0.1 40`);
+                        player.server.runCommandSilent(`particle minecraft:lava ${cx} ${cy + 1.0} ${cz} 0.4 0.4 0.4 0.05 25`);
+                        player.sendSystemMessage(Text.of(`§6🌋 [Горн] §fЭкипировка успешно возвышена до §eТира ${res.targetTier || evalAsc.targetTier}§f!`));
+
+                        openInfernalCrucibleGUI(player, sess.stationPos);
+                    } else {
+                        player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.6 0.6`);
+                        player.sendSystemMessage(Text.of(`§c[Горн] ${res ? res.message : 'Ошибка ритуала возвышения!'}`));
+                    }
+                };
+                return;
+            }
+
+            // Режим 3: Пустой слот ожидания (без фантомного предмета, чистый оверлей)
+            s.setItem(Item.of('minecraft:air'));
+            s.leftClicked = () => {};
         });
 
         // ----------------------------------------------------------------------
-        // БЫСТРАЯ ЗАГРУЗКА ИЗ ИНВЕНТАРЯ
+        // БЫСТРАЯ ЗАГРУЗКА ИЗ ИНВЕНТАРЯ (SHIFT + CLICK И ПЕРЕНОС)
         // ----------------------------------------------------------------------
         gui.inventoryClicked = (event) => {
             if (!event) return;

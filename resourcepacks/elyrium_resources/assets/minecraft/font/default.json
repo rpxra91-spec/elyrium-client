@@ -3,7 +3,7 @@
     {
       "type": "bitmap",
       "file": "elyrium:gui/forge_workshop_overlay.png",
-      "ascent": 13,
+      "ascent": 15,
       "height": 222,
       "chars": [
         ""
@@ -12,7 +12,7 @@
     {
       "type": "bitmap",
       "file": "elyrium:gui/runic_table_overlay.png",
-      "ascent": 13,
+      "ascent": 15,
       "height": 166,
       "chars": [
         ""
@@ -21,7 +21,7 @@
     {
       "type": "bitmap",
       "file": "elyrium:gui/hearth_smeltery_overlay.png",
-      "ascent": 13,
+      "ascent": 15,
       "height": 166,
       "chars": [
         ""
@@ -30,7 +30,7 @@
     {
       "type": "bitmap",
       "file": "elyrium:gui/void_anvil_overlay.png",
-      "ascent": 13,
+      "ascent": 15,
       "height": 166,
       "chars": [
         ""
@@ -39,7 +39,7 @@
     {
       "type": "bitmap",
       "file": "elyrium:gui/infernal_crucible_overlay.png",
-      "ascent": 13,
+      "ascent": 15,
       "height": 166,
       "chars": [
         ""
@@ -48,7 +48,7 @@
     {
       "type": "bitmap",
       "file": "elyrium:gui/weapon_bench_overlay.png",
-      "ascent": 13,
+      "ascent": 15,
       "height": 166,
       "chars": [
         ""
@@ -57,7 +57,7 @@
     {
       "type": "bitmap",
       "file": "elyrium:gui/blacksmith_workbench_overlay.png",
-      "ascent": 13,
+      "ascent": 15,
       "height": 166,
       "chars": [
         ""

@@ -275,7 +275,7 @@ function updateHearthSlots(gui, session) {
             ]));
         } else {
             slot.setItem(Item.of('minecraft:gray_stained_glass_pane')
-                .withCustomName(Text.of('§8[ Лоток Продукции #' + (p + 1) + ' ]'))
+                .withCustomName(Text.of('§8[ Лоток Продукции #' + (o + 1) + ' ]'))
                 .withLore([
                     Text.of('§7Пусто. Сюда поступают выплавленные слитки и материалы.')
                 ]));

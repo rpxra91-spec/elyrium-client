@@ -998,12 +998,12 @@ const NOMAD_CONFIG = {
 // 🧠 СИСТЕМНОЕ СОСТОЯНИЕ В ПАМЯТИ (TRACKER)
 // ==============================================================================
 global.ElyriumNomadBosses = global.ElyriumNomadBosses || {};
-var ElyriumNomadBosses = global.ElyriumNomadBosses;
+// Global tracker
 
 function getActiveNomadCount(sector, dimension) {
     let count = 0;
     for (let uuid in (global.ElyriumNomadBosses || {})) {
-        let b = ElyriumNomadBosses[uuid];
+        let b = global.ElyriumNomadBosses[uuid];
         if (!b) continue;
         if (dimension && b.dimension !== dimension) continue;
         if (sector && b.sector !== sector) continue;
@@ -1015,7 +1015,7 @@ function getActiveNomadCount(sector, dimension) {
 // Проверка расстояния от любой активной банды (Anti-Clustering)
 function isTooCloseToOtherBosses(x, z, dimension, minDist) {
     for (let uuid in (global.ElyriumNomadBosses || {})) {
-        let b = ElyriumNomadBosses[uuid];
+        let b = global.ElyriumNomadBosses[uuid];
         if (!b) continue;
         if (b.dimension === dimension) {
             let distSq = (b.x - x) * (b.x - x) + (b.z - z) * (b.z - z);
@@ -1048,7 +1048,7 @@ function cleanExpiredBosses(server) {
     let maxLifetimeMs = NOMAD_CONFIG.bossDespawnTimeoutMinutes * 60 * 1000;
 
     for (let uuid in (global.ElyriumNomadBosses || {})) {
-        let boss = ElyriumNomadBosses[uuid];
+        let boss = global.ElyriumNomadBosses[uuid];
         if (!boss) continue;
 
         let elapsed = now - boss.spawnTime;
@@ -1070,7 +1070,7 @@ function cleanExpiredBosses(server) {
                 }
             }
 
-            delete ElyriumNomadBosses[uuid];
+            delete global.ElyriumNomadBosses[uuid];
         }
     }
 }
@@ -1303,7 +1303,7 @@ function spawnNomadBoss(server, bossId, x, y, z, forcedDim) {
 
     // Регистрация в реестре
     let now = Date.now();
-    ElyriumNomadBosses[stringUuid] = {
+    global.ElyriumNomadBosses[stringUuid] = {
         uuid: stringUuid,
         barId: barId,
         bossId: bossId,
@@ -1327,7 +1327,7 @@ function spawnNomadBoss(server, bossId, x, y, z, forcedDim) {
         campBlocks: campBlocks
     };
 
-    return ElyriumNomadBosses[stringUuid];
+    return global.ElyriumNomadBosses[stringUuid];
 }
 
 // ==============================================================================
@@ -1371,7 +1371,7 @@ ServerEvents.tick(event => {
                     // 2. Проверка локальной плотности вокруг игрока (макс 1 банда в 120м)
                     let nearbyCount = 0;
                     for (let uuid in (global.ElyriumNomadBosses || {})) {
-                        let b = ElyriumNomadBosses[uuid];
+                        let b = global.ElyriumNomadBosses[uuid];
                         if (b && b.dimension === 'minecraft:overworld') {
                             let dSq = (b.x - px) * (b.x - px) + (b.z - pz) * (b.z - pz);
                             if (dSq < NOMAD_CONFIG.playerLocalRadius * NOMAD_CONFIG.playerLocalRadius) {
@@ -1525,7 +1525,7 @@ ServerEvents.tick(event => {
         let now = Date.now();
 
         for (let uuid in (global.ElyriumNomadBosses || {})) {
-            let bInfo = ElyriumNomadBosses[uuid];
+            let bInfo = global.ElyriumNomadBosses[uuid];
             if (!bInfo) continue;
 
             let level = server.getLevel(bInfo.dimension || 'minecraft:overworld');
@@ -1535,7 +1535,7 @@ ServerEvents.tick(event => {
             if (!entity || !entity.isLiving() || !entity.isAlive()) {
                 server.runCommandSilent(`bossbar remove nomad_${bInfo.barId}`);
                 if (bInfo.campBlocks) removeCampsiteBlocks(server, bInfo.campBlocks, bInfo.dimension);
-                delete ElyriumNomadBosses[uuid];
+                delete global.ElyriumNomadBosses[uuid];
                 continue;
             }
 
@@ -1671,7 +1671,7 @@ ServerEvents.tick(event => {
     // --------------------------------------------------------------------------
     if (server.tickCount % NOMAD_CONFIG.marchTickInterval === 0) {
         for (let uuid in (global.ElyriumNomadBosses || {})) {
-            let bInfo = ElyriumNomadBosses[uuid];
+            let bInfo = global.ElyriumNomadBosses[uuid];
             if (!bInfo || bInfo.state !== 'marching' || !bInfo.targetWaypoint) continue;
 
             let level = server.getLevel(bInfo.dimension || 'minecraft:overworld');
@@ -1712,7 +1712,7 @@ EntityEvents.beforeHurt(event => {
 
     if (target.tags.contains('elyrium_nomad_boss')) {
         let stringUuid = target.stringUuid;
-        let bossInfo = ElyriumNomadBosses[stringUuid];
+        let bossInfo = global.ElyriumNomadBosses[stringUuid];
         if (!bossInfo) return;
 
         // Немедленное прерывание марша при атаке!
@@ -1745,7 +1745,7 @@ EntityEvents.death(event => {
 
     if (entity.tags.contains('elyrium_nomad_boss')) {
         let stringUuid = entity.stringUuid;
-        let bossInfo = ElyriumNomadBosses[stringUuid];
+        let bossInfo = global.ElyriumNomadBosses[stringUuid];
         let bossId = bossInfo ? bossInfo.bossId : null;
 
         if (!bossId) {
@@ -1778,7 +1778,7 @@ EntityEvents.death(event => {
                     removeCampsiteBlocks(server, bossInfo.campBlocks, bossInfo.dimension);
                 });
             }
-            delete ElyriumNomadBosses[stringUuid];
+            delete global.ElyriumNomadBosses[stringUuid];
         }
 
         let bossTitle = config ? config.displayName : 'Кочевой Вожак';
@@ -1868,7 +1868,7 @@ ServerEvents.command(event => {
         let count = 0;
         let msg = `§6=== АКТИВНЫЕ БАНДЫ И ФОРПОСТЫ ===§r\n`;
         for (let uuid in (global.ElyriumNomadBosses || {})) {
-            let b = ElyriumNomadBosses[uuid];
+            let b = global.ElyriumNomadBosses[uuid];
             if (b) {
                 count++;
                 msg += `§e• ${b.name} §7[${b.rarity}] (${b.dimension}, Сектор ${b.sector}) [${b.x}, ${b.y}, ${b.z}] Состояние: ${b.state}\n`;
@@ -1883,7 +1883,7 @@ ServerEvents.command(event => {
     if (subCmd === 'clear') {
         let count = 0;
         for (let uuid in (global.ElyriumNomadBosses || {})) {
-            let b = ElyriumNomadBosses[uuid];
+            let b = global.ElyriumNomadBosses[uuid];
             if (b) {
                 server.runCommandSilent(`bossbar remove nomad_${b.barId}`);
                 if (b.campBlocks) removeCampsiteBlocks(server, b.campBlocks, b.dimension);
@@ -1902,7 +1902,7 @@ ServerEvents.command(event => {
             }
         }
         global.ElyriumNomadBosses = {};
-    ElyriumNomadBosses = global.ElyriumNomadBosses;
+    // Global tracker
         let msg = `§a[Nomad] Успешно удалено ${count} активных банд и зачищены лагеря!`;
         if (player) player.displayClientMessage(Text.of(msg), false);
         else server.tell(Text.of(msg));

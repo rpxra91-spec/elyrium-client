@@ -129,12 +129,43 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
         });
 
         // ======================================================================
-        // РЕЖИМ 1: КОВКА СНАРЯЖЕНИЯ (FORGE)
+        // РЕЖИМ 1: КОВКА СНАРЯЖЕНИЯ (FORGE) С УМНЫМ АВТО-ПОДБОРОМ И КАТЕГОРИЯМИ
         // ======================================================================
         if (sess.mode === 'FORGE') {
-            let curRecipe = (typeof WORKSHOP_FORGE_RECIPES !== 'undefined' && WORKSHOP_FORGE_RECIPES.length > 0)
-                ? WORKSHOP_FORGE_RECIPES[sess.recipeIdx % WORKSHOP_FORGE_RECIPES.length]
-                : { id: 'simplyswords:iron_longsword', name: 'Стальной Длинный Меч', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 14 };
+            let allRecipes = (typeof WORKSHOP_FORGE_RECIPES !== 'undefined' && WORKSHOP_FORGE_RECIPES.length > 0)
+                ? WORKSHOP_FORGE_RECIPES
+                : [{ id: 'simplyswords:iron_longsword', name: 'Стальной Длинный Меч', ingot: 'minecraft:iron_ingot', ingotName: 'Железный Слиток', ingotCount: 14 }];
+
+            // Авто-определение металла в сетке 6 слотов
+            let placedIngots = new Set();
+            for (let i = 0; i < 6; i++) {
+                let st = sess.forgeIngredients[i];
+                if (st && !st.isEmpty()) placedIngots.add(String(st.id));
+            }
+
+            // Получаем уникальные металлы из всех рецептов
+            let uniqueMetals = [];
+            let seenMetals = new Set();
+            allRecipes.forEach(r => {
+                if (!seenMetals.has(r.ingot)) {
+                    seenMetals.add(r.ingot);
+                    uniqueMetals.push({ ingot: r.ingot, name: r.ingotName });
+                }
+            });
+
+            // Если в сетке выложен известный металл - фильтруем рецепты по нему!
+            let activeMetal = null;
+            for (let m of uniqueMetals) {
+                if (placedIngots.has(m.ingot)) {
+                    activeMetal = m.ingot;
+                    break;
+                }
+            }
+
+            let filteredList = activeMetal ? allRecipes.filter(r => r.ingot === activeMetal) : allRecipes;
+            if (filteredList.length === 0) filteredList = allRecipes;
+
+            let curRecipe = filteredList[sess.recipeIdx % filteredList.length];
 
             let availIngot = countWorkbenchIngredients(sess.forgeIngredients, curRecipe.ingot);
             let availExtra = curRecipe.extra ? countWorkbenchIngredients(sess.forgeIngredients, curRecipe.extra) : 999;
@@ -225,9 +256,12 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
 
             // КАТАЛОГ ЧЕРТЕЖЕЙ (Row 0: Col 5 Prev, Col 6 Display, Col 7 Next)
             gui.slot(5, 0, s => {
-                s.setItem(Item.of('minecraft:arrow').withCustomName(Text.of('§e◀ Предыдущий Чертеж')));
+                s.setItem(Item.of('minecraft:arrow').withCustomName(Text.of('§e◀ Предыдущий Чертеж')).withLore([
+                    Text.of(`§7Категория: §e${curRecipe.ingotName}`),
+                    Text.of(`§8Позиция: §f${(sess.recipeIdx % filteredList.length) + 1} / ${filteredList.length}`)
+                ]));
                 s.leftClicked = () => {
-                    let len = (typeof WORKSHOP_FORGE_RECIPES !== 'undefined' && WORKSHOP_FORGE_RECIPES.length > 0) ? WORKSHOP_FORGE_RECIPES.length : 1;
+                    let len = filteredList.length;
                     sess.recipeIdx = (sess.recipeIdx - 1 + len) % len;
                     player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.6 1.4`);
                     openBlacksmithWorkbenchGUI(player, sess.stationPos);
@@ -237,6 +271,8 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
             gui.slot(6, 0, s => {
                 let ghostLore = [
                     Text.of(`§6Чертеж: §f${curRecipe.name}`),
+                    Text.of(`§7Категория металла: §e${curRecipe.ingotName}`),
+                    Text.of(`§8Позиция: §f${(sess.recipeIdx % filteredList.length) + 1} из ${filteredList.length} в категории`),
                     Text.of('§8────────────────────────────────'),
                     Text.of(`§7Требуемый металл: §e${curRecipe.ingotName} §f(${availIngot}/${curRecipe.ingotCount})`)
                 ];
@@ -244,16 +280,33 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
                     ghostLore.push(Text.of(`§7Дополнительно: §e${curRecipe.extraName} §f(${availExtra}/${curRecipe.extraCount})`));
                 }
                 ghostLore.push(Text.of('§8────────────────────────────────'));
-                ghostLore.push(Text.of(canCraft ? '§a✓ Все сырье загружено в 6 ячеек слева!' : '§c✗ Загрузите сырье в ячейки слева.'));
+                ghostLore.push(Text.of(canCraft ? '§a✓ Все сырье загружено в ячейки слева!' : '§c✗ Загрузите сырье в ячейки слева.'));
+                ghostLore.push(Text.of('§8────────────────────────────────'));
+                ghostLore.push(Text.of('§e▶ Клик ЛКМ: §bПереключить металл / категорию тира'));
+                ghostLore.push(Text.of('§a✓ Подсказка: выложите слитки слева для мгновенного авто-фильтра!'));
 
-                s.setItem(Item.of('minecraft:book').withCustomName(Text.of(`§e📖 [ Чертеж: ${curRecipe.name} ]`)).withLore(ghostLore));
-                s.leftClicked = () => {};
+                s.setItem(Item.of('minecraft:book').withCustomName(Text.of(`§e📖 [ Кодекс: ${curRecipe.name} ]`)).withLore(ghostLore));
+                s.leftClicked = () => {
+                    // Переключаем категорию на следующий металл
+                    let curMetalIdx = uniqueMetals.findIndex(m => m.ingot === curRecipe.ingot);
+                    let nextMetalIdx = (curMetalIdx + 1) % uniqueMetals.length;
+                    let targetMetal = uniqueMetals[nextMetalIdx].ingot;
+                    let targetIdxInAll = allRecipes.findIndex(r => r.ingot === targetMetal);
+                    if (targetIdxInAll >= 0) {
+                        sess.recipeIdx = 0;
+                        player.server.runCommandSilent(`playsound minecraft:item.book.page_turn player ${player.username} ~ ~ ~ 0.8 1.1`);
+                        openBlacksmithWorkbenchGUI(player, sess.stationPos);
+                    }
+                };
             });
 
             gui.slot(7, 0, s => {
-                s.setItem(Item.of('minecraft:arrow').withCustomName(Text.of('§eСледующий Чертеж ▶')));
+                s.setItem(Item.of('minecraft:arrow').withCustomName(Text.of('§eСледующий Чертеж ▶')).withLore([
+                    Text.of(`§7Категория: §e${curRecipe.ingotName}`),
+                    Text.of(`§8Позиция: §f${(sess.recipeIdx % filteredList.length) + 1} / ${filteredList.length}`)
+                ]));
                 s.leftClicked = () => {
-                    let len = (typeof WORKSHOP_FORGE_RECIPES !== 'undefined' && WORKSHOP_FORGE_RECIPES.length > 0) ? WORKSHOP_FORGE_RECIPES.length : 1;
+                    let len = filteredList.length;
                     sess.recipeIdx = (sess.recipeIdx + 1) % len;
                     player.server.runCommandSilent(`playsound minecraft:ui.button.click player ${player.username} ~ ~ ~ 0.6 1.4`);
                     openBlacksmithWorkbenchGUI(player, sess.stationPos);
