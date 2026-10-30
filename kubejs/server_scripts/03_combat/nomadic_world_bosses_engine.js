@@ -997,11 +997,12 @@ const NOMAD_CONFIG = {
 // ==============================================================================
 // 🧠 СИСТЕМНОЕ СОСТОЯНИЕ В ПАМЯТИ (TRACKER)
 // ==============================================================================
-if (typeof ElyriumNomadBosses === "undefined") { var ElyriumNomadBosses = {}; }
+global.ElyriumNomadBosses = global.ElyriumNomadBosses || {};
+var ElyriumNomadBosses = global.ElyriumNomadBosses;
 
 function getActiveNomadCount(sector, dimension) {
     let count = 0;
-    for (let uuid in ElyriumNomadBosses) {
+    for (let uuid in (global.ElyriumNomadBosses || {})) {
         let b = ElyriumNomadBosses[uuid];
         if (!b) continue;
         if (dimension && b.dimension !== dimension) continue;
@@ -1013,7 +1014,7 @@ function getActiveNomadCount(sector, dimension) {
 
 // Проверка расстояния от любой активной банды (Anti-Clustering)
 function isTooCloseToOtherBosses(x, z, dimension, minDist) {
-    for (let uuid in ElyriumNomadBosses) {
+    for (let uuid in (global.ElyriumNomadBosses || {})) {
         let b = ElyriumNomadBosses[uuid];
         if (!b) continue;
         if (b.dimension === dimension) {
@@ -1046,7 +1047,7 @@ function cleanExpiredBosses(server) {
     let now = Date.now();
     let maxLifetimeMs = NOMAD_CONFIG.bossDespawnTimeoutMinutes * 60 * 1000;
 
-    for (let uuid in ElyriumNomadBosses) {
+    for (let uuid in (global.ElyriumNomadBosses || {})) {
         let boss = ElyriumNomadBosses[uuid];
         if (!boss) continue;
 
@@ -1369,7 +1370,7 @@ ServerEvents.tick(event => {
 
                     // 2. Проверка локальной плотности вокруг игрока (макс 1 банда в 120м)
                     let nearbyCount = 0;
-                    for (let uuid in ElyriumNomadBosses) {
+                    for (let uuid in (global.ElyriumNomadBosses || {})) {
                         let b = ElyriumNomadBosses[uuid];
                         if (b && b.dimension === 'minecraft:overworld') {
                             let dSq = (b.x - px) * (b.x - px) + (b.z - pz) * (b.z - pz);
@@ -1523,7 +1524,7 @@ ServerEvents.tick(event => {
     if (server.tickCount % 20 === 0) {
         let now = Date.now();
 
-        for (let uuid in ElyriumNomadBosses) {
+        for (let uuid in (global.ElyriumNomadBosses || {})) {
             let bInfo = ElyriumNomadBosses[uuid];
             if (!bInfo) continue;
 
@@ -1669,7 +1670,7 @@ ServerEvents.tick(event => {
     // 3. ФИЗИЧЕСКИЙ ШАГ ПОХОДНОГО МАРША (Каждые marchTickInterval = 2 сек)
     // --------------------------------------------------------------------------
     if (server.tickCount % NOMAD_CONFIG.marchTickInterval === 0) {
-        for (let uuid in ElyriumNomadBosses) {
+        for (let uuid in (global.ElyriumNomadBosses || {})) {
             let bInfo = ElyriumNomadBosses[uuid];
             if (!bInfo || bInfo.state !== 'marching' || !bInfo.targetWaypoint) continue;
 
@@ -1866,7 +1867,7 @@ ServerEvents.command(event => {
     if (subCmd === 'list') {
         let count = 0;
         let msg = `§6=== АКТИВНЫЕ БАНДЫ И ФОРПОСТЫ ===§r\n`;
-        for (let uuid in ElyriumNomadBosses) {
+        for (let uuid in (global.ElyriumNomadBosses || {})) {
             let b = ElyriumNomadBosses[uuid];
             if (b) {
                 count++;
@@ -1881,7 +1882,7 @@ ServerEvents.command(event => {
 
     if (subCmd === 'clear') {
         let count = 0;
-        for (let uuid in ElyriumNomadBosses) {
+        for (let uuid in (global.ElyriumNomadBosses || {})) {
             let b = ElyriumNomadBosses[uuid];
             if (b) {
                 server.runCommandSilent(`bossbar remove nomad_${b.barId}`);
@@ -1900,7 +1901,8 @@ ServerEvents.command(event => {
                 count++;
             }
         }
-        ElyriumNomadBosses = {};
+        global.ElyriumNomadBosses = {};
+    ElyriumNomadBosses = global.ElyriumNomadBosses;
         let msg = `§a[Nomad] Успешно удалено ${count} активных банд и зачищены лагеря!`;
         if (player) player.displayClientMessage(Text.of(msg), false);
         else server.tell(Text.of(msg));
