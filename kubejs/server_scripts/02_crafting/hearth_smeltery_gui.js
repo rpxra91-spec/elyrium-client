@@ -1,5 +1,5 @@
 // ==============================================================================
-// 🔥 ELYRIUM RPG: AUTONOMOUS WORLD HEARTH SMELTERY & METALLURGY ENGINE (v3.0)
+// 🔥 ELYRIUM RPG: AUTONOMOUS WORLD HEARTH SMELTERY & METALLURGY ENGINE (v3.1)
 // Minecraft 1.21.1 NeoForge | KubeJS Server Script
 // File: server_scripts/02_crafting/hearth_smeltery_gui.js
 // ==============================================================================
@@ -9,9 +9,12 @@
 // - Real World Persistence: Items stay stored inside the physical block!
 // - Autonomous Background Smelting: Continues smelting in the world even when closed!
 // - Visual Cooking Animation: Dynamic progress bar, animated flame phases & smoke.
+// - Bellows Overclock Buff (Canon):
+//   * Clicking bellows activates 2.5-minute Overclock Buff (+30% smelting speed, 2x fuel consumption).
+//   * 5-minute Cooldown from activation (2.5m active buff + 2.5m cooldown cooldown).
+//   * No spam clicking required: pure strategic buff with dynamic GUI timers & world effects!
 // - Full 2-Way Resource Movement: Free pickup, placement & Shift-click for inputs/fuels/outputs.
 // - Multi-Smelting: Smelts up to 3 raw ore inputs simultaneously!
-// - Bellows Action: Left-clicking bellows provides +30% instant cooking boost!
 // - Drops all contents if broken in the world.
 // - Strict Rule: NO FOOD ALLOWED (strictly industrial metallurgy).
 // ==============================================================================
@@ -31,6 +34,8 @@ function makeDefaultHearthState() {
         outputs: [null, null, null, null, null, null],
         fuelUnits: 0,
         cookProgress: 0,
+        overclockUntil: 0,
+        overclockCooldownUntil: 0,
         lastActiveTick: 0
     };
 }
@@ -48,6 +53,8 @@ function getHearthState(level, x, y, z) {
                 let state = makeDefaultHearthState();
                 state.fuelUnits = parsed.fuelUnits || 0;
                 state.cookProgress = parsed.cookProgress || 0;
+                state.overclockUntil = parsed.overclockUntil || 0;
+                state.overclockCooldownUntil = parsed.overclockCooldownUntil || 0;
                 for (let i = 0; i < 3; i++) {
                     if (parsed.inputs && parsed.inputs[i]) state.inputs[i] = Item.of(parsed.inputs[i].id, parsed.inputs[i].count);
                     if (parsed.fuels && parsed.fuels[i]) state.fuels[i] = Item.of(parsed.fuels[i].id, parsed.fuels[i].count);
@@ -73,6 +80,8 @@ function saveHearthState(server, key, state) {
         let toSave = {
             fuelUnits: state.fuelUnits || 0,
             cookProgress: state.cookProgress || 0,
+            overclockUntil: state.overclockUntil || 0,
+            overclockCooldownUntil: state.overclockCooldownUntil || 0,
             inputs: state.inputs.map(it => (it && !it.isEmpty()) ? { id: String(it.id), count: it.count } : null),
             fuels: state.fuels.map(it => (it && !it.isEmpty()) ? { id: String(it.id), count: it.count } : null),
             outputs: state.outputs.map(it => (it && !it.isEmpty()) ? { id: String(it.id), count: it.count } : null)
@@ -162,6 +171,13 @@ function makeProgressBar(percent) {
     return bar;
 }
 
+function formatTimeMinutesSeconds(seconds) {
+    let m = Math.floor(seconds / 60);
+    let s = seconds % 60;
+    let sStr = s < 10 ? '0' + s : String(s);
+    return `${m}м ${sStr}с`;
+}
+
 // ------------------------------------------------------------------------------
 // AUTONOMOUS BACKGROUND TICK ENGINE (ServerEvents.tick)
 // ------------------------------------------------------------------------------
@@ -169,6 +185,8 @@ ServerEvents.tick(event => {
     let server = event.server;
     // Тикаем каждые 10 тиков (0.5 сек)
     if (server.tickCount % 10 !== 0) return;
+
+    let now = Date.now();
 
     for (let key in global.ElyriumHearthData) {
         let state = global.ElyriumHearthData[key];
@@ -184,6 +202,8 @@ ServerEvents.tick(event => {
         let level = server.getLevel(dim);
         if (!level || !level.isLoaded(new BlockPos(bx, by, bz))) continue;
 
+        let isOverclocked = (state.overclockUntil && now < state.overclockUntil);
+
         // 1. Проверяем, есть ли что плавить
         let canSmeltAny = false;
         for (let i = 0; i < 3; i++) {
@@ -191,7 +211,6 @@ ServerEvents.tick(event => {
             if (inSt && !inSt.isEmpty()) {
                 let res = getSmelteryResult(inSt);
                 if (res) {
-                    // Проверяем, есть ли место в лотках
                     for (let o = 0; o < 6; o++) {
                         let outSt = state.outputs[o];
                         if (!outSt || outSt.isEmpty() || (outSt.id === res.id && outSt.count < outSt.maxStackSize)) {
@@ -204,13 +223,13 @@ ServerEvents.tick(event => {
             if (canSmeltAny) break;
         }
 
-        // 2. Если нечего плавить, сбрасываем прогресс
+        // 2. Если нечего плавить, сбрасываем прогресс плавки
         if (!canSmeltAny) {
             if (state.cookProgress > 0) state.cookProgress = Math.max(0, state.cookProgress - 10);
             continue;
         }
 
-        // 3. Если есть что плавить, но кончилось топливо — пытаемся подбросить
+        // 3. Если есть что плавить, но кончилось топливо — пытаемся загрузить из fuels
         if (state.fuelUnits <= 0) {
             for (let f = 0; f < 3; f++) {
                 let fSt = state.fuels[f];
@@ -233,13 +252,23 @@ ServerEvents.tick(event => {
 
         // 4. Если есть топливо — плавим!
         if (state.fuelUnits > 0) {
-            // За 10 тиков прибавляем 12.5% (полный цикл 80 тиков = 4 секунды)
-            state.cookProgress += 12.5;
+            // Базовый темп: 12.5% за 10 тиков (4.0 секунды на цикл)
+            // При форсаже: +30% быстрее (16.25% за 10 тиков, 3.08 секунды на цикл)
+            let speedMult = isOverclocked ? 1.3 : 1.0;
+            state.cookProgress += 12.5 * speedMult;
 
             // Частицы пламени и дыма в мире
             if (server.tickCount % 20 === 0) {
-                server.runCommandSilent(`execute in ${dim} run particle minecraft:flame ${bx + 0.5} ${by + 0.9} ${bz + 0.5} 0.2 0.1 0.2 0.02 4`);
-                server.runCommandSilent(`execute in ${dim} run particle minecraft:smoke ${bx + 0.5} ${by + 1.2} ${bz + 0.5} 0.1 0.2 0.1 0.01 3`);
+                if (isOverclocked) {
+                    // Усиленные эффекты при форсаже
+                    server.runCommandSilent(`execute in ${dim} run particle minecraft:flame ${bx + 0.5} ${by + 0.9} ${bz + 0.5} 0.35 0.2 0.35 0.05 8`);
+                    server.runCommandSilent(`execute in ${dim} run particle minecraft:lava ${bx + 0.5} ${by + 0.9} ${bz + 0.5} 0.2 0.1 0.2 0.02 3`);
+                    server.runCommandSilent(`execute in ${dim} run particle minecraft:smoke ${bx + 0.5} ${by + 1.2} ${bz + 0.5} 0.15 0.3 0.15 0.02 5`);
+                } else {
+                    // Стандартные эффекты
+                    server.runCommandSilent(`execute in ${dim} run particle minecraft:flame ${bx + 0.5} ${by + 0.9} ${bz + 0.5} 0.2 0.1 0.2 0.02 4`);
+                    server.runCommandSilent(`execute in ${dim} run particle minecraft:smoke ${bx + 0.5} ${by + 1.2} ${bz + 0.5} 0.1 0.2 0.1 0.01 3`);
+                }
             }
 
             // Завершение цикла плавки
@@ -282,7 +311,9 @@ ServerEvents.tick(event => {
                 }
 
                 if (smeltedCount > 0) {
-                    state.fuelUnits = Math.max(0, state.fuelUnits - 1);
+                    // Расход топлива: базовый = 1 ед./слиток, при форсаже = 2 ед./слиток (в 2 раза больше!)
+                    let fuelCost = isOverclocked ? (smeltedCount * 2) : smeltedCount;
+                    state.fuelUnits = Math.max(0, state.fuelUnits - fuelCost);
                     server.runCommandSilent(`execute in ${dim} run playsound minecraft:block.furnace.fire_crackle block @a[distance=..12] ${bx} ${by} ${bz} 0.8 1.1`);
                 }
             }
@@ -310,6 +341,10 @@ ServerEvents.tick(event => {
 // RENDER SLOTS IN CHEST CONTAINER
 // ------------------------------------------------------------------------------
 function renderHearthSlots(gui, state, player) {
+    let now = Date.now();
+    let isOverclocked = (state.overclockUntil && now < state.overclockUntil);
+    let isOnCooldown = (state.overclockCooldownUntil && now < state.overclockCooldownUntil);
+
     // 1. Raw Input Slots (Cols 0, 1, 2; Row 0)
     for (let i = 0; i < 3; i++) {
         let slot = gui.getSlot(i, 0);
@@ -344,33 +379,70 @@ function renderHearthSlots(gui, state, player) {
         }
     }
 
-    // 3. Central Flame & Bellows (Col 4, Row 1)
+    // 3. Central Flame & Bellows Overclock Buff (Col 4, Row 1)
     let centerSlot = gui.getSlot(4, 1);
     let isBurning = state.fuelUnits > 0;
     let prog = state.cookProgress || 0;
 
-    // Анимация иконки огня
     let fireIcon = 'minecraft:coal';
-    if (isBurning) {
+    if (isOverclocked) {
+        fireIcon = 'minecraft:blaze_powder';
+    } else if (isBurning) {
         if (prog < 33) fireIcon = 'minecraft:campfire';
         else if (prog < 66) fireIcon = 'minecraft:fire_charge';
         else fireIcon = 'minecraft:blaze_powder';
     }
 
     let flameItem = Item.of(fireIcon);
-    if (isBurning) flameItem.enchant('minecraft:fire_aspect', 1);
+    if (isOverclocked || isBurning) flameItem.enchant('minecraft:fire_aspect', 1);
 
-    let lore = [
-        Text.of(isBurning ? '§6🔥 [ КУЗНЕЧНЫЙ ГОРН: АКТИВЕН ]' : '§8[ ❄ Горн остыл. Загрузите топливо ]'),
-        Text.of('§8────────────────────────────────'),
-        Text.of(`§7Прогресс плавки: §f[${makeProgressBar(prog)}] §e${Math.floor(prog)}%`),
-        Text.of(`§eЖар очага: §6${state.fuelUnits} ед. горения`),
-        Text.of('§a⚡ Параллельная плавка всех 3 лотков сырья!'),
-        Text.of('§8────────────────────────────────'),
-        Text.of('§e▶ Нажмите ЛКМ: §fРаздуть мехи (+30% ускорение цикла)'),
-        Text.of('§7Плавление продолжается автономно даже при закрытии!')
-    ];
-    centerSlot.setItem(flameItem.withCustomName(Text.of(isBurning ? '§c🔥 РАЗДУТЬ МЕХИ ОЧАГА 🔥' : '§8[ Очаг без топлива ]')).withLore(lore));
+    let titleText = '';
+    let lore = [];
+
+    if (isOverclocked) {
+        // РЕЖИМ: ФОРСАЖ АКТИВЕН
+        let leftSec = Math.max(0, Math.ceil((state.overclockUntil - now) / 1000));
+        let cdSec = Math.max(0, Math.ceil((state.overclockCooldownUntil - now) / 1000));
+        titleText = '§6🔥 [ ФОРСАЖ ГОРНА: АКТИВЕН ]';
+
+        lore.push(Text.of(`§eОставшееся время форсажа: §c${formatTimeMinutesSeconds(leftSec)}`));
+        lore.push(Text.of('§8────────────────────────────────'));
+        lore.push(Text.of('§a⚡ Скорость плавки: §e+30% УСКОРЕНИЕ'));
+        lore.push(Text.of('§c⚠ Расход топлива: §42x (Удвоенный жар)'));
+        lore.push(Text.of('§8────────────────────────────────'));
+        lore.push(Text.of(`§7Прогресс плавки: §f[${makeProgressBar(prog)}] §e${Math.floor(prog)}%`));
+        lore.push(Text.of(`§eЖар очага: §6${state.fuelUnits} ед.`));
+        lore.push(Text.of(`§8Перезарядка форсажа завершится через: §7${formatTimeMinutesSeconds(cdSec)}`));
+    } else if (isOnCooldown) {
+        // РЕЖИМ: ОСТЫВАНИЕ (КУЛДАУН)
+        let cdSec = Math.max(0, Math.ceil((state.overclockCooldownUntil - now) / 1000));
+        titleText = isBurning ? '§e💨 [ КУЗНЕЧНЫЙ ГОРН ] §8(Мехи остывают)' : '§8[ ❄ Горн остыл | Мехи остывают ]';
+
+        lore.push(Text.of('§7Стандартная автоматическая плавка.'));
+        lore.push(Text.of('§8────────────────────────────────'));
+        lore.push(Text.of(`§7Прогресс плавки: §f[${makeProgressBar(prog)}] §e${Math.floor(prog)}%`));
+        lore.push(Text.of(`§eЖар очага: §6${state.fuelUnits} ед.`));
+        lore.push(Text.of('§a⚡ Параллельная плавка 3 лотков сырья'));
+        lore.push(Text.of('§8────────────────────────────────'));
+        lore.push(Text.of(`§8❄ Мехи остывают: перезарядка §e${formatTimeMinutesSeconds(cdSec)}`));
+        lore.push(Text.of('§8Форсаж станет доступен после полного остывания.'));
+    } else {
+        // РЕЖИМ: ГОТОВ К АКТИВАЦИИ ФОРСАЖА
+        titleText = isBurning ? '§6💨 РАЗДУТЬ МЕХИ: ФОРСАЖ 💨' : '§8[ Очаг без топлива ]';
+
+        lore.push(Text.of(isBurning ? '§a★ Мехи готовы к включению форсажа!' : '§7Загрузите топливо снизу для розжига.'));
+        lore.push(Text.of('§8────────────────────────────────'));
+        lore.push(Text.of(`§7Прогресс плавки: §f[${makeProgressBar(prog)}] §e${Math.floor(prog)}%`));
+        lore.push(Text.of(`§eЖар очага: §6${state.fuelUnits} ед.`));
+        lore.push(Text.of('§a⚡ Параллельная плавка 3 лотков сырья'));
+        lore.push(Text.of('§8────────────────────────────────'));
+        lore.push(Text.of('§e▶ Нажмите ЛКМ: §6Включить Форсаж Мехов!'));
+        lore.push(Text.of('§a✓ Длительность: §f2.5 минуты §a(+30% к скорости)'));
+        lore.push(Text.of('§c⚠ Расход угля: §fв 2 раза больше'));
+        lore.push(Text.of('§8Перезарядка способности: 5 минут'));
+    }
+
+    centerSlot.setItem(flameItem.withCustomName(Text.of(titleText)).withLore(lore));
 
     // 4. Output Slots (Cols 6, 7, 8; Rows 0 and 1)
     for (let o = 0; o < 6; o++) {
@@ -466,7 +538,6 @@ function openHearthSmelteryGUI(player, block) {
                         renderHearthSlots(gui, state, player);
                         saveHearthState(player.server, key, state);
                     } else if (current && !current.isEmpty()) {
-                        // Pick up entire stack
                         player.containerMenu.setCarried(current.copy());
                         state.inputs[slotIdx] = null;
                         player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
@@ -495,7 +566,6 @@ function openHearthSmelteryGUI(player, block) {
                         renderHearthSlots(gui, state, player);
                         saveHearthState(player.server, key, state);
                     } else if (current && !current.isEmpty()) {
-                        // Pick up half stack
                         let half = Math.ceil(current.count / 2);
                         let picked = current.copy();
                         picked.setCount(half);
@@ -590,19 +660,46 @@ function openHearthSmelteryGUI(player, block) {
         }
 
         // ----------------------------------------------------------------------
-        // 3. BELLOWS FLAME BOOST (Col 4, Row 1)
+        // 3. BELLOWS OVERCLOCK BUFF TRIGGER (Col 4, Row 1)
         // ----------------------------------------------------------------------
         gui.slot(4, 1, s => {
             s.leftClicked = () => {
+                let nowTs = Date.now();
+                let isAlreadyOverclocked = (state.overclockUntil && nowTs < state.overclockUntil);
+                let isAlreadyCooldown = (state.overclockCooldownUntil && nowTs < state.overclockCooldownUntil);
+
+                if (isAlreadyOverclocked) {
+                    let remSec = Math.max(0, Math.ceil((state.overclockUntil - nowTs) / 1000));
+                    player.server.runCommandSilent(`playsound minecraft:block.furnace.fire_crackle player ${player.username} ~ ~ ~ 0.8 1.4`);
+                    player.tell(Text.of(`§6🔥 [Очаг] Форсаж кузнечных мехов уже активен! Осталось: §e${formatTimeMinutesSeconds(remSec)}§6.`));
+                    return;
+                }
+
+                if (isAlreadyCooldown) {
+                    let cdSec = Math.max(0, Math.ceil((state.overclockCooldownUntil - nowTs) / 1000));
+                    player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.7 1.2`);
+                    player.tell(Text.of(`§7❄ [Очаг] Кузнечные мехи остывают после форсажа! Готовность через: §e${formatTimeMinutesSeconds(cdSec)}§7.`));
+                    return;
+                }
+
+                // Активация форсажа
                 if (state.fuelUnits > 0) {
-                    state.cookProgress = Math.min(100, state.cookProgress + 30);
-                    player.server.runCommandSilent(`playsound minecraft:entity.blaze.shoot player ${player.username} ~ ~ ~ 0.8 1.4`);
-                    player.server.runCommandSilent(`particle minecraft:flame ${bx + 0.5} ${by + 0.9} ${bz + 0.5} 0.3 0.1 0.3 0.05 10`);
+                    // Бафф длится 2.5 минуты (150 сек)
+                    // Перезарядка длится 5 минут (300 сек) с момента активации
+                    state.overclockUntil = nowTs + 150000;
+                    state.overclockCooldownUntil = nowTs + 300000;
+
+                    player.server.runCommandSilent(`playsound minecraft:entity.blaze.shoot player ${player.username} ~ ~ ~ 1.0 1.2`);
+                    player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.9 0.8`);
+                    player.server.runCommandSilent(`particle minecraft:flame ${bx + 0.5} ${by + 1.0} ${bz + 0.5} 0.4 0.2 0.4 0.1 25`);
+                    player.server.runCommandSilent(`particle minecraft:lava ${bx + 0.5} ${by + 1.0} ${bz + 0.5} 0.3 0.2 0.3 0.05 10`);
+                    player.tell(Text.of('§6🔥 [КУЗНЕЧНЫЙ ОЧАГ] Мехи мощно раздуты! Форсаж активирован: §a+30% к скорости плавки §6на 2.5 мин (Расход топлива 2x, перезарядка 5 мин)!'));
+
                     renderHearthSlots(gui, state, player);
                     saveHearthState(player.server, key, state);
                 } else {
                     player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.6 1.0`);
-                    player.tell(Text.of('§e[Очаг] Горн остыл! Загрузите топливо снизу, чтобы раздуть огонь.'));
+                    player.tell(Text.of('§e[Очаг] Нельзя включить форсаж без топлива! Загрузите уголь или лаву снизу.'));
                 }
             };
         });
