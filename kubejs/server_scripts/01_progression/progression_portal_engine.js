@@ -1249,6 +1249,8 @@ BlockEvents.rightClicked(event => {
     let pName = String(player.username)
 
     let isCatalyst = (itemId === 'kubejs:infernal_igniter') ||
+                     (itemId === 'kubejs:infernal_key') ||
+                     (itemId === 'kubejs:ascension_catalyst_t2') ||
                      (itemId === 'kubejs:world_heart') ||
                      (itemId === 'cataclysm:burning_ashes') ||
                      (!isOverworld && itemId === 'minecraft:flint_and_steel') ||
@@ -1344,6 +1346,8 @@ ItemEvents.rightClicked(event => {
     let pName = String(player.username)
 
     let isCatalyst = (itemId === 'kubejs:infernal_igniter') ||
+                     (itemId === 'kubejs:infernal_key') ||
+                     (itemId === 'kubejs:ascension_catalyst_t2') ||
                      (itemId === 'kubejs:world_heart') ||
                      (itemId === 'cataclysm:burning_ashes') ||
                      (!isOverworld && itemId === 'minecraft:flint_and_steel') ||
@@ -1510,6 +1514,8 @@ ItemEvents.entityInteracted(event => {
     let isOverworld = (dim === 'minecraft:overworld')
 
     let isCatalyst = (itemId === 'kubejs:infernal_igniter') ||
+                     (itemId === 'kubejs:infernal_key') ||
+                     (itemId === 'kubejs:ascension_catalyst_t2') ||
                      (itemId === 'kubejs:world_heart') ||
                      (itemId === 'cataclysm:burning_ashes') ||
                      (!isOverworld && itemId === 'minecraft:flint_and_steel') ||

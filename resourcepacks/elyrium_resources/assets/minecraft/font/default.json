@@ -64,6 +64,15 @@
       ]
     },
     {
+      "type": "bitmap",
+      "file": "elyrium:gui/arcane_altar_overlay.png",
+      "ascent": 15,
+      "height": 166,
+      "chars": [
+        ""
+      ]
+    },
+    {
       "type": "space",
       "advances": {
         "": 1,

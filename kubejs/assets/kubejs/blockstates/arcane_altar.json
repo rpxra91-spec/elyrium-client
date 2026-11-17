@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "kubejs:block/arcane_altar"
+    },
+    "facing=south": {
+      "model": "kubejs:block/arcane_altar",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "kubejs:block/arcane_altar",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "kubejs:block/arcane_altar",
+      "y": 90
+    }
+  }
+}

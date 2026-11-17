@@ -16,6 +16,19 @@
 // ==============================================================================
 
 StartupEvents.registry('item', event => {
+    // Инфернальный Ключ Врат Незера (Ключ Разлома: Тир 1 -> Тир 2)
+    event.create('infernal_key')
+        .displayName('§c🗝 Инфернальный Ключ Врат Незера§r')
+        .tooltip('§8[Древний Артефакт Разлома: Тир I ➔ Тир II]')
+        .tooltip('§7Выкован из пылающей кости поверженного владыки катакомб.')
+        .tooltip('§e▶ Применение: §fКлик ПКМ по раме Бастиона Незера 6x8.')
+        .tooltip('§c✦ Пробуждает Древний Портал и открывает путь в Преисподнюю!')
+        .glow(true)
+        .rarity('epic')
+        .maxStackSize(16)
+        .tag('skd:keys')
+        .tag('skd:tier_1');
+
     // Tier 2: The Nether (Pre-requisite: Tier 1 Weapon)
     event.create('ascension_catalyst_t2')
         .displayName('§cКатализатор Возвышения II (Инфернальный)§r')

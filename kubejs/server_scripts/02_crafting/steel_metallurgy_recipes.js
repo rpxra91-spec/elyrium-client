@@ -143,6 +143,18 @@ ServerEvents.recipes(event => {
         O: 'minecraft:obsidian'
     }).id('elyrium:crafting/void_anvil');
 
+    // 🔮 ТРЕТЬЯ СТАНЦИЯ ТРИАДЫ НЕЗЕРА: МАГИЧЕСКИЙ АЛТАРЬ ЧАРОДЕЯ (ARCANE ALTAR)
+    event.shaped('kubejs:arcane_altar', [
+        ' S ',
+        'ABA',
+        'CCC'
+    ], {
+        S: 'irons_spellbooks:common_ink',
+        A: 'minecraft:amethyst_shard',
+        B: 'irons_spellbooks:inscription_table',
+        C: 'minecraft:polished_blackstone'
+    }).id('elyrium:crafting/arcane_altar');
+
 
     // --------------------------------------------------------------------------
     // 7. НЕБЕСНЫЙ АСТРАЛИТ (СИНТЕЗ СПЛАВА ТИРА III)

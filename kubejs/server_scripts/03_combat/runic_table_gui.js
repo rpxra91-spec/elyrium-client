@@ -311,7 +311,57 @@ function openRunicTableGUI(player) {
 
                 player.tell(Text.of('§a✨ [Начертание Успешно!] §fРуническая печать впечатана в снаряжение!'));
             };
+
+            s.shiftLeftClicked = () => {
+                if (!session.result || session.result.isEmpty()) return;
+
+                let output = session.result.copy();
+
+                // Consume input gear
+                session.gear = null;
+                gui.slot(1, 1, st => st.setItem(Item.of('minecraft:air')));
+
+                // Consume 1x glyph
+                if (session.glyph) {
+                    session.glyph.shrink(1);
+                    if (session.glyph.count <= 0) session.glyph = null;
+                    gui.slot(3, 1, st => st.setItem(session.glyph ? session.glyph : Item.of('minecraft:air')));
+                }
+
+                // Consume 1x ink
+                if (session.ink) {
+                    session.ink.shrink(1);
+                    if (session.ink.count <= 0) session.ink = null;
+                    gui.slot(5, 1, st => st.setItem(session.ink ? session.ink : Item.of('minecraft:air')));
+                }
+
+                session.result = null;
+                s.setItem(Item.of('minecraft:air'));
+
+                player.give(output);
+
+                let server = player.server;
+                server.runCommandSilent(`playsound minecraft:block.enchantment_table.use player ${player.username} ~ ~ ~ 1.0 1.2`);
+                server.runCommandSilent(`playsound minecraft:block.anvil.use player ${player.username} ~ ~ ~ 1.0 1.4`);
+                server.runCommandSilent(`particle minecraft:enchant ~ ~1.2 ~ 0.5 0.5 0.5 0.2 45`);
+                server.runCommandSilent(`particle minecraft:witch ~ ~1.0 ~ 0.4 0.4 0.4 0.1 30`);
+
+                player.tell(Text.of('§a✨ [Начертание Успешно!] §fРуническая печать впечатана в снаряжение!'));
+            };
         });
+
+        // Register unused slots as air to prevent voiding items
+        for (let row = 0; row < 3; row++) {
+            for (let col = 0; col < 9; col++) {
+                if (row === 1 && (col === 1 || col === 3 || col === 5 || col === 7)) continue;
+                gui.slot(col, row, st => {
+                    st.setItem(Item.of('minecraft:air'));
+                    st.leftClicked = () => {};
+                    st.rightClicked = () => {};
+                    st.shiftLeftClicked = () => {};
+                });
+            }
+        }
 
         // Initialize state
         updateResultSlot();
@@ -411,9 +461,9 @@ function openRunicTableGUI(player) {
                         event.setItem(one);
                         if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
                     } else if (invItem.id === carried.id && invItem.count < invItem.maxStackSize) {
-                        clickedItem.grow(1);
+                        invItem.grow(1);
                         carried.shrink(1);
-                        event.setItem(clickedItem);
+                        event.setItem(invItem);
                         if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
                     }
                 }

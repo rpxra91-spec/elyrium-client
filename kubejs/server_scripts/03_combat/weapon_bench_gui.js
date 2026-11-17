@@ -914,6 +914,24 @@ function openWeaponBenchGUI(player, block) {
         let linkLine = Item.of('minecraft:chain').withCustomName(Text.of('§7»»» Рунический Канал »»»'));
 
         // Clean Non-Chest Overlay (zero filler panes)
+        // Lock all unused background slots to prevent voiding/stealing items
+        let usedBenchSlots = new Set([
+            '0,0', '4,0', '8,0',
+            '1,1', '3,1', '5,1', '7,1',
+            '0,2', '1,2', '3,2', '4,2', '6,2', '7,2'
+        ]);
+        for (let r = 0; r < 3; r++) {
+            for (let c = 0; c < 9; c++) {
+                if (!usedBenchSlots.has(c + ',' + r)) {
+                    gui.slot(c, r, st => {
+                        st.setItem(Item.of('minecraft:air'));
+                        st.leftClicked = () => {};
+                        st.rightClicked = () => {};
+                        st.shiftLeftClicked = () => {};
+                    });
+                }
+            }
+        }
 
 
         // ======================================================================
@@ -987,6 +1005,20 @@ function openWeaponBenchGUI(player, block) {
             };
             s.leftClicked = clickHandler;
             s.rightClicked = clickHandler;
+            s.shiftLeftClicked = () => {
+                let sess = getOrCreateBenchSession(player, blockPos);
+                if (sess.equipment && !sess.equipment.isEmpty()) {
+                    let out = sess.equipment;
+                    sess.equipment = null;
+                    if (sess.benchPos) {
+                        setStoredBenchWeapon(player.level, sess.benchPos, null);
+                        clearBenchWorldDisplay(player.level, sess.benchPos);
+                    }
+                    player.give(out);
+                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
+                    refreshWeaponBenchGUI(player, blockPos);
+                }
+            };
         });
 
         // МОНИТОР ПРОГРЕССИИ ОРУЖИЯ (X=8, Y=0)

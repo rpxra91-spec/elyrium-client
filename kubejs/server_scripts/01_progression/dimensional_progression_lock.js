@@ -187,11 +187,12 @@ EntityEvents.death(event => {
         })
     }
 
-    // Tier 1 -> Tier 2: Overworld Citadel Bosses unlock Nether
-    if (entityId === 'cataclysm:the_leviathan' || entityId.includes('malgaros')) {
-        awardNearby(1, '🔥 ВРАТА ПРЕИСПОДНЕЙ РАСПЕЧАТАНЫ! 🔥', 'Владыка Цитадели пал. Открыто измерение Незера (Tier 2).')
-    } else if (entityId === 'cataclysm:ancient_remnant' || entityId === 'cataclysm:kobolediator') {
-        awardNearby(1, '⚡ ИСПОЛИН ВЕРХНЕГО МИРА СВЕРГНУТ! ⚡', 'Древний страж пал. Исследуйте глубины Черной Цитадели.')
+    // Tier 1 -> Tier 2: Overworld Citadel & Catacomb Bosses unlock Nether
+    if (entityId === 'cataclysm:the_leviathan' || entityId.includes('malgaros') ||
+        entityId === 'cataclysm:ancient_remnant' || entityId === 'cataclysm:kobolediator' ||
+        entityId === 'cataclysm:maledictus' ||
+        entityId === 'irons_spellbooks:dead_king' || entityId.includes('dead_king')) {
+        awardNearby(1, '🔥 ВРАТА ПРЕИСПОДНЕЙ РАСПЕЧАТАНЫ! 🔥', 'Владыка Катакомб пал. Получен Инфернальный Ключ! Открыто измерение Незера (Tier 2).')
     }
 
     // Tier 2 -> Tier 3: Nether Bosses unlock Aether

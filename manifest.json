@@ -1,8 +1,8 @@
 {
-  "version": "0.4.74",
+  "version": "0.4.75",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-11-17T15:48:25.358018+00:00",
+  "generated_at": "2026-11-17T16:43:41.376869+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -8596,6 +8596,11 @@
       "size": 196
     },
     {
+      "path": "kubejs/assets/kubejs/blockstates/arcane_altar.json",
+      "sha256": "06db5c8b42988fe6de699d5d1520174381b3dc354ae415184e018d69f662f203",
+      "size": 373
+    },
+    {
       "path": "kubejs/assets/kubejs/blockstates/blacksmith_hearth.json",
       "sha256": "22cdd1a3dfe798b54375a97b14040bf31c4365f4a43594068275f6171026456c",
       "size": 354
@@ -8794,6 +8799,11 @@
       "path": "kubejs/assets/kubejs/lang/ru_ru.json",
       "sha256": "98c626a9ee6497ad0a652b358bf29c06fc57624cb6a087c4b7ab4ee14c5a8ed1",
       "size": 7256
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/block/arcane_altar.json",
+      "sha256": "8c8a7ff5bc9d35a060f1018bae6f17bdd0a38614b674bda8926352a14da54e18",
+      "size": 2410
     },
     {
       "path": "kubejs/assets/kubejs/models/block/blacksmith_hearth.json",
@@ -9034,6 +9044,11 @@
       "path": "kubejs/assets/kubejs/models/item/apex_titan_belt.json",
       "sha256": "fb1d41f49501d426fcbfc4551169f20ed394c217a3f9420325dbc37adc05eda3",
       "size": 115
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/arcane_altar.json",
+      "sha256": "b32d826a312df3fe3d8c1151d49d4c16e8df96195f10fd37f524e12d3d5809c0",
+      "size": 45
     },
     {
       "path": "kubejs/assets/kubejs/models/item/ascension_catalyst_t10.json",
@@ -9688,6 +9703,11 @@
     {
       "path": "kubejs/assets/kubejs/models/item/infernal_igniter.json",
       "sha256": "bafe1d7bc8c0b010be60523d7b98d65f642b06fd3a334f136338d609f3adad09",
+      "size": 109
+    },
+    {
+      "path": "kubejs/assets/kubejs/models/item/infernal_key.json",
+      "sha256": "862334f357ae5728616b209d3911ecc603b2a6a93130054164a49efa0a7508ab",
       "size": 109
     },
     {
@@ -14852,8 +14872,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/boss_catalyst_drops_and_recipes.js",
-      "sha256": "126b36c04daa63d321cfc4edf2173a4344de807026a8209e1af6710a5592b982",
-      "size": 7245
+      "sha256": "857c0b2f42f563dc3ef4293c91ceb581ab261d9c364e08846711c7e02f53f48e",
+      "size": 7618
     },
     {
       "path": "kubejs/server_scripts/01_progression/boundary_wall_lockdown.js",
@@ -14867,8 +14887,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/dimensional_progression_lock.js",
-      "sha256": "6e305404a74cb3a0d1d727f6ff6ae2552ff9c2483f967a2af9dcea8999f1c3ea",
-      "size": 16164
+      "sha256": "c801c0c26f74c709ed43669627ee38d9d0a0178ab2dd4ac6faed1bb002677958",
+      "size": 16155
     },
     {
       "path": "kubejs/server_scripts/01_progression/elyrium_continent_tp.js",
@@ -14882,8 +14902,8 @@
     },
     {
       "path": "kubejs/server_scripts/01_progression/progression_portal_engine.js",
-      "sha256": "d33754bedb8beba0f76efc84ed1dae1d44a257a74df10c50eb2fe1584d992b6f",
-      "size": 108129
+      "sha256": "256be72df35d2695f56bf07b900958837267fb775e7672639be002f5dcf22c1e",
+      "size": 108510
     },
     {
       "path": "kubejs/server_scripts/01_progression/return_scroll_system.js",
@@ -14909,6 +14929,11 @@
       "path": "kubejs/server_scripts/01_progression/world_spawn_setup.js",
       "sha256": "49d5202551de8efc6d1af96c5d0925730f4b77b90ed5043db4d5dcf01b2ce663",
       "size": 13014
+    },
+    {
+      "path": "kubejs/server_scripts/02_crafting/arcane_altar_gui.js",
+      "sha256": "2e225c52b1eb781f3f61649128e68d738ddc32dec05b76938f9ed78a69cc3783",
+      "size": 34899
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_crafting_gui.js",
@@ -14937,8 +14962,8 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/steel_metallurgy_recipes.js",
-      "sha256": "2a3912a9a06ac94c6def8a28c64ae1e23cc1ce8c0aef4c7033f6f57870e141de",
-      "size": 7195
+      "sha256": "af4b0a1373949c18f721b4d90e397a6e5bed3123a5f397975a3ebd85e4635805",
+      "size": 7651
     },
     {
       "path": "kubejs/server_scripts/02_magic/elemental_altar_gui.js",
@@ -15062,8 +15087,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/runic_table_gui.js",
-      "sha256": "1db70c705fa8aa2491122f781af1a73088fe9110c4ea1587f46cc54172771beb",
-      "size": 19216
+      "sha256": "0d4990834068909f75fa749dc1c099195a0a48252ad08114b74938089ecbacd7",
+      "size": 21559
     },
     {
       "path": "kubejs/server_scripts/03_combat/shield_guard_posture.js",
@@ -15102,8 +15127,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/void_anvil_gui.js",
-      "sha256": "b8961e5cb450f8ad27c9924e7c8ba265419608d86e13da27c565e917fb14e944",
-      "size": 29599
+      "sha256": "28d498c44fda85fdeb81d06df714cd10b83869845cf0de2a05fdc7c23cd78b2b",
+      "size": 31371
     },
     {
       "path": "kubejs/server_scripts/03_combat/wave_defense_arena.js",
@@ -15112,8 +15137,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_gui.js",
-      "sha256": "3525bdf46cde1042d53e87d13d488c33562c27c187b19c3c120b2dc0e8299fac",
-      "size": 117782
+      "sha256": "47690989ca4a62ba716e36e6c0f3540577afd2ff7e91f1aed5523042d645feec",
+      "size": 119289
     },
     {
       "path": "kubejs/server_scripts/03_combat/weapon_bench_recipes.js",
@@ -15386,9 +15411,14 @@
       "size": 18911
     },
     {
+      "path": "kubejs/startup_scripts/arcane_altar_block.js",
+      "sha256": "d445a23aef346414ec07e94a1335d808d9efcc06417e6e5eb2b895dc2a0bdbe5",
+      "size": 1574
+    },
+    {
       "path": "kubejs/startup_scripts/ascension_catalysts.js",
-      "sha256": "53bdd82f7dc0bb027f11f8b08751ab808dc6662444c1f2197db0bb9a4ab6f7d8",
-      "size": 7027
+      "sha256": "d5d2a55882a5a231503b27d30577e0a9316c7abe5078f4771a5c50207c61982f",
+      "size": 7862
     },
     {
       "path": "kubejs/startup_scripts/blacksmith_station_blocks.js",
@@ -20931,6 +20961,11 @@
       "size": 332
     },
     {
+      "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/arcane_altar_overlay.png",
+      "sha256": "3257ce5ddda4adff821738dcd8686c137fb5a7628dbe351b9fb05ae485ee86e7",
+      "size": 69206
+    },
+    {
       "path": "resourcepacks/elyrium_resources/assets/elyrium/textures/gui/blacksmith_workbench_overlay.png",
       "sha256": "11e564667658a2383477632a3e4491c2846791610df0864c6c42e02b4421f797",
       "size": 40019
@@ -22526,6 +22561,11 @@
       "size": 578
     },
     {
+      "path": "resourcepacks/elyrium_resources/assets/kubejs/blockstates/arcane_altar.json",
+      "sha256": "06db5c8b42988fe6de699d5d1520174381b3dc354ae415184e018d69f662f203",
+      "size": 373
+    },
+    {
       "path": "resourcepacks/elyrium_resources/assets/kubejs/blockstates/blacksmith_hearth.json",
       "sha256": "22cdd1a3dfe798b54375a97b14040bf31c4365f4a43594068275f6171026456c",
       "size": 354
@@ -22549,6 +22589,11 @@
       "path": "resourcepacks/elyrium_resources/assets/kubejs/blockstates/weapon_bench.json",
       "sha256": "659e923be2793d3de9cc4888b9cf4c429b841fcf741e84b18a16109d03dc90b5",
       "size": 373
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/kubejs/models/block/arcane_altar.json",
+      "sha256": "8c8a7ff5bc9d35a060f1018bae6f17bdd0a38614b674bda8926352a14da54e18",
+      "size": 2410
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/kubejs/models/block/blacksmith_hearth.json",
@@ -22596,6 +22641,11 @@
       "size": 17680
     },
     {
+      "path": "resourcepacks/elyrium_resources/assets/kubejs/models/item/arcane_altar.json",
+      "sha256": "b32d826a312df3fe3d8c1151d49d4c16e8df96195f10fd37f524e12d3d5809c0",
+      "size": 45
+    },
+    {
       "path": "resourcepacks/elyrium_resources/assets/kubejs/models/item/blacksmith_hearth.json",
       "sha256": "cea271888c85cdd920f3ad5a61a4bb855e7c01e6fca9cfe20ae7a362deeffed2",
       "size": 51
@@ -22609,6 +22659,11 @@
       "path": "resourcepacks/elyrium_resources/assets/kubejs/models/item/infernal_crucible.json",
       "sha256": "95a860f4d08766d719e43c2201f0273a7b777a216930f45396bec2248fe961d5",
       "size": 51
+    },
+    {
+      "path": "resourcepacks/elyrium_resources/assets/kubejs/models/item/infernal_key.json",
+      "sha256": "862334f357ae5728616b209d3911ecc603b2a6a93130054164a49efa0a7508ab",
+      "size": 109
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/kubejs/models/item/void_anvil.json",
@@ -22627,8 +22682,8 @@
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/minecraft/font/default.json",
-      "sha256": "e9044396ecdf41387683823c9fc81a1abc0b7b4657029f1b0e0ac9a7b59df281",
-      "size": 1590
+      "sha256": "ae3fcc8956f0ccb467c4a552ae2a63be84e038c23caa5df78631965f9bc65e23",
+      "size": 1770
     },
     {
       "path": "resourcepacks/elyrium_resources/assets/simplestats/lang/ru_ru.json",

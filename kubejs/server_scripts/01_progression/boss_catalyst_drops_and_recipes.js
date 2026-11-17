@@ -21,21 +21,26 @@ EntityEvents.drops(event => {
 
     let grantCatalyst = (catId, tierNum, bossName) => {
         event.addDrop(Item.of(catId, 1));
+        if (catId === 'kubejs:ascension_catalyst_t2') {
+            event.addDrop(Item.of('kubejs:infernal_key', 1));
+        }
 
         if (level && level.server) {
             let server = level.server;
             server.runCommandSilent(`execute in ${level.dimension} run particle minecraft:totem_of_undying ${x} ${y + 1.5} ${z} 0.8 0.8 0.8 0.2 60`);
             server.runCommandSilent(`execute in ${level.dimension} run particle minecraft:firework ${x} ${y + 2.0} ${z} 0.6 0.6 0.6 0.15 35`);
             server.runCommandSilent(`execute in ${level.dimension} run playsound minecraft:ui.toast.challenge_complete master @a[distance=..64] ${x} ${y} ${z} 1.2 1.0`);
-            server.tell(Text.of(`§6👑 [ЭЛИРИУМ] Повержен владыка §e${bossName}§6! Получен §lКатализатор Возвышения (Тир ${tierNum})§r§6!`));
+            server.tell(Text.of(`§6👑 [ЭЛИРИУМ] Повержен владыка §e${bossName}§6! Получен §lКатализатор Возвышения (Тир ${tierNum})§r§6 и §c🗝 Инфернальный Ключ§6!`));
         }
     };
 
-    // TIER 1 BOSSES (Overworld -> Drop T2 Catalyst)
+    // TIER 1 BOSSES (Overworld & Catacombs -> Drop T2 Catalyst + Infernal Key)
     if (id === 'cataclysm:ancient_remnant' || id.includes('ancient_remnant') ||
         id === 'cataclysm:kobolediator' || id.includes('kobolediator') ||
-        id === 'cataclysm:maledictus') {
-        grantCatalyst('kubejs:ascension_catalyst_t2', 2, 'Черной Цитадели');
+        id === 'cataclysm:maledictus' ||
+        id === 'cataclysm:the_leviathan' || id.includes('the_leviathan') ||
+        id === 'irons_spellbooks:dead_king' || id.includes('dead_king')) {
+        grantCatalyst('kubejs:ascension_catalyst_t2', 2, 'Черной Цитадели / Катакомб');
     }
 
     // TIER 2 BOSSES (Nether -> Drop T3 Catalyst)
