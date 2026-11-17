@@ -24,11 +24,15 @@ let openHearthViewers = new Map(); // uuid -> { blockKey, gui }
 
 function getHearthKey(level, x, y, z) {
     let dim = String(level.dimension);
-    return `${dim}_${x}_${y}_${z}`;
+    return `${dim}|${x}|${y}|${z}`;
 }
 
-function makeDefaultHearthState() {
+function makeDefaultHearthState(dim, bx, by, bz) {
     return {
+        dim: dim || '',
+        bx: bx || 0,
+        by: by || 0,
+        bz: bz || 0,
         inputs: [null, null, null],
         fuels: [null, null, null],
         outputs: [null, null, null, null, null, null],
@@ -41,16 +45,19 @@ function makeDefaultHearthState() {
 }
 
 function getHearthState(level, x, y, z) {
+    let dim = String(level.dimension);
     let key = getHearthKey(level, x, y, z);
     if (!global.ElyriumHearthData[key]) {
         let server = level.server;
         let pData = server.persistentData;
         let hearthCompound = pData.getCompound('elyrium_hearth_data');
-        if (hearthCompound && hearthCompound.contains(key)) {
+        let legacyKey = `${dim}_${x}_${y}_${z}`;
+        let activeKeyInStorage = hearthCompound && (hearthCompound.contains(key) ? key : (hearthCompound.contains(legacyKey) ? legacyKey : null));
+        if (hearthCompound && activeKeyInStorage) {
             try {
-                let jsonStr = hearthCompound.getString(key);
+                let jsonStr = hearthCompound.getString(activeKeyInStorage);
                 let parsed = JSON.parse(jsonStr);
-                let state = makeDefaultHearthState();
+                let state = makeDefaultHearthState(dim, x, y, z);
                 state.fuelUnits = parsed.fuelUnits || 0;
                 state.cookProgress = parsed.cookProgress || 0;
                 state.overclockUntil = parsed.overclockUntil || 0;
@@ -64,10 +71,10 @@ function getHearthState(level, x, y, z) {
                 }
                 global.ElyriumHearthData[key] = state;
             } catch (e) {
-                global.ElyriumHearthData[key] = makeDefaultHearthState();
+                global.ElyriumHearthData[key] = makeDefaultHearthState(dim, x, y, z);
             }
         } else {
-            global.ElyriumHearthData[key] = makeDefaultHearthState();
+            global.ElyriumHearthData[key] = makeDefaultHearthState(dim, x, y, z);
         }
     }
     return global.ElyriumHearthData[key];
@@ -192,13 +199,35 @@ ServerEvents.tick(event => {
         let state = global.ElyriumHearthData[key];
         if (!state) continue;
 
-        let parts = key.split('_');
-        if (parts.length < 4) continue;
-        let dim = parts[0];
-        let bx = parseInt(parts[1]);
-        let by = parseInt(parts[2]);
-        let bz = parseInt(parts[3]);
+        let dim = state.dim;
+        let bx = state.bx;
+        let by = state.by;
+        let bz = state.bz;
+        if (!dim) {
+            let parts = key.split('|');
+            if (parts.length >= 4) {
+                dim = parts[0];
+                bx = parseInt(parts[1]);
+                by = parseInt(parts[2]);
+                bz = parseInt(parts[3]);
+            } else {
+                let lastUnderscore = key.lastIndexOf('_');
+                let secondLast = key.lastIndexOf('_', lastUnderscore - 1);
+                let thirdLast = key.lastIndexOf('_', secondLast - 1);
+                if (thirdLast > 0) {
+                    dim = key.substring(0, thirdLast);
+                    bx = parseInt(key.substring(thirdLast + 1, secondLast));
+                    by = parseInt(key.substring(secondLast + 1, lastUnderscore));
+                    bz = parseInt(key.substring(lastUnderscore + 1));
+                }
+            }
+            state.dim = dim;
+            state.bx = bx;
+            state.by = by;
+            state.bz = bz;
+        }
 
+        if (!dim) continue;
         let level = server.getLevel(dim);
         if (!level || !level.isLoaded(new BlockPos(bx, by, bz))) continue;
 
@@ -273,7 +302,7 @@ ServerEvents.tick(event => {
 
             // Завершение цикла плавки
             if (state.cookProgress >= 100) {
-                state.cookProgress = 0;
+                state.cookProgress = Math.max(0, state.cookProgress - 100);
                 let smeltedCount = 0;
 
                 // Параллельная плавка всех 3 слотов сырья
@@ -683,6 +712,25 @@ function openHearthSmelteryGUI(player, block) {
                 }
 
                 // Активация форсажа
+                if (state.fuelUnits <= 0) {
+                    for (let f = 0; f < 3; f++) {
+                        let fSt = state.fuels[f];
+                        if (fSt && !fSt.isEmpty()) {
+                            let units = getFuelBurnUnits(fSt);
+                            if (units > 0) {
+                                state.fuelUnits += units;
+                                if (fSt.id === 'minecraft:lava_bucket') {
+                                    state.fuels[f] = Item.of('minecraft:bucket');
+                                } else {
+                                    fSt.shrink(1);
+                                    if (fSt.count <= 0) state.fuels[f] = null;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+
                 if (state.fuelUnits > 0) {
                     // Бафф длится 2.5 минуты (150 сек)
                     // Перезарядка длится 5 минут (300 сек) с момента активации
@@ -733,6 +781,16 @@ function openHearthSmelteryGUI(player, block) {
                     saveHearthState(player.server, key, state);
                 };
 
+                s.shiftLeftClicked = () => {
+                    let out = state.outputs[outIdx];
+                    if (!out || out.isEmpty()) return;
+                    player.give(out.copy());
+                    state.outputs[outIdx] = null;
+                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
+                    renderHearthSlots(gui, state, player);
+                    saveHearthState(player.server, key, state);
+                };
+
                 s.rightClicked = () => {
                     let out = state.outputs[outIdx];
                     if (!out || out.isEmpty()) return;
@@ -757,6 +815,23 @@ function openHearthSmelteryGUI(player, block) {
                 };
             });
         }
+
+        // ----------------------------------------------------------------------
+        // 4b. UNUSED CONTAINER SLOTS (LOCK TO PREVENT ITEM VOIDING)
+        // ----------------------------------------------------------------------
+        let unusedSlots = [
+            { x: 3, y: 0 }, { x: 4, y: 0 }, { x: 5, y: 0 },
+            { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 5, y: 1 },
+            { x: 3, y: 2 }, { x: 4, y: 2 }, { x: 5, y: 2 }, { x: 6, y: 2 }, { x: 7, y: 2 }, { x: 8, y: 2 }
+        ];
+        unusedSlots.forEach(pos => {
+            gui.slot(pos.x, pos.y, s => {
+                s.setItem(Item.of('minecraft:air'));
+                s.leftClicked = () => {};
+                s.rightClicked = () => {};
+                s.shiftLeftClicked = () => {};
+            });
+        });
 
         // ----------------------------------------------------------------------
         // 5. INVENTORY ROUTING (Shift + Click & Direct Clicks)
@@ -916,6 +991,16 @@ BlockEvents.broken('kubejs:blacksmith_hearth', event => {
     let key = getHearthKey(level, block.x, block.y, block.z);
     let state = global.ElyriumHearthData[key];
 
+    // Close menus for any active viewers of this hearth block
+    openHearthViewers.forEach((vInfo, uuid) => {
+        if (vInfo && vInfo.blockKey === key) {
+            let p = level.server.getPlayerByUUID(uuid);
+            if (p) {
+                p.closeMenu();
+            }
+        }
+    });
+
     if (state) {
         let toDrop = [];
         for (let i = 0; i < 3; i++) {
@@ -925,6 +1010,11 @@ BlockEvents.broken('kubejs:blacksmith_hearth', event => {
         for (let o = 0; o < 6; o++) {
             if (state.outputs[o] && !state.outputs[o].isEmpty()) toDrop.push(state.outputs[o]);
         }
+
+        // Clear state slots so closing events or lingering references cannot duplicate items
+        state.inputs = [null, null, null];
+        state.fuels = [null, null, null];
+        state.outputs = [null, null, null, null, null, null];
 
         toDrop.forEach(st => {
             block.popItem(st);

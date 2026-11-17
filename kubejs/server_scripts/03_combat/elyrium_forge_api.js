@@ -702,20 +702,6 @@ var ElyriumForgeAPI = {
                 }
             }
 
-        // Deduct Hardcore Ingot requirement (8-10 ingots of target tier)
-        if (player && evalData.requiredIngotId && evalData.requiredIngotCount > 0) {
-            let reqId = evalData.requiredIngotId;
-            let altId = evalData.requiredAltIngotId;
-            let need = evalData.requiredIngotCount;
-            let c1 = safeCountPlayerItems(player, reqId);
-            let take1 = Math.min(c1, need);
-            if (take1 > 0) safeDeductPlayerItems(player, reqId, take1);
-            let remain = need - take1;
-            if (remain > 0 && altId) {
-                safeDeductPlayerItems(player, altId, remain);
-            }
-        }
-
             return {
                 status: 'SUCCESS',
                 resultGear: resultItem,
@@ -855,8 +841,21 @@ var ElyriumForgeAPI = {
                     let CustomData = Java.loadClass('net.minecraft.world.item.component.CustomData');
                     resultItem.set(DataComponents.CUSTOM_DATA, CustomData.of(cd.copyTag()));
                 }
-                let cn = gear.get(DataComponents.CUSTOM_NAME);
-                if (cn) resultItem.set(DataComponents.CUSTOM_NAME, cn);
+                if (isTrackA) {
+                    try {
+                        let oldDefaultName = gear.getItem().getName(gear).getString().replace(/\[\+\d+\]/g, '').trim();
+                        let oldCustomName = gear.hoverName ? gear.hoverName.getString().replace(/\[\+\d+\]/g, '').trim() : '';
+                        if (oldCustomName && oldCustomName !== oldDefaultName) {
+                            let cn = gear.get(DataComponents.CUSTOM_NAME);
+                            if (cn) resultItem.set(DataComponents.CUSTOM_NAME, cn);
+                        } else {
+                            resultItem.remove(DataComponents.CUSTOM_NAME);
+                        }
+                    } catch (eName) {}
+                } else {
+                    let cn = gear.get(DataComponents.CUSTOM_NAME);
+                    if (cn) resultItem.set(DataComponents.CUSTOM_NAME, cn);
+                }
                 let enc = gear.get(DataComponents.ENCHANTMENTS);
                 if (enc) resultItem.set(DataComponents.ENCHANTMENTS, enc);
             } catch (eComp) {}
@@ -923,6 +922,20 @@ var ElyriumForgeAPI = {
             player.server.runCommandSilent(
                 `tellraw @a ["",{"text":"🌟 [ВЕЛИКОЕ ВОЗВЫШЕНИЕ] ","color":"gold","bold":true},{"text":"Герой ","color":"yellow"},{"text":"${player.username}","color":"white","bold":true},{"text":" возвысил артефакт ","color":"yellow"},{"text":"${rawName}","color":"aqua","bold":true},{"text":" до эпохи ","color":"yellow"},{"text":"ТИРА ${targetTier}","color":"light_purple","bold":true},{"text":"!","color":"gold"}]`
             );
+        }
+
+        // Deduct Hardcore Ingot requirement (8-10 ingots of target tier)
+        if (player && evalData.requiredIngotId && evalData.requiredIngotCount > 0) {
+            let reqId = evalData.requiredIngotId;
+            let altId = evalData.requiredAltIngotId;
+            let need = evalData.requiredIngotCount;
+            let c1 = safeCountPlayerItems(player, reqId);
+            let take1 = Math.min(c1, need);
+            if (take1 > 0) safeDeductPlayerItems(player, reqId, take1);
+            let remain = need - take1;
+            if (remain > 0 && altId) {
+                safeDeductPlayerItems(player, altId, remain);
+            }
         }
 
         return {

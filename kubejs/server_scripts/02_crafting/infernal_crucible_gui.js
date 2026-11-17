@@ -33,6 +33,13 @@ function clearCrucibleSession(player) {
     activeCrucibleSessions.delete(uuid);
 }
 
+function clearResultWithReturn(player, sess) {
+    if (sess.result && !sess.result.isEmpty()) {
+        player.give(sess.result);
+    }
+    sess.result = null;
+}
+
 function isEligibleAscensionGear(item) {
     if (!item || item.isEmpty()) return false;
     let id = String(item.id).toLowerCase();
@@ -105,12 +112,12 @@ function openInfernalCrucibleGUI(player, stationPos) {
                 if (carried && !carried.isEmpty() && isEligibleAscensionGear(carried)) {
                     if (!current || current.isEmpty()) {
                         sess.gear = carried.split(1);
-                        sess.result = null;
+                        clearResultWithReturn(player, sess);
                         player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
                     } else {
                         let temp = current.copy();
                         sess.gear = carried.split(1);
-                        sess.result = null;
+                        clearResultWithReturn(player, sess);
                         player.give(temp);
                         player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
                     }
@@ -118,7 +125,7 @@ function openInfernalCrucibleGUI(player, stationPos) {
                 } else if (current && !current.isEmpty()) {
                     player.containerMenu.setCarried(current.copy());
                     sess.gear = null;
-                    sess.result = null;
+                    clearResultWithReturn(player, sess);
                     player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
                     openInfernalCrucibleGUI(player, sess.stationPos);
                 }
@@ -149,7 +156,7 @@ function openInfernalCrucibleGUI(player, stationPos) {
                         if (!current || current.isEmpty()) {
                             sess.catalyst = carried.copy();
                             player.containerMenu.setCarried(Item.of('minecraft:air'));
-                            sess.result = null;
+                            clearResultWithReturn(player, sess);
                             player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                         } else if (current.id === carried.id) {
                             let space = current.maxStackSize - current.count;
@@ -157,13 +164,13 @@ function openInfernalCrucibleGUI(player, stationPos) {
                             current.grow(move);
                             carried.shrink(move);
                             if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
-                            sess.result = null;
+                            clearResultWithReturn(player, sess);
                             player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                         } else {
                             let temp = current.copy();
                             sess.catalyst = carried.copy();
                             player.containerMenu.setCarried(temp);
-                            sess.result = null;
+                            clearResultWithReturn(player, sess);
                             player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                         }
                         openInfernalCrucibleGUI(player, sess.stationPos);
@@ -171,7 +178,7 @@ function openInfernalCrucibleGUI(player, stationPos) {
                 } else if (current && !current.isEmpty()) {
                     player.containerMenu.setCarried(current.copy());
                     sess.catalyst = null;
-                    sess.result = null;
+                    clearResultWithReturn(player, sess);
                     player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.8 1.0`);
                     openInfernalCrucibleGUI(player, sess.stationPos);
                 }
@@ -190,12 +197,12 @@ function openInfernalCrucibleGUI(player, stationPos) {
                             carried.shrink(1);
                             sess.catalyst = one;
                             if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
-                            sess.result = null;
+                            clearResultWithReturn(player, sess);
                         } else if (current.id === carried.id && current.count < current.maxStackSize) {
                             current.grow(1);
                             carried.shrink(1);
                             if (carried.count <= 0) player.containerMenu.setCarried(Item.of('minecraft:air'));
-                            sess.result = null;
+                            clearResultWithReturn(player, sess);
                         }
                         openInfernalCrucibleGUI(player, sess.stationPos);
                     }
@@ -206,7 +213,7 @@ function openInfernalCrucibleGUI(player, stationPos) {
                     current.shrink(half);
                     if (current.count <= 0) sess.catalyst = null;
                     player.containerMenu.setCarried(picked);
-                    sess.result = null;
+                    clearResultWithReturn(player, sess);
                     openInfernalCrucibleGUI(player, sess.stationPos);
                 }
             };
@@ -222,7 +229,8 @@ function openInfernalCrucibleGUI(player, stationPos) {
                 s.setItem(sess.result.copy().withLore([
                     Text.of('§6★ ВОЗВЫШЕНИЕ УСПЕШНО ЗАВЕРШЕНО! ★'),
                     Text.of('§8────────────────────────────────'),
-                    Text.of('§e▶ Нажмите ЛКМ: §fЗабрать артефакт в инвентарь')
+                    Text.of('§e▶ Нажмите ЛКМ: §fЗабрать артефакт в руку'),
+                    Text.of('§e▶ Shift+ЛКМ: §fЗабрать сразу в инвентарь')
                 ]));
                 s.leftClicked = () => {
                     let res = sess.result;
@@ -233,6 +241,13 @@ function openInfernalCrucibleGUI(player, stationPos) {
                     } else {
                         player.give(res);
                     }
+                    player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
+                    openInfernalCrucibleGUI(player, sess.stationPos);
+                };
+                s.shiftLeftClicked = () => {
+                    let res = sess.result;
+                    sess.result = null;
+                    player.give(res);
                     player.server.runCommandSilent(`playsound minecraft:entity.item.pickup player ${player.username} ~ ~ ~ 0.9 1.1`);
                     openInfernalCrucibleGUI(player, sess.stationPos);
                 };
@@ -337,7 +352,7 @@ function openInfernalCrucibleGUI(player, stationPos) {
                         sess.catalyst = invItem.copy();
                         event.setItem(Item.of('minecraft:air'));
                     }
-                    sess.result = null;
+                    clearResultWithReturn(player, sess);
                     player.server.runCommandSilent(`playsound minecraft:item.firecharge.use player ${player.username} ~ ~ ~ 0.8 1.4`);
                     openInfernalCrucibleGUI(player, sess.stationPos);
                     return;
@@ -347,7 +362,7 @@ function openInfernalCrucibleGUI(player, stationPos) {
                     if (sess.gear && !sess.gear.isEmpty()) player.give(sess.gear);
                     sess.gear = invItem.split(1);
                     event.setItem(invItem.count <= 0 ? Item.of('minecraft:air') : invItem);
-                    sess.result = null;
+                    clearResultWithReturn(player, sess);
                     player.server.runCommandSilent(`playsound minecraft:item.armor.equip_iron player ${player.username} ~ ~ ~ 0.8 1.2`);
                     openInfernalCrucibleGUI(player, sess.stationPos);
                     return;

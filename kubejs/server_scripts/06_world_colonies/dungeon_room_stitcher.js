@@ -835,7 +835,7 @@ var ElyriumDungeonStitcher = {
             cmd(`item replace block ${x} ${y} ${z} container.2 with minecraft:diamond ${diamondCount}`);
         }
         cmd(`item replace block ${x} ${y} ${z} container.4 with minecraft:golden_apple ${rng.nextInt(1, 2)}`);
-        cmd(`item replace block ${x} ${y} ${z} container.8 with minecraft:potion{Potion:"minecraft:strong_healing"}`);
+        cmd(`item replace block ${x} ${y} ${z} container.8 with minecraft:potion[potion_contents="minecraft:strong_healing"]`);
     },
 
     populateVictoryChest: function(server, x, y, z, sector, instanceId, rng) {
@@ -867,7 +867,7 @@ var ElyriumDungeonStitcher = {
             let chestItem = m.chest ? `{id:"${m.chest}",Count:1b}` : '{}';
             let helmItem = m.helm ? `{id:"${m.helm}",Count:1b}` : '{}';
 
-            cmd(`summon ${m.id} ${x + ox} ${y} ${z + oz} {CustomName:'{"text":"${m.name}","color":"red"}',CustomNameVisible:1b,Attributes:[{Name:"generic.max_health",Base:${m.hp}f},{Name:"generic.follow_range",Base:32.0f}],Health:${m.hp}f,HandItems:[${mainItem},${offItem}],ArmorItems:[{},{},${chestItem},${helmItem}],HandDropChances:[0.05f,0.05f],Tags:["elyrium_dungeon_mob","${packName}","inst_${instanceId}"]}`);
+            cmd(`summon ${m.id} ${x + ox} ${y} ${z + oz} {CustomName:'{"text":"${m.name}","color":"red"}',CustomNameVisible:1b,attributes:[{id:"minecraft:generic.max_health",base:${m.hp}f},{id:"minecraft:generic.follow_range",base:32.0f}],Health:${m.hp}f,HandItems:[${mainItem},${offItem}],ArmorItems:[{},{},${chestItem},${helmItem}],HandDropChances:[0.05f,0.05f],Tags:["elyrium_dungeon_mob","${packName}","inst_${instanceId}"]}`);
         }
     },
 
@@ -877,7 +877,7 @@ var ElyriumDungeonStitcher = {
         let m = rng.choice(tData.ranged);
         let helmItem = m.helm ? `{id:"${m.helm}",Count:1b}` : '{}';
 
-        cmd(`summon ${m.id} ${x} ${y} ${z} {CustomName:'{"text":"${m.name}","color":"yellow"}',CustomNameVisible:1b,Attributes:[{Name:"generic.max_health",Base:${m.hp}f},{Name:"generic.follow_range",Base:40.0f}],Health:${m.hp}f,HandItems:[{id:"${m.bow}",Count:1b},{}],ArmorItems:[{},{},{},${helmItem}],Tags:["elyrium_dungeon_mob","elyrium_sniper","inst_${instanceId}"]}`);
+        cmd(`summon ${m.id} ${x} ${y} ${z} {CustomName:'{"text":"${m.name}","color":"yellow"}',CustomNameVisible:1b,attributes:[{id:"minecraft:generic.max_health",base:${m.hp}f},{id:"minecraft:generic.follow_range",base:40.0f}],Health:${m.hp}f,HandItems:[{id:"${m.bow}",Count:1b},{}],ArmorItems:[{},{},{},${helmItem}],Tags:["elyrium_dungeon_mob","elyrium_sniper","inst_${instanceId}"]}`);
     },
 
     spawnSpiderPack: function(server, x, y, z, sector, instanceId, rng) {
@@ -886,7 +886,7 @@ var ElyriumDungeonStitcher = {
         for (let i = 0; i < count; i++) {
             let ox = (rng.next() - 0.5) * 3;
             let oz = (rng.next() - 0.5) * 3;
-            cmd(`summon minecraft:cave_spider ${x + ox} ${y} ${z + oz} {CustomName:'{"text":"Ядовитый Ткач Склепа","color":"dark_red"}',CustomNameVisible:1b,Attributes:[{Name:"generic.max_health",Base:28.0f},{Name:"generic.follow_range",Base:32.0f}],Health:28.0f,Tags:["elyrium_dungeon_mob","elyrium_spider","inst_${instanceId}"]}`);
+            cmd(`summon minecraft:cave_spider ${x + ox} ${y} ${z + oz} {CustomName:'{"text":"Ядовитый Ткач Склепа","color":"dark_red"}',CustomNameVisible:1b,attributes:[{id:"minecraft:generic.max_health",base:28.0f},{id:"minecraft:generic.follow_range",base:32.0f}],Health:28.0f,Tags:["elyrium_dungeon_mob","elyrium_spider","inst_${instanceId}"]}`);
         }
     },
 
@@ -898,7 +898,7 @@ var ElyriumDungeonStitcher = {
         let chestItem = mb.chest ? `{id:"${mb.chest}",Count:1b}` : '{}';
         let helmItem = mb.helm ? `{id:"${mb.helm}",Count:1b}` : '{}';
 
-        cmd(`summon ${mb.id} ${x} ${y} ${z} {CustomName:'{"text":"${mb.name}","color":"gold","bold":true}',CustomNameVisible:1b,Attributes:[{Name:"generic.max_health",Base:${mb.hp}f},{Name:"generic.attack_damage",Base:12.0f},{Name:"generic.follow_range",Base:48.0f},{Name:"generic.knockback_resistance",Base:0.6f}],Health:${mb.hp}f,HandItems:[${mainItem},{}],ArmorItems:[{},{},${chestItem},${helmItem}],Tags:["elyrium_dungeon_mob","dungeon_miniboss","inst_${instanceId}"]}`);
+        cmd(`summon ${mb.id} ${x} ${y} ${z} {CustomName:'{"text":"${mb.name}","color":"gold","bold":true}',CustomNameVisible:1b,attributes:[{id:"minecraft:generic.max_health",base:${mb.hp}f},{id:"minecraft:generic.attack_damage",base:12.0f},{id:"minecraft:generic.follow_range",base:48.0f},{id:"minecraft:generic.knockback_resistance",base:0.6f}],Health:${mb.hp}f,HandItems:[${mainItem},{}],ArmorItems:[{},{},${chestItem},${helmItem}],Tags:["elyrium_dungeon_mob","dungeon_miniboss","inst_${instanceId}"]}`);
     },
 
     spawnFinalBoss: function(server, x, y, z, sector, instanceId, rng) {
@@ -906,7 +906,7 @@ var ElyriumDungeonStitcher = {
         let tData = this.getTierData(sector);
         let b = rng.choice(tData.boss);
 
-        cmd(`summon ${b.id} ${x} ${y} ${z} {CustomName:'{"text":"👑 ${b.name}","color":"dark_red","bold":true}',CustomNameVisible:1b,Attributes:[{Name:"generic.max_health",Base:${b.hp}f},{Name:"generic.attack_damage",Base:18.0f},{Name:"generic.knockback_resistance",Base:0.8f},{Name:"generic.follow_range",Base:64.0f}],Health:${b.hp}f,Tags:["elyrium_dungeon_mob","dungeon_boss","inst_${instanceId}"]}`);
+        cmd(`summon ${b.id} ${x} ${y} ${z} {CustomName:'{"text":"👑 ${b.name}","color":"dark_red","bold":true}',CustomNameVisible:1b,attributes:[{id:"minecraft:generic.max_health",base:${b.hp}f},{id:"minecraft:generic.attack_damage",base:18.0f},{id:"minecraft:generic.knockback_resistance",base:0.8f},{id:"minecraft:generic.follow_range",base:64.0f}],Health:${b.hp}f,Tags:["elyrium_dungeon_mob","dungeon_boss","inst_${instanceId}"]}`);
     },
 
     unlockPortcullis: function(server, instanceId) {
@@ -1204,10 +1204,14 @@ var ElyriumDungeonStitcher = {
         this.buildDescendingStaircase(server, s1_x1, s1_z1, s1_x1, s1_z2, 64, 48, pal, rng);
 
         // Stairwell 2: from Floor 2 MiniBoss Exit to Floor 3 Start (Y=48 down to 32)
+        // Gate is at f2.exit[1] * 24 + 8, so staircase begins at + 9 to preserve the portcullis!
         let s2_x1 = ox + f2.exit[0] * 24;
-        let s2_z1 = f2.exit[1] * 24 + 8;
+        let s2_z1 = f2.exit[1] * 24 + 9;
         let s2_z2 = (f2.exit[1] + 1) * 24 - 6;
         this.buildDescendingStaircase(server, s2_x1, s2_z1, s2_x1, s2_z2, 48, 32, pal, rng);
+
+        // Remove generation forceload to keep server memory clean
+        cmd(`forceload remove ${ox - 110} -32 ${ox + 110} 460`);
     }
 };
 
@@ -1314,6 +1318,12 @@ ServerEvents.commandRegistry(event => {
             id = maxId;
         }
 
+        let currentDim = String(player.level.dimension);
+        if (currentDim === 'elyrium:dungeons') {
+            player.displayClientMessage(Component.literal(`§c[ПОДЗЕМЕЛЬЕ] Вы уже находитесь внутри подземелья! Для выхода используйте: /dungeon_leave`), false);
+            return 0;
+        }
+
         if (id <= 0 || id > maxId) {
             player.displayClientMessage(Component.literal(`§c[ОШИБКА] Подземелье #${id} еще не сгенерировано! Сначала создайте его: /dungeon_generate <сектор 1..8>`), false);
             player.server.runCommandSilent(`playsound minecraft:block.anvil.hit player ${player.username} ~ ~ ~ 0.8 0.6`);
@@ -1361,9 +1371,9 @@ ServerEvents.commandRegistry(event => {
 
         let retDim = player.persistentData.getString('elyrium_return_dim') || 'minecraft:overworld';
         let retX = player.persistentData.getDouble('elyrium_return_x') || -2.5;
-        let retY = player.persistentData.getDouble('elyrium_return_y') || 70.0;
+        let retY = player.persistentData.getDouble('elyrium_return_y');
+        if (isNaN(retY) || retY < -60 || retY > 320) retY = 70.0;
         let retZ = player.persistentData.getDouble('elyrium_return_z') || -36.9;
-        if (retY < 10) retY = 70.0;
 
         player.teleportTo(retDim, retX, retY, retZ, player.yaw, player.pitch);
         player.setDeltaMovement(0, 0, 0);
@@ -1392,9 +1402,9 @@ ServerEvents.tick(event => {
             if (player.y < 15.0 || player.y > 220.0) {
                 let retDim = player.persistentData.getString('elyrium_return_dim') || 'minecraft:overworld';
                 let retX = player.persistentData.getDouble('elyrium_return_x') || -2.5;
-                let retY = player.persistentData.getDouble('elyrium_return_y') || 70.0;
+                let retY = player.persistentData.getDouble('elyrium_return_y');
+                if (isNaN(retY) || retY < -60 || retY > 320) retY = 70.0;
                 let retZ = player.persistentData.getDouble('elyrium_return_z') || -36.9;
-                if (retY < 10) retY = 70.0;
 
                 player.teleportTo(retDim, retX, retY, retZ, player.yaw, player.pitch);
                 player.setDeltaMovement(0, 0, 0);

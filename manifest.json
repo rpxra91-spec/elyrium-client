@@ -1,8 +1,8 @@
 {
-  "version": "0.4.73",
+  "version": "0.4.74",
   "game_version": "1.21.1",
   "neoforge_version": "21.1.233",
-  "generated_at": "2026-10-31T08:30:20.382626+00:00",
+  "generated_at": "2026-11-17T15:48:25.358018+00:00",
   "repo": "rpxra91-spec/elyrium-client",
   "files": [
     {
@@ -14922,18 +14922,18 @@
     },
     {
       "path": "kubejs/server_scripts/02_crafting/blacksmith_workbench_gui.js",
-      "sha256": "9fcb9cb4d0a82fc213dd32c37c09d0faf494a01777bbc8794fedc79490784c25",
-      "size": 40539
+      "sha256": "7014645b67b1d7dc21f38c4d92fd60d85638160ef05e57e32de9cfbf315398f3",
+      "size": 43508
     },
     {
       "path": "kubejs/server_scripts/02_crafting/hearth_smeltery_gui.js",
-      "sha256": "21c09b8ae5ba28127afe83ade842fab7100a98b0585b16741761ee6e0b3402de",
-      "size": 50362
+      "sha256": "f3d7fee84d44c9c81e782b9b27d5f475db7659517d45c436ebbe4a2a143ac705",
+      "size": 54490
     },
     {
       "path": "kubejs/server_scripts/02_crafting/infernal_crucible_gui.js",
-      "sha256": "be8edea4bbedca795c2f38d81b9566110741711a7f981059c6f461ef4bb01b74",
-      "size": 24182
+      "sha256": "2beeed6a4c59921b28f994c79107313d8fa5e12255e8a3a0b60333814ddffc22",
+      "size": 25047
     },
     {
       "path": "kubejs/server_scripts/02_crafting/steel_metallurgy_recipes.js",
@@ -14987,8 +14987,8 @@
     },
     {
       "path": "kubejs/server_scripts/03_combat/elyrium_forge_api.js",
-      "sha256": "da43761d6c1208b2a48f7174b858d8d29cf1cb4f066c2e1f15d3099390533bdb",
-      "size": 46502
+      "sha256": "bdb1dceac3ed3de65a5f33dd7a8ea76162db5bbb37f0bcb9c7862b6f22166e54",
+      "size": 47284
     },
     {
       "path": "kubejs/server_scripts/03_combat/equipment_reinforcement_engine.js",
@@ -15217,8 +15217,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/anti_grief_dungeon_lockdown.js",
-      "sha256": "d0bca35b181e377b99a89dc9c10cb9ddf91b26540e756dd867a542ae2d30d38a",
-      "size": 5208
+      "sha256": "4f155a16873d700f3a12c3136c7cdc7fa5a915976cdda73be262b15b81ca4377",
+      "size": 5227
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/capital_housing_engine.js",
@@ -15282,8 +15282,8 @@
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/dungeon_room_stitcher.js",
-      "sha256": "f59e25c98648bd2a4357c339a236e23f53d296f4b988367a99ba97016be21c48",
-      "size": 76075
+      "sha256": "514312ea7da21c540484551ef1067d0dc31700c63df07ef82f3aafb1d3478725",
+      "size": 76843
     },
     {
       "path": "kubejs/server_scripts/06_world_colonies/endless_fringe_engine.js",

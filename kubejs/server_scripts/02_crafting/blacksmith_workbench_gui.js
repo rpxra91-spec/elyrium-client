@@ -156,10 +156,19 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
             // Если в сетке выложен известный металл - фильтруем рецепты по нему!
             let activeMetal = null;
             for (let m of uniqueMetals) {
-                if (placedIngots.has(m.ingot)) {
-                    activeMetal = m.ingot;
-                    break;
+                for (let i = 0; i < 6; i++) {
+                    let st = sess.forgeIngredients[i];
+                    if (st && !st.isEmpty()) {
+                        let matches = (typeof matchesItemOrTag === 'function')
+                            ? matchesItemOrTag(st, m.ingot)
+                            : (String(st.id) === m.ingot);
+                        if (matches) {
+                            activeMetal = m.ingot;
+                            break;
+                        }
+                    }
                 }
+                if (activeMetal) break;
             }
 
             let filteredList = activeMetal ? allRecipes.filter(r => r.ingot === activeMetal) : allRecipes;
@@ -293,7 +302,7 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
                     let targetMetal = uniqueMetals[nextMetalIdx].ingot;
                     let targetIdxInAll = allRecipes.findIndex(r => r.ingot === targetMetal);
                     if (targetIdxInAll >= 0) {
-                        sess.recipeIdx = 0;
+                        sess.recipeIdx = targetIdxInAll;
                         player.server.runCommandSilent(`playsound minecraft:item.book.page_turn player ${player.username} ~ ~ ~ 0.8 1.1`);
                         openBlacksmithWorkbenchGUI(player, sess.stationPos);
                     }
@@ -373,7 +382,15 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
 
             let repMat = (gear && typeof getRepairMaterial === 'function') ? getRepairMaterial(gear) : { id: 'minecraft:iron_ingot', name: 'Железный Слиток' };
             let neededCost = (gear && typeof calculateRepairCost === 'function') ? calculateRepairCost(gear) : 0;
-            let hasEnough = (ingots && ingots.count >= neededCost);
+            let matchesMaterial = false;
+            if (ingots && !ingots.isEmpty() && repMat) {
+                if (typeof matchesItemOrTag === 'function') {
+                    matchesMaterial = matchesItemOrTag(ingots, repMat.id);
+                } else {
+                    matchesMaterial = (String(ingots.id) === repMat.id);
+                }
+            }
+            let hasEnough = (matchesMaterial && ingots.count >= neededCost);
             let canRepair = (gear && neededCost > 0 && hasEnough);
 
             // СЛОТ 10: ПОВРЕЖДЕННАЯ ЭКИПИРОВКА (Col 1, Row 1)
@@ -432,6 +449,14 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
                     let current = sess.repairIngots;
 
                     if (carried && !carried.isEmpty()) {
+                        if (gear && !gear.isEmpty() && repMat) {
+                            let matches = (typeof matchesItemOrTag === 'function') ? matchesItemOrTag(carried, repMat.id) : (String(carried.id) === repMat.id);
+                            if (!matches) {
+                                player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.8 1.5`);
+                                player.sendSystemMessage(Text.of(`§c[Верстак] Для починки этого предмета требуется: §e${repMat.name}§c!`));
+                                return;
+                            }
+                        }
                         if (!current || current.isEmpty()) {
                             sess.repairIngots = carried.copy();
                             player.containerMenu.setCarried(Item.of('minecraft:air'));
@@ -463,6 +488,14 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
                     let current = sess.repairIngots;
 
                     if (carried && !carried.isEmpty()) {
+                        if (gear && !gear.isEmpty() && repMat) {
+                            let matches = (typeof matchesItemOrTag === 'function') ? matchesItemOrTag(carried, repMat.id) : (String(carried.id) === repMat.id);
+                            if (!matches) {
+                                player.server.runCommandSilent(`playsound minecraft:block.fire.extinguish player ${player.username} ~ ~ ~ 0.8 1.5`);
+                                player.sendSystemMessage(Text.of(`§c[Верстак] Для починки этого предмета требуется: §e${repMat.name}§c!`));
+                                return;
+                            }
+                        }
                         if (!current || current.isEmpty()) {
                             let one = carried.copy();
                             one.setCount(1);
@@ -588,6 +621,15 @@ function openBlacksmithWorkbenchGUI(player, stationPos) {
                         openBlacksmithWorkbenchGUI(player, sess.stationPos);
                         return;
                     } else {
+                        if (sess.repairGear && !sess.repairGear.isEmpty()) {
+                            let repMat = (typeof getRepairMaterial === 'function') ? getRepairMaterial(sess.repairGear) : { id: 'minecraft:iron_ingot' };
+                            let matches = (typeof matchesItemOrTag === 'function') ? matchesItemOrTag(invItem, repMat.id) : (String(invItem.id) === repMat.id);
+                            if (!matches) return;
+                        } else {
+                            let isIngot = invItem.hasTag('c:ingots') || String(invItem.id).endsWith('_ingot') || String(invItem.id) === 'minecraft:diamond';
+                            if (!isIngot) return;
+                        }
+
                         if (sess.repairIngots && !sess.repairIngots.isEmpty()) {
                             if (sess.repairIngots.id === invItem.id && sess.repairIngots.count < sess.repairIngots.maxStackSize) {
                                 let space = sess.repairIngots.maxStackSize - sess.repairIngots.count;

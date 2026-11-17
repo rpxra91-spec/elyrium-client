@@ -42,7 +42,7 @@ function isInsideProtectedDungeon(level, pos) {
     if (!level) return false;
 
     // 1. Dedicated Instance Dimension: ALWAYS PROTECTED
-    if (level.dimension === 'elyrium:dungeons') {
+    if (String(level.dimension) === 'elyrium:dungeons') {
         return true;
     }
 
@@ -50,7 +50,7 @@ function isInsideProtectedDungeon(level, pos) {
         let structureManager = level.asKubeJS().minecraftLevel.structureManager();
         if (!structureManager) return false;
 
-        let structureStart = structureManager.getStructureWithPieceAt(pos);
+        let structureStart = structureManager.getStructureWithPieceAt(pos, h => true);
         if (!structureStart || !structureStart.isValid()) return false;
 
         let structStr = structureStart.getStructure().toString().toLowerCase();
